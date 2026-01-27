@@ -34,7 +34,6 @@ interface DropZoneProps {
     onTransportChange: (slot: TimeSlot, index: number, mode: TransportMode) => void;
     onItemClick: (item: ScheduleItem) => void;
     t: any;
-    autoSchedule: boolean;
     onAddItem: (slot: TimeSlot) => void;
     onMoveItem: (slot: TimeSlot, index: number) => void;
     onQuickFill: (slot: TimeSlot) => void;
@@ -44,7 +43,7 @@ interface DropZoneProps {
 
 const DropZone: React.FC<DropZoneProps> = ({
     slot, items, title, icon, isAccommodation = false, previousItem, isDraggingGlobal,
-    onDragOver, onDrop, onDragStart, onDelete, onTimeChange, onNoteChange, onTransportChange, onItemClick, t, autoSchedule, onAddItem, onMoveItem, onQuickFill, lang, sampleAssets
+    onDragOver, onDrop, onDragStart, onDelete, onTimeChange, onNoteChange, onTransportChange, onItemClick, t, onAddItem, onMoveItem, onQuickFill, lang, sampleAssets
 }) => {
     const isCompact = false; // Always expanded to show Add button
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
@@ -102,6 +101,18 @@ const DropZone: React.FC<DropZoneProps> = ({
                 {previousItem && items.length > 0 && !isCompact && (() => { const suggestion = getTransportSuggestion(previousItem, items[0]); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
                 {items.map((item, idx) => {
                     const prevItemInSlot = idx > 0 ? items[idx - 1] : null;
+
+                    // Conflict Detection
+                    let hasConflict = false;
+                    if (prevItemInSlot && prevItemInSlot.startTime && item.startTime) {
+                        const prevEnd = addMinutes(prevItemInSlot.startTime, parseDuration(prevItemInSlot.duration));
+                        // Simple string comparison for time (HH:MM) works for same day if standard 24h format
+                        // But crossing midnight might be tricky. Assuming valid 24h string.
+                        if (item.startTime < prevEnd) {
+                            hasConflict = true;
+                        }
+                    }
+
                     // Dynamic Title Lookup for Localization
                     // Try to find the original asset to get the translated title if available
                     // Fallback to item.title which might be stale (saved in original language)
@@ -113,7 +124,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                     return (
                         <React.Fragment key={item.instanceId}>
                             {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleTransportClick(e, idx, item.arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
-                            <div draggable onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)} onClick={() => onItemClick(item)} style={{ touchAction: 'pan-y' }} className="group relative bg-white border border-gray-100 rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 hover:border-teal-300">
+                            <div draggable onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)} onClick={() => onItemClick(item)} style={{ touchAction: 'pan-y' }} className={`group relative bg-white border rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 ${hasConflict ? 'border-red-300 ring-1 ring-red-100' : 'border-gray-100 hover:border-teal-300'}`}>
                                 <div className="absolute -top-2 -right-2 flex gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
                                     <button
                                         onClick={(e) => {
@@ -136,13 +147,20 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />
                                 </div>
                                 {/* Fixed index prop here */}
-                                <SmartTimeInput
-                                    slot={slot}
-                                    index={idx}
-                                    value={item.startTime || ''}
-                                    onChange={(val) => onTimeChange(slot, idx, val)}
-                                    suggestedTime={getSuggestedTime(idx)}
-                                />
+                                <div className="flex flex-col items-end gap-1">
+                                    <SmartTimeInput
+                                        slot={slot}
+                                        index={idx}
+                                        value={item.startTime || ''}
+                                        onChange={(val) => onTimeChange(slot, idx, val)}
+                                        suggestedTime={getSuggestedTime(idx)}
+                                    />
+                                    {hasConflict && (
+                                        <span className="text-[10px] text-red-500 bg-red-50 px-1.5 py-0.5 rounded font-bold animate-pulse">
+                                            ⚠️ 時間衝突
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </React.Fragment>
                     );

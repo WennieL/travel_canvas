@@ -228,12 +228,54 @@ export default function App() {
     const [viewMode, setViewMode] = useState<ViewMode>('canvas');
     // Use custom hook for plans management
     const {
-        plans, setPlans, activePlanId, setActivePlanId, activePlan,
-        currentDay, setCurrentDay, updateActivePlan, updateChecklist,
-        handleCreatePlan: hookCreatePlan, handleDeletePlan: hookDeletePlan,
-        handleAddDay: hookAddDay, handleDeleteDay: hookDeleteDay,
-        getDisplayDate, getShortDate
+        plans, activePlanId, activePlan, currentDay,
+        setPlans, setActivePlanId, setCurrentDay,
+        updateActivePlan, updateChecklist, handleCreatePlan: hookCreatePlan,
+        handleDeletePlan: hookDeletePlan, handleAddDay: hookAddDay,
+        handleDeleteDay: hookDeleteDay, getDisplayDate, getShortDate
     } = usePlans(isInitialized, t, lang);
+
+    // DATA INTEGRITY REPAIR: Ensure items are in correct slots based on time
+    useEffect(() => {
+        if (!activePlan || !activePlan.schedule) return;
+        const currentDayKey = `Day ${currentDay}`;
+        const daySchedule = activePlan.schedule[currentDayKey];
+        if (!daySchedule) return;
+
+        let hasChange = false;
+        const newDaySchedule = JSON.parse(JSON.stringify(daySchedule)); // Deep clone for safety
+        const slots: TimeSlot[] = ['morning', 'afternoon', 'evening', 'night'];
+
+        slots.forEach(slot => {
+            const items = newDaySchedule[slot];
+            for (let i = items.length - 1; i >= 0; i--) {
+                const item = items[i];
+                if (!item.startTime) continue;
+
+                const hour = parseInt(item.startTime.split(':')[0], 10);
+                let correctSlot: TimeSlot = slot;
+                if (hour >= 6 && hour < 12) correctSlot = 'morning';
+                else if (hour >= 12 && hour < 18) correctSlot = 'afternoon';
+                else if (hour >= 18 && hour < 22) correctSlot = 'evening';
+                else correctSlot = 'night';
+
+                if (correctSlot !== slot) {
+                    hasChange = true;
+                    // Move to correct slot
+                    items.splice(i, 1);
+                    newDaySchedule[correctSlot].push(item);
+                    newDaySchedule[correctSlot].sort((a: ScheduleItem, b: ScheduleItem) => (a.startTime || '').localeCompare(b.startTime || ''));
+                }
+            }
+        });
+
+        if (hasChange) {
+            console.log("Auto-Repair: Correcting slot alignment");
+            const newSchedule = { ...activePlan.schedule, [currentDayKey]: newDaySchedule };
+            updateActivePlan({ schedule: newSchedule });
+        }
+    }, [activePlan?.id, currentDay]); // Run on plan/day change
+
 
     // Use custom hook for budget calculations
     const { budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown } = useBudget(activePlan, t);
@@ -317,21 +359,12 @@ export default function App() {
     }, [currentDay]);
 
     const openDateModal = () => { setTempStartDate(activePlan.startDate); setTempEndDate(activePlan.endDate); setShowDateModal(true); };
-    const handleCreatePlan = () => {
-        const newId = Math.random().toString(36).substr(2, 9);
-        setPlans([...plans, { id: newId, name: `${t.newPlanName} ${plans.length + 1}`, startDate: new Date().toISOString().split('T')[0], endDate: new Date(Date.now() + 2 * 86400000).toISOString().split('T')[0], totalDays: 3, schedule: createEmptySchedule(3), checklist: DEFAULT_CHECKLIST, createdAt: Date.now() }]);
-        setActivePlanId(newId); setShowPlanManager(false);
-    };
-    const handleDeletePlan = (id: string, e: React.MouseEvent) => { e.stopPropagation(); if (plans.length <= 1) return alert("At least one plan required"); if (confirm(t.deletePlanConfirm)) { const newPlans = plans.filter(p => p.id !== id); setPlans(newPlans); if (activePlanId === id) setActivePlanId(newPlans[0].id); } };
-    const savePlanName = (e: React.MouseEvent) => { e.stopPropagation(); if (editingPlanId) { setPlans(prev => prev.map(p => p.id === editingPlanId ? { ...p, name: editingName } : p)); setEditingPlanId(null); } };
-    const handleAddDay = () => { const newTotalDays = activePlan.totalDays + 1; const newEndDate = new Date(activePlan.endDate); newEndDate.setDate(newEndDate.getDate() + 1); const newSchedule = { ...activePlan.schedule }; if (!newSchedule[`Day ${newTotalDays}`]) newSchedule[`Day ${newTotalDays}`] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }; updateActivePlan({ totalDays: newTotalDays, endDate: newEndDate.toISOString().split('T')[0], schedule: newSchedule }); setCurrentDay(newTotalDays); setTempEndDate(newEndDate.toISOString().split('T')[0]); };
-    const handleDeleteDay = (dayToDelete: number, e?: React.MouseEvent) => {
-        if (e) e.stopPropagation(); if (activePlan.totalDays <= 1) return alert("Keep at least one day"); if (!confirm(`${t.deleteDayConfirm} ${dayToDelete}?`)) return;
-        const newTotalDays = activePlan.totalDays - 1; const newEndDate = new Date(activePlan.endDate); newEndDate.setDate(newEndDate.getDate() - 1);
-        const newSchedule: FullSchedule = {}; for (let i = 1; i <= newTotalDays; i++) newSchedule[`Day ${i}`] = i < dayToDelete ? activePlan.schedule[`Day ${i}`] : activePlan.schedule[`Day ${i + 1}`];
-        updateActivePlan({ totalDays: newTotalDays, endDate: newEndDate.toISOString().split('T')[0], schedule: newSchedule });
-        if (currentDay >= dayToDelete) setCurrentDay(Math.max(1, currentDay - 1)); setTempEndDate(newEndDate.toISOString().split('T')[0]);
-    };
+    const handleCreatePlan = hookCreatePlan;
+
+    const handleDeletePlan = hookDeletePlan;
+    const handleAddDay = hookAddDay;
+    const handleDeleteDay = hookDeleteDay;
+
     const handleCreateCustomItem = (data: { name: string; type: ItemType; price: string; time: string; notes: string; origin?: string; destination?: string }) => {
         // Generate title from origin/destination for transport if name is empty
         let finalTitle = data.name;
@@ -375,39 +408,61 @@ export default function App() {
 
     const [showMoveModal, setShowMoveModal] = useState(false);
     const [moveTarget, setMoveTarget] = useState<{ slot: TimeSlot, index: number } | null>(null);
-    const [autoSchedule, setAutoSchedule] = useState(true); // Default to ON
+
 
     const [addToSlotTarget, setAddToSlotTarget] = useState<{ day: number, slot: TimeSlot } | null>(null);
 
     // Handle time change for schedule items - WITH AUTO SCHEDULE
+    // Handle time change for schedule items - SMART SORTING (No Ripple)
+    // Handle time change for schedule items - SMART SORTING (No Ripple)
     const handleTimeChange = (slot: TimeSlot, index: number, val: string) => {
+        // CORRECTION: Must use Deep Clone to ensure React detects changes in nested arrays!
         const newSchedule = { ...activePlan.schedule };
-        const daySchedule = newSchedule[`Day ${currentDay}`];
-        if (daySchedule?.[slot][index]) {
-            daySchedule[slot][index].startTime = val;
+        const currentDayKey = `Day ${currentDay}`;
 
-            // Auto Schedule Logic
-            if (autoSchedule && val) {
-                // Calculate end time of current item
-                const currentDuration = parseDuration(daySchedule[slot][index].duration);
-                let previousEndTime = addMinutes(val, currentDuration);
+        if (!newSchedule[currentDayKey]) return;
 
-                // Cascade changes to subsequent items in the same slot
-                for (let i = index + 1; i < daySchedule[slot].length; i++) {
-                    const item = daySchedule[slot][i];
-                    // Add buffer (transport or default 30m)
-                    const buffer = 30; // ideally calculateTravelTime but simple for now
-                    const newStart = addMinutes(previousEndTime, buffer);
-                    item.startTime = newStart;
+        // Clone the day object and the specific arrays we will modify
+        newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] };
+        const daySchedule = newSchedule[currentDayKey];
 
-                    // Update fallback for next iteration
-                    const itemDuration = parseDuration(item.duration);
-                    previousEndTime = addMinutes(newStart, itemDuration);
-                }
+        // Ensure all arrays are initialized
+        (['morning', 'afternoon', 'evening', 'night', 'accommodation'] as TimeSlot[]).forEach(s => {
+            if (!daySchedule[s]) daySchedule[s] = [];
+        });
+
+        // Current item reference
+        const sourceArray = [...daySchedule[slot]];
+        const item = { ...sourceArray[index] };
+
+        if (item) {
+            item.startTime = val;
+
+            // 1. Determine new slot based on time
+            let newSlot: TimeSlot = slot;
+            if (val) {
+                const hour = parseInt(val.split(':')[0], 10);
+                if (hour >= 6 && hour < 12) newSlot = 'morning';
+                else if (hour >= 12 && hour < 18) newSlot = 'afternoon';
+                else if (hour >= 18 && hour < 22) newSlot = 'evening';
+                else newSlot = 'night';
             }
 
-            // Sort by time after update (only if not auto-scheduled, otherwise order implies time)
-            if (val && !autoSchedule) newSchedule[`Day ${currentDay}`][slot].sort((a, b) => (a.startTime || '').localeCompare(b.startTime || ''));
+            // 2. Logic to move or update
+            if (newSlot !== slot && slot !== 'accommodation' && newSlot !== 'accommodation') {
+                // Move item
+                sourceArray.splice(index, 1);
+                daySchedule[slot] = sourceArray;
+
+                daySchedule[newSlot] = [...daySchedule[newSlot], item];
+                daySchedule[newSlot].sort((a, b) => (a.startTime || '').localeCompare(b.startTime || ''));
+            } else {
+                // Update in place
+                sourceArray[index] = item;
+                sourceArray.sort((a, b) => (a.startTime || '').localeCompare(b.startTime || ''));
+                daySchedule[slot] = sourceArray;
+            }
+
             updateActivePlan({ schedule: newSchedule });
         }
     };
@@ -691,24 +746,7 @@ export default function App() {
 
                         <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
 
-                        {/* Auto Schedule Toggle */}
-                        <button
-                            onClick={() => {
-                                const newVal = !autoSchedule;
-                                setAutoSchedule(newVal);
-                                showToastMessage(`Auto Schedule: ${newVal ? 'ON' : 'OFF'}`);
-                            }}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${autoSchedule
-                                ? 'bg-indigo-50 text-indigo-600 border-indigo-200'
-                                : 'bg-white text-gray-400 border-gray-200 hover:bg-gray-50'
-                                }`}
-                            title={t.autoScheduleDesc || "Automatically adjust times"}
-                        >
-                            <Wand2 size={12} className={autoSchedule ? "text-indigo-500" : "text-gray-400"} />
-                            {t.autoSchedule || "Auto Schedule"}
-                        </button>
 
-                        <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
 
                         {/* Global Actions */}
                         <button onClick={toggleLang} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
@@ -774,9 +812,9 @@ export default function App() {
                                 const items = activePlan.schedule[`Day ${currentDay}`]?.[slot] || [];
                                 let prevItem: ScheduleItem | undefined;
                                 if (index > 0) { const prevItems = activePlan.schedule[`Day ${currentDay}`]?.[arr[index - 1]] || []; if (prevItems.length > 0) prevItem = prevItems[prevItems.length - 1]; }
-                                return (<DropZone key={slot} slot={slot} items={items} title={`${getSlotLabel(slot, t)} (${slot === 'morning' ? '06:00-12:00' : slot === 'afternoon' ? '12:00-18:00' : slot === 'evening' ? '18:00-22:00' : '22:00-06:00'})`} icon={<Clock size={14} />} previousItem={prevItem} isDraggingGlobal={isDraggingGlobal} onDragOver={handleDragOver} onDrop={handleDrop} onDragStart={handleDragStart} onDelete={handleDelete} onTimeChange={handleTimeChange} onNoteChange={handleNoteChange} onTransportChange={handleTransportChange} onItemClick={setDetailItem} t={t} autoSchedule={autoSchedule} onAddItem={handleAddItemClick} onMoveItem={handleMoveItem} onQuickFill={handleQuickFill} lang={lang} sampleAssets={SAMPLE_ASSETS} />);
+                                return (<DropZone key={slot} slot={slot} items={items} title={`${getSlotLabel(slot, t)} (${slot === 'morning' ? '06:00-12:00' : slot === 'afternoon' ? '12:00-18:00' : slot === 'evening' ? '18:00-22:00' : '22:00-06:00'})`} icon={<Clock size={14} />} previousItem={prevItem} isDraggingGlobal={isDraggingGlobal} onDragOver={handleDragOver} onDrop={handleDrop} onDragStart={handleDragStart} onDelete={handleDelete} onTimeChange={handleTimeChange} onNoteChange={handleNoteChange} onTransportChange={handleTransportChange} onItemClick={setDetailItem} t={t} onAddItem={handleAddItemClick} onMoveItem={handleMoveItem} onQuickFill={handleQuickFill} lang={lang} sampleAssets={SAMPLE_ASSETS} />);
                             })}
-                            <div className="mt-8 border-t border-dashed border-gray-200 pt-4"><DropZone slot="accommodation" items={activePlan.schedule[`Day ${currentDay}`]?.accommodation || []} title={getSlotLabel('accommodation', t)} icon={<Home size={14} />} isAccommodation={true} isDraggingGlobal={isDraggingGlobal} onDragOver={handleDragOver} onDrop={handleDrop} onDragStart={handleDragStart} onDelete={handleDelete} onTimeChange={handleTimeChange} onNoteChange={handleNoteChange} onTransportChange={handleTransportChange} onItemClick={setDetailItem} t={t} autoSchedule={autoSchedule} onAddItem={handleAddItemClick} onMoveItem={handleMoveItem} onQuickFill={handleQuickFill} lang={lang} sampleAssets={SAMPLE_ASSETS} /></div>
+                            <div className="mt-8 border-t border-dashed border-gray-200 pt-4"><DropZone slot="accommodation" items={activePlan.schedule[`Day ${currentDay}`]?.accommodation || []} title={getSlotLabel('accommodation', t)} icon={<Home size={14} />} isAccommodation={true} isDraggingGlobal={isDraggingGlobal} onDragOver={handleDragOver} onDrop={handleDrop} onDragStart={handleDragStart} onDelete={handleDelete} onTimeChange={handleTimeChange} onNoteChange={handleNoteChange} onTransportChange={handleTransportChange} onItemClick={setDetailItem} t={t} onAddItem={handleAddItemClick} onMoveItem={handleMoveItem} onQuickFill={handleQuickFill} lang={lang} sampleAssets={SAMPLE_ASSETS} /></div>
                         </div>
                     )}
                     {viewMode === 'map' && <MapView schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }} t={t} onItemClick={setDetailItem} />}
