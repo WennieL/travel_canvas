@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ScheduleItem, TimeSlot } from '../types';
@@ -143,6 +143,14 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
 
                     {/* Auto Center */}
                     <MapUpdater points={points} />
+
+                    {/* Route Line Service */}
+                    {points.length > 1 && (
+                        <Polyline
+                            positions={points.map(p => [p.lat, p.lng])}
+                            pathOptions={{ color: '#0d9488', weight: 4, opacity: 0.6, dashArray: '10, 10' }}
+                        />
+                    )}
 
                     {/* Markers */}
                     {points.map((p, idx) => (
