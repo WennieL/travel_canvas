@@ -177,12 +177,12 @@ const DropZone: React.FC<DropZoneProps> = ({
                     {/* Mobile: Solid Add Button style (only if items > 0 or consistent?) - actually keep consistent structure but change text/icon */}
                     {/* Wait, design req: Mobile = Add Item. Desktop = Visual Cue. */}
 
-                    <div className="md:hidden flex items-center gap-2">
+                    <div className="lg:hidden flex items-center gap-2">
                         <Plus size={16} className={`group-hover:scale-110 transition-transform ${items.length === 0 ? 'text-teal-500' : ''}`} />
-                        {items.length === 0 ? (t.tapToPlan || "Tap + to plan") : (t.addItem || "Add Item")}
+                        {items.length === 0 ? ("+ Add items...") : (t.addItem || "Add Item")}
                     </div>
 
-                    <div className="hidden md:flex items-center gap-2 text-gray-400 group-hover:text-teal-600">
+                    <div className="hidden lg:flex items-center gap-2 text-gray-400 group-hover:text-teal-600">
                         <MoveLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                         <span>{t.dragFromSidebar || "Drag items from sidebar"}</span>
                     </div>

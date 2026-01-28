@@ -41,8 +41,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     const [hoveredItem, setHoveredItem] = useState<TravelItem | null>(null);
     const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
-    // Check if mobile
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    // Check if mobile/tablet (updated to match LG breakpoint)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
     // Combine Sample Assets with Custom Assets
     const allAssets = [...SAMPLE_ASSETS, ...customAssets];
@@ -144,12 +144,12 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                         draggable
                                         onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
                                         onClick={() => {
-                                            if (window.innerWidth < 768) {
+                                            if (window.innerWidth < 1024) {
                                                 setMobilePreviewItem(item);
                                             }
                                         }}
                                         onMouseEnter={(e) => {
-                                            if (window.innerWidth >= 768) {
+                                            if (window.innerWidth >= 1024) {
                                                 const rect = e.currentTarget.getBoundingClientRect();
                                                 setTooltipPos({
                                                     x: rect.left + rect.width / 2,
@@ -292,7 +292,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
             {/* Mobile Preview Bottom Sheet */}
             {mobilePreviewItem && (
-                <div className="md:hidden fixed inset-0 z-[100]">
+                <div className="lg:hidden fixed inset-0 z-[100]">
                     {/* Backdrop */}
                     <div
                         className="absolute inset-0 bg-black/40 backdrop-blur-sm"

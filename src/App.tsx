@@ -848,7 +848,7 @@ export default function App() {
 
                 </div>
 
-                <button onClick={() => setShowMobileLibrary(true)} className="md:hidden fixed bottom-20 right-6 w-12 h-12 bg-teal-600 text-white rounded-full shadow-lg flex items-center justify-center z-40 hover:scale-105 active:scale-95 transition-all"><Plus size={24} /></button>
+                <button onClick={() => setShowMobileLibrary(true)} className="lg:hidden fixed bottom-20 right-6 w-12 h-12 bg-teal-600 text-white rounded-full shadow-lg flex items-center justify-center z-40 hover:scale-105 active:scale-95 transition-all"><Plus size={24} /></button>
                 <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around p-2 z-30 pb-5">
                     <button onClick={() => setViewMode('canvas')} className={`flex flex-col items-center gap-0.5 p-2 rounded-lg ${viewMode === 'canvas' ? 'text-teal-600 bg-teal-50' : 'text-gray-400'}`}><Calendar size={20} /><span className="text-[10px]">{t.schedule}</span></button>
                     <button onClick={() => setViewMode('map')} className={`flex flex-col items-center gap-0.5 p-2 rounded-lg ${viewMode === 'map' ? 'text-teal-600 bg-teal-50' : 'text-gray-400'}`}><MapIcon size={20} /><span className="text-[10px]">{t.map}</span></button>
@@ -856,7 +856,7 @@ export default function App() {
                 </div>
                 {
                     showMobileLibrary && (
-                        <div className="fixed inset-0 z-50 md:hidden flex flex-col justify-end">
+                        <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end">
                             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowMobileLibrary(false)} />
                             <div className={`relative bg-white w-full rounded-t-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${mobileLibraryExpanded ? 'h-[85vh]' : 'h-[45vh]'}`}>
                                 {/* Header with drag indicator and controls */}
