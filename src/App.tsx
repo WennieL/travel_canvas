@@ -625,7 +625,7 @@ export default function App() {
     return (
         <div className="flex flex-col md:flex-row h-[100dvh] bg-white text-slate-800 font-sans overflow-x-hidden">
             {!isFullscreen && <div
-                className={`hidden md:flex flex-col border-r border-gray-100 bg-white relative z-20 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-80 opacity-100' : 'w-0 opacity-0 overflow-hidden'} ${sidebarHighlight ? 'animate-shake bg-teal-50 ring-4 ring-teal-400 ring-inset z-30' : ''}`}
+                className={`hidden lg:flex flex-col border-r border-gray-100 bg-white relative z-20 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-80 opacity-100' : 'w-0 opacity-0 overflow-hidden'} ${sidebarHighlight ? 'animate-shake bg-teal-50 ring-4 ring-teal-400 ring-inset z-30' : ''}`}
             >
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between">
                     <button onClick={() => setShowLanding(true)} className="text-lg font-bold flex items-center gap-2 text-teal-600 whitespace-nowrap hover:opacity-80 transition-opacity" title={t.backToHome}><MapIcon className="w-5 h-5" /> {t.appTitle}</button>
@@ -647,7 +647,7 @@ export default function App() {
             {!isFullscreen && !isSidebarOpen && (
                 <button
                     onClick={() => setIsSidebarOpen(true)}
-                    className="hidden md:flex fixed left-0 top-1/2 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-sm items-center justify-center text-gray-400 hover:text-teal-600 hover:border-teal-300 transition-all z-30"
+                    className="hidden lg:flex fixed left-0 top-1/2 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-sm items-center justify-center text-gray-400 hover:text-teal-600 hover:border-teal-300 transition-all z-30"
                     title="展開側邊欄"
                 >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -691,7 +691,7 @@ export default function App() {
                 </div>
                 {!isFullscreen && <div className="hidden md:flex h-14 bg-white border-b border-gray-100 items-center justify-between px-6 shadow-[0_2px_10px_-5px_rgba(0,0,0,0.05)] z-10">
                     {/* Trip Name Display - Editable */}
-                    <div className={`flex flex-col justify-center flex-shrink-0 ${!isSidebarOpen ? 'ml-10' : ''}`}>
+                    <div className={`flex flex-col justify-center flex-shrink-0 ${!isSidebarOpen ? 'lg:ml-10' : ''}`}>
                         {isEditingName ? (
                             <input
                                 ref={nameInputRef}
@@ -756,7 +756,7 @@ export default function App() {
                             title="將您的行程分享給社群"
                         >
                             <Upload size={14} />
-                            提交審核
+                            <span className="hidden lg:inline">提交審核</span>
                         </button>
                         <button onClick={() => setShowShareModal(true)} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.shareHub || '分享'}><Share2 size={18} /></button>
 
@@ -845,17 +845,7 @@ export default function App() {
                         <ZoomIn size={18} />
                     </button>
 
-                    {/* Divider */}
-                    <div className="w-px h-6 bg-gray-200 mx-1"></div>
 
-                    {/* Fullscreen Toggle */}
-                    <button
-                        onClick={() => setIsFullscreen(!isFullscreen)}
-                        className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
-                        title={isFullscreen ? "退出全螢幕" : "全螢幕模式"}
-                    >
-                        {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
-                    </button>
                 </div>
 
                 <button onClick={() => setShowMobileLibrary(true)} className="md:hidden fixed bottom-20 right-6 w-12 h-12 bg-teal-600 text-white rounded-full shadow-lg flex items-center justify-center z-40 hover:scale-105 active:scale-95 transition-all"><Plus size={24} /></button>
