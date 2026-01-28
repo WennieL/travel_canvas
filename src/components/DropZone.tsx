@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin } from 'lucide-react';
+import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical } from 'lucide-react';
 import {
     TimeSlot,
     ScheduleItem,
@@ -46,6 +46,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     onDragOver, onDrop, onDragStart, onDelete, onTimeChange, onNoteChange, onTransportChange, onItemClick, t, onAddItem, onMoveItem, onQuickFill, lang, sampleAssets
 }) => {
     const isCompact = false; // Always expanded to show Add button
+    const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, index, nextMode); };
     const handleCrossSlotTransportClick = (e: React.MouseEvent, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, 0, nextMode); };
@@ -125,7 +126,9 @@ const DropZone: React.FC<DropZoneProps> = ({
                         <React.Fragment key={item.instanceId}>
                             {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleTransportClick(e, idx, item.arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
                             <div draggable onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)} onClick={() => onItemClick(item)} style={{ touchAction: 'pan-y' }} className={`group relative bg-white border rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 ${hasConflict ? 'border-red-300 ring-1 ring-red-100' : 'border-gray-100 hover:border-teal-300'}`}>
-                                <div className="absolute -top-2 -right-2 flex gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
+
+                                {/* Desktop Hover Actions - Visible >= 1024px */}
+                                <div className="hidden lg:flex absolute -top-2 -right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -148,13 +151,74 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 </div>
                                 {/* Fixed index prop here */}
                                 <div className="flex flex-col items-end gap-1">
-                                    <SmartTimeInput
-                                        slot={slot}
-                                        index={idx}
-                                        value={item.startTime || ''}
-                                        onChange={(val) => onTimeChange(slot, idx, val)}
-                                        suggestedTime={getSuggestedTime(idx)}
-                                    />
+                                    <div className="flex items-center gap-1 relative">
+                                        <SmartTimeInput
+                                            slot={slot}
+                                            index={idx}
+                                            value={item.startTime || ''}
+                                            onChange={(val) => onTimeChange(slot, idx, val)}
+                                            suggestedTime={getSuggestedTime(idx)}
+                                        />
+
+                                        {/* Mobile Action Menu (Three Dots) - Integrated in Flex Layout */}
+                                        <div className="lg:hidden relative">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setOpenMenuId(openMenuId === item.instanceId ? null : item.instanceId);
+                                                }}
+                                                className="p-1 text-gray-400 hover:text-teal-600 rounded-full active:bg-gray-100"
+                                            >
+                                                <MoreVertical size={16} />
+                                            </button>
+
+                                            {openMenuId === item.instanceId && (
+                                                <>
+                                                    {/* Backdrop to close menu */}
+                                                    <div className="fixed inset-0 z-30" onClick={(e) => { e.stopPropagation(); setOpenMenuId(null); }}></div>
+
+                                                    {/* Dropdown Menu - Aligned to bottom right of button */}
+                                                    <div className="absolute right-0 top-full mt-1 bg-white border border-gray-100 shadow-xl rounded-xl p-1.5 flex flex-col gap-1 min-w-[140px] z-40 animate-in fade-in zoom-in-95 duration-200">
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                onItemClick(item);
+                                                                setOpenMenuId(null);
+                                                            }}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-teal-50 hover:text-teal-600 rounded-lg w-full text-left"
+                                                        >
+                                                            <MapPin size={14} />
+                                                            {t.viewDetails || "View Details"}
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                onMoveItem(slot, idx);
+                                                                setOpenMenuId(null);
+                                                            }}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg w-full text-left"
+                                                        >
+                                                            <MoveRight size={14} />
+                                                            {t.moveToDay || "Move to Day"}
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                if (confirm(t.confirmDelete || "Delete?")) {
+                                                                    onDelete(slot, idx);
+                                                                }
+                                                                setOpenMenuId(null);
+                                                            }}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg w-full text-left"
+                                                        >
+                                                            <Trash2 size={14} />
+                                                            {t.delete || "Delete"}
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
                                     {hasConflict && (
                                         <span className="text-[10px] text-red-500 bg-red-50 px-1.5 py-0.5 rounded font-bold animate-pulse">
                                             ⚠️ 時間衝突
