@@ -161,7 +161,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         />
 
                                         {/* Mobile Action Menu (Three Dots) - Integrated in Flex Layout */}
-                                        <div className="lg:hidden relative">
+                                        <div className="lg:hidden touch-device-visible relative">
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
