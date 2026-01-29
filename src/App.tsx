@@ -657,8 +657,31 @@ export default function App() {
             )}
             <div className="flex-1 flex flex-col min-w-0 bg-white relative">
                 <div className="md:hidden h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 z-30">
-                    <h1 className="font-bold text-teal-700 flex items-center gap-2 truncate"><MapIcon className="w-4 h-4" /> {activePlan.name}</h1>
-                    <div className="flex gap-1"><button onClick={() => setShowLanding(true)} className="p-2 text-gray-500"><Home size={18} /></button><button onClick={() => setShowPlanManager(true)} className="p-2 text-gray-500"><FolderOpen size={18} /></button><button onClick={() => setShowExportModal(true)} className="p-2 text-gray-500"><Download size={18} /></button></div>
+                    <div className="flex flex-col overflow-hidden mr-2">
+                        {isEditingName ? (
+                            <input
+                                ref={nameInputRef}
+                                type="text"
+                                value={editingName}
+                                onChange={(e) => setEditingName(e.target.value)}
+                                onBlur={saveName}
+                                onKeyDown={handleNameKeyDown}
+                                autoFocus
+                                className="font-bold text-teal-700 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
+                            />
+                        ) : (
+                            <h1 onClick={startEditingName} className="font-bold text-teal-700 flex items-center gap-2 truncate text-sm leading-tight cursor-pointer active:opacity-70 transition-opacity">
+                                <MapIcon className="w-3.5 h-3.5 flex-shrink-0" /> {activePlan.name}
+                            </h1>
+                        )}
+                        <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate}</span>
+                    </div>
+                    <div className="flex gap-0.5 flex-shrink-0 items-center">
+                        <button onClick={() => setShowPlanManager(true)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"><FolderOpen size={18} /></button>
+                        <button onClick={toggleLang} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
+                        <button onClick={() => setShowSubmitModal(true)} className="mx-1 w-8 h-8 flex items-center justify-center bg-teal-500 text-white rounded-full shadow-sm hover:bg-teal-600 hover:scale-105 transition-all"><Upload size={14} /></button>
+                        <button onClick={() => setShowShareModal(true)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"><Share2 size={18} /></button>
+                    </div>
                 </div>
 
                 {/* Mobile Day Selector - Sticky Horizontal Scroll */}
@@ -749,6 +772,7 @@ export default function App() {
 
 
                         {/* Global Actions */}
+                        <button onClick={() => setShowPlanManager(true)} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.myPlans}><FolderOpen size={18} /></button>
                         <button onClick={toggleLang} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                         <button
                             onClick={() => setShowSubmitModal(true)}
