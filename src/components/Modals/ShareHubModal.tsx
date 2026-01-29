@@ -40,7 +40,7 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                             <Share2 size={20} />
                         </div>
                         <div>
-                            <h3 className="text-xl font-black text-gray-900 leading-tight">{t.shareHub || '分享中心'}</h3>
+                            <h3 className="text-xl font-black text-gray-900 leading-tight">{t.shareHub || 'Share Hub'}</h3>
                             <p className="text-[11px] text-teal-600 font-bold uppercase tracking-widest">{plan.name}</p>
                         </div>
                     </div>
@@ -71,13 +71,13 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                             </div>
                         </div>
                         <p className="text-xs font-bold text-gray-400 group-hover:text-teal-600 transition-colors uppercase tracking-widest">
-                            {t.scanToPreview || '掃描即可查看行程'}
+                            {t.scanToPreview || 'Scan to view plan'}
                         </p>
                     </div>
 
                     {/* Link Section */}
                     <div className="space-y-3">
-                        <label className="text-[11px] font-black text-gray-400 uppercase tracking-wider ml-1">{t.shareLink || '專屬分享連結'}</label>
+                        <label className="text-[11px] font-black text-gray-400 uppercase tracking-wider ml-1">{t.shareLinkTitle || 'Share Link'}</label>
                         <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-2xl border border-gray-100 focus-within:border-teal-400 transition-colors">
                             <div className="pl-3 py-2 text-gray-400">
                                 <LinkIcon size={16} />
@@ -93,7 +93,7 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                                 className="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl border border-teal-500 shadow-md shadow-teal-100 transition-all active:scale-95 flex items-center gap-2"
                             >
                                 <Copy size={14} />
-                                {t.copy || '複製'}
+                                {t.copy || 'Copy'}
                             </button>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                             className="w-full py-3.5 bg-gray-900 hover:bg-black text-white rounded-2xl font-bold text-sm shadow-xl shadow-gray-200 transition-all active:scale-95 flex items-center justify-center gap-2"
                         >
                             <Globe size={16} className="text-teal-400" />
-                            {t.mobilePreview || '手機版預覽'}
+                            {t.mobilePreview || 'Mobile Preview'}
                         </button>
                         <button
                             onClick={() => {
@@ -118,14 +118,14 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                             className="w-full py-3.5 bg-white hover:bg-gray-50 text-gray-600 border border-gray-200 rounded-2xl font-bold text-sm shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2"
                         >
                             <FileText size={16} />
-                            {t.exportText || '匯出 PDF/文字'}
+                            {t.exportText || 'Export PDF/Text'}
                         </button>
                     </div>
                 </div>
 
                 {/* Footer Tip */}
                 <div className="p-4 bg-gray-50 text-center border-t border-gray-100">
-                    <p className="text-[10px] text-gray-400 font-medium">✨ {t.shareTip || '小撇步：把連結傳到 Line 群組，朋友都能看到精美行程！'}</p>
+                    <p className="text-[10px] text-gray-400 font-medium">✨ {t.shareTip || 'Tip: Share this link to your friends!'}</p>
                 </div>
             </div>
         </div>

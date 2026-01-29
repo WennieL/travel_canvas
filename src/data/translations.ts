@@ -200,7 +200,23 @@ export const TRANSLATIONS: any = {
         tag_budget: "省錢",
         tag_luxury: "奢華",
         tag_nature: "自然",
-        tag_city: "都市"
+        tag_city: "都市",
+
+        // Tooltips & Actions
+        expandSidebar: "展開側邊欄",
+        collapseSidebar: "收起側邊欄",
+        editTitleHint: "點擊編輯名稱",
+        editDateHint: "點擊修改日期",
+        submitForReview: "提交審核",
+        shareToCommunityHint: "將您的行程分享給社群",
+
+        // Share Hub
+        shareHub: "分享中心",
+        scanToPreview: "掃描即可查看行程",
+        shareLinkTitle: "專屬分享連結",
+        mobilePreview: "手機版預覽",
+        exportText: "匯出 PDF/文字",
+        shareTip: "小撇步：把連結傳到 Line 群組，朋友都能看到精美行程！"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -402,6 +418,22 @@ export const TRANSLATIONS: any = {
         tag_budget: "Budget",
         tag_luxury: "Luxury",
         tag_nature: "Nature",
-        tag_city: "Urban"
+        tag_city: "Urban",
+
+        // Tooltips & Actions
+        expandSidebar: "Expand Sidebar",
+        collapseSidebar: "Collapse Sidebar",
+        editTitleHint: "Click to edit title",
+        editDateHint: "Click to change dates",
+        submitForReview: "Submit Review",
+        shareToCommunityHint: "Share your trip to the community",
+
+        // Share Hub
+        shareHub: "Share Hub",
+        scanToPreview: "Scan to View",
+        shareLinkTitle: "Unique Share Link",
+        mobilePreview: "Mobile Preview",
+        exportText: "Export PDF/Text",
+        shareTip: "Pro Tip: Share this link to your Line group so friends can view the itinerary!"
     }
 };
