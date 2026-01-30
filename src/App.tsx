@@ -94,7 +94,7 @@ import {
 } from './components/Modals';
 import { usePlans, useBudget } from './hooks';
 
-export default function App() {
+export function App() {
     const [lang, setLang] = useState<LangType>('zh');
     // Custom Assets State (Persisted)
     const [customAssets, setCustomAssets] = useState<TravelItem[]>(() => {
@@ -647,38 +647,70 @@ export default function App() {
 
     // [NEW] Unlock Logic
     const [unlockTarget, setUnlockTarget] = useState<ScheduleItem | null>(null);
+    const [batchUnlockCount, setBatchUnlockCount] = useState(0);
 
     const handleUnlockItem = (item: ScheduleItem) => {
         setUnlockTarget(item);
+        setBatchUnlockCount(0); // Single mode
+    };
+
+    // Gate Check Logic
+    const handleGateCheck = (action: () => void) => {
+        let lockedCount = 0;
+        Object.values(activePlan.schedule).forEach(day => {
+            (['morning', 'afternoon', 'evening', 'night', 'accommodation'] as TimeSlot[]).forEach(slot => {
+                day[slot].forEach(item => {
+                    if (item.isLocked) lockedCount++;
+                });
+            });
+        });
+
+        if (lockedCount > 0) {
+            setBatchUnlockCount(lockedCount);
+            setUnlockTarget(null); // Batch mode
+        } else {
+            action();
+        }
     };
 
     const confirmUnlock = () => {
-        if (!unlockTarget) return;
-
-        // Find and update the item in the schedule
         const newSchedule = { ...activePlan.schedule };
         let found = false;
+
+        // Helper to unlock an item
+        const unlockItem = (item: ScheduleItem) => {
+            item.isLocked = false;
+            if (item.insiderTip) item.insiderTip.isLocked = false;
+        };
 
         Object.keys(newSchedule).forEach(dayKey => {
             const day = newSchedule[dayKey];
             (['morning', 'afternoon', 'evening', 'night', 'accommodation'] as TimeSlot[]).forEach(slot => {
-                const idx = day[slot].findIndex(i => i.instanceId === unlockTarget.instanceId);
-                if (idx !== -1) {
-                    // UNLOCK IT
-                    day[slot][idx].isLocked = false;
-                    if (day[slot][idx].insiderTip) {
-                        day[slot][idx].insiderTip!.isLocked = false;
+                if (unlockTarget) {
+                    // Single Unlock
+                    const idx = day[slot].findIndex(i => i.instanceId === unlockTarget.instanceId);
+                    if (idx !== -1) {
+                        unlockItem(day[slot][idx]);
+                        found = true;
                     }
-                    found = true;
+                } else if (batchUnlockCount > 0) {
+                    // Batch Unlock ALL
+                    day[slot].forEach(item => {
+                        if (item.isLocked) {
+                            unlockItem(item);
+                            found = true;
+                        }
+                    });
                 }
             });
         });
 
         if (found) {
             updateActivePlan({ schedule: newSchedule });
-            showToastMessage("🎉 Unlock Successful! Secret revealed.");
+            showToastMessage(batchUnlockCount > 0 ? "🎉 Full Itinerary Unlocked!" : "🎉 Secret revealed.");
         }
         setUnlockTarget(null);
+        setBatchUnlockCount(0);
     };
     const applyTemplate = (tpl: DaySchedule) => { if (confirm(t.confirm + "?")) { const newSchedule = { ...activePlan.schedule }; const copy = (items: ScheduleItem[]) => items.map(i => ({ ...i, instanceId: Math.random().toString(36).substr(2, 9), arrivalTransport: 'car' as TransportMode })); newSchedule[`Day ${currentDay}`] = { morning: copy(tpl.morning), afternoon: copy(tpl.afternoon), evening: copy(tpl.evening), night: copy(tpl.night), accommodation: copy(tpl.accommodation) }; updateActivePlan({ schedule: newSchedule }); setShowMobileLibrary(false); } };
     const generateExportText = () => { let text = `✈️ ${activePlan.name} (${activePlan.startDate} ~ ${activePlan.endDate})\n`; text += `💰 ${t.budget}: JP¥${calculateTotalBudget().toLocaleString()}\n\n`; for (let i = 1; i <= activePlan.totalDays; i++) { const dayKey = `Day ${i}`; const dayData = activePlan.schedule[dayKey]; const currentDateStr = getDisplayDate(i); text += `📅 ${t.day} ${i} - ${currentDateStr}\n`; if (!dayData) { text += `  (No schedule)\n\n`; continue; } const hasActivities = [...dayData.morning, ...dayData.afternoon, ...dayData.evening, ...dayData.night].length > 0; const hasAccommodation = dayData.accommodation && dayData.accommodation.length > 0; if (!hasActivities && !hasAccommodation) { text += `  (Free Time)\n`; } else { (['morning', 'afternoon', 'evening', 'night'] as TimeSlot[]).forEach(slot => { if (dayData[slot] && dayData[slot].length > 0) { text += `  ${getSlotLabel(slot, t).split(' ')[0]}:\n`; dayData[slot].forEach(item => { const timeStr = item.startTime ? `[${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } }); if (hasAccommodation) { text += `  🏨 ${t.accommodation}:\n`; dayData.accommodation.forEach(item => { const timeStr = item.startTime ? `[${t.checkIn}: ${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } } text += `\n`; } return text; };
@@ -842,14 +874,14 @@ export default function App() {
                         <button onClick={() => setShowPlanManager(true)} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.myPlans}><FolderOpen size={18} /></button>
                         <button onClick={toggleLang} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                         <button
-                            onClick={() => setShowSubmitModal(true)}
+                            onClick={() => handleGateCheck(() => setShowSubmitModal(true))}
                             className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-full text-xs font-bold hover:shadow-md hover:scale-105 transition-all"
                             title="將您的行程分享給社群"
                         >
                             <Upload size={14} />
                             <span className="hidden lg:inline">提交審核</span>
                         </button>
-                        <button onClick={() => setShowShareModal(true)} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.shareHub || '分享'}><Share2 size={18} /></button>
+                        <button onClick={() => handleGateCheck(() => setShowShareModal(true))} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.shareHub || '分享'}><Share2 size={18} /></button>
 
                     </div>
                 </div>}
@@ -1318,11 +1350,13 @@ export default function App() {
 
             {/* Unlock Modal */}
             <UnlockModal
-                isOpen={!!unlockTarget}
-                onClose={() => setUnlockTarget(null)}
+                isOpen={!!unlockTarget || batchUnlockCount > 0}
+                onClose={() => { setUnlockTarget(null); setBatchUnlockCount(0); }}
                 item={unlockTarget}
                 onUnlock={confirmUnlock}
                 t={t}
+                mode={batchUnlockCount > 0 ? 'batch' : 'single'}
+                count={batchUnlockCount}
             />
 
             {/* Template Preview Modal */}
@@ -1347,11 +1381,12 @@ export default function App() {
                 }}
             />
 
-
             <style>{`
           .animate-spin-once { animation: spin 0.5s ease-in-out; }
           @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
       `}</style>
-        </div >
+        </div>
     );
-}
+};
+
+export default App;
