@@ -88,7 +88,8 @@ import {
     DateModal,
     PlanManagerModal,
     CustomItemModal,
-    SubmitModal
+    SubmitModal,
+    TemplatePreviewModal
 } from './components/Modals';
 import { usePlans, useBudget } from './hooks';
 
@@ -159,6 +160,7 @@ export default function App() {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isDraggingGlobal, setIsDraggingGlobal] = useState(false);
+    const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
 
     // UI/UX Enhancement States
     const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -631,12 +633,12 @@ export default function App() {
                     <button onClick={() => setShowLanding(true)} className="text-lg font-bold flex items-center gap-2 text-teal-600 whitespace-nowrap hover:opacity-80 transition-opacity" title={t.backToHome}><MapIcon className="w-5 h-5" /> {t.appTitle}</button>
                     <button onClick={() => setShowPlanManager(true)} className="p-1.5 hover:bg-gray-100 rounded-md text-gray-400" title={t.myPlans}><FolderOpen size={18} /></button>
                 </div>
-                <SidebarContent activeTab={activeTab} setActiveTab={setActiveTab} searchQuery={searchQuery} setSearchQuery={setSearchQuery} activeCategory={activeCategory} setActiveCategory={setActiveCategory} activeRegion={activeRegion} setActiveRegion={setActiveRegion} setShowCustomItemModal={setShowCustomItemModal} handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd} applyTemplate={applyTemplate} t={t} lang={lang} customAssets={customAssets} subscribedCreators={subscribedCreators} onCreatorClick={handleCreatorClick} />
+                <SidebarContent activeTab={activeTab} setActiveTab={setActiveTab} searchQuery={searchQuery} setSearchQuery={setSearchQuery} activeCategory={activeCategory} setActiveCategory={setActiveCategory} activeRegion={activeRegion} setActiveRegion={setActiveRegion} setShowCustomItemModal={setShowCustomItemModal} handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd} applyTemplate={applyTemplate} t={t} lang={lang} customAssets={customAssets} subscribedCreators={subscribedCreators} onCreatorClick={handleCreatorClick} onPreviewTemplate={setPreviewTemplate} />
                 {/* Collapse Button - Centered on right edge (Canva style) */}
                 <button
                     onClick={() => setIsSidebarOpen(false)}
                     className="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-sm flex items-center justify-center text-gray-400 hover:text-teal-600 hover:border-teal-300 transition-all z-30"
-                    title="收起側邊欄"
+                    title={t.collapseSidebar}
                 >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M15 18l-6-6 6-6" />
@@ -648,7 +650,7 @@ export default function App() {
                 <button
                     onClick={() => setIsSidebarOpen(true)}
                     className="hidden lg:flex fixed left-0 top-1/2 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-sm items-center justify-center text-gray-400 hover:text-teal-600 hover:border-teal-300 transition-all z-30"
-                    title="展開側邊欄"
+                    title={t.expandSidebar}
                 >
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M9 18l6-6-6-6" />
@@ -729,7 +731,7 @@ export default function App() {
                             <h1
                                 onClick={startEditingName}
                                 className="font-bold text-lg text-gray-800 truncate max-w-[280px] leading-tight cursor-pointer hover:text-teal-600 hover:underline underline-offset-2 decoration-dotted transition-colors group"
-                                title="點擊編輯名稱"
+                                title={t.editTitleHint}
                             >
                                 {activePlan.name}
                                 <span className="ml-1 text-gray-300 group-hover:text-teal-400 text-sm">✏️</span>
@@ -738,7 +740,7 @@ export default function App() {
                         <span
                             onClick={openDatePicker}
                             className="text-[10px] text-gray-400 font-medium tracking-wide cursor-pointer hover:text-teal-600 hover:underline underline-offset-2 decoration-dotted transition-colors"
-                            title="點擊修改日期"
+                            title={t.editDateHint}
                         >
                             📅 {activePlan.startDate} ~ {activePlan.endDate}
                         </span>
@@ -905,7 +907,7 @@ export default function App() {
                                     </button>
                                 </div>
                                 <div className="flex-1 flex flex-col overflow-hidden">
-                                    <SidebarContent activeTab={activeTab} setActiveTab={setActiveTab} searchQuery={searchQuery} setSearchQuery={setSearchQuery} activeCategory={activeCategory} setActiveCategory={setActiveCategory} activeRegion={activeRegion} setActiveRegion={setActiveRegion} setShowCustomItemModal={setShowCustomItemModal} handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd} applyTemplate={applyTemplate} t={t} lang={lang} customAssets={customAssets} subscribedCreators={subscribedCreators} onCreatorClick={handleCreatorClick} />
+                                    <SidebarContent activeTab={activeTab} setActiveTab={setActiveTab} searchQuery={searchQuery} setSearchQuery={setSearchQuery} activeCategory={activeCategory} setActiveCategory={setActiveCategory} activeRegion={activeRegion} setActiveRegion={setActiveRegion} setShowCustomItemModal={setShowCustomItemModal} handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd} applyTemplate={applyTemplate} t={t} lang={lang} customAssets={customAssets} subscribedCreators={subscribedCreators} onCreatorClick={handleCreatorClick} onPreviewTemplate={setPreviewTemplate} />
                                 </div>
                             </div>
                         </div>
@@ -1248,6 +1250,29 @@ export default function App() {
             />
 
             {toast.show && <Toast message={toast.message} onClose={() => setToast({ ...toast, show: false })} />}
+
+            {/* Template Preview Modal */}
+            <TemplatePreviewModal
+                isOpen={!!previewTemplate}
+                onClose={() => setPreviewTemplate(null)}
+                template={previewTemplate}
+                t={t}
+                onApply={(tpl) => {
+                    applyTemplate(tpl.schedule);
+                    setPreviewTemplate(null);
+                }}
+                onUnlock={(tpl: any) => {
+                    // Mock Payment Logic
+                    if (confirm(`Unlock ${tpl.name} for $${tpl.price}? (Mock Payment)`)) {
+                        tpl.purchased = true;
+                        tpl.isLocked = false;
+                        showToastMessage("🎉 Unlock Successful! Full itinerary revealed.");
+                        // Force update to refresh UI
+                        setPreviewTemplate({ ...tpl });
+                    }
+                }}
+            />
+
 
             <style>{`
           .animate-spin-once { animation: spin 0.5s ease-in-out; }

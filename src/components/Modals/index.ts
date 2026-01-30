@@ -5,3 +5,4 @@ export { DateModal } from './DateModal';
 export { PlanManagerModal } from './PlanManagerModal';
 export { CustomItemModal } from './CustomItemModal';
 export { SubmitModal } from './SubmitModal';
+export * from './TemplatePreviewModal';

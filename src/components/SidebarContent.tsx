@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Plus, Clock, Star, MapPin, Tag, X } from 'lucide-react';
+import { Search, Plus, Clock, Star, MapPin, Tag, X, Lock } from 'lucide-react';
 import { ItemType, TravelItem, DaySchedule, Region, Template } from '../types';
 import { SAMPLE_ASSETS, TEMPLATES, CATEGORY_FILTERS, REGION_FILTERS, POPULAR_TAGS, SAMPLE_CREATORS } from '../data/index';
 import { getFallbackImage } from '../utils';
@@ -23,13 +23,14 @@ interface SidebarContentProps {
     customAssets?: TravelItem[];
     subscribedCreators: string[];
     onCreatorClick: (creatorId: string) => void;
+    onPreviewTemplate?: (template: Template) => void;
 }
 
 const SidebarContent: React.FC<SidebarContentProps> = ({
     activeTab, setActiveTab, searchQuery, setSearchQuery, activeCategory, setActiveCategory,
     activeRegion, setActiveRegion,
     setShowCustomItemModal, handleDragStart, handleTapToAdd, applyTemplate, t, lang = 'zh', customAssets = [],
-    subscribedCreators = [], onCreatorClick
+    subscribedCreators = [], onCreatorClick, onPreviewTemplate
 }) => {
     // Local tag filter state
     const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -208,20 +209,51 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             const tTags = (lang === 'en' && template.tagsEn) ? template.tagsEn : template.tags;
 
                             return (
-                                <div key={template.id} className="p-3 border border-gray-100 rounded-lg hover:shadow-sm transition-shadow bg-white relative group">
+                                <div
+                                    key={template.id}
+                                    className="p-3 border border-gray-100 rounded-lg hover:shadow-sm transition-shadow bg-white relative group cursor-pointer hover:border-teal-200"
+                                    onClick={() => onPreviewTemplate?.(template)}
+                                >
                                     <div className="flex justify-between items-start mb-1 gap-2">
-                                        <h3 className="font-bold text-gray-800 text-sm flex-1">{tName}</h3>
-                                        {/* Tier Badge - Clean Internal */}
-                                        {template.tier && (
-                                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium whitespace-nowrap shrink-0 ${template.tier === 'official' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
-                                                template.tier === 'creator' ? 'bg-teal-50 text-teal-700 border border-teal-200' :
-                                                    'bg-gray-50 text-gray-500 border border-gray-200'
-                                                }`}>
-                                                {template.tier === 'official' && '🏆 精選'}
-                                                {template.tier === 'creator' && '⭐ 達人'}
-                                                {template.tier === 'community' && '👤 社群'}
-                                            </span>
-                                        )}
+                                        <h3 className="font-bold text-gray-800 text-sm flex-1 leading-tight">
+                                            {tName}
+                                        </h3>
+                                        {/* Tier Badge & Price Badges */}
+                                        <div className="flex flex-col items-end gap-1">
+                                            {/* Price/Status Badges */}
+                                            {template.price ? (
+                                                <div className="flex items-center gap-1">
+                                                    {/* Removed redundant top-right price */}
+                                                    {template.originalPrice && (
+                                                        <span className="bg-yellow-400 text-yellow-900 text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap transform -rotate-2">
+                                                            {Math.round((1 - template.price / template.originalPrice) * 100)}% OFF
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <span className="bg-gray-100 text-gray-500 text-[10px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap border border-gray-200">
+                                                    FREE
+                                                </span>
+                                            )}
+
+                                            {/* Tier Info (Simplified) */}
+                                            {template.tier && (
+                                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium whitespace-nowrap shrink-0 ${template.tier === 'official' ? 'text-amber-700 bg-amber-50' :
+                                                    template.tier === 'creator' ? 'text-teal-700 bg-teal-50' : 'text-gray-500 bg-gray-50'
+                                                    }`}>
+                                                    {template.tier === 'official' && '🏆 Official'}
+                                                    {template.tier === 'creator' && '⭐ Creator'}
+                                                    {template.tier === 'community' && '👤 Community'}
+                                                </span>
+                                            )}
+
+                                            {/* Small Early Bird Tag */}
+                                            {template.price && template.originalPrice && template.price < template.originalPrice && (
+                                                <span className="text-[9px] bg-rose-100 text-rose-600 px-1.5 py-0.5 rounded font-bold whitespace-nowrap border border-rose-200 animate-pulse">
+                                                    🔥 Early Bird
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
 
                                     {/* Metrics: CopiedCount + Rating */}
@@ -239,7 +271,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                         )}
                                     </div>
 
-                                    {/* Creator Info */}
                                     <div
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -272,9 +303,32 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                         </span>
                                     </div>
 
-                                    <button onClick={() => applyTemplate(template.schedule)} className="w-full py-1.5 bg-gray-50 text-teal-600 text-xs rounded hover:bg-teal-50 transition-colors font-medium">
-                                        {t.apply || 'Apply'}
-                                    </button>
+                                    {template.isLocked && !template.purchased ? (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                if (confirm(`Unlock this premium plan for $${template.price}? (Mock Payment)`)) {
+                                                    template.purchased = true;
+                                                    template.isLocked = false;
+                                                    // Force re-render trick or just let the user re-click for now since it's a smoke test
+                                                    // Ideally we lift state, but for smoke test we mutate local object
+                                                    alert("Unlocked! You can now apply this template.");
+                                                    applyTemplate(template.schedule);
+                                                }
+                                            }}
+                                            className="w-full py-1.5 bg-teal-600 text-white text-xs rounded hover:bg-teal-700 transition-colors font-bold flex items-center justify-center gap-1"
+                                        >
+                                            <Lock size={12} />
+                                            Unlock ${template.price}
+                                        </button>
+                                    ) : (
+                                        <button onClick={(e) => {
+                                            e.stopPropagation();
+                                            applyTemplate(template.schedule);
+                                        }} className="w-full py-1.5 bg-gray-50 text-teal-600 text-xs rounded hover:bg-teal-50 transition-colors font-medium">
+                                            {t.apply || 'Apply'}
+                                        </button>
+                                    )}
                                 </div>
                             )
                         })}
