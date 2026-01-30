@@ -14,6 +14,32 @@ export const SAMPLE_ASSETS: TravelItem[] = [
     { id: 'f1', title: '一蘭拉麵 澀谷', titleEn: 'Ichiran Ramen Shibuya', type: 'food', duration: '1小時', image: '🍜', description: '天然豚骨拉麵專賣店。', descriptionEn: 'Famous tonkotsu ramen specialty store.', price: 980, address: '東京都澀谷區', rating: 4.3, tips: '碗底有「この一滴が最高の喜び」', x: 48, y: 62, lat: 35.6603, lng: 139.6994, funFact: '味集中座位', openingHours: '24H', tags: ['拉麵'], region: 'tokyo' },
     { id: 'f2', title: '築地場外市場', titleEn: 'Tsukiji Outer Market', type: 'food', duration: '2小時', image: '🍣', description: '新鮮海鮮早餐天堂！', descriptionEn: 'Fresh seafood breakfast paradise!', price: 4000, address: '東京都中央區築地', rating: 4.7, tips: '必吃玉子燒和海鮮丼', x: 60, y: 50, lat: 35.6654, lng: 139.7706, funFact: '早上5點就開始營業', openingHours: '05:00-14:00', tags: ['海鮮'], region: 'tokyo' },
     { id: 'f3', title: '敘敘苑燒肉', titleEn: 'Jojoen Yakiniku', type: 'food', duration: '1.5小時', image: '🥩', description: '高級和牛燒肉餐廳。', descriptionEn: 'High-end Wagyu BBQ restaurant.', price: 8000, address: '東京都多處分店', rating: 4.6, tips: '午餐套餐較划算', x: 55, y: 52, lat: 35.6598, lng: 139.6983, funFact: 'A5和牛入口即化', openingHours: '11:00-23:00', tags: ['燒肉'], region: 'tokyo' },
+    // [NEW] Premium Tokyo Asset (Decoy for Shibuya Crossing)
+    {
+        id: 'p1',
+        title: 'Shibuya Sky Garden (Secret Spot)', // Real title hidden until unlock
+        titleEn: 'Shibuya Sky Garden',
+        marketingTitle: '澀谷 3 樓的空中花園 (私藏)',
+        marketingTitleEn: 'Secret Sky Garden above Shibuya',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🤫',
+        marketingImage: 'https://images.unsplash.com/photo-1554797589-7241bb691973?q=80&w=300&auto=format&fit=crop', // Vibe photo
+        description: '遠離十字路口的人潮，這裡是拍攝澀谷全景的最佳秘密基地。',
+        descriptionEn: 'Escape the crowds. The best secret spot for panoramic shots of the crossing.',
+        price: 0, // Entry is free, but the info is paid
+        address: '澀谷區某處 (解鎖查看)', // Hidden
+        rating: 5.0,
+        x: 46, y: 61, lat: 35.6595, lng: 139.7005, // Near Shibuya
+        tags: ['私藏', '攝影', '安靜'],
+        region: 'tokyo',
+        tier: 'premium',
+        isLocked: true,
+        insiderTip: {
+            text: "從 109 百貨旁的小巷進去，搭乘透明電梯直達 3 樓。這裡完全沒有觀光客，只有當地情侶。",
+            isLocked: true
+        }
+    },
     // Tokyo Hotels
     { id: 'h1', title: '澀谷Stream Excel', titleEn: 'Shibuya Stream Excel', type: 'hotel', duration: '過夜', image: '🏨', description: '澀谷車站直結，交通超方便。', descriptionEn: 'Directly connected to Shibuya Station.', price: 25000, address: '東京都澀谷區', rating: 4.6, tips: '可看到澀谷十字路口', x: 45, y: 60, lat: 35.6569, lng: 139.7029, funFact: '2018年新開幕', tags: ['推薦'], region: 'tokyo' },
     { id: 'h2', title: '新宿格拉斯麗酒店', titleEn: 'Hotel Gracery Shinjuku', type: 'hotel', duration: '過夜', image: '🦖', description: '樓頂有巨型哥吉拉！', descriptionEn: 'Features a giant Godzilla head on the roof!', price: 18000, address: '東京都新宿區', rating: 4.4, tips: '哥吉拉每小時會吼叫', x: 35, y: 50, lat: 35.6946, lng: 139.7032, funFact: '頭的大小跟電影1:1', tags: ['特色'], region: 'tokyo' },
@@ -25,6 +51,29 @@ export const SAMPLE_ASSETS: TravelItem[] = [
     { id: 'oa2', title: '大阪城', titleEn: 'Osaka Castle', type: 'attraction', duration: '2小時', image: '🏯', description: '豐臣秀吉建造的名城，歷史博物館。', descriptionEn: 'Famous castle built by Toyotomi Hideyoshi.', price: 600, address: '大阪市中央區', rating: 4.7, tips: '天守閣頂樓景觀絕佳', x: 55, y: 45, lat: 34.6873, lng: 135.5262, funFact: '曾多次被燒毀重建', openingHours: '09:00-17:00', tags: ['歷史'], region: 'osaka' },
     { id: 'oa3', title: '道頓堀', titleEn: 'Dotonbori', type: 'attraction', duration: '3小時', image: '🦀', description: '大阪最熱鬧的美食街，固力果看板必拍！', descriptionEn: 'Bustling food street with the iconic Glico Man.', price: 0, address: '大阪市中央區道頓堀', rating: 4.8, tips: '晚上霓虹燈最美', x: 48, y: 55, lat: 34.6687, lng: 135.5012, funFact: '固力果看板已傳承六代', openingHours: '24H', tags: ['必去', '美食'], region: 'osaka' },
     { id: 'oa4', title: '環球影城 USJ', titleEn: 'Universal Studios Japan', type: 'attraction', duration: '整天', image: '🎢', description: '哈利波特、超級任天堂世界！', descriptionEn: 'Harry Potter and Super Nintendo World!', price: 8600, address: '大阪市此花區', rating: 4.9, tips: '買快速通關才能玩到重點設施', x: 30, y: 50, lat: 34.6654, lng: 135.4323, funFact: '任天堂園區全球獨家', openingHours: '09:00-21:00', tags: ['樂園'], region: 'osaka' },
+    // [NEW] Premium Osaka Asset
+    {
+        id: 'p2',
+        title: 'Dotonbori Jazz Boat (Secret)',
+        titleEn: 'Dotonbori Jazz Boat',
+        marketingTitle: '道頓堀爵士觀光船 (隱藏版)',
+        marketingTitleEn: 'Hidden Jazz Boat Ride',
+        type: 'attraction',
+        duration: '45分',
+        image: '🎷',
+        description: '不要去排大排長龍的觀光船。這艘船有現場爵士樂演奏，還可以帶啤酒上去喝。',
+        address: '道頓堀川某個碼頭 (解鎖查看)',
+        rating: 4.9,
+        x: 48, y: 56, lat: 34.6687, lng: 135.5012,
+        tags: ['浪漫', '音樂', '夜景'],
+        region: 'osaka',
+        tier: 'premium',
+        isLocked: true,
+        insiderTip: {
+            text: "每天只有兩班（19:00, 20:30），船長是退役薩克斯風手。記得提前在官網預約，現場買不到票。",
+            isLocked: true
+        }
+    },
     // Osaka Food
     { id: 'of1', title: '金龍拉麵', titleEn: 'Kinryu Ramen', type: 'food', duration: '30分', image: '🍜', description: '道頓堀24小時營業的人氣拉麵店。', descriptionEn: 'Popular 24H ramen shop in Dotonbori.', price: 700, address: '道頓堀', rating: 4.2, tips: '站著吃是特色', x: 49, y: 56, lat: 34.6682, lng: 135.5034, funFact: '創業超過50年', openingHours: '24H', tags: ['拉麵'], region: 'osaka' },
     { id: 'of2', title: '章魚燒 くくる', titleEn: 'Takoyaki Kukuru', type: 'food', duration: '30分', image: '🐙', description: '大阪最有名的章魚燒本家。', descriptionEn: 'Famous original Takoyaki shop.', price: 600, address: '道頓堀', rating: 4.5, tips: '章魚超大顆！', x: 47, y: 55, lat: 34.6685, lng: 135.5018, funFact: '章魚來自明石', openingHours: '11:00-22:00', tags: ['小吃'], region: 'osaka' },
@@ -38,5 +87,28 @@ export const SAMPLE_ASSETS: TravelItem[] = [
     { id: 'ka2', title: '清水寺', titleEn: 'Kiyomizu-dera', type: 'attraction', duration: '2小時', image: '🏯', description: '著名的清水舞台由139根巨柱支撐，不使用一根釘子。', descriptionEn: 'Famous wooden stage supported by 139 pillars without a single nail.', price: 400, address: '京都市東山區清水1丁目294', rating: 4.9, tips: '可順遊二年坂、三年坂老街', x: 60, y: 50, lat: 34.9949, lng: 135.7850, funFact: '「清水の舞台から飛び降りる」意指下定決心', openingHours: '06:00-18:00 (夜間特別拜觀至21:00)', tags: ['古蹟', '網美'], region: 'kyoto' },
     { id: 'ka3', title: '伏見稻荷大社', titleEn: 'Fushimi Inari Taisha', type: 'attraction', duration: '2-3小時', image: '⛩️', description: '千本鳥居綿延4公里上山，祈求生意興隆的聖地。', descriptionEn: 'Famous for 4km of vermilion torii gates up the mountain.', price: 0, address: '京都市伏見區深草藪之內町68', rating: 4.9, tips: '全程走完約2-3小時，清晨或傍晚拍照最美', x: 50, y: 70, lat: 34.9671, lng: 135.7726, funFact: '共有約一萬座鳥居，企業捐贈一座約40-100萬日圓', openingHours: '24H（全年無休）', tags: ['必去', '攝影'], region: 'kyoto' },
     { id: 'ka4', title: '嵐山竹林', titleEn: 'Arashiyama Bamboo Grove', type: 'attraction', duration: '1.5小時', image: '🎋', description: '高聳竹林形成天然隧道，風吹時沙沙作響。', descriptionEn: 'Towering bamboo creates a natural tunnel with rustling sounds.', price: 0, address: '京都市右京區嵯峨天龍寺', rating: 4.7, tips: '早上7點前抵達可拍到空無一人的竹林', x: 20, y: 40, lat: 35.0094, lng: 135.6667, funFact: '竹子生長速度可達每天1公尺', openingHours: '24H', tags: ['自然', '攝影'], region: 'kyoto' },
-    { id: 'kf1', title: '中村藤吉本店', titleEn: 'Nakamura Tokichi', type: 'food', duration: '1.5小時', image: '🍵', description: '創業於1854年的宇治抹茶老舖，必吃抹茶聖代。', descriptionEn: 'Historic Uji matcha shop since 1854, famous for matcha parfait.', price: 1500, address: '京都府宇治市宇治壱番10', rating: 4.8, tips: '平日也要排隊1小時以上，建議先抽號碼牌', x: 61, y: 51, lat: 34.8892, lng: 135.8016, funFact: '抹茶的咖啡因比咖啡少但更持久', openingHours: '10:00-17:30', tags: ['美食', '甜點'], region: 'kyoto' }
+    { id: 'kf1', title: '中村藤吉本店', titleEn: 'Nakamura Tokichi', type: 'food', duration: '1.5小時', image: '🍵', description: '創業於1854年的宇治抹茶老舖，必吃抹茶聖代。', descriptionEn: 'Historic Uji matcha shop since 1854, famous for matcha parfait.', price: 1500, address: '京都府宇治市宇治壱番10', rating: 4.8, tips: '平日也要排隊1小時以上，建議先抽號碼牌', x: 61, y: 51, lat: 34.8892, lng: 135.8016, funFact: '抹茶的咖啡因比咖啡少但更持久', openingHours: '10:00-17:30', tags: ['美食', '甜點'], region: 'kyoto' },
+    // [NEW] Premium Kyoto Asset
+    {
+        id: 'p3',
+        title: 'Murakami Haruki\'s Jazz Bar',
+        titleEn: 'Secret Jazz Cafe',
+        marketingTitle: '村上春樹也愛的爵士吧 (私藏)',
+        marketingTitleEn: 'Murakami\'s Favorite Jazz Bar',
+        type: 'food',
+        duration: '2小時',
+        image: '🥃',
+        description: '這不是一般觀光客會來的地方。這裡賣的是「孤獨」與「黑膠唱片」的味道。',
+        address: '京都市役所附近 (解鎖查看)',
+        rating: 5.0,
+        x: 55, y: 55, lat: 35.0116, lng: 135.7681,
+        tags: ['放鬆', '文青', '私藏'],
+        region: 'kyoto',
+        tier: 'premium',
+        isLocked: true,
+        insiderTip: {
+            text: "進店請保持安靜。老闆不喜歡人拍照，但如果你點一杯「挪威的森林」特調，他會跟你聊整晚。",
+            isLocked: true
+        }
+    }
 ];

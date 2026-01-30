@@ -28,6 +28,18 @@ export interface TravelItem {
     region?: Region;
     origin?: string;       // 出發地 (for transport items)
     destination?: string;  // 目的地 (for transport items)
+
+    // [NEW] Premium Content Strategy Fields
+    tier?: 'standard' | 'premium';
+    marketingTitle?: string; // e.g. "Hidden Jazz Bar" (Shown when locked)
+    marketingTitleEn?: string;
+    marketingImage?: string; // Vibe photo (Shown when locked)
+    isLocked?: boolean;     // If true, hide address/real title
+    insiderTip?: {
+        text: string;
+        textEn?: string;
+        isLocked?: boolean; // If tip itself is locked
+    };
 }
 
 export interface ScheduleItem extends TravelItem {
@@ -35,6 +47,17 @@ export interface ScheduleItem extends TravelItem {
     startTime?: string;
     notes?: string;
     arrivalTransport?: TransportMode;
+    // [NEW] Storytelling Fields (Override from TravelItem for instance-specifics)
+    insiderTip?: {
+        text: string;
+        textEn?: string;
+        isLocked?: boolean;
+        highlight?: boolean;
+    };
+    lockedTeaser?: {
+        image?: string;
+        description: string;
+    };
 }
 
 export interface ChecklistItem {
@@ -84,15 +107,33 @@ export interface Template {
     id: string;
     name: string;
     nameEn?: string;
+    // [NEW] Marketing Title ("The Tokyo You Missed")
+    title?: string;
     author: string;
     authorEn?: string;
     authorId: string; // Link to Creator
     region: Region;
     tags: string[];
     tagsEn?: string[];
+    // [NEW] Visual Vibe Tags
+    vibes?: Array<{
+        tag: string;
+        color: string; // Tailwind class or hex
+    }>;
+    // [NEW] Narrative Header
+    coverStory?: {
+        quote: string;
+        description: string;
+        authorLabel?: string;
+    };
     duration: number;
     rating?: number;
+    // price removed (duplicate)
     tier?: 'official' | 'creator' | 'community'; // Template tier level
     copiedCount?: number; // Number of times this template was copied/applied
     schedule: DaySchedule;
+    price?: number;        // Unlock price in USD
+    originalPrice?: number; // Original price for anchor effect
+    isLocked?: boolean;    // If true, requires purchase/unlock
+    purchased?: boolean;   // Local state to track if user unlocked it
 }

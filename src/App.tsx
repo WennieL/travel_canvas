@@ -89,7 +89,8 @@ import {
     PlanManagerModal,
     CustomItemModal,
     SubmitModal,
-    TemplatePreviewModal
+    TemplatePreviewModal,
+    UnlockModal
 } from './components/Modals';
 import { usePlans, useBudget } from './hooks';
 
@@ -518,7 +519,33 @@ export default function App() {
     const handleDateConfirm = () => { const diff = Math.ceil(Math.abs(new Date(tempEndDate).getTime() - new Date(tempStartDate).getTime()) / (1000 * 60 * 60 * 24)) + 1; const newSchedule = { ...activePlan.schedule }; for (let i = 1; i <= diff; i++) if (!newSchedule[`Day ${i}`]) newSchedule[`Day ${i}`] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }; updateActivePlan({ startDate: tempStartDate, endDate: tempEndDate, totalDays: diff, schedule: newSchedule }); if (currentDay > diff) setCurrentDay(1); setShowDateModal(false); };
     const handleDragStart = (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => { draggedItemRef.current = { item, source, sourceSlot: slot, index }; e.dataTransfer.effectAllowed = 'copyMove'; e.dataTransfer.setData('text/plain', item.id); setIsDraggingGlobal(true); };
     const handleDragOver = (e: React.DragEvent) => { e.preventDefault(); e.dataTransfer.dropEffect = draggedItemRef.current?.source === 'sidebar' ? 'copy' : 'move'; };
-    const handleDrop = (e: React.DragEvent, targetSlot: TimeSlot) => { e.preventDefault(); setIsDraggingGlobal(false); const draggedItem = draggedItemRef.current; if (!draggedItem) return; const currentDayKey = `Day ${currentDay}`; const newSchedule = { ...activePlan.schedule }; if (!newSchedule[currentDayKey]) newSchedule[currentDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }; const newItem = { ...draggedItem.item, instanceId: Math.random().toString(36).substr(2, 9), startTime: '', arrivalTransport: 'car' as TransportMode }; if (draggedItem.source === 'sidebar') { newSchedule[currentDayKey][targetSlot].push(newItem); } else if (draggedItem.source === 'canvas' && draggedItem.sourceSlot !== undefined && draggedItem.index !== undefined) { const item = newSchedule[currentDayKey][draggedItem.sourceSlot][draggedItem.index]; newSchedule[currentDayKey][draggedItem.sourceSlot].splice(draggedItem.index, 1); newSchedule[currentDayKey][targetSlot].push(item); } updateActivePlan({ schedule: newSchedule }); draggedItemRef.current = null; };
+    const handleDrop = (e: React.DragEvent, targetSlot: TimeSlot) => {
+        e.preventDefault();
+        setIsDraggingGlobal(false);
+        const draggedItem = draggedItemRef.current;
+        if (!draggedItem) return;
+        const currentDayKey = `Day ${currentDay}`;
+        const newSchedule = { ...activePlan.schedule };
+        if (!newSchedule[currentDayKey]) newSchedule[currentDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+
+        // [MODIFIED] Preserve all premium properties (tier, isLocked, marketingTitle, etc.)
+        const newItem: ScheduleItem = {
+            ...draggedItem.item,
+            instanceId: Math.random().toString(36).substr(2, 9),
+            startTime: '',
+            arrivalTransport: 'car' as TransportMode
+        };
+
+        if (draggedItem.source === 'sidebar') {
+            newSchedule[currentDayKey][targetSlot].push(newItem);
+        } else if (draggedItem.source === 'canvas' && draggedItem.sourceSlot !== undefined && draggedItem.index !== undefined) {
+            const item = newSchedule[currentDayKey][draggedItem.sourceSlot][draggedItem.index];
+            newSchedule[currentDayKey][draggedItem.sourceSlot].splice(draggedItem.index, 1);
+            newSchedule[currentDayKey][targetSlot].push(item);
+        }
+        updateActivePlan({ schedule: newSchedule });
+        draggedItemRef.current = null;
+    };
     const handleDelete = (slot: TimeSlot, index: number) => { const newSchedule = { ...activePlan.schedule }; newSchedule[`Day ${currentDay}`][slot].splice(index, 1); updateActivePlan({ schedule: newSchedule }); };
 
     // Quick Fill Logic (Static Data)
@@ -602,18 +629,56 @@ export default function App() {
         const dayKey = `Day ${targetDay}`;
         if (!newSchedule[dayKey]) newSchedule[dayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
-        newSchedule[dayKey][targetSlot].push({
+        // [MODIFIED] Preserve premium properties here too
+        const newItem: ScheduleItem = {
             ...item,
             instanceId: Math.random().toString(36).substr(2, 9),
             startTime: '',
-            arrivalTransport: 'car'
+            arrivalTransport: 'car' as TransportMode
+        };
+
+        newSchedule[dayKey][targetSlot].push(newItem);
+        updateActivePlan({ schedule: newSchedule });
+        showToastMessage(`${t.added || 'Added'} ${lang === 'en' && item.titleEn ? item.titleEn : item.title}`);
+
+        // Reset target if used
+        if (addToSlotTarget) setAddToSlotTarget(null);
+    };
+
+    // [NEW] Unlock Logic
+    const [unlockTarget, setUnlockTarget] = useState<ScheduleItem | null>(null);
+
+    const handleUnlockItem = (item: ScheduleItem) => {
+        setUnlockTarget(item);
+    };
+
+    const confirmUnlock = () => {
+        if (!unlockTarget) return;
+
+        // Find and update the item in the schedule
+        const newSchedule = { ...activePlan.schedule };
+        let found = false;
+
+        Object.keys(newSchedule).forEach(dayKey => {
+            const day = newSchedule[dayKey];
+            (['morning', 'afternoon', 'evening', 'night', 'accommodation'] as TimeSlot[]).forEach(slot => {
+                const idx = day[slot].findIndex(i => i.instanceId === unlockTarget.instanceId);
+                if (idx !== -1) {
+                    // UNLOCK IT
+                    day[slot][idx].isLocked = false;
+                    if (day[slot][idx].insiderTip) {
+                        day[slot][idx].insiderTip!.isLocked = false;
+                    }
+                    found = true;
+                }
+            });
         });
 
-        updateActivePlan({ schedule: newSchedule });
-
-        // UX Feedback
-        setAddToSlotTarget(null); // Reset target
-        setShowMobileLibrary(false); // Close mobile library
+        if (found) {
+            updateActivePlan({ schedule: newSchedule });
+            showToastMessage("🎉 Unlock Successful! Secret revealed.");
+        }
+        setUnlockTarget(null);
     };
     const applyTemplate = (tpl: DaySchedule) => { if (confirm(t.confirm + "?")) { const newSchedule = { ...activePlan.schedule }; const copy = (items: ScheduleItem[]) => items.map(i => ({ ...i, instanceId: Math.random().toString(36).substr(2, 9), arrivalTransport: 'car' as TransportMode })); newSchedule[`Day ${currentDay}`] = { morning: copy(tpl.morning), afternoon: copy(tpl.afternoon), evening: copy(tpl.evening), night: copy(tpl.night), accommodation: copy(tpl.accommodation) }; updateActivePlan({ schedule: newSchedule }); setShowMobileLibrary(false); } };
     const generateExportText = () => { let text = `✈️ ${activePlan.name} (${activePlan.startDate} ~ ${activePlan.endDate})\n`; text += `💰 ${t.budget}: JP¥${calculateTotalBudget().toLocaleString()}\n\n`; for (let i = 1; i <= activePlan.totalDays; i++) { const dayKey = `Day ${i}`; const dayData = activePlan.schedule[dayKey]; const currentDateStr = getDisplayDate(i); text += `📅 ${t.day} ${i} - ${currentDateStr}\n`; if (!dayData) { text += `  (No schedule)\n\n`; continue; } const hasActivities = [...dayData.morning, ...dayData.afternoon, ...dayData.evening, ...dayData.night].length > 0; const hasAccommodation = dayData.accommodation && dayData.accommodation.length > 0; if (!hasActivities && !hasAccommodation) { text += `  (Free Time)\n`; } else { (['morning', 'afternoon', 'evening', 'night'] as TimeSlot[]).forEach(slot => { if (dayData[slot] && dayData[slot].length > 0) { text += `  ${getSlotLabel(slot, t).split(' ')[0]}:\n`; dayData[slot].forEach(item => { const timeStr = item.startTime ? `[${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } }); if (hasAccommodation) { text += `  🏨 ${t.accommodation}:\n`; dayData.accommodation.forEach(item => { const timeStr = item.startTime ? `[${t.checkIn}: ${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } } text += `\n`; } return text; };
@@ -1250,6 +1315,15 @@ export default function App() {
             />
 
             {toast.show && <Toast message={toast.message} onClose={() => setToast({ ...toast, show: false })} />}
+
+            {/* Unlock Modal */}
+            <UnlockModal
+                isOpen={!!unlockTarget}
+                onClose={() => setUnlockTarget(null)}
+                item={unlockTarget}
+                onUnlock={confirmUnlock}
+                t={t}
+            />
 
             {/* Template Preview Modal */}
             <TemplatePreviewModal

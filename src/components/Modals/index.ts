@@ -6,3 +6,4 @@ export { PlanManagerModal } from './PlanManagerModal';
 export { CustomItemModal } from './CustomItemModal';
 export { SubmitModal } from './SubmitModal';
 export * from './TemplatePreviewModal';
+export { UnlockModal } from './UnlockModal';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical } from 'lucide-react';
+import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock } from 'lucide-react';
 import {
     TimeSlot,
     ScheduleItem,
@@ -39,11 +39,12 @@ interface DropZoneProps {
     onQuickFill: (slot: TimeSlot) => void;
     lang: 'zh' | 'en';
     sampleAssets: TravelItem[];
+    onUnlockItem?: (item: ScheduleItem) => void;
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
     slot, items, title, icon, isAccommodation = false, previousItem, isDraggingGlobal,
-    onDragOver, onDrop, onDragStart, onDelete, onTimeChange, onNoteChange, onTransportChange, onItemClick, t, onAddItem, onMoveItem, onQuickFill, lang, sampleAssets
+    onDragOver, onDrop, onDragStart, onDelete, onTimeChange, onNoteChange, onTransportChange, onItemClick, t, onAddItem, onMoveItem, onQuickFill, lang, sampleAssets, onUnlockItem
 }) => {
     const isCompact = false; // Always expanded to show Add button
     const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
@@ -118,14 +119,31 @@ const DropZone: React.FC<DropZoneProps> = ({
                     // Try to find the original asset to get the translated title if available
                     // Fallback to item.title which might be stale (saved in original language)
                     const originalAsset = sampleAssets.find(a => a.id === item.id);
-                    const displayTitle = (lang === 'en' && originalAsset?.titleEn) ? originalAsset.titleEn :
-                        (lang === 'zh' && originalAsset?.title) ? originalAsset.title :
-                            (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
+
+                    const isLocked = item.isLocked;
+
+                    const displayTitleRaw = isLocked
+                        ? (lang === 'en' && item.marketingTitleEn ? item.marketingTitleEn : item.marketingTitle)
+                        : (lang === 'en' && originalAsset?.titleEn ? originalAsset.titleEn :
+                            (lang === 'zh' && originalAsset?.title) ? originalAsset.title :
+                                (lang === 'en' && item.titleEn) ? item.titleEn : item.title);
+
+                    const displayTitle = displayTitleRaw || (isLocked ? "🔒 Secret Location" : item.title);
 
                     return (
                         <React.Fragment key={item.instanceId}>
-                            {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleTransportClick(e, idx, item.arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
-                            <div draggable onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)} onClick={() => onItemClick(item)} style={{ touchAction: 'pan-y' }} className={`group relative bg-white border rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 animate-land ${hasConflict ? 'border-red-300 ring-1 ring-red-100' : 'border-gray-100 hover:border-teal-300'}`}>
+                            {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
+                            <div
+                                draggable
+                                onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
+                                onClick={() => onItemClick(item)}
+                                style={{ touchAction: 'pan-y' }}
+                                className={`group relative border rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 animate-land 
+                                    ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
+                                        isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
+                                            'bg-white border-gray-100 hover:border-teal-300'}
+                                `}
+                            >
 
                                 {/* Desktop Hover Actions - Visible >= 1024px */}
                                 <div className="hidden lg:flex absolute -top-2 -right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
@@ -143,9 +161,30 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     <button onClick={(e) => { e.stopPropagation(); onDelete(slot, idx); }} className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"> <Trash2 size={12} /> </button>
                                 </div>
                                 <div className="text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
-                                <div className="flex-shrink-0 text-2xl bg-gray-50 w-10 h-10 flex items-center justify-center rounded-md"> {item.image || getFallbackImage(item.type)} </div>
+
+                                <div className="relative flex-shrink-0 text-2xl bg-gray-50 w-10 h-10 flex items-center justify-center rounded-md overflow-hidden">
+                                    {isLocked && (
+                                        <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
+                                            <Lock size={12} className="text-gray-400" />
+                                        </div>
+                                    )}
+                                    {item.image || getFallbackImage(item.type)}
+                                </div>
+
                                 <div className="flex-1 min-w-0">
-                                    <div className="flex items-center justify-between mb-0.5"> <h4 className="font-bold text-gray-700 text-sm truncate pr-2">{displayTitle}</h4> <span className="text-[10px] font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap"> ¥{item.price?.toLocaleString()} </span> </div>
+                                    <div className="flex items-center justify-between mb-0.5">
+                                        <h4 className={`font-bold text-sm truncate pr-2 ${isLocked ? 'text-gray-600 italic' : 'text-gray-700'}`}>{displayTitle}</h4>
+                                        {isLocked ? (
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); onUnlockItem?.(item); }}
+                                                className="text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm flex items-center gap-1"
+                                            >
+                                                <Lock size={8} /> Unlock
+                                            </button>
+                                        ) : (
+                                            <span className="text-[10px] font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap"> ¥{item.price?.toLocaleString()} </span>
+                                        )}
+                                    </div>
                                     <div className="flex items-center gap-2 mb-1.5 flex-wrap"> <div className="flex items-center gap-1 text-[10px] text-gray-400 bg-gray-50 px-1.5 rounded"> <Clock size={10} /> {item.duration || t.flexible} </div> {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)} {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))} </div>
                                     <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />
                                 </div>

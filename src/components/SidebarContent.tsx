@@ -137,8 +137,17 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                             {filteredAssets.map((item) => {
-                                const title = (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
+                                const isPremium = item.tier === 'premium';
+                                const isLocked = item.isLocked;
+
+                                // Determine display title: Marketing Title if locked, else real title
+                                const displayTitleRaw = isLocked
+                                    ? (lang === 'en' && item.marketingTitleEn ? item.marketingTitleEn : item.marketingTitle)
+                                    : (lang === 'en' && item.titleEn ? item.titleEn : item.title);
+                                const title = displayTitleRaw || item.title; // Fallback
+
                                 const description = (lang === 'en' && item.descriptionEn) ? item.descriptionEn : item.description;
+
                                 return (
                                     <div
                                         key={item.id}
@@ -160,14 +169,56 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                             }
                                         }}
                                         onMouseLeave={() => setHoveredItem(null)}
-                                        className="group bg-white border border-gray-100 rounded-lg p-2 cursor-grab active:cursor-grabbing hover:border-teal-400 transition-all flex flex-col gap-1.5 relative hover:shadow-sm"
+                                        className={`group border rounded-lg p-2 cursor-grab active:cursor-grabbing transition-all flex flex-col gap-1.5 relative hover:shadow-md
+                                            ${isPremium
+                                                ? 'bg-gradient-to-br from-amber-50/80 to-purple-50/80 border-amber-200 hover:border-amber-400'
+                                                : 'bg-white border-gray-100 hover:border-teal-400'
+                                            }
+                                        `}
                                     >
-                                        <div className="text-2xl bg-gray-50 h-12 flex items-center justify-center rounded w-full">{item.image || getFallbackImage(item.type)}</div>
+                                        {/* Premium Badge */}
+                                        {isPremium && (
+                                            <div className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm z-10 flex items-center gap-0.5">
+                                                <span>💎</span>
+                                                <span>Secret</span>
+                                            </div>
+                                        )}
+
+                                        <div className="relative text-2xl h-12 flex items-center justify-center rounded w-full overflow-hidden">
+                                            {/* Image Background for Premium */}
+                                            {isPremium && item.marketingImage ? (
+                                                <div
+                                                    className="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-110 transition-transform duration-500"
+                                                    style={{ backgroundImage: `url(${item.marketingImage})` }}
+                                                />
+                                            ) : (
+                                                <div className={`absolute inset-0 ${isPremium ? 'bg-amber-100/50' : 'bg-gray-50'}`} />
+                                            )}
+
+                                            {/* Icon/Emoji */}
+                                            <span className="relative z-10 drop-shadow-md filter">{item.image || getFallbackImage(item.type)}</span>
+
+                                            {/* Lock Overlay */}
+                                            {isLocked && (
+                                                <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                                                    <Lock size={12} className="text-white drop-shadow-md opacity-60" />
+                                                </div>
+                                            )}
+                                        </div>
+
                                         <div className="flex-1 min-w-0">
-                                            <h4 className="font-bold text-gray-700 text-xs truncate" title={title}>{title}</h4>
+                                            <h4 className={`font-bold text-xs truncate ${isPremium ? 'text-amber-900' : 'text-gray-700'}`} title={title}>
+                                                {title}
+                                            </h4>
                                             <div className="flex items-center justify-between mt-0.5">
                                                 <span className="text-[10px] text-gray-400">{item.duration}</span>
-                                                <span className="text-[10px] font-bold text-teal-600">¥{item.price?.toLocaleString()}</span>
+                                                {isLocked ? (
+                                                    <span className="text-[10px] font-bold text-amber-600 flex items-center gap-0.5">
+                                                        <Lock size={8} /> Unlock
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-[10px] font-bold text-teal-600">¥{item.price?.toLocaleString()}</span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -460,7 +511,13 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         <span className="text-2xl">{hoveredItem.image || getFallbackImage(hoveredItem.type)}</span>
                         <div className="flex-1 min-w-0">
                             <h5 className="font-bold text-gray-800 text-sm leading-tight truncate">
-                                {(lang === 'en' && hoveredItem.titleEn) ? hoveredItem.titleEn : hoveredItem.title}
+                                {(lang === 'en' && hoveredItem.isLocked && hoveredItem.marketingTitleEn
+                                    ? hoveredItem.marketingTitleEn
+                                    : lang === 'en' && hoveredItem.titleEn
+                                        ? hoveredItem.titleEn
+                                        : hoveredItem.isLocked && hoveredItem.marketingTitle
+                                            ? hoveredItem.marketingTitle
+                                            : hoveredItem.title)}
                             </h5>
                             {hoveredItem.rating && (
                                 <span className="text-yellow-500 text-xs">★ {hoveredItem.rating}</span>
@@ -483,7 +540,11 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         {hoveredItem.address && (
                             <div className="flex items-center gap-1.5 text-gray-400">
                                 <span>📍</span>
-                                <span className="truncate">{hoveredItem.address}</span>
+                                {hoveredItem.isLocked ? (
+                                    <span className="italic opacity-60">Unlock to view address</span>
+                                ) : (
+                                    <span className="truncate">{hoveredItem.address}</span>
+                                )}
                             </div>
                         )}
                     </div>
