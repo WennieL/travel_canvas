@@ -340,6 +340,13 @@ export function App() {
 
     useEffect(() => { setCurrentDay(1); setTempStartDate(activePlan.startDate); setTempEndDate(activePlan.endDate); }, [activePlanId]);
 
+    // [Sanitizer] Auto-remove "[Preview]" from plan name if present (Legacy fix)
+    useEffect(() => {
+        if (activePlan.name && activePlan.name.startsWith('[Preview] ')) {
+            updateActivePlan({ name: activePlan.name.replace('[Preview] ', '') });
+        }
+    }, [activePlan.name]);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [showExportModal, setShowExportModal] = useState(false);
     const [exportTab, setExportTab] = useState<'text' | 'image' | 'share' | 'backup'>('text');
@@ -871,7 +878,7 @@ export function App() {
 
 
                         {/* Global Actions */}
-                        <button onClick={() => setShowPlanManager(true)} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.myPlans}><FolderOpen size={18} /></button>
+                        <button onClick={() => setShowPlanManager(true)} className="w-9 h-9 flex lg:hidden items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.myPlans}><FolderOpen size={18} /></button>
                         <button onClick={toggleLang} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                         <button
                             onClick={() => handleGateCheck(() => setShowSubmitModal(true))}
@@ -929,7 +936,7 @@ export function App() {
                                     <span className="text-lg text-gray-600 font-medium">{getDisplayDate(currentDay)}</span>
                                     <WeatherWidget />
                                 </div>
-                                <button onClick={openDateModal} className="p-2 hover:bg-gray-100 rounded-full text-gray-400"><Calendar size={18} /></button>
+                                {/* Removed duplicate Calendar button */}
                             </div>
                             {(['morning', 'afternoon', 'evening', 'night'] as TimeSlot[]).map((slot, index, arr) => {
                                 const items = activePlan.schedule[`Day ${currentDay}`]?.[slot] || [];
