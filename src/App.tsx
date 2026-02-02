@@ -90,7 +90,8 @@ import {
     CustomItemModal,
     SubmitModal,
     TemplatePreviewModal,
-    UnlockModal
+    UnlockModal,
+    OnboardingModal
 } from './components/Modals';
 import { usePlans, useBudget } from './hooks';
 
@@ -141,6 +142,16 @@ export function App() {
 
     const activeCreator = SAMPLE_CREATORS.find(c => c.id === selectedCreatorId);
     const creatorTemplates = activeCreator ? TEMPLATES.filter(tpl => tpl.authorId === activeCreator.id) : [];
+
+    // Onboarding state - show for first-time users
+    const [showOnboarding, setShowOnboarding] = useState<boolean>(() => {
+        return !localStorage.getItem('hasSeenOnboarding');
+    });
+
+    const handleOnboardingClose = () => {
+        setShowOnboarding(false);
+        localStorage.setItem('hasSeenOnboarding', 'true');
+    };
 
     const showToastMessage = (msg: string) => {
         setToast({ message: msg, show: true });
@@ -1391,6 +1402,13 @@ export function App() {
                 onClose={() => setDetailItem(null)}
                 item={detailItem}
                 t={t}
+            />
+
+            {/* Onboarding Modal - shows for first-time users */}
+            <OnboardingModal
+                isOpen={showOnboarding && !showLanding}
+                onClose={handleOnboardingClose}
+                lang={lang}
             />
 
             {toast.show && <Toast message={toast.message} onClose={() => setToast({ ...toast, show: false })} />}
