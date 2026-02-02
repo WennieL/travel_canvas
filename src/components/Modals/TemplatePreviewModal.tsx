@@ -129,9 +129,9 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                             </p>
                             <button
                                 onClick={() => onUnlock(template)}
-                                className="w-full py-2.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-teal-200/50"
+                                className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-amber-200/50"
                             >
-                                Unlock for $0.99
+                                🎁 Beta 免費解鎖
                             </button>
                         </div>
                     </div>
@@ -236,12 +236,9 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     {isLocked ? (
                         <button
                             onClick={() => onUnlock(template)}
-                            className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white rounded-2xl font-bold text-sm shadow-xl shadow-teal-200/50 hover:shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                            className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl font-bold text-sm shadow-xl shadow-amber-200/50 hover:shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                         >
-                            <div className="w-5 h-5 rounded-full border-2 border-white/30 flex items-center justify-center">
-                                <CheckCircle2 size={12} className="text-white opacity-0 group-hover:opacity-100" />
-                            </div>
-                            Unlock for $0.99
+                            🎁 Beta 免費解鎖
                         </button>
                     ) : (
                         <button

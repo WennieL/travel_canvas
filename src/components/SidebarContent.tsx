@@ -96,8 +96,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     }
                                 }}
                                 className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === 'all' && country.id === 'all'
-                                        ? 'bg-teal-600 text-white shadow-sm'
-                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
+                                    ? 'bg-teal-600 text-white shadow-sm'
+                                    : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
                                     }`}
                             >
                                 <span>{country.icon}</span>
@@ -126,8 +126,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 key={city.id}
                                 onClick={() => setActiveRegion(city.id)}
                                 className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === city.id
-                                        ? 'bg-teal-600 text-white shadow-sm'
-                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
+                                    ? 'bg-teal-600 text-white shadow-sm'
+                                    : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
                                     }`}
                             >
                                 <span>{city.icon}</span>
@@ -405,19 +405,15 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                if (confirm(`Unlock this premium plan for $${template.price}? (Mock Payment)`)) {
-                                                    template.purchased = true;
-                                                    template.isLocked = false;
-                                                    // Force re-render trick or just let the user re-click for now since it's a smoke test
-                                                    // Ideally we lift state, but for smoke test we mutate local object
-                                                    alert("Unlocked! You can now apply this template.");
-                                                    applyTemplate(template.schedule);
-                                                }
+                                                // Beta: 直接解鎖，不需付費
+                                                template.purchased = true;
+                                                template.isLocked = false;
+                                                alert("🎁 Beta 免費解鎖成功！");
+                                                applyTemplate(template.schedule);
                                             }}
-                                            className="w-full py-1.5 bg-teal-600 text-white text-xs rounded hover:bg-teal-700 transition-colors font-bold flex items-center justify-center gap-1"
+                                            className="w-full py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs rounded hover:from-amber-600 hover:to-orange-600 transition-colors font-bold flex items-center justify-center gap-1"
                                         >
-                                            <Lock size={12} />
-                                            Unlock ${template.price}
+                                            🎁 Beta 免費解鎖
                                         </button>
                                     ) : (
                                         <button onClick={(e) => {

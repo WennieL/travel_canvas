@@ -70,22 +70,16 @@ export const UnlockModal: React.FC<UnlockModalProps> = ({ isOpen, onClose, item,
                             <p className="text-gray-600 mb-6 leading-relaxed text-sm">
                                 {item?.description || "Unlock this hidden gem to see the exact location and exclusive insider tips."}
                             </p>
-                            <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 mb-6 flex items-center justify-between">
-                                <div>
-                                    <div className="text-xs text-gray-500">One-time unlock</div>
-                                    <div className="text-xl font-bold text-gray-900">$0.99 <span className="text-sm font-normal text-gray-400">/ item</span></div>
-                                </div>
-                                <div className="text-right">
-                                    <div className="text-[10px] text-amber-600 font-bold">OR GET PRO</div>
-                                    <div className="text-xs text-gray-400 line-through">$4.99/mo</div>
-                                </div>
+                            <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-6 text-center">
+                                <div className="text-xs text-amber-700 font-medium mb-1">🎁 Beta 限定優惠</div>
+                                <div className="text-xl font-bold text-amber-900">免費解鎖</div>
+                                <div className="text-xs text-amber-600 mt-1">感謝您參與測試！</div>
                             </div>
                             <button
                                 onClick={onUnlock}
-                                className="w-full py-3.5 bg-gradient-to-r from-teal-500 to-emerald-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-teal-500/20 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                                className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold text-lg shadow-lg shadow-amber-500/20 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
                             >
-                                <Lock size={18} />
-                                Unlock Now
+                                🎁 Beta 免費解鎖
                             </button>
                         </>
                     ) : (
@@ -134,9 +128,8 @@ export const UnlockModal: React.FC<UnlockModalProps> = ({ isOpen, onClose, item,
                         </div>
                     )}
 
-                    <p className="text-center text-[10px] text-gray-400 mt-4 flex items-center justify-center gap-1">
-                        <ShieldCheck size={10} />
-                        Secure payment processing
+                    <p className="text-center text-[10px] text-amber-600 mt-4">
+                        ✨ Beta 期間所有 Premium 內容免費開放
                     </p>
                 </div>
             </div>
