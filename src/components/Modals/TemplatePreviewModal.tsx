@@ -58,7 +58,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     </div>
                     <div>
                         <h4 className="font-bold text-gray-800 text-sm leading-tight mb-1">{item.title}</h4>
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
                             <span className="flex items-center gap-1 bg-gray-50 px-1.5 py-0.5 rounded">
                                 <Clock size={10} /> {item.duration}
                             </span>
@@ -66,6 +66,25 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                 <span className="text-gray-400">¥{(item.price || 0).toLocaleString()}</span>
                             )}
                         </div>
+
+                        {/* [NEW] Insider Whisper Card */}
+                        {item.insiderTip && (
+                            <div className={`mt-3 p-3 rounded-lg text-xs leading-relaxed relative ${item.insiderTip.highlight ? 'bg-amber-50 border border-amber-100 text-amber-900' : 'bg-gray-50 text-gray-600'}`}>
+                                <div className="absolute -top-2 left-3 bg-white px-1 text-[10px] font-bold text-amber-500 flex items-center gap-1 border border-amber-100 rounded-full shadow-sm">
+                                    <Star size={8} fill="currentColor" /> INSIDER
+                                </div>
+                                {/* Support both new format (teaser) and legacy format (text) */}
+                                {item.insiderTip.teaser || item.insiderTip.text}
+
+                                {/* Show premium indicator if there's more content */}
+                                {item.insiderTip.full && (
+                                    <div className="mt-2 pt-2 border-t border-amber-100 text-amber-600 font-medium flex items-center gap-1">
+                                        <Lock size={10} />
+                                        <span>解鎖看更多達人秘訣</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -145,17 +164,49 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                 {/* Header */}
                 <div className="bg-white px-6 py-5 border-b border-gray-100 sticky top-0 z-30 flex items-start justify-between shadow-sm/50">
                     <div>
-                        <h2 className="text-xl font-black text-slate-800 leading-tight mb-2">
-                            {template.name}
-                        </h2>
-                        <div className="flex items-center gap-3">
-                            <span className="bg-teal-50 text-teal-700 text-[10px] font-bold px-2.5 py-1 rounded-md border border-teal-100">
-                                {template.duration} Days
-                            </span>
-                            <span className="flex items-center gap-1 text-[11px] font-bold text-amber-500 bg-amber-50 px-2 py-1 rounded-md border border-amber-100">
-                                <Star size={10} fill="currentColor" /> {template.rating}
-                            </span>
-                        </div>
+                        {template.coverStory ? (
+                            <div className="space-y-3">
+                                <div className="space-y-1">
+                                    <h2 className="text-xl font-black text-slate-900 leading-tight">
+                                        {template.title || template.name}
+                                    </h2>
+                                    {template.coverStory.authorLabel && (
+                                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                                            {template.coverStory.authorLabel}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <blockquote className="relative italic text-slate-600 text-sm border-l-4 border-teal-500 pl-3 py-1">
+                                    "{template.coverStory.quote}"
+                                </blockquote>
+
+                                {template.vibes && (
+                                    <div className="flex flex-wrap gap-2 pt-1">
+                                        {template.vibes.map((vibe, i) => (
+                                            <span key={i} className={`text-[10px] font-bold px-2 py-1 rounded-full ${vibe.color}`}>
+                                                {vibe.tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            // Fallback for old templates
+                            <>
+                                <h2 className="text-xl font-black text-slate-800 leading-tight mb-2">
+                                    {template.name}
+                                </h2>
+                                <div className="flex items-center gap-3">
+                                    <span className="bg-teal-50 text-teal-700 text-[10px] font-bold px-2.5 py-1 rounded-md border border-teal-100">
+                                        {template.duration} Days
+                                    </span>
+                                    <span className="flex items-center gap-1 text-[11px] font-bold text-amber-500 bg-amber-50 px-2 py-1 rounded-md border border-amber-100">
+                                        <Star size={10} fill="currentColor" /> {template.rating}
+                                    </span>
+                                </div>
+                            </>
+                        )}
                     </div>
                     <button
                         onClick={onClose}

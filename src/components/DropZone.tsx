@@ -187,6 +187,14 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5 flex-wrap"> <div className="flex items-center gap-1 text-[10px] text-gray-400 bg-gray-50 px-1.5 rounded"> <Clock size={10} /> {item.duration || t.flexible} </div> {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)} {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))} </div>
                                     <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />
+
+                                    {/* Insider Tip Display - Show when item has tips */}
+                                    {item.insiderTip && (
+                                        <div className="flex items-center gap-1 text-[10px] text-amber-600 mt-1">
+                                            <Star size={10} fill="currentColor" />
+                                            <span className="font-medium">有達人秘訣 — 點擊查看</span>
+                                        </div>
+                                    )}
                                 </div>
                                 {/* Fixed index prop here */}
                                 <div className="flex flex-col items-end gap-1">

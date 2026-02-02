@@ -148,6 +148,73 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                     </div>
                                 </div>
                             )}
+
+                            {/* Insider Tip Section - Premium Content */}
+                            {item.insiderTip && (
+                                <div className="p-4 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <Star size={16} className="text-amber-500" fill="currentColor" />
+                                        <span className="font-bold text-amber-800 tracking-wide">INSIDER TIP</span>
+                                    </div>
+
+                                    {/* Teaser / Summary */}
+                                    <p className="text-amber-900 leading-relaxed mb-4">
+                                        {item.insiderTip.teaser || item.insiderTip.text}
+                                    </p>
+
+                                    {/* Full Details (if available) */}
+                                    {item.insiderTip.full && (
+                                        <div className="space-y-3 pt-3 border-t border-amber-200">
+                                            {/* Story */}
+                                            {item.insiderTip.full.story && (
+                                                <div className="text-amber-800 text-sm leading-relaxed italic">
+                                                    "{item.insiderTip.full.story}"
+                                                </div>
+                                            )}
+
+                                            {/* Details Grid */}
+                                            <div className="grid gap-2 text-sm">
+                                                {item.insiderTip.full.exactLocation && (
+                                                    <div className="flex items-start gap-2">
+                                                        <span className="text-base">📍</span>
+                                                        <div>
+                                                            <div className="font-medium text-amber-900">精確位置</div>
+                                                            <div className="text-amber-700">{item.insiderTip.full.exactLocation}</div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {item.insiderTip.full.mustTry && (
+                                                    <div className="flex items-start gap-2">
+                                                        <span className="text-base">🎯</span>
+                                                        <div>
+                                                            <div className="font-medium text-amber-900">必點推薦</div>
+                                                            <div className="text-amber-700">{item.insiderTip.full.mustTry}</div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {item.insiderTip.full.bestTime && (
+                                                    <div className="flex items-start gap-2">
+                                                        <span className="text-base">⏰</span>
+                                                        <div>
+                                                            <div className="font-medium text-amber-900">最佳時段</div>
+                                                            <div className="text-amber-700">{item.insiderTip.full.bestTime}</div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {item.insiderTip.full.avoid && (
+                                                    <div className="flex items-start gap-2">
+                                                        <span className="text-base">⚠️</span>
+                                                        <div>
+                                                            <div className="font-medium text-red-700">避坑提醒</div>
+                                                            <div className="text-red-600">{item.insiderTip.full.avoid}</div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

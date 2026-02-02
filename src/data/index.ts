@@ -3,6 +3,7 @@
 
 export { TRANSLATIONS } from './translations';
 export { SAMPLE_ASSETS } from './sample-assets';
+export { MELBOURNE_ASSETS } from './melbourne-assets';
 export { SAMPLE_CREATORS } from './creators';
 export { TEMPLATES } from './templates';
 export {
@@ -12,3 +13,4 @@ export {
     REGION_FILTERS,
     POPULAR_TAGS
 } from './demo-plan';
+

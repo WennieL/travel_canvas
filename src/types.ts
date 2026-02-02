@@ -3,7 +3,7 @@ export type TransportMode = 'car' | 'walk' | 'public';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation';
 export type ViewMode = 'canvas' | 'map' | 'checklist';
-export type Region = 'tokyo' | 'osaka' | 'kyoto' | 'all';
+export type Region = 'tokyo' | 'osaka' | 'kyoto' | 'melbourne' | 'all';
 
 export interface TravelItem {
     id: string;
@@ -35,11 +35,32 @@ export interface TravelItem {
     marketingTitleEn?: string;
     marketingImage?: string; // Vibe photo (Shown when locked)
     isLocked?: boolean;     // If true, hide address/real title
-    insiderTip?: {
-        text: string;
-        textEn?: string;
-        isLocked?: boolean; // If tip itself is locked
+    insiderTip?: InsiderTip;
+}
+
+// [NEW] Enhanced Insider Tip Structure
+export interface InsiderTip {
+    // Free preview
+    teaser: string;
+    teaserEn?: string;
+
+    // Premium content (unlocked)
+    full?: {
+        story: string;           // Full narrative
+        storyEn?: string;
+        photos?: string[];       // Exclusive photos
+        exactLocation?: string;  // Precise location tip
+        mustTry?: string;        // Must order/buy
+        avoid?: string;          // Pitfalls to avoid
+        bestTime?: string;       // Best time to visit
+        reservation?: string;    // Booking link
     };
+
+    // Legacy fields for compatibility
+    text?: string;
+    textEn?: string;
+    isLocked?: boolean;
+    highlight?: boolean;
 }
 
 export interface ScheduleItem extends TravelItem {
@@ -47,13 +68,8 @@ export interface ScheduleItem extends TravelItem {
     startTime?: string;
     notes?: string;
     arrivalTransport?: TransportMode;
-    // [NEW] Storytelling Fields (Override from TravelItem for instance-specifics)
-    insiderTip?: {
-        text: string;
-        textEn?: string;
-        isLocked?: boolean;
-        highlight?: boolean;
-    };
+    // Override insiderTip to allow instance-specific tips (uses same InsiderTip interface)
+    insiderTip?: InsiderTip;
     lockedTeaser?: {
         image?: string;
         description: string;
