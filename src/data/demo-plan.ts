@@ -103,12 +103,31 @@ export const CATEGORY_FILTERS: { id: 'all' | ItemType; label: string }[] = [
     { id: 'custom', label: 'custom' },
 ];
 
-// 地區過濾器
+// 地區過濾器 - 兩層結構：國家 → 城市
+export const COUNTRY_FILTERS = [
+    { id: 'all', label: '全部', labelEn: 'All', icon: '🌏' },
+    { id: 'japan', label: '日本', labelEn: 'Japan', icon: '🇯🇵' },
+    { id: 'australia', label: '澳洲', labelEn: 'Australia', icon: '🇦🇺' },
+];
+
+export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: string; icon: string }[]> = {
+    japan: [
+        { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
+        { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
+        { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
+    ],
+    australia: [
+        { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
+    ],
+};
+
+// Legacy support - keep REGION_FILTERS for backwards compatibility
 export const REGION_FILTERS: { id: Region; label: string; labelEn: string; icon: string }[] = [
     { id: 'all', label: '全部', labelEn: 'All', icon: '🌏' },
-    { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗾' },
+    { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
     { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
     { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
+    { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
 ];
 
 // 熱門標籤

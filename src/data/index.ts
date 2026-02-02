@@ -11,6 +11,8 @@ export {
     TOKYO_DEMO_PLAN,
     CATEGORY_FILTERS,
     REGION_FILTERS,
+    COUNTRY_FILTERS,
+    CITY_FILTERS,
     POPULAR_TAGS
 } from './demo-plan';
 

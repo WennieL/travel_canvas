@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Search, Plus, Clock, Star, MapPin, Tag, X, Lock } from 'lucide-react';
 import { ItemType, TravelItem, DaySchedule, Region, Template } from '../types';
-import { SAMPLE_ASSETS, TEMPLATES, CATEGORY_FILTERS, REGION_FILTERS, POPULAR_TAGS, SAMPLE_CREATORS } from '../data/index';
+import { SAMPLE_ASSETS, TEMPLATES, CATEGORY_FILTERS, REGION_FILTERS, COUNTRY_FILTERS, CITY_FILTERS, POPULAR_TAGS, SAMPLE_CREATORS } from '../data/index';
 import { getFallbackImage } from '../utils';
 
 interface SidebarContentProps {
@@ -38,6 +38,9 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     // Mobile preview bottom sheet state
     const [mobilePreviewItem, setMobilePreviewItem] = useState<TravelItem | null>(null);
 
+    // Country-City hierarchy state
+    const [activeCountry, setActiveCountry] = useState<string>('all');
+
     // Desktop hover tooltip state (Portal-based)
     const [hoveredItem, setHoveredItem] = useState<TravelItem | null>(null);
     const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -72,23 +75,67 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 <button onClick={() => setActiveTab('templates')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'templates' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.templates}</button>
             </div>
 
-            {/* Region Filter - Always visible */}
+            {/* Region Filter - Two Level: Country → City */}
             <div className="px-4 py-2 border-b border-gray-100 bg-gray-50/50">
-                <div className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide">
-                    {REGION_FILTERS.map(region => (
+                {activeCountry === 'all' ? (
+                    /* Level 1: Country Selection */
+                    <div className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide">
+                        {COUNTRY_FILTERS.map(country => (
+                            <button
+                                key={country.id}
+                                onClick={() => {
+                                    if (country.id === 'all') {
+                                        setActiveRegion('all');
+                                    } else {
+                                        setActiveCountry(country.id);
+                                        // Auto-select first city of the country
+                                        const cities = CITY_FILTERS[country.id];
+                                        if (cities && cities.length > 0) {
+                                            setActiveRegion(cities[0].id);
+                                        }
+                                    }
+                                }}
+                                className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === 'all' && country.id === 'all'
+                                        ? 'bg-teal-600 text-white shadow-sm'
+                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
+                                    }`}
+                            >
+                                <span>{country.icon}</span>
+                                <span>{lang === 'en' && country.labelEn ? country.labelEn : country.label}</span>
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    /* Level 2: City Selection (within selected country) */
+                    <div className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide">
+                        {/* Back Button */}
                         <button
-                            key={region.id}
-                            onClick={() => setActiveRegion(region.id)}
-                            className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === region.id
-                                ? 'bg-teal-600 text-white shadow-sm'
-                                : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
-                                }`}
+                            onClick={() => {
+                                setActiveCountry('all');
+                                setActiveRegion('all');
+                            }}
+                            className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all"
                         >
-                            <span>{region.icon}</span>
-                            <span>{lang === 'en' && region.labelEn ? region.labelEn : region.label}</span>
+                            <span>←</span>
+                            <span>{COUNTRY_FILTERS.find(c => c.id === activeCountry)?.[lang === 'en' ? 'labelEn' : 'label']}</span>
                         </button>
-                    ))}
-                </div>
+
+                        {/* City Buttons */}
+                        {CITY_FILTERS[activeCountry]?.map(city => (
+                            <button
+                                key={city.id}
+                                onClick={() => setActiveRegion(city.id)}
+                                className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === city.id
+                                        ? 'bg-teal-600 text-white shadow-sm'
+                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
+                                    }`}
+                            >
+                                <span>{city.icon}</span>
+                                <span>{lang === 'en' && city.labelEn ? city.labelEn : city.label}</span>
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
 
             <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 scrollbar-thin scrollbar-thumb-gray-200">
