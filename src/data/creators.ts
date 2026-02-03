@@ -11,6 +11,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Official curated plans, perfect for beginners.',
         followers: 12050,
         tags: ['官方', '經典'],
+        tagsEn: ['Official', 'Classic'],
         blogUrl: 'https://travelcanvas.com/blog'
     },
     {
@@ -22,6 +23,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Eats through Tokyo, only recommending the best!',
         followers: 5300,
         tags: ['美食', '甜點'],
+        tagsEn: ['Food', 'Desserts'],
         blogUrl: 'https://anan-foodie.com'
     },
     {
@@ -33,6 +35,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Local guide showing you the best Takoyaki places.',
         followers: 3200,
         tags: ['大阪', '在地'],
+        tagsEn: ['Osaka', 'Local'],
         blogUrl: 'https://osaka-life.jp'
     },
     {
@@ -44,6 +47,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Annual pass holder, teaching you how to skip lines.',
         followers: 8900,
         tags: ['樂園', '攻略'],
+        tagsEn: ['Theme Park', 'Tips'],
         blogUrl: 'https://usj-expert.net'
     },
     {
@@ -55,6 +59,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Focusing on ancient temples, tea ceremonies, and silence.',
         followers: 4500,
         tags: ['京都', '文化'],
+        tagsEn: ['Kyoto', 'Culture'],
         blogUrl: 'https://kyoto-slowlife.com'
     },
     {
@@ -66,6 +71,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Exploring Japan with two kids. Recommendation for families.',
         followers: 7200,
         tags: ['親子', '家庭'],
+        tagsEn: ['Family', 'Kids'],
         blogUrl: 'https://family-trip-japan.com'
     },
     {
@@ -77,6 +83,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Capturing the beauty of Japan through the lens.',
         followers: 15000,
         tags: ['攝影', '打卡'],
+        tagsEn: ['Photography', 'Spots'],
         blogUrl: 'https://kuan-photo.com'
     },
     {
@@ -88,6 +95,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'A coffee enthusiast living in Melbourne for 5 years. Exploring hidden gems in laneways.',
         followers: 8200,
         tags: ['墨爾本', '咖啡', '酒吧'],
+        tagsEn: ['Melbourne', 'Coffee', 'Bars'],
         blogUrl: 'https://melbourne-local.com'
     },
     {
@@ -99,6 +107,7 @@ export const SAMPLE_CREATORS: Creator[] = [
         descriptionEn: 'Born and raised in Osaka. Here to show you the local way!',
         followers: 6400,
         tags: ['大阪', '美食', '樂園'],
+        tagsEn: ['Osaka', 'Food', 'Theme Park'],
         blogUrl: 'https://osaka-fun.jp'
     }
 ];

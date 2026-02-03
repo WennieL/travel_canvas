@@ -9,6 +9,16 @@
 ## Phase 2: Smart Assistant & Conflict Resolution (Planned)
 - **Quick-Fix Assistant**: Add an "Auto-Align" button next to conflict warnings.
 - **Slot-First Duration Adjustment**: One-click to reduce the previous item's duration to perfectly fit the next activity.
-- **Mobile Layout Refinement**: Redesign schedule card layouts specifically for smaller screens to improve readability and space efficiency.
+- **Card UI "Lean" Refactor**: 
+    - Remove the redundant map/location icon from the top-right corner of schedule cards.
+    - Consolidate location viewing into the "Item Detail" modal to declutter the main canvas.
+    - Move "Delete" and "Move" actions to a hover state or a more integrated menu to achieve a cleaner, more premium look.
+- **Mobile Experience Optimization**: 
+    - Redesign schedule card layouts for portrait screens.
+    - Larger touch targets for time inputs and note editing.
+    - Streamlined information hierarchy (Title > Time > Price) to avoid overcrowding on small devices.
 - **User-Defined Durations**: Allow manual input for activity length.
+- **Tablet & Large Screen Optimization**: 
+    - Adjust grid layouts for iPad/Tablet portrait and landscape modes.
+    - Optimization of the "Side-by-Side" Map and Canvas view for 10-12 inch screens.
 - **Visual Refinement**: Shift from "Warning" (Red) to "Information" (Blue/Slate) to reduce planning anxiety.

@@ -1340,6 +1340,7 @@ export function App() {
                     applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule });
                     setSelectedCreatorId(null);
                 }}
+                lang={lang}
             />
 
             {/* Move Item Modal */}

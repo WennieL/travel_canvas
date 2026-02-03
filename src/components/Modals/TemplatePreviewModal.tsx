@@ -42,12 +42,17 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     ];
 
     // Default whatYouGet
-    const whatYouGet = template.whatYouGet || [
+    const whatYouGet = template.whatYouGet || (lang === 'zh' ? [
         `完整 ${template.duration} 天行程安排`,
         `${highlights.tips} 個在地人私藏秘訣`,
         '精確地點、地圖座標、最佳時段',
         '避坑指南 (熱門時段/地雷餐廳)',
-    ];
+    ] : [
+        `Complete ${template.duration}-day itinerary`,
+        `${highlights.tips} insider tips from locals`,
+        'Exact locations, map coordinates, best times',
+        'Avoid crowds & tourist traps guide',
+    ]);
 
     // Count hidden items
     const hiddenCount = template.hiddenCount ||
@@ -111,19 +116,21 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                     {/* ===== 2. TITLE & HIGHLIGHTS ===== */}
                     <div className="px-5 -mt-8 relative z-10">
                         <h1 className="text-2xl font-black text-gray-900 leading-tight mb-3">
-                            {template.title || template.name}
+                            {lang === 'en'
+                                ? (template.titleEn || template.nameEn || template.title || template.name)
+                                : (template.title || template.name)}
                         </h1>
 
                         {/* Highlights Bar */}
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 mb-4">
                             <span className="flex items-center gap-1">
-                                <span className="text-base">🗓️</span>
-                                <span className="font-medium">{highlights.days} 天</span>
+                                <span className="text-base">📅️</span>
+                                <span className="font-medium">{highlights.days} {lang === 'zh' ? '天' : 'days'}</span>
                             </span>
                             <span className="text-gray-300">|</span>
                             <span className="flex items-center gap-1">
                                 <span className="text-base">📍</span>
-                                <span className="font-medium">{highlights.spots} 景點</span>
+                                <span className="font-medium">{highlights.spots} {lang === 'zh' ? '景點' : 'spots'}</span>
                             </span>
                             <span className="text-gray-300">|</span>
                             <span className="flex items-center gap-1">
@@ -135,7 +142,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                 <Star size={12} className="text-amber-400 fill-amber-400" />
                                 <span className="font-medium">{highlights.rating}</span>
                                 {highlights.usageCount && (
-                                    <span className="text-gray-400">({highlights.usageCount} 次套用)</span>
+                                    <span className="text-gray-400">({highlights.usageCount} {lang === 'zh' ? '次套用' : 'uses'})</span>
                                 )}
                             </span>
                         </div>
@@ -157,15 +164,22 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                             {lang === 'en' && template.authorEn ? template.authorEn : template.author}
                                         </span>
                                         <span className="text-xs text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full font-medium">
-                                            {template.region === 'tokyo' ? '東京達人' :
-                                                template.region === 'kyoto' ? '京都達人' :
-                                                    template.region === 'osaka' ? '大阪達人' :
-                                                        template.region === 'melbourne' ? 'Melbourne Local' : '旅遊達人'}
+                                            {lang === 'zh'
+                                                ? (template.region === 'tokyo' ? '東京達人' :
+                                                    template.region === 'kyoto' ? '京都達人' :
+                                                        template.region === 'osaka' ? '大阪達人' :
+                                                            template.region === 'melbourne' ? '墨爾本達人' : '旅遊達人')
+                                                : (template.region === 'tokyo' ? 'Tokyo Expert' :
+                                                    template.region === 'kyoto' ? 'Kyoto Expert' :
+                                                        template.region === 'osaka' ? 'Osaka Expert' :
+                                                            template.region === 'melbourne' ? 'Melbourne Local' : 'Travel Expert')}
                                         </span>
                                     </div>
                                     {template.coverStory?.quote && (
                                         <p className="text-sm text-gray-600 italic leading-relaxed">
-                                            "{template.coverStory.quote}"
+                                            "{lang === 'en' && template.coverStory?.quoteEn
+                                                ? template.coverStory.quoteEn
+                                                : template.coverStory.quote}"
                                         </p>
                                     )}
                                     {/* View More Link */}
@@ -241,12 +255,12 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                             </span>
                                         </div>
                                         <p className="text-sm text-gray-600">
-                                            更多精彩行程等你探索...
+                                            {lang === 'zh' ? '更多精彩行程等你探索...' : 'More exciting stops to explore...'}
                                         </p>
                                     </div>
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
-                                            套用後查看完整行程
+                                            {lang === 'zh' ? '套用後查看完整行程' : 'Apply to see full itinerary'}
                                         </span>
                                     </div>
                                 </div>
@@ -265,7 +279,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                     </div>
                                     <div className="flex-1">
                                         <div className="text-sm font-bold text-purple-800 mb-1">
-                                            🔒 含 {hiddenCount} 個隱藏秘密景點
+                                            🔒 {lang === 'zh' ? `含 ${hiddenCount} 個隱藏秘密景點` : `Includes ${hiddenCount} hidden gems`}
                                         </div>
                                         <p className="text-xs text-purple-600">
                                             {lang === 'zh'
@@ -308,7 +322,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
 
                     {/* Beta Badge */}
                     <p className="text-center text-[10px] text-gray-400 mt-2">
-                        🎁 Beta 期間所有內容免費解鎖
+                        🎁 {lang === 'zh' ? 'Beta 期間所有內容免費解鎖' : 'All content unlocked free during Beta'}
                     </p>
                 </div>
             </div>

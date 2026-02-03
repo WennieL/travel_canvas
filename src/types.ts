@@ -117,6 +117,7 @@ export interface Creator {
     followers: number;
     blogUrl?: string;
     tags: string[];
+    tagsEn?: string[];
 }
 
 export interface Template {
@@ -125,6 +126,7 @@ export interface Template {
     nameEn?: string;
     // Marketing Title ("The Tokyo You Missed")
     title?: string;
+    titleEn?: string;
     author: string;
     authorEn?: string;
     authorId: string; // Link to Creator
@@ -139,6 +141,7 @@ export interface Template {
     // Narrative Header
     coverStory?: {
         quote: string;
+        quoteEn?: string;
         description: string;
         authorLabel?: string;
     };

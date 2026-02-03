@@ -10,6 +10,7 @@ interface CreatorProfileProps {
     isSubscribed: boolean;
     onToggleSubscribe: () => void;
     onExploreTemplate: (template: Template) => void;
+    lang?: 'zh' | 'en';
 }
 
 export const CreatorProfile: React.FC<CreatorProfileProps> = ({
@@ -19,7 +20,8 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
     onClose,
     isSubscribed,
     onToggleSubscribe,
-    onExploreTemplate
+    onExploreTemplate,
+    lang = 'zh'
 }) => {
     if (!isOpen) return null;
 
@@ -64,40 +66,42 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                     </div>
 
                     <div className="flex items-center gap-2 mt-3">
-                        <h2 className="text-2xl font-bold text-gray-800">{creator.name}</h2>
+                        <h2 className="text-2xl font-bold text-gray-800">
+                            {lang === 'en' && creator.nameEn ? creator.nameEn : creator.name}
+                        </h2>
                         {/* Dynamic Tier Badge */}
                         {highestTier && (
                             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${highestTier === 'official' ? 'bg-amber-100 text-amber-700 border border-amber-300' :
                                 highestTier === 'creator' ? 'bg-teal-100 text-teal-700 border border-teal-300' :
                                     'bg-gray-100 text-gray-600 border border-gray-300'
                                 }`}>
-                                {highestTier === 'official' && '🏆 官方精選'}
-                                {highestTier === 'creator' && '⭐ 認證達人'}
-                                {highestTier === 'community' && '👤 社群貢獻者'}
+                                {highestTier === 'official' && (lang === 'zh' ? '🏆 官方精選' : '🏆 Official Pick')}
+                                {highestTier === 'creator' && (lang === 'zh' ? '⭐ 認證達人' : '⭐ Verified Creator')}
+                                {highestTier === 'community' && (lang === 'zh' ? '👤 社群貢獲者' : '👤 Community')}
                             </span>
                         )}
                     </div>
 
                     <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
                         <span className="flex items-center gap-1">
-                            <span className="font-bold text-gray-800">{creator.followers.toLocaleString()}</span> Followers
+                            <span className="font-bold text-gray-800">{creator.followers.toLocaleString()}</span> {lang === 'zh' ? '粉絲' : 'Followers'}
                         </span>
                         <span>•</span>
-                        <span>{templates.length} Plans</span>
+                        <span>{templates.length} {lang === 'zh' ? '個行程' : 'Plans'}</span>
                         {totalCopied > 0 && (
                             <>
                                 <span>•</span>
-                                <span className="text-teal-600">🔗 {totalCopied.toLocaleString()} 累計套用</span>
+                                <span className="text-teal-600">🔗 {totalCopied.toLocaleString()} {lang === 'zh' ? '累計套用' : 'uses'}</span>
                             </>
                         )}
                     </div>
 
                     <p className="mt-3 text-center text-gray-600 leading-relaxed text-sm px-4">
-                        {creator.description}
+                        {lang === 'en' && creator.descriptionEn ? creator.descriptionEn : creator.description}
                     </p>
 
                     <div className="flex gap-2 mt-4 flex-wrap justify-center">
-                        {creator.tags.map(tag => (
+                        {(lang === 'en' && creator.tagsEn ? creator.tagsEn : creator.tags).map(tag => (
                             <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
                                 #{tag}
                             </span>
@@ -113,7 +117,9 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                 }`}
                         >
                             {isSubscribed ? <UserCheck size={18} /> : <UserPlus size={18} />}
-                            {isSubscribed ? 'Subscribed' : 'Subscribe'}
+                            {isSubscribed
+                                ? (lang === 'zh' ? '已追蹤' : 'Subscribed')
+                                : (lang === 'zh' ? '追蹤' : 'Subscribe')}
                         </button>
 
                         {creator.blogUrl && (
@@ -134,7 +140,7 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                 <div className="flex-1 p-6 bg-gray-50">
                     <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
                         <MapPin size={18} className="text-teal-600" />
-                        Created Plans
+                        {lang === 'zh' ? '創作的行程' : 'Created Plans'}
                     </h3>
 
                     <div className="grid grid-cols-1 gap-4">
@@ -169,7 +175,7 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                     )}
 
                                     <div className="absolute top-2 right-2 bg-black/40 text-white px-2 py-1 rounded text-xs font-medium backdrop-blur-sm">
-                                        {template.duration} Days
+                                        {template.duration} {lang === 'zh' ? '天' : 'Days'}
                                     </div>
 
                                     {/* Early Bird Badge */}
@@ -204,10 +210,10 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                 <div className="p-4">
                                     <h4 className="font-bold text-gray-800 group-hover:text-teal-600 transition-colors flex items-center gap-1.5">
                                         {template.isLocked && !template.purchased && <Lock size={14} className="text-gray-400" />}
-                                        {template.name}
+                                        {lang === 'en' && template.nameEn ? template.nameEn : template.name}
                                     </h4>
                                     <div className="flex flex-wrap gap-1 mt-2">
-                                        {template.tags.slice(0, 3).map(tag => (
+                                        {(lang === 'en' && template.tagsEn ? template.tagsEn : template.tags).slice(0, 3).map(tag => (
                                             <span key={tag} className="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">
                                                 {tag}
                                             </span>
@@ -218,9 +224,9 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                             ⭐ <span className="text-gray-600">{template.rating}</span>
                                         </div>
                                         {template.isLocked && !template.purchased ? (
-                                            <span className="text-teal-600 font-bold">Tap to Unlock</span>
+                                            <span className="text-teal-600 font-bold">{lang === 'zh' ? '點擊解鎖' : 'Tap to Unlock'}</span>
                                         ) : (
-                                            <span>View Details</span>
+                                            <span>{lang === 'zh' ? '查看詳情' : 'View Details'}</span>
                                         )}
                                     </div>
                                 </div>
