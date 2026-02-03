@@ -123,7 +123,7 @@ export interface Template {
     id: string;
     name: string;
     nameEn?: string;
-    // [NEW] Marketing Title ("The Tokyo You Missed")
+    // Marketing Title ("The Tokyo You Missed")
     title?: string;
     author: string;
     authorEn?: string;
@@ -131,12 +131,12 @@ export interface Template {
     region: Region;
     tags: string[];
     tagsEn?: string[];
-    // [NEW] Visual Vibe Tags
+    // Visual Vibe Tags
     vibes?: Array<{
         tag: string;
         color: string; // Tailwind class or hex
     }>;
-    // [NEW] Narrative Header
+    // Narrative Header
     coverStory?: {
         quote: string;
         description: string;
@@ -144,7 +144,6 @@ export interface Template {
     };
     duration: number;
     rating?: number;
-    // price removed (duplicate)
     tier?: 'official' | 'creator' | 'community'; // Template tier level
     copiedCount?: number; // Number of times this template was copied/applied
     schedule: DaySchedule;
@@ -152,4 +151,20 @@ export interface Template {
     originalPrice?: number; // Original price for anchor effect
     isLocked?: boolean;    // If true, requires purchase/unlock
     purchased?: boolean;   // Local state to track if user unlocked it
+
+    // [NEW] Phase 1 UX Upgrade Fields
+    coverImage?: string;   // Hero image URL
+    highlights?: {
+        days: number;
+        spots: number;
+        tips: number;
+        rating: number;
+        usageCount?: number; // "來自 256 次套用"
+    };
+    whatYouGet?: string[]; // Bullet list of value props
+    dayPreviews?: Array<{  // Condensed day preview
+        day: number;
+        summary: string;   // "淺草寺 → 晴空塔 → 隅田川夜景"
+    }>;
+    hiddenCount?: number;  // Number of hidden/locked items
 }

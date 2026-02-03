@@ -215,7 +215,7 @@ export const TRANSLATIONS: any = {
         scanToPreview: "掃描即可查看行程",
         shareLinkTitle: "專屬分享連結",
         mobilePreview: "手機版預覽",
-        exportText: "匯出 PDF/文字",
+        exportPdfText: "匯出 PDF/文字",
         shareTip: "小撇步：把連結傳到 Line 群組，朋友都能看到精美行程！"
     },
     en: {
@@ -433,7 +433,7 @@ export const TRANSLATIONS: any = {
         scanToPreview: "Scan to View",
         shareLinkTitle: "Unique Share Link",
         mobilePreview: "Mobile Preview",
-        exportText: "Export PDF/Text",
+        exportPdfText: "Export PDF/Text",
         shareTip: "Pro Tip: Share this link to your Line group so friends can view the itinerary!"
     }
 };

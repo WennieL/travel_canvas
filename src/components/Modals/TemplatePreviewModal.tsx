@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Clock, MapPin, Star, Lock, CheckCircle2, Navigation, Camera, Utensils } from 'lucide-react';
+import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
 import { Template, ScheduleItem } from '../../types';
 
 interface TemplatePreviewModalProps {
@@ -8,7 +8,9 @@ interface TemplatePreviewModalProps {
     template: Template | null;
     onApply: (template: Template) => void;
     onUnlock: (template: Template) => void;
+    onViewCreator?: (authorId: string) => void; // Navigate to creator profile
     t: any;
+    lang?: 'zh' | 'en';
 }
 
 export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
@@ -17,240 +19,301 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     template,
     onApply,
     onUnlock,
-    t
+    onViewCreator,
+    t,
+    lang = 'zh'
 }) => {
     if (!isOpen || !template) return null;
 
     const isLocked = template.isLocked && !template.purchased;
 
-    // Helper to get icon for type
-    const getItemIcon = (type: string) => {
-        switch (type) {
-            case 'food': return <Utensils size={16} className="text-orange-500" />;
-            case 'attraction': return <Camera size={16} className="text-blue-500" />;
-            case 'transport': return <Navigation size={16} className="text-teal-500" />;
-            default: return <MapPin size={16} className="text-rose-500" />;
+    // Calculate highlights from template data if not provided
+    const highlights = template.highlights || {
+        days: template.duration,
+        spots: Object.values(template.schedule).flat().length,
+        tips: Object.values(template.schedule).flat().filter((item: ScheduleItem) => item.insiderTip).length,
+        rating: template.rating || 4.8,
+        usageCount: template.copiedCount || 256
+    };
+
+    // Generate day previews from schedule if not provided
+    const dayPreviews = template.dayPreviews || [
+        { day: 1, summary: template.schedule.morning.slice(0, 3).map((i: ScheduleItem) => i.title).join(' → ') || '行程安排中...' },
+    ];
+
+    // Default whatYouGet
+    const whatYouGet = template.whatYouGet || [
+        `完整 ${template.duration} 天行程安排`,
+        `${highlights.tips} 個在地人私藏秘訣`,
+        '精確地點、地圖座標、最佳時段',
+        '避坑指南 (熱門時段/地雷餐廳)',
+    ];
+
+    // Count hidden items
+    const hiddenCount = template.hiddenCount ||
+        Object.values(template.schedule).flat().filter((item: ScheduleItem) => item.isLocked).length || 2;
+
+    // City-based gradient for cover placeholder
+    const getCoverGradient = (region: string) => {
+        switch (region) {
+            case 'tokyo': return 'from-indigo-500 via-purple-500 to-pink-500';
+            case 'kyoto': return 'from-emerald-500 via-teal-500 to-cyan-500';
+            case 'osaka': return 'from-orange-500 via-red-500 to-pink-500';
+            case 'melbourne': return 'from-amber-500 via-yellow-500 to-lime-500';
+            default: return 'from-teal-500 via-emerald-500 to-green-500';
         }
     };
 
-    const renderTimelineItem = (item: ScheduleItem, index: number, isLast: boolean, blur: boolean = false) => (
-        <div key={index} className={`relative pl-8 ${blur ? 'blur-[5px]' : ''}`}>
-            {/* Timeline Line */}
-            {!isLast && (
-                <div className="absolute left-[11px] top-8 bottom-[-24px] w-[2px] bg-gray-200"></div>
-            )}
-
-            {/* Timeline Dot */}
-            <div className="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-white border-2 border-teal-100 flex items-center justify-center shadow-sm z-10">
-                <div className="w-2 h-2 rounded-full bg-teal-400"></div>
-            </div>
-
-            {/* Time */}
-            <div className="absolute left-[-60px] top-1.5 text-xs font-medium text-gray-400 w-12 text-right">
-                {item.startTime || (index === 0 ? '09:00 AM' : index === 1 ? '01:00 PM' : '06:00 PM')}
-            </div>
-
-            {/* Card */}
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:border-teal-200 transition-colors group">
-                <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-xl shrink-0 group-hover:bg-teal-50 transition-colors">
-                        {item.image || getItemIcon(item.type)}
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-gray-800 text-sm leading-tight mb-1">{item.title}</h4>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                            <span className="flex items-center gap-1 bg-gray-50 px-1.5 py-0.5 rounded">
-                                <Clock size={10} /> {item.duration}
-                            </span>
-                            {(item.price || 0) > 0 && (
-                                <span className="text-gray-400">¥{(item.price || 0).toLocaleString()}</span>
-                            )}
-                        </div>
-
-                        {/* [NEW] Insider Whisper Card */}
-                        {item.insiderTip && (
-                            <div className={`mt-3 p-3 rounded-lg text-xs leading-relaxed relative ${item.insiderTip.highlight ? 'bg-amber-50 border border-amber-100 text-amber-900' : 'bg-gray-50 text-gray-600'}`}>
-                                <div className="absolute -top-2 left-3 bg-white px-1 text-[10px] font-bold text-amber-500 flex items-center gap-1 border border-amber-100 rounded-full shadow-sm">
-                                    <Star size={8} fill="currentColor" /> INSIDER
-                                </div>
-                                {/* Support both new format (teaser) and legacy format (text) */}
-                                {item.insiderTip.teaser || item.insiderTip.text}
-
-                                {/* Show premium indicator if there's more content */}
-                                {item.insiderTip.full && (
-                                    <div className="mt-2 pt-2 border-t border-amber-100 text-amber-600 font-medium flex items-center gap-1">
-                                        <Lock size={10} />
-                                        <span>解鎖看更多達人秘訣</span>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-
-    const renderDaySection = (dayNum: number, title: string, items: any[], locked: boolean = false) => (
-        <div className="relative pl-14 md:pl-0">
-            {/* Day Header */}
-            <div className="flex items-center gap-3 mb-6 relative">
-                {/* Mobile: Day Badge is absolute left */}
-                <div className="bg-slate-800 text-white text-[10px] font-black px-2 py-1 rounded tracking-wider shadow-lg shadow-slate-200 z-10">
-                    DAY {dayNum}
-                </div>
-                <h3 className={`font-bold text-slate-400 text-sm tracking-wide ${locked ? 'blur-[4px]' : ''}`}>{title}</h3>
-
-                {/* Horizontal Divider */}
-                <div className="h-[1px] bg-gray-100 flex-1 ml-2"></div>
-            </div>
-
-            {/* Timeline Container */}
-            <div className="space-y-6 relative md:ml-16 border-l-2 border-gray-100 md:border-l-0 md:pl-0 pl-6 border-l-transparent">
-
-                {/* Vertical Line for Desktop - connecting items */}
-                <div className="hidden md:block absolute left-[11px] top-2 bottom-0 w-[2px] bg-gray-100"></div>
-
-                <div className="space-y-6">
-                    {items.map((item, idx) => renderTimelineItem(item, idx, idx === items.length - 1, locked))}
-                </div>
-
-                {/* Lock Overlay */}
-                {locked && (
-                    <div className="absolute inset-x-0 -top-10 bottom-0 z-20 flex flex-col items-center justify-center pointer-events-none">
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/60 to-white/90 backdrop-blur-[1px]"></div>
-                        <div className="bg-white/95 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-white/50 text-center transform scale-100 pointer-events-auto max-w-[240px]">
-                            <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
-                                <Lock size={24} />
-                            </div>
-                            <h4 className="font-bold text-gray-800 mb-1">Unlock Full Itinerary</h4>
-                            <p className="text-xs text-slate-500 leading-relaxed mb-4">
-                                Get full access to detailed scheduling, hidden gems, and pro tips for all {template.duration} days.
-                            </p>
-                            <button
-                                onClick={() => onUnlock(template)}
-                                className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-amber-200/50"
-                            >
-                                🎁 Beta 免費解鎖
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-
-    // Mock Data construction for preview
-    const day1Items = [
-        ...template.schedule.morning,
-        ...template.schedule.afternoon
-    ].slice(0, 4); // Limit to 4 items for layout
-
-    const day2Items = [
-        { title: 'Asakusa Temple', type: 'attraction', startTime: '09:00 AM', duration: '2hr', price: 0 },
-        { title: 'Shibuya Crossing', type: 'attraction', startTime: '01:00 PM', duration: '30min', price: 0 },
-        { title: 'Meiji Shrine', type: 'attraction', startTime: '02:00 PM', duration: '1.5hr', price: 0 },
-        { title: 'Ichiran Ramen', type: 'food', startTime: '06:00 PM', duration: '1hr', price: 1500 },
-    ];
-
     return (
-        <div className="fixed inset-0 z-[70] flex justify-center items-center pointer-events-none">
+        <div className="fixed inset-0 z-[70] flex justify-center items-end md:items-center pointer-events-none">
+            {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm pointer-events-auto transition-opacity duration-300"
                 onClick={onClose}
             />
 
-            <div className="bg-[#F8FAFC] w-full max-w-[480px] h-[85vh] md:h-[800px] md:max-h-[90vh] md:rounded-3xl shadow-2xl pointer-events-auto flex flex-col relative overflow-hidden animate-in zoom-in-95 duration-300 border border-white/20">
-                {/* Header */}
-                <div className="bg-white px-6 py-5 border-b border-gray-100 sticky top-0 z-30 flex items-start justify-between shadow-sm/50">
-                    <div>
-                        {template.coverStory ? (
-                            <div className="space-y-3">
-                                <div className="space-y-1">
-                                    <h2 className="text-xl font-black text-slate-900 leading-tight">
-                                        {template.title || template.name}
-                                    </h2>
-                                    {template.coverStory.authorLabel && (
-                                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                            {template.coverStory.authorLabel}
-                                        </div>
+            {/* Modal Container */}
+            <div className="bg-white w-full max-w-[480px] h-[90vh] md:h-[85vh] md:max-h-[800px] md:rounded-3xl rounded-t-3xl shadow-2xl pointer-events-auto flex flex-col relative overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+
+                {/* Close Button */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 z-50 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
+                >
+                    <X size={18} className="text-gray-600" />
+                </button>
+
+                {/* Scrollable Content */}
+                <div className="flex-1 overflow-y-auto overscroll-contain">
+
+                    {/* ===== 1. COVER IMAGE SECTION ===== */}
+                    <div className="relative">
+                        {template.coverImage ? (
+                            <img
+                                src={template.coverImage}
+                                alt={template.name}
+                                className="w-full h-48 md:h-56 object-cover"
+                            />
+                        ) : (
+                            <div className={`w-full h-48 md:h-56 bg-gradient-to-br ${getCoverGradient(template.region)} flex items-center justify-center`}>
+                                <div className="text-white/30 text-6xl">
+                                    {template.region === 'tokyo' ? '🗼' :
+                                        template.region === 'kyoto' ? '⛩️' :
+                                            template.region === 'osaka' ? '🏯' :
+                                                template.region === 'melbourne' ? '☕' : '🌏'}
+                                </div>
+                            </div>
+                        )}
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                    </div>
+
+                    {/* ===== 2. TITLE & HIGHLIGHTS ===== */}
+                    <div className="px-5 -mt-8 relative z-10">
+                        <h1 className="text-2xl font-black text-gray-900 leading-tight mb-3">
+                            {template.title || template.name}
+                        </h1>
+
+                        {/* Highlights Bar */}
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 mb-4">
+                            <span className="flex items-center gap-1">
+                                <span className="text-base">🗓️</span>
+                                <span className="font-medium">{highlights.days} 天</span>
+                            </span>
+                            <span className="text-gray-300">|</span>
+                            <span className="flex items-center gap-1">
+                                <span className="text-base">📍</span>
+                                <span className="font-medium">{highlights.spots} 景點</span>
+                            </span>
+                            <span className="text-gray-300">|</span>
+                            <span className="flex items-center gap-1">
+                                <span className="text-base">💡</span>
+                                <span className="font-medium">{highlights.tips} Tips</span>
+                            </span>
+                            <span className="text-gray-300">|</span>
+                            <span className="flex items-center gap-1">
+                                <Star size={12} className="text-amber-400 fill-amber-400" />
+                                <span className="font-medium">{highlights.rating}</span>
+                                {highlights.usageCount && (
+                                    <span className="text-gray-400">({highlights.usageCount} 次套用)</span>
+                                )}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* ===== 3. CREATOR CARD ===== */}
+                    <div className="px-5 mb-5">
+                        <div
+                            className={`bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-4 border border-gray-100 ${onViewCreator ? 'cursor-pointer hover:border-teal-200 transition-colors' : ''}`}
+                            onClick={() => onViewCreator && onViewCreator(template.authorId)}
+                        >
+                            <div className="flex items-start gap-3">
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center text-white shadow-lg shadow-teal-200/50">
+                                    <User size={20} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="font-bold text-gray-800">
+                                            {lang === 'en' && template.authorEn ? template.authorEn : template.author}
+                                        </span>
+                                        <span className="text-xs text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full font-medium">
+                                            {template.region === 'tokyo' ? '東京達人' :
+                                                template.region === 'kyoto' ? '京都達人' :
+                                                    template.region === 'osaka' ? '大阪達人' :
+                                                        template.region === 'melbourne' ? 'Melbourne Local' : '旅遊達人'}
+                                        </span>
+                                    </div>
+                                    {template.coverStory?.quote && (
+                                        <p className="text-sm text-gray-600 italic leading-relaxed">
+                                            "{template.coverStory.quote}"
+                                        </p>
+                                    )}
+                                    {/* View More Link */}
+                                    {onViewCreator && (
+                                        <button
+                                            className="mt-2 text-xs text-teal-600 hover:text-teal-700 font-medium flex items-center gap-1 group"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onViewCreator(template.authorId);
+                                            }}
+                                        >
+                                            {lang === 'zh' ? '查看更多模板' : 'View more templates'}
+                                            <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                                        </button>
                                     )}
                                 </div>
-
-                                <blockquote className="relative italic text-slate-600 text-sm border-l-4 border-teal-500 pl-3 py-1">
-                                    "{template.coverStory.quote}"
-                                </blockquote>
-
-                                {template.vibes && (
-                                    <div className="flex flex-wrap gap-2 pt-1">
-                                        {template.vibes.map((vibe, i) => (
-                                            <span key={i} className={`text-[10px] font-bold px-2 py-1 rounded-full ${vibe.color}`}>
-                                                {vibe.tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
                             </div>
-                        ) : (
-                            // Fallback for old templates
-                            <>
-                                <h2 className="text-xl font-black text-slate-800 leading-tight mb-2">
-                                    {template.name}
-                                </h2>
-                                <div className="flex items-center gap-3">
-                                    <span className="bg-teal-50 text-teal-700 text-[10px] font-bold px-2.5 py-1 rounded-md border border-teal-100">
-                                        {template.duration} Days
-                                    </span>
-                                    <span className="flex items-center gap-1 text-[11px] font-bold text-amber-500 bg-amber-50 px-2 py-1 rounded-md border border-amber-100">
-                                        <Star size={10} fill="currentColor" /> {template.rating}
+                        </div>
+                    </div>
+
+                    {/* ===== 4. WHAT YOU'LL GET ===== */}
+                    <div className="px-5 mb-5">
+                        <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <Sparkles size={14} className="text-amber-500" />
+                            {lang === 'zh' ? '這個模板讓你獲得' : 'What You\'ll Get'}
+                        </h3>
+                        <div className="bg-amber-50/50 border border-amber-100 rounded-xl p-4 space-y-2">
+                            {whatYouGet.map((item, idx) => (
+                                <div key={idx} className="flex items-start gap-2 text-sm">
+                                    <CheckCircle2 size={16} className="text-amber-500 mt-0.5 shrink-0" />
+                                    <span className="text-gray-700">{item}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* ===== 5. DAY PREVIEW ===== */}
+                    <div className="px-5 mb-5">
+                        <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <MapPin size={14} className="text-teal-500" />
+                            {lang === 'zh' ? '行程預覽' : 'Itinerary Preview'}
+                        </h3>
+                        <div className="space-y-2">
+                            {/* Show first day from actual schedule */}
+                            <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="bg-slate-800 text-white text-[10px] font-black px-2 py-0.5 rounded">
+                                        DAY 1
                                     </span>
                                 </div>
-                            </>
-                        )}
-                    </div>
-                    <button
-                        onClick={onClose}
-                        className="p-2 -mr-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-full transition-colors"
-                    >
-                        <X size={20} />
-                    </button>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 overflow-y-auto p-6 scroll-smooth">
-                    <div className="space-y-12 pb-20">
-                        {renderDaySection(1, 'Arrival & Exploration', day1Items)}
-
-                        {template.duration > 1 && renderDaySection(2, 'City Tour & Hidden Gems', day2Items, isLocked)}
-
-                        {template.duration > 2 && (
-                            <div className="opacity-50 blur-[2px]">
-                                {renderDaySection(3, 'Deep Dive Culture', day2Items.slice(0, 2), isLocked)}
+                                <p className="text-sm text-gray-600 flex items-center flex-wrap gap-1">
+                                    {[...template.schedule.morning, ...template.schedule.afternoon]
+                                        .slice(0, 4)
+                                        .map((item: ScheduleItem, idx, arr) => (
+                                            <React.Fragment key={idx}>
+                                                <span className="font-medium text-gray-800">{item.title}</span>
+                                                {idx < arr.length - 1 && (
+                                                    <ArrowRight size={12} className="text-gray-300" />
+                                                )}
+                                            </React.Fragment>
+                                        ))
+                                    }
+                                </p>
                             </div>
-                        )}
+
+                            {/* Blurred preview for remaining days */}
+                            {template.duration > 1 && (
+                                <div className="bg-gray-50 rounded-xl p-3 border border-gray-100 relative overflow-hidden">
+                                    <div className="blur-[6px]">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="bg-slate-800 text-white text-[10px] font-black px-2 py-0.5 rounded">
+                                                DAY 2-{template.duration}
+                                            </span>
+                                        </div>
+                                        <p className="text-sm text-gray-600">
+                                            更多精彩行程等你探索...
+                                        </p>
+                                    </div>
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                                            套用後查看完整行程
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
+
+                    {/* ===== 6. HIDDEN CONTENT TEASER ===== */}
+                    {hiddenCount > 0 && (
+                        <div className="px-5 mb-6">
+                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 rounded-xl p-4 relative overflow-hidden">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-white/60 backdrop-blur-[6px]" />
+                                        <Lock size={20} className="text-purple-500 relative z-10" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="text-sm font-bold text-purple-800 mb-1">
+                                            🔒 含 {hiddenCount} 個隱藏秘密景點
+                                        </div>
+                                        <p className="text-xs text-purple-600">
+                                            {lang === 'zh'
+                                                ? 'Beta 期間免費解鎖，錯過不再！'
+                                                : 'Unlock for free during Beta!'}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Bottom Padding for Sticky Footer */}
+                    <div className="h-24" />
                 </div>
 
-                {/* Sticky Footer */}
-                <div className="p-5 bg-white border-t border-gray-100 sticky bottom-0 z-30 shadow-[0_-5px_20px_-10px_rgba(0,0,0,0.1)]">
-                    {isLocked ? (
-                        <button
-                            onClick={() => onUnlock(template)}
-                            className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl font-bold text-sm shadow-xl shadow-amber-200/50 hover:shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
-                        >
-                            🎁 Beta 免費解鎖
-                        </button>
-                    ) : (
+                {/* ===== 7. STICKY CTA FOOTER ===== */}
+                <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+                    <div className="flex gap-3">
+                        {/* Primary CTA */}
                         <button
                             onClick={() => onApply(template)}
-                            className="w-full py-4 bg-gray-900 hover:bg-black text-white rounded-2xl font-bold text-sm shadow-xl hover:shadow-2xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                            className="flex-1 py-3.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white rounded-2xl font-bold text-sm shadow-lg shadow-teal-200/50 hover:shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                         >
-                            <CheckCircle2 size={18} className="text-teal-400" />
-                            Apply This Plan
+                            <CheckCircle2 size={18} />
+                            {lang === 'zh' ? '一鍵套用' : 'Apply Now'}
                         </button>
-                    )}
+
+                        {/* Secondary CTA - Show only if has locked content */}
+                        {isLocked && (
+                            <button
+                                onClick={() => onUnlock(template)}
+                                className="px-4 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl font-bold text-sm shadow-lg shadow-amber-200/50 hover:shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                            >
+                                <Lock size={16} />
+                                {lang === 'zh' ? '解鎖' : 'Unlock'}
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Beta Badge */}
+                    <p className="text-center text-[10px] text-gray-400 mt-2">
+                        🎁 Beta 期間所有內容免費解鎖
+                    </p>
                 </div>
             </div>
         </div>
     );
-}
+};
+
+export default TemplatePreviewModal;

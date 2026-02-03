@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink, UserPlus, UserCheck, MapPin } from 'lucide-react';
+import { X, ExternalLink, UserPlus, UserCheck, MapPin, Lock } from 'lucide-react';
 import { Creator, Template } from '../types';
 
 interface CreatorProfileProps {
@@ -68,8 +68,8 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                         {/* Dynamic Tier Badge */}
                         {highestTier && (
                             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${highestTier === 'official' ? 'bg-amber-100 text-amber-700 border border-amber-300' :
-                                    highestTier === 'creator' ? 'bg-teal-100 text-teal-700 border border-teal-300' :
-                                        'bg-gray-100 text-gray-600 border border-gray-300'
+                                highestTier === 'creator' ? 'bg-teal-100 text-teal-700 border border-teal-300' :
+                                    'bg-gray-100 text-gray-600 border border-gray-300'
                                 }`}>
                                 {highestTier === 'official' && '🏆 官方精選'}
                                 {highestTier === 'creator' && '⭐ 認證達人'}
@@ -141,21 +141,69 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                         {templates.map(template => (
                             <div
                                 key={template.id}
-                                className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all cursor-pointer"
+                                className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all cursor-pointer relative"
                                 onClick={() => {
-                                    onExploreTemplate(template);
-                                    // onClose(); // Optional: close profile when selecting? Maybe keep open.
+                                    if (template.isLocked && !template.purchased) {
+                                        // Mock Purchase Interaction
+                                        if (confirm(`Unlock this premium plan for $${template.price}? (Mock Payment)`)) {
+                                            template.purchased = true; // Local mutation for demo
+                                            template.isLocked = false;
+                                            onExploreTemplate({ ...template, isLocked: false, purchased: true }); // Force update for viewer
+                                        }
+                                    } else {
+                                        onExploreTemplate(template);
+                                    }
                                 }}
                             >
                                 <div className="h-32 bg-gray-200 relative overflow-hidden">
                                     {/* Mock Image Gradient */}
-                                    <div className={`absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-500 opacity-80`} />
+                                    <div className={`absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-500 opacity-80 ${template.isLocked && !template.purchased ? 'grayscale' : ''}`} />
+
+                                    {/* Lock Overlay */}
+                                    {template.isLocked && !template.purchased && (
+                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
+                                            <div className="bg-white/20 p-3 rounded-full backdrop-blur-md border border-white/30 text-white">
+                                                <Lock size={24} />
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <div className="absolute top-2 right-2 bg-black/40 text-white px-2 py-1 rounded text-xs font-medium backdrop-blur-sm">
                                         {template.duration} Days
                                     </div>
+
+                                    {/* Early Bird Badge */}
+                                    {template.price && template.originalPrice && template.price < template.originalPrice && (
+                                        <div className="absolute top-2 left-2 bg-rose-500 text-white px-2 py-1 rounded-full text-[10px] font-bold shadow-sm animate-pulse flex items-center gap-1">
+                                            🔥 Early Bird
+                                        </div>
+                                    )}
+
+                                    {/* Price Tag for Premium */}
+                                    {template.price && (
+                                        <div className="absolute bottom-2 left-2 flex items-center gap-1.5">
+                                            <div className="bg-teal-500 text-white px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">
+                                                ${template.price}
+                                            </div>
+                                            {template.originalPrice && (
+                                                <>
+                                                    <div className="text-[10px] text-white/80 line-through decoration-white/80 font-medium bg-black/20 px-1 rounded">
+                                                        ${template.originalPrice}
+                                                    </div>
+                                                    {/* Discount Badge */}
+                                                    {template.price < template.originalPrice && (
+                                                        <div className="bg-yellow-400 text-yellow-900 text-[10px] px-1.5 py-0.5 rounded font-black shadow-sm transform -rotate-2">
+                                                            {Math.round((1 - template.price / template.originalPrice) * 100)}% OFF
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="p-4">
-                                    <h4 className="font-bold text-gray-800 group-hover:text-teal-600 transition-colors">
+                                    <h4 className="font-bold text-gray-800 group-hover:text-teal-600 transition-colors flex items-center gap-1.5">
+                                        {template.isLocked && !template.purchased && <Lock size={14} className="text-gray-400" />}
                                         {template.name}
                                     </h4>
                                     <div className="flex flex-wrap gap-1 mt-2">
@@ -169,7 +217,11 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                         <div className="flex items-center gap-1 text-yellow-500">
                                             ⭐ <span className="text-gray-600">{template.rating}</span>
                                         </div>
-                                        <span>View Details</span>
+                                        {template.isLocked && !template.purchased ? (
+                                            <span className="text-teal-600 font-bold">Tap to Unlock</span>
+                                        ) : (
+                                            <span>View Details</span>
+                                        )}
                                     </div>
                                 </div>
                             </div>

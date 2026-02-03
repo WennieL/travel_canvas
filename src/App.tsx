@@ -1430,6 +1430,7 @@ export function App() {
                 onClose={() => setPreviewTemplate(null)}
                 template={previewTemplate}
                 t={t}
+                lang={lang}
                 onApply={(tpl) => {
                     applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule });
                     setPreviewTemplate(null);
@@ -1443,6 +1444,10 @@ export function App() {
                         // Force update to refresh UI
                         setPreviewTemplate({ ...tpl });
                     }
+                }}
+                onViewCreator={(authorId) => {
+                    setPreviewTemplate(null); // Close preview modal
+                    setSelectedCreatorId(authorId); // Open creator profile
                 }}
             />
 

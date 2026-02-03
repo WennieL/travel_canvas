@@ -78,5 +78,27 @@ export const SAMPLE_CREATORS: Creator[] = [
         followers: 15000,
         tags: ['攝影', '打卡'],
         blogUrl: 'https://kuan-photo.com'
+    },
+    {
+        id: 'c-mel',
+        name: 'Melbourne Local',
+        nameEn: 'Melbourne Local',
+        avatar: '☕',
+        description: '住在墨爾本 5 年的咖啡狂熱者，帶你探索巷弄裡的隱藏寶藏。',
+        descriptionEn: 'A coffee enthusiast living in Melbourne for 5 years. Exploring hidden gems in laneways.',
+        followers: 8200,
+        tags: ['墨爾本', '咖啡', '酒吧'],
+        blogUrl: 'https://melbourne-local.com'
+    },
+    {
+        id: 'c-osaka',
+        name: '大阪玩樂王',
+        nameEn: 'Osaka Fun Guide',
+        avatar: '🐙',
+        description: '土生土長的大阪人，教你怎麼玩最道地！',
+        descriptionEn: 'Born and raised in Osaka. Here to show you the local way!',
+        followers: 6400,
+        tags: ['大阪', '美食', '樂園'],
+        blogUrl: 'https://osaka-fun.jp'
     }
 ];
