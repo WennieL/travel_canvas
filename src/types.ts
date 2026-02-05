@@ -150,7 +150,7 @@ export interface Template {
     rating?: number;
     tier?: 'official' | 'creator' | 'community'; // Template tier level
     copiedCount?: number; // Number of times this template was copied/applied
-    schedule: DaySchedule;
+    schedule: DaySchedule | FullSchedule;
     price?: number;        // Unlock price in USD
     originalPrice?: number; // Original price for anchor effect
     isLocked?: boolean;    // If true, requires purchase/unlock

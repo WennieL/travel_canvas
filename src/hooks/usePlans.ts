@@ -40,7 +40,15 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             if (savedPlans) {
                 const parsedPlans = JSON.parse(savedPlans);
                 if (Array.isArray(parsedPlans) && parsedPlans.length > 0) {
-                    setPlans(parsedPlans);
+                    // Validate and sanitize plans
+                    const validPlans = parsedPlans.map((p: any) => {
+                        // Ensure schedule exists and has at least Day 1
+                        if (!p.schedule || Object.keys(p.schedule).length === 0) {
+                            return { ...p, schedule: TOKYO_DEMO_PLAN.schedule };
+                        }
+                        return p;
+                    });
+                    setPlans(validPlans);
                 }
             }
             if (savedActiveId) {

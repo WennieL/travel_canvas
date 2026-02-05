@@ -20,33 +20,34 @@ import SmartTimeInput from './SmartTimeInput';
 interface DropZoneProps {
     slot: TimeSlot;
     items: ScheduleItem[];
-    title: string;
-    icon: React.ReactNode;
-    isAccommodation?: boolean;
-    previousItem?: ScheduleItem;
-    isDraggingGlobal: boolean;
-    onDragOver: (e: React.DragEvent) => void;
-    onDrop: (e: React.DragEvent, slot: TimeSlot) => void;
-    onDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
-    onDelete: (slot: TimeSlot, index: number) => void;
-    onTimeChange: (slot: TimeSlot, index: number, newTime: string) => void;
-    onNoteChange: (slot: TimeSlot, index: number, newNote: string) => void;
-    onTransportChange: (slot: TimeSlot, index: number, mode: TransportMode) => void;
-    onItemClick: (item: ScheduleItem) => void;
+    label: string;
+    onDrop: (e: React.DragEvent) => void;
+    onRemoveItem: (index: number) => void;
+    onUpdateItem: (index: number, updates: Partial<ScheduleItem>) => void;
+    onMoveItem: (index: number) => void;
+    onUnlockItem: (item: ScheduleItem) => void;
+    onItemClick: (item: ScheduleItem) => void; // New prop
+    onAddItem?: () => void;
     t: any;
-    onAddItem: (slot: TimeSlot) => void;
-    onMoveItem: (slot: TimeSlot, index: number) => void;
-    onQuickFill: (slot: TimeSlot) => void;
-    lang: 'zh' | 'en';
-    sampleAssets: TravelItem[];
-    onUnlockItem?: (item: ScheduleItem) => void;
+    previousItem?: ScheduleItem | null;
+    lang: string;
+    onDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, title, icon, isAccommodation = false, previousItem, isDraggingGlobal,
-    onDragOver, onDrop, onDragStart, onDelete, onTimeChange, onNoteChange, onTransportChange, onItemClick, t, onAddItem, onMoveItem, onQuickFill, lang, sampleAssets, onUnlockItem
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart
 }) => {
-    const isCompact = false; // Always expanded to show Add button
+    const isCompact = false;
+    const isDraggingGlobal = false; // Simplified
+    const onDragOver = (e: React.DragEvent) => { e.preventDefault(); };
+    // Removed unused sampleAssets and hardcoded lang
+    // Removed shadowed onAddItem
+    const onQuickFill = (s: TimeSlot) => { console.log("Quick fill", s); };
+    // Passed from parent
+    const onDelete = (s: TimeSlot, i: number) => onRemoveItem(i);
+    const onTimeChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { startTime: v });
+    const onNoteChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { notes: v });
+    const onTransportChange = (s: TimeSlot, i: number, m: TransportMode) => onUpdateItem(i, { arrivalTransport: m });
     const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, index, nextMode); };
@@ -81,11 +82,20 @@ const DropZone: React.FC<DropZoneProps> = ({
         return null;
     };
 
+    // Derived UI Variables
+    const isAccommodation = slot === 'accommodation';
+    const title = label;
+    const icon = isAccommodation ? <BedDouble size={16} /> :
+        slot === 'morning' ? <Sun size={16} /> :
+            slot === 'afternoon' ? <Coffee size={16} /> :
+                slot === 'evening' ? <Sun size={16} /> : // Sunset/Evening logic could be refined
+                    slot === 'night' ? <Moon size={16} /> : <Clock size={16} />;
+
     return (
         <div className={`relative transition-all duration-300 ${isAccommodation ? 'mt-4' : 'pl-8'}`}>
             {!isAccommodation && !isCompact && (<> <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
             <div className={`mb-2 flex items-center transition-all ${isCompact ? 'opacity-40 hover:opacity-100' : 'opacity-100'}`}> <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${isAccommodation ? 'text-indigo-600' : 'text-gray-500'}`}> {icon} {title} </h3> {isCompact && <div className="h-[1px] flex-1 bg-gray-200 ml-3"></div>} </div>
-            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e, slot)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'h-2 hover:h-12 border-2 border-transparent hover:border-dashed hover:border-gray-300 overflow-hidden' : 'min-h-[80px] border-2 border-dashed p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
+            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'h-2 hover:h-12 border-2 border-transparent hover:border-dashed hover:border-gray-300 overflow-hidden' : 'min-h-[80px] border-2 border-dashed p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && !isCompact && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors py-4 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'}`}>
                         {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!"))}
@@ -116,17 +126,11 @@ const DropZone: React.FC<DropZoneProps> = ({
                     }
 
                     // Dynamic Title Lookup for Localization
-                    // Try to find the original asset to get the translated title if available
-                    // Fallback to item.title which might be stale (saved in original language)
-                    const originalAsset = sampleAssets.find(a => a.id === item.id);
-
                     const isLocked = item.isLocked;
 
                     const displayTitleRaw = isLocked
                         ? (lang === 'en' && item.marketingTitleEn ? item.marketingTitleEn : item.marketingTitle)
-                        : (lang === 'en' && originalAsset?.titleEn ? originalAsset.titleEn :
-                            (lang === 'zh' && originalAsset?.title) ? originalAsset.title :
-                                (lang === 'en' && item.titleEn) ? item.titleEn : item.title);
+                        : (lang === 'en' && item.titleEn ? item.titleEn : item.title);
 
                     const displayTitle = displayTitleRaw || (isLocked ? "🔒 Secret Location" : item.title);
 
@@ -142,6 +146,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
                                             'bg-white border-gray-100 hover:border-teal-300'}
+                                    ${openMenuId === item.instanceId ? 'z-50' : ''}
                                 `}
                             >
 
@@ -157,7 +162,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     >
                                         <MapPin size={12} />
                                     </button>
-                                    <button onClick={(e) => { e.stopPropagation(); onMoveItem(slot, idx); }} className="bg-white text-gray-400 hover:text-blue-500 p-1 rounded-full shadow border border-gray-100" title={t.moveToDay || "Move to Day"}> <MoveRight size={12} /> </button>
+                                    <button onClick={(e) => { e.stopPropagation(); onMoveItem(idx); }} className="bg-white text-gray-400 hover:text-blue-500 p-1 rounded-full shadow border border-gray-100" title={t.moveToDay || "Move to Day"}> <MoveRight size={12} /> </button>
                                     <button onClick={(e) => { e.stopPropagation(); onDelete(slot, idx); }} className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"> <Trash2 size={12} /> </button>
                                 </div>
                                 <div className="text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
@@ -240,7 +245,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                onMoveItem(slot, idx);
+                                                                onMoveItem(idx);
                                                                 setOpenMenuId(null);
                                                             }}
                                                             className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg w-full text-left"
@@ -279,15 +284,12 @@ const DropZone: React.FC<DropZoneProps> = ({
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
-                        onAddItem(slot);
+                        onAddItem?.();
                     }}
                     className={`w-full py-2 border rounded-lg transition-all flex items-center justify-center gap-2 text-sm mt-2 group 
                         ${items.length === 0 ? 'animate-pulse bg-gray-50 border-dashed border-gray-300' : 'border-dashed border-gray-300 text-gray-400 hover:text-teal-600 hover:border-teal-400 hover:bg-teal-50'}
                     `}
                 >
-                    {/* Mobile: Solid Add Button style (only if items > 0 or consistent?) - actually keep consistent structure but change text/icon */}
-                    {/* Wait, design req: Mobile = Add Item. Desktop = Visual Cue. */}
-
                     <div className="lg:hidden flex items-center gap-2">
                         <Plus size={16} className={`group-hover:scale-110 transition-transform ${items.length === 0 ? 'text-teal-500' : ''}`} />
                         {items.length === 0 ? ("+ Add items...") : (t.addItem || "Add Item")}

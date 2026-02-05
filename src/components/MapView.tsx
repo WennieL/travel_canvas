@@ -4,6 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ScheduleItem, TimeSlot } from '../types';
 import { List, Map as MapIcon, Navigation, ExternalLink } from 'lucide-react';
+import { SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../data';
 
 interface MapViewProps {
     schedule: any; // Using any temporarily to avoid strict type issues with DaySchedule vs FullSchedule, will refine
@@ -41,10 +42,22 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
         slots.forEach(slot => {
             if (schedule[slot]) {
                 schedule[slot].forEach((item: ScheduleItem) => {
-                    // Use real coordinates if available, otherwise fallback to "fake" mapping for demo or skip
-                    // For now, we only map items with real lat/lng
-                    if (item.lat && item.lng) {
-                        list.push({ item, slot, lat: item.lat, lng: item.lng, index: globalIndex });
+                    // Try to find coordinates if missing
+                    let lat = item.lat;
+                    let lng = item.lng;
+
+                    if (!lat || !lng) {
+                        // Lookup in known assets
+                        const allAssets = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS];
+                        const found = allAssets.find(asset => asset.title === item.title || asset.id === item.id);
+                        if (found && found.lat && found.lng) {
+                            lat = found.lat;
+                            lng = found.lng;
+                        }
+                    }
+
+                    if (lat && lng) {
+                        list.push({ item, slot, lat, lng, index: globalIndex });
                     }
                     globalIndex++;
                 });

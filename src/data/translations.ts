@@ -3,6 +3,7 @@ export const TRANSLATIONS: any = {
     zh: {
         appTitle: "TravelCanvas",
         myPlans: "我的計畫",
+        plan: "行程",
         assets: "素材資料庫",
         templates: "達人模板",
         searchPlaceholder: "搜尋...",
@@ -160,6 +161,8 @@ export const TRANSLATIONS: any = {
         backupImportDesc: "選擇之前下載的 JSON 備份檔來還原資料。",
         importSuccess: "匯入成功！",
         importError: "匯入失敗，請確認檔案格式正確。",
+        delete: "刪除",
+        confirmDelete: "確定要刪除嗎？",
         moveToDay: "移動至其他天",
         quickFill: "一鍵填入",
         quickFillAdded: "已加入建議行程！",
@@ -221,6 +224,7 @@ export const TRANSLATIONS: any = {
     en: {
         appTitle: "TravelCanvas",
         myPlans: "My Plans",
+        plan: "Plan",
         assets: "Assets",
         templates: "Templates",
         searchPlaceholder: "Search...",
@@ -378,6 +382,8 @@ export const TRANSLATIONS: any = {
         backupImportDesc: "Select a previously downloaded backup file to restore.",
         importSuccess: "Import successful!",
         importError: "Import failed. Please check the file format.",
+        delete: "Delete",
+        confirmDelete: "Are you sure you want to delete?",
         moveToDay: "Move to Day",
         quickFill: "Quick Fill",
         quickFillAdded: "Suggestions added!",

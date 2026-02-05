@@ -1,0 +1,107 @@
+import { useState, useCallback } from 'react';
+import { ViewMode, ItemType, Region, Template, ScheduleItem, TimeSlot } from '../types';
+
+export const useUIState = () => {
+    // Basic UI Toggles
+    const [showLanding, setShowLanding] = useState(true);
+    const [viewMode, setViewMode] = useState<ViewMode>('canvas');
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [sidebarHighlight, setSidebarHighlight] = useState(false);
+
+    // Name Editing
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [editingName, setEditingName] = useState('');
+
+    // Modal States
+    const [showPlanManager, setShowPlanManager] = useState(false);
+    const [showDateModal, setShowDateModal] = useState(false);
+    const [showExportModal, setShowExportModal] = useState(false);
+    const [showShareModal, setShowShareModal] = useState(false);
+    const [showCustomItemModal, setShowCustomItemModal] = useState(false);
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
+    const [showCitySelector, setShowCitySelector] = useState(false);
+    const [showMobileLibrary, setShowMobileLibrary] = useState(false);
+    const [mobileLibraryExpanded, setMobileLibraryExpanded] = useState(false);
+    const [showMobilePreview, setShowMobilePreview] = useState(false);
+    const [showMoveModal, setShowMoveModal] = useState(false);
+    const [selectedCreatorId, setSelectedCreatorId] = useState<string | null>(null);
+    const [moveTarget, setMoveTarget] = useState<{ slot: TimeSlot, index: number } | null>(null);
+    const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
+    const [unlockTarget, setUnlockTarget] = useState<ScheduleItem | null>(null);
+    const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
+    const [batchUnlockCount, setBatchUnlockCount] = useState(0);
+
+    // Sidebar States
+    const [activeTab, setActiveTab] = useState<'assets' | 'templates'>('assets');
+    const [activeCategory, setActiveCategory] = useState<'all' | ItemType>('all');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sidebarWidth, setSidebarWidth] = useState(() => {
+        try {
+            const saved = localStorage.getItem('sidebarWidth');
+            return saved ? parseInt(saved) : 320;
+        } catch { return 320; }
+    });
+
+    // Export States
+    const [exportTab, setExportTab] = useState<'text' | 'image' | 'share' | 'backup'>('text');
+
+    // Canvas Zoom
+    const [canvasZoom, setCanvasZoom] = useState(() => {
+        try {
+            const saved = localStorage.getItem('canvasZoom');
+            return saved ? parseInt(saved) : 100;
+        } catch { return 100; }
+    });
+
+    const handleZoomIn = useCallback(() => {
+        setCanvasZoom(prev => Math.min(prev + 10, 150));
+    }, []);
+
+    const handleZoomOut = useCallback(() => {
+        setCanvasZoom(prev => Math.max(prev - 10, 50));
+    }, []);
+
+    const handleZoomReset = useCallback(() => {
+        setCanvasZoom(100);
+    }, []);
+
+    return {
+        // States
+        showLanding, setShowLanding,
+        viewMode, setViewMode,
+        isFullscreen, setIsFullscreen,
+        isSidebarOpen, setIsSidebarOpen,
+        sidebarHighlight, setSidebarHighlight,
+        isEditingName, setIsEditingName,
+        editingName, setEditingName,
+        showPlanManager, setShowPlanManager,
+        showDateModal, setShowDateModal,
+        showExportModal, setShowExportModal,
+        showShareModal, setShowShareModal,
+        showCustomItemModal, setShowCustomItemModal,
+        showSubmitModal, setShowSubmitModal,
+        showCitySelector, setShowCitySelector,
+        showMobileLibrary, setShowMobileLibrary,
+        mobileLibraryExpanded, setMobileLibraryExpanded,
+        showMobilePreview, setShowMobilePreview,
+        showMoveModal, setShowMoveModal,
+        activeTab, setActiveTab,
+        activeCategory, setActiveCategory,
+        searchQuery, setSearchQuery,
+        sidebarWidth, setSidebarWidth,
+        canvasZoom, setCanvasZoom,
+        exportTab, setExportTab,
+        selectedCreatorId, setSelectedCreatorId,
+        previewTemplate, setPreviewTemplate,
+        unlockTarget, setUnlockTarget,
+        selectedItem, setSelectedItem,
+        batchUnlockCount, setBatchUnlockCount,
+        moveTarget, setMoveTarget,
+
+        // Handlers
+        handleZoomIn,
+        handleZoomOut,
+        handleZoomReset,
+    };
+};
