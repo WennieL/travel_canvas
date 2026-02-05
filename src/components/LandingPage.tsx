@@ -298,7 +298,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                             {/* Coming Soon */}
                             <div className="bg-slate-50 rounded-2xl overflow-hidden border border-dashed border-slate-300 flex flex-col items-center justify-center h-[264px] hover:bg-slate-100 transition-colors">
                                 <span className="text-4xl mb-3 opacity-50">🌏</span>
-                                <p className="text-slate-400 font-medium">{lang === 'zh' ? '更多城市即將推出' : 'More cities coming soon'}</p>
+                                <p className="text-slate-400 font-medium">{lang === 'zh' ? '更多城市即將推出...' : 'More cities coming soon...'}</p>
                             </div>
                         </div>
                     </div>
@@ -754,7 +754,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                     </div>
 
                     {/* Trust Badges */}
-                    <div className="flex flex-wrap justify-center gap-6 text-slate-500 text-sm">
+                    {/* <div className="flex flex-wrap justify-center gap-6 text-slate-500 text-sm">
                         <div className="flex items-center gap-2">
                             <span className="text-teal-500">🔒</span>
                             {lang === 'zh' ? '安全付款' : 'Secure Payment'}
@@ -771,7 +771,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                             <span className="text-teal-500">💬</span>
                             {lang === 'zh' ? '客服支援' : 'Support Available'}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </section>
 

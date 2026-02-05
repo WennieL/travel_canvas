@@ -730,13 +730,17 @@ export function App() {
         setUnlockTarget(null);
         setBatchUnlockCount(0);
     };
-    const applyTemplate = (template: { name: string; duration: number; schedule: DaySchedule }) => {
-        // 確認對話框
-        const confirmMessage = lang === 'zh'
-            ? `⚠️ 確定要套用「${template.name}」嗎？\n\n套用後，目前的行程內容將會被取代。\n\n💡 小提示：您也可以先新增一個新的旅行計畫，再套用模板喔！`
-            : `⚠️ Apply "${template.name}"?\n\nThis will replace your current itinerary.\n\n💡 Tip: You can also create a new plan first to keep your current one!`;
+    const applyTemplate = (template: { name: string; nameEn?: string; duration: number; schedule: DaySchedule }, skipConfirm: boolean = false) => {
+        const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
 
-        if (!confirm(confirmMessage)) return;
+        // 確認對話框
+        if (!skipConfirm) {
+            const confirmMessage = lang === 'zh'
+                ? `⚠️ 確定要套用「${templateName}」嗎？\n\n套用後，目前的行程內容將會被取代。\n\n💡 小提示：您也可以先新增一個新的旅行計畫，再套用模板喔！`
+                : `⚠️ Apply "${templateName}"?\n\nThis will replace your current itinerary.\n\n💡 Tip: You can also create a new plan first to keep your current one!`;
+
+            if (!confirm(confirmMessage)) return;
+        }
 
         // 複製項目的工具函數
         const copy = (items: ScheduleItem[]) => items.map(i => ({
@@ -759,7 +763,7 @@ export function App() {
 
         // 更新整個 Plan（名稱 + 天數 + 行程）
         updateActivePlan({
-            name: template.name,
+            name: templateName,
             totalDays: template.duration,
             schedule: newSchedule
         });
@@ -769,7 +773,7 @@ export function App() {
         setShowMobileLibrary(false);
 
         // 顯示成功訊息
-        showToastMessage(`✅ 已套用「${template.name}」模板！`);
+        showToastMessage(lang === 'zh' ? `✅ 已套用「${templateName}」模板！` : `✅ Template "${templateName}" applied!`);
     };
     const generateExportText = () => { let text = `✈️ ${activePlan.name} (${activePlan.startDate} ~ ${activePlan.endDate})\n`; text += `💰 ${t.budget}: JP¥${calculateTotalBudget().toLocaleString()}\n\n`; for (let i = 1; i <= activePlan.totalDays; i++) { const dayKey = `Day ${i}`; const dayData = activePlan.schedule[dayKey]; const currentDateStr = getDisplayDate(i); text += `📅 ${t.day} ${i} - ${currentDateStr}\n`; if (!dayData) { text += `  (No schedule)\n\n`; continue; } const hasActivities = [...dayData.morning, ...dayData.afternoon, ...dayData.evening, ...dayData.night].length > 0; const hasAccommodation = dayData.accommodation && dayData.accommodation.length > 0; if (!hasActivities && !hasAccommodation) { text += `  (Free Time)\n`; } else { (['morning', 'afternoon', 'evening', 'night'] as TimeSlot[]).forEach(slot => { if (dayData[slot] && dayData[slot].length > 0) { text += `  ${getSlotLabel(slot, t).split(' ')[0]}:\n`; dayData[slot].forEach(item => { const timeStr = item.startTime ? `[${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } }); if (hasAccommodation) { text += `  🏨 ${t.accommodation}:\n`; dayData.accommodation.forEach(item => { const timeStr = item.startTime ? `[${t.checkIn}: ${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } } text += `\n`; } return text; };
 
@@ -778,7 +782,8 @@ export function App() {
         if (templateId) {
             const template = TEMPLATES.find(t => t.id === templateId);
             if (template) {
-                setTimeout(() => applyTemplate(template), 100);
+                // 從 Landing page 點擊來的，這時候 skipConfirm = true
+                setTimeout(() => applyTemplate(template, true), 100);
             }
         }
     }} lang={lang} toggleLang={toggleLang} />;
