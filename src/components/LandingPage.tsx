@@ -112,6 +112,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                             {t.joinEarlyAccess}
                         </button>
                     </div>
+                    {/* Trust hint */}
+                    <p className="text-white/60 text-sm mt-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                        {lang === 'zh' ? '無需註冊 • 無需信用卡 • 立即試用' : 'No signup required • No credit card • Try instantly'}
+                    </p>
                 </div>
 
                 {/* Ken Burns & Carousel Animation Styles */}
@@ -246,7 +250,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                                     {t.feature3Desc}
                                 </p>
                                 <div className="text-[#4ECDC4] font-bold text-lg">
-                                    {lang === 'zh' ? '💡 站在達人的肩膀上' : '💡 Stand on the shoulders of experts'}
+                                    {lang === 'zh' ? '💡 他們的經驗，你的起點' : '💡 Their experience, your head start'}
                                 </div>
                             </div>
                         </div>
@@ -292,14 +296,27 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                     {/* Text Content */}
                     <div className="flex-1 text-center md:text-left">
                         <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 text-xs font-black uppercase tracking-wider mb-6 shadow-lg shadow-yellow-500/20">
-                            {lang === 'zh' ? '創作者經濟' : 'Creator Economy'}
+                            {lang === 'zh' ? '達人社群' : 'Expert Community'}
                         </span>
                         <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
                             {t.communityTitle || "Plan like a pro. Share like an influencer."}
                         </h2>
-                        <p className="text-lg text-gray-400 mb-8 leading-relaxed max-w-xl mx-auto md:mx-0">
+                        <p className="text-lg text-gray-400 mb-6 leading-relaxed max-w-xl mx-auto md:mx-0">
                             {t.communitySubtitle || "Join our community. Publish your trips, get featured, and inspire thousands of travelers."}
                         </p>
+
+                        {/* Expert Types Explanation */}
+                        <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
+                            <span className="px-3 py-1.5 bg-white/10 rounded-full text-sm text-gray-300 border border-white/10">
+                                🏠 {lang === 'zh' ? '當地達人 — 住在那裡的人' : 'Local Expert — lives there'}
+                            </span>
+                            <span className="px-3 py-1.5 bg-white/10 rounded-full text-sm text-gray-300 border border-white/10">
+                                ✈️ {lang === 'zh' ? '資深旅人 — 去過 5 次以上' : 'Veteran — visited 5+ times'}
+                            </span>
+                            <span className="px-3 py-1.5 bg-white/10 rounded-full text-sm text-gray-300 border border-white/10">
+                                ⭐ {lang === 'zh' ? '人氣規劃師 — 被引用 100+ 次' : 'Community Star — copied 100+ times'}
+                            </span>
+                        </div>
 
                         <div className="flex flex-wrap gap-6 justify-center md:justify-start mb-10">
                             <div className="flex flex-col">
@@ -340,7 +357,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                                         Alice.Travels
                                         <span className="bg-blue-500 text-white text-[10px] p-1 rounded-full"><Globe size={10} /></span>
                                     </h3>
-                                    <p className="text-teal-400 text-sm font-medium">Verified Creator</p>
+                                    <p className="text-teal-400 text-sm font-medium">{lang === 'zh' ? '🏠 當地達人' : '🏠 Local Expert'}</p>
                                 </div>
                             </div>
 
@@ -576,19 +593,24 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                         </span>
                     </div>
 
-                    {/* Testimonial */}
-                    <div className="bg-slate-50 rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mb-8">
-                        <p className="text-lg md:text-xl text-slate-700 italic mb-4">
-                            "{lang === 'zh'
-                                ? '終於有一個真正讓規劃變簡單的工具了！再也不用開 20 個分頁了。'
-                                : 'Finally, a trip planner that actually makes sense! No more 20 tabs.'}"
+                    {/* Beta CTA - Honest approach */}
+                    <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-2xl p-6 md:p-8 max-w-2xl mx-auto mb-8 border border-teal-100">
+                        <p className="text-lg md:text-xl text-slate-700 font-medium mb-4">
+                            {lang === 'zh'
+                                ? '🚀 我們正在打造下一代旅行規劃工具'
+                                : '🚀 We\'re building the next-gen trip planner'}
                         </p>
-                        <div className="flex items-center justify-center gap-2">
-                            <span className="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                            <span className="text-slate-500 text-sm">
-                                — Demo User
-                            </span>
-                        </div>
+                        <p className="text-slate-500 text-sm mb-4">
+                            {lang === 'zh'
+                                ? '目前為 Beta 版，免費試用所有功能。你的回饋將幫助我們變得更好！'
+                                : 'Currently in Beta — try all features free. Your feedback helps us improve!'}
+                        </p>
+                        <button
+                            onClick={onStart}
+                            className="px-6 py-2 bg-teal-500 text-white font-bold rounded-full hover:bg-teal-600 transition-all text-sm"
+                        >
+                            {lang === 'zh' ? '免費試用 Beta 版' : 'Try Beta Free'}
+                        </button>
                     </div>
 
                     {/* Trust Badges */}

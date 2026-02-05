@@ -18,9 +18,10 @@ interface ItemDetailModalProps {
     onClose: () => void;
     item: ScheduleItem | TravelItem | null;
     t: any;
+    lang?: 'zh' | 'en';
 }
 
-const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item, t }) => {
+const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item, t, lang = 'zh' }) => {
     if (!isOpen || !item) return null;
 
     const hasCoordinates = item.lat && item.lng;
@@ -42,7 +43,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                         </div>
                         <div>
                             <h2 className="font-bold text-xl text-gray-800 flex items-center gap-2">
-                                {item.title || (item as any).titleEn}
+                                {lang === 'en' && (item as any).titleEn ? (item as any).titleEn : item.title}
                             </h2>
                             <p className="text-sm text-gray-400 capitalize flex items-center gap-1">
                                 {item.type} {item.region && `• ${item.region}`}
@@ -94,9 +95,11 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                     <div className="p-6 space-y-6">
                         {/* Description */}
                         <div>
-                            <h3 className="font-bold text-gray-800 mb-2 text-sm uppercase tracking-wide opacity-70">Description</h3>
+                            <h3 className="font-bold text-gray-800 mb-2 text-sm uppercase tracking-wide opacity-70">
+                                {lang === 'zh' ? '描述' : 'Description'}
+                            </h3>
                             <p className="text-gray-600 leading-relaxed text-lg">
-                                {item.description || "No description available."}
+                                {lang === 'en' && (item as any).descriptionEn ? (item as any).descriptionEn : (item.description || (lang === 'zh' ? '暫無描述' : 'No description available.'))}
                             </p>
                         </div>
 
@@ -159,36 +162,36 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
 
                                     {/* Teaser / Summary */}
                                     <p className="text-amber-900 leading-relaxed mb-4">
-                                        {item.insiderTip.teaser || item.insiderTip.text}
+                                        {lang === 'en' && item.insiderTip.teaserEn ? item.insiderTip.teaserEn : (item.insiderTip.teaser || item.insiderTip.text)}
                                     </p>
 
                                     {/* Full Details (if available) */}
                                     {item.insiderTip.full && (
                                         <div className="space-y-3 pt-3 border-t border-amber-200">
                                             {/* Story */}
-                                            {item.insiderTip.full.story && (
+                                            {(item.insiderTip.full.story || item.insiderTip.full.storyEn) && (
                                                 <div className="text-amber-800 text-sm leading-relaxed italic">
-                                                    "{item.insiderTip.full.story}"
+                                                    "{lang === 'en' && item.insiderTip.full.storyEn ? item.insiderTip.full.storyEn : item.insiderTip.full.story}"
                                                 </div>
                                             )}
 
                                             {/* Details Grid */}
                                             <div className="grid gap-2 text-sm">
-                                                {item.insiderTip.full.exactLocation && (
+                                                {(item.insiderTip.full.exactLocation || item.insiderTip.full.exactLocationEn) && (
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">📍</span>
                                                         <div>
-                                                            <div className="font-medium text-amber-900">精確位置</div>
-                                                            <div className="text-amber-700">{item.insiderTip.full.exactLocation}</div>
+                                                            <div className="font-medium text-amber-900">{lang === 'zh' ? '精確位置' : 'Exact Location'}</div>
+                                                            <div className="text-amber-700">{lang === 'en' && item.insiderTip.full.exactLocationEn ? item.insiderTip.full.exactLocationEn : item.insiderTip.full.exactLocation}</div>
                                                         </div>
                                                     </div>
                                                 )}
-                                                {item.insiderTip.full.mustTry && (
+                                                {(item.insiderTip.full.mustTry || item.insiderTip.full.mustTryEn) && (
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">🎯</span>
                                                         <div>
-                                                            <div className="font-medium text-amber-900">必點推薦</div>
-                                                            <div className="text-amber-700">{item.insiderTip.full.mustTry}</div>
+                                                            <div className="font-medium text-amber-900">{lang === 'zh' ? '必點推薦' : 'Must Try'}</div>
+                                                            <div className="text-amber-700">{lang === 'en' && item.insiderTip.full.mustTryEn ? item.insiderTip.full.mustTryEn : item.insiderTip.full.mustTry}</div>
                                                         </div>
                                                     </div>
                                                 )}
@@ -196,17 +199,17 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">⏰</span>
                                                         <div>
-                                                            <div className="font-medium text-amber-900">最佳時段</div>
+                                                            <div className="font-medium text-amber-900">{lang === 'zh' ? '最佳時段' : 'Best Time'}</div>
                                                             <div className="text-amber-700">{item.insiderTip.full.bestTime}</div>
                                                         </div>
                                                     </div>
                                                 )}
-                                                {item.insiderTip.full.avoid && (
+                                                {(item.insiderTip.full.avoid || item.insiderTip.full.avoidEn) && (
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">⚠️</span>
                                                         <div>
-                                                            <div className="font-medium text-red-700">避坑提醒</div>
-                                                            <div className="text-red-600">{item.insiderTip.full.avoid}</div>
+                                                            <div className="font-medium text-red-700">{lang === 'zh' ? '避坑提醒' : 'Avoid'}</div>
+                                                            <div className="text-red-600">{lang === 'en' && item.insiderTip.full.avoidEn ? item.insiderTip.full.avoidEn : item.insiderTip.full.avoid}</div>
                                                         </div>
                                                     </div>
                                                 )}

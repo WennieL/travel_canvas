@@ -1403,6 +1403,7 @@ export function App() {
                 onClose={() => setDetailItem(null)}
                 item={detailItem}
                 t={t}
+                lang={lang}
             />
 
             {/* Onboarding Modal - shows for first-time users */}
