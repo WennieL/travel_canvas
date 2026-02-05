@@ -773,7 +773,15 @@ export function App() {
     };
     const generateExportText = () => { let text = `✈️ ${activePlan.name} (${activePlan.startDate} ~ ${activePlan.endDate})\n`; text += `💰 ${t.budget}: JP¥${calculateTotalBudget().toLocaleString()}\n\n`; for (let i = 1; i <= activePlan.totalDays; i++) { const dayKey = `Day ${i}`; const dayData = activePlan.schedule[dayKey]; const currentDateStr = getDisplayDate(i); text += `📅 ${t.day} ${i} - ${currentDateStr}\n`; if (!dayData) { text += `  (No schedule)\n\n`; continue; } const hasActivities = [...dayData.morning, ...dayData.afternoon, ...dayData.evening, ...dayData.night].length > 0; const hasAccommodation = dayData.accommodation && dayData.accommodation.length > 0; if (!hasActivities && !hasAccommodation) { text += `  (Free Time)\n`; } else { (['morning', 'afternoon', 'evening', 'night'] as TimeSlot[]).forEach(slot => { if (dayData[slot] && dayData[slot].length > 0) { text += `  ${getSlotLabel(slot, t).split(' ')[0]}:\n`; dayData[slot].forEach(item => { const timeStr = item.startTime ? `[${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } }); if (hasAccommodation) { text += `  🏨 ${t.accommodation}:\n`; dayData.accommodation.forEach(item => { const timeStr = item.startTime ? `[${t.checkIn}: ${item.startTime}] ` : ''; const priceStr = item.price ? ` (¥${item.price})` : ''; const noteStr = item.notes ? `\n      ${t.addNote}: ${item.notes}` : ''; text += `    - ${timeStr}${item.image || getFallbackImage(item.type)} ${item.title}${priceStr}${noteStr}\n`; }); } } text += `\n`; } return text; };
 
-    if (showLanding) return <LandingPage onStart={() => setShowLanding(false)} lang={lang} toggleLang={toggleLang} />;
+    if (showLanding) return <LandingPage onStart={(templateId?: string) => {
+        setShowLanding(false);
+        if (templateId) {
+            const template = TEMPLATES.find(t => t.id === templateId);
+            if (template) {
+                setTimeout(() => applyTemplate(template), 100);
+            }
+        }
+    }} lang={lang} toggleLang={toggleLang} />;
 
     if (!activePlan) {
         return <div className="h-screen w-screen flex items-center justify-center text-gray-500">Loading plan...</div>;
