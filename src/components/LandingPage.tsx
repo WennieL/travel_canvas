@@ -310,7 +310,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#4ECDC4]/5 to-[#FFE66D]/5 rounded-full blur-3xl"></div>
 
             {/* ===== VALUE PROPOSITION TRANSITION - "The Spark" ===== */}
-            <section className="w-full bg-stone-50 py-16 md:py-24 px-6 z-10 text-center">
+            <section className="w-full bg-white py-16 md:py-24 px-6 z-10 text-center">
                 <div className="max-w-3xl mx-auto">
                     <h2 className="text-2xl md:text-4xl font-extrabold text-slate-800 mb-6 leading-snug">
                         {lang === 'zh'
@@ -333,6 +333,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
             {/* ===== CORE FEATURES SECTION - Unified Background ===== */}
             <section id="features" className="w-full bg-stone-100 py-16 md:py-24 px-6 z-10">
                 <div className="max-w-6xl mx-auto space-y-12">
+                    {/* Section Header */}
+                    <div className="text-center">
+                        <span className="inline-block px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-bold uppercase tracking-wider mb-4">
+                            {lang === 'zh' ? '核心功能' : 'Core Features'}
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">
+                            {lang === 'zh' ? '為什麼選擇 TravelCanvas？' : 'Why TravelCanvas?'}
+                        </h2>
+                        <p className="text-slate-500 text-lg max-w-xl mx-auto">
+                            {lang === 'zh' ? '告別繁瑣的行程規劃，專注於旅行的樂趣' : 'Stop stressing over spreadsheets. Focus on the journey.'}
+                        </p>
+                    </div>
 
                     {/* CORE FEATURE 1: Chaos → Order */}
                     <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm">
@@ -346,7 +358,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                             {/* Text - Right */}
                             <div className="flex-1 text-center md:text-left">
                                 <span className="text-[#FF6B6B] font-bold text-sm uppercase tracking-wider mb-4 block">
-                                    {lang === 'zh' ? '核心功能' : 'Core Feature'}
+                                    {lang === 'zh' ? '化繁為簡' : 'Bye Bye Chaos'}
                                 </span>
                                 <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-6 leading-tight">
                                     {lang === 'zh' ? '告別混亂的 20 個分頁' : 'Say Goodbye to 20 Open Tabs'}
