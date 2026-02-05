@@ -41,6 +41,22 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     // Country-City hierarchy state
     const [activeCountry, setActiveCountry] = useState<string>('all');
 
+    // [NEW] Sync internal activeCountry when external activeRegion changes (Context Awareness)
+    React.useEffect(() => {
+        if (activeRegion === 'all') {
+            setActiveCountry('all');
+            return;
+        }
+
+        // Find which country this city belongs to
+        for (const countryId in CITY_FILTERS) {
+            if (CITY_FILTERS[countryId].some(city => city.id === activeRegion)) {
+                setActiveCountry(countryId);
+                break;
+            }
+        }
+    }, [activeRegion]);
+
     // Desktop hover tooltip state (Portal-based)
     const [hoveredItem, setHoveredItem] = useState<TravelItem | null>(null);
     const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
