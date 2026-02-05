@@ -102,6 +102,7 @@ export interface Plan {
     totalDays: number;
     schedule: FullSchedule;
     checklist: ChecklistItem[];
+    region?: Region; // [NEW] Track the city/region of the plan
     targetCurrency?: string; // e.g. 'TWD'
     exchangeRate?: number;   // e.g. 0.21 (1 JPY = 0.21 TWD)
     createdAt: number;

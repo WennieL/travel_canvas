@@ -17,7 +17,7 @@ interface SidebarContentProps {
     setShowCustomItemModal: (show: boolean) => void;
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
     handleTapToAdd: (item: TravelItem) => void;
-    applyTemplate: (template: { name: string; duration: number; schedule: DaySchedule }) => void;
+    applyTemplate: (template: { name: string; duration: number; schedule: DaySchedule; region: Region }) => void;
     t: any;
     lang?: string;
     customAssets?: TravelItem[];
@@ -409,7 +409,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                                 template.purchased = true;
                                                 template.isLocked = false;
                                                 alert("🎁 Beta 免費解鎖成功！");
-                                                applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule });
+                                                applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule, region: template.region });
                                             }}
                                             className="w-full py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs rounded hover:from-amber-600 hover:to-orange-600 transition-colors font-bold flex items-center justify-center gap-1"
                                         >
@@ -418,7 +418,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     ) : (
                                         <button onClick={(e) => {
                                             e.stopPropagation();
-                                            applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule });
+                                            applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule, region: template.region });
                                         }} className="w-full py-1.5 bg-gray-50 text-teal-600 text-xs rounded hover:bg-teal-50 transition-colors font-medium">
                                             {t.apply || 'Apply'}
                                         </button>

@@ -43,7 +43,8 @@ import {
     TOKYO_DEMO_PLAN,
     SAMPLE_CREATORS,
     TEMPLATES,
-    SAMPLE_ASSETS
+    SAMPLE_ASSETS,
+    CITY_FILTERS
 } from './data/index';
 import {
     LangType,
@@ -167,12 +168,15 @@ export function App() {
     const [activeTab, setActiveTab] = useState<'assets' | 'templates'>('assets');
     const [activeCategory, setActiveCategory] = useState<'all' | ItemType>('all');
     const [activeRegion, setActiveRegion] = useState<Region>('all');
+    // [MOVED] Sync activeRegion logic will be placed after activePlan is available
+
     const [isInitialized, setIsInitialized] = useState(false);
     const draggedItemRef = useRef<{ item: TravelItem, source: 'sidebar' | 'canvas', sourceSlot?: TimeSlot, index?: number } | null>(null);
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isDraggingGlobal, setIsDraggingGlobal] = useState(false);
     const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
+    const [showCitySelector, setShowCitySelector] = useState(false); // [NEW] City Selector Toggle
 
     // UI/UX Enhancement States
     const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -248,6 +252,13 @@ export function App() {
         handleDeletePlan: hookDeletePlan, handleAddDay: hookAddDay,
         handleDeleteDay: hookDeleteDay, getDisplayDate, getShortDate
     } = usePlans(isInitialized, t, lang);
+
+    // [NEW] Sync activeRegion with activePlan (Moved here)
+    useEffect(() => {
+        if (activePlan?.region && activePlan.region !== activeRegion) {
+            setActiveRegion(activePlan.region);
+        }
+    }, [activePlan?.id, activePlan?.region]);
 
     // DATA INTEGRITY REPAIR: Ensure items are in correct slots based on time
     useEffect(() => {
@@ -730,7 +741,7 @@ export function App() {
         setUnlockTarget(null);
         setBatchUnlockCount(0);
     };
-    const applyTemplate = (template: { name: string; nameEn?: string; duration: number; schedule: DaySchedule }, skipConfirm: boolean = false) => {
+    const applyTemplate = (template: { name: string; nameEn?: string; duration: number; schedule: DaySchedule; region: Region }, skipConfirm: boolean = false) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
 
         // 確認對話框
@@ -761,11 +772,12 @@ export function App() {
             };
         }
 
-        // 更新整個 Plan（名稱 + 天數 + 行程）
+        // 更新整個 Plan（名稱 + 天數 + 行程 + 地區）
         updateActivePlan({
             name: templateName,
             totalDays: template.duration,
-            schedule: newSchedule
+            schedule: newSchedule,
+            region: template.region // [NEW] Set plan region
         });
 
         // 跳到 Day 1
@@ -840,9 +852,68 @@ export function App() {
                                 className="font-bold text-teal-700 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
                             />
                         ) : (
-                            <h1 onClick={startEditingName} className="font-bold text-teal-700 flex items-center gap-2 truncate text-sm leading-tight cursor-pointer active:opacity-70 transition-opacity">
-                                <MapIcon className="w-3.5 h-3.5 flex-shrink-0" /> {activePlan.name}
-                            </h1>
+                            <div className="flex items-center gap-2">
+                                <h1 onClick={startEditingName} className="font-bold text-teal-700 flex items-center gap-1.5 truncate text-sm leading-tight cursor-pointer active:opacity-70 transition-opacity">
+                                    <MapIcon className="w-3.5 h-3.5 flex-shrink-0" /> {activePlan.name}
+                                </h1>
+                                {/* Mobile City Selector */}
+                                <div className="relative">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowCitySelector(!showCitySelector);
+                                        }}
+                                        className={`flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold transition-all whitespace-nowrap ${showCitySelector ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-500'}`}
+                                    >
+                                        <span>📍</span>
+                                        <span className="max-w-[60px] truncate">
+                                            {(() => {
+                                                const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
+                                                if (!city) return lang === 'en' ? 'All' : '全部';
+                                                return lang === 'en' ? city.labelEn : city.label;
+                                            })()}
+                                        </span>
+                                        <span className={`text-[8px] ml-0.5 transition-transform ${showCitySelector ? 'rotate-180' : ''}`}>▼</span>
+                                    </button>
+
+                                    {/* Mobile Dropdown */}
+                                    {showCitySelector && (
+                                        <div className="absolute top-full left-0 mt-2 w-44 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                            <div className="max-h-60 overflow-y-auto">
+                                                <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
+                                                {CITY_FILTERS?.japan?.map(city => (
+                                                    <button
+                                                        key={city.id}
+                                                        onClick={() => {
+                                                            setActiveRegion(city.id);
+                                                            updateActivePlan({ region: city.id });
+                                                            setShowCitySelector(false);
+                                                        }}
+                                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                                    >
+                                                        <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                                    </button>
+                                                ))}
+                                                <div className="h-px bg-gray-100 my-1"></div>
+                                                <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
+                                                {CITY_FILTERS?.australia?.map(city => (
+                                                    <button
+                                                        key={city.id}
+                                                        onClick={() => {
+                                                            setActiveRegion(city.id);
+                                                            updateActivePlan({ region: city.id });
+                                                            setShowCitySelector(false);
+                                                        }}
+                                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                                    >
+                                                        <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         )}
                         <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate}</span>
                     </div>
@@ -912,6 +983,66 @@ export function App() {
                         >
                             📅 {activePlan.startDate} ~ {activePlan.endDate}
                         </span>
+                    </div>
+
+                    {/* [NEW] City Selector */}
+                    <div className="relative ml-4 z-20">
+                        <button
+                            onClick={() => setShowCitySelector(!showCitySelector)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${showCitySelector ? 'bg-teal-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                        >
+                            <span>📍</span>
+                            <span className="whitespace-nowrap">
+                                {(() => {
+                                    const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
+                                    if (!city) return lang === 'en' ? 'All Cities' : '所有城市';
+                                    return lang === 'en' ? city.labelEn : city.label;
+                                })()}
+                            </span>
+                            <span className={`text-[10px] ml-0.5 transition-transform ${showCitySelector ? 'rotate-180' : ''}`}>▼</span>
+                        </button>
+
+                        {showCitySelector && (
+                            <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="flex items-center justify-between px-2 py-1 mb-1">
+                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{lang === 'zh' ? '選擇城市' : 'Select City'}</div>
+                                    <button onClick={() => setShowCitySelector(false)} className="text-gray-400 hover:text-gray-600"><X size={12} /></button>
+                                </div>
+                                <div className="max-h-64 overflow-y-auto">
+                                    <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
+                                    {CITY_FILTERS?.japan?.map(city => (
+                                        <button
+                                            key={city.id}
+                                            onClick={() => {
+                                                setActiveRegion(city.id);
+                                                updateActivePlan({ region: city.id });
+                                                setShowCitySelector(false);
+                                            }}
+                                            className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                        >
+                                            <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                            {activeRegion === city.id && <Check size={12} className="ml-auto" />}
+                                        </button>
+                                    ))}
+                                    <div className="h-px bg-gray-100 my-1 mx-2"></div>
+                                    <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
+                                    {CITY_FILTERS?.australia?.map(city => (
+                                        <button
+                                            key={city.id}
+                                            onClick={() => {
+                                                setActiveRegion(city.id);
+                                                updateActivePlan({ region: city.id });
+                                                setShowCitySelector(false);
+                                            }}
+                                            className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                        >
+                                            <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                            {activeRegion === city.id && <Check size={12} className="ml-auto" />}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="flex items-center gap-2">
                         {/* Compact Budget Widget */}
@@ -1350,7 +1481,7 @@ export function App() {
                 isSubscribed={selectedCreatorId ? subscribedCreators.includes(selectedCreatorId) : false}
                 onToggleSubscribe={() => selectedCreatorId && toggleSubscription(selectedCreatorId)}
                 onExploreTemplate={(tpl) => {
-                    applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule });
+                    applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule, region: tpl.region });
                     setSelectedCreatorId(null);
                 }}
                 lang={lang}
@@ -1447,7 +1578,7 @@ export function App() {
                 t={t}
                 lang={lang}
                 onApply={(tpl) => {
-                    applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule });
+                    applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule, region: tpl.region });
                     setPreviewTemplate(null);
                 }}
                 onUnlock={(tpl: any) => {

@@ -86,6 +86,7 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             targetCurrency: 'TWD',
             exchangeRate: 0.22,
             checklist: [],
+            region: 'tokyo', // Default to Tokyo
             createdAt: Date.now()
         };
         setPlans([...plans, newPlan]);

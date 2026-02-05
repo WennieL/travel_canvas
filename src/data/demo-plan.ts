@@ -24,6 +24,7 @@ export const TOKYO_DEMO_PLAN: Plan = {
         { id: 'c5', text: '確認機票與住宿', checked: true }
     ],
     createdAt: Date.now(),
+    region: 'tokyo',
     schedule: {
         'Day 1': {
             morning: [
