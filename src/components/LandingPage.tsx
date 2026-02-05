@@ -478,10 +478,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                                     <span className="text-teal-500">✓</span>
                                     {lang === 'zh' ? 'PDF 匯出（有浮水印）' : 'PDF export (watermarked)'}
                                 </li>
-                                <li className="flex items-center gap-2 text-slate-400 text-sm">
-                                    <span className="text-slate-300">✗</span>
-                                    {lang === 'zh' ? '離線存取' : 'Offline access'}
-                                </li>
                             </ul>
                         </div>
 
@@ -541,7 +537,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                                 </li>
                                 <li className="flex items-center gap-2 text-sm">
                                     <span className="text-teal-400">✓</span>
-                                    {lang === 'zh' ? '離線存取 & 進階功能' : 'Offline + advanced features'}
+                                    {lang === 'zh' ? '更多達人專屬模板' : 'More expert templates'}
                                 </li>
                             </ul>
                         </div>
@@ -660,8 +656,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                             </summary>
                             <p className="mt-4 text-slate-600 text-sm leading-relaxed">
                                 {lang === 'zh'
-                                    ? '您的資料安全儲存在雲端，並經過加密保護。您可以從任何裝置存取您的行程。'
-                                    : 'Your data is securely stored in the cloud with encryption. Access your trips from any device.'}
+                                    ? '目前 Beta 版本的資料儲存在您的瀏覽器本地。雲端同步功能正在開發中，即將推出！'
+                                    : 'Currently in Beta, your data is stored locally in your browser. Cloud sync is coming soon!'}
                             </p>
                         </details>
 
@@ -673,8 +669,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                             </summary>
                             <p className="mt-4 text-slate-600 text-sm leading-relaxed">
                                 {lang === 'zh'
-                                    ? '可以！免費版可與 1 位朋友協作，Pro 版可與最多 5 人一起規劃。透過分享連結，朋友可以查看或編輯行程。'
-                                    : 'Yes! Free plan allows 1 collaborator, Pro allows up to 5. Share links with friends to view or edit trips together.'}
+                                    ? '協作功能正在開發中！目前您可以透過分享連結讓朋友查看行程，即時共編功能即將推出。'
+                                    : 'Collaboration is in development! Currently you can share trip links for viewing. Real-time co-editing is coming soon.'}
                             </p>
                         </details>
 
