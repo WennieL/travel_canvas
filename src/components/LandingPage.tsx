@@ -394,179 +394,162 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
             {/* Product Preview Section */}
             <ProductPreview lang={lang} onStart={onStart} />
 
-            {/* ===== PRICING SECTION (Travoll-inspired) ===== */}
+            {/* ===== PRICING SECTION (Optimized) ===== */}
             <section id="pricing" className="w-full py-20 px-6 bg-gradient-to-b from-slate-50 to-white z-10">
                 <div className="max-w-5xl mx-auto">
+                    {/* Section Header */}
+                    <div className="text-center mb-12">
+                        <span className="inline-block px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-xs font-bold uppercase tracking-wider mb-4">
+                            {lang === 'zh' ? '定價方案' : 'Pricing'}
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">
+                            {lang === 'zh' ? '簡單透明，沒有隱藏費用' : 'Simple pricing. No surprises.'}
+                        </h2>
+                        <p className="text-slate-500 text-lg max-w-xl mx-auto">
+                            {lang === 'zh' ? '免費版就很強大。需要更多？隨時升級。' : 'Free is powerful. Need more? Upgrade anytime.'}
+                        </p>
+                    </div>
+
                     {/* Billing Toggle */}
-                    <div className="flex justify-center mb-8">
+                    <div className="flex justify-center mb-10">
                         <div className="relative inline-flex items-center bg-slate-100 rounded-full p-1">
                             <button
                                 onClick={() => setIsYearly(false)}
                                 className={`px-6 py-2 text-sm font-bold rounded-full transition-all ${!isYearly ? 'bg-slate-800 text-white' : 'text-slate-600 hover:text-slate-800'}`}
                             >
-                                {lang === 'zh' ? '月付' : 'Pay monthly'}
+                                {lang === 'zh' ? '月付' : 'Monthly'}
                             </button>
                             <button
                                 onClick={() => setIsYearly(true)}
                                 className={`px-6 py-2 text-sm font-bold rounded-full transition-all ${isYearly ? 'bg-slate-800 text-white' : 'text-slate-600 hover:text-slate-800'}`}
                             >
-                                {lang === 'zh' ? '年付' : 'Pay yearly'}
+                                {lang === 'zh' ? '年付' : 'Yearly'}
                             </button>
-                            {/* Discount Badge */}
-                            <span className="absolute -top-3 right-0 bg-gradient-to-r from-orange-400 to-red-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
-                                {lang === 'zh' ? '省 33%' : '33% OFF'}
+                            <span className="absolute -top-3 -right-2 bg-gradient-to-r from-orange-400 to-red-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                                {lang === 'zh' ? '省 33%' : 'SAVE 33%'}
                             </span>
                         </div>
                     </div>
 
                     {/* Pricing Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
 
-                        {/* FREE Plan - Starter */}
-                        <div className="bg-white rounded-3xl p-8 border-2 border-slate-200 shadow-sm flex flex-col relative">
-                            {/* Plan Header */}
-                            <div className="text-center mb-6">
-                                <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                                    {lang === 'zh' ? '免費版' : 'Starter'}
+                        {/* FREE Plan */}
+                        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col">
+                            <div className="mb-4">
+                                <h3 className="text-xl font-bold text-slate-800">
+                                    {lang === 'zh' ? '免費版' : 'Free'}
                                 </h3>
-                                <p className="text-slate-500 text-sm">
-                                    {lang === 'zh' ? '免費開始你的旅程規劃！' : 'Get started and build your trip for FREE!'}
+                                <p className="text-slate-400 text-sm">
+                                    {lang === 'zh' ? '永久免費，足夠一般使用' : 'Free forever for casual planning'}
                                 </p>
                             </div>
 
-                            {/* Price */}
-                            <div className="text-center mb-6">
-                                <span className="text-5xl font-extrabold text-slate-800">$0</span>
-                                <span className="text-slate-500 text-lg">/mo</span>
+                            <div className="mb-6">
+                                <span className="text-4xl font-extrabold text-slate-800">$0</span>
+                                <span className="text-slate-400">/mo</span>
+                                <p className="text-slate-400 text-xs mt-1">&nbsp;</p>
                             </div>
 
-                            {/* CTA */}
                             <button
                                 onClick={onStart}
-                                className="w-full py-3 px-6 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white font-bold rounded-full hover:opacity-90 transition-all shadow-md mb-2"
+                                className="w-full py-3 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-all mb-2"
                             >
-                                {lang === 'zh' ? '免費開始規劃' : 'Start Planning for FREE'}
+                                {lang === 'zh' ? '開始使用' : 'Get Started'}
                             </button>
                             <p className="text-center text-slate-400 text-xs mb-6">
                                 {lang === 'zh' ? '永久免費！' : "It's Free!"}
                             </p>
 
-                            {/* Features */}
                             <ul className="space-y-3 flex-1">
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '基本功能完整使用' : 'Access to core features'}
+                                <li className="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span className="text-teal-500">✓</span>
+                                    {lang === 'zh' ? '1 份草稿行程' : '1 draft itinerary'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '與 1 位朋友協作' : 'Desktop collaboration with 1 friend'}
+                                <li className="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span className="text-teal-500">✓</span>
+                                    {lang === 'zh' ? '每行程 20 個景點' : '20 spots per trip'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '每跟行程 20 個景點區塊' : '20 Canvas Blocks per trip'}
+                                <li className="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span className="text-teal-500">✓</span>
+                                    {lang === 'zh' ? '5 個基本模板' : '5 starter templates'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '5 個基本模板' : '5 basic templates'}
+                                <li className="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span className="text-teal-500">✓</span>
+                                    {lang === 'zh' ? 'PDF 匯出（有浮水印）' : 'PDF export (watermarked)'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '1 份草稿行程' : 'One draft itinerary per account'}
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? 'PDF 匯出（有浮水印）' : 'PDF export (with watermark)'}
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '1 個分享連結' : '1 shareable trip link'}
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-400 text-sm">
-                                    <span className="text-red-400 mt-0.5">✗</span>
-                                    {lang === 'zh' ? '離線存取' : 'Offline Access'}
+                                <li className="flex items-center gap-2 text-slate-400 text-sm">
+                                    <span className="text-slate-300">✗</span>
+                                    {lang === 'zh' ? '離線存取' : 'Offline access'}
                                 </li>
                             </ul>
                         </div>
 
-                        {/* PRO Plan - Traveler */}
-                        <div className="bg-white rounded-3xl p-8 border-2 border-[#4ECDC4] shadow-lg flex flex-col relative">
-                            {/* Most Popular Badge */}
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                <span className="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md">
-                                    {lang === 'zh' ? '最受歡迎' : 'Most Popular'}
-                                </span>
+                        {/* PRO Plan */}
+                        <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white flex flex-col relative overflow-hidden">
+                            {/* Popular Badge */}
+                            <div className="absolute top-0 right-0 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">
+                                {lang === 'zh' ? '最受歡迎' : 'POPULAR'}
                             </div>
 
-                            {/* Plan Header */}
-                            <div className="text-center mb-6 mt-2">
-                                <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                                    {lang === 'zh' ? '旅行家' : 'Traveler'}
+                            <div className="mb-4">
+                                <h3 className="text-xl font-bold">
+                                    {lang === 'zh' ? '旅行家 Pro' : 'Traveler Pro'}
                                 </h3>
-                                <p className="text-slate-500 text-sm">
-                                    {t.pricingProFor}
+                                <p className="text-slate-400 text-sm">
+                                    {lang === 'zh' ? '認真規劃的旅人首選' : 'For serious trip planners'}
                                 </p>
                             </div>
 
-                            {/* Price */}
-                            <div className="text-center mb-6">
-                                <span className="text-5xl font-extrabold text-slate-800">
-                                    {isYearly ? '$3.33' : '$4.99'}
-                                </span>
-                                <span className="text-slate-500 text-lg">/mo</span>
-                                {isYearly && (
-                                    <p className="text-sm text-teal-600 font-medium mt-1">
-                                        {lang === 'zh' ? '年付 $39.99，省 $20' : 'Billed $39.99/year, save $20'}
-                                    </p>
-                                )}
+                            <div className="mb-2">
+                                <span className="text-4xl font-extrabold">{isYearly ? '$3.33' : '$4.99'}</span>
+                                <span className="text-slate-400">/mo</span>
                             </div>
+                            {isYearly && (
+                                <p className="text-teal-400 text-xs mb-4">
+                                    {lang === 'zh' ? '年付 $39.99（省 $20）' : 'Billed $39.99/year (save $20)'}
+                                </p>
+                            )}
+                            {!isYearly && <div className="h-4 mb-4"></div>}
 
-                            {/* CTA */}
                             <button
                                 onClick={onStart}
-                                className="w-full py-3 px-6 bg-gradient-to-r from-[#4ECDC4] to-[#44A5A0] text-white font-bold rounded-full hover:opacity-90 transition-all shadow-md mb-2"
+                                className="w-full py-3 bg-gradient-to-r from-[#4ECDC4] to-[#44A5A0] text-white font-bold rounded-xl hover:opacity-90 transition-all mb-2"
                             >
-                                {lang === 'zh' ? '立即升級' : 'Upgrade Now'}
+                                {lang === 'zh' ? '免費試用 14 天' : 'Start 14-Day Trial'}
                             </button>
-                            <p className="text-center text-slate-400 text-xs mb-6">
-                                {lang === 'zh' ? '隨時取消 • 14 天免費試用' : 'Cancel anytime • 14-day free trial'}
+                            <p className="text-center text-slate-500 text-xs mb-6">
+                                {lang === 'zh' ? '隨時取消 • 不需信用卡' : 'Cancel anytime • No credit card'}
                             </p>
 
-                            {/* Features */}
                             <ul className="space-y-3 flex-1">
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '所有功能完整使用' : 'Access to all features'}
+                                <li className="flex items-center gap-2 text-sm">
+                                    <span className="text-teal-400">✓</span>
+                                    <strong>{lang === 'zh' ? '無限' : 'Unlimited'}</strong>&nbsp;{lang === 'zh' ? '草稿行程' : 'itineraries'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? 'PDF 匯出（無浮水印）' : 'PDF export (no watermark)'}
+                                <li className="flex items-center gap-2 text-sm">
+                                    <span className="text-teal-400">✓</span>
+                                    <strong>{lang === 'zh' ? '無限' : 'Unlimited'}</strong>&nbsp;{lang === 'zh' ? '景點' : 'spots'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '無限分享連結' : 'Unlimited shareable trip links'}
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
+                                <li className="flex items-center gap-2 text-sm">
+                                    <span className="text-teal-400">✓</span>
                                     {lang === 'zh' ? '所有達人模板' : 'All expert templates'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '進階地圖功能（路線規劃等）' : 'Advanced Map features (route planning & more)'}
+                                <li className="flex items-center gap-2 text-sm">
+                                    <span className="text-teal-400">✓</span>
+                                    {lang === 'zh' ? 'PDF 匯出（無浮水印）' : 'PDF export (no watermark)'}
                                 </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '離線存取' : 'Offline access'}
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '無限景點區塊' : 'Unlimited Canvas Blocks'}
-                                </li>
-                                <li className="flex items-start gap-3 text-slate-600 text-sm">
-                                    <span className="text-teal-500 mt-0.5">✓</span>
-                                    {lang === 'zh' ? '無限草稿行程' : 'Unlimited draft itineraries'}
+                                <li className="flex items-center gap-2 text-sm">
+                                    <span className="text-teal-400">✓</span>
+                                    {lang === 'zh' ? '離線存取 & 進階功能' : 'Offline + advanced features'}
                                 </li>
                             </ul>
                         </div>
+                    </div>
+
+                    {/* Trust Footer */}
+                    <div className="text-center mt-10 text-slate-400 text-sm">
+                        {lang === 'zh' ? '🔒 安全付款 • 隨時取消 • 14 天免費試用' : '🔒 Secure payment • Cancel anytime • 14-day free trial'}
                     </div>
                 </div>
             </section>
