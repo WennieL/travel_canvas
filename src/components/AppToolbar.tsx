@@ -19,7 +19,7 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
                 {[
                     { mode: 'canvas', icon: <Calendar size={18} />, label: t.schedule },
                     { mode: 'map', icon: <MapIcon size={18} />, label: t.map },
-                    { mode: 'checklist', icon: <ListTodo size={18} />, label: t.checklist }
+                    { mode: 'checklist', icon: <ListTodo size={18} />, label: t.preparation }
                 ].map((item) => (
                     <button
                         key={item.mode}

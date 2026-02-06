@@ -168,7 +168,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                 )}
 
                 {showModal && (
-                    <ModalContent
+                    <BudgetOverview
                         showModal={showModal}
                         setShowModal={setShowModal}
                         spent={spent}
@@ -245,20 +245,22 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     );
 };
 
-// Extracted Modal Content to avoid code duplication
-const ModalContent = ({ showModal, setShowModal, spent, limit, remaining, isOverBudget, percentage, breakdown, tempLimit, setTempLimit, tempCurrency, setTempCurrency, tempRate, setTempRate, currency, exchangeRate, handleSave, t, generatePieGradient, calculatedJPY }: any) => (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+// Extracted and Exported BudgetOverview (formerly ModalContent)
+export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remaining, isOverBudget, percentage, breakdown, tempLimit, setTempLimit, tempCurrency, setTempCurrency, tempRate, setTempRate, currency, exchangeRate, handleSave, t, generatePieGradient, calculatedJPY, embed = false }: any) => (
+    <div className={embed ? "w-full h-full bg-white" : "fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"}>
+        <div className={embed ? "w-full" : "bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"}>
             {/* Header */}
-            <div className="bg-gradient-to-r from-teal-500 to-teal-600 p-5 text-white">
+            <div className={`bg-gradient-to-r from-teal-500 to-teal-600 p-5 text-white ${embed ? 'rounded-xl mb-4 shadow-sm' : ''}`}>
                 <div className="flex justify-between items-center">
                     <h3 className="font-bold text-lg flex items-center gap-2">
                         <TrendingUp size={20} />
                         {t.budgetManagement || '預算管理'}
                     </h3>
-                    <button onClick={() => setShowModal(false)} className="p-1 hover:bg-white/20 rounded-full">
-                        <X size={20} />
-                    </button>
+                    {!embed && (
+                        <button onClick={() => setShowModal(false)} className="p-1 hover:bg-white/20 rounded-full">
+                            <X size={20} />
+                        </button>
+                    )}
                 </div>
                 {/* Large Budget Display */}
                 <div className="mt-4">
@@ -291,7 +293,7 @@ const ModalContent = ({ showModal, setShowModal, spent, limit, remaining, isOver
             </div>
 
             {/* Content */}
-            <div className="p-5 space-y-5">
+            <div className={embed ? "space-y-5 pb-20" : "p-5 space-y-5"}>
                 {/* Settings Grid */}
                 <div>
                     <label className="text-xs text-gray-500 block mb-2">{t.budgetLimit || '預算上限'} ({tempCurrency})</label>

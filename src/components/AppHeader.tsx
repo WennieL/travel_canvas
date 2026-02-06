@@ -224,17 +224,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <BudgetWidget
-                        spent={calculateTotalBudget()}
-                        limit={budgetLimit}
-                        breakdown={calculateCategoryBreakdown()}
-                        onSetLimit={setBudgetLimit}
-                        currency={activePlan.targetCurrency}
-                        exchangeRate={activePlan.exchangeRate}
-                        onSetSettings={(currency, rate) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })}
-                        t={t}
-                        compact={true}
-                    />
 
                     <div className="hidden lg:flex items-center">
                         <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>

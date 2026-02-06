@@ -41,6 +41,7 @@ import MapView from './components/MapView';
 import SidebarContent from './components/SidebarContent';
 import DropZone from './components/DropZone';
 import ChecklistView from './components/ChecklistView';
+import ScheduleList from './components/ScheduleList';
 import { Toast } from './components/Toast';
 import { usePlans, useBudget, useUIState } from './hooks';
 
@@ -519,29 +520,20 @@ export function App() {
                             />
                         </div>
                     ) : viewMode === 'checklist' ? (
-                        <div className="h-full bg-white rounded-2xl p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                                <span className="w-1 h-8 bg-teal-500 rounded-full block"></span>
-                                {t.checklist}
-                            </h2>
-                            {/* Checklist implementation here */}
-                            <div className="space-y-4">
-                                {Object.keys(activePlan.schedule).map(day => (
-                                    <div key={day} className="border-b border-gray-100 pb-4 last:border-0">
-                                        <h3 className="font-bold text-teal-600 mb-3">{day}</h3>
-                                        <div className="space-y-2 pl-4">
-                                            {['morning', 'afternoon', 'evening', 'night'].map(slot => (
-                                                (activePlan.schedule[day] as any)[slot]?.map((item: ScheduleItem) => (
-                                                    <div key={item.instanceId} className="flex items-center gap-3">
-                                                        <input type="checkbox" className="w-4 h-4 text-teal-600 rounded border-gray-300 focus:ring-teal-500" />
-                                                        <span className="text-gray-700">{item.title}</span>
-                                                    </div>
-                                                ))
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                        <div className="h-full pb-20 lg:pb-0">
+                            <ScheduleList
+                                activePlan={activePlan}
+                                t={t}
+                                budgetProps={{
+                                    spent: calculateTotalBudget(),
+                                    limit: budgetLimit,
+                                    breakdown: calculateCategoryBreakdown(),
+                                    currency: activePlan.targetCurrency,
+                                    exchangeRate: activePlan.exchangeRate,
+                                    onSetLimit: setBudgetLimit,
+                                    onSetSettings: (currency: string, rate: number) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })
+                                }}
+                            />
                         </div>
                     ) : (
                         <div className="max-w-xl mx-auto space-y-6">
@@ -575,14 +567,14 @@ export function App() {
                 {/* Mobile Navigation */}
                 <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-[500]">
                     <button onClick={() => setViewMode('canvas')} className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' ? 'text-teal-600' : 'text-gray-400'}`}>
-                        <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold">{t.plan || 'Plan'}</span>
+                        <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold">{t.plan || 'Plan'}</span>
                     </button>
                     <button onClick={() => setViewMode('map')} className={`flex flex-col items-center transition-colors ${viewMode === 'map' ? 'text-teal-600' : 'text-gray-400'}`}>
                         <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold">{t.map || 'Map'}</span>
                     </button>
 
                     <button onClick={() => setViewMode('checklist')} className={`flex flex-col items-center transition-colors ${viewMode === 'checklist' ? 'text-teal-600' : 'text-gray-400'}`}>
-                        <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold">{t.checklist || 'Checklist'}</span>
+                        <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold">{t.preparation || 'Preparation'}</span>
                     </button>
                     <button onClick={() => setShowPlanManager(true)} className="flex flex-col items-center text-gray-400">
                         <FolderOpen size={20} /> <span className="text-[10px] mt-1 font-bold">{t.myPlans || 'Plans'}</span>
