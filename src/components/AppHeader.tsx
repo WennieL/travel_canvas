@@ -46,7 +46,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         <>
             {/* Mobile Header */}
             <div className="md:hidden h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 z-30">
-                <div className="flex flex-col overflow-hidden mr-2">
+                <div className="flex flex-col mr-2 min-w-0">
                     {isEditingName ? (
                         <input
                             ref={nameInputRef}
@@ -84,39 +84,42 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 </button>
 
                                 {showCitySelector && (
-                                    <div className="absolute top-full left-0 mt-2 w-44 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                                        <div className="max-h-60 overflow-y-auto">
-                                            <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
-                                            {CITY_FILTERS?.japan?.map(city => (
-                                                <button
-                                                    key={city.id}
-                                                    onClick={() => {
-                                                        setActiveRegion(city.id);
-                                                        updateActivePlan({ region: city.id });
-                                                        setShowCitySelector(false);
-                                                    }}
-                                                    className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                                >
-                                                    <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                                </button>
-                                            ))}
-                                            <div className="h-px bg-gray-100 my-1"></div>
-                                            <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
-                                            {CITY_FILTERS?.australia?.map(city => (
-                                                <button
-                                                    key={city.id}
-                                                    onClick={() => {
-                                                        setActiveRegion(city.id);
-                                                        updateActivePlan({ region: city.id });
-                                                        setShowCitySelector(false);
-                                                    }}
-                                                    className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                                >
-                                                    <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                                </button>
-                                            ))}
+                                    <>
+                                        <div className="fixed inset-0 z-40" onClick={() => setShowCitySelector(false)} />
+                                        <div className="absolute top-full left-0 mt-2 w-44 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                            <div className="max-h-60 overflow-y-auto">
+                                                <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
+                                                {CITY_FILTERS?.japan?.map(city => (
+                                                    <button
+                                                        key={city.id}
+                                                        onClick={() => {
+                                                            setActiveRegion(city.id);
+                                                            updateActivePlan({ region: city.id });
+                                                            setShowCitySelector(false);
+                                                        }}
+                                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                                    >
+                                                        <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                                    </button>
+                                                ))}
+                                                <div className="h-px bg-gray-100 my-1"></div>
+                                                <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
+                                                {CITY_FILTERS?.australia?.map(city => (
+                                                    <button
+                                                        key={city.id}
+                                                        onClick={() => {
+                                                            setActiveRegion(city.id);
+                                                            updateActivePlan({ region: city.id });
+                                                            setShowCitySelector(false);
+                                                        }}
+                                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                                    >
+                                                        <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                                    </button>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -181,45 +184,48 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     </button>
 
                     {showCitySelector && (
-                        <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                            <div className="flex items-center justify-between px-2 py-1 mb-1">
-                                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{lang === 'zh' ? '選擇城市' : 'Select City'}</div>
-                                <button onClick={() => setShowCitySelector(false)} className="text-gray-400 hover:text-gray-600"><X size={12} /></button>
+                        <>
+                            <div className="fixed inset-0 z-40" onClick={() => setShowCitySelector(false)} />
+                            <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="flex items-center justify-between px-2 py-1 mb-1">
+                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{lang === 'zh' ? '選擇城市' : 'Select City'}</div>
+                                    <button onClick={() => setShowCitySelector(false)} className="text-gray-400 hover:text-gray-600"><X size={12} /></button>
+                                </div>
+                                <div className="max-h-64 overflow-y-auto">
+                                    <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
+                                    {CITY_FILTERS?.japan?.map(city => (
+                                        <button
+                                            key={city.id}
+                                            onClick={() => {
+                                                setActiveRegion(city.id);
+                                                updateActivePlan({ region: city.id });
+                                                setShowCitySelector(false);
+                                            }}
+                                            className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                        >
+                                            <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                            {activeRegion === city.id && <Check size={12} className="ml-auto" />}
+                                        </button>
+                                    ))}
+                                    <div className="h-px bg-gray-100 my-1 mx-2"></div>
+                                    <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
+                                    {CITY_FILTERS?.australia?.map(city => (
+                                        <button
+                                            key={city.id}
+                                            onClick={() => {
+                                                setActiveRegion(city.id);
+                                                updateActivePlan({ region: city.id });
+                                                setShowCitySelector(false);
+                                            }}
+                                            className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                        >
+                                            <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
+                                            {activeRegion === city.id && <Check size={12} className="ml-auto" />}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="max-h-64 overflow-y-auto">
-                                <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
-                                {CITY_FILTERS?.japan?.map(city => (
-                                    <button
-                                        key={city.id}
-                                        onClick={() => {
-                                            setActiveRegion(city.id);
-                                            updateActivePlan({ region: city.id });
-                                            setShowCitySelector(false);
-                                        }}
-                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                    >
-                                        <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                        {activeRegion === city.id && <Check size={12} className="ml-auto" />}
-                                    </button>
-                                ))}
-                                <div className="h-px bg-gray-100 my-1 mx-2"></div>
-                                <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
-                                {CITY_FILTERS?.australia?.map(city => (
-                                    <button
-                                        key={city.id}
-                                        onClick={() => {
-                                            setActiveRegion(city.id);
-                                            updateActivePlan({ region: city.id });
-                                            setShowCitySelector(false);
-                                        }}
-                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                    >
-                                        <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                        {activeRegion === city.id && <Check size={12} className="ml-auto" />}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+                        </>
                     )}
                 </div>
 
