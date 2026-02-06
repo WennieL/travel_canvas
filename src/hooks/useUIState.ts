@@ -46,26 +46,6 @@ export const useUIState = () => {
     // Export States
     const [exportTab, setExportTab] = useState<'text' | 'image' | 'share' | 'backup'>('text');
 
-    // Canvas Zoom
-    const [canvasZoom, setCanvasZoom] = useState(() => {
-        try {
-            const saved = localStorage.getItem('canvasZoom');
-            return saved ? parseInt(saved) : 100;
-        } catch { return 100; }
-    });
-
-    const handleZoomIn = useCallback(() => {
-        setCanvasZoom(prev => Math.min(prev + 10, 150));
-    }, []);
-
-    const handleZoomOut = useCallback(() => {
-        setCanvasZoom(prev => Math.max(prev - 10, 50));
-    }, []);
-
-    const handleZoomReset = useCallback(() => {
-        setCanvasZoom(100);
-    }, []);
-
     return {
         // States
         showLanding, setShowLanding,
@@ -90,7 +70,6 @@ export const useUIState = () => {
         activeCategory, setActiveCategory,
         searchQuery, setSearchQuery,
         sidebarWidth, setSidebarWidth,
-        canvasZoom, setCanvasZoom,
         exportTab, setExportTab,
         selectedCreatorId, setSelectedCreatorId,
         previewTemplate, setPreviewTemplate,
@@ -98,10 +77,5 @@ export const useUIState = () => {
         selectedItem, setSelectedItem,
         batchUnlockCount, setBatchUnlockCount,
         moveTarget, setMoveTarget,
-
-        // Handlers
-        handleZoomIn,
-        handleZoomOut,
-        handleZoomReset,
     };
 };

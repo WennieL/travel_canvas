@@ -63,7 +63,6 @@ export function App() {
         isSidebarOpen, setIsSidebarOpen,
         sidebarWidth, setSidebarWidth,
         sidebarHighlight, setSidebarHighlight,
-        canvasZoom, handleZoomIn, handleZoomOut, handleZoomReset,
         isEditingName, setIsEditingName,
         editingName, setEditingName,
         showPlanManager, setShowPlanManager,
@@ -123,9 +122,8 @@ export function App() {
         if (isInitialized) {
             localStorage.setItem('app_lang', lang);
             localStorage.setItem('sidebarWidth', sidebarWidth.toString());
-            localStorage.setItem('canvasZoom', canvasZoom.toString());
         }
-    }, [lang, sidebarWidth, canvasZoom, isInitialized]);
+    }, [lang, sidebarWidth, isInitialized]);
 
     // Derived State
     const activeRegion = activePlan?.region || 'all';
@@ -498,8 +496,6 @@ export function App() {
                     calculateTotalBudget={calculateTotalBudget} calculateCategoryBreakdown={calculateCategoryBreakdown}
                     toolbar={<AppToolbar
                         viewMode={viewMode} setViewMode={setViewMode}
-                        canvasZoom={canvasZoom} handleZoomIn={handleZoomIn}
-                        handleZoomOut={handleZoomOut} handleZoomReset={handleZoomReset}
                         t={t}
                     />}
                 />
@@ -548,7 +544,7 @@ export function App() {
                             </div>
                         </div>
                     ) : (
-                        <div className="max-w-xl mx-auto space-y-6" style={{ transform: `scale(${canvasZoom / 100})`, transformOrigin: 'top center', transition: 'transform 0.2s' }}>
+                        <div className="max-w-xl mx-auto space-y-6">
                             {['morning', 'afternoon', 'evening', 'night'].map((slot: any) => (
                                 <DropZone
                                     key={slot} slot={slot} label={getSlotLabel(slot, t)}
