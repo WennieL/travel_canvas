@@ -172,8 +172,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
             />
 
             {showExportModal && (
-                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowExportModal(false)}>
+                    <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200" onClick={(e) => e.stopPropagation()}>
                         <div className="flex items-center justify-between p-4 border-b border-gray-100">
                             <h3 className="font-bold text-lg flex items-center gap-2">
                                 <Download size={18} className="text-teal-600" />
@@ -402,8 +402,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
             />
 
             {showMoveModal && moveTarget && (
-                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl w-full max-w-sm shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200">
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowMoveModal(false)}>
+                    <div className="bg-white rounded-2xl w-full max-w-sm shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200" onClick={(e) => e.stopPropagation()}>
                         <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
                             <h3 className="font-bold text-gray-800 flex items-center gap-2">
                                 <MoveRight size={18} className="text-blue-500" />

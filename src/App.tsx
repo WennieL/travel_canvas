@@ -566,17 +566,29 @@ export function App() {
 
                 {/* Mobile Navigation */}
                 <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-[500]">
-                    <button onClick={() => setViewMode('canvas')} className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' ? 'text-teal-600' : 'text-gray-400'}`}>
+                    <button
+                        onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
+                        className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                    >
                         <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold">{t.plan || 'Plan'}</span>
                     </button>
-                    <button onClick={() => setViewMode('map')} className={`flex flex-col items-center transition-colors ${viewMode === 'map' ? 'text-teal-600' : 'text-gray-400'}`}>
+                    <button
+                        onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
+                        className={`flex flex-col items-center transition-colors ${viewMode === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                    >
                         <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold">{t.map || 'Map'}</span>
                     </button>
 
-                    <button onClick={() => setViewMode('checklist')} className={`flex flex-col items-center transition-colors ${viewMode === 'checklist' ? 'text-teal-600' : 'text-gray-400'}`}>
+                    <button
+                        onClick={() => { setViewMode('checklist'); setShowPlanManager(false); }}
+                        className={`flex flex-col items-center transition-colors ${viewMode === 'checklist' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                    >
                         <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold">{t.preparation || 'Preparation'}</span>
                     </button>
-                    <button onClick={() => setShowPlanManager(true)} className="flex flex-col items-center text-gray-400">
+                    <button
+                        onClick={() => setShowPlanManager(true)}
+                        className={`flex flex-col items-center transition-colors ${showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                    >
                         <FolderOpen size={20} /> <span className="text-[10px] mt-1 font-bold">{t.myPlans || 'Plans'}</span>
                     </button>
                 </div>

@@ -26,8 +26,8 @@ export const PlanManagerModal: React.FC<PlanManagerModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-            <div className="bg-white rounded-xl w-full max-w-lg shadow-2xl p-5 flex flex-col max-h-[80vh]">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={onClose}>
+            <div className="bg-white rounded-xl w-full max-w-lg shadow-2xl p-5 flex flex-col max-h-[80vh]" onClick={(e) => e.stopPropagation()}>
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="font-bold text-gray-800 flex items-center gap-2">
                         <FolderOpen size={18} className="text-teal-600" />
@@ -47,8 +47,8 @@ export const PlanManagerModal: React.FC<PlanManagerModalProps> = ({
                                 onClose();
                             }}
                             className={`p-3 rounded-lg border flex justify-between items-center cursor-pointer group ${activePlanId === p.id
-                                    ? 'border-teal-500 bg-teal-50'
-                                    : 'border-gray-200 hover:bg-gray-50'
+                                ? 'border-teal-500 bg-teal-50'
+                                : 'border-gray-200 hover:bg-gray-50'
                                 }`}
                         >
                             <div>
