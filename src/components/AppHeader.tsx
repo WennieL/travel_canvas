@@ -236,10 +236,11 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         compact={true}
                     />
 
-                    <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
-
-                    {/* View Switcher/Zoom Toolbar */}
-                    {toolbar}
+                    <div className="hidden lg:flex items-center">
+                        <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
+                        {/* View Switcher/Zoom Toolbar */}
+                        {toolbar}
+                    </div>
 
                     <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
 
