@@ -18,6 +18,7 @@ interface BudgetWidgetProps {
     onSetSettings?: (currency: string, rate: number) => void;
     t: any;
     compact?: boolean;
+    showToastMessage?: (message: string, type: 'success' | 'error') => void;
 }
 
 export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
@@ -29,7 +30,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     exchangeRate,
     onSetSettings,
     t,
-    compact = false
+    compact = false,
+    showToastMessage
 }) => {
     const [showModal, setShowModal] = useState(false);
     // Initialize tempLimit in Home Currency (approx)
@@ -38,6 +40,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     const [tempCurrency, setTempCurrency] = useState(currency || 'TWD');
     const [tempRate, setTempRate] = useState(exchangeRate?.toString() || '0.21');
     const [isHovered, setIsHovered] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     React.useEffect(() => {
         if (currency) setTempCurrency(currency);
@@ -55,6 +58,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
         if (showModal) {
             const currentRate = parseFloat(tempRate) || 0.21;
             setTempLimit(Math.round(limit * currentRate).toString());
+            setIsSuccess(false); // Reset success state when modal opens
         }
     }, [showModal]);
 
@@ -91,7 +95,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
         return `conic-gradient(${segments.join(', ')})`;
     };
 
-    const handleSave = () => {
+    const handleSave = (isEmbeddedCall: boolean = false) => {
         const rate = parseFloat(tempRate) || 1;
         const limitInCurrency = parseInt(tempLimit) || 0;
         // Convert Home Currency back to JPY
@@ -102,7 +106,18 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
         if (onSetSettings) {
             onSetSettings(tempCurrency, rate);
         }
-        setShowModal(false);
+
+        setIsSuccess(true);
+
+        // Only show toast message if not embedded and showToastMessage prop is provided
+        if (!isEmbeddedCall && showToastMessage) {
+            showToastMessage(t.budgetUpdated, 'success');
+        }
+        // If not embedded, close the modal immediately.
+        // If embedded, the parent component might handle closing or keep it open for further edits.
+        if (!isEmbeddedCall) {
+            setShowModal(false);
+        }
     };
 
     // ... (Compact/Regular render)
@@ -218,7 +233,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
             </button>
 
             {showModal && (
-                <ModalContent
+                <BudgetOverview
                     showModal={showModal}
                     setShowModal={setShowModal}
                     spent={spent}
@@ -239,6 +254,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                     t={t}
                     generatePieGradient={generatePieGradient}
                     calculatedJPY={calculatedJPY} // Pass this
+                    isSuccess={isSuccess}
                 />
             )}
         </>
@@ -246,7 +262,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
 };
 
 // Extracted and Exported BudgetOverview (formerly ModalContent)
-export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remaining, isOverBudget, percentage, breakdown, tempLimit, setTempLimit, tempCurrency, setTempCurrency, tempRate, setTempRate, currency, exchangeRate, handleSave, t, generatePieGradient, calculatedJPY, embed = false }: any) => (
+export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remaining, isOverBudget, percentage, breakdown, tempLimit, setTempLimit, tempCurrency, setTempCurrency, tempRate, setTempRate, currency, exchangeRate, handleSave, t, generatePieGradient, calculatedJPY, embed = false, isSuccess = false }: any) => (
     <div className={embed ? "w-full h-full bg-white" : "fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"}>
         <div className={embed ? "w-full" : "bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"}>
             {/* Header */}
@@ -314,7 +330,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
 
                 {/* Currency Settings */}
                 <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                    <label className="text-xs text-gray-500 block mb-2 font-medium">匯率設定 ({t.currency || 'Currency'})</label>
+                    <label className="text-xs text-gray-500 block mb-2 font-medium">{t.currencySettings}</label>
                     <div className="flex gap-2">
                         <select
                             value={tempCurrency}
@@ -350,11 +366,25 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                 </div>
 
                 {/* Save Button */}
+                {/* Save Button */}
                 <button
-                    onClick={handleSave}
-                    className="w-full py-3 bg-teal-600 text-white rounded-xl font-bold shadow-lg shadow-teal-200 hover:bg-teal-700 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                    onClick={() => !isSuccess && handleSave()}
+                    disabled={isSuccess}
+                    className={`w-full py-3 rounded-xl font-bold shadow-lg transition-all flex items-center justify-center gap-2 ${isSuccess
+                        ? 'bg-orange-500 text-white shadow-orange-200 scale-100 cursor-default'
+                        : 'bg-teal-600 text-white shadow-teal-200 hover:bg-teal-700 hover:scale-[1.02] active:scale-[0.98]'
+                        }`}
                 >
-                    {t.confirm || '儲存設定'}
+                    {isSuccess ? (
+                        <>
+                            <div className="w-5 h-5 border-2 border-white rounded-full flex items-center justify-center animate-in zoom-in duration-300">
+                                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                            </div>
+                            <span>{t.savedSuccess || 'Saved!'}</span>
+                        </>
+                    ) : (
+                        t.confirm || '儲存設定'
+                    )}
                 </button>
 
                 {/* Category Breakdown */}

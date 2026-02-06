@@ -19,9 +19,10 @@ interface ScheduleListProps {
     activePlan: Plan;
     t: any;
     budgetProps: any; // Pass all budget props
+    showToastMessage: (message: string, type: 'success' | 'error') => void;
 }
 
-const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps }) => {
+const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps, showToastMessage }) => {
     const [activeTab, setActiveTab] = useState<'schedule' | 'budget'>('schedule');
 
     // Budget Logic (Duplicate state management here? Or pass from BudgetWidget?)
@@ -75,6 +76,8 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps 
         return `conic-gradient(${segments.join(', ')})`;
     };
 
+    const [isSuccess, setIsSuccess] = useState(false);
+
     const handleSave = () => {
         const rate = parseFloat(tempRate) || 1;
         const limitInCurrency = parseInt(tempLimit) || 0;
@@ -83,6 +86,14 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps 
         if (onSetSettings) {
             onSetSettings(tempCurrency, rate);
         }
+
+        setIsSuccess(true);
+        // showToastMessage(t.budgetUpdated, 'success'); // Disabled in favor of button feedback
+
+        // Reset success state after 2 seconds
+        setTimeout(() => {
+            setIsSuccess(false);
+        }, 2000);
     };
 
     const calculatedJPY = Math.round((parseInt(tempLimit) || 0) / (parseFloat(tempRate) || 1));
@@ -114,7 +125,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps 
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
                 {activeTab === 'schedule' ? (
                     <div className="space-y-4 pb-24 lg:pb-0">
                         {/* Header for Checklist */}
@@ -162,6 +173,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps 
                             generatePieGradient={generatePieGradient}
                             calculatedJPY={calculatedJPY}
                             embed={true}
+                            isSuccess={isSuccess}
                         />
                     </div>
                 )}

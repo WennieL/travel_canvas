@@ -219,7 +219,10 @@ export const TRANSLATIONS: any = {
         shareLinkTitle: "專屬分享連結",
         mobilePreview: "手機版預覽",
         exportPdfText: "匯出 PDF/文字",
-        shareTip: "小撇步：把連結傳到 Line 群組，朋友都能看到精美行程！"
+        shareTip: "小撇步：把連結傳到 Line 群組，朋友都能看到精美行程！",
+        budgetUpdated: "預算已更新！",
+        currencySettings: "匯率設定 (Currency)",
+        savedSuccess: "儲存成功"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -440,6 +443,9 @@ export const TRANSLATIONS: any = {
         shareLinkTitle: "Unique Share Link",
         mobilePreview: "Mobile Preview",
         exportPdfText: "Export PDF/Text",
-        shareTip: "Pro Tip: Share this link to your Line group so friends can view the itinerary!"
+        shareTip: "Pro Tip: Share this link to your Line group so friends can view the itinerary!",
+        budgetUpdated: "Budget settings saved successfully!",
+        currencySettings: "Currency Settings",
+        savedSuccess: "Saved successfully"
     }
 };

@@ -533,6 +533,7 @@ export function App() {
                                     onSetLimit: setBudgetLimit,
                                     onSetSettings: (currency: string, rate: number) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })
                                 }}
+                                showToastMessage={showToastMessage}
                             />
                         </div>
                     ) : (
