@@ -499,7 +499,7 @@ export function App() {
             {/* Desktop Sidebar */}
             {!isFullscreen && (
                 <div
-                    className={`hidden lg:flex flex-col border-r border-gray-100 bg-white relative z-20 transition-all duration-300 ${isSidebarOpen ? 'opacity-100' : 'w-0 opacity-0 overflow-hidden'}`}
+                    className={`hidden lg:flex flex-col border-r border-gray-100 bg-white relative z-20 transition-all duration-300 overflow-hidden ${isSidebarOpen ? 'opacity-100' : 'w-0 opacity-0'}`}
                     style={{ width: isSidebarOpen ? sidebarWidth : 0 }}
                 >
                     <div className="p-4 border-b border-gray-100 flex items-center justify-between">
@@ -522,8 +522,19 @@ export function App() {
                         onCreatorClick={setSelectedCreatorId} onPreviewTemplate={setPreviewTemplate}
                         highlight={ui.sidebarHighlight}
                     />
-                    <button onClick={() => setIsSidebarOpen(false)} className="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 my-6 h-12 bg-white border border-gray-200 rounded-r-lg shadow-sm flex items-center justify-center text-gray-400 hover:text-teal-600 z-30">
-                        <SidebarClose size={12} />
+                </div>
+            )}
+
+            {/* Sidebar Toggle Button (Always Visible) */}
+            {!isFullscreen && (
+                <div className="relative z-30">
+                    <button
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                        className={`absolute top-1/2 left-0 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 border-l-0 rounded-r-lg shadow-sm flex items-center justify-center text-gray-400 hover:text-teal-600 transition-all duration-300 ${isSidebarOpen ? '' : 'translate-x-[0px]'}`}
+                        style={{ left: isSidebarOpen ? 0 : 0 }}
+                        aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+                    >
+                        {isSidebarOpen ? <SidebarClose size={12} /> : <SidebarClose size={12} className="rotate-180" />}
                     </button>
                 </div>
             )}
@@ -599,6 +610,7 @@ export function App() {
                                         if (window.innerWidth < 1024) {
                                             ui.setShowMobileLibrary(true);
                                         } else {
+                                            if (!isSidebarOpen) setIsSidebarOpen(true); // [NEW] Auto-expand
                                             ui.setSidebarHighlight(true);
                                             setTimeout(() => ui.setSidebarHighlight(false), 2000);
                                         }
