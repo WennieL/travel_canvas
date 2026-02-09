@@ -472,7 +472,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         </div>
 
                         {/* Content */}
-                        <div className="px-5 pb-8">
+                        <div className="px-5 pb-24">
                             {/* Header */}
                             <div className="flex items-start gap-3 mb-4">
                                 <div className="text-4xl bg-gray-50 w-16 h-16 flex items-center justify-center rounded-xl">

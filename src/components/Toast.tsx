@@ -26,7 +26,7 @@ export const Toast: React.FC<ToastProps> = ({ message, onClose, duration = 3000,
     };
 
     return (
-        <div className="fixed bottom-6 inset-x-0 flex justify-center z-[100] pointer-events-none">
+        <div className="fixed bottom-20 lg:bottom-6 inset-x-0 flex justify-center z-[100] pointer-events-none">
             <div className={`${getBgColor()} px-6 py-3 rounded-full shadow-lg flex items-center gap-2 animate-fade-in-up pointer-events-auto transition-colors`}>
                 <span className="text-sm font-medium">{message}</span>
             </div>

@@ -432,6 +432,13 @@ export function App() {
 
         updateActivePlan({ schedule: newSchedule });
 
+        // [NEW] Close mobile library modal
+        ui.setShowMobileLibrary(false);
+
+        // Get display name for item and slot
+        const itemName = (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
+        const slotLabel = t[targetSlot] || targetSlot;
+
         // Scheme A: Cross-Region Warning
         if (item.region && activePlan.region &&
             item.region !== 'all' && activePlan.region !== 'all' &&
@@ -449,7 +456,11 @@ export function App() {
                 3000
             );
         } else {
-            showToastMessage("✅ " + (t.added || "Added!"), 'success', 2000);
+            // [IMPROVED] Show item name + slot in toast
+            const addedMsg = lang === 'en'
+                ? `✅ "${itemName}" added to ${slotLabel}`
+                : `✅ 「${itemName}」已加入${slotLabel}`;
+            showToastMessage(addedMsg, 'success', 2500);
         }
     };
 
