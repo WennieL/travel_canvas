@@ -10,6 +10,7 @@ interface MapViewProps {
     schedule: any; // Using any temporarily to avoid strict type issues with DaySchedule vs FullSchedule, will refine
     t: any;
     onItemClick?: (item: ScheduleItem) => void;
+    isEmbedded?: boolean; // Scheme B: Split view
 }
 
 // Helper to center map on points
@@ -40,8 +41,8 @@ const MapEvents: React.FC<{ onMapClick: () => void }> = ({ onMapClick }) => {
 import MapDetailPanel from './MapDetailPanel';
 import { useMapEvents } from 'react-leaflet'; // Add import
 
-const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
-    const [showList, setShowList] = useState(true);
+const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded = false }) => {
+    const [showList, setShowList] = useState(!isEmbedded); // Default hidden if embedded
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
 
@@ -50,8 +51,9 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
         const slots = ['morning', 'afternoon', 'evening', 'night', 'accommodation'];
         const list: { item: ScheduleItem; slot: string; lat: number; lng: number, index: number }[] = [];
 
-        let globalIndex = 0;
+        let globalIndex = 0; // Keep track for unique keys if needed, but per-slot index is priority for sync
         slots.forEach(slot => {
+            let slotIndex = 0; // Reset index for each slot to match DropZone badges
             if (schedule[slot]) {
                 schedule[slot].forEach((item: ScheduleItem) => {
                     // Try to find coordinates if missing
@@ -69,7 +71,8 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                     }
 
                     if (lat && lng) {
-                        list.push({ item, slot, lat, lng, index: globalIndex });
+                        list.push({ item, slot, lat, lng, index: slotIndex });
+                        slotIndex++;
                     }
                     globalIndex++;
                 });
@@ -80,11 +83,11 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
 
     const getSlotColor = (slot: string) => {
         switch (slot) {
-            case 'morning': return 'bg-amber-500 border-amber-600';
-            case 'afternoon': return 'bg-teal-500 border-teal-600';
-            case 'evening': return 'bg-purple-500 border-purple-600';
-            case 'night': return 'bg-indigo-600 border-indigo-700';
-            case 'accommodation': return 'bg-rose-500 border-rose-600';
+            case 'morning': return 'bg-orange-500 border-orange-600'; // Match DropZone.morning
+            case 'afternoon': return 'bg-blue-500 border-blue-600'; // Match DropZone.afternoon
+            case 'evening': return 'bg-purple-500 border-purple-600'; // Match DropZone.evening
+            case 'night': return 'bg-indigo-900 border-indigo-950'; // Match DropZone.night (dark indigo)
+            case 'accommodation': return 'bg-indigo-600 border-indigo-700'; // Match DropZone.accommodation
             default: return 'bg-gray-500 border-gray-600';
         }
     };
@@ -114,8 +117,8 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
     return (
         <div className="bg-gray-100 rounded-3xl h-full min-h-[500px] relative overflow-hidden border border-gray-200 shadow-inner flex">
 
-            {/* Sidebar List */}
-            {showList && points.length > 0 && (
+            {/* Sidebar List (Hidden in Embedded Mode) */}
+            {!isEmbedded && showList && points.length > 0 && (
                 <div className="w-56 bg-white border-r border-gray-200 flex flex-col z-[400] overflow-hidden shrink-0 shadow-lg">
                     <div className="p-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                         <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
@@ -134,7 +137,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                                 onClick={() => setSelectedItem(p.item)}
                             >
                                 <div className={`w-5 h-5 mt-0.5 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm ${getSlotColor(p.slot).split(' ')[0]}`}>
-                                    {idx + 1}
+                                    {p.index + 1}
                                 </div>
                                 <div className="min-w-0 flex-1">
                                     <h4 className="text-xs font-bold text-gray-800 truncate leading-tight mb-0.5">{p.item.title}</h4>
@@ -185,41 +188,50 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                         <Marker
                             key={idx}
                             position={[p.lat, p.lng]}
-                            icon={createIcon(p.item.image || '', p.slot, idx, hoveredIndex === idx)}
+                            icon={createIcon(p.item.image || '', p.slot, p.index, hoveredIndex === idx)}
                             eventHandlers={{
                                 mouseover: () => setHoveredIndex(idx),
                                 mouseout: () => setHoveredIndex(null),
                                 click: (e) => {
                                     L.DomEvent.stopPropagation(e as any); // Stop click from hitting map background
-                                    setSelectedItem(p.item);
+                                    if (isEmbedded) {
+                                        onItemClick?.(p.item); // Scroll to item
+                                    } else {
+                                        setSelectedItem(p.item); // Open internal detail
+                                    }
                                 }
                             }}
                         >
-                            <Popup className="custom-popup" offset={[0, -10]}>
-                                <div className="p-1 min-w-[150px]">
-                                    <div className="font-bold text-sm mb-1 flex items-center gap-1">
-                                        {p.item.image} {p.item.title}
-                                    </div>
-                                    <div className="text-xs text-gray-500 mb-2">{p.item.description}</div>
-                                    {p.item.tips && (
-                                        <div className="text-[10px] bg-yellow-50 text-yellow-700 p-1.5 rounded border border-yellow-100 flex gap-1">
-                                            <span>💡</span> {p.item.tips}
+                            {!isEmbedded && (
+                                <Popup className="custom-popup" offset={[0, -10]}>
+                                    <div className="p-1 min-w-[150px]">
+                                        <div className="font-bold text-sm mb-1 flex items-center gap-1">
+                                            {p.item.image} {p.item.title}
                                         </div>
-                                    )}
-                                </div>
-                            </Popup>
+                                        <div className="text-xs text-gray-500 mb-2">{p.item.description}</div>
+                                        {p.item.tips && (
+                                            <div className="text-[10px] bg-yellow-50 text-yellow-700 p-1.5 rounded border border-yellow-100 flex gap-1">
+                                                <span>💡</span> {p.item.tips}
+                                            </div>
+                                        )}
+                                    </div>
+                                </Popup>
+                            )}
                         </Marker>
                     ))}
                 </MapContainer>
 
                 {/* Overlays */}
-                <button
-                    onClick={() => setShowList(!showList)}
-                    className={`absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md z-[500] flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
-                >
-                    <List size={14} />
-                    {showList ? '隱藏列表' : '顯示列表'}
-                </button>
+                {/* Overlays (Hidden in Embedded) */}
+                {!isEmbedded && (
+                    <button
+                        onClick={() => setShowList(!showList)}
+                        className={`absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md z-[500] flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
+                    >
+                        <List size={14} />
+                        {showList ? '隱藏列表' : '顯示列表'}
+                    </button>
+                )}
 
                 {points.length === 0 && (
                     <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-[500] flex items-center justify-center">
@@ -233,17 +245,19 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                     </div>
                 )}
 
-                {/* Detail Panel Slide-over */}
-                <div
-                    className={`absolute top-4 bottom-4 right-4 w-96 bg-white shadow-2xl rounded-2xl z-[1000] overflow-hidden transition-transform duration-300 transform ${selectedItem ? 'translate-x-0' : 'translate-x-[110%]'}`}
-                >
-                    <MapDetailPanel
-                        item={selectedItem}
-                        onClose={() => setSelectedItem(null)}
-                        t={t}
-                        lang="zh" // Should pass lang prop, assuming zh for now or need to lift from props
-                    />
-                </div>
+                {/* Detail Panel Slide-over (Hidden in Embedded) */}
+                {!isEmbedded && (
+                    <div
+                        className={`absolute top-4 bottom-4 right-4 w-96 bg-white shadow-2xl rounded-2xl z-[1000] overflow-hidden transition-transform duration-300 transform ${selectedItem ? 'translate-x-0' : 'translate-x-[110%]'}`}
+                    >
+                        <MapDetailPanel
+                            item={selectedItem}
+                            onClose={() => setSelectedItem(null)}
+                            t={t}
+                            lang="zh" // Should pass lang prop, assuming zh for now or need to lift from props
+                        />
+                    </div>
+                )}
             </div>
 
             <style>{`

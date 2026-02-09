@@ -18,7 +18,7 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
             <div className="flex bg-gray-100/80 p-0.5 rounded-lg gap-0.5">
                 {[
                     { mode: 'canvas', icon: <Calendar size={18} />, label: t.schedule },
-                    { mode: 'map', icon: <MapIcon size={18} />, label: t.map },
+                    // Map mode removed in favor of Split View Toggle
                     { mode: 'checklist', icon: <ListTodo size={18} />, label: t.preparation }
                 ].map((item) => (
                     <button

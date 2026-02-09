@@ -135,7 +135,36 @@ export function App() {
         }
     }, [activePlan?.id, activePlan?.region]);
 
+    const [showContextMap, setShowContextMap] = useState(false);
+
+    // [NEW] Auto-Collapse Sidebar on Map View (Layout Optimization)
+    useEffect(() => {
+        if (window.innerWidth >= 1024) { // Only on Desktop
+            if (showContextMap) {
+                // Auto-collapse sidebar in Split View
+                setIsSidebarOpen(false);
+            } else if (viewMode === 'canvas') {
+                // Restore sidebar in Canvas View
+                setIsSidebarOpen(true);
+            }
+        }
+    }, [viewMode, showContextMap]);
+
+    // Context Map Scroll Handler
+    const handleMapItemClick = (item: any) => {
+        const el = document.getElementById(`item-${item.instanceId}`);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Animation for highlight
+            el.classList.add('ring-2', 'ring-teal-500', 'ring-offset-2', 'bg-teal-50');
+            setTimeout(() => {
+                el.classList.remove('ring-2', 'ring-teal-500', 'ring-offset-2', 'bg-teal-50');
+            }, 2000);
+        }
+    };
+
     // Derived State
+
     // Removed local activeRegion derived state to avoid confusion with ui.activeRegion
     const activeCreator = SAMPLE_CREATORS.find(c => c.id === selectedCreatorId);
     const creatorTemplates = activeCreator ? TEMPLATES.filter(tpl => tpl.authorId === activeCreator.id) : [];
@@ -556,6 +585,7 @@ export function App() {
                         viewMode={viewMode} setViewMode={setViewMode}
                         t={t}
                     />}
+                    showContextMap={showContextMap} setShowContextMap={setShowContextMap} // Pass context map state
                 />
 
                 <DayTabs
@@ -594,60 +624,82 @@ export function App() {
                             />
                         </div>
                     ) : (
-                        <div className="max-w-xl mx-auto space-y-6">
-                            {['morning', 'afternoon', 'evening', 'night'].map((slot: any) => (
-                                <DropZone
-                                    key={slot} slot={slot} label={getSlotLabel(slot, t)}
-                                    items={currentDaySchedule[slot]}
-                                    onDrop={(e) => handleDrop(e, slot)}
-                                    onRemoveItem={(idx: number) => handleRemoveItem(slot, idx)}
-                                    onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot, idx, upd)}
-                                    onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot, index: idx }); }}
-                                    onUnlockItem={(item) => { setUnlockTarget(item); }}
-                                    onItemClick={ui.setSelectedItem}
-                                    onDragStart={handleDragStart}
-                                    onAddItem={() => {
-                                        if (window.innerWidth < 1024) {
-                                            ui.setShowMobileLibrary(true);
-                                        } else {
-                                            if (!isSidebarOpen) setIsSidebarOpen(true);
-                                            ui.setSidebarHighlight(true);
-                                            setTimeout(() => ui.setSidebarHighlight(false), 2000);
-                                        }
-                                    }}
-                                    t={t}
-                                    lang={lang}
-                                    planRegion={activePlan.region}
-                                />
-                            ))}
+                        // Canvas View (Default)
+                        <div className={`flex h-full gap-4 ${showContextMap ? 'overflow-hidden' : ''}`}>
+                            {/* Schedule List Area */}
+                            <div className={`flex-1 transition-all duration-300 ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
+                                <div className="space-y-6 pb-24 lg:pb-12 max-w-3xl mx-auto">
+                                    {/* Weather/Date Info could go here */}
 
-                            {/* Accommodation Slot */}
-                            <DropZone
-                                key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
-                                items={currentDaySchedule.accommodation}
-                                onDrop={(e) => handleDrop(e, 'accommodation')}
-                                onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
-                                onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
-                                onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot: 'accommodation', index: idx }); }}
-                                onUnlockItem={(item) => { setUnlockTarget(item); }}
-                                onItemClick={ui.setSelectedItem}
-                                onDragStart={handleDragStart}
-                                onAddItem={() => {
-                                    if (window.innerWidth < 1024) {
-                                        ui.setShowMobileLibrary(true);
-                                    } else {
-                                        if (!isSidebarOpen) setIsSidebarOpen(true);
-                                        ui.setSidebarHighlight(true);
-                                        setTimeout(() => ui.setSidebarHighlight(false), 2000);
-                                    }
-                                }}
-                                t={t}
-                                lang={lang}
-                                planRegion={activePlan.region}
-                            />
+                                    {['morning', 'afternoon', 'evening', 'night'].map((slot) => (
+                                        <DropZone
+                                            key={slot} slot={slot as TimeSlot} label={getSlotLabel(slot as TimeSlot, t)}
+                                            items={currentDaySchedule[slot as keyof typeof currentDaySchedule]}
+                                            onDrop={(e) => handleDrop(e, slot as TimeSlot)}
+                                            onRemoveItem={(idx: number) => handleRemoveItem(slot as TimeSlot, idx)}
+                                            onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot as TimeSlot, idx, upd)}
+                                            onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot: slot as TimeSlot, index: idx }); }}
+                                            onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                            onItemClick={ui.setSelectedItem}
+                                            onDragStart={handleDragStart}
+                                            onAddItem={() => {
+                                                if (window.innerWidth < 1024) {
+                                                    ui.setShowMobileLibrary(true);
+                                                } else {
+                                                    if (!isSidebarOpen) setIsSidebarOpen(true);
+                                                    ui.setSidebarHighlight(true);
+                                                    setTimeout(() => ui.setSidebarHighlight(false), 2000);
+                                                }
+                                            }}
+                                            t={t}
+                                            lang={lang}
+                                            planRegion={activePlan.region}
+                                            isCompact={showContextMap} // Scheme B: Compact mode
+                                        />
+                                    ))}
 
-                            {/* Bottom Padding for Mobile Nav */}
-                            <div className="h-24 lg:h-12" />
+                                    {/* Accommodation Slot */}
+                                    <DropZone
+                                        key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
+                                        items={currentDaySchedule.accommodation}
+                                        onDrop={(e) => handleDrop(e, 'accommodation')}
+                                        onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
+                                        onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
+                                        onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot: 'accommodation', index: idx }); }}
+                                        onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                        onItemClick={ui.setSelectedItem}
+                                        onDragStart={handleDragStart}
+                                        onAddItem={() => {
+                                            if (window.innerWidth < 1024) {
+                                                ui.setShowMobileLibrary(true);
+                                            } else {
+                                                if (!isSidebarOpen) setIsSidebarOpen(true);
+                                                ui.setSidebarHighlight(true);
+                                                setTimeout(() => ui.setSidebarHighlight(false), 2000);
+                                            }
+                                        }}
+                                        t={t}
+                                        lang={lang}
+                                        planRegion={activePlan.region}
+                                        isCompact={showContextMap} // Scheme B: Compact mode
+                                    />
+
+                                    {/* Bottom Padding for Mobile Nav */}
+                                    <div className="h-24 lg:h-12" />
+                                </div>
+                            </div>
+
+                            {/* Context Map (Right Side) */}
+                            {showContextMap && (
+                                <div className="hidden lg:block w-[40%] h-full bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 shadow-inner sticky top-0">
+                                    <MapView
+                                        schedule={currentDaySchedule}
+                                        t={t}
+                                        onItemClick={handleMapItemClick} // Scheme B: Scroll to item
+                                        isEmbedded={true} // Scheme B: Hide duplicate list
+                                    />
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

@@ -32,6 +32,8 @@ interface AppHeaderProps {
     setBudgetLimit: (limit: number) => void;
     calculateTotalBudget: () => number;
     calculateCategoryBreakdown: () => any;
+    showContextMap: boolean;
+    setShowContextMap: (show: boolean) => void;
     toolbar?: React.ReactNode;
 }
 
@@ -40,7 +42,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     isEditingName, editingName, setEditingName, startEditingName, saveName, handleNameKeyDown, nameInputRef,
     openDatePicker, showCitySelector, setShowCitySelector, activeRegion, setActiveRegion, updateActivePlan,
     setShowLanding, setShowPlanManager, setShowSubmitModal, setShowShareModal, handleGateCheck,
-    isSidebarOpen, budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown, toolbar
+    isSidebarOpen, budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
+    showContextMap, setShowContextMap, toolbar
 }) => {
     return (
         <>
@@ -231,8 +234,19 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
                 <div className="flex items-center gap-2">
 
-                    <div className="hidden lg:flex items-center">
+                    <div className="hidden lg:flex items-center gap-2">
+                        {/* Context Map Toggle (Split View) */}
+                        <button
+                            onClick={() => setShowContextMap(!showContextMap)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${showContextMap ? 'bg-teal-50 text-teal-600 border-teal-200' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'}`}
+                            title={lang === 'zh' ? '顯示輔助地圖' : 'Show Side Map'}
+                        >
+                            <MapIcon size={14} />
+                            <span>{lang === 'zh' ? '地圖' : 'Map'}</span>
+                        </button>
+
                         <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
+
                         {/* View Switcher/Zoom Toolbar */}
                         {toolbar}
                     </div>

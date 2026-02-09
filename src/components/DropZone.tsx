@@ -34,12 +34,13 @@ interface DropZoneProps {
     lang: string;
     onDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
     planRegion?: Region; // Scheme B: For visual cues
+    isCompact?: boolean; // Scheme B: Split view compact mode
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion, isCompact = false
 }) => {
-    const isCompact = false;
+    // const isCompact = false; // Removed hardcoded
     const isDraggingGlobal = false; // Simplified
     const onDragOver = (e: React.DragEvent) => { e.preventDefault(); };
     // Removed unused sampleAssets and hardcoded lang
@@ -106,14 +107,13 @@ const DropZone: React.FC<DropZoneProps> = ({
     return (
         <div className={`relative transition-all duration-300 ${isAccommodation ? 'mt-4' : 'pl-8'}`}>
             {!isAccommodation && !isCompact && (<> <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
-            <div className={`mb-2 flex items-center justify-between transition-all ${isCompact ? 'opacity-40 hover:opacity-100' : 'opacity-100'}`}>
+            <div className="mb-2 flex items-center justify-between transition-all opacity-100">
                 <div className="flex items-center gap-2">
                     <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${currentStyle.color}`}> {icon} {title} </h3>
                     {!isAccommodation && <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{currentStyle.time}</span>}
                 </div>
-                {isCompact && <div className="h-[1px] flex-1 bg-gray-200 ml-3"></div>}
             </div>
-            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'h-2 hover:h-12 border-2 border-transparent hover:border-dashed hover:border-gray-300 overflow-hidden' : 'min-h-[80px] border-2 border-dashed p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
+            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-2 flex flex-col space-y-1' : 'min-h-[80px] border-2 border-dashed p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && !isCompact && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors py-4 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'}`}>
                         {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!"))}
@@ -159,15 +159,24 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 draggable
                                 onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
                                 onClick={() => onItemClick(item)}
+                                id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{ touchAction: 'pan-y' }}
-                                className={`group relative border rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 animate-land 
-                                    ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
+                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land 
+                                        ${isCompact ? 'p-2 gap-2' : 'p-3 items-start gap-3'}
+                                        ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
                                             isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
                                                 'bg-white border-gray-100 hover:border-teal-300'}
-                                    ${openMenuId === item.instanceId ? 'z-50' : ''}
-                                `}
+                                        ${openMenuId === item.instanceId ? 'z-50' : ''}
+                                    `}
                             >
+
+                                {/* Scheme B: Synchronized Badge (Only in Compact Mode or if requested) */}
+                                {isCompact && (
+                                    <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-sm ${currentStyle.color.replace('text-', 'bg-').replace('900', '600')}`}>
+                                        {idx + 1}
+                                    </div>
+                                )}
 
                                 {/* Desktop Hover Actions - Visible >= 1024px */}
                                 <div className="hidden lg:flex absolute -top-2 -right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
@@ -186,7 +195,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 </div>
                                 <div className="text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
 
-                                <div className="relative flex-shrink-0 text-2xl bg-gray-50 w-10 h-10 flex items-center justify-center rounded-md overflow-hidden">
+                                <div className={`relative flex-shrink-0 bg-gray-50 flex items-center justify-center rounded-md overflow-hidden ${isCompact ? 'w-8 h-8 text-lg' : 'w-10 h-10 text-2xl'}`}>
                                     {isLocked && (
                                         <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
                                             <Lock size={12} className="text-gray-400" />
@@ -216,8 +225,16 @@ const DropZone: React.FC<DropZoneProps> = ({
                                             <span className="text-[10px] font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap"> ¥{item.price?.toLocaleString()} </span>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-2 mb-1.5 flex-wrap"> <div className="flex items-center gap-1 text-[10px] text-gray-400 bg-gray-50 px-1.5 rounded"> <Clock size={10} /> {item.duration || t.flexible} </div> {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)} {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))} </div>
-                                    <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />
+                                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                                        <div className="flex items-center gap-1 text-[10px] text-gray-400 bg-gray-50 px-1.5 rounded"> <Clock size={10} /> {item.duration || t.flexible} </div>
+                                        {!isCompact && (
+                                            <>
+                                                {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)}
+                                                {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
+                                            </>
+                                        )}
+                                    </div>
+                                    {!isCompact && <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />}
 
                                     {/* Insider Tip Display - Show when item has tips */}
                                     {item.insiderTip && (
