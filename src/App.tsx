@@ -288,6 +288,8 @@ export function App() {
 
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
+        newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] }; // Clone day
+        newSchedule[currentDayKey][targetSlot] = [...newSchedule[currentDayKey][targetSlot]]; // Clone target slot array
 
         if (dragged.source === 'sidebar') {
             const newItem: ScheduleItem = {
@@ -298,6 +300,10 @@ export function App() {
             };
             newSchedule[currentDayKey][targetSlot].push(newItem);
         } else if (dragged.source === 'canvas' && dragged.sourceSlot && dragged.index !== undefined) {
+            // If moving within same day but different slot (or same slot), need to clone source slot too if different
+            if (dragged.sourceSlot !== targetSlot) {
+                newSchedule[currentDayKey][dragged.sourceSlot] = [...newSchedule[currentDayKey][dragged.sourceSlot]];
+            }
             const item = newSchedule[currentDayKey][dragged.sourceSlot].splice(dragged.index, 1)[0];
             newSchedule[currentDayKey][targetSlot].push(item);
         }
@@ -342,6 +348,8 @@ export function App() {
     const handleRemoveItem = (slot: TimeSlot, index: number) => {
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
+        newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] }; // Clone day
+        newSchedule[currentDayKey][slot] = [...newSchedule[currentDayKey][slot]]; // Clone slot array
         newSchedule[currentDayKey][slot].splice(index, 1);
         updateActivePlan({ schedule: newSchedule });
     };
@@ -404,7 +412,9 @@ export function App() {
     const handleTapToAdd = (item: TravelItem) => {
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
+        newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] }; // Clone day
         let targetSlot: TimeSlot = item.type === 'hotel' ? 'accommodation' : 'morning';
+        newSchedule[currentDayKey][targetSlot] = [...newSchedule[currentDayKey][targetSlot]]; // Clone slot array
 
         newSchedule[currentDayKey][targetSlot].push({
             ...item,
@@ -599,11 +609,12 @@ export function App() {
                 <div className="flex-1 overflow-y-auto bg-gray-50/30 p-4 lg:p-8 custom-scrollbar">
                     {/* View Switcher Content */}
                     {viewMode === 'map' ? (
-                        <div className="h-full pb-20 lg:pb-0">
+                        <div className="h-full">
                             <MapView
                                 schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }}
                                 t={t}
                                 onItemClick={ui.setSelectedItem}
+                                onClose={() => setViewMode('canvas')} // [NEW] Return to Canvas view
                             />
                         </div>
                     ) : viewMode === 'checklist' ? (
@@ -631,32 +642,41 @@ export function App() {
                                 <div className="space-y-6 pb-24 lg:pb-12 max-w-3xl mx-auto">
                                     {/* Weather/Date Info could go here */}
 
-                                    {['morning', 'afternoon', 'evening', 'night'].map((slot) => (
-                                        <DropZone
-                                            key={slot} slot={slot as TimeSlot} label={getSlotLabel(slot as TimeSlot, t)}
-                                            items={currentDaySchedule[slot as keyof typeof currentDaySchedule]}
-                                            onDrop={(e) => handleDrop(e, slot as TimeSlot)}
-                                            onRemoveItem={(idx: number) => handleRemoveItem(slot as TimeSlot, idx)}
-                                            onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot as TimeSlot, idx, upd)}
-                                            onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot: slot as TimeSlot, index: idx }); }}
-                                            onUnlockItem={(item) => { setUnlockTarget(item); }}
-                                            onItemClick={ui.setSelectedItem}
-                                            onDragStart={handleDragStart}
-                                            onAddItem={() => {
-                                                if (window.innerWidth < 1024) {
-                                                    ui.setShowMobileLibrary(true);
-                                                } else {
-                                                    if (!isSidebarOpen) setIsSidebarOpen(true);
-                                                    ui.setSidebarHighlight(true);
-                                                    setTimeout(() => ui.setSidebarHighlight(false), 2000);
-                                                }
-                                            }}
-                                            t={t}
-                                            lang={lang}
-                                            planRegion={activePlan.region}
-                                            isCompact={showContextMap} // Scheme B: Compact mode
-                                        />
-                                    ))}
+                                    {(() => {
+                                        const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
+                                        let cumulativeIndex = 0;
+                                        return slots.map((slot) => {
+                                            const startIdx = cumulativeIndex;
+                                            cumulativeIndex += (currentDaySchedule[slot] || []).length;
+                                            return (
+                                                <DropZone
+                                                    key={slot} slot={slot} label={getSlotLabel(slot, t)}
+                                                    items={currentDaySchedule[slot as keyof typeof currentDaySchedule]}
+                                                    onDrop={(e) => handleDrop(e, slot)}
+                                                    onRemoveItem={(idx: number) => handleRemoveItem(slot, idx)}
+                                                    onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot, idx, upd)}
+                                                    onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot, index: idx }); }}
+                                                    onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                                    onItemClick={ui.setSelectedItem}
+                                                    onDragStart={handleDragStart}
+                                                    onAddItem={() => {
+                                                        if (window.innerWidth < 1024) {
+                                                            ui.setShowMobileLibrary(true);
+                                                        } else {
+                                                            if (!isSidebarOpen) setIsSidebarOpen(true);
+                                                            ui.setSidebarHighlight(true);
+                                                            setTimeout(() => ui.setSidebarHighlight(false), 2000);
+                                                        }
+                                                    }}
+                                                    t={t}
+                                                    lang={lang}
+                                                    planRegion={activePlan.region}
+                                                    isCompact={showContextMap} // Scheme B: Compact mode
+                                                    startIndex={startIdx} // Global sequential numbering
+                                                />
+                                            );
+                                        });
+                                    })()}
 
                                     {/* Accommodation Slot */}
                                     <DropZone
@@ -682,6 +702,7 @@ export function App() {
                                         lang={lang}
                                         planRegion={activePlan.region}
                                         isCompact={showContextMap} // Scheme B: Compact mode
+                                        startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)} // Global sequential
                                     />
 
                                     {/* Bottom Padding for Mobile Nav */}
@@ -704,34 +725,37 @@ export function App() {
                     )}
                 </div>
 
-                {/* Mobile Navigation */}
-                <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-[500]">
-                    <button
-                        onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
-                        className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
-                    >
-                        <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold">{t.plan || 'Plan'}</span>
-                    </button>
-                    <button
-                        onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
-                        className={`flex flex-col items-center transition-colors ${viewMode === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
-                    >
-                        <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold">{t.map || 'Map'}</span>
-                    </button>
+                {/* Mobile Navigation (Hidden in Map Mode to maximize space) */}
+                {viewMode !== 'map' && (
+                    <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-[500]">
+                        <button
+                            onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
+                            className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                        >
+                            <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold">{t.plan || 'Plan'}</span>
+                        </button>
+                        <button
+                            onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
+                            className={`flex flex-col items-center transition-colors ${viewMode === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                        >
+                            <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold">{t.map || 'Map'}</span>
+                        </button>
 
-                    <button
-                        onClick={() => { setViewMode('checklist'); setShowPlanManager(false); }}
-                        className={`flex flex-col items-center transition-colors ${viewMode === 'checklist' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
-                    >
-                        <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold">{t.preparation || 'Preparation'}</span>
-                    </button>
-                    <button
-                        onClick={() => setShowPlanManager(true)}
-                        className={`flex flex-col items-center transition-colors ${showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
-                    >
-                        <FolderOpen size={20} /> <span className="text-[10px] mt-1 font-bold">{t.myPlans || 'Plans'}</span>
-                    </button>
-                </div>
+                        <button
+                            onClick={() => { setViewMode('checklist'); setShowPlanManager(false); }}
+                            className={`flex flex-col items-center transition-colors ${viewMode === 'checklist' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                        >
+                            <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold">{t.preparation || 'Preparation'}</span>
+                        </button>
+                        <button
+                            onClick={() => setShowPlanManager(true)}
+                            className={`flex flex-col items-center transition-colors ${showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                        >
+                            <FolderOpen size={20} /> <span className="text-[10px] mt-1 font-bold">{t.myPlans || 'Plans'}</span>
+                        </button>
+
+                    </div>
+                )}
             </div>
 
             <AppModals

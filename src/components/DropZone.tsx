@@ -35,10 +35,11 @@ interface DropZoneProps {
     onDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
     planRegion?: Region; // Scheme B: For visual cues
     isCompact?: boolean; // Scheme B: Split view compact mode
+    startIndex?: number; // For global sequential numbering (1-n)
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion, isCompact = false
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0
 }) => {
     // const isCompact = false; // Removed hardcoded
     const isDraggingGlobal = false; // Simplified
@@ -174,7 +175,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 {/* Scheme B: Synchronized Badge (Only in Compact Mode or if requested) */}
                                 {isCompact && (
                                     <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-sm ${currentStyle.color.replace('text-', 'bg-').replace('900', '600')}`}>
-                                        {idx + 1}
+                                        {startIndex + idx + 1}
                                     </div>
                                 )}
 

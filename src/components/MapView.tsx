@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ScheduleItem, TimeSlot } from '../types';
-import { List, Map as MapIcon, Navigation, ExternalLink } from 'lucide-react';
+import { List, Map as MapIcon, Navigation, ExternalLink, X } from 'lucide-react';
 import { SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../data';
 
 interface MapViewProps {
@@ -11,6 +11,7 @@ interface MapViewProps {
     t: any;
     onItemClick?: (item: ScheduleItem) => void;
     isEmbedded?: boolean; // Scheme B: Split view
+    onClose?: () => void; // [NEW] Close handler for Mobile Full Screen
 }
 
 // Helper to center map on points
@@ -39,21 +40,29 @@ const MapEvents: React.FC<{ onMapClick: () => void }> = ({ onMapClick }) => {
 };
 
 import MapDetailPanel from './MapDetailPanel';
-import { useMapEvents } from 'react-leaflet'; // Add import
+import { useMapEvents } from 'react-leaflet';
+import BottomSheet from './BottomSheet'; // [NEW] Import BottomSheet
 
-const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded = false }) => {
+const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded = false, onClose }) => {
     const [showList, setShowList] = useState(!isEmbedded); // Default hidden if embedded
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Collect valid points
     const points = useMemo(() => {
         const slots = ['morning', 'afternoon', 'evening', 'night', 'accommodation'];
         const list: { item: ScheduleItem; slot: string; lat: number; lng: number, index: number }[] = [];
 
-        let globalIndex = 0; // Keep track for unique keys if needed, but per-slot index is priority for sync
+        let globalIndex = 0; // Global sequential numbering (1, 2, 3... n)
         slots.forEach(slot => {
-            let slotIndex = 0; // Reset index for each slot to match DropZone badges
             if (schedule[slot]) {
                 schedule[slot].forEach((item: ScheduleItem) => {
                     // Try to find coordinates if missing
@@ -71,10 +80,12 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
                     }
 
                     if (lat && lng) {
-                        list.push({ item, slot, lat, lng, index: slotIndex });
-                        slotIndex++;
+                        list.push({ item, slot, lat, lng, index: globalIndex }); // Use globalIndex
+                        globalIndex++;
+                    } else {
+                        console.warn('[MapView] Item missing coordinates:', item.title, item.id, 'lat:', item.lat, 'lng:', item.lng);
+                        globalIndex++; // Still increment even if no coords, to keep count accurate
                     }
-                    globalIndex++;
                 });
             }
         });
@@ -117,8 +128,8 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
     return (
         <div className="bg-gray-100 rounded-3xl h-full min-h-[500px] relative overflow-hidden border border-gray-200 shadow-inner flex">
 
-            {/* Sidebar List (Hidden in Embedded Mode) */}
-            {!isEmbedded && showList && points.length > 0 && (
+            {/* Sidebar List (Desktop Only, Hidden in Embedded) */}
+            {!isMobile && !isEmbedded && showList && points.length > 0 && (
                 <div className="w-56 bg-white border-r border-gray-200 flex flex-col z-[400] overflow-hidden shrink-0 shadow-lg">
                     <div className="p-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                         <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
@@ -233,6 +244,16 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
                     </button>
                 )}
 
+                {/* Mobile Close Button (FAB) */}
+                {isMobile && onClose && (
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full shadow-lg z-[1100] flex items-center justify-center text-gray-700 hover:text-red-500 active:scale-95 transition-all"
+                    >
+                        <X size={20} />
+                    </button>
+                )}
+
                 {points.length === 0 && (
                     <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-[500] flex items-center justify-center">
                         <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm mx-4">
@@ -245,8 +266,8 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
                     </div>
                 )}
 
-                {/* Detail Panel Slide-over (Hidden in Embedded) */}
-                {!isEmbedded && (
+                {/* Desktop Detail Panel (Hidden in Embedded/Mobile) */}
+                {!isMobile && !isEmbedded && (
                     <div
                         className={`absolute top-4 bottom-4 right-4 w-96 bg-white shadow-2xl rounded-2xl z-[1000] overflow-hidden transition-transform duration-300 transform ${selectedItem ? 'translate-x-0' : 'translate-x-[110%]'}`}
                     >
@@ -258,6 +279,64 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
                         />
                     </div>
                 )}
+
+                {/* Mobile Bottom Sheet */}
+                {isMobile && !isEmbedded && (
+                    <BottomSheet
+                        isOpen={true} // Always "open" but manages its own snap state
+                        snapPoints={[0.15, 0.5, 0.9]}
+                        initialSnap={selectedItem ? 1 : 0} // Expand slightly if item selected
+                        header={
+                            <div className="text-center">
+                                {selectedItem ? (
+                                    <h3 className="text-sm font-bold text-gray-800">{selectedItem.title}</h3>
+                                ) : (
+                                    <div className="text-xs font-medium text-gray-500 flex items-center gap-1">
+                                        <List size={12} /> {points.length} 個地點
+                                    </div>
+                                )}
+                            </div>
+                        }
+                    >
+                        {selectedItem ? (
+                            <div className="pb-20">
+                                <button
+                                    onClick={() => setSelectedItem(null)}
+                                    className="mb-4 text-xs text-gray-500 flex items-center gap-1 hover:text-gray-800"
+                                >
+                                    ← 返回列表
+                                </button>
+                                <MapDetailPanel
+                                    item={selectedItem}
+                                    onClose={() => setSelectedItem(null)}
+                                    t={t}
+                                    lang="zh"
+                                />
+                            </div>
+                        ) : (
+                            <div className="space-y-2 pb-20">
+                                {points.map((p, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex items-start gap-3 active:scale-95 transition-transform"
+                                        onClick={() => setSelectedItem(p.item)}
+                                    >
+                                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm ${getSlotColor(p.slot).split(' ')[0]}`}>
+                                            {p.index + 1}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-sm text-gray-800">{p.item.title}</h4>
+                                            <div className="text-xs text-gray-500 line-clamp-1">{p.item.address || p.item.startTime || 'No details'}</div>
+                                        </div>
+                                        <div className="ml-auto">
+                                            {/* Action button if needed */}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </BottomSheet>
+                )}
             </div>
 
             <style>{`
@@ -268,7 +347,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
                     @apply m-0;
                 }
             `}</style>
-        </div>
+        </div >
     );
 };
 
