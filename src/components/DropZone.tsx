@@ -93,10 +93,26 @@ const DropZone: React.FC<DropZoneProps> = ({
                 slot === 'evening' ? <Sun size={16} /> : // Sunset/Evening logic could be refined
                     slot === 'night' ? <Moon size={16} /> : <Clock size={16} />;
 
+    // Style Mapping
+    const slotStyles: Record<string, { color: string, time: string }> = {
+        morning: { color: 'text-orange-500', time: '06:00 - 12:00' },
+        afternoon: { color: 'text-blue-500', time: '12:00 - 18:00' },
+        evening: { color: 'text-purple-500', time: '18:00 - 22:00' },
+        night: { color: 'text-indigo-900', time: '22:00 - 06:00' },
+        accommodation: { color: 'text-indigo-600', time: '' }
+    };
+    const currentStyle = slotStyles[slot] || { color: 'text-gray-500', time: '' };
+
     return (
         <div className={`relative transition-all duration-300 ${isAccommodation ? 'mt-4' : 'pl-8'}`}>
             {!isAccommodation && !isCompact && (<> <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
-            <div className={`mb-2 flex items-center transition-all ${isCompact ? 'opacity-40 hover:opacity-100' : 'opacity-100'}`}> <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${isAccommodation ? 'text-indigo-600' : 'text-gray-500'}`}> {icon} {title} </h3> {isCompact && <div className="h-[1px] flex-1 bg-gray-200 ml-3"></div>} </div>
+            <div className={`mb-2 flex items-center justify-between transition-all ${isCompact ? 'opacity-40 hover:opacity-100' : 'opacity-100'}`}>
+                <div className="flex items-center gap-2">
+                    <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${currentStyle.color}`}> {icon} {title} </h3>
+                    {!isAccommodation && <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{currentStyle.time}</span>}
+                </div>
+                {isCompact && <div className="h-[1px] flex-1 bg-gray-200 ml-3"></div>}
+            </div>
             <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'h-2 hover:h-12 border-2 border-transparent hover:border-dashed hover:border-gray-300 overflow-hidden' : 'min-h-[80px] border-2 border-dashed p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && !isCompact && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors py-4 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'}`}>

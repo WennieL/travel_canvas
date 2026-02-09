@@ -610,7 +610,7 @@ export function App() {
                                         if (window.innerWidth < 1024) {
                                             ui.setShowMobileLibrary(true);
                                         } else {
-                                            if (!isSidebarOpen) setIsSidebarOpen(true); // [NEW] Auto-expand
+                                            if (!isSidebarOpen) setIsSidebarOpen(true);
                                             ui.setSidebarHighlight(true);
                                             setTimeout(() => ui.setSidebarHighlight(false), 2000);
                                         }
@@ -620,6 +620,34 @@ export function App() {
                                     planRegion={activePlan.region}
                                 />
                             ))}
+
+                            {/* Accommodation Slot */}
+                            <DropZone
+                                key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
+                                items={currentDaySchedule.accommodation}
+                                onDrop={(e) => handleDrop(e, 'accommodation')}
+                                onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
+                                onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
+                                onMoveItem={(idx) => { setShowMoveModal(true); ui.setMoveTarget({ slot: 'accommodation', index: idx }); }}
+                                onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                onItemClick={ui.setSelectedItem}
+                                onDragStart={handleDragStart}
+                                onAddItem={() => {
+                                    if (window.innerWidth < 1024) {
+                                        ui.setShowMobileLibrary(true);
+                                    } else {
+                                        if (!isSidebarOpen) setIsSidebarOpen(true);
+                                        ui.setSidebarHighlight(true);
+                                        setTimeout(() => ui.setSidebarHighlight(false), 2000);
+                                    }
+                                }}
+                                t={t}
+                                lang={lang}
+                                planRegion={activePlan.region}
+                            />
+
+                            {/* Bottom Padding for Mobile Nav */}
+                            <div className="h-24 lg:h-12" />
                         </div>
                     )}
                 </div>
