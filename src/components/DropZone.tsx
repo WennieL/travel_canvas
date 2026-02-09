@@ -237,13 +237,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     </div>
                                     {!isCompact && <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />}
 
-                                    {/* Insider Tip Display - Show when item has tips */}
-                                    {item.insiderTip && (
-                                        <div className="flex items-center gap-1 text-[10px] text-amber-600 mt-1">
-                                            <Star size={10} fill="currentColor" />
-                                            <span className="font-medium">有達人秘訣 — 點擊查看</span>
-                                        </div>
-                                    )}
+
 
                                     {/* Inline Cross-Region Warning */}
                                     {item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion && (
