@@ -114,7 +114,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                     {!isAccommodation && <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{currentStyle.time}</span>}
                 </div>
             </div>
-            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-2 flex flex-col space-y-1' : 'min-h-[80px] border-2 border-dashed px-0 md:p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
+            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-3 flex flex-col space-y-2' : 'min-h-[80px] border-2 border-dashed px-0 md:p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && !isCompact && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors py-4 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'}`}>
                         {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!"))}
@@ -155,7 +155,7 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                     return (
                         <React.Fragment key={item.instanceId}>
-                            {prevItemInSlot && !isCompact && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="relative w-full flex items-center lg:pl-4 py-2" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="hidden lg:block h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> <div className="lg:hidden absolute left-1/2 -translate-x-1/2 h-6 w-0.5 bg-gray-200"></div> </div>); })()}
+                            {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="relative w-full flex items-center lg:pl-4 py-2" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="hidden lg:block h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> <div className="lg:hidden absolute left-1/2 -translate-x-1/2 h-6 w-0.5 bg-gray-200"></div> </div>); })()}
                             <div
                                 draggable
                                 onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
@@ -163,7 +163,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{ touchAction: 'pan-y' }}
                                 className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land
-                                        ${isCompact ? 'p-2 gap-2' : 'pl-1 pr-2 md:p-3 items-start gap-1.5 md:gap-3'}
+                                        ${isCompact ? 'p-3 gap-3 items-start' : 'pl-1 pr-2 md:p-3 items-start gap-1.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
                                             isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
@@ -196,7 +196,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 </div>
                                 <div className="hidden md:block text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
 
-                                <div className={`relative flex-shrink-0 bg-gray-50 flex items-center justify-center rounded-md overflow-hidden ${isCompact ? 'w-8 h-8 text-lg' : 'w-10 h-10 text-2xl'}`}>
+                                <div className={`relative flex-shrink-0 bg-gray-50 flex items-center justify-center rounded-md overflow-hidden w-10 h-10 text-2xl`}>
                                     {isLocked && (
                                         <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
                                             <Lock size={12} className="text-gray-400" />
@@ -228,14 +228,10 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     </div>
                                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                                         <div className="flex items-center gap-1 text-[10px] text-gray-400 bg-gray-50 px-1.5 rounded"> <Clock size={10} /> {item.duration || t.flexible} </div>
-                                        {!isCompact && (
-                                            <>
-                                                {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)}
-                                                {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
-                                            </>
-                                        )}
+                                        {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)}
+                                        {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
                                     </div>
-                                    {!isCompact && <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />}
+                                    <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />
 
 
 
