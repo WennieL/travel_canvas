@@ -31,6 +31,7 @@ export const useUIState = () => {
     const [unlockTarget, setUnlockTarget] = useState<ScheduleItem | null>(null);
     const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
     const [batchUnlockCount, setBatchUnlockCount] = useState(0);
+    const [addToSlotTarget, setAddToSlotTarget] = useState<TimeSlot | null>(null); // Track which slot user clicked "Add Item"
 
     // Sidebar States
     const [activeTab, setActiveTab] = useState<'assets' | 'templates'>('assets');
@@ -80,6 +81,7 @@ export const useUIState = () => {
         selectedItem, setSelectedItem,
         batchUnlockCount, setBatchUnlockCount,
         activeRegion, setActiveRegion,
-        moveTarget, setMoveTarget
+        moveTarget, setMoveTarget,
+        addToSlotTarget, setAddToSlotTarget
     };
 };

@@ -85,7 +85,8 @@ export function App() {
         unlockTarget, setUnlockTarget,
         batchUnlockCount, setBatchUnlockCount,
         moveTarget, setMoveTarget,
-        activeRegion, setActiveRegion
+        activeRegion, setActiveRegion,
+        addToSlotTarget, setAddToSlotTarget
     } = ui;
 
     const t = TRANSLATIONS[lang];
@@ -413,7 +414,9 @@ export function App() {
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
         newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] }; // Clone day
-        let targetSlot: TimeSlot = item.type === 'hotel' ? 'accommodation' : 'morning';
+
+        // Use tracked slot from user's clicked "Add Item", fallback to morning/accommodation
+        let targetSlot: TimeSlot = addToSlotTarget || (item.type === 'hotel' ? 'accommodation' : 'morning');
         newSchedule[currentDayKey][targetSlot] = [...newSchedule[currentDayKey][targetSlot]]; // Clone slot array
 
         newSchedule[currentDayKey][targetSlot].push({
@@ -432,8 +435,9 @@ export function App() {
 
         updateActivePlan({ schedule: newSchedule });
 
-        // [NEW] Close mobile library modal
+        // [NEW] Close mobile library modal and clear target slot
         ui.setShowMobileLibrary(false);
+        setAddToSlotTarget(null); // Reset target slot
 
         // Get display name for item and slot
         const itemName = (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
@@ -672,6 +676,7 @@ export function App() {
                                                     onDragStart={handleDragStart}
                                                     onAddItem={() => {
                                                         if (window.innerWidth < 1024) {
+                                                            setAddToSlotTarget(slot); // Track which slot user clicked
                                                             ui.setShowMobileLibrary(true);
                                                         } else {
                                                             if (!isSidebarOpen) setIsSidebarOpen(true);
@@ -702,6 +707,7 @@ export function App() {
                                         onDragStart={handleDragStart}
                                         onAddItem={() => {
                                             if (window.innerWidth < 1024) {
+                                                setAddToSlotTarget('accommodation'); // Track which slot user clicked
                                                 ui.setShowMobileLibrary(true);
                                             } else {
                                                 if (!isSidebarOpen) setIsSidebarOpen(true);
