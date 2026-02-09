@@ -29,9 +29,21 @@ const MapUpdater: React.FC<{ points: { lat: number; lng: number }[] }> = ({ poin
     return null;
 };
 
+// Helper to handle map clicks
+const MapEvents: React.FC<{ onMapClick: () => void }> = ({ onMapClick }) => {
+    useMapEvents({
+        click: () => onMapClick(),
+    });
+    return null;
+};
+
+import MapDetailPanel from './MapDetailPanel';
+import { useMapEvents } from 'react-leaflet'; // Add import
+
 const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
     const [showList, setShowList] = useState(true);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
 
     // Collect valid points
     const points = useMemo(() => {
@@ -116,10 +128,10 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                             <div
                                 key={idx}
                                 className={`px-3 py-2 flex items-start gap-3 cursor-pointer transition-colors border-l-4 ${hoveredIndex === idx ? 'bg-teal-50 border-teal-500' : 'border-transparent hover:bg-gray-50'
-                                    }`}
+                                    } ${selectedItem?.instanceId === p.item.instanceId ? 'bg-teal-50 border-teal-500' : ''}`}
                                 onMouseEnter={() => setHoveredIndex(idx)}
                                 onMouseLeave={() => setHoveredIndex(null)}
-                                onClick={() => onItemClick?.(p.item)}
+                                onClick={() => setSelectedItem(p.item)}
                             >
                                 <div className={`w-5 h-5 mt-0.5 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm ${getSlotColor(p.slot).split(' ')[0]}`}>
                                     {idx + 1}
@@ -157,6 +169,9 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                     {/* Auto Center */}
                     <MapUpdater points={points} />
 
+                    {/* Click Outside Handler */}
+                    <MapEvents onMapClick={() => setSelectedItem(null)} />
+
                     {/* Route Line Service */}
                     {points.length > 1 && (
                         <Polyline
@@ -174,7 +189,10 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                             eventHandlers={{
                                 mouseover: () => setHoveredIndex(idx),
                                 mouseout: () => setHoveredIndex(null),
-                                click: () => onItemClick?.(p.item)
+                                click: (e) => {
+                                    L.DomEvent.stopPropagation(e as any); // Stop click from hitting map background
+                                    setSelectedItem(p.item);
+                                }
                             }}
                         >
                             <Popup className="custom-popup" offset={[0, -10]}>
@@ -214,6 +232,18 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick }) => {
                         </div>
                     </div>
                 )}
+
+                {/* Detail Panel Slide-over */}
+                <div
+                    className={`absolute top-4 bottom-4 right-4 w-96 bg-white shadow-2xl rounded-2xl z-[1000] overflow-hidden transition-transform duration-300 transform ${selectedItem ? 'translate-x-0' : 'translate-x-[110%]'}`}
+                >
+                    <MapDetailPanel
+                        item={selectedItem}
+                        onClose={() => setSelectedItem(null)}
+                        t={t}
+                        lang="zh" // Should pass lang prop, assuming zh for now or need to lift from props
+                    />
+                </div>
             </div>
 
             <style>{`

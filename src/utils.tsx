@@ -13,6 +13,17 @@ import { ItemType, TimeSlot, TravelItem, TransportMode, FullSchedule } from './t
 
 // --- Helper Functions ---
 
+export const getCategoryLabel = (type: ItemType, t: any) => {
+    switch (type) {
+        case 'attraction': return t.attraction || 'Attraction';
+        case 'food': return t.food || 'Food';
+        case 'hotel': return t.hotel || 'Hotel';
+        case 'custom': return t.custom || 'Custom';
+        default: return t.other || 'Other';
+    }
+};
+
+
 export const getItemIcon = (type: ItemType) => {
     switch (type) {
         case 'attraction': return <Camera size={14} className="text-blue-500" />;
