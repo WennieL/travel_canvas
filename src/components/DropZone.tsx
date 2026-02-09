@@ -164,7 +164,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{ touchAction: 'pan-y' }}
                                 className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land
-                                        ${isCompact ? 'p-3 gap-3 items-start' : 'pl-1 pr-2 md:p-3 items-start gap-1.5 md:gap-3'}
+                                        ${isCompact ? 'p-3 gap-3 items-start' : 'p-4 items-start gap-2.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
                                             isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :

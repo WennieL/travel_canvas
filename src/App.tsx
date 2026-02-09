@@ -581,7 +581,7 @@ export function App() {
 
             {/* Sidebar Toggle Button (Always Visible) */}
             {!isFullscreen && (
-                <div className="relative z-30">
+                <div className="hidden lg:block relative z-30">
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className={`absolute top-1/2 left-0 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 border-l-0 rounded-r-lg shadow-sm flex items-center justify-center text-gray-400 hover:text-teal-600 transition-all duration-300 ${isSidebarOpen ? '' : 'translate-x-[0px]'}`}
@@ -654,7 +654,7 @@ export function App() {
                         <div className={`flex h-full gap-4 ${showContextMap ? 'overflow-hidden' : ''}`}>
                             {/* Schedule List Area */}
                             <div className={`flex-1 transition-all duration-300 ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                                <div className="space-y-6 pb-24 lg:pb-12 max-w-3xl mx-auto px-2 md:px-4 lg:px-0">
+                                <div className="space-y-6 pb-24 lg:pb-12 px-4 md:px-6 lg:max-w-3xl lg:mx-auto lg:px-0">
                                     {/* Weather/Date Info could go here */}
 
                                     {(() => {
