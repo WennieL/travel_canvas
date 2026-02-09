@@ -53,6 +53,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     const onNoteChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { notes: v });
     const onTransportChange = (s: TimeSlot, i: number, m: TransportMode) => onUpdateItem(i, { arrivalTransport: m });
     const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
+    const [editingNoteId, setEditingNoteId] = React.useState<string | null>(null);
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, index, nextMode); };
     const handleCrossSlotTransportClick = (e: React.MouseEvent, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, 0, nextMode); };
@@ -174,22 +175,23 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                                 {/* Scheme B: Synchronized Badge (Only in Compact Mode or if requested) */}
                                 {isCompact && (
-                                    <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-sm ${currentStyle.color.replace('text-', 'bg-').replace('900', '600')}`}>
+                                    <div className={`hidden lg:flex flex-shrink-0 w-5 h-5 rounded-full items-center justify-center text-white text-[10px] font-bold shadow-sm ${currentStyle.color.replace('text-', 'bg-').replace('900', '600')}`}>
                                         {startIndex + idx + 1}
                                     </div>
                                 )}
 
                                 {/* Desktop Hover Actions - Visible >= 1024px */}
                                 <div className="hidden lg:flex absolute -top-2 -right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
+
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            onItemClick(item);
+                                            setEditingNoteId(item.instanceId);
                                         }}
-                                        className="bg-white text-gray-400 hover:text-green-500 p-1 rounded-full shadow border border-gray-100"
-                                        title={t.viewDetails || "View Details"}
+                                        className="bg-white text-gray-400 hover:text-amber-500 p-1 rounded-full shadow border border-gray-100"
+                                        title={t.addNote || "Add Note"}
                                     >
-                                        <MapPin size={12} />
+                                        <NoteIcon size={12} />
                                     </button>
                                     <button onClick={(e) => { e.stopPropagation(); onMoveItem(idx); }} className="bg-white text-gray-400 hover:text-blue-500 p-1 rounded-full shadow border border-gray-100" title={t.moveToDay || "Move to Day"}> <MoveRight size={12} /> </button>
                                     <button onClick={(e) => { e.stopPropagation(); onDelete(slot, idx); }} className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"> <Trash2 size={12} /> </button>
@@ -231,7 +233,18 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)}
                                         {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
                                     </div>
-                                    <input type="text" placeholder={t.addNote} value={item.notes || ''} onClick={(e) => e.stopPropagation()} onChange={(e) => onNoteChange(slot, idx, e.target.value)} className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400" />
+                                    {(item.notes || editingNoteId === item.instanceId) && (
+                                        <input
+                                            type="text"
+                                            placeholder={t.addNote}
+                                            value={item.notes || ''}
+                                            autoFocus={editingNoteId === item.instanceId}
+                                            onBlur={() => setEditingNoteId(null)}
+                                            onClick={(e) => e.stopPropagation()}
+                                            onChange={(e) => onNoteChange(slot, idx, e.target.value)}
+                                            className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400 animate-in fade-in slide-in-from-top-1 duration-200"
+                                        />
+                                    )}
 
 
 
@@ -277,17 +290,7 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                                                     {/* Dropdown Menu - Aligned to bottom right of button */}
                                                     <div className="absolute right-0 top-full mt-1 bg-white border border-gray-100 shadow-xl rounded-xl p-1.5 flex flex-col gap-1 min-w-[140px] z-40 animate-in fade-in zoom-in-95 duration-200">
-                                                        <button
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                onItemClick(item);
-                                                                setOpenMenuId(null);
-                                                            }}
-                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-teal-50 hover:text-teal-600 rounded-lg w-full text-left"
-                                                        >
-                                                            <MapPin size={14} />
-                                                            {t.viewDetails || "View Details"}
-                                                        </button>
+
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
@@ -298,6 +301,17 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         >
                                                             <MoveRight size={14} />
                                                             {t.moveToDay || "Move to Day"}
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setEditingNoteId(item.instanceId);
+                                                                setOpenMenuId(null);
+                                                            }}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-amber-50 hover:text-amber-600 rounded-lg w-full text-left"
+                                                        >
+                                                            <NoteIcon size={14} />
+                                                            {t.addNote || "Add Note"}
                                                         </button>
                                                         <button
                                                             onClick={(e) => {
