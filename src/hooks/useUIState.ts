@@ -46,6 +46,9 @@ export const useUIState = () => {
     // Export States
     const [exportTab, setExportTab] = useState<'text' | 'image' | 'share' | 'backup'>('text');
 
+    // Region State (Sidebar Filter)
+    const [activeRegion, setActiveRegion] = useState<Region>('all');
+
     return {
         // States
         showLanding, setShowLanding,
@@ -76,6 +79,7 @@ export const useUIState = () => {
         unlockTarget, setUnlockTarget,
         selectedItem, setSelectedItem,
         batchUnlockCount, setBatchUnlockCount,
-        moveTarget, setMoveTarget,
+        activeRegion, setActiveRegion,
+        moveTarget, setMoveTarget
     };
 };

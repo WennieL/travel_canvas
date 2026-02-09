@@ -222,7 +222,12 @@ export const TRANSLATIONS: any = {
         shareTip: "小撇步：把連結傳到 Line 群組，朋友都能看到精美行程！",
         budgetUpdated: "預算已更新！",
         currencySettings: "匯率設定 (Currency)",
-        savedSuccess: "儲存成功"
+        savedSuccess: "儲存成功",
+        crossRegionWarning: "⚠️ 注意：您加入了 {region} 的景點至 {planRegion} 行程中。",
+        crossRegionWarningShort: "跨區提醒：此為 {region} 景點 (目前行程：{planRegion})",
+        tokyo: "東京",
+        osaka: "大阪",
+        kyoto: "京都"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -446,6 +451,11 @@ export const TRANSLATIONS: any = {
         shareTip: "Pro Tip: Share this link to your Line group so friends can view the itinerary!",
         budgetUpdated: "Budget settings saved successfully!",
         currencySettings: "Currency Settings",
-        savedSuccess: "Saved successfully"
+        savedSuccess: "Saved successfully",
+        crossRegionWarning: "⚠️ Note: You added a {region} item to your {planRegion} plan.",
+        crossRegionWarningShort: "Region Warning: This is a {region} item (Plan: {planRegion})",
+        tokyo: "Tokyo",
+        osaka: "Osaka",
+        kyoto: "Kyoto"
     }
 };

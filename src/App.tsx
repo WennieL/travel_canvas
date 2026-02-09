@@ -84,7 +84,8 @@ export function App() {
         previewTemplate, setPreviewTemplate,
         unlockTarget, setUnlockTarget,
         batchUnlockCount, setBatchUnlockCount,
-        moveTarget, setMoveTarget
+        moveTarget, setMoveTarget,
+        activeRegion, setActiveRegion
     } = ui;
 
     const t = TRANSLATIONS[lang];
@@ -107,9 +108,9 @@ export function App() {
     const draggedItemRef = useRef<{ item: TravelItem, source: 'sidebar' | 'canvas', sourceSlot?: TimeSlot, index?: number } | null>(null);
 
     // Toast State
-    const [toast, setToast] = useState<{ show: boolean, message: string }>({ show: false, message: '' });
-    const showToastMessage = useCallback((message: string) => {
-        setToast({ show: true, message });
+    const [toast, setToast] = useState<{ show: boolean, message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number }>({ show: false, message: '' });
+    const showToastMessage = useCallback((message: string, type: 'success' | 'warning' | 'error' | 'info' = 'success', duration: number = 2000) => {
+        setToast({ show: true, message, type, duration });
     }, []);
 
     // Initialization & Persistence
@@ -126,8 +127,16 @@ export function App() {
         }
     }, [lang, sidebarWidth, isInitialized]);
 
+    // [NEW] Sync Sidebar Region with Active Plan
+    // When switching plans or applying templates, automatically switch the sidebar category
+    useEffect(() => {
+        if (activePlan?.region && activePlan.region !== 'all') {
+            ui.setActiveRegion(activePlan.region);
+        }
+    }, [activePlan?.id, activePlan?.region]);
+
     // Derived State
-    const activeRegion = activePlan?.region || 'all';
+    // Removed local activeRegion derived state to avoid confusion with ui.activeRegion
     const activeCreator = SAMPLE_CREATORS.find(c => c.id === selectedCreatorId);
     const creatorTemplates = activeCreator ? TEMPLATES.filter(tpl => tpl.authorId === activeCreator.id) : [];
     const [subscribedCreators, setSubscribedCreators] = useState<string[]>([]);
@@ -264,6 +273,24 @@ export function App() {
             newSchedule[currentDayKey][targetSlot].push(item);
         }
 
+        // Scheme A: Cross-Region Warning (Drag & Drop)
+        if (dragged.source === 'sidebar' && dragged.item.region && activePlan.region &&
+            dragged.item.region !== 'all' && activePlan.region !== 'all' &&
+            dragged.item.region !== activePlan.region) {
+            const regionName = t[dragged.item.region] || dragged.item.region.toUpperCase();
+            const planRegionName = t[activePlan.region] || activePlan.region.toUpperCase();
+
+            showToastMessage(
+                t.crossRegionWarning
+                    ? t.crossRegionWarning
+                        .replace('{region}', regionName)
+                        .replace('{planRegion}', planRegionName)
+                    : `⚠️ Note: You added a ${regionName} item to your ${planRegionName} plan.`,
+                'warning',
+                3000
+            );
+        }
+
         // Auto-sort target slot
         newSchedule[currentDayKey][targetSlot].sort((a, b) => {
             const timeA = a.startTime || 'ZZZZ';
@@ -365,7 +392,26 @@ export function App() {
         });
 
         updateActivePlan({ schedule: newSchedule });
-        showToastMessage("✅ Added!");
+
+        // Scheme A: Cross-Region Warning
+        if (item.region && activePlan.region &&
+            item.region !== 'all' && activePlan.region !== 'all' &&
+            item.region !== activePlan.region) {
+            const regionName = t[item.region] || item.region.toUpperCase();
+            const planRegionName = t[activePlan.region] || activePlan.region.toUpperCase();
+
+            showToastMessage(
+                t.crossRegionWarning
+                    ? t.crossRegionWarning
+                        .replace('{region}', regionName)
+                        .replace('{planRegion}', planRegionName)
+                    : `⚠️ Note: You added a ${regionName} item to your ${planRegionName} plan.`,
+                'warning',
+                3000
+            );
+        } else {
+            showToastMessage("✅ " + (t.added || "Added!"), 'success', 2000);
+        }
     };
 
     const handleUnlockConfirm = () => {
@@ -468,7 +514,7 @@ export function App() {
                         activeTab={activeTab} setActiveTab={setActiveTab}
                         searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                         activeCategory={activeCategory} setActiveCategory={setActiveCategory}
-                        activeRegion={activeRegion} setActiveRegion={(r) => updateActivePlan({ region: r })}
+                        activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
                         setShowCustomItemModal={setShowCustomItemModal}
                         handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
                         applyTemplate={applyTemplate} t={t} lang={lang}
@@ -490,7 +536,7 @@ export function App() {
                     startEditingName={startEditingName} saveName={saveName} handleNameKeyDown={handleNameKeyDown}
                     nameInputRef={nameInputRef} openDatePicker={openDatePicker}
                     showCitySelector={showCitySelector} setShowCitySelector={setShowCitySelector}
-                    activeRegion={activeRegion} setActiveRegion={(r) => updateActivePlan({ region: r })}
+                    activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
                     updateActivePlan={updateActivePlan} setShowLanding={setShowLanding} setShowPlanManager={setShowPlanManager}
                     setShowSubmitModal={setShowSubmitModal} setShowShareModal={setShowShareModal} handleGateCheck={handleGateCheck}
                     isSidebarOpen={isSidebarOpen} budgetLimit={budgetLimit} setBudgetLimit={setBudgetLimit}
@@ -559,6 +605,7 @@ export function App() {
                                     }}
                                     t={t}
                                     lang={lang}
+                                    planRegion={activePlan.region}
                                 />
                             ))}
                         </div>
@@ -628,12 +675,12 @@ export function App() {
                 activeTab={activeTab} setActiveTab={setActiveTab}
                 searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                 activeCategory={activeCategory} setActiveCategory={setActiveCategory}
-                activeRegion={activeRegion} setActiveRegion={(r) => updateActivePlan({ region: r })}
+                activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
                 handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
                 showMobileLibrary={showMobileLibrary} setShowMobileLibrary={setShowMobileLibrary}
             />
 
-            {toast.show && <Toast message={toast.message} onClose={() => setToast({ show: false, message: '' })} />}
+            {toast.show && <Toast message={toast.message} type={toast.type} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}
         </div >
     );
 }

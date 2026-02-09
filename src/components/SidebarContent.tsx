@@ -17,7 +17,7 @@ interface SidebarContentProps {
     setShowCustomItemModal: (show: boolean) => void;
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
     handleTapToAdd: (item: TravelItem) => void;
-    applyTemplate: (template: { name: string; duration: number; schedule: DaySchedule; region: Region }) => void;
+    applyTemplate: (template: { name: string; duration: number; schedule: DaySchedule | any; region: Region }) => void;
     t: any;
     lang?: string;
     customAssets?: TravelItem[];

@@ -486,7 +486,12 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                         setPreviewTemplate(null);
                     }}
                     onUnlock={(tpl) => {
-                        setUnlockTarget(tpl.schedule.morning[0] || null); // Simplified for now
+                        const schedule = tpl.schedule as any;
+                        const firstDayKey = Object.keys(schedule)[0];
+                        const firstDay = schedule[firstDayKey];
+                        const firstItem = firstDay?.morning?.[0] || null;
+
+                        setUnlockTarget(firstItem);
                         setBatchUnlockCount(1);
                     }}
                     t={t}

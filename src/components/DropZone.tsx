@@ -4,7 +4,8 @@ import {
     TimeSlot,
     ScheduleItem,
     TravelItem,
-    TransportMode
+    TransportMode,
+    Region
 } from '../types';
 import {
     getTransportIcon,
@@ -32,10 +33,11 @@ interface DropZoneProps {
     previousItem?: ScheduleItem | null;
     lang: string;
     onDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
+    planRegion?: Region; // Scheme B: For visual cues
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion
 }) => {
     const isCompact = false;
     const isDraggingGlobal = false; // Simplified
@@ -144,8 +146,9 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 style={{ touchAction: 'pan-y' }}
                                 className={`group relative border rounded-lg p-3 shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-start gap-3 transition-all hover:-translate-y-0.5 animate-land 
                                     ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
-                                        isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
-                                            'bg-white border-gray-100 hover:border-teal-300'}
+                                        (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
+                                            isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
+                                                'bg-white border-gray-100 hover:border-teal-300'}
                                     ${openMenuId === item.instanceId ? 'z-50' : ''}
                                 `}
                             >
@@ -175,10 +178,17 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     )}
                                     {item.image || getFallbackImage(item.type)}
                                 </div>
-
-                                <div className="flex-1 min-w-0">
+                                <div className="flex-1 min-w-0 mr-2">
                                     <div className="flex items-center justify-between mb-0.5">
-                                        <h4 className={`font-bold text-sm truncate pr-2 ${isLocked ? 'text-gray-600 italic' : 'text-gray-700'}`}>{displayTitle}</h4>
+                                        <div className="flex items-center gap-2 overflow-hidden mr-2">
+                                            <h4 className={`font-bold text-sm truncate ${isLocked ? 'text-gray-600 italic' : 'text-gray-700'}`}>{displayTitle}</h4>
+                                            {/* Scheme B: Visual Tag for Cross-Region */}
+                                            {item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion && (
+                                                <span className="text-[9px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-bold tracking-wider uppercase border border-gray-200">
+                                                    {t[item.region] || item.region}
+                                                </span>
+                                            )}
+                                        </div>
                                         {isLocked ? (
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); onUnlockItem?.(item); }}
@@ -198,6 +208,18 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         <div className="flex items-center gap-1 text-[10px] text-amber-600 mt-1">
                                             <Star size={10} fill="currentColor" />
                                             <span className="font-medium">有達人秘訣 — 點擊查看</span>
+                                        </div>
+                                    )}
+
+                                    {/* Inline Cross-Region Warning */}
+                                    {item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion && (
+                                        <div className="mt-2 text-[10px] text-amber-700 bg-amber-100/50 px-2 py-1 rounded flex items-center gap-1.5 border border-amber-200/50">
+                                            <span className="flex-shrink-0 text-amber-500">⚠️</span>
+                                            <span>
+                                                {t.crossRegionWarningShort
+                                                    ? t.crossRegionWarningShort.replace('{region}', t[item.region] || item.region).replace('{planRegion}', t[planRegion] || planRegion)
+                                                    : `This is a ${t[item.region] || item.region} item in a ${t[planRegion] || planRegion} plan.`}
+                                            </span>
                                         </div>
                                     )}
                                 </div>
@@ -301,7 +323,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                     </div>
                 </button>
             </div>
-        </div>
+        </div >
     );
 };
 
