@@ -106,8 +106,8 @@ const DropZone: React.FC<DropZoneProps> = ({
     const currentStyle = slotStyles[slot] || { color: 'text-gray-500', time: '' };
 
     return (
-        <div className={`relative transition-all duration-300 ${isAccommodation ? 'mt-4' : 'pl-8'}`}>
-            {!isAccommodation && !isCompact && (<> <div className="absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
+        <div className={`relative transition-all duration-300 ${isAccommodation ? 'mt-4' : 'lg:pl-8'}`}>
+            {!isAccommodation && !isCompact && (<> <div className="hidden lg:block absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="hidden lg:block absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
             <div className="mb-2 flex items-center justify-between transition-all opacity-100">
                 <div className="flex items-center gap-2">
                     <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${currentStyle.color}`}> {icon} {title} </h3>
@@ -129,7 +129,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                         )}
                     </div>
                 )}
-                {previousItem && items.length > 0 && !isCompact && (() => { const suggestion = getTransportSuggestion(previousItem, items[0]); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
+                {previousItem && items.length > 0 && !isCompact && (() => { const suggestion = getTransportSuggestion(previousItem, items[0]); return (<div className="relative w-full flex items-center lg:pl-4 py-2" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="hidden lg:block h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> <div className="lg:hidden absolute left-1/2 -translate-x-1/2 h-6 w-0.5 bg-gray-200"></div> </div>); })()}
                 {items.map((item, idx) => {
                     const prevItemInSlot = idx > 0 ? items[idx - 1] : null;
 
@@ -155,14 +155,14 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                     return (
                         <React.Fragment key={item.instanceId}>
-                            {prevItemInSlot && !isCompact && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="flex items-center gap-2 pl-4 py-1.5 w-fit" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
+                            {prevItemInSlot && !isCompact && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="relative w-full flex items-center lg:pl-4 py-2" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="hidden lg:block h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> <div className="lg:hidden absolute left-1/2 -translate-x-1/2 h-6 w-0.5 bg-gray-200"></div> </div>); })()}
                             <div
                                 draggable
                                 onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
                                 onClick={() => onItemClick(item)}
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{ touchAction: 'pan-y' }}
-                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land 
+                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land
                                         ${isCompact ? 'p-2 gap-2' : 'p-3 items-start gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
