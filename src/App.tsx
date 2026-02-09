@@ -654,7 +654,7 @@ export function App() {
                         <div className={`flex h-full gap-4 ${showContextMap ? 'overflow-hidden' : ''}`}>
                             {/* Schedule List Area */}
                             <div className={`flex-1 transition-all duration-300 ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                                <div className="space-y-6 pb-24 lg:pb-12 max-w-3xl mx-auto px-4 lg:px-0">
+                                <div className="space-y-6 pb-24 lg:pb-12 max-w-3xl mx-auto px-2 md:px-4 lg:px-0">
                                     {/* Weather/Date Info could go here */}
 
                                     {(() => {

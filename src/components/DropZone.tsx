@@ -114,7 +114,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                     {!isAccommodation && <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{currentStyle.time}</span>}
                 </div>
             </div>
-            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-2 flex flex-col space-y-1' : 'min-h-[80px] border-2 border-dashed p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
+            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-2 flex flex-col space-y-1' : 'min-h-[80px] border-2 border-dashed px-0 md:p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && !isCompact && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors py-4 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'}`}>
                         {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!"))}
@@ -163,7 +163,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{ touchAction: 'pan-y' }}
                                 className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land
-                                        ${isCompact ? 'p-2 gap-2' : 'p-3 items-start gap-3'}
+                                        ${isCompact ? 'p-2 gap-2' : 'pl-1 pr-2 md:p-3 items-start gap-1.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
                                             isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
@@ -194,7 +194,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     <button onClick={(e) => { e.stopPropagation(); onMoveItem(idx); }} className="bg-white text-gray-400 hover:text-blue-500 p-1 rounded-full shadow border border-gray-100" title={t.moveToDay || "Move to Day"}> <MoveRight size={12} /> </button>
                                     <button onClick={(e) => { e.stopPropagation(); onDelete(slot, idx); }} className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"> <Trash2 size={12} /> </button>
                                 </div>
-                                <div className="text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
+                                <div className="hidden md:block text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
 
                                 <div className={`relative flex-shrink-0 bg-gray-50 flex items-center justify-center rounded-md overflow-hidden ${isCompact ? 'w-8 h-8 text-lg' : 'w-10 h-10 text-2xl'}`}>
                                     {isLocked && (
