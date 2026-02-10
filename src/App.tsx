@@ -824,10 +824,10 @@ export function App() {
                         </div>
                     ) : (
                         // Canvas View (Default)
-                        <div className={`flex h-full gap-4 ${showContextMap ? 'overflow-hidden' : ''}`}>
+                        <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
                             {/* Schedule List Area */}
-                            <div className={`flex-1 transition-all duration-300 ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                                <div className="space-y-6 pb-24 lg:pb-12 px-4 md:px-6 lg:max-w-3xl lg:mx-auto lg:px-0 max-w-full">
+                            <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
+                                <div className="space-y-6 pb-24 lg:pb-12 px-4 md:px-6 lg:max-w-3xl mx-auto lg:px-0 w-full max-w-full overflow-x-hidden">
                                     {/* Weather/Date Info could go here */}
 
                                     {(() => {
@@ -916,35 +916,33 @@ export function App() {
                     )}
                 </div>
 
-                {/* Mobile Navigation (Hidden in Map Mode to maximize space) */}
                 {viewMode !== 'map' && (
-                    <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-50">
+                    <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 grid grid-cols-4 items-center pb-2 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
                         <button
                             onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
-                            className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                            className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
                         >
-                            <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold">{t.plan || 'Plan'}</span>
+                            <Calendar size={20} /> <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.plan || 'Plan'}</span>
                         </button>
                         <button
                             onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
-                            className={`flex flex-col items-center transition-colors ${(viewMode as string) === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                            className={`flex flex-col items-center justify-center w-full transition-colors ${(viewMode as string) === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
                         >
-                            <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold">{t.map || 'Map'}</span>
+                            <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.map || 'Map'}</span>
                         </button>
 
                         <button
                             onClick={() => { setViewMode('checklist'); setShowPlanManager(false); }}
-                            className={`flex flex-col items-center transition-colors ${viewMode === 'checklist' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                            className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'checklist' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
                         >
-                            <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold">{t.preparation || 'Preparation'}</span>
+                            <ListTodo size={20} /> <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.preparation || 'Tools'}</span>
                         </button>
                         <button
                             onClick={() => setShowPlanManager(true)}
-                            className={`flex flex-col items-center transition-colors ${showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                            className={`flex flex-col items-center justify-center w-full transition-colors ${showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
                         >
-                            <FolderOpen size={20} /> <span className="text-[10px] mt-1 font-bold">{t.myPlans || 'Plans'}</span>
+                            <FolderOpen size={20} /> <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.myPlans || 'Plans'}</span>
                         </button>
-
                     </div>
                 )}
             </div>
