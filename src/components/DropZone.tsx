@@ -36,17 +36,17 @@ interface DropZoneProps {
     planRegion?: Region; // Scheme B: For visual cues
     isCompact?: boolean; // Scheme B: Split view compact mode
     startIndex?: number; // For global sequential numbering (1-n)
+    onQuickFill?: (slot: TimeSlot) => void;
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, onQuickFill, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0
 }) => {
     // const isCompact = false; // Removed hardcoded
     const isDraggingGlobal = false; // Simplified
     const onDragOver = (e: React.DragEvent) => { e.preventDefault(); };
     // Removed unused sampleAssets and hardcoded lang
     // Removed shadowed onAddItem
-    const onQuickFill = (s: TimeSlot) => { console.log("Quick fill", s); };
     // Passed from parent
     const onDelete = (s: TimeSlot, i: number) => onRemoveItem(i);
     const onTimeChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { startTime: v });
@@ -121,7 +121,11 @@ const DropZone: React.FC<DropZoneProps> = ({
                         {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!"))}
                         {!isDraggingGlobal && !isAccommodation && (
                             <button
-                                onClick={(e) => { e.stopPropagation(); onQuickFill(slot); }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log("Quick Fill Clicked", slot, !!onQuickFill);
+                                    if (onQuickFill) onQuickFill(slot);
+                                }}
                                 className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-50 text-teal-600 rounded-full text-xs font-bold hover:bg-teal-100 transition-colors animate-in fade-in zoom-in duration-300"
                             >
                                 <Sparkles size={12} />
