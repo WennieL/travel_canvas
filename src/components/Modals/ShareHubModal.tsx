@@ -31,7 +31,7 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4 backdrop-blur-md" onClick={onClose}>
+        <div className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4 backdrop-blur-md" onClick={onClose}>
             <div className="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden border border-gray-100" onClick={(e) => e.stopPropagation()}>
                 {/* Modal Header */}
                 <div className="p-6 pb-4 flex justify-between items-center bg-gradient-to-r from-teal-50 to-emerald-50">

@@ -870,7 +870,7 @@ export function App() {
 
                 {/* Mobile Navigation (Hidden in Map Mode to maximize space) */}
                 {viewMode !== 'map' && (
-                    <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-[500]">
+                    <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 flex items-center justify-around px-6 pb-2 z-50">
                         <button
                             onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
                             className={`flex flex-col items-center transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}

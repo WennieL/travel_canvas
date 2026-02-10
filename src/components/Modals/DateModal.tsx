@@ -33,7 +33,7 @@ export const DateModal: React.FC<DateModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center p-4">
             <div className="bg-white rounded-xl w-full max-w-sm p-5">
                 <h3 className="font-bold mb-4">{t.dateSettings}</h3>
                 <div className="space-y-4 mb-4">

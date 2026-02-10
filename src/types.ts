@@ -50,8 +50,11 @@ export interface InsiderTip {
         storyEn?: string;
         photos?: string[];       // Exclusive photos
         exactLocation?: string;  // Precise location tip
+        exactLocationEn?: string;
         mustTry?: string;        // Must order/buy
+        mustTryEn?: string;
         avoid?: string;          // Pitfalls to avoid
+        avoidEn?: string;
         bestTime?: string;       // Best time to visit
         reservation?: string;    // Booking link
     };

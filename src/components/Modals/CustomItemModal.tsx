@@ -60,7 +60,7 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-black/50 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm">
             <div className="bg-white rounded-xl w-full max-w-md p-5 shadow-2xl">
                 <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                     <Plus size={18} className="text-teal-600" />
@@ -76,8 +76,8 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                                 key={type}
                                 onClick={() => setItemType(type)}
                                 className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${itemType === type
-                                        ? 'bg-teal-600 border-teal-600 text-white'
-                                        : 'bg-white border-gray-200 text-gray-600 hover:border-teal-300'
+                                    ? 'bg-teal-600 border-teal-600 text-white'
+                                    : 'bg-white border-gray-200 text-gray-600 hover:border-teal-300'
                                     }`}
                             >
                                 {type === 'attraction' && '🎯 '}

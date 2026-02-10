@@ -29,7 +29,7 @@ interface MobileLibraryProps {
 
 export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {
     return (
-        <div className="fixed inset-0 z-[100] lg:hidden">
+        <div className="fixed inset-0 z-[1000] lg:hidden">
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"

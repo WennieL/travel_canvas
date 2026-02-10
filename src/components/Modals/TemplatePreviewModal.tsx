@@ -27,18 +27,27 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
 
     const isLocked = template.isLocked && !template.purchased;
 
+    // Unified way to get all items regardless of schedule structure
+    const allItems: ScheduleItem[] = ('morning' in template.schedule)
+        ? Object.values(template.schedule as DaySchedule).flat()
+        : Object.values(template.schedule as FullSchedule).flatMap(day => Object.values(day).flat());
+
     // Calculate highlights from template data if not provided
     const highlights = template.highlights || {
         days: template.duration,
-        spots: Object.values(template.schedule).flat().length,
-        tips: Object.values(template.schedule).flat().filter((item: ScheduleItem) => item.insiderTip).length,
+        spots: allItems.length,
+        tips: allItems.filter(item => item.insiderTip).length,
         rating: template.rating || 4.8,
         usageCount: template.copiedCount || 256
     };
 
     // Generate day previews from schedule if not provided
+    const firstDay = ('morning' in template.schedule)
+        ? (template.schedule as DaySchedule)
+        : (template.schedule as FullSchedule)['Day 1'] || Object.values(template.schedule as FullSchedule)[0];
+
     const dayPreviews = template.dayPreviews || [
-        { day: 1, summary: template.schedule.morning.slice(0, 3).map((i: ScheduleItem) => i.title).join(' → ') || '行程安排中...' },
+        { day: 1, summary: firstDay?.morning?.slice(0, 3).map((i: ScheduleItem) => i.title).join(' → ') || '行程安排中...' },
     ];
 
     // Default whatYouGet
@@ -70,7 +79,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 z-[70] flex justify-center items-end md:items-center pointer-events-none">
+        <div className="fixed inset-0 z-[1000] flex justify-center items-end md:items-center pointer-events-none">
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm pointer-events-auto transition-opacity duration-300"

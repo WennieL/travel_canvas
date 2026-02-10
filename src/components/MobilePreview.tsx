@@ -31,7 +31,7 @@ export const MobilePreview: React.FC<MobilePreviewProps> = ({ plan, onClose, lan
     };
 
     return (
-        <div className="fixed inset-0 z-[100] bg-black">
+        <div className="fixed inset-0 z-[1000] bg-black">
             {/* Phone Frame Simulation */}
             <div className="absolute inset-0 md:inset-8 md:max-w-[375px] md:max-h-[812px] md:mx-auto md:rounded-[3rem] md:border-[14px] md:border-gray-800 md:shadow-2xl overflow-hidden bg-white flex flex-col">
                 {/* Status Bar (Simulated) */}
