@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock } from 'lucide-react';
+import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock, Banknote } from 'lucide-react';
 import {
     TimeSlot,
     ScheduleItem,
@@ -54,6 +54,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     const onNoteChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { notes: v });
     const onTransportChange = (s: TimeSlot, i: number, m: TransportMode) => onUpdateItem(i, { arrivalTransport: m });
     const [editingNoteId, setEditingNoteId] = React.useState<string | null>(null);
+    const [editingPriceId, setEditingPriceId] = React.useState<string | null>(null);
     const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
     const [menuPosition, setMenuPosition] = useState<{ top: number, left: number } | null>(null);
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
@@ -188,6 +189,16 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                                 {/* Desktop Hover Actions - Visible >= 1024px */}
                                 <div className="hidden lg:flex absolute top-2 right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setEditingPriceId(item.instanceId);
+                                        }}
+                                        className="bg-white text-gray-400 hover:text-teal-500 p-1 rounded-full shadow border border-gray-100"
+                                        title={t.setBudget || "Set Budget"}
+                                    >
+                                        <Banknote size={12} />
+                                    </button>
 
                                     <button
                                         onClick={(e) => {
@@ -250,7 +261,8 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         </div>
 
                                         {/* Price Badge - Only valid price or locked */}
-                                        {(isLocked || (item.price !== undefined && item.price > 0)) && (
+                                        {/* Price Badge - Only valid price or locked or edit mode */}
+                                        {(isLocked || (item.price !== undefined && item.price > 0) || editingPriceId === item.instanceId) && (
                                             isLocked ? (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); onUnlockItem?.(item); }}
@@ -259,12 +271,40 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                     <Lock size={8} /> Unlock
                                                 </button>
                                             ) : (
-                                                <span className="text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap border border-gray-200"> ¥{item.price?.toLocaleString()} </span>
+                                                editingPriceId === item.instanceId ? (
+                                                    <div className="flex items-center gap-1 bg-white border border-teal-300 rounded px-1 py-0.5 shadow-sm">
+                                                        <span className="text-[10px] text-gray-400">¥</span>
+                                                        <input
+                                                            type="number"
+                                                            autoFocus
+                                                            className="w-12 text-[10px] font-medium text-gray-700 p-0 border-none focus:ring-0 bg-transparent"
+                                                            placeholder="0"
+                                                            value={item.price || ''}
+                                                            onChange={(e) => {
+                                                                const val = parseInt(e.target.value);
+                                                                onUpdateItem(idx, { price: isNaN(val) ? 0 : val });
+                                                            }}
+                                                            onBlur={() => setEditingPriceId(null)}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === 'Enter') setEditingPriceId(null);
+                                                            }}
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <span
+                                                        onClick={(e) => { e.stopPropagation(); setEditingPriceId(item.instanceId); }}
+                                                        title={t.setBudget}
+                                                        className="text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap border border-gray-200 cursor-pointer hover:border-teal-300 hover:text-teal-600 transition-colors"
+                                                    >
+                                                        ¥{item.price?.toLocaleString()}
+                                                    </span>
+                                                )
                                             )
                                         )}
 
                                         {/* Tags - Hidden on Mobile */}
-                                        {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="hidden lg:flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
+
                                     </div>
 
                                     {(item.notes || editingNoteId === item.instanceId) && (
@@ -327,13 +367,13 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                onMoveItem(idx);
+                                                                setEditingPriceId(item.instanceId);
                                                                 setOpenMenuId(null);
                                                             }}
-                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg w-full text-left"
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-teal-50 hover:text-teal-600 rounded-lg w-full text-left"
                                                         >
-                                                            <MoveRight size={14} />
-                                                            {t.moveToDay || "Move to Day"}
+                                                            <Banknote size={14} />
+                                                            {t.setBudget || "Set Budget"}
                                                         </button>
                                                         <button
                                                             onClick={(e) => {
@@ -345,6 +385,17 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         >
                                                             <NoteIcon size={14} />
                                                             {t.addNote || "Add Note"}
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                onMoveItem(idx);
+                                                                setOpenMenuId(null);
+                                                            }}
+                                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg w-full text-left"
+                                                        >
+                                                            <MoveRight size={14} />
+                                                            {t.moveToDay || "Move to Day"}
                                                         </button>
                                                         <button
                                                             onClick={(e) => {
