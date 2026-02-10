@@ -22,3 +22,34 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite
+vite.config.ts.timestamp-*
+
+# System
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+desktop.ini
+.AppleDouble
+.LSOverride
+
+# Linting
+.eslintcache

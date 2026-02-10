@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Download, FileText, Image as ImageIcon, Share2, HardDrive, Copy, Link as LinkIcon, MoveRight, Upload } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
+import { useConfirm } from '../hooks';
 import {
     ExportModal,
     ShareHubModal,
@@ -124,6 +125,7 @@ interface AppModalsProps {
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
+    const { confirm } = useConfirm();
     const {
         lang, t, showToastMessage,
         showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId, handleCreatePlan, handleDeletePlan,
@@ -247,7 +249,12 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                                                     showToastMessage('✅ ' + (t.downloadImage || '圖片已下載!'));
                                                 } catch (error) {
                                                     console.error('Export image failed:', error);
-                                                    alert('Export failed');
+                                                    confirm({
+                                                        title: 'Export Error',
+                                                        message: 'Export failed. Please check console for details.',
+                                                        type: 'error',
+                                                        confirmText: 'OK'
+                                                    });
                                                 }
                                             }
                                         }}
@@ -349,7 +356,12 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                                                                     setShowExportModal(false);
                                                                 }
                                                             } catch (err) {
-                                                                alert(t.importError || '匯入失敗');
+                                                                confirm({
+                                                                    title: t.importError || '匯入失敗',
+                                                                    message: 'Import failed. Please check file format.',
+                                                                    type: 'error',
+                                                                    confirmText: 'OK'
+                                                                });
                                                             }
                                                         };
                                                         reader.readAsText(file);

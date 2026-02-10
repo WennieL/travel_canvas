@@ -43,7 +43,7 @@ import DropZone from './components/DropZone';
 import ChecklistView from './components/ChecklistView';
 import ScheduleList from './components/ScheduleList';
 import { Toast } from './components/Toast';
-import { usePlans, useBudget, useUIState } from './hooks';
+import { usePlans, useBudget, useUIState, useConfirm } from './hooks';
 
 // New Modular Components
 import AppHeader from './components/AppHeader';
@@ -57,6 +57,7 @@ export function App() {
 
     // UI State Management Hook
     const ui = useUIState();
+    const { confirm } = useConfirm();
     const {
         showLanding, setShowLanding,
         viewMode, setViewMode,
@@ -96,7 +97,7 @@ export function App() {
         plans, activePlanId, activePlan, currentDay,
         setPlans, setActivePlanId, setCurrentDay,
         updateActivePlan, updateChecklist, handleCreatePlan,
-        handleDeletePlan, handleAddDay, handleDeleteDay, getDisplayDate, getShortDate
+        handleDeletePlan: _handleDeletePlan, handleAddDay, handleDeleteDay: _handleDeleteDay, getDisplayDate, getShortDate
     } = usePlans(isInitialized, t, lang);
 
     const { budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown } = useBudget(activePlan, t);
@@ -195,13 +196,19 @@ export function App() {
 
     const openDatePicker = () => setShowDateModal(true);
 
-    const applyTemplate = (template: Template, skipConfirm: boolean = false) => {
+    const applyTemplate = async (template: Template, skipConfirm: boolean = false) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
         if (!skipConfirm) {
-            const confirmMessage = lang === 'zh'
-                ? `⚠️ 確定要套用「${templateName}」嗎？\n\n目前的行程將被取代。`
-                : `⚠️ Apply "${templateName}"?\n\nCurrent itinerary will be replaced.`;
-            if (!window.confirm(confirmMessage)) return;
+            const confirmed = await confirm({
+                title: lang === 'zh' ? '套用模板' : 'Apply Template',
+                message: lang === 'zh'
+                    ? `⚠️ 確定要套用「${templateName}」嗎？\n\n目前的行程將被取代。`
+                    : `⚠️ Apply "${templateName}"?\n\nCurrent itinerary will be replaced.`,
+                type: 'warning',
+                confirmText: lang === 'zh' ? '套用' : 'Apply',
+                cancelText: lang === 'zh' ? '取消' : 'Cancel'
+            });
+            if (!confirmed) return;
         }
 
         const copy = (items: ScheduleItem[]) => (items || []).map(i => ({
@@ -465,6 +472,40 @@ export function App() {
                 ? `✅ "${itemName}" added to ${slotLabel}`
                 : `✅ 「${itemName}」已加入${slotLabel}`;
             showToastMessage(addedMsg, 'success', 2500);
+        }
+    };
+
+    const onDeleteDay = async (dayToDelete: number, e?: React.MouseEvent) => {
+        e?.stopPropagation();
+        const confirmed = await confirm({
+            title: lang === 'zh' ? '刪除天數' : 'Delete Day',
+            message: lang === 'zh'
+                ? `確定要刪除第 ${dayToDelete} 天嗎？\n此動作無法復原。`
+                : `Are you sure you want to delete Day ${dayToDelete}?\nThis action cannot be undone.`,
+            type: 'warning',
+            confirmText: lang === 'zh' ? '刪除' : 'Delete',
+            cancelText: lang === 'zh' ? '取消' : 'Cancel'
+        });
+        if (confirmed) {
+            _handleDeleteDay(dayToDelete, e);
+        }
+    };
+
+    const onDeletePlan = async (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        const planToDelete = plans.find(p => p.id === id);
+        const planName = planToDelete?.name || '';
+        const confirmed = await confirm({
+            title: lang === 'zh' ? '刪除行程' : 'Delete Trip',
+            message: lang === 'zh'
+                ? `確定要刪除「${planName}」嗎？`
+                : `Are you sure you want to delete "${planName}"?`,
+            type: 'error',
+            confirmText: lang === 'zh' ? '刪除' : 'Delete',
+            cancelText: lang === 'zh' ? '取消' : 'Cancel'
+        });
+        if (confirmed) {
+            _handleDeletePlan(id, e);
         }
     };
 
@@ -740,7 +781,7 @@ export function App() {
 
                 <DayTabs
                     activePlan={activePlan} currentDay={currentDay} setCurrentDay={setCurrentDay}
-                    handleAddDay={handleAddDay} handleDeleteDay={handleDeleteDay}
+                    handleAddDay={handleAddDay} handleDeleteDay={onDeleteDay}
                     getShortDate={getShortDate} t={t}
                     dayTabsContainerRef={dayTabsContainerRef} mobileDayTabsRef={mobileDayTabsRef}
                 />
@@ -905,7 +946,7 @@ export function App() {
                 {...ui}
                 lang={lang} t={t} showToastMessage={showToastMessage}
                 plans={plans} activePlanId={activePlanId} setActivePlanId={setActivePlanId}
-                handleCreatePlan={handleCreatePlan} handleDeletePlan={handleDeletePlan}
+                handleCreatePlan={handleCreatePlan} handleDeletePlan={onDeletePlan}
                 handleCreateCustomItem={handleCreateCustomItem}
                 activePlan={activePlan} currentDay={currentDay} generateExportText={generateExportText}
                 setPlans={setPlans} setActivePlanIdDirect={setActivePlanId}

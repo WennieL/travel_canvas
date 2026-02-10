@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, FileText, Image as ImageIcon, Share2, HardDrive, Download, Copy, Upload, Link as LinkIcon } from 'lucide-react';
+import { useConfirm } from '../../hooks';
 import * as htmlToImage from 'html-to-image';
 import { Plan, TravelItem } from '../../types';
 
@@ -48,6 +49,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     onImportBackup
 }) => {
     const [exportTab, setExportTab] = useState<ExportTab>('text');
+    const { confirm } = useConfirm();
 
     if (!isOpen) return null;
 
@@ -83,10 +85,20 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                         showToast('✅ ' + (t.importSuccess || '匯入成功！'));
                         onClose();
                     } else {
-                        alert(t.importError || '匯入失敗，請確認檔案格式正確。');
+                        confirm({
+                            title: t.importError || '匯入失敗',
+                            message: t.importErrorHint || '匯入失敗，請確認檔案格式正確。',
+                            type: 'error',
+                            confirmText: t.ok || 'OK'
+                        });
                     }
                 } catch (err) {
-                    alert(t.importError || '匯入失敗，請確認檔案格式正確。');
+                    confirm({
+                        title: t.importError || '匯入失敗',
+                        message: t.importErrorHint || '匯入失敗，請確認檔案格式正確。',
+                        type: 'error',
+                        confirmText: t.ok || 'OK'
+                    });
                 }
             };
             reader.readAsText(file);
@@ -109,10 +121,20 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 showToast('✅ ' + (t.downloadImage || '圖片已下載!'));
             } catch (error) {
                 console.error('Export image failed:', error);
-                alert('Export failed');
+                confirm({
+                    title: 'Export Error',
+                    message: 'Export failed. Please check console for details.',
+                    type: 'error',
+                    confirmText: 'OK'
+                });
             }
         } else {
-            alert('Unable to find schedule content');
+            confirm({
+                title: 'Export Error',
+                message: 'Unable to find schedule content',
+                type: 'error',
+                confirmText: 'OK'
+            });
         }
     };
 

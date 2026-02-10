@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, ExternalLink, UserPlus, UserCheck, MapPin, Lock } from 'lucide-react';
+import { useConfirm } from '../hooks';
 import { Creator, Template } from '../types';
 
 interface CreatorProfileProps {
@@ -23,6 +24,7 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
     onExploreTemplate,
     lang = 'zh'
 }) => {
+    const { confirm } = useConfirm();
     if (!isOpen) return null;
 
     // Calculate highest tier from creator's templates
@@ -148,10 +150,19 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                             <div
                                 key={template.id}
                                 className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all cursor-pointer relative"
-                                onClick={() => {
+                                onClick={async () => {
                                     if (template.isLocked && !template.purchased) {
                                         // Mock Purchase Interaction
-                                        if (confirm(`Unlock this premium plan for $${template.price}? (Mock Payment)`)) {
+                                        const confirmed = await confirm({
+                                            title: lang === 'zh' ? '解鎖行程' : 'Unlock Plan',
+                                            message: lang === 'zh'
+                                                ? `確定要解鎖此付費行程嗎？(模擬付款: $${template.price})`
+                                                : `Unlock this premium plan for $${template.price}? (Mock Payment)`,
+                                            type: 'info',
+                                            confirmText: lang === 'zh' ? '解鎖' : 'Unlock',
+                                            cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                                        });
+                                        if (confirmed) {
                                             template.purchased = true; // Local mutation for demo
                                             template.isLocked = false;
                                             onExploreTemplate({ ...template, isLocked: false, purchased: true }); // Force update for viewer

@@ -4,6 +4,7 @@ import { Search, Plus, Clock, Star, MapPin, Tag, X, Lock } from 'lucide-react';
 import { ItemType, TravelItem, DaySchedule, Region, Template } from '../types';
 import { SAMPLE_ASSETS, TEMPLATES, CATEGORY_FILTERS, REGION_FILTERS, COUNTRY_FILTERS, CITY_FILTERS, POPULAR_TAGS, SAMPLE_CREATORS } from '../data/index';
 import { getFallbackImage } from '../utils';
+import { useConfirm } from '../hooks';
 
 interface SidebarContentProps {
     activeTab: 'assets' | 'templates';
@@ -17,7 +18,7 @@ interface SidebarContentProps {
     setShowCustomItemModal: (show: boolean) => void;
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
     handleTapToAdd: (item: TravelItem) => void;
-    applyTemplate: (template: { name: string; duration: number; schedule: DaySchedule | any; region: Region }) => void;
+    applyTemplate: (template: any) => void | Promise<void>;
     t: any;
     lang?: string;
     customAssets?: TravelItem[];
@@ -33,6 +34,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     setShowCustomItemModal, handleDragStart, handleTapToAdd, applyTemplate, t, lang = 'zh', customAssets = [],
     subscribedCreators = [], onCreatorClick, onPreviewTemplate, highlight
 }) => {
+    const { confirm } = useConfirm();
     // Local tag filter state
     const [activeTag, setActiveTag] = useState<string | null>(null);
     const [showSubscribedOnly, setShowSubscribedOnly] = useState(false);
@@ -425,7 +427,12 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                                 // Beta: 直接解鎖，不需付費
                                                 template.purchased = true;
                                                 template.isLocked = false;
-                                                alert("🎁 Beta 免費解鎖成功！");
+                                                confirm({
+                                                    title: lang === 'zh' ? '解鎖成功' : 'Unlocked Success',
+                                                    message: lang === 'zh' ? "🎁 Beta 免費解鎖成功！" : "🎁 Beta Unlocked successfully!",
+                                                    type: 'success',
+                                                    confirmText: lang === 'zh' ? '太棒了' : 'Awesome'
+                                                });
                                                 applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule, region: template.region });
                                             }}
                                             className="w-full py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs rounded hover:from-amber-600 hover:to-orange-600 transition-colors font-bold flex items-center justify-center gap-1"

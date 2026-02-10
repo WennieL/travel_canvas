@@ -102,7 +102,6 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
         setCurrentDay(1);
     };
 
-    // Delete plan
     const handleDeletePlan = (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         if (plans.length <= 1) return;
@@ -133,7 +132,6 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
     const handleDeleteDay = (dayToDelete: number, e?: React.MouseEvent) => {
         e?.stopPropagation();
         if (activePlan.totalDays <= 1) return;
-        if (!confirm(t.deleteDay || `Delete Day ${dayToDelete}?`)) return;
 
         const newSchedule: Record<string, DaySchedule> = {};
         for (let i = 1; i <= activePlan.totalDays; i++) {

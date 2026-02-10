@@ -14,11 +14,14 @@ polyfill({
 });
 
 import ErrorBoundary from './components/ErrorBoundary'
+import { ConfirmProvider } from './contexts/ConfirmContext'
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
     <React.StrictMode>
         <ErrorBoundary>
-            <App />
+            <ConfirmProvider>
+                <App />
+            </ConfirmProvider>
         </ErrorBoundary>
     </React.StrictMode>,
 )

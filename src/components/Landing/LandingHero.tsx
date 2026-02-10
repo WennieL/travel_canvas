@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { LangType } from '../../types';
+import { useConfirm } from '../../hooks';
 
 interface LandingHeroProps {
     lang: LangType;
@@ -9,6 +10,7 @@ interface LandingHeroProps {
 }
 
 const LandingHero: React.FC<LandingHeroProps> = ({ lang, t, onStart }) => {
+    const { confirm } = useConfirm();
     return (
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
             {/* Background Image Carousel */}
@@ -48,7 +50,14 @@ const LandingHero: React.FC<LandingHeroProps> = ({ lang, t, onStart }) => {
                     </button>
                     <button
                         className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white border-2 border-white/50 text-lg font-bold rounded-full hover:bg-white hover:text-slate-800 hover:border-white transition-all"
-                        onClick={() => alert("Thanks for your interest! Early access coming soon.")}
+                        onClick={() => confirm({
+                            title: lang === 'zh' ? '敬請期待' : 'Coming Soon',
+                            message: lang === 'zh'
+                                ? "感謝您的關注！搶先體驗版即將推出。"
+                                : "Thanks for your interest! Early access coming soon.",
+                            type: 'info',
+                            confirmText: lang === 'zh' ? '知道了' : 'Got it'
+                        })}
                     >
                         {t.joinEarlyAccess}
                     </button>

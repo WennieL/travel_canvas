@@ -18,6 +18,7 @@ import {
     getTransportSuggestion
 } from '../utils';
 import SmartTimeInput from './SmartTimeInput';
+import { useConfirm } from '../hooks';
 
 interface DropZoneProps {
     slot: TimeSlot;
@@ -43,6 +44,7 @@ interface DropZoneProps {
 const DropZone: React.FC<DropZoneProps> = ({
     slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, onQuickFill, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0
 }) => {
+    const { confirm } = useConfirm();
     // const isCompact = false; // Removed hardcoded
     const isDraggingGlobal = false; // Simplified
     const onDragOver = (e: React.DragEvent) => { e.preventDefault(); };
@@ -398,9 +400,16 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                             {t.moveToDay || "Move to Day"}
                                                         </button>
                                                         <button
-                                                            onClick={(e) => {
+                                                            onClick={async (e) => {
                                                                 e.stopPropagation();
-                                                                if (confirm(t.confirmDelete || "Delete?")) {
+                                                                const confirmed = await confirm({
+                                                                    title: lang === 'zh' ? '刪除項目' : 'Delete Item',
+                                                                    message: lang === 'zh' ? '確定要刪除此項目嗎？' : 'Are you sure you want to delete this item?',
+                                                                    type: 'warning',
+                                                                    confirmText: lang === 'zh' ? '刪除' : 'Delete',
+                                                                    cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                                                                });
+                                                                if (confirmed) {
                                                                     onDelete(slot, idx);
                                                                 }
                                                                 setOpenMenuId(null);

@@ -9,3 +9,4 @@ export * from './TemplatePreviewModal';
 export { UnlockModal } from './UnlockModal';
 export { OnboardingModal } from './OnboardingModal';
 export { default as ItemDetailModal } from './ItemDetailModal';
+export { ConfirmDialog } from './ConfirmDialog';
