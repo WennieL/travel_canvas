@@ -9,7 +9,8 @@ import "mobile-drag-drop/default.css";
 
 // Initialize mobile-drag-drop polyfill
 polyfill({
-    dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride
+    dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+    holdToDrag: 400
 });
 
 import ErrorBoundary from './components/ErrorBoundary'

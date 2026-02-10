@@ -166,7 +166,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
                                 onClick={() => onItemClick(item)}
                                 id={`item-${item.instanceId}`} // For scroll targeting
-                                style={{ touchAction: 'pan-y' }}
+                                style={{}}
                                 className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 animate-land overflow-hidden
                                         ${isCompact ? 'p-3 gap-3 items-start' : 'p-4 items-start gap-2.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
