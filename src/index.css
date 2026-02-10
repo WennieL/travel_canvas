@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 /* Typography */
+[draggable="true"] {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  user-select: none;
+}
+
 :root {
   --font-heading: 'Poppins', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
@@ -87,8 +94,15 @@ h6 {
 }
 
 @keyframes wiggle {
-  0%, 100% { transform: rotate(-1deg); }
-  50% { transform: rotate(1deg); }
+
+  0%,
+  100% {
+    transform: rotate(-1deg);
+  }
+
+  50% {
+    transform: rotate(1deg);
+  }
 }
 
 .animate-wiggle {
