@@ -7,7 +7,7 @@ export { MELBOURNE_ASSETS } from './melbourne-assets';
 export { SAMPLE_CREATORS } from './creators';
 export { TEMPLATES } from './templates';
 export {
-    DEFAULT_CHECKLIST,
+    REGION_DEFAULT_CHECKLISTS,
     TOKYO_DEMO_PLAN,
     CATEGORY_FILTERS,
     REGION_FILTERS,

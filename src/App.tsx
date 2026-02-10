@@ -16,6 +16,7 @@ import {
     TRANSLATIONS,
     TEMPLATES,
     SAMPLE_CREATORS,
+    REGION_DEFAULT_CHECKLISTS,
 } from './data/index';
 import {
     LangType,
@@ -244,11 +245,15 @@ export function App() {
             }
         }
 
+        const region = template.region || 'tokyo';
+        const localizedDefaults = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
+
         updateActivePlan({
             name: templateName,
             totalDays: template.duration,
             schedule: newSchedule,
-            region: template.region
+            region: region,
+            checklist: localizedDefaults
         });
         setCurrentDay(1);
         setShowMobileLibrary(false);
@@ -802,6 +807,7 @@ export function App() {
                         <div className="h-full pb-20 lg:pb-0">
                             <ScheduleList
                                 activePlan={activePlan}
+                                lang={lang}
                                 t={t}
                                 budgetProps={{
                                     spent: calculateTotalBudget(),
@@ -813,6 +819,7 @@ export function App() {
                                     onSetSettings: (currency: string, rate: number) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })
                                 }}
                                 showToastMessage={showToastMessage}
+                                onUpdateChecklist={updateChecklist}
                             />
                         </div>
                     ) : (

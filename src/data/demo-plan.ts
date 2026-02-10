@@ -1,13 +1,91 @@
 import { ChecklistItem, Plan, ItemType, Region } from '../types';
 
-// 預設清單
-export const DEFAULT_CHECKLIST: ChecklistItem[] = [
-    { id: 'c1', text: '確認護照效期 (至少6個月)', checked: false },
-    { id: 'c2', text: '購買旅遊保險', checked: false },
-    { id: 'c3', text: '預訂網卡 / Wi-Fi 機', checked: false },
-    { id: 'c4', text: '兌換外幣 (日圓)', checked: false },
-    { id: 'c5', text: '確認機票與住宿憑證', checked: false },
-];
+// 預設清單 (通用)
+export const DEFAULT_CHECKLIST: Record<string, ChecklistItem[]> = {
+    zh: [
+        { id: 'c1', text: '確認護照效期 (至少6個月)', checked: false },
+        { id: 'c2', text: '購買旅遊保險', checked: false },
+        { id: 'c3', text: '預訂網卡 / Wi-Fi 機', checked: false },
+        { id: 'c4', text: '確認機票與住宿憑證', checked: false },
+    ],
+    en: [
+        { id: 'c1', text: 'Check passport validity (at least 6 months)', checked: false },
+        { id: 'c2', text: 'Buy travel insurance', checked: false },
+        { id: 'c3', text: 'Book eSIM / Wi-Fi machine', checked: false },
+        { id: 'c4', text: 'Confirm flight & hotel vouchers', checked: false },
+    ]
+};
+
+// 地區專屬預設清單
+export const REGION_DEFAULT_CHECKLISTS: Record<Region, Record<string, ChecklistItem[]>> = {
+    tokyo: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'tokyo_1', text: '辦理 Suica / Pasmo 卡', checked: false },
+            { id: 'tokyo_2', text: '購買東京景點套票 (如 Disney)', checked: false },
+            { id: 'tokyo_3', text: '下載 Visit Japan Web 並填寫申報', checked: false },
+            { id: 'tokyo_4', text: '兌換日圓現金', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'tokyo_1', text: 'Get Suica / Pasmo card', checked: false },
+            { id: 'tokyo_2', text: 'Buy Tokyo attraction tickets (e.g. Disney)', checked: false },
+            { id: 'tokyo_3', text: 'Complete Visit Japan Web declaration', checked: false },
+            { id: 'tokyo_4', text: 'Exchange JPY cash', checked: false },
+        ]
+    },
+    osaka: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'osaka_1', text: '購買大阪周遊卡 (Osaka Amazing Pass)', checked: false },
+            { id: 'osaka_2', text: '預訂環球影城 (USJ) 門票 & 快速通關', checked: false },
+            { id: 'osaka_3', text: '下載 Visit Japan Web 並填寫申報', checked: false },
+            { id: 'osaka_4', text: '兌換日圓現金', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'osaka_1', text: 'Buy Osaka Amazing Pass', checked: false },
+            { id: 'osaka_2', text: 'Book USJ tickets & Express Pass', checked: false },
+            { id: 'osaka_3', text: 'Complete Visit Japan Web declaration', checked: false },
+            { id: 'osaka_4', text: 'Exchange JPY cash', checked: false },
+        ]
+    },
+    kyoto: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'kyoto_1', text: '購買關西地區鐵路周遊券', checked: false },
+            { id: 'kyoto_2', text: '查詢京都巴士一日券/IC卡儲值', checked: false },
+            { id: 'kyoto_3', text: '預訂知名和服體驗', checked: false },
+            { id: 'kyoto_4', text: '下載 Visit Japan Web 並填寫申報', checked: false },
+            { id: 'kyoto_5', text: '兌換日圓現金', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'kyoto_1', text: 'Buy Kansai Area Railway Pass', checked: false },
+            { id: 'kyoto_2', text: 'Check Kyoto Bus Pass / IC card', checked: false },
+            { id: 'kyoto_3', text: 'Book Kimono experience', checked: false },
+            { id: 'kyoto_4', text: 'Complete Visit Japan Web declaration', checked: false },
+            { id: 'kyoto_5', text: 'Exchange JPY cash', checked: false },
+        ]
+    },
+    melbourne: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'mel_1', text: '申請澳洲電子簽證 (ETA)', checked: false },
+            { id: 'mel_2', text: '註冊我的公車卡 (Myki)', checked: false },
+            { id: 'mel_3', text: '購買八公分轉接頭 (澳洲規格)', checked: false },
+            { id: 'mel_4', text: '兌換澳幣 (AUD)', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'mel_1', text: 'Apply for Australian ETA (Visa)', checked: false },
+            { id: 'mel_2', text: 'Get Myki Card (Public Transport)', checked: false },
+            { id: 'mel_3', text: 'Buy AU Power Adapter', checked: false },
+            { id: 'mel_4', text: 'Exchange AUD cash', checked: false },
+        ]
+    },
+    all: { zh: DEFAULT_CHECKLIST.zh, en: DEFAULT_CHECKLIST.en }
+};
 
 // 東京 Demo 計畫
 export const TOKYO_DEMO_PLAN: Plan = {

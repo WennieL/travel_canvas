@@ -44,7 +44,7 @@ interface AppModalsProps {
     plans: Plan[];
     activePlanId: string;
     setActivePlanId: (id: string) => void;
-    handleCreatePlan: () => void;
+    handleCreatePlan: (region?: Region) => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
 
     // Custom Item
@@ -128,7 +128,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
     const { confirm } = useConfirm();
     const {
         lang, t, showToastMessage,
-        showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId, handleCreatePlan, handleDeletePlan,
+        showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId, handleCreatePlan, handleDeletePlan, activeRegion,
         showCustomItemModal, setShowCustomItemModal, handleCreateCustomItem,
         showExportModal, setShowExportModal, exportTab, setExportTab, activePlan, currentDay, generateExportText,
         setPlans, setActivePlanIdDirect, setCustomAssets, setBudgetLimit, setSubscribedCreators,
@@ -161,7 +161,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 plans={plans}
                 activePlanId={activePlanId}
                 onSelectPlan={setActivePlanId}
-                onCreatePlan={handleCreatePlan}
+                onCreatePlan={() => handleCreatePlan(activeRegion)}
                 onDeletePlan={handleDeletePlan}
                 t={t}
             />

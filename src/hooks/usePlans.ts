@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType } from '../types';
-import { TOKYO_DEMO_PLAN } from '../data';
+import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region } from '../types';
+import { TOKYO_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS } from '../data';
 
 export interface UsePlansReturn {
     // State
@@ -82,8 +82,9 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
     };
 
     // Create new plan
-    const handleCreatePlan = () => {
+    const handleCreatePlan = (region: Region = 'tokyo') => {
         const now = new Date();
+        const defaultChecklist = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
         const newPlan: Plan = {
             id: `plan_${Date.now()}`,
             name: t.newPlan || 'New Trip',
@@ -91,10 +92,10 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             endDate: new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
             totalDays: 4,
             schedule: { 'Day 1': { morning: [], afternoon: [], evening: [], night: [], accommodation: [] } },
-            targetCurrency: 'TWD',
-            exchangeRate: 0.22,
-            checklist: [],
-            region: 'tokyo', // Default to Tokyo
+            targetCurrency: region === 'melbourne' ? 'AUD' : 'TWD',
+            exchangeRate: region === 'melbourne' ? 21.0 : 0.22,
+            checklist: defaultChecklist,
+            region: region,
             createdAt: Date.now()
         };
         setPlans([...plans, newPlan]);
