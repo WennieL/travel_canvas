@@ -38,8 +38,11 @@ export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {
 
             {/* Drawer */}
             <div className="absolute bottom-0 left-0 right-0 h-[85vh] bg-white rounded-t-2xl shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-300">
-                {/* Drag Handle / Header */}
-                <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-100">
+                {/* Drag Handle / Header - Clickable to close */}
+                <div
+                    className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50/50 transition-colors"
+                    onClick={props.onClose}
+                >
                     <div className="w-8 h-8" /> {/* Spacer */}
                     <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
                     <button
