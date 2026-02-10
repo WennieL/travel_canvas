@@ -127,7 +127,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             </div>
                         </div>
                     )}
-                    <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate}</span>
+                    <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate} <span className="opacity-80">({activePlan.totalDays} {lang === 'en' ? 'Days' : '天'})</span></span>
                 </div>
                 <div className="flex gap-0.5 flex-shrink-0 items-center">
                     <button onClick={toggleLang} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
@@ -165,7 +165,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         className="text-[10px] text-gray-400 font-medium tracking-wide cursor-pointer hover:text-teal-600 hover:underline underline-offset-2 decoration-dotted transition-colors"
                         title={t.editDateHint}
                     >
-                        📅 {activePlan.startDate} ~ {activePlan.endDate}
+                        📅 {activePlan.startDate} ~ {activePlan.endDate} <span className="text-gray-300 ml-1 font-normal">({activePlan.totalDays} {lang === 'en' ? 'Days' : '天'})</span>
                     </span>
                 </div>
 
