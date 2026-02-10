@@ -22,7 +22,7 @@ const DayTabs: React.FC<DayTabsProps> = ({
     return (
         <>
             {/* Mobile Day Selector - Sticky Horizontal Scroll */}
-            <div className="md:hidden sticky top-14 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-2">
+            <div className="md:hidden sticky top-14 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-2 max-w-[100vw] overflow-hidden">
                 <div ref={mobileDayTabsRef} className="flex px-4 gap-2 overflow-x-auto scrollbar-hide items-center">
                     {Array.from({ length: activePlan.totalDays }).map((_, i) => (
                         <button

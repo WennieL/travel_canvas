@@ -48,7 +48,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     return (
         <>
             {/* Mobile Header */}
-            <div className="md:hidden h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 z-30">
+            <div className="md:hidden h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 z-30 max-w-[100vw] overflow-hidden">
                 <div className="flex flex-col mr-2 min-w-0">
                     {isEditingName ? (
                         <input

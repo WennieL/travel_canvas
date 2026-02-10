@@ -107,7 +107,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     const currentStyle = slotStyles[slot] || { color: 'text-gray-500', time: '' };
 
     return (
-        <div className={`relative transition-all duration-300 ${isAccommodation ? 'mt-4' : 'lg:pl-8'}`}>
+        <div className={`relative transition-all duration-300 overflow-hidden ${isAccommodation ? 'mt-4' : 'lg:pl-8'}`}>
             {!isAccommodation && !isCompact && (<> <div className="hidden lg:block absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="hidden lg:block absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
             <div className="mb-2 flex items-center justify-between transition-all opacity-100">
                 <div className="flex items-center gap-2">
@@ -167,7 +167,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 onClick={() => onItemClick(item)}
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{ touchAction: 'pan-y' }}
-                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full flex items-center transition-all hover:-translate-y-0.5 animate-land
+                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 animate-land overflow-hidden
                                         ${isCompact ? 'p-3 gap-3 items-start' : 'p-4 items-start gap-2.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
@@ -265,7 +265,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     )}
                                 </div>
                                 {/* Fixed index prop here */}
-                                <div className="flex flex-col items-end gap-1">
+                                <div className="flex flex-col items-end gap-1 flex-shrink-0">
                                     <div className="flex items-center gap-1 relative">
                                         <SmartTimeInput
                                             slot={slot}

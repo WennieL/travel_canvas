@@ -664,7 +664,7 @@ export function App() {
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
     return (
-        <div className="flex flex-col md:flex-row h-[100dvh] bg-white text-slate-800 font-sans overflow-x-hidden">
+        <div className="flex flex-col md:flex-row h-[100dvh] bg-white text-slate-800 font-sans overflow-x-hidden max-w-[100vw]">
             {/* Desktop Sidebar */}
             {!isFullscreen && (
                 <div
@@ -709,7 +709,7 @@ export function App() {
             )}
 
             {/* Main Area */}
-            <div className="flex-1 flex flex-col min-w-0 bg-white relative">
+            <div className="flex-1 flex flex-col min-w-0 bg-white relative overflow-x-hidden">
                 <AppHeader
                     lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
                     isEditingName={isEditingName} editingName={editingName} setEditingName={setEditingName}
@@ -746,7 +746,7 @@ export function App() {
                 />
 
                 {/* Canvas Area */}
-                <div className="flex-1 overflow-y-auto bg-gray-50/30 p-4 lg:p-8 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 lg:p-8 custom-scrollbar">
                     {/* View Switcher Content */}
                     {viewMode === 'map' ? (
                         <div className="h-full">
@@ -779,7 +779,7 @@ export function App() {
                         <div className={`flex h-full gap-4 ${showContextMap ? 'overflow-hidden' : ''}`}>
                             {/* Schedule List Area */}
                             <div className={`flex-1 transition-all duration-300 ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                                <div className="space-y-6 pb-24 lg:pb-12 px-4 md:px-6 lg:max-w-3xl lg:mx-auto lg:px-0">
+                                <div className="space-y-6 pb-24 lg:pb-12 px-4 md:px-6 lg:max-w-3xl lg:mx-auto lg:px-0 max-w-full">
                                     {/* Weather/Date Info could go here */}
 
                                     {(() => {
