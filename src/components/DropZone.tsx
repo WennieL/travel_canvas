@@ -187,7 +187,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 )}
 
                                 {/* Desktop Hover Actions - Visible >= 1024px */}
-                                <div className="hidden lg:flex absolute -top-2 -right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
+                                <div className="hidden lg:flex absolute top-2 right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
 
                                     <button
                                         onClick={(e) => {
