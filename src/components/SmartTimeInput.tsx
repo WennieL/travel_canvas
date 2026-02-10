@@ -27,23 +27,23 @@ const SmartTimeInput: React.FC<SmartTimeInputProps> = ({ slot, index, value, onC
     };
 
     return (
-        <div className="flex flex-col items-end gap-1 pl-2 relative group/time min-w-[70px]">
+        <div className="flex flex-col items-end gap-1 relative group/time min-w-[60px]">
             <div
                 className={`
                   relative flex items-center justify-center 
-                  bg-gray-50 border rounded-lg px-2 py-1.5 text-xs font-mono 
+                  bg-gray-100 border border-transparent rounded px-1.5 py-0.5 text-[11px] font-mono 
                   transition-all w-full
-                  ${value ? 'text-teal-700 border-gray-200' : 'text-gray-400 border-dashed border-gray-300 hover:border-teal-300'}
-                  ${isFocused ? 'ring-2 ring-teal-500/30 border-teal-500' : ''}
+                  ${value ? 'text-gray-700' : 'text-gray-400 border-dashed border-gray-300 hover:border-teal-300'}
+                  ${isFocused ? 'ring-1 ring-teal-500 border-teal-500 bg-white' : 'hover:bg-gray-200'}
                `}
             >
-                {/* Stepper Buttons (Visible on Hover/Empty) */}
+                {/* Stepper Buttons (Desktop Only or Hover) */}
                 <button
                     onClick={(e) => handleAdjust(e, -15)}
-                    className={`absolute left-[-22px] top-1/2 -translate-y-1/2 p-1.5 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-all ${!value ? 'opacity-0 group-hover/time:opacity-100' : 'opacity-0 group-hover/time:opacity-100'}`}
+                    className={`absolute left-[-18px] top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-all hidden lg:group-hover/time:block`}
                     title="-15 min"
                 >
-                    <Minus size={12} strokeWidth={3} />
+                    <Minus size={10} strokeWidth={3} />
                 </button>
 
                 <div className="relative flex items-center justify-center w-full">
@@ -61,10 +61,10 @@ const SmartTimeInput: React.FC<SmartTimeInputProps> = ({ slot, index, value, onC
 
                 <button
                     onClick={(e) => handleAdjust(e, 15)}
-                    className={`absolute right-[-22px] top-1/2 -translate-y-1/2 p-1.5 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-all ${!value ? 'opacity-0 group-hover/time:opacity-100' : 'opacity-0 group-hover/time:opacity-100'}`}
+                    className={`absolute right-[-18px] top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-all hidden lg:group-hover/time:block`}
                     title="+15 min"
                 >
-                    <Plus size={12} strokeWidth={3} />
+                    <Plus size={10} strokeWidth={3} />
                 </button>
             </div>
 

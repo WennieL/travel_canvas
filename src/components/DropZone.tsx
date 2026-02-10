@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock } from 'lucide-react';
 import {
     TimeSlot,
@@ -52,8 +53,9 @@ const DropZone: React.FC<DropZoneProps> = ({
     const onTimeChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { startTime: v });
     const onNoteChange = (s: TimeSlot, i: number, v: string) => onUpdateItem(i, { notes: v });
     const onTransportChange = (s: TimeSlot, i: number, m: TransportMode) => onUpdateItem(i, { arrivalTransport: m });
-    const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
     const [editingNoteId, setEditingNoteId] = React.useState<string | null>(null);
+    const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
+    const [menuPosition, setMenuPosition] = useState<{ top: number, left: number } | null>(null);
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, index, nextMode); };
     const handleCrossSlotTransportClick = (e: React.MouseEvent, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, 0, nextMode); };
@@ -168,7 +170,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{}}
                                 className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 animate-land overflow-hidden
-                                        ${isCompact ? 'p-3 gap-3 items-start' : 'p-4 items-start gap-2.5 md:gap-3'}
+                                        ${isCompact ? 'p-3 gap-3 items-center' : 'p-4 items-center gap-2.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
                                             isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
@@ -211,32 +213,60 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     {item.image || getFallbackImage(item.type)}
                                 </div>
                                 <div className="flex-1 min-w-0 mr-2">
-                                    <div className="flex items-center justify-between mb-0.5">
-                                        <div className="flex items-center gap-2 overflow-hidden mr-2">
+                                    <div className="flex items-center justify-between mb-1 min-w-0">
+                                        <div className="flex items-center gap-2 overflow-hidden mr-2 min-w-0 flex-1">
                                             <h4 className={`font-bold text-sm truncate ${isLocked ? 'text-gray-600 italic' : 'text-gray-700'}`}>{displayTitle}</h4>
+
+                                            {/* Rating - Moved next to Title */}
+                                            {item.rating && (
+                                                <div className="flex items-center gap-0.5 text-[10px] text-yellow-600 font-bold bg-yellow-50 px-1 rounded flex-shrink-0">
+                                                    <Star size={8} fill="currentColor" /> {item.rating}
+                                                </div>
+                                            )}
                                             {/* Scheme B: Visual Tag for Cross-Region */}
                                             {item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion && (
-                                                <span className="text-[9px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-bold tracking-wider uppercase border border-gray-200">
+                                                <span className="text-[9px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-bold tracking-wider uppercase border border-gray-200 flex-shrink-0">
                                                     {t[item.region] || item.region}
                                                 </span>
                                             )}
                                         </div>
-                                        {isLocked ? (
-                                            <button
-                                                onClick={(e) => { e.stopPropagation(); onUnlockItem?.(item); }}
-                                                className="text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm flex items-center gap-1"
-                                            >
-                                                <Lock size={8} /> Unlock
-                                            </button>
-                                        ) : (
-                                            <span className="text-[10px] font-medium text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap"> ¥{item.price?.toLocaleString()} </span>
-                                        )}
                                     </div>
+
+                                    {/* Metadata Row: Time, Duration, Price, Rating */}
                                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                                        <div className="flex items-center gap-1 text-[10px] text-gray-400 bg-gray-50 px-1.5 rounded"> <Clock size={10} /> {item.duration || t.flexible} </div>
-                                        {item.rating && (<div className="flex items-center gap-0.5 text-[10px] text-yellow-600"> <Star size={8} fill="currentColor" /> {item.rating} </div>)}
-                                        {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
+                                        {/* Time Input - Moved Here */}
+                                        <SmartTimeInput
+                                            slot={slot}
+                                            index={idx}
+                                            value={item.startTime || ''}
+                                            onChange={(val) => onTimeChange(slot, idx, val)}
+                                            suggestedTime={getSuggestedTime(idx)}
+                                        />
+
+                                        {/* Duration Badge */}
+                                        <div className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
+                                            <Clock size={10} />
+                                            {item.duration || t.flexible}
+                                        </div>
+
+                                        {/* Price Badge - Only valid price or locked */}
+                                        {(isLocked || (item.price !== undefined && item.price > 0)) && (
+                                            isLocked ? (
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); onUnlockItem?.(item); }}
+                                                    className="text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm flex items-center gap-1"
+                                                >
+                                                    <Lock size={8} /> Unlock
+                                                </button>
+                                            ) : (
+                                                <span className="text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap border border-gray-200"> ¥{item.price?.toLocaleString()} </span>
+                                            )
+                                        )}
+
+                                        {/* Tags - Hidden on Mobile */}
+                                        {item.tags && item.tags.slice(0, 1).map(tag => (<div key={tag} className="hidden lg:flex items-center gap-0.5 text-[10px] text-teal-600 bg-teal-50 px-1.5 rounded"> <Tag size={8} /> {tag} </div>))}
                                     </div>
+
                                     {(item.notes || editingNoteId === item.instanceId) && (
                                         <input
                                             type="text"
@@ -264,37 +294,36 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         </div>
                                     )}
                                 </div>
-                                {/* Fixed index prop here */}
-                                <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                                {/* Fixed Right Column - Only Menu */}
+                                <div className="flex flex-col items-end gap-1 flex-shrink-0 pl-1">
                                     <div className="flex items-center gap-1 relative">
-                                        <SmartTimeInput
-                                            slot={slot}
-                                            index={idx}
-                                            value={item.startTime || ''}
-                                            onChange={(val) => onTimeChange(slot, idx, val)}
-                                            suggestedTime={getSuggestedTime(idx)}
-                                        />
 
-                                        {/* Mobile Action Menu (Three Dots) - Integrated in Flex Layout */}
+                                        {/* Mobile Action Menu (Three Dots) - Integrated in Flex Layout with Portal */}
                                         <div className="lg:hidden touch-device-visible relative">
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
+                                                    // Pass the button element to position the portal
+                                                    const rect = e.currentTarget.getBoundingClientRect();
+                                                    setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.right - 150 + window.scrollX }); // Align right
                                                     setOpenMenuId(openMenuId === item.instanceId ? null : item.instanceId);
                                                 }}
-                                                className="p-1 text-gray-400 hover:text-teal-600 rounded-full active:bg-gray-100"
+                                                className="p-1.5 text-gray-400 hover:text-teal-600 rounded-full active:bg-gray-100"
                                             >
-                                                <MoreVertical size={16} />
+                                                <MoreVertical size={18} />
                                             </button>
 
-                                            {openMenuId === item.instanceId && (
+                                            {openMenuId === item.instanceId && ReactDOM.createPortal(
                                                 <>
                                                     {/* Backdrop to close menu */}
-                                                    <div className="fixed inset-0 z-30" onClick={(e) => { e.stopPropagation(); setOpenMenuId(null); }}></div>
+                                                    <div className="fixed inset-0 z-[9998]" onClick={(e) => { e.stopPropagation(); setOpenMenuId(null); }}></div>
 
-                                                    {/* Dropdown Menu - Aligned to bottom right of button */}
-                                                    <div className="absolute right-0 top-full mt-1 bg-white border border-gray-100 shadow-xl rounded-xl p-1.5 flex flex-col gap-1 min-w-[140px] z-40 animate-in fade-in zoom-in-95 duration-200">
-
+                                                    {/* Dropdown Menu - Positioned via Portal */}
+                                                    <div
+                                                        style={{ top: menuPosition?.top, left: menuPosition?.left }}
+                                                        className="absolute w-[150px] bg-white border border-gray-100 shadow-xl rounded-xl p-1.5 flex flex-col gap-1 z-[9999] animate-in fade-in zoom-in-95 duration-200"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
@@ -331,7 +360,8 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                             {t.delete || "Delete"}
                                                         </button>
                                                     </div>
-                                                </>
+                                                </>,
+                                                document.body
                                             )}
                                         </div>
                                     </div>

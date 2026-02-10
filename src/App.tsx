@@ -879,7 +879,7 @@ export function App() {
                         </button>
                         <button
                             onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
-                            className={`flex flex-col items-center transition-colors ${viewMode === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                            className={`flex flex-col items-center transition-colors ${(viewMode as string) === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
                         >
                             <MapIcon size={20} /> <span className="text-[10px] mt-1 font-bold">{t.map || 'Map'}</span>
                         </button>
