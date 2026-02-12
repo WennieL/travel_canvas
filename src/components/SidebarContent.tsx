@@ -217,7 +217,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 return (
                                     <div
                                         key={item.id}
-                                        draggable
+                                        draggable={true}
                                         onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
                                         onClick={() => {
                                             if (window.innerWidth < 1024) {
@@ -235,7 +235,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                             }
                                         }}
                                         onMouseLeave={() => setHoveredItem(null)}
-                                        className={`group border rounded-lg p-2 cursor-grab active:cursor-grabbing transition-all flex flex-col gap-1.5 relative hover:shadow-md
+                                        className={`group border rounded-lg p-2 cursor-grab active:cursor-grabbing transition-all flex flex-col gap-1.5 relative hover:shadow-md touch-none select-none
                                             ${isPremium
                                                 ? 'bg-gradient-to-br from-amber-50/80 to-purple-50/80 border-amber-200 hover:border-amber-400'
                                                 : 'bg-white border-gray-100 hover:border-teal-400'

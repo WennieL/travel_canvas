@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 /* Typography */
+[draggable],
 [draggable="true"] {
-  touch-action: none;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  user-select: none;
+  touch-action: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
 }
 
 :root {

@@ -167,12 +167,12 @@ const DropZone: React.FC<DropZoneProps> = ({
                         <React.Fragment key={item.instanceId}>
                             {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="relative w-full flex items-center lg:pl-4 py-2" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="hidden lg:block h-3 w-0.5 bg-gray-200"></div> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> <div className="lg:hidden absolute left-1/2 -translate-x-1/2 h-6 w-0.5 bg-gray-200"></div> </div>); })()}
                             <div
-                                draggable
+                                draggable={true}
                                 onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
                                 onClick={() => onItemClick(item)}
                                 id={`item-${item.instanceId}`} // For scroll targeting
                                 style={{}}
-                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 animate-land overflow-hidden
+                                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 animate-land overflow-hidden touch-none select-none
                                         ${isCompact ? 'p-3 gap-3 items-center' : 'p-4 items-center gap-2.5 md:gap-3'}
                                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
                                         (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
