@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Plus, Clock, Star, MapPin, Tag, X, Lock } from 'lucide-react';
+import { Search, Plus, Clock, Star, MapPin, Tag, X, Lock, ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import { ItemType, TravelItem, DaySchedule, Region, Template } from '../types';
 import { SAMPLE_ASSETS, TEMPLATES, CATEGORY_FILTERS, REGION_FILTERS, COUNTRY_FILTERS, CITY_FILTERS, POPULAR_TAGS, SAMPLE_CREATORS } from '../data/index';
 import { getFallbackImage } from '../utils';
@@ -40,6 +40,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     const [showSubscribedOnly, setShowSubscribedOnly] = useState(false);
     // Mobile preview bottom sheet state
     const [mobilePreviewItem, setMobilePreviewItem] = useState<TravelItem | null>(null);
+    const [showMoreCategories, setShowMoreCategories] = useState(false);
 
     // Country-City hierarchy state
     const [activeCountry, setActiveCountry] = useState<string>('all');
@@ -59,6 +60,49 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             }
         }
     }, [activeRegion]);
+
+    // Scroll refs for carousel behavior
+    const countryScrollRef = useRef<HTMLDivElement>(null);
+    const cityScrollRef = useRef<HTMLDivElement>(null);
+    const catScrollRef = useRef<HTMLDivElement>(null);
+    const tagScrollRef = useRef<HTMLDivElement>(null);
+
+    const [canScrollLeftCountry, setCanScrollLeftCountry] = useState(false);
+    const [canScrollRightCountry, setCanScrollRightCountry] = useState(false);
+    const [canScrollLeftCity, setCanScrollLeftCity] = useState(false);
+    const [canScrollRightCity, setCanScrollRightCity] = useState(false);
+    const [canScrollLeftCat, setCanScrollLeftCat] = useState(false);
+    const [canScrollRightCat, setCanScrollRightCat] = useState(false);
+    const [canScrollLeftTag, setCanScrollLeftTag] = useState(false);
+    const [canScrollRightTag, setCanScrollRightTag] = useState(false);
+
+    const checkScroll = (ref: React.RefObject<HTMLDivElement | null>, setLeft: (b: boolean) => void, setRight: (b: boolean) => void) => {
+        if (ref.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+            setLeft(scrollLeft > 5);
+            setRight(scrollLeft + clientWidth < scrollWidth - 5);
+        }
+    };
+
+    React.useEffect(() => {
+        const check = () => {
+            checkScroll(countryScrollRef, setCanScrollLeftCountry, setCanScrollRightCountry);
+            checkScroll(cityScrollRef, setCanScrollLeftCity, setCanScrollRightCity);
+            checkScroll(catScrollRef, setCanScrollLeftCat, setCanScrollRightCat);
+            checkScroll(tagScrollRef, setCanScrollLeftTag, setCanScrollRightTag);
+        };
+        // Initial check after render
+        setTimeout(check, 100);
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, [activeCountry, activeTab]);
+
+    const handleScroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
+        if (ref.current) {
+            const amount = direction === 'left' ? -150 : 150;
+            ref.current.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+    };
 
     // Desktop hover tooltip state (Portal-based)
     const [hoveredItem, setHoveredItem] = useState<TravelItem | null>(null);
@@ -98,61 +142,105 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             <div className={`px-4 py-2 border-b border-gray-100 transition-colors ${highlight ? 'bg-teal-50/50' : 'bg-gray-50/50'}`}>
                 {activeCountry === 'all' ? (
                     /* Level 1: Country Selection */
-                    <div className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide">
-                        {COUNTRY_FILTERS.map(country => (
+                    <div className="relative group/carousel">
+                        {canScrollLeftCountry && (
                             <button
-                                key={country.id}
-                                onClick={() => {
-                                    if (country.id === 'all') {
-                                        setActiveRegion('all');
-                                    } else {
-                                        setActiveCountry(country.id);
-                                        // Auto-select first city of the country
-                                        const cities = CITY_FILTERS[country.id];
-                                        if (cities && cities.length > 0) {
-                                            setActiveRegion(cities[0].id);
-                                        }
-                                    }
-                                }}
-                                className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === 'all' && country.id === 'all'
-                                    ? 'bg-teal-600 text-white shadow-sm'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
-                                    }`}
+                                onClick={() => handleScroll(countryScrollRef, 'left')}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
                             >
-                                <span>{country.icon}</span>
-                                <span>{lang === 'en' && country.labelEn ? country.labelEn : country.label}</span>
+                                <ChevronLeft size={14} />
                             </button>
-                        ))}
+                        )}
+                        <div
+                            ref={countryScrollRef}
+                            onScroll={() => checkScroll(countryScrollRef, setCanScrollLeftCountry, setCanScrollRightCountry)}
+                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-1"
+                        >
+                            {COUNTRY_FILTERS.map(country => (
+                                <button
+                                    key={country.id}
+                                    onClick={() => {
+                                        if (country.id === 'all') {
+                                            setActiveRegion('all');
+                                        } else {
+                                            setActiveCountry(country.id);
+                                            // Auto-select first city of the country
+                                            const cities = CITY_FILTERS[country.id];
+                                            if (cities && cities.length > 0) {
+                                                setActiveRegion(cities[0].id);
+                                            }
+                                        }
+                                    }}
+                                    className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === 'all' && country.id === 'all'
+                                        ? 'bg-teal-600 text-white shadow-sm'
+                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
+                                        }`}
+                                >
+                                    <span>{country.icon}</span>
+                                    <span>{lang === 'en' && country.labelEn ? country.labelEn : country.label}</span>
+                                </button>
+                            ))}
+                        </div>
+                        {canScrollRightCountry && (
+                            <button
+                                onClick={() => handleScroll(countryScrollRef, 'right')}
+                                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
+                            >
+                                <ChevronRight size={14} />
+                            </button>
+                        )}
                     </div>
                 ) : (
                     /* Level 2: City Selection (within selected country) */
-                    <div className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide">
-                        {/* Back Button */}
-                        <button
-                            onClick={() => {
-                                setActiveCountry('all');
-                                setActiveRegion('all');
-                            }}
-                            className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all"
-                        >
-                            <span>←</span>
-                            <span>{COUNTRY_FILTERS.find(c => c.id === activeCountry)?.[lang === 'en' ? 'labelEn' : 'label']}</span>
-                        </button>
-
-                        {/* City Buttons */}
-                        {CITY_FILTERS[activeCountry]?.map(city => (
+                    <div className="relative group/carousel">
+                        {canScrollLeftCity && (
                             <button
-                                key={city.id}
-                                onClick={() => setActiveRegion(city.id)}
-                                className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === city.id
-                                    ? 'bg-teal-600 text-white shadow-sm'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
-                                    }`}
+                                onClick={() => handleScroll(cityScrollRef, 'left')}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
                             >
-                                <span>{city.icon}</span>
-                                <span>{lang === 'en' && city.labelEn ? city.labelEn : city.label}</span>
+                                <ChevronLeft size={14} />
                             </button>
-                        ))}
+                        )}
+                        <div
+                            ref={cityScrollRef}
+                            onScroll={() => checkScroll(cityScrollRef, setCanScrollLeftCity, setCanScrollRightCity)}
+                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-1"
+                        >
+                            {/* Back Button */}
+                            <button
+                                onClick={() => {
+                                    setActiveCountry('all');
+                                    setActiveRegion('all');
+                                }}
+                                className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all"
+                            >
+                                <span>←</span>
+                                <span>{COUNTRY_FILTERS.find(c => c.id === activeCountry)?.[lang === 'en' ? 'labelEn' : 'label']}</span>
+                            </button>
+
+                            {/* City Buttons */}
+                            {CITY_FILTERS[activeCountry]?.map(city => (
+                                <button
+                                    key={city.id}
+                                    onClick={() => setActiveRegion(city.id)}
+                                    className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === city.id
+                                        ? 'bg-teal-600 text-white shadow-sm'
+                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
+                                        }`}
+                                >
+                                    <span>{city.icon}</span>
+                                    <span>{lang === 'en' && city.labelEn ? city.labelEn : city.label}</span>
+                                </button>
+                            ))}
+                        </div>
+                        {canScrollRightCity && (
+                            <button
+                                onClick={() => handleScroll(cityScrollRef, 'right')}
+                                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
+                            >
+                                <ChevronRight size={14} />
+                            </button>
+                        )}
                     </div>
                 )}
             </div>
@@ -165,10 +253,57 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             <input type="text" placeholder={t.searchPlaceholder} className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                         </div>
                         <button onClick={() => setShowCustomItemModal(true)} className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"><Plus size={14} /> {t.createCustom}</button>
-                        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-                            {CATEGORY_FILTERS.map(cat => (
-                                <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all border ${activeCategory === cat.id ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-gray-600 border-gray-100 hover:bg-gray-50'}`}>{t[cat.label] || cat.label}</button>
-                            ))}
+                        <div className="relative group/carousel">
+                            {canScrollLeftCat && (
+                                <button
+                                    onClick={() => handleScroll(catScrollRef, 'left')}
+                                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-90"
+                                >
+                                    <ChevronLeft size={12} />
+                                </button>
+                            )}
+                            <div
+                                ref={catScrollRef}
+                                onScroll={() => checkScroll(catScrollRef, setCanScrollLeftCat, setCanScrollRightCat)}
+                                className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide px-0.5 items-start"
+                            >
+                                {(showMoreCategories ? CATEGORY_FILTERS : CATEGORY_FILTERS.slice(0, 5)).map(cat => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => setActiveCategory(cat.id)}
+                                        className="flex flex-col items-center gap-1.5 min-w-[56px] transition-all group/cat"
+                                    >
+                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-sm transition-all ${cat.color} ${activeCategory === cat.id ? 'ring-2 ring-offset-2 ring-teal-500 scale-110 shadow-md' : 'opacity-90 group-hover/cat:scale-105 group-hover/cat:opacity-100'}`}>
+                                            {cat.icon}
+                                        </div>
+                                        <span className={`text-[10px] font-bold text-center leading-tight transition-colors ${activeCategory === cat.id ? 'text-teal-600' : 'text-gray-500 shadow-sm'}`}>
+                                            {lang === 'en' ? cat.labelEn : (t[cat.label] || cat.label)}
+                                        </span>
+                                    </button>
+                                ))}
+
+                                {!showMoreCategories && CATEGORY_FILTERS.length > 5 && (
+                                    <button
+                                        onClick={() => setShowMoreCategories(true)}
+                                        className="flex flex-col items-center gap-1.5 min-w-[56px] transition-all group/cat"
+                                    >
+                                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-sm transition-all bg-gray-100 text-gray-400 group-hover/cat:bg-gray-200 group-hover/cat:text-gray-600">
+                                            <MoreHorizontal size={20} />
+                                        </div>
+                                        <span className="text-[10px] font-bold text-center leading-tight text-gray-500">
+                                            {lang === 'en' ? 'More' : '更多'}
+                                        </span>
+                                    </button>
+                                )}
+                            </div>
+                            {canScrollRightCat && (
+                                <button
+                                    onClick={() => handleScroll(catScrollRef, 'right')}
+                                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-90"
+                                >
+                                    <ChevronRight size={12} />
+                                </button>
+                            )}
                         </div>
                         {/* Tag Pills */}
                         <div className="relative">
@@ -185,20 +320,42 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     </button>
                                 )}
                             </div>
-                            <div className="flex gap-1.5 flex-wrap">
-                                {POPULAR_TAGS.map(tag => (
+                            <div className="relative group/carousel">
+                                {canScrollLeftTag && (
                                     <button
-                                        key={tag.id}
-                                        onClick={() => setActiveTag(activeTag === tag.id ? null : tag.id)}
-                                        className={`flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-medium transition-all ${activeTag === tag.id
-                                            ? 'bg-purple-600 text-white shadow-sm'
-                                            : 'bg-purple-50 text-purple-600 hover:bg-purple-100'
-                                            }`}
+                                        onClick={() => handleScroll(tagScrollRef, 'left')}
+                                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-purple-600 border border-purple-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-75"
                                     >
-                                        <span>{tag.icon}</span>
-                                        <span>#{lang === 'en' && tag.labelEn ? tag.labelEn : tag.label}</span>
+                                        <ChevronLeft size={10} />
                                     </button>
-                                ))}
+                                )}
+                                <div
+                                    ref={tagScrollRef}
+                                    onScroll={() => checkScroll(tagScrollRef, setCanScrollLeftTag, setCanScrollRightTag)}
+                                    className="flex gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide pb-0.5"
+                                >
+                                    {POPULAR_TAGS.map(tag => (
+                                        <button
+                                            key={tag.id}
+                                            onClick={() => setActiveTag(activeTag === tag.id ? null : tag.id)}
+                                            className={`flex-shrink-0 flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-medium transition-all ${activeTag === tag.id
+                                                ? 'bg-purple-600 text-white shadow-sm'
+                                                : 'bg-purple-50 text-purple-600 hover:bg-purple-100'
+                                                }`}
+                                        >
+                                            <span>{tag.icon}</span>
+                                            <span>#{lang === 'en' && tag.labelEn ? tag.labelEn : tag.label}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                                {canScrollRightTag && (
+                                    <button
+                                        onClick={() => handleScroll(tagScrollRef, 'right')}
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-purple-600 border border-purple-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-75"
+                                    >
+                                        <ChevronRight size={10} />
+                                    </button>
+                                )}
                             </div>
                         </div>
                         <div className="grid grid-cols-2 gap-2">

@@ -43,6 +43,7 @@ import SidebarContent from './components/SidebarContent';
 import DropZone from './components/DropZone';
 import ChecklistView from './components/ChecklistView';
 import ScheduleList from './components/ScheduleList';
+import DiscoveryView from './components/DiscoveryView';
 import { Toast } from './components/Toast';
 import { usePlans, useBudget, useUIState, useConfirm, useItinerary } from './hooks';
 
@@ -58,6 +59,7 @@ import { ALL_SUGGESTIONS } from './data/suggestions';
 export function App() {
     const [lang, setLang] = useState<LangType>('zh');
     const [isInitialized, setIsInitialized] = useState(false);
+    const [isCreatingNewPlan, setIsCreatingNewPlan] = useState(false);
 
     // UI State Management Hook
     const ui = useUIState();
@@ -100,9 +102,27 @@ export function App() {
     const {
         plans, activePlanId, activePlan, currentDay,
         setPlans, setActivePlanId, setCurrentDay,
-        updateActivePlan, updateChecklist, handleCreatePlan,
+        updateActivePlan, updateChecklist, handleCreatePlan: _handleCreatePlan,
         handleDeletePlan: _handleDeletePlan, handleAddDay, handleDeleteDay: _handleDeleteDay, getDisplayDate, getShortDate
     } = usePlans(isInitialized, TRANSLATIONS[lang], lang);
+
+    const handleTriggerStartPicker = () => {
+        ui.setShowStartPicker(true);
+    };
+
+    const executeCreateBlankPlan = (region?: Region) => {
+        _handleCreatePlan(region);
+        setIsCreatingNewPlan(false);
+        showToastMessage(lang === 'zh' ? '計畫已建立！' : 'Plan created!');
+    };
+
+    const enterExpertCreationMode = () => {
+        setIsCreatingNewPlan(true);
+        setViewMode('discovery');
+        setActiveTab('templates');
+        ui.setShowStartPicker(false);
+        showToastMessage(lang === 'zh' ? '請從靈感牆中挑選一個您喜歡的行程 ✨' : 'Please pick a template you like from the inspiration wall ✨');
+    };
 
     const { budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown } = useBudget(activePlan, TRANSLATIONS[lang]);
 
@@ -270,15 +290,39 @@ export function App() {
         const region = template.region || 'tokyo';
         const localizedDefaults = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
 
-        updateActivePlan({
-            name: templateName,
-            totalDays: template.duration,
-            schedule: newSchedule,
-            region: region,
-            checklist: localizedDefaults
-        });
+        if (isCreatingNewPlan) {
+            // Create a brand new plan instead of updating
+            const id = `plan-${Date.now()}`;
+            const newPlan: Plan = {
+                id,
+                name: templateName,
+                startDate: new Date().toISOString().split('T')[0],
+                endDate: new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0],
+                totalDays: template.duration,
+                schedule: newSchedule,
+                region: region,
+                checklist: localizedDefaults,
+                createdAt: Date.now(),
+                targetCurrency: region === 'melbourne' ? 'AUD' : 'TWD',
+                exchangeRate: region === 'melbourne' ? 21.0 : 0.22
+            };
+            setPlans([...plans, newPlan]);
+            setActivePlanId(id);
+            setIsCreatingNewPlan(false);
+        } else {
+            // Legacy behavior: Overwrite active plan
+            updateActivePlan({
+                name: templateName,
+                totalDays: template.duration,
+                schedule: newSchedule,
+                region: region,
+                checklist: localizedDefaults
+            });
+        }
         setCurrentDay(1);
         setShowMobileLibrary(false);
+        setShowPlanManager(false);
+        setViewMode('canvas');
         showToastMessage(lang === 'zh' ? `✅ 已套用「${templateName}」！` : `✅ "${templateName}" applied!`);
     };
 
@@ -416,10 +460,18 @@ export function App() {
     };
 
     if (showLanding) return <LandingPage onStart={(templateId?: string) => {
-        setShowLanding(false);
         if (templateId) {
+            setShowLanding(false);
             const template = TEMPLATES.find(t => t.id === templateId);
             if (template) setTimeout(() => applyTemplate(template, true), 100);
+        } else {
+            // Logic for "Start" button on Landing Page
+            // If they have no plans, show picker. If they have plans, just go to canvas.
+            setShowLanding(false);
+            if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
+                // Might be a fresh start or demo
+                ui.setShowStartPicker(true);
+            }
         }
     }} lang={lang} toggleLang={toggleLang} />;
 
@@ -474,23 +526,25 @@ export function App() {
 
             {/* Main Area */}
             <div className="flex-1 flex flex-col min-w-0 bg-white relative overflow-x-hidden">
-                <AppHeader
-                    lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
-                    isEditingName={isEditingName} editingName={editingName} setEditingName={setEditingName}
-                    startEditingName={startEditingName} saveName={saveName} handleNameKeyDown={handleNameKeyDown}
-                    nameInputRef={nameInputRef} openDatePicker={openDatePicker}
-                    showCitySelector={showCitySelector} setShowCitySelector={setShowCitySelector}
-                    activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
-                    updateActivePlan={updateActivePlan} setShowLanding={setShowLanding} setShowPlanManager={setShowPlanManager}
-                    setShowSubmitModal={setShowSubmitModal} setShowShareModal={setShowShareModal} handleGateCheck={handleGateCheck}
-                    isSidebarOpen={isSidebarOpen} budgetLimit={budgetLimit} setBudgetLimit={setBudgetLimit}
-                    calculateTotalBudget={calculateTotalBudget} calculateCategoryBreakdown={calculateCategoryBreakdown}
-                    toolbar={<AppToolbar
-                        viewMode={viewMode} setViewMode={setViewMode}
-                        t={t}
-                    />}
-                    showContextMap={showContextMap} setShowContextMap={setShowContextMap} // Pass context map state
-                />
+                {viewMode !== 'discovery' && (
+                    <AppHeader
+                        lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
+                        isEditingName={isEditingName} editingName={editingName} setEditingName={setEditingName}
+                        startEditingName={startEditingName} saveName={saveName} handleNameKeyDown={handleNameKeyDown}
+                        nameInputRef={nameInputRef} openDatePicker={openDatePicker}
+                        showCitySelector={showCitySelector} setShowCitySelector={setShowCitySelector}
+                        activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
+                        updateActivePlan={updateActivePlan} setShowLanding={setShowLanding} setShowPlanManager={setShowPlanManager}
+                        setShowSubmitModal={setShowSubmitModal} setShowShareModal={setShowShareModal} handleGateCheck={handleGateCheck}
+                        isSidebarOpen={isSidebarOpen} budgetLimit={budgetLimit} setBudgetLimit={setBudgetLimit}
+                        calculateTotalBudget={calculateTotalBudget} calculateCategoryBreakdown={calculateCategoryBreakdown}
+                        toolbar={<AppToolbar
+                            viewMode={viewMode} setViewMode={setViewMode}
+                            t={t}
+                        />}
+                        showContextMap={showContextMap} setShowContextMap={setShowContextMap} // Pass context map state
+                    />
+                )}
 
                 {/* [NEW] Quick Fill Logic */}
                 {(() => {
@@ -502,12 +556,14 @@ export function App() {
                     return null;
                 })()}
 
-                <DayTabs
-                    activePlan={activePlan} currentDay={currentDay} setCurrentDay={setCurrentDay}
-                    handleAddDay={handleAddDay} handleDeleteDay={onDeleteDay}
-                    getShortDate={getShortDate} t={t}
-                    dayTabsContainerRef={dayTabsContainerRef} mobileDayTabsRef={mobileDayTabsRef}
-                />
+                {viewMode !== 'discovery' && (
+                    <DayTabs
+                        activePlan={activePlan} currentDay={currentDay} setCurrentDay={setCurrentDay}
+                        handleAddDay={handleAddDay} handleDeleteDay={onDeleteDay}
+                        getShortDate={getShortDate} t={t}
+                        dayTabsContainerRef={dayTabsContainerRef} mobileDayTabsRef={mobileDayTabsRef}
+                    />
+                )}
 
                 {/* Canvas Area */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 lg:p-8 custom-scrollbar">
@@ -519,6 +575,19 @@ export function App() {
                                 t={t}
                                 onItemClick={ui.setSelectedItem}
                                 onClose={() => setViewMode('canvas')} // [NEW] Return to Canvas view
+                            />
+                        </div>
+                    ) : viewMode === 'discovery' ? (
+                        <div className="h-full">
+                            <DiscoveryView
+                                lang={lang}
+                                t={t}
+                                activeRegion={ui.activeRegion}
+                                setActiveRegion={ui.setActiveRegion}
+                                showToastMessage={showToastMessage}
+                                toggleLang={toggleLang}
+                                onPreviewTemplate={setPreviewTemplate}
+                                setActiveTab={setActiveTab}
                             />
                         </div>
                     ) : viewMode === 'checklist' ? (
@@ -571,6 +640,7 @@ export function App() {
                     showPlanManager={showPlanManager}
                     setViewMode={setViewMode}
                     setShowPlanManager={setShowPlanManager}
+                    lang={lang}
                     t={t}
                 />
             </div>
@@ -579,7 +649,10 @@ export function App() {
                 {...ui}
                 lang={lang} t={t} showToastMessage={showToastMessage}
                 plans={plans} activePlanId={activePlanId} setActivePlanId={setActivePlanId}
-                handleCreatePlan={handleCreatePlan} handleDeletePlan={onDeletePlan}
+                onTriggerPicker={handleTriggerStartPicker}
+                onCreateBlank={executeCreateBlankPlan}
+                onExpertMode={enterExpertCreationMode}
+                handleDeletePlan={onDeletePlan}
                 handleCreateCustomItem={handleCreateCustomItem}
                 activePlan={activePlan} currentDay={currentDay} generateExportText={generateExportText}
                 setPlans={setPlans} setActivePlanIdDirect={setActivePlanId}

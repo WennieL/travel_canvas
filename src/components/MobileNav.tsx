@@ -1,12 +1,13 @@
 import React from 'react';
-import { Calendar, Map as MapIcon, ListTodo, FolderOpen } from 'lucide-react';
-import { LangType } from '../types';
+import { Calendar, Map as MapIcon, ListTodo, FolderOpen, Compass } from 'lucide-react';
+import { LangType, ViewMode } from '../types';
 
 interface MobileNavProps {
-    viewMode: string;
+    viewMode: ViewMode;
     showPlanManager: boolean;
-    setViewMode: (mode: 'canvas' | 'map' | 'checklist') => void;
+    setViewMode: (mode: ViewMode) => void;
     setShowPlanManager: (show: boolean) => void;
+    lang: LangType;
     t: any;
 }
 
@@ -15,12 +16,20 @@ const MobileNav: React.FC<MobileNavProps> = ({
     showPlanManager,
     setViewMode,
     setShowPlanManager,
+    lang,
     t
 }) => {
     if (viewMode === 'map') return null;
 
     return (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 grid grid-cols-4 items-center pb-2 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 grid grid-cols-5 items-center pb-2 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+            <button
+                onClick={() => { setViewMode('discovery'); setShowPlanManager(false); }}
+                className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'discovery' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+            >
+                <Compass size={20} />
+                <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{lang === 'zh' ? '發現' : 'Explore'}</span>
+            </button>
             <button
                 onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
                 className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'canvas' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}

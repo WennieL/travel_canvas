@@ -17,7 +17,7 @@ export interface UsePlansReturn {
     // Actions
     updateActivePlan: (updates: Partial<Plan>) => void;
     updateChecklist: (newChecklist: ChecklistItem[]) => void;
-    handleCreatePlan: () => void;
+    handleCreatePlan: (region?: Region) => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
     handleAddDay: () => void;
     handleDeleteDay: (dayToDelete: number, e?: React.MouseEvent) => void;

@@ -12,11 +12,12 @@ import {
     TemplatePreviewModal,
     UnlockModal,
     ItemDetailModal,
+    StartPickerModal,
 } from './Modals';
 import { MobileLibrary } from './MobileLibrary';
 import { MobilePreview } from './MobilePreview';
 import { CreatorProfile } from './CreatorProfile';
-import { Plan, LangType, Template, TimeSlot, ScheduleItem, ItemType, TransportMode, Region, TravelItem } from '../types';
+import { Plan, LangType, Template, TimeSlot, ScheduleItem, ItemType, TransportMode, Region, TravelItem, ViewMode } from '../types';
 
 interface AppModalsProps {
     // Shared
@@ -33,6 +34,9 @@ interface AppModalsProps {
     setActiveCategory: (category: 'all' | ItemType) => void;
     activeRegion: Region;
     setActiveRegion: (region: Region) => void;
+    isSidebarOpen: boolean;
+    setIsSidebarOpen: (open: boolean) => void;
+    setViewMode: (mode: ViewMode) => void;
 
     // Handlers
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
@@ -44,7 +48,9 @@ interface AppModalsProps {
     plans: Plan[];
     activePlanId: string;
     setActivePlanId: (id: string) => void;
-    handleCreatePlan: (region?: Region) => void;
+    onTriggerPicker: () => void;
+    onCreateBlank: (region?: Region) => void;
+    onExpertMode: () => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
 
     // Custom Item
@@ -119,6 +125,10 @@ interface AppModalsProps {
     setBatchUnlockCount: (count: number) => void;
     confirmUnlock: () => void;
 
+    // Start Picker
+    showStartPicker: boolean;
+    setShowStartPicker: (show: boolean) => void;
+
     // Item Detail Modal
     selectedItem: ScheduleItem | null;
     setSelectedItem: (item: ScheduleItem | null) => void;
@@ -128,7 +138,10 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
     const { confirm } = useConfirm();
     const {
         lang, t, showToastMessage,
-        showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId, handleCreatePlan, handleDeletePlan, activeRegion,
+        activeTab, setActiveTab,
+        showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId,
+        onTriggerPicker, onCreateBlank, onExpertMode,
+        handleDeletePlan, activeRegion,
         showCustomItemModal, setShowCustomItemModal, handleCreateCustomItem,
         showExportModal, setShowExportModal, exportTab, setExportTab, activePlan, currentDay, generateExportText,
         setPlans, setActivePlanIdDirect, setCustomAssets, setBudgetLimit, setSubscribedCreators,
@@ -142,11 +155,24 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         showMobileLibrary, setShowMobileLibrary,
         previewTemplate, setPreviewTemplate,
         unlockTarget, setUnlockTarget, batchUnlockCount, setBatchUnlockCount, confirmUnlock,
+        showStartPicker, setShowStartPicker,
+        isSidebarOpen, setIsSidebarOpen,
+        setViewMode,
         selectedItem, setSelectedItem
     } = props;
 
     return (
         <>
+            <StartPickerModal
+                isOpen={showStartPicker}
+                onClose={() => setShowStartPicker(false)}
+                lang={lang}
+                onChooseBlank={() => {
+                    onCreateBlank(activeRegion);
+                    setShowStartPicker(false);
+                }}
+                onChooseTemplate={onExpertMode}
+            />
             <ItemDetailModal
                 isOpen={!!selectedItem}
                 onClose={() => setSelectedItem(null)}
@@ -161,7 +187,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 plans={plans}
                 activePlanId={activePlanId}
                 onSelectPlan={setActivePlanId}
-                onCreatePlan={() => handleCreatePlan(activeRegion)}
+                onCreatePlan={onTriggerPicker}
                 onDeletePlan={handleDeletePlan}
                 t={t}
             />

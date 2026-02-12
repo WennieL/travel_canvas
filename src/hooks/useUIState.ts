@@ -25,6 +25,7 @@ export const useUIState = () => {
     const [mobileLibraryExpanded, setMobileLibraryExpanded] = useState(false);
     const [showMobilePreview, setShowMobilePreview] = useState(false);
     const [showMoveModal, setShowMoveModal] = useState(false);
+    const [showStartPicker, setShowStartPicker] = useState(false);
     const [selectedCreatorId, setSelectedCreatorId] = useState<string | null>(null);
     const [moveTarget, setMoveTarget] = useState<{ slot: TimeSlot, index: number } | null>(null);
     const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
@@ -70,6 +71,7 @@ export const useUIState = () => {
         mobileLibraryExpanded, setMobileLibraryExpanded,
         showMobilePreview, setShowMobilePreview,
         showMoveModal, setShowMoveModal,
+        showStartPicker, setShowStartPicker,
         activeTab, setActiveTab,
         activeCategory, setActiveCategory,
         searchQuery, setSearchQuery,
