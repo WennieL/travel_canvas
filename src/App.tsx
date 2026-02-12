@@ -559,6 +559,7 @@ export function App() {
                             setMoveTarget={ui.setMoveTarget}
                             setShowMobileLibrary={ui.setShowMobileLibrary}
                             setSidebarHighlight={ui.setSidebarHighlight}
+                            setIsSidebarOpen={ui.setIsSidebarOpen}
                             setUnlockTarget={setUnlockTarget}
                             setSelectedItem={ui.setSelectedItem}
                         />

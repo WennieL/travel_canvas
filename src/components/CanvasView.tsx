@@ -43,6 +43,7 @@ interface CanvasViewProps {
     setSidebarHighlight: (show: boolean) => void;
     setUnlockTarget: (item: ScheduleItem | null) => void;
     setSelectedItem: (item: ScheduleItem | null) => void;
+    setIsSidebarOpen: (open: boolean) => void;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -64,7 +65,8 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     setShowMobileLibrary,
     setSidebarHighlight,
     setUnlockTarget,
-    setSelectedItem
+    setSelectedItem,
+    setIsSidebarOpen
 }) => {
     const isTimeline = !showContextMap;
 
@@ -135,7 +137,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                                 setAddToSlotTarget(slot);
                                                 setShowMobileLibrary(true);
                                             } else {
-                                                if (!isSidebarOpen) setSidebarHighlight(true);
+                                                if (!isSidebarOpen) setIsSidebarOpen(true);
                                                 setSidebarHighlight(true);
                                                 setTimeout(() => setSidebarHighlight(false), 2000);
                                             }
@@ -189,6 +191,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                 setAddToSlotTarget('accommodation');
                                 setShowMobileLibrary(true);
                             } else {
+                                if (!isSidebarOpen) setIsSidebarOpen(true);
                                 setSidebarHighlight(true);
                                 setTimeout(() => setSidebarHighlight(false), 2000);
                             }
