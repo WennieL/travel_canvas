@@ -3,6 +3,25 @@ import { TimeSlot, ScheduleItem, DaySchedule, Plan, LangType, TravelItem } from 
 import DropZone from './DropZone';
 import MapView from './MapView';
 import { getSlotLabel } from '../utils';
+import { Sun, Coffee, Moon, Clock, BedDouble, Sunset } from 'lucide-react';
+
+// Slot visual configuration
+const slotConfig: Record<string, { color: string; time: string }> = {
+    morning: { color: 'text-orange-500', time: '06:00 - 12:00' },
+    afternoon: { color: 'text-blue-500', time: '12:00 - 18:00' },
+    evening: { color: 'text-purple-500', time: '18:00 - 22:00' },
+    night: { color: 'text-indigo-900', time: '22:00 - 06:00' },
+};
+
+const getSlotIcon = (slot: string) => {
+    switch (slot) {
+        case 'morning': return <Sun size={14} />;
+        case 'afternoon': return <Coffee size={14} />;
+        case 'evening': return <Sunset size={14} />;
+        case 'night': return <Moon size={14} />;
+        default: return <Clock size={14} />;
+    }
+};
 
 interface CanvasViewProps {
     showContextMap: boolean;
@@ -47,50 +66,114 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     setUnlockTarget,
     setSelectedItem
 }) => {
+    const isTimeline = !showContextMap;
+
     return (
         <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
             {/* Schedule List Area */}
             <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                <div className="space-y-6 pb-24 lg:pb-12 px-4 md:px-6 lg:max-w-3xl mx-auto lg:px-0 w-full max-w-full overflow-x-hidden">
+                <div className={`relative pb-24 lg:pb-12 lg:max-w-3xl mx-auto w-full max-w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
                     {(() => {
                         const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
                         let cumulativeIndex = 0;
-                        return slots.map((slot) => {
+                        return slots.map((slot, slotIdx) => {
                             const startIdx = cumulativeIndex;
-                            cumulativeIndex += (currentDaySchedule[slot] || []).length;
+                            const slotItems = currentDaySchedule[slot] || [];
+                            cumulativeIndex += slotItems.length;
+
+                            // Cross-slot transport: get previous slot's last item
+                            const prevSlot = slotIdx > 0 ? slots[slotIdx - 1] : null;
+                            const prevSlotItems = prevSlot ? (currentDaySchedule[prevSlot] || []) : [];
+                            const previousSlotLastItem = prevSlotItems.length > 0
+                                ? prevSlotItems[prevSlotItems.length - 1]
+                                : null;
+
+                            const config = slotConfig[slot];
+
                             return (
-                                <DropZone
-                                    key={slot} slot={slot} label={getSlotLabel(slot, t)}
-                                    items={currentDaySchedule[slot as keyof typeof currentDaySchedule]}
-                                    onDrop={(e) => handleDrop(e, slot)}
-                                    onRemoveItem={(idx: number) => handleRemoveItem(slot, idx)}
-                                    onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot, idx, upd)}
-                                    onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot, index: idx }); }}
-                                    onUnlockItem={(item) => { setUnlockTarget(item); }}
-                                    onItemClick={setSelectedItem}
-                                    onDragStart={handleDragStart}
-                                    onAddItem={() => {
-                                        if (window.innerWidth < 1024) {
-                                            setAddToSlotTarget(slot);
-                                            setShowMobileLibrary(true);
-                                        } else {
-                                            if (!isSidebarOpen) setSidebarHighlight(true); // Simplified logic
-                                            setSidebarHighlight(true);
-                                            setTimeout(() => setSidebarHighlight(false), 2000);
-                                        }
-                                    }}
-                                    t={t}
-                                    lang={lang}
-                                    planRegion={activePlan.region}
-                                    isCompact={showContextMap}
-                                    startIndex={startIdx}
-                                    onQuickFill={() => handleQuickFill(slot)}
-                                />
+                                <React.Fragment key={slot}>
+                                    {/* Timeline Slot Label */}
+                                    {isTimeline && (
+                                        <div className="relative flex items-center h-12 py-3 pl-12 lg:pl-16">
+                                            {/* Line segment through this label */}
+                                            <div className="absolute left-[20px] lg:left-[24px] top-0 bottom-0 w-0.5 bg-gray-200" />
+
+                                            {/* Slot label anchored to the line */}
+                                            <div className="absolute left-0 right-0 flex items-center z-10">
+                                                {/* Icon centered on spine */}
+                                                <div className={`absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white ${config.color.replace('text-', 'bg-').replace('500', '50')} ${config.color.replace('text-', 'border-').replace('500', '200')}`}>
+                                                    <span className="text-xl">{getSlotIcon(slot)}</span>
+                                                </div>
+
+                                                {/* Text labels shifted right of the icon */}
+                                                <div className="pl-12 lg:pl-14 flex flex-col justify-center">
+                                                    <div className="flex items-center gap-4">
+                                                        <h3 className={`text-base lg:text-lg font-black uppercase tracking-widest ${config.color}`}>
+                                                            {getSlotLabel(slot, t)}
+                                                        </h3>
+                                                        <span className="text-xs lg:text-sm text-gray-400 font-bold tracking-tight bg-gray-50/50 px-2 py-0.5 rounded-full border border-gray-100">
+                                                            {config.time}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <DropZone
+                                        key={slot} slot={slot} label={getSlotLabel(slot, t)}
+                                        items={slotItems}
+                                        onDrop={(e) => handleDrop(e, slot)}
+                                        onRemoveItem={(idx: number) => handleRemoveItem(slot, idx)}
+                                        onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot, idx, upd)}
+                                        onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot, index: idx }); }}
+                                        onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                        onItemClick={setSelectedItem}
+                                        onDragStart={handleDragStart}
+                                        onAddItem={() => {
+                                            if (window.innerWidth < 1024) {
+                                                setAddToSlotTarget(slot);
+                                                setShowMobileLibrary(true);
+                                            } else {
+                                                if (!isSidebarOpen) setSidebarHighlight(true);
+                                                setSidebarHighlight(true);
+                                                setTimeout(() => setSidebarHighlight(false), 2000);
+                                            }
+                                        }}
+                                        t={t}
+                                        lang={lang}
+                                        planRegion={activePlan.region}
+                                        isCompact={showContextMap}
+                                        startIndex={startIdx}
+                                        onQuickFill={() => handleQuickFill(slot)}
+                                        previousItem={previousSlotLastItem}
+                                        showTimeline={isTimeline}
+                                    />
+                                </React.Fragment>
                             );
                         });
                     })()}
 
                     {/* Accommodation Slot */}
+                    {isTimeline && (
+                        <div className="relative flex items-center h-12 py-3 pl-12 lg:pl-16 mt-10">
+                            {/* Slot label (no line segment here, as requested) */}
+                            <div className="absolute left-0 right-0 flex items-center z-10">
+                                {/* Icon positioned to match spine alignment */}
+                                <div className="absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white border-indigo-200 bg-indigo-50">
+                                    <BedDouble className="w-5 h-5 text-indigo-600" />
+                                </div>
+
+                                {/* Text label shifted right to match activity slots */}
+                                <div className="pl-12 lg:pl-14 flex flex-col justify-center">
+                                    <h3 className="text-base lg:text-lg font-black uppercase tracking-widest text-indigo-600">
+                                        {t.accommodation || 'Accommodation'}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <DropZone
                         key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
                         items={currentDaySchedule.accommodation}
@@ -114,6 +197,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         lang={lang}
                         planRegion={activePlan.region}
                         isCompact={showContextMap}
+                        showTimeline={isTimeline}
                         startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)}
                     />
 
