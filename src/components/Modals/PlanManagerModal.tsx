@@ -58,15 +58,16 @@ export const PlanManagerModal: React.FC<PlanManagerModalProps> = ({
                                 </div>
                             </div>
                             <div className="flex items-center gap-2">
-                                {plans.length > 1 && (
+                                {plans.length > 1 && p.id !== activePlanId && (
                                     <button
                                         onClick={(e) => onDeletePlan(p.id, e)}
-                                        className="p-1 rounded hover:bg-red-50 text-gray-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                                        className="p-1.5 rounded-md hover:bg-red-50 text-gray-400 hover:text-red-500 transition-all opacity-40 hover:opacity-100 group-hover:opacity-100"
+                                        title={t.removePlan}
                                     >
-                                        <Trash2 size={14} />
+                                        <Trash2 size={16} />
                                     </button>
                                 )}
-                                {activePlanId === p.id && <Check size={16} className="text-teal-600" />}
+                                {activePlanId === p.id && <Check size={18} className="text-teal-600" />}
                             </div>
                         </div>
                     ))}
