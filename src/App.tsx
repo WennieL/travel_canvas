@@ -45,7 +45,7 @@ import ChecklistView from './components/ChecklistView';
 import ScheduleList from './components/ScheduleList';
 import DiscoveryView from './components/DiscoveryView';
 import { Toast } from './components/Toast';
-import { usePlans, useBudget, useUIState, useConfirm, useItinerary } from './hooks';
+import { usePlans, useBudget, useUIState, useConfirm, useItinerary, useAppActions } from './hooks';
 
 // New Modular Components
 import AppHeader from './components/AppHeader';
@@ -86,7 +86,6 @@ export function App() {
         activeTab, setActiveTab,
         activeCategory, setActiveCategory,
         searchQuery, setSearchQuery,
-        exportTab, setExportTab,
         selectedCreatorId, setSelectedCreatorId,
         previewTemplate, setPreviewTemplate,
         unlockTarget, setUnlockTarget,
@@ -239,173 +238,21 @@ export function App() {
 
     const openDatePicker = () => setShowDateModal(true);
 
-    const applyTemplate = async (template: Template, skipConfirm: boolean = false) => {
-        const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
-        if (!skipConfirm) {
-            const confirmed = await confirm({
-                title: lang === 'zh' ? '套用模板' : 'Apply Template',
-                message: lang === 'zh'
-                    ? `⚠️ 確定要套用「${templateName}」嗎？\n\n目前的行程將被取代。`
-                    : `⚠️ Apply "${templateName}"?\n\nCurrent itinerary will be replaced.`,
-                type: 'warning',
-                confirmText: lang === 'zh' ? '套用' : 'Apply',
-                cancelText: lang === 'zh' ? '取消' : 'Cancel'
-            });
-            if (!confirmed) return;
-        }
+    // Simplified Actions via Hook
+    const actions = useAppActions({
+        plans, setPlans, activePlan, updateActivePlan, activePlanId, setActivePlanId,
+        currentDay, setCurrentDay, lang, t, confirm, showToastMessage,
+        isCreatingNewPlan, setIsCreatingNewPlan, ui, setCustomAssets,
+        _handleDeleteDay: (day: number, e?: React.MouseEvent) => _handleDeleteDay(day, e),
+        _handleDeletePlan: (id: string, e: React.MouseEvent) => _handleDeletePlan(id, e)
+    });
 
-        const copy = (items: ScheduleItem[]) => (items || []).map(i => ({
-            ...i,
-            instanceId: Math.random().toString(36).substr(2, 9),
-            arrivalTransport: (i.arrivalTransport || 'car') as TransportMode
-        }));
+    const {
+        applyTemplate, handleCreateCustomItem, onDeleteDay, onDeletePlan,
+        handleUnlockConfirm, executeMoveItem
+    } = actions;
 
-        const newSchedule: Record<string, DaySchedule> = {};
-        const isMultiDay = !('morning' in template.schedule);
-
-        if (isMultiDay) {
-            const fullSched = template.schedule as FullSchedule;
-            Object.keys(fullSched).forEach(dayKey => {
-                newSchedule[dayKey] = {
-                    morning: copy(fullSched[dayKey].morning),
-                    afternoon: copy(fullSched[dayKey].afternoon),
-                    evening: copy(fullSched[dayKey].evening),
-                    night: copy(fullSched[dayKey].night),
-                    accommodation: copy(fullSched[dayKey].accommodation)
-                };
-            });
-        } else {
-            const daySched = template.schedule as DaySchedule;
-            for (let day = 1; day <= template.duration; day++) {
-                newSchedule[`Day ${day}`] = {
-                    morning: copy(daySched.morning),
-                    afternoon: copy(daySched.afternoon),
-                    evening: copy(daySched.evening),
-                    night: copy(daySched.night),
-                    accommodation: copy(daySched.accommodation)
-                };
-            }
-        }
-
-        const region = template.region || 'tokyo';
-        const localizedDefaults = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
-
-        if (isCreatingNewPlan) {
-            // Create a brand new plan instead of updating
-            const id = `plan-${Date.now()}`;
-            const newPlan: Plan = {
-                id,
-                name: templateName,
-                startDate: new Date().toISOString().split('T')[0],
-                endDate: new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0],
-                totalDays: template.duration,
-                schedule: newSchedule,
-                region: region,
-                checklist: localizedDefaults,
-                createdAt: Date.now(),
-                targetCurrency: region === 'melbourne' ? 'AUD' : 'TWD',
-                exchangeRate: region === 'melbourne' ? 21.0 : 0.22
-            };
-            setPlans([...plans, newPlan]);
-            setActivePlanId(id);
-            setIsCreatingNewPlan(false);
-        } else {
-            // Legacy behavior: Overwrite active plan
-            updateActivePlan({
-                name: templateName,
-                totalDays: template.duration,
-                schedule: newSchedule,
-                region: region,
-                checklist: localizedDefaults
-            });
-        }
-        setCurrentDay(1);
-        setShowMobileLibrary(false);
-        setShowPlanManager(false);
-        setViewMode('canvas');
-        showToastMessage(lang === 'zh' ? `✅ 已套用「${templateName}」！` : `✅ "${templateName}" applied!`);
-    };
-
-    const handleCreateCustomItem = (data: any) => {
-        const currentDayKey = `Day ${currentDay}`;
-        const newSchedule = { ...activePlan.schedule };
-
-        const newItem: ScheduleItem = {
-            id: `custom-${Date.now()}`,
-            title: data.name,
-            type: data.type,
-            price: parseInt(data.price) || 0,
-            image: data.type === 'food' ? '🍜' : '📌',
-            instanceId: Math.random().toString(36).substr(2, 9),
-            startTime: data.time || '',
-            arrivalTransport: 'car',
-            notes: data.notes || ''
-        };
-
-        let targetSlot: TimeSlot = 'morning';
-        if (data.time) {
-            const hour = parseInt(data.time.split(':')[0], 10);
-            targetSlot = hour >= 6 && hour < 12 ? 'morning' : hour >= 12 && hour < 18 ? 'afternoon' : hour >= 18 && hour < 22 ? 'evening' : 'night';
-        }
-
-        newSchedule[currentDayKey][targetSlot].push(newItem);
-        updateActivePlan({ schedule: newSchedule });
-        setCustomAssets(prev => [...prev, { ...newItem, id: `asset-${Date.now()}`, region: 'all' } as TravelItem]);
-        showToastMessage("🎉 " + (t.itemCreated || "Created!"));
-        setShowCustomItemModal(false);
-    };
-
-
-    const onDeleteDay = async (dayToDelete: number, e?: React.MouseEvent) => {
-        e?.stopPropagation();
-        const confirmed = await confirm({
-            title: lang === 'zh' ? '刪除天數' : 'Delete Day',
-            message: lang === 'zh'
-                ? `確定要刪除第 ${dayToDelete} 天嗎？\n此動作無法復原。`
-                : `Are you sure you want to delete Day ${dayToDelete}?\nThis action cannot be undone.`,
-            type: 'warning',
-            confirmText: lang === 'zh' ? '刪除' : 'Delete',
-            cancelText: lang === 'zh' ? '取消' : 'Cancel'
-        });
-        if (confirmed) {
-            _handleDeleteDay(dayToDelete, e);
-        }
-    };
-
-    const onDeletePlan = async (id: string, e: React.MouseEvent) => {
-        e.stopPropagation();
-        const planToDelete = plans.find(p => p.id === id);
-        const planName = planToDelete?.name || '';
-        const confirmed = await confirm({
-            title: lang === 'zh' ? '刪除行程' : 'Delete Trip',
-            message: lang === 'zh'
-                ? `確定要刪除「${planName}」嗎？`
-                : `Are you sure you want to delete "${planName}"?`,
-            type: 'error',
-            confirmText: lang === 'zh' ? '刪除' : 'Delete',
-            cancelText: lang === 'zh' ? '取消' : 'Cancel'
-        });
-        if (confirmed) {
-            _handleDeletePlan(id, e);
-        }
-    };
-
-
-    const handleUnlockConfirm = () => {
-        const newSchedule = { ...activePlan.schedule };
-        Object.values(newSchedule).forEach(day => {
-            Object.values(day).forEach(slotItems => {
-                slotItems.forEach((item: ScheduleItem) => {
-                    if (unlockTarget && item.instanceId === unlockTarget.instanceId) item.isLocked = false;
-                    else if (batchUnlockCount > 0 && item.isLocked) item.isLocked = false;
-                });
-            });
-        });
-        updateActivePlan({ schedule: newSchedule });
-        setUnlockTarget(null);
-        setBatchUnlockCount(0);
-        showToastMessage("🎉 Unlocked!");
-    };
+    const confirmUnlock = () => handleUnlockConfirm(unlockTarget, batchUnlockCount, setUnlockTarget, setBatchUnlockCount);
 
     const handleGateCheck = (action: () => void) => {
         let lockedCount = 0;
@@ -427,29 +274,6 @@ export function App() {
         } else {
             action();
         }
-    }
-
-
-    const executeMoveItem = (targetDay: number) => {
-        if (!ui.moveTarget) return;
-        const sourceDayKey = `Day ${currentDay}`;
-        const targetDayKey = `Day ${targetDay}`;
-        const newSchedule = { ...activePlan.schedule };
-
-        if (!newSchedule[targetDayKey]) newSchedule[targetDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
-        const [item] = newSchedule[sourceDayKey][ui.moveTarget.slot].splice(ui.moveTarget.index, 1);
-        newSchedule[targetDayKey][ui.moveTarget.slot].push(item);
-
-        // Auto-sort target slot
-        newSchedule[targetDayKey][ui.moveTarget.slot].sort((a, b) => {
-            const timeA = a.startTime || 'ZZZZ';
-            const timeB = b.startTime || 'ZZZZ';
-            return timeA.localeCompare(timeB);
-        });
-
-        updateActivePlan({ schedule: newSchedule });
-        setShowMoveModal(false);
-        showToastMessage(`${t.movedTo || 'Moved to'} Day ${targetDay}`);
     };
 
     const generateExportText = () => {
@@ -661,7 +485,7 @@ export function App() {
                 customAssets={customAssets} budgetLimit={budgetLimit}
                 subscribedCreators={subscribedCreators}
                 onOpenMobilePreview={() => setShowMobilePreview(true)}
-                confirmUnlock={handleUnlockConfirm}
+                confirmUnlock={confirmUnlock}
                 onDateConfirm={(start, end) => {
                     const diff = Math.ceil(Math.abs(new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60 * 24)) + 1;
                     updateActivePlan({ startDate: start, endDate: end, totalDays: diff });

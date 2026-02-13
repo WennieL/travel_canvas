@@ -11,3 +11,4 @@ export { OnboardingModal } from './OnboardingModal';
 export { default as ItemDetailModal } from './ItemDetailModal';
 export { ConfirmDialog } from './ConfirmDialog';
 export { StartPickerModal } from './StartPickerModal';
+export { MoveToDayModal } from './MoveToDayModal';

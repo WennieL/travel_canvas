@@ -227,6 +227,8 @@ export const TRANSLATIONS: any = {
         savedSuccess: "儲存成功",
         crossRegionWarning: "⚠️ 注意：您加入了 {region} 的景點至 {planRegion} 行程中。",
         crossRegionWarningShort: "跨區提醒：此為 {region} 景點 (目前行程：{planRegion})",
+        statusBusy: "行程緊湊",
+        statusOverload: "行程超載",
         tokyo: "東京",
         osaka: "大阪",
         kyoto: "京都"
@@ -458,6 +460,8 @@ export const TRANSLATIONS: any = {
         savedSuccess: "Saved successfully",
         crossRegionWarning: "⚠️ Note: You added a {region} item to your {planRegion} plan.",
         crossRegionWarningShort: "Region Warning: This is a {region} item (Plan: {planRegion})",
+        statusBusy: "Packed",
+        statusOverload: "Overfilled",
         tokyo: "Tokyo",
         osaka: "Osaka",
         kyoto: "Kyoto"

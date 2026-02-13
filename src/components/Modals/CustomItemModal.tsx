@@ -45,14 +45,29 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
     };
 
     const handleCreate = () => {
+        const trimmedName = name.trim();
+        const trimmedOrigin = origin.trim();
+        const trimmedDestination = destination.trim();
+
+        // Validation logic
+        if (itemType === 'transport') {
+            if (!trimmedName && (!trimmedOrigin || !trimmedDestination)) {
+                return; // Basic silent fail or could add error state
+            }
+        } else {
+            if (!trimmedName) {
+                return;
+            }
+        }
+
         onCreateItem({
-            name,
+            name: trimmedName || (itemType === 'transport' ? `${trimmedOrigin} ➔ ${trimmedDestination}` : 'Untitled'),
             type: itemType,
-            price,
+            price: price || '0',
             time,
             notes,
-            origin,
-            destination
+            origin: trimmedOrigin,
+            destination: trimmedDestination
         });
         handleClose();
     };

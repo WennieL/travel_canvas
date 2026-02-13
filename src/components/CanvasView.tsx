@@ -2,8 +2,8 @@ import React from 'react';
 import { TimeSlot, ScheduleItem, DaySchedule, Plan, LangType, TravelItem } from '../types';
 import DropZone from './DropZone';
 import MapView from './MapView';
-import { getSlotLabel } from '../utils';
-import { Sun, Coffee, Moon, Clock, BedDouble, Sunset } from 'lucide-react';
+import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle } from 'lucide-react';
+import { getSlotLabel, parseDuration } from '../utils';
 
 // Slot visual configuration
 const slotConfig: Record<string, { color: string; time: string }> = {
@@ -92,6 +92,11 @@ const CanvasView: React.FC<CanvasViewProps> = ({
 
                             const config = slotConfig[slot];
 
+                            // Capacity Logic
+                            const totalMins = slotItems.reduce((acc, item) => acc + parseDuration(item.duration), 0);
+                            const threshold = slot === 'evening' ? 240 : 360;
+                            const capacityStatus = totalMins > threshold ? 'overload' : totalMins > threshold * 0.8 ? 'busy' : null;
+
                             return (
                                 <React.Fragment key={slot}>
                                     {/* Timeline Slot Label */}
@@ -116,6 +121,16 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                                         <span className="text-xs lg:text-sm text-gray-400 font-bold tracking-tight bg-gray-50/50 px-2 py-0.5 rounded-full border border-gray-100">
                                                             {config.time}
                                                         </span>
+                                                        {capacityStatus === 'busy' && (
+                                                            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-yellow-50 text-yellow-600 text-[10px] font-bold border border-yellow-100 uppercase animate-pulse">
+                                                                <Clock size={10} /> {t.statusBusy}
+                                                            </span>
+                                                        )}
+                                                        {capacityStatus === 'overload' && (
+                                                            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-50 text-red-600 text-[10px] font-bold border border-red-100 uppercase">
+                                                                <AlertTriangle size={10} /> {t.statusOverload}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

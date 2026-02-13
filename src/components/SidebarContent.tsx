@@ -1,10 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Plus, Clock, Star, MapPin, Tag, X, Lock, ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
-import { ItemType, TravelItem, DaySchedule, Region, Template } from '../types';
+import { Search, Plus, Star, Tag, X, Lock } from 'lucide-react';
+import { ItemType, TravelItem, DaySchedule, Region, Template, LangType } from '../types';
 import { SAMPLE_ASSETS, TEMPLATES, CATEGORY_FILTERS, REGION_FILTERS, COUNTRY_FILTERS, CITY_FILTERS, POPULAR_TAGS, SAMPLE_CREATORS } from '../data/index';
 import { getFallbackImage } from '../utils';
 import { useConfirm } from '../hooks';
+
+// Modular Sub-components
+import { AssetItemCard } from './Sidebar/AssetItemCard';
+import { TemplateItemCard } from './Sidebar/TemplateItemCard';
+import { CategoryCarousel } from './Sidebar/CategoryCarousel';
+import { RegionCarousel } from './Sidebar/RegionCarousel';
+import { TagCarousel } from './Sidebar/TagCarousel';
 
 interface SidebarContentProps {
     activeTab: 'assets' | 'templates';
@@ -20,7 +27,7 @@ interface SidebarContentProps {
     handleTapToAdd: (item: TravelItem) => void;
     applyTemplate: (template: any) => void | Promise<void>;
     t: any;
-    lang?: string;
+    lang?: LangType;
     customAssets?: TravelItem[];
     subscribedCreators: string[];
     onCreatorClick: (creatorId: string) => void;
@@ -40,7 +47,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     const [showSubscribedOnly, setShowSubscribedOnly] = useState(false);
     // Mobile preview bottom sheet state
     const [mobilePreviewItem, setMobilePreviewItem] = useState<TravelItem | null>(null);
-    const [showMoreCategories, setShowMoreCategories] = useState(false);
 
     // Country-City hierarchy state
     const [activeCountry, setActiveCountry] = useState<string>('all');
@@ -60,49 +66,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             }
         }
     }, [activeRegion]);
-
-    // Scroll refs for carousel behavior
-    const countryScrollRef = useRef<HTMLDivElement>(null);
-    const cityScrollRef = useRef<HTMLDivElement>(null);
-    const catScrollRef = useRef<HTMLDivElement>(null);
-    const tagScrollRef = useRef<HTMLDivElement>(null);
-
-    const [canScrollLeftCountry, setCanScrollLeftCountry] = useState(false);
-    const [canScrollRightCountry, setCanScrollRightCountry] = useState(false);
-    const [canScrollLeftCity, setCanScrollLeftCity] = useState(false);
-    const [canScrollRightCity, setCanScrollRightCity] = useState(false);
-    const [canScrollLeftCat, setCanScrollLeftCat] = useState(false);
-    const [canScrollRightCat, setCanScrollRightCat] = useState(false);
-    const [canScrollLeftTag, setCanScrollLeftTag] = useState(false);
-    const [canScrollRightTag, setCanScrollRightTag] = useState(false);
-
-    const checkScroll = (ref: React.RefObject<HTMLDivElement | null>, setLeft: (b: boolean) => void, setRight: (b: boolean) => void) => {
-        if (ref.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-            setLeft(scrollLeft > 5);
-            setRight(scrollLeft + clientWidth < scrollWidth - 5);
-        }
-    };
-
-    React.useEffect(() => {
-        const check = () => {
-            checkScroll(countryScrollRef, setCanScrollLeftCountry, setCanScrollRightCountry);
-            checkScroll(cityScrollRef, setCanScrollLeftCity, setCanScrollRightCity);
-            checkScroll(catScrollRef, setCanScrollLeftCat, setCanScrollRightCat);
-            checkScroll(tagScrollRef, setCanScrollLeftTag, setCanScrollRightTag);
-        };
-        // Initial check after render
-        setTimeout(check, 100);
-        window.addEventListener('resize', check);
-        return () => window.removeEventListener('resize', check);
-    }, [activeCountry, activeTab]);
-
-    const handleScroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
-        if (ref.current) {
-            const amount = direction === 'left' ? -150 : 150;
-            ref.current.scrollBy({ left: amount, behavior: 'smooth' });
-        }
-    };
 
     // Desktop hover tooltip state (Portal-based)
     const [hoveredItem, setHoveredItem] = useState<TravelItem | null>(null);
@@ -139,119 +102,13 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             </div>
 
             {/* Region Filter - Two Level: Country → City */}
-            <div className={`px-4 py-2 border-b border-gray-100 transition-colors ${highlight ? 'bg-teal-50/50' : 'bg-gray-50/50'}`}>
-                {activeCountry === 'all' ? (
-                    /* Level 1: Country Selection */
-                    <div className="relative group/carousel">
-                        {canScrollLeftCountry && (
-                            <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 flex items-center">
-                                <button
-                                    onClick={() => handleScroll(countryScrollRef, 'left')}
-                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
-                                >
-                                    <ChevronLeft size={16} strokeWidth={2.5} />
-                                </button>
-                            </div>
-                        )}
-                        <div
-                            ref={countryScrollRef}
-                            onScroll={() => checkScroll(countryScrollRef, setCanScrollLeftCountry, setCanScrollRightCountry)}
-                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-2"
-                        >
-                            {COUNTRY_FILTERS.map(country => (
-                                <button
-                                    key={country.id}
-                                    onClick={() => {
-                                        if (country.id === 'all') {
-                                            setActiveRegion('all');
-                                        } else {
-                                            setActiveCountry(country.id);
-                                            // Auto-select first city of the country
-                                            const cities = CITY_FILTERS[country.id];
-                                            if (cities && cities.length > 0) {
-                                                setActiveRegion(cities[0].id);
-                                            }
-                                        }
-                                    }}
-                                    className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === 'all' && country.id === 'all'
-                                        ? 'bg-teal-600 text-white shadow-sm'
-                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
-                                        }`}
-                                >
-                                    <span>{country.icon}</span>
-                                    <span>{lang === 'en' && country.labelEn ? country.labelEn : country.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                        {canScrollRightCountry && (
-                            <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 flex items-center justify-end">
-                                <button
-                                    onClick={() => handleScroll(countryScrollRef, 'right')}
-                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
-                                >
-                                    <ChevronRight size={16} strokeWidth={2.5} />
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    /* Level 2: City Selection (within selected country) */
-                    <div className="relative group/carousel">
-                        {canScrollLeftCity && (
-                            <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 flex items-center">
-                                <button
-                                    onClick={() => handleScroll(cityScrollRef, 'left')}
-                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
-                                >
-                                    <ChevronLeft size={16} strokeWidth={2.5} />
-                                </button>
-                            </div>
-                        )}
-                        <div
-                            ref={cityScrollRef}
-                            onScroll={() => checkScroll(cityScrollRef, setCanScrollLeftCity, setCanScrollRightCity)}
-                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-2"
-                        >
-                            {/* Back Button */}
-                            <button
-                                onClick={() => {
-                                    setActiveCountry('all');
-                                    setActiveRegion('all');
-                                }}
-                                className="flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all"
-                            >
-                                <span>←</span>
-                                <span>{COUNTRY_FILTERS.find(c => c.id === activeCountry)?.[lang === 'en' ? 'labelEn' : 'label']}</span>
-                            </button>
-
-                            {/* City Buttons */}
-                            {CITY_FILTERS[activeCountry]?.map(city => (
-                                <button
-                                    key={city.id}
-                                    onClick={() => setActiveRegion(city.id)}
-                                    className={`flex-shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${activeRegion === city.id
-                                        ? 'bg-teal-600 text-white shadow-sm'
-                                        : 'bg-white text-gray-600 border border-gray-200 hover:border-teal-300'
-                                        }`}
-                                >
-                                    <span>{city.icon}</span>
-                                    <span>{lang === 'en' && city.labelEn ? city.labelEn : city.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                        {canScrollRightCity && (
-                            <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 flex items-center justify-end">
-                                <button
-                                    onClick={() => handleScroll(cityScrollRef, 'right')}
-                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
-                                >
-                                    <ChevronRight size={16} strokeWidth={2.5} />
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                )}
-            </div>
+            <RegionCarousel
+                activeCountry={activeCountry}
+                setActiveCountry={setActiveCountry}
+                activeRegion={activeRegion}
+                setActiveRegion={setActiveRegion}
+                lang={lang}
+            />
 
             <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 scrollbar-thin scrollbar-thumb-gray-200">
                 {activeTab === 'assets' && (
@@ -261,208 +118,41 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             <input type="text" placeholder={t.searchPlaceholder} className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                         </div>
                         <button onClick={() => setShowCustomItemModal(true)} className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"><Plus size={14} /> {t.createCustom}</button>
-                        <div className="relative group/carousel">
-                            {canScrollLeftCat && (
-                                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none z-10 flex items-start pt-[14px]">
-                                    <button
-                                        onClick={() => handleScroll(catScrollRef, 'left')}
-                                        className="pointer-events-auto p-1 text-gray-800 hover:text-teal-600 transition-all scale-125"
-                                    >
-                                        <ChevronLeft size={18} strokeWidth={3} />
-                                    </button>
-                                </div>
-                            )}
-                            <div
-                                ref={catScrollRef}
-                                onScroll={() => checkScroll(catScrollRef, setCanScrollLeftCat, setCanScrollRightCat)}
-                                className="flex gap-4 overflow-x-auto pt-2 pb-2 scrollbar-hide px-3 items-start"
-                            >
-                                {(showMoreCategories ? CATEGORY_FILTERS : CATEGORY_FILTERS.slice(0, 5)).map(cat => (
-                                    <button
-                                        key={cat.id}
-                                        onClick={() => setActiveCategory(cat.id)}
-                                        className="flex flex-col items-center gap-2.5 min-w-[56px] transition-all group/cat"
-                                    >
-                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-sm transition-all ${cat.color} ${activeCategory === cat.id ? 'ring-2 ring-offset-2 ring-teal-500 scale-110 shadow-md' : 'opacity-90 group-hover/cat:scale-105 group-hover/cat:opacity-100'}`}>
-                                            {cat.icon}
-                                        </div>
-                                        <span className={`text-[10px] font-bold text-center leading-tight transition-colors ${activeCategory === cat.id ? 'text-teal-600' : 'text-gray-500 shadow-sm'}`}>
-                                            {lang === 'en' ? cat.labelEn : (t[cat.label] || cat.label)}
-                                        </span>
-                                    </button>
-                                ))}
 
-                                {!showMoreCategories && CATEGORY_FILTERS.length > 5 && (
-                                    <button
-                                        onClick={() => setShowMoreCategories(true)}
-                                        className="flex flex-col items-center gap-2.5 min-w-[56px] transition-all group/cat"
-                                    >
-                                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-sm transition-all bg-gray-100 text-gray-400 group-hover/cat:bg-gray-200 group-hover/cat:text-gray-600">
-                                            <MoreHorizontal size={20} />
-                                        </div>
-                                        <span className="text-[10px] font-bold text-center leading-tight text-gray-500">
-                                            {lang === 'en' ? 'More' : '更多'}
-                                        </span>
-                                    </button>
-                                )}
-                            </div>
-                            {canScrollRightCat && (
-                                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white via-white/80 to-transparent pointer-events-none z-10 flex items-start pt-[14px] justify-end">
-                                    <button
-                                        onClick={() => handleScroll(catScrollRef, 'right')}
-                                        className="pointer-events-auto p-1 text-gray-800 hover:text-teal-600 transition-all scale-125"
-                                    >
-                                        <ChevronRight size={18} strokeWidth={3} />
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                        {/* Tag Pills */}
-                        <div className="relative">
-                            <div className="flex items-center gap-1 mb-1">
-                                <Tag size={12} className="text-gray-400" />
-                                <span className="text-[10px] text-gray-400 font-medium">標籤篩選</span>
-                                {activeTag && (
-                                    <button
-                                        onClick={() => setActiveTag(null)}
-                                        className="ml-auto flex items-center gap-0.5 text-[10px] text-teal-600 hover:text-teal-700"
-                                    >
-                                        <X size={10} />
-                                        清除
-                                    </button>
-                                )}
-                            </div>
-                            <div className="relative group/carousel">
-                                {canScrollLeftTag && (
-                                    <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 flex items-center">
-                                        <button
-                                            onClick={() => handleScroll(tagScrollRef, 'left')}
-                                            className="pointer-events-auto p-1 text-purple-600 hover:text-purple-800 transition-all"
-                                        >
-                                            <ChevronLeft size={14} strokeWidth={3} />
-                                        </button>
-                                    </div>
-                                )}
-                                <div
-                                    ref={tagScrollRef}
-                                    onScroll={() => checkScroll(tagScrollRef, setCanScrollLeftTag, setCanScrollRightTag)}
-                                    className="flex gap-1.5 flex-nowrap overflow-x-auto scrollbar-hide pb-0.5"
-                                >
-                                    {POPULAR_TAGS.map(tag => (
-                                        <button
-                                            key={tag.id}
-                                            onClick={() => setActiveTag(activeTag === tag.id ? null : tag.id)}
-                                            className={`flex-shrink-0 flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-medium transition-all ${activeTag === tag.id
-                                                ? 'bg-purple-600 text-white shadow-sm'
-                                                : 'bg-purple-50 text-purple-600 hover:bg-purple-100'
-                                                }`}
-                                        >
-                                            <span>{tag.icon}</span>
-                                            <span>#{lang === 'en' && tag.labelEn ? tag.labelEn : tag.label}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                                {canScrollRightTag && (
-                                    <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 flex items-center justify-end">
-                                        <button
-                                            onClick={() => handleScroll(tagScrollRef, 'right')}
-                                            className="pointer-events-auto p-1 text-purple-600 hover:text-purple-800 transition-all"
-                                        >
-                                            <ChevronRight size={14} strokeWidth={3} />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+                        <CategoryCarousel
+                            activeCategory={activeCategory}
+                            setActiveCategory={setActiveCategory}
+                            lang={lang}
+                            t={t}
+                        />
+
+                        <TagCarousel
+                            activeTag={activeTag}
+                            setActiveTag={setActiveTag}
+                            lang={lang}
+                        />
+
                         <div className="grid grid-cols-2 gap-2">
-                            {filteredAssets.map((item) => {
-                                const isPremium = item.tier === 'premium';
-                                const isLocked = item.isLocked;
-
-                                // Determine display title: Marketing Title if locked, else real title
-                                const displayTitleRaw = isLocked
-                                    ? (lang === 'en' && item.marketingTitleEn ? item.marketingTitleEn : item.marketingTitle)
-                                    : (lang === 'en' && item.titleEn ? item.titleEn : item.title);
-                                const title = displayTitleRaw || item.title; // Fallback
-
-                                const description = (lang === 'en' && item.descriptionEn) ? item.descriptionEn : item.description;
-
-                                return (
-                                    <div
-                                        key={item.id}
-                                        draggable={true}
-                                        onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
-                                        onClick={() => {
-                                            if (window.innerWidth < 1024) {
-                                                setMobilePreviewItem(item);
-                                            }
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            if (window.innerWidth >= 1024) {
-                                                const rect = e.currentTarget.getBoundingClientRect();
-                                                setTooltipPos({
-                                                    x: rect.left + rect.width / 2,
-                                                    y: rect.top - 8
-                                                });
-                                                setHoveredItem(item);
-                                            }
-                                        }}
-                                        onMouseLeave={() => setHoveredItem(null)}
-                                        className={`group border rounded-lg p-2 cursor-grab active:cursor-grabbing transition-all flex flex-col gap-1.5 relative hover:shadow-md touch-none select-none
-                                            ${isPremium
-                                                ? 'bg-gradient-to-br from-amber-50/80 to-purple-50/80 border-amber-200 hover:border-amber-400'
-                                                : 'bg-white border-gray-100 hover:border-teal-400'
-                                            }
-                                        `}
-                                    >
-                                        {/* Premium Badge */}
-                                        {isPremium && (
-                                            <div className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm z-10 flex items-center gap-0.5">
-                                                <span>💎</span>
-                                                <span>Secret</span>
-                                            </div>
-                                        )}
-
-                                        <div className="relative text-2xl h-12 flex items-center justify-center rounded w-full overflow-hidden">
-                                            {/* Image Background for Premium */}
-                                            {isPremium && item.marketingImage ? (
-                                                <div
-                                                    className="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-110 transition-transform duration-500"
-                                                    style={{ backgroundImage: `url(${item.marketingImage})` }}
-                                                />
-                                            ) : (
-                                                <div className={`absolute inset-0 ${isPremium ? 'bg-amber-100/50' : 'bg-gray-50'}`} />
-                                            )}
-
-                                            {/* Icon/Emoji */}
-                                            <span className="relative z-10 drop-shadow-md filter">{item.image || getFallbackImage(item.type)}</span>
-
-                                            {/* Lock Overlay */}
-                                            {isLocked && (
-                                                <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                                                    <Lock size={12} className="text-white drop-shadow-md opacity-60" />
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <div className="flex-1 min-w-0">
-                                            <h4 className={`font-bold text-xs truncate ${isPremium ? 'text-amber-900' : 'text-gray-700'}`} title={title}>
-                                                {title}
-                                            </h4>
-                                            <div className="flex items-center justify-between mt-0.5">
-                                                <span className="text-[10px] text-gray-400">{item.duration}</span>
-                                                {isLocked ? (
-                                                    <span className="text-[10px] font-bold text-amber-600 flex items-center gap-0.5">
-                                                        <Lock size={8} /> Unlock
-                                                    </span>
-                                                ) : (
-                                                    <span className="text-[10px] font-bold text-teal-600">¥{item.price?.toLocaleString()}</span>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}
+                            {filteredAssets.map((item) => (
+                                <AssetItemCard
+                                    key={item.id}
+                                    item={item}
+                                    lang={lang}
+                                    isMobile={isMobile}
+                                    onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
+                                    onClick={() => {
+                                        if (isMobile) setMobilePreviewItem(item);
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!isMobile) {
+                                            const rect = e.currentTarget.getBoundingClientRect();
+                                            setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top - 8 });
+                                            setHoveredItem(item);
+                                        }
+                                    }}
+                                    onMouseLeave={() => setHoveredItem(null)}
+                                />
+                            ))}
                             {filteredAssets.length === 0 && (
                                 <div className="col-span-2 text-center text-gray-400 text-sm py-8">
                                     {t.searchPlaceholder}...
@@ -488,141 +178,31 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             </button>
                         </div>
 
-                        {filteredTemplates.map(template => {
-                            const creator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
-
-                            // Bilingual logic
-                            const tName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
-                            const tAuthor = (lang === 'en')
-                                ? (creator?.nameEn || template.authorEn || creator?.name || template.author)
-                                : (creator?.name || template.author);
-                            const tTags = (lang === 'en' && template.tagsEn) ? template.tagsEn : template.tags;
-
-                            return (
-                                <div
-                                    key={template.id}
-                                    className="p-3 border border-gray-100 rounded-lg hover:shadow-sm transition-shadow bg-white relative group cursor-pointer hover:border-teal-200"
-                                    onClick={() => onPreviewTemplate?.(template)}
-                                >
-                                    <div className="flex justify-between items-start mb-1 gap-2">
-                                        <h3 className="font-bold text-gray-800 text-sm flex-1 leading-tight">
-                                            {tName}
-                                        </h3>
-                                        {/* Tier Badge & Price Badges */}
-                                        <div className="flex flex-col items-end gap-1">
-                                            {/* Price/Status Badges */}
-                                            {template.price ? (
-                                                <div className="flex items-center gap-1">
-                                                    {/* Removed redundant top-right price */}
-                                                    {template.originalPrice && (
-                                                        <span className="bg-yellow-400 text-yellow-900 text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap transform -rotate-2">
-                                                            {Math.round((1 - template.price / template.originalPrice) * 100)}% OFF
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <span className="bg-gray-100 text-gray-500 text-[10px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap border border-gray-200">
-                                                    FREE
-                                                </span>
-                                            )}
-
-                                            {/* Tier Info (Simplified) */}
-                                            {template.tier && (
-                                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium whitespace-nowrap shrink-0 ${template.tier === 'official' ? 'text-amber-700 bg-amber-50' :
-                                                    template.tier === 'creator' ? 'text-teal-700 bg-teal-50' : 'text-gray-500 bg-gray-50'
-                                                    }`}>
-                                                    {template.tier === 'official' && '🏆 Official'}
-                                                    {template.tier === 'creator' && '⭐ Creator'}
-                                                    {template.tier === 'community' && '👤 Community'}
-                                                </span>
-                                            )}
-
-                                            {/* Small Early Bird Tag */}
-                                            {template.price && template.originalPrice && template.price < template.originalPrice && (
-                                                <span className="text-[9px] bg-rose-100 text-rose-600 px-1.5 py-0.5 rounded font-bold whitespace-nowrap border border-rose-200 animate-pulse">
-                                                    🔥 Early Bird
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Metrics: CopiedCount + Rating */}
-                                    <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-2">
-                                        {template.copiedCount && template.copiedCount > 0 && (
-                                            <span className="flex items-center gap-0.5">
-                                                🔗 <span className="font-medium">{template.copiedCount.toLocaleString()}</span> {lang === 'en' ? 'applied' : '已套用'}
-                                            </span>
-                                        )}
-                                        {template.rating && (
-                                            <span className="flex items-center gap-0.5 text-yellow-600">
-                                                <Star size={10} fill="currentColor" />
-                                                <span className="font-medium">{template.rating}</span>
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onCreatorClick(template.authorId);
-                                        }}
-                                        className="flex items-center gap-2 text-xs text-gray-500 mb-2 p-1 -ml-1 rounded hover:bg-gray-50 cursor-pointer transition-colors w-max max-w-full"
-                                        title="View Creator Profile"
-                                    >
-                                        <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[10px] overflow-hidden shrink-0 border border-gray-100">
-                                            {creator?.avatar || '👤'}
-                                        </div>
-                                        <span className="truncate font-medium text-gray-600 group-hover:text-teal-600 transition-colors">
-                                            {tAuthor}
-                                        </span>
-                                        {subscribedCreators.includes(template.authorId) && (
-                                            <span className="ml-1 text-[10px] text-teal-600 bg-teal-50 px-1 py-0.5 rounded-full flex items-center">
-                                                ✓
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-1 mb-3">
-                                        {tTags && tTags.map(tag => (
-                                            <span key={tag} className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                        <span className="text-[10px] text-gray-400 px-1 py-0.5 ml-auto">
-                                            {template.duration} {t.day}
-                                        </span>
-                                    </div>
-
-                                    {template.isLocked && !template.purchased ? (
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                // Beta: 直接解鎖，不需付費
-                                                template.purchased = true;
-                                                template.isLocked = false;
-                                                confirm({
-                                                    title: lang === 'zh' ? '解鎖成功' : 'Unlocked Success',
-                                                    message: lang === 'zh' ? "🎁 Beta 免費解鎖成功！" : "🎁 Beta Unlocked successfully!",
-                                                    type: 'success',
-                                                    confirmText: lang === 'zh' ? '太棒了' : 'Awesome'
-                                                });
-                                                applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule, region: template.region });
-                                            }}
-                                            className="w-full py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs rounded hover:from-amber-600 hover:to-orange-600 transition-colors font-bold flex items-center justify-center gap-1"
-                                        >
-                                            🎁 Beta 免費解鎖
-                                        </button>
-                                    ) : (
-                                        <button onClick={(e) => {
-                                            e.stopPropagation();
-                                            applyTemplate({ name: template.name, duration: template.duration, schedule: template.schedule, region: template.region });
-                                        }} className="w-full py-1.5 bg-gray-50 text-teal-600 text-xs rounded hover:bg-teal-50 transition-colors font-medium">
-                                            {t.apply || 'Apply'}
-                                        </button>
-                                    )}
-                                </div>
-                            )
-                        })}
+                        {filteredTemplates.map(template => (
+                            <TemplateItemCard
+                                key={template.id}
+                                template={template}
+                                creator={SAMPLE_CREATORS.find(c => c.id === template.authorId)}
+                                lang={lang}
+                                subscribedCreators={subscribedCreators}
+                                t={t}
+                                onPreview={() => onPreviewTemplate?.(template)}
+                                onCreatorClick={onCreatorClick}
+                                onApply={(tpl) => {
+                                    if (tpl.isLocked && !tpl.purchased) {
+                                        tpl.purchased = true;
+                                        tpl.isLocked = false;
+                                        confirm({
+                                            title: lang === 'zh' ? '解鎖成功' : 'Unlocked Success',
+                                            message: lang === 'zh' ? "🎁 Beta 免費解鎖成功！" : "🎁 Beta Unlocked successfully!",
+                                            type: 'success',
+                                            confirmText: lang === 'zh' ? '太棒了' : 'Awesome'
+                                        });
+                                    }
+                                    applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule, region: tpl.region });
+                                }}
+                            />
+                        ))}
                         {filteredTemplates.length === 0 && (
                             <div className="text-center text-gray-400 text-sm py-8 bg-gray-50 rounded-lg border border-dashed border-gray-200">
                                 <p className="mb-2">😕 找不到模板</p>

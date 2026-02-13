@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock, Banknote, Sunset } from 'lucide-react';
+import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock, Banknote, Sunset, AlertTriangle } from 'lucide-react';
 import {
     TimeSlot,
     ScheduleItem,
@@ -112,11 +112,22 @@ const DropZone: React.FC<DropZoneProps> = ({
     };
     const currentStyle = slotStyles[slot] || { color: 'text-gray-500', time: '' };
 
+    // Capacity Logic
+    const getCapacityStatus = () => {
+        if (isAccommodation) return null;
+        const totalMins = items.reduce((acc, item) => acc + parseDuration(item.duration), 0);
+        const threshold = slot === 'evening' ? 240 : 360;
+        if (totalMins > threshold) return 'overload';
+        if (totalMins > threshold * 0.8) return 'busy';
+        return null;
+    };
+    const capacityStatus = getCapacityStatus();
+
     return (
-        <div className={`relative transition-all duration-300 overflow-hidden ${isAccommodation ? 'mt-4' : showTimeline ? 'pl-12 lg:pl-16' : 'lg:pl-8'}`}>
+        <div className={`relative transition-all duration-300 overflow-hidden ${isAccommodation ? 'mt-4' : showTimeline ? 'pl-16 lg:pl-24' : 'lg:pl-8'}`}>
             {/* Timeline line segment (only in timeline mode, non-accommodation) */}
             {showTimeline && !isAccommodation && (
-                <div className="absolute left-[20px] lg:left-[24px] top-0 bottom-0 w-0.5 bg-gray-200 z-0" />
+                <div className="absolute left-[24px] lg:left-[36px] top-0 bottom-0 w-0.5 bg-gray-200 z-0" />
             )}
             {/* Old desktop-only timeline (non-timeline mode) */}
             {!showTimeline && !isAccommodation && !isCompact && (<> <div className="hidden lg:block absolute left-3 top-8 bottom-0 w-0.5 bg-gray-100"></div> <div className="hidden lg:block absolute left-[5px] top-8 w-4 h-4 rounded-full border-4 border-white bg-teal-100 shadow-sm z-10"></div> </>)}
@@ -126,6 +137,16 @@ const DropZone: React.FC<DropZoneProps> = ({
                     <div className="flex items-center gap-2">
                         <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-2 ${currentStyle.color}`}> {icon} {title} </h3>
                         {!isAccommodation && <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{currentStyle.time}</span>}
+                        {capacityStatus === 'busy' && (
+                            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-yellow-50 text-yellow-600 text-[10px] font-bold border border-yellow-100 uppercase animate-pulse">
+                                <Clock size={10} /> {t.statusBusy}
+                            </span>
+                        )}
+                        {capacityStatus === 'overload' && (
+                            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-50 text-red-600 text-[10px] font-bold border border-red-100 uppercase">
+                                <AlertTriangle size={10} /> {t.statusOverload}
+                            </span>
+                        )}
                     </div>
                 </div>
             )}
@@ -180,9 +201,25 @@ const DropZone: React.FC<DropZoneProps> = ({
                                 {showTimeline && !isAccommodation && (
                                     <>
                                         {/* Horizontal connector line */}
-                                        <div className="absolute left-[-28px] lg:left-[-40px] top-1/2 -translate-y-1/2 w-[28px] lg:w-[40px] h-0.5 bg-gray-200 z-0" />
-                                        {/* Timeline dot for this card */}
-                                        <div className="absolute left-[-35px] lg:left-[-47px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-teal-400 border-2 border-white shadow-sm z-30 transition-transform hover:scale-110 cursor-pointer" />
+                                        <div className="absolute left-[-40px] lg:left-[-60px] top-1/2 -translate-y-1/2 w-[40px] lg:w-[60px] h-0.5 bg-gray-200 z-0" />
+                                        {/* Timeline Time Pill for this card */}
+                                        <div className="absolute left-[-60px] lg:left-[-85px] top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-[52px] lg:w-[60px]">
+                                            <SmartTimeInput
+                                                slot={slot}
+                                                index={idx}
+                                                value={item.startTime || ''}
+                                                onChange={(val) => onTimeChange(slot, idx, val)}
+                                                suggestedTime={getSuggestedTime(idx)}
+                                                className={`
+                                                    !border-2 !shadow-sm !rounded-full !py-0.5 !px-1.5 !text-[10px] lg:!text-xs !font-bold transition-colors !bg-white
+                                                    ${slot === 'morning' ? '!border-orange-200 !text-orange-600 hover:!border-orange-400' :
+                                                        slot === 'afternoon' ? '!border-blue-200 !text-blue-600 hover:!border-blue-400' :
+                                                            slot === 'evening' ? '!border-purple-200 !text-purple-600 hover:!border-purple-400' :
+                                                                slot === 'night' ? '!border-indigo-200 !text-indigo-900 hover:!border-indigo-400' :
+                                                                    '!border-gray-100 !text-gray-700 hover:!border-teal-400'}
+                                                `}
+                                            />
+                                        </div>
                                     </>
                                 )}
                                 <div
@@ -264,16 +301,8 @@ const DropZone: React.FC<DropZoneProps> = ({
                                             </div>
                                         </div>
 
-                                        {/* Metadata Row: Time, Duration, Price, Rating */}
+                                        {/* Metadata Row: Duration, Price, Rating */}
                                         <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                                            {/* Time Input - Moved Here */}
-                                            <SmartTimeInput
-                                                slot={slot}
-                                                index={idx}
-                                                value={item.startTime || ''}
-                                                onChange={(val) => onTimeChange(slot, idx, val)}
-                                                suggestedTime={getSuggestedTime(idx)}
-                                            />
 
                                             {/* Duration Badge */}
                                             <div className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">

@@ -45,8 +45,6 @@ export const useUIState = () => {
         } catch { return 320; }
     });
 
-    // Export States
-    const [exportTab, setExportTab] = useState<'text' | 'image' | 'share' | 'backup'>('text');
 
     // Region State (Sidebar Filter)
     const [activeRegion, setActiveRegion] = useState<Region>('all');
@@ -76,7 +74,6 @@ export const useUIState = () => {
         activeCategory, setActiveCategory,
         searchQuery, setSearchQuery,
         sidebarWidth, setSidebarWidth,
-        exportTab, setExportTab,
         selectedCreatorId, setSelectedCreatorId,
         previewTemplate, setPreviewTemplate,
         unlockTarget, setUnlockTarget,

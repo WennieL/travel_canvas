@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Minus, Plus, Wand2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Wand2 } from 'lucide-react';
 import { addMinutes } from '../utils';
 import { TimeSlot } from '../types';
 
@@ -9,70 +9,68 @@ interface SmartTimeInputProps {
     value: string;
     onChange: (val: string) => void;
     suggestedTime: string | null;
+    className?: string;
 }
 
-const SmartTimeInput: React.FC<SmartTimeInputProps> = ({ slot, index, value, onChange, suggestedTime }) => {
+const SmartTimeInput: React.FC<SmartTimeInputProps> = ({ slot, index, value, onChange, suggestedTime, className }) => {
     const [isFocused, setIsFocused] = useState(false);
-
-    const handleAdjust = (e: React.MouseEvent, minutes: number) => {
-        e.stopPropagation();
-        const baseTime = value || suggestedTime || "09:00";
-        const newValue = addMinutes(baseTime, minutes);
-        onChange(newValue);
-    };
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleSetSuggested = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (suggestedTime) onChange(suggestedTime);
     };
 
+    const handleContainerClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        // Trigger the native picker if available
+        if (inputRef.current) {
+            try {
+                // @ts-ignore - showPicker is a newer API
+                if (inputRef.current.showPicker) {
+                    // @ts-ignore
+                    inputRef.current.showPicker();
+                } else {
+                    inputRef.current.focus();
+                    inputRef.current.click();
+                }
+            } catch (err) {
+                inputRef.current.focus();
+                inputRef.current.click();
+            }
+        }
+    };
+
     return (
-        <div className="flex flex-col items-end gap-1 relative group/time min-w-[60px]">
-            <div
-                className={`
-                  relative flex items-center justify-center 
-                  bg-gray-100 border border-transparent rounded px-1.5 py-0.5 text-[11px] font-mono 
-                  transition-all w-full
-                  ${value ? 'text-gray-700' : 'text-gray-400 border-dashed border-gray-300 hover:border-teal-300'}
-                  ${isFocused ? 'ring-1 ring-teal-500 border-teal-500 bg-white' : 'hover:bg-gray-200'}
-               `}
-            >
-                {/* Stepper Buttons (Desktop Only or Hover) */}
-                <button
-                    onClick={(e) => handleAdjust(e, -15)}
-                    className={`absolute left-[-18px] top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-all hidden lg:group-hover/time:block`}
-                    title="-15 min"
-                >
-                    <Minus size={10} strokeWidth={3} />
-                </button>
+        <div
+            onClick={handleContainerClick}
+            className={`relative flex items-center justify-center group/time w-full h-full cursor-pointer ${className || ''}`}
+        >
+            {/* The Invisible Native Time Input */}
+            <input
+                ref={inputRef}
+                type="time"
+                value={value || ''}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                onChange={(e) => onChange(e.target.value)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+            />
 
-                <div className="relative flex items-center justify-center w-full">
-                    <span className={`pointer-events-none z-0 ${!value ? 'opacity-50' : ''}`}>{value || "-- : --"}</span>
-                    <input
-                        type="time"
-                        value={value || ''}
-                        onClick={(e) => e.stopPropagation()}
-                        onFocus={() => setIsFocused(true)}
-                        onBlur={() => setIsFocused(false)}
-                        onChange={(e) => onChange(e.target.value)}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                    />
-                </div>
-
-                <button
-                    onClick={(e) => handleAdjust(e, 15)}
-                    className={`absolute right-[-18px] top-1/2 -translate-y-1/2 p-1 rounded-full text-slate-400 hover:text-teal-600 hover:bg-teal-50 transition-all hidden lg:group-hover/time:block`}
-                    title="+15 min"
-                >
-                    <Plus size={10} strokeWidth={3} />
-                </button>
+            {/* Visual Label */}
+            <div className={`
+                pointer-events-none z-10 font-mono transition-all duration-200
+                ${isFocused ? 'scale-110' : ''}
+                ${!value ? 'opacity-40' : ''}
+            `}>
+                {value || "--:--"}
             </div>
 
-            {/* Magic Suggestion Button (Only if value is empty and suggestion exists) */}
+            {/* Magic Suggestion Button */}
             {!value && suggestedTime && (
                 <button
                     onClick={handleSetSuggested}
-                    className="absolute -bottom-6 right-0 text-[10px] text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100 shadow-sm flex items-center gap-1 opacity-0 group-hover/time:opacity-100 transition-all animate-bounce-slow"
+                    className="absolute -bottom-7 right-0 text-[10px] text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100 shadow-sm flex items-center gap-1 opacity-0 group-hover/time:opacity-100 transition-all z-30"
                 >
                     <Wand2 size={10} />
                     {suggestedTime}
