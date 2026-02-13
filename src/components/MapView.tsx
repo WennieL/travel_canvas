@@ -234,7 +234,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, t, onItemClick, isEmbedded 
 
                 {/* Overlays */}
                 {/* Overlays (Hidden in Embedded) */}
-                {!isEmbedded && (
+                {!isEmbedded && !isMobile && (
                     <button
                         onClick={() => setShowList(!showList)}
                         className={`absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md z-[500] flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
