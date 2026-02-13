@@ -231,7 +231,11 @@ export const TRANSLATIONS: any = {
         statusOverload: "行程超載",
         tokyo: "東京",
         osaka: "大阪",
-        kyoto: "京都"
+        kyoto: "京都",
+        hideList: "隱藏列表",
+        showList: "顯示列表",
+        noSpotsOnMap: "地圖上沒有行程點",
+        dragFromSidebarToMap: "請從側邊欄拖曳景點到行程中。"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -464,6 +468,10 @@ export const TRANSLATIONS: any = {
         statusOverload: "Overfilled",
         tokyo: "Tokyo",
         osaka: "Osaka",
-        kyoto: "Kyoto"
+        kyoto: "Kyoto",
+        hideList: "Hide List",
+        showList: "Show List",
+        noSpotsOnMap: "No spots on map",
+        dragFromSidebarToMap: "Drag spots from sidebar to start."
     }
 };

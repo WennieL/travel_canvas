@@ -396,6 +396,7 @@ export function App() {
                         <div className="h-full">
                             <MapView
                                 schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }}
+                                lang={lang}
                                 t={t}
                                 onItemClick={ui.setSelectedItem}
                                 onClose={() => setViewMode('canvas')} // [NEW] Return to Canvas view
