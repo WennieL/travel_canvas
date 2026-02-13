@@ -113,14 +113,16 @@ h6 {
 }
 
 /* Hide scrollbar while keeping scroll */
-.scrollbar-hide {
+.scrollbar-hide,
+.no-scrollbar {
   -ms-overflow-style: none;
   /* IE/Edge */
   scrollbar-width: none;
   /* Firefox */
 }
 
-.scrollbar-hide::-webkit-scrollbar {
+.scrollbar-hide::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
   display: none;
   /* Chrome/Safari/Opera */
 }

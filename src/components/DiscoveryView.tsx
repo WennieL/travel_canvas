@@ -61,7 +61,7 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
                     </button>
                 </div>
 
-                <div className="flex overflow-x-auto pb-4 px-6 gap-4 no-scrollbar">
+                <div className="flex overflow-x-auto pb-4 px-6 gap-4 scrollbar-hide">
                     {regionTemplates.map(tpl => (
                         <button
                             key={tpl.id}
@@ -114,7 +114,7 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
     };
 
     return (
-        <div className="flex-1 bg-white overflow-y-auto no-scrollbar pb-24">
+        <div className="flex-1 bg-white overflow-y-auto scrollbar-hide pb-24">
             {/* Hero Header */}
             <div className="pt-8 pb-6 px-6 bg-gradient-to-b from-gray-50 to-white">
                 <div className="flex items-center justify-between mb-2">
@@ -131,7 +131,7 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
                 <h2 className="text-2xl font-black text-gray-900 leading-tight mb-2">
                     {lang === 'zh' ? '尋找下次旅行的靈感' : 'Find Inspiration for Next Trip'}
                 </h2>
-                <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
                     {regionFilters.map(filter => {
                         const isActive = activeRegion === filter.id;
                         return (
@@ -151,26 +151,27 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
             </div>
 
             {/* Main Content Sections */}
-            <div className="mt-4" ref={contentRef}>
+            <div className="mt-6" ref={contentRef}>
                 {/* Featured Section */}
                 <div className="px-6 mb-8">
-                    <div className="relative aspect-[16/9] rounded-[2rem] overflow-hidden bg-gray-900 group shadow-xl">
+                    <div className="relative min-h-[200px] aspect-[4/3] md:aspect-[16/9] rounded-[2rem] overflow-hidden bg-gray-900 group shadow-xl">
                         <img
                             src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070&auto=format&fit=crop"
                             className="w-full h-full object-cover opacity-60 transition-transform group-hover:scale-105 duration-[2s]"
                             alt="Kyoto"
                         />
-                        <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                            <span className="text-[10px] font-black text-teal-300 uppercase tracking-[0.2em] mb-2">Editor's Pick</span>
-                            <h3 className="text-2xl font-black text-white leading-tight mb-2">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 p-5 md:p-8 flex flex-col justify-end">
+                            <span className="text-[10px] font-black text-teal-300 uppercase tracking-[0.2em] mb-2 drop-shadow-sm">Editor's Pick</span>
+                            <h3 className="text-xl md:text-2xl font-black text-white leading-tight mb-2 drop-shadow-md">
                                 {lang === 'zh' ? '京都：與古都的一期一會' : 'Kyoto: A Moment in Time'}
                             </h3>
-                            <p className="text-white/80 text-xs font-medium max-w-[240px] leading-relaxed mb-4">
+                            <p className="text-white/90 text-xs font-medium max-w-[240px] leading-relaxed mb-4 drop-shadow-sm">
                                 {lang === 'zh' ? '深入隱藏巷弄，探索被時光遺忘的茶屋。' : 'Deep dive into hidden alleys and explore teahouses forgotten by time.'}
                             </p>
                             <button
                                 onClick={scrollToContent}
-                                className="self-start px-6 py-2.5 bg-white text-gray-900 text-xs font-black rounded-full hover:bg-teal-50 transition-colors shadow-lg active:scale-95 transition-all"
+                                className="self-start px-6 py-2.5 bg-white text-gray-900 text-xs font-black rounded-full hover:bg-teal-50 transition-colors shadow-lg active:scale-95 transition-all outline-none"
                             >
                                 {lang === 'zh' ? '立即探索' : 'Explore Now'}
                             </button>
