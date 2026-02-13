@@ -144,17 +144,19 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                     /* Level 1: Country Selection */
                     <div className="relative group/carousel">
                         {canScrollLeftCountry && (
-                            <button
-                                onClick={() => handleScroll(countryScrollRef, 'left')}
-                                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
-                            >
-                                <ChevronLeft size={14} />
-                            </button>
+                            <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 flex items-center">
+                                <button
+                                    onClick={() => handleScroll(countryScrollRef, 'left')}
+                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
+                                >
+                                    <ChevronLeft size={16} strokeWidth={2.5} />
+                                </button>
+                            </div>
                         )}
                         <div
                             ref={countryScrollRef}
                             onScroll={() => checkScroll(countryScrollRef, setCanScrollLeftCountry, setCanScrollRightCountry)}
-                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-1"
+                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-2"
                         >
                             {COUNTRY_FILTERS.map(country => (
                                 <button
@@ -182,29 +184,33 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             ))}
                         </div>
                         {canScrollRightCountry && (
-                            <button
-                                onClick={() => handleScroll(countryScrollRef, 'right')}
-                                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
-                            >
-                                <ChevronRight size={14} />
-                            </button>
+                            <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 flex items-center justify-end">
+                                <button
+                                    onClick={() => handleScroll(countryScrollRef, 'right')}
+                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
+                                >
+                                    <ChevronRight size={16} strokeWidth={2.5} />
+                                </button>
+                            </div>
                         )}
                     </div>
                 ) : (
                     /* Level 2: City Selection (within selected country) */
                     <div className="relative group/carousel">
                         {canScrollLeftCity && (
-                            <button
-                                onClick={() => handleScroll(cityScrollRef, 'left')}
-                                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
-                            >
-                                <ChevronLeft size={14} />
-                            </button>
+                            <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 flex items-center">
+                                <button
+                                    onClick={() => handleScroll(cityScrollRef, 'left')}
+                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
+                                >
+                                    <ChevronLeft size={16} strokeWidth={2.5} />
+                                </button>
+                            </div>
                         )}
                         <div
                             ref={cityScrollRef}
                             onScroll={() => checkScroll(cityScrollRef, setCanScrollLeftCity, setCanScrollRightCity)}
-                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-1"
+                            className="flex gap-1 flex-nowrap overflow-x-auto scrollbar-hide px-2"
                         >
                             {/* Back Button */}
                             <button
@@ -234,12 +240,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             ))}
                         </div>
                         {canScrollRightCity && (
-                            <button
-                                onClick={() => handleScroll(cityScrollRef, 'right')}
-                                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all"
-                            >
-                                <ChevronRight size={14} />
-                            </button>
+                            <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 flex items-center justify-end">
+                                <button
+                                    onClick={() => handleScroll(cityScrollRef, 'right')}
+                                    className="pointer-events-auto p-1 text-gray-600 hover:text-teal-600 transition-all"
+                                >
+                                    <ChevronRight size={16} strokeWidth={2.5} />
+                                </button>
+                            </div>
                         )}
                     </div>
                 )}
@@ -255,23 +263,25 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         <button onClick={() => setShowCustomItemModal(true)} className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"><Plus size={14} /> {t.createCustom}</button>
                         <div className="relative group/carousel">
                             {canScrollLeftCat && (
-                                <button
-                                    onClick={() => handleScroll(catScrollRef, 'left')}
-                                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-90"
-                                >
-                                    <ChevronLeft size={12} />
-                                </button>
+                                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none z-10 flex items-start pt-[14px]">
+                                    <button
+                                        onClick={() => handleScroll(catScrollRef, 'left')}
+                                        className="pointer-events-auto p-1 text-gray-800 hover:text-teal-600 transition-all scale-125"
+                                    >
+                                        <ChevronLeft size={18} strokeWidth={3} />
+                                    </button>
+                                </div>
                             )}
                             <div
                                 ref={catScrollRef}
                                 onScroll={() => checkScroll(catScrollRef, setCanScrollLeftCat, setCanScrollRightCat)}
-                                className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide px-0.5 items-start"
+                                className="flex gap-4 overflow-x-auto pt-2 pb-2 scrollbar-hide px-3 items-start"
                             >
                                 {(showMoreCategories ? CATEGORY_FILTERS : CATEGORY_FILTERS.slice(0, 5)).map(cat => (
                                     <button
                                         key={cat.id}
                                         onClick={() => setActiveCategory(cat.id)}
-                                        className="flex flex-col items-center gap-1.5 min-w-[56px] transition-all group/cat"
+                                        className="flex flex-col items-center gap-2.5 min-w-[56px] transition-all group/cat"
                                     >
                                         <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-sm transition-all ${cat.color} ${activeCategory === cat.id ? 'ring-2 ring-offset-2 ring-teal-500 scale-110 shadow-md' : 'opacity-90 group-hover/cat:scale-105 group-hover/cat:opacity-100'}`}>
                                             {cat.icon}
@@ -285,7 +295,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 {!showMoreCategories && CATEGORY_FILTERS.length > 5 && (
                                     <button
                                         onClick={() => setShowMoreCategories(true)}
-                                        className="flex flex-col items-center gap-1.5 min-w-[56px] transition-all group/cat"
+                                        className="flex flex-col items-center gap-2.5 min-w-[56px] transition-all group/cat"
                                     >
                                         <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-sm transition-all bg-gray-100 text-gray-400 group-hover/cat:bg-gray-200 group-hover/cat:text-gray-600">
                                             <MoreHorizontal size={20} />
@@ -297,12 +307,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 )}
                             </div>
                             {canScrollRightCat && (
-                                <button
-                                    onClick={() => handleScroll(catScrollRef, 'right')}
-                                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-teal-600 border border-teal-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-90"
-                                >
-                                    <ChevronRight size={12} />
-                                </button>
+                                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white via-white/80 to-transparent pointer-events-none z-10 flex items-start pt-[14px] justify-end">
+                                    <button
+                                        onClick={() => handleScroll(catScrollRef, 'right')}
+                                        className="pointer-events-auto p-1 text-gray-800 hover:text-teal-600 transition-all scale-125"
+                                    >
+                                        <ChevronRight size={18} strokeWidth={3} />
+                                    </button>
+                                </div>
                             )}
                         </div>
                         {/* Tag Pills */}
@@ -322,12 +334,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             </div>
                             <div className="relative group/carousel">
                                 {canScrollLeftTag && (
-                                    <button
-                                        onClick={() => handleScroll(tagScrollRef, 'left')}
-                                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-purple-600 border border-purple-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-75"
-                                    >
-                                        <ChevronLeft size={10} />
-                                    </button>
+                                    <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 flex items-center">
+                                        <button
+                                            onClick={() => handleScroll(tagScrollRef, 'left')}
+                                            className="pointer-events-auto p-1 text-purple-600 hover:text-purple-800 transition-all"
+                                        >
+                                            <ChevronLeft size={14} strokeWidth={3} />
+                                        </button>
+                                    </div>
                                 )}
                                 <div
                                     ref={tagScrollRef}
@@ -349,12 +363,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     ))}
                                 </div>
                                 {canScrollRightTag && (
-                                    <button
-                                        onClick={() => handleScroll(tagScrollRef, 'right')}
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-purple-600 border border-purple-100 hidden group-hover/carousel:flex items-center justify-center hover:bg-white transition-all scale-75"
-                                    >
-                                        <ChevronRight size={10} />
-                                    </button>
+                                    <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 flex items-center justify-end">
+                                        <button
+                                            onClick={() => handleScroll(tagScrollRef, 'right')}
+                                            className="pointer-events-auto p-1 text-purple-600 hover:text-purple-800 transition-all"
+                                        >
+                                            <ChevronRight size={14} strokeWidth={3} />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         </div>
