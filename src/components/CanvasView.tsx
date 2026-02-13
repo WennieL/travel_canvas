@@ -108,7 +108,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                             {/* Slot label anchored to the line */}
                                             <div className="absolute left-0 right-0 flex items-center z-10">
                                                 {/* Icon centered on spine */}
-                                                <div className={`absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white ${config.color.replace('text-', 'bg-').replace('500', '50')} ${config.color.replace('text-', 'border-').replace('500', '200')}`}>
+                                                <div className={`absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white ${config.color} ${config.color.replace('text-', 'bg-').replace('500', '50')} ${config.color.replace('text-', 'border-').replace('500', '200')}`}>
                                                     <span className="text-xl">{getSlotIcon(slot)}</span>
                                                 </div>
 
