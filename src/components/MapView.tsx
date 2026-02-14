@@ -185,11 +185,11 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
     };
 
     return (
-        <div className={`bg-gray-100 rounded-3xl relative overflow-hidden border border-gray-200 shadow-inner flex ${isMobile && !isFullScreen ? (isLandscape ? 'flex-row h-[85svh]' : 'flex-col-reverse h-[85svh]') : 'flex-row h-full min-h-[500px]'}`}>
+        <div className={`bg-gray-100 rounded-3xl relative overflow-hidden border border-gray-200 shadow-inner flex ${isMobile && !isFullScreen ? (isLandscape ? 'flex-row-reverse h-[85svh]' : 'flex-col-reverse h-[85svh]') : 'flex-row h-full min-h-[500px]'}`}>
 
             {/* Sidebar List (Desktop or Mobile Split-View) */}
             {((!isMobile && !isEmbedded && showList) || (isMobile && !isFullScreen && !isEmbedded)) && points.length > 0 && (
-                <div className={`${isMobile ? (isLandscape ? 'w-1/2 h-full' : 'w-full flex-1') : 'w-56'} bg-white border-r border-gray-200 flex flex-col z-[400] overflow-hidden shrink-0 shadow-lg`}>
+                <div className={`${isMobile ? (isLandscape ? 'w-1/2 h-full border-l' : 'w-full flex-1 border-r') : 'w-56 border-r'} bg-white border-gray-200 flex flex-col z-[400] overflow-hidden shrink-0 shadow-lg`}>
                     <div className="p-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                         <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
                             <List size={14} /> {t.schedule}{t.attraction}

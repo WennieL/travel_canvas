@@ -229,6 +229,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                 <div className="hidden lg:block w-[40%] h-full bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 shadow-inner sticky top-0">
                     <MapView
                         schedule={currentDaySchedule}
+                        lang={lang}
                         t={t}
                         onItemClick={handleMapItemClick}
                         isEmbedded={true}

@@ -17,7 +17,7 @@ import {
     addMinutes,
     getTransportSuggestion
 } from '../utils';
-import SmartTimeInput from './SmartTimeInput';
+import SmartTimeInput from './SmartTimeInput.tsx';
 import { useConfirm } from '../hooks';
 
 interface DropZoneProps {
@@ -208,7 +208,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                 slot={slot}
                                                 index={idx}
                                                 value={item.startTime || ''}
-                                                onChange={(val) => onTimeChange(slot, idx, val)}
+                                                onChange={(val: string) => onTimeChange(slot, idx, val)}
                                                 suggestedTime={getSuggestedTime(idx)}
                                                 className={`
                                                     !border-2 !shadow-sm !rounded-full !py-0.5 !px-1.5 !text-[10px] lg:!text-xs !font-bold transition-colors !bg-white
