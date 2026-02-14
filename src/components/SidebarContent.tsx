@@ -101,37 +101,74 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 <button onClick={() => setActiveTab('templates')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'templates' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.templates}</button>
             </div>
 
-            {/* Region Filter - Two Level: Country → City */}
-            <RegionCarousel
-                activeCountry={activeCountry}
-                setActiveCountry={setActiveCountry}
-                activeRegion={activeRegion}
-                setActiveRegion={setActiveRegion}
-                lang={lang}
-            />
+            {/* Main Scrollable Area */}
+            <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-200">
+                {/* Layer 1: Region Selection (Scrolls with text) */}
+                <RegionCarousel
+                    activeCountry={activeCountry}
+                    setActiveCountry={setActiveCountry}
+                    activeRegion={activeRegion}
+                    setActiveRegion={setActiveRegion}
+                    lang={lang}
+                />
 
-            <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 scrollbar-thin scrollbar-thumb-gray-200">
-                {activeTab === 'assets' && (
-                    <div className="space-y-4">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
-                            <input type="text" placeholder={t.searchPlaceholder} className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                {/* Layer 2: Sticky Toolbar (Search + Categories + Tags) */}
+                <div className="sticky top-0 z-[50] bg-white px-4 py-4 space-y-4 shadow-md border-b border-gray-100">
+                    {activeTab === 'assets' && (
+                        <>
+                            <div className="relative">
+                                <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
+                                <input
+                                    type="text"
+                                    placeholder={t.searchPlaceholder}
+                                    className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <button
+                                onClick={() => setShowCustomItemModal(true)}
+                                className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"
+                            >
+                                <Plus size={14} /> {t.createCustom}
+                            </button>
+
+                            <CategoryCarousel
+                                activeCategory={activeCategory}
+                                setActiveCategory={setActiveCategory}
+                                lang={lang}
+                                t={t}
+                            />
+
+                            <TagCarousel
+                                activeTag={activeTag}
+                                setActiveTag={setActiveTag}
+                                lang={lang}
+                            />
+                        </>
+                    )}
+
+                    {activeTab === 'templates' && (
+                        <div className="flex items-center justify-between px-1">
+                            <span className="text-xs text-gray-400">
+                                {filteredTemplates.length} {t.templates}
+                            </span>
+                            <button
+                                onClick={() => setShowSubscribedOnly(!showSubscribedOnly)}
+                                className={`text-xs px-2 py-1 rounded transition-colors border ${showSubscribedOnly
+                                    ? 'bg-teal-50 text-teal-600 border-teal-200 font-medium'
+                                    : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
+                                    }`}
+                            >
+                                {showSubscribedOnly ? '✓ 已關注' : '只看已關注'}
+                            </button>
                         </div>
-                        <button onClick={() => setShowCustomItemModal(true)} className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"><Plus size={14} /> {t.createCustom}</button>
+                    )}
+                </div>
 
-                        <CategoryCarousel
-                            activeCategory={activeCategory}
-                            setActiveCategory={setActiveCategory}
-                            lang={lang}
-                            t={t}
-                        />
-
-                        <TagCarousel
-                            activeTag={activeTag}
-                            setActiveTag={setActiveTag}
-                            lang={lang}
-                        />
-
+                {/* Layer 3: Main Content Area */}
+                <div className="p-4 pt-2">
+                    {activeTab === 'assets' && (
                         <div className="grid grid-cols-2 gap-2">
                             {filteredAssets.map((item) => (
                                 <AssetItemCard
@@ -159,60 +196,46 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 </div>
                             )}
                         </div>
-                    </div>
-                )}
-                {activeTab === 'templates' && (
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between px-1 mb-2">
-                            <span className="text-xs text-gray-400">
-                                {filteredTemplates.length} {t.templates}
-                            </span>
-                            <button
-                                onClick={() => setShowSubscribedOnly(!showSubscribedOnly)}
-                                className={`text-xs px-2 py-1 rounded transition-colors border ${showSubscribedOnly
-                                    ? 'bg-teal-50 text-teal-600 border-teal-200 font-medium'
-                                    : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
-                                    }`}
-                            >
-                                {showSubscribedOnly ? '✓ 已關注' : '只看已關注'}
-                            </button>
-                        </div>
+                    )}
 
-                        {filteredTemplates.map(template => (
-                            <TemplateItemCard
-                                key={template.id}
-                                template={template}
-                                creator={SAMPLE_CREATORS.find(c => c.id === template.authorId)}
-                                lang={lang}
-                                subscribedCreators={subscribedCreators}
-                                t={t}
-                                onPreview={() => onPreviewTemplate?.(template)}
-                                onCreatorClick={onCreatorClick}
-                                onApply={(tpl) => {
-                                    if (tpl.isLocked && !tpl.purchased) {
-                                        tpl.purchased = true;
-                                        tpl.isLocked = false;
-                                        confirm({
-                                            title: lang === 'zh' ? '解鎖成功' : 'Unlocked Success',
-                                            message: lang === 'zh' ? "🎁 Beta 免費解鎖成功！" : "🎁 Beta Unlocked successfully!",
-                                            type: 'success',
-                                            confirmText: lang === 'zh' ? '太棒了' : 'Awesome'
-                                        });
-                                    }
-                                    applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule, region: tpl.region });
-                                }}
-                            />
-                        ))}
-                        {filteredTemplates.length === 0 && (
-                            <div className="text-center text-gray-400 text-sm py-8 bg-gray-50 rounded-lg border border-dashed border-gray-200">
-                                <p className="mb-2">😕 找不到模板</p>
-                                <button onClick={() => setShowSubscribedOnly(false)} className="text-teal-600 hover:underline text-xs">
-                                    {showSubscribedOnly ? '查看所有達人' : '嘗試其他篩選'}
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                )}
+                    {activeTab === 'templates' && (
+                        <div className="space-y-3">
+                            {filteredTemplates.map(template => (
+                                <TemplateItemCard
+                                    key={template.id}
+                                    template={template}
+                                    creator={SAMPLE_CREATORS.find(c => c.id === template.authorId)}
+                                    lang={lang}
+                                    subscribedCreators={subscribedCreators}
+                                    t={t}
+                                    onPreview={() => onPreviewTemplate?.(template)}
+                                    onCreatorClick={onCreatorClick}
+                                    onApply={(tpl) => {
+                                        if (tpl.isLocked && !tpl.purchased) {
+                                            tpl.purchased = true;
+                                            tpl.isLocked = false;
+                                            confirm({
+                                                title: lang === 'zh' ? '解鎖成功' : 'Unlocked Success',
+                                                message: lang === 'zh' ? "🎁 Beta 免費解鎖成功！" : "🎁 Beta Unlocked successfully!",
+                                                type: 'success',
+                                                confirmText: lang === 'zh' ? '太棒了' : 'Awesome'
+                                            });
+                                        }
+                                        applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule, region: tpl.region });
+                                    }}
+                                />
+                            ))}
+                            {filteredTemplates.length === 0 && (
+                                <div className="text-center text-gray-400 text-sm py-8 bg-gray-50 rounded-lg border border-dashed border-gray-200">
+                                    <p className="mb-2">😕 找不到模板</p>
+                                    <button onClick={() => setShowSubscribedOnly(false)} className="text-teal-600 hover:underline text-xs">
+                                        {showSubscribedOnly ? '查看所有達人' : '嘗試其他篩選'}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Mobile Preview Bottom Sheet */}
