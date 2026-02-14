@@ -35,6 +35,7 @@ export interface TravelItem {
     marketingTitleEn?: string;
     marketingImage?: string; // Vibe photo (Shown when locked)
     isLocked?: boolean;     // If true, hide address/real title
+    isCustom?: boolean;     // [NEW] Flag to identify user-created items
     insiderTip?: InsiderTip;
 }
 

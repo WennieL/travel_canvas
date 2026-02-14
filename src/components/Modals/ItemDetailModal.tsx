@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { X, MapPin, Clock, Star, Tag, MousePointerClick, Navigation } from 'lucide-react';
+import { X, MapPin, Clock, Star, Tag, MousePointerClick, Navigation, Edit2, Save, Undo2 } from 'lucide-react';
 import { ScheduleItem, TravelItem } from '../../types';
 import L from 'leaflet';
 
@@ -19,16 +19,57 @@ interface ItemDetailModalProps {
     item: ScheduleItem | TravelItem | null;
     t: any;
     lang?: 'zh' | 'en';
+    onUpdateScheduleItem?: (instanceId: string, updates: Partial<ScheduleItem>) => void;
+    onUpdateCustomAsset?: (id: string, updates: Partial<TravelItem>) => void;
 }
 
-const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item, t, lang = 'zh' }) => {
+const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item, t, lang = 'zh', onUpdateScheduleItem, onUpdateCustomAsset }) => {
+    const [isEditing, setIsEditing] = React.useState(false);
+    const [editedTitle, setEditedTitle] = React.useState('');
+    const [editedAddress, setEditedAddress] = React.useState('');
+    const [editedDescription, setEditedDescription] = React.useState('');
+    const [editedPrice, setEditedPrice] = React.useState<number>(0);
+    const [syncToLibrary, setSyncToLibrary] = React.useState(false);
+
+    // Reset edit state when modal opens/closes or item changes
+    React.useEffect(() => {
+        if (isOpen && item) {
+            setEditedTitle(item.title);
+            setEditedAddress(item.address || '');
+            setEditedDescription(item.description || '');
+            setEditedPrice(item.price || 0);
+            setIsEditing(false);
+        }
+    }, [isOpen, item]);
+
     if (!isOpen || !item) return null;
+
+    const isCustom = (item as ScheduleItem).isCustom;
+
+    const handleSave = () => {
+        if (!onUpdateScheduleItem || !(item as ScheduleItem).instanceId) return;
+
+        const updates = {
+            title: editedTitle,
+            address: editedAddress,
+            description: editedDescription,
+            price: editedPrice
+        };
+
+        onUpdateScheduleItem((item as ScheduleItem).instanceId, updates);
+
+        if (syncToLibrary && onUpdateCustomAsset && item.id) {
+            onUpdateCustomAsset(item.id, updates);
+        }
+
+        setIsEditing(false);
+    };
 
     const hasCoordinates = item.lat && item.lng;
     const position: [number, number] = hasCoordinates ? [item.lat!, item.lng!] : [35.6762, 139.6503]; // Default Tokyo
 
     const handleNavigate = () => {
-        const query = hasCoordinates ? `${item.lat},${item.lng}` : (item.address || item.title);
+        const query = hasCoordinates ? `${item.lat},${item.lng}` : (editedAddress || item.title);
         window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
     };
 
@@ -38,21 +79,62 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                 {/* Header */}
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white z-10">
                     <div className="flex items-center gap-3">
-                        <div className="text-3xl bg-gray-50 w-12 h-12 flex items-center justify-center rounded-xl">
+                        <div className="text-3xl bg-gray-50 w-12 h-12 flex items-center justify-center rounded-xl relative">
                             {item.image || '📍'}
+                            {isCustom && !isEditing && (
+                                <div className="absolute -top-1 -right-1 bg-teal-500 text-[10px] text-white px-1.5 rounded-full font-bold shadow-sm">
+                                    CUSTOM
+                                </div>
+                            )}
                         </div>
                         <div>
-                            <h2 className="font-bold text-xl text-gray-800 flex items-center gap-2">
-                                {lang === 'en' && (item as any).titleEn ? (item as any).titleEn : item.title}
-                            </h2>
+                            {isEditing ? (
+                                <input
+                                    className="font-bold text-xl text-gray-800 border-b border-blue-200 focus:outline-none focus:border-blue-500 w-full bg-blue-50/30 px-1 rounded-sm"
+                                    value={editedTitle}
+                                    onChange={e => setEditedTitle(e.target.value)}
+                                    autoFocus
+                                />
+                            ) : (
+                                <h2 className="font-bold text-xl text-gray-800 flex items-center gap-2">
+                                    {lang === 'en' && (item as any).titleEn ? (item as any).titleEn : item.title}
+                                </h2>
+                            )}
                             <p className="text-sm text-gray-400 capitalize flex items-center gap-1">
                                 {item.type} {item.region && `• ${item.region}`}
                             </p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-colors">
-                        <X size={24} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        {isCustom && (
+                            isEditing ? (
+                                <>
+                                    <button
+                                        onClick={() => setIsEditing(false)}
+                                        className="p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-colors flex items-center gap-1 text-sm font-medium"
+                                    >
+                                        <Undo2 size={18} />
+                                    </button>
+                                    <button
+                                        onClick={handleSave}
+                                        className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors flex items-center gap-2 text-sm font-bold shadow-sm px-3"
+                                    >
+                                        <Save size={18} /> {t.save || '儲存'}
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-colors flex items-center gap-1 text-sm font-medium px-3"
+                                >
+                                    <Edit2 size={18} /> <span className="hidden sm:inline">{t.edit || '編輯'}</span>
+                                </button>
+                            )
+                        )}
+                        <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-colors">
+                            <X size={24} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Body - Scrollable */}
@@ -98,17 +180,38 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                             <h3 className="font-bold text-gray-800 mb-2 text-sm uppercase tracking-wide opacity-70">
                                 {lang === 'zh' ? '描述' : 'Description'}
                             </h3>
-                            <p className="text-gray-600 leading-relaxed text-lg">
-                                {lang === 'en' && (item as any).descriptionEn ? (item as any).descriptionEn : (item.description || (lang === 'zh' ? '暫無描述' : 'No description available.'))}
-                            </p>
+                            {isEditing ? (
+                                <textarea
+                                    className="w-full h-32 text-gray-600 leading-relaxed text-lg p-3 bg-blue-50/30 border border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+                                    value={editedDescription}
+                                    onChange={e => setEditedDescription(e.target.value)}
+                                    placeholder={lang === 'zh' ? '在此輸入描述...' : 'Enter description here...'}
+                                />
+                            ) : (
+                                <p className="text-gray-600 leading-relaxed text-lg">
+                                    {lang === 'en' && (item as any).descriptionEn ? (item as any).descriptionEn : (item.description || (lang === 'zh' ? '暫無描述' : 'No description available.'))}
+                                </p>
+                            )}
                         </div>
 
                         {/* Info Grid */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {item.price !== undefined && (
-                                <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                <div className={`p-3 rounded-lg border transition-colors ${isEditing ? 'bg-blue-50/50 border-blue-200' : 'bg-gray-50 border-gray-100'}`}>
                                     <div className="text-xs text-gray-400 mb-1">Price</div>
-                                    <div className="font-bold text-gray-800">¥{item.price.toLocaleString()}</div>
+                                    {isEditing ? (
+                                        <div className="flex items-center gap-1">
+                                            <span className="text-gray-400 font-bold">¥</span>
+                                            <input
+                                                type="number"
+                                                className="font-bold text-gray-800 bg-transparent w-full focus:outline-none"
+                                                value={editedPrice}
+                                                onChange={e => setEditedPrice(parseInt(e.target.value) || 0)}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="font-bold text-gray-800">¥{item.price.toLocaleString()}</div>
+                                    )}
                                 </div>
                             )}
                             {item.duration && (
@@ -133,13 +236,43 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
 
                         {/* Details List */}
                         <div className="space-y-3 pt-2">
-                            {item.address && (
-                                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                                    <MapPin className="w-5 h-5 text-gray-400 mt-0.5 shrink-0" />
-                                    <div>
+                            {(isEditing || item.address) && (
+                                <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${isEditing ? 'bg-blue-50/50 border border-blue-200' : 'hover:bg-gray-50'}`}>
+                                    <MapPin className={`w-5 h-5 mt-0.5 shrink-0 ${isEditing ? 'text-blue-500' : 'text-gray-400'}`} />
+                                    <div className="flex-1">
                                         <div className="font-medium text-gray-900">Address</div>
-                                        <div className="text-gray-500 text-sm">{item.address}</div>
+                                        {isEditing ? (
+                                            <input
+                                                className="text-gray-600 text-sm bg-transparent w-full focus:outline-none border-b border-blue-200"
+                                                value={editedAddress}
+                                                onChange={e => setEditedAddress(e.target.value)}
+                                                placeholder={lang === 'zh' ? '輸入地址或地點...' : 'Enter address or location...'}
+                                            />
+                                        ) : (
+                                            <div className="text-gray-500 text-sm">{item.address}</div>
+                                        )}
                                     </div>
+                                </div>
+                            )}
+
+                            {isEditing && isCustom && (
+                                <div className="px-3 py-2 bg-teal-50 rounded-lg border border-teal-100 flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-teal-600">✨</span>
+                                        <div>
+                                            <div className="text-xs font-bold text-teal-800">{t.syncToLibrary || "同步至自訂圖庫"}</div>
+                                            <div className="text-[10px] text-teal-600 opacity-80">{t.syncToLibraryDesc || "修改後將同步更新圖庫裡的原始資料"}</div>
+                                        </div>
+                                    </div>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={syncToLibrary}
+                                            onChange={e => setSyncToLibrary(e.target.checked)}
+                                        />
+                                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500"></div>
+                                    </label>
                                 </div>
                             )}
                             {item.tips && (

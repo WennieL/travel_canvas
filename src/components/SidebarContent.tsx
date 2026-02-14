@@ -79,8 +79,20 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
     // Filter assets by region, category, search query, and tag
     const filteredAssets = allAssets.filter(item => {
-        const matchesRegion = activeRegion === 'all' || item.region === activeRegion;
-        const matchesCategory = activeCategory === 'all' || item.type === activeCategory;
+        // [STRICT] Only show items matching the current city, unless 'All' is selected.
+        // We also allow 'all' region items to show up everywhere (Universal assets).
+        const matchesRegion = activeRegion === 'all' || item.region === activeRegion || item.region === 'all';
+
+        // Custom balancing logic: 
+        // 1. If 'custom' cat selected, show everything with isCustom: true OR from customAssets array
+        const isCustomItem = item.isCustom || customAssets.some(ca => ca.id === item.id);
+
+        const matchesCategory = activeCategory === 'all'
+            ? true
+            : activeCategory === 'custom'
+                ? isCustomItem
+                : item.type === activeCategory;
+
         const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
         const matchesTag = !activeTag || (item.tags && item.tags.includes(activeTag));

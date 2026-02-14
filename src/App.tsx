@@ -137,6 +137,7 @@ export function App() {
         handleDrop,
         handleRemoveItem,
         handleUpdateItem,
+        handleUpdateScheduleItemByInstanceId,
         handleTapToAdd,
         handleQuickFill
     } = useItinerary(
@@ -501,6 +502,7 @@ export function App() {
                 tempEndDate={activePlan.endDate}
                 selectedItem={ui.selectedItem}
                 setSelectedItem={ui.setSelectedItem}
+                onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
 
                 // Pass View State & Handlers for Mobile Library
                 activeTab={activeTab} setActiveTab={setActiveTab}
@@ -509,6 +511,7 @@ export function App() {
                 activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
                 handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
                 showMobileLibrary={showMobileLibrary} setShowMobileLibrary={setShowMobileLibrary}
+                addToSlotTarget={addToSlotTarget}
             />
 
             {toast.show && <Toast message={toast.message} type={toast.type} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}

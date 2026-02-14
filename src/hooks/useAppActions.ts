@@ -130,27 +130,43 @@ export const useAppActions = (deps: AppActionsDeps) => {
             title: data.name,
             type: data.type,
             price: parseInt(data.price) || 0,
-            image: data.type === 'food' ? '🍜' : '📌',
+            image: data.type === 'food' ? '🍜' : data.type === 'hotel' ? '🏨' : data.type === 'transport' ? '✈️' : '📌',
             instanceId: Math.random().toString(36).substr(2, 9),
             startTime: data.time || '',
             arrivalTransport: 'car',
-            notes: data.notes || ''
+            notes: data.notes || '',
+            isCustom: true,
+            region: (data.region || activePlan.region || 'all') as any
         };
 
-        let targetSlot: TimeSlot = 'morning';
+        // If user clicked a '+' button, we have a specific target slot
+        let targetSlot: TimeSlot = ui.addToSlotTarget?.slot || 'morning';
+
+        // But if they entered a specific time, that takes precedence for slotting
         if (data.time) {
             const hour = parseInt(data.time.split(':')[0], 10);
-            targetSlot = hour >= 6 && hour < 12 ? 'morning' : hour >= 12 && hour < 18 ? 'afternoon' : hour >= 18 && hour < 22 ? 'evening' : 'night';
+            targetSlot = hour >= 5 && hour < 11 ? 'morning' :
+                hour >= 11 && hour < 17 ? 'afternoon' :
+                    hour >= 17 && hour < 21 ? 'evening' : 'night';
         }
 
         if (!newSchedule[currentDayKey]) {
             newSchedule[currentDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
         }
         newSchedule[currentDayKey][targetSlot].push(newItem);
+
+        // Sort slot if time exists
+        if (data.time) {
+            newSchedule[currentDayKey][targetSlot].sort((a: ScheduleItem, b: ScheduleItem) =>
+                (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ')
+            );
+        }
+
         updateActivePlan({ schedule: newSchedule });
-        setCustomAssets(prev => [...prev, { ...newItem, id: `asset-${Date.now()}`, region: 'all' } as TravelItem]);
+        setCustomAssets(prev => [...prev, { ...newItem, id: `asset-${Date.now()}` } as TravelItem]);
         showToastMessage("🎉 " + (t.itemCreated || "Created!"));
         ui.setShowCustomItemModal(false);
+        ui.setAddToSlotTarget(null); // Clear the target after successful creation
     }, [currentDay, activePlan, updateActivePlan, setCustomAssets, showToastMessage, t, ui]);
 
     const onDeleteDay = useCallback(async (dayToDelete: number, e?: React.MouseEvent) => {

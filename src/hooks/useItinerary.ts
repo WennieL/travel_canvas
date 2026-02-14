@@ -117,6 +117,30 @@ export function useItinerary(
         updateActivePlan({ schedule: newSchedule });
     };
 
+    const handleUpdateScheduleItemByInstanceId = (instanceId: string, updates: Partial<ScheduleItem>) => {
+        const currentDayKey = `Day ${currentDay}`;
+        const newSchedule = { ...activePlan.schedule };
+        newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] };
+
+        // Search through all slots to find the item
+        let foundSlot: TimeSlot | null = null;
+        let foundIndex: number = -1;
+
+        const slots: TimeSlot[] = ['morning', 'afternoon', 'evening', 'night', 'accommodation'];
+        for (const slot of slots) {
+            const idx = newSchedule[currentDayKey][slot]?.findIndex(item => item.instanceId === instanceId);
+            if (idx !== undefined && idx !== -1) {
+                foundSlot = slot;
+                foundIndex = idx;
+                break;
+            }
+        }
+
+        if (foundSlot && foundIndex !== -1) {
+            handleUpdateItem(foundSlot, foundIndex, updates);
+        }
+    };
+
     const handleTapToAdd = (item: TravelItem) => {
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
@@ -200,6 +224,7 @@ export function useItinerary(
         handleDrop,
         handleRemoveItem,
         handleUpdateItem,
+        handleUpdateScheduleItemByInstanceId,
         handleTapToAdd,
         handleQuickFill,
         draggedItemRef

@@ -235,7 +235,11 @@ export const TRANSLATIONS: any = {
         hideList: "隱藏列表",
         showList: "顯示列表",
         noSpotsOnMap: "地圖上沒有行程點",
-        dragFromSidebarToMap: "請從側邊欄拖曳景點到行程中。"
+        dragFromSidebarToMap: "請從側邊欄拖曳景點到行程中。",
+        edit: "編輯",
+        save: "儲存",
+        syncToLibrary: "同步至自訂圖庫",
+        syncToLibraryDesc: "修改後將同步更新圖庫裡的原始資料"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -472,6 +476,10 @@ export const TRANSLATIONS: any = {
         hideList: "Hide List",
         showList: "Show List",
         noSpotsOnMap: "No spots on map",
-        dragFromSidebarToMap: "Drag spots from sidebar to start."
+        dragFromSidebarToMap: "Drag spots from sidebar to start.",
+        edit: "Edit",
+        save: "Save",
+        syncToLibrary: "Sync to Library",
+        syncToLibraryDesc: "Updates will also be applied to the master record in your library"
     }
 };

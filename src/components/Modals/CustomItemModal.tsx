@@ -10,6 +10,7 @@ interface CustomItemData {
     notes: string;
     origin?: string;
     destination?: string;
+    region?: string;
 }
 
 interface CustomItemModalProps {
@@ -17,21 +18,34 @@ interface CustomItemModalProps {
     onClose: () => void;
     onCreateItem: (data: CustomItemData) => void;
     t: Record<string, string>;
+    initialType?: ItemType;    // [NEW] Smart default type
+    currentRegion?: string;   // [NEW] To show where it's being added
 }
 
 export const CustomItemModal: React.FC<CustomItemModalProps> = ({
     isOpen,
     onClose,
     onCreateItem,
-    t
+    t,
+    initialType = 'attraction',
+    currentRegion = 'all'
 }) => {
-    const [itemType, setItemType] = useState<ItemType>('attraction');
+    const [itemType, setItemType] = useState<ItemType>(initialType);
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [time, setTime] = useState('');
     const [notes, setNotes] = useState('');
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
+    const [region, setRegion] = useState<string>(currentRegion);
+
+    // Update state when modal opens with new initial type
+    React.useEffect(() => {
+        if (isOpen) {
+            setItemType(initialType);
+            setRegion(currentRegion);
+        }
+    }, [isOpen, initialType, currentRegion]);
 
     const handleClose = () => {
         setName('');
@@ -40,7 +54,7 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
         setNotes('');
         setOrigin('');
         setDestination('');
-        setItemType('attraction');
+        setItemType(initialType);
         onClose();
     };
 
@@ -67,7 +81,8 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
             time,
             notes,
             origin: trimmedOrigin,
-            destination: trimmedDestination
+            destination: trimmedDestination,
+            region: region
         });
         handleClose();
     };
@@ -160,6 +175,31 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                             value={price}
                             onChange={e => setPrice(e.target.value)}
                         />
+                    </div>
+                </div>
+
+                {/* Region Selector */}
+                <div className="mb-4">
+                    <label className="text-xs text-gray-500 mb-1 block">🌍 {t.region || '地區'}</label>
+                    <div className="flex flex-wrap gap-2">
+                        {(['all', 'tokyo', 'osaka', 'kyoto', 'melbourne'] as const).map(reg => (
+                            <button
+                                key={reg}
+                                type="button"
+                                onClick={() => setRegion(reg)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${region === reg
+                                    ? 'bg-teal-600 border-teal-600 text-white'
+                                    : 'bg-white border-gray-200 text-gray-600 hover:border-teal-300'
+                                    }`}
+                            >
+                                {reg === 'all' && '🌏 '}
+                                {reg === 'tokyo' && '🗼 '}
+                                {reg === 'osaka' && '🏯 '}
+                                {reg === 'kyoto' && '⛩️ '}
+                                {reg === 'melbourne' && '☕ '}
+                                {t[reg] || reg}
+                            </button>
+                        ))}
                     </div>
                 </div>
 

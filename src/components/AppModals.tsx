@@ -56,6 +56,7 @@ interface AppModalsProps {
     showCustomItemModal: boolean;
     setShowCustomItemModal: (show: boolean) => void;
     handleCreateCustomItem: (data: any) => void;
+    addToSlotTarget?: TimeSlot | null;
 
     // Export Modal
     showExportModal: boolean;
@@ -129,6 +130,7 @@ interface AppModalsProps {
     // Item Detail Modal
     selectedItem: ScheduleItem | null;
     setSelectedItem: (item: ScheduleItem | null) => void;
+    onUpdateScheduleItem?: (instanceId: string, updates: Partial<ScheduleItem>) => void;
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
@@ -189,10 +191,16 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
             />
 
             <CustomItemModal
-                isOpen={showCustomItemModal}
-                onClose={() => setShowCustomItemModal(false)}
-                onCreateItem={handleCreateCustomItem}
-                t={t}
+                isOpen={props.showCustomItemModal}
+                onClose={() => props.setShowCustomItemModal(false)}
+                onCreateItem={props.handleCreateCustomItem}
+                t={props.t}
+                initialType={
+                    props.addToSlotTarget === 'accommodation' ? 'hotel' :
+                        props.addToSlotTarget === 'morning' || props.addToSlotTarget === 'afternoon' ? 'attraction' :
+                            props.addToSlotTarget === 'evening' ? 'food' : 'custom'
+                }
+                currentRegion={props.activeRegion}
             />
 
             <ExportModal
@@ -290,7 +298,10 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     setActiveCategory={props.setActiveCategory}
                     activeRegion={props.activeRegion}
                     setActiveRegion={props.setActiveRegion}
-                    setShowCustomItemModal={setShowCustomItemModal}
+                    setShowCustomItemModal={(show) => {
+                        setShowCustomItemModal(show);
+                        if (show) setShowMobileLibrary(false);
+                    }}
                     handleDragStart={props.handleDragStart}
                     handleTapToAdd={(item) => {
                         props.handleTapToAdd(item);
@@ -348,6 +359,22 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     count={batchUnlockCount}
                     onUnlock={confirmUnlock}
                     t={t}
+                />
+            )}
+
+            {props.selectedItem && (
+                <ItemDetailModal
+                    isOpen={!!props.selectedItem}
+                    onClose={() => props.setSelectedItem(null)}
+                    item={props.selectedItem}
+                    t={props.t}
+                    lang={props.lang}
+                    onUpdateScheduleItem={props.onUpdateScheduleItem}
+                    onUpdateCustomAsset={(id, updates) => {
+                        props.setCustomAssets((prev: TravelItem[]) => prev.map((asset: TravelItem) =>
+                            asset.id === id ? { ...asset, ...updates } : asset
+                        ));
+                    }}
                 />
             )}
         </>
