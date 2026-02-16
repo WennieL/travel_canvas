@@ -126,3 +126,61 @@ h6 {
   display: none;
   /* Chrome/Safari/Opera */
 }
+
+/* Print Styles */
+@media print {
+  .print\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background-color: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Force background colors */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide UI elements */
+  header,
+  footer,
+  aside,
+  nav,
+  .sidebar,
+  .mobile-nav,
+  .view-switcher,
+  .day-tabs-container,
+  button:not(.print-include),
+  .toast-container,
+  .modal-overlay,
+  .fixed-action-btn {
+    display: none !important;
+  }
+
+  /* Expand content */
+  .main-content,
+  .schedule-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .schedule-content {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 20px !important;
+  }
+
+  /* Page breaks */
+  .itinerary-card {
+    page-break-inside: avoid;
+  }
+}

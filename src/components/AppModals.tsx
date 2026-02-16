@@ -1,7 +1,6 @@
 import React from 'react';
 import { X, MoveRight } from 'lucide-react';
 import {
-    ExportModal,
     ShareHubModal,
     DateModal,
     PlanManagerModal,
@@ -58,25 +57,12 @@ interface AppModalsProps {
     handleCreateCustomItem: (data: any) => void;
     addToSlotTarget?: TimeSlot | null;
 
-    // Export Modal
-    showExportModal: boolean;
-    setShowExportModal: (show: boolean) => void;
-    activePlan: Plan;
-    currentDay: number;
-    generateExportText: () => string;
-    setPlans: (plans: Plan[]) => void;
-    setActivePlanIdDirect: (id: string) => void;
-    setCustomAssets: (assets: any) => void;
-    setBudgetLimit: (limit: number) => void;
-    setSubscribedCreators: (creators: string[]) => void;
-    customAssets: any;
-    budgetLimit: number;
-    subscribedCreators: string[];
-
     // Share Modal
     showShareModal: boolean;
     setShowShareModal: (show: boolean) => void;
     onOpenMobilePreview: () => void;
+    activePlan: Plan;
+    currentDay: number;
 
     // Date Modal
     showDateModal: boolean;
@@ -203,27 +189,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 currentRegion={props.activeRegion}
             />
 
-            <ExportModal
-                isOpen={showExportModal}
-                onClose={() => setShowExportModal(false)}
-                plan={activePlan}
-                currentDay={currentDay}
-                t={t}
-                showToast={showToastMessage}
-                generateExportText={generateExportText}
-                plans={plans}
-                activePlanId={activePlanId}
-                customAssets={customAssets}
-                budgetLimit={budgetLimit}
-                subscribedCreators={subscribedCreators}
-                onImportBackup={(data) => {
-                    setPlans(data.plans);
-                    if (data.activePlanId) setActivePlanIdDirect(data.activePlanId);
-                    if (data.customAssets) setCustomAssets(data.customAssets);
-                    if (data.budgetLimit) setBudgetLimit(data.budgetLimit);
-                    if (data.subscribedCreators) setSubscribedCreators(data.subscribedCreators);
-                }}
-            />
+
 
             <ShareHubModal
                 isOpen={showShareModal}
@@ -232,9 +198,9 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 t={t}
                 showToast={showToastMessage}
                 onOpenMobilePreview={onOpenMobilePreview}
-                onOpenExportText={() => {
-                    setShowExportModal(true);
-                }}
+                onOpenSubmitModal={() => setShowSubmitModal(true)}
+                lang={lang}
+                currentDay={currentDay}
             />
 
             <DateModal

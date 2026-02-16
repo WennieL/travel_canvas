@@ -129,10 +129,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     )}
                     <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate} <span className="opacity-80">({activePlan.totalDays} {lang === 'en' ? 'Days' : '天'})</span></span>
                 </div>
-                <div className="flex gap-0.5 flex-shrink-0 items-center">
+                <div className="flex gap-1 flex-shrink-0 items-center">
                     <button onClick={toggleLang} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
-                    <button onClick={() => setShowSubmitModal(true)} className="mx-1 w-8 h-8 flex items-center justify-center bg-teal-500 text-white rounded-full shadow-sm hover:bg-teal-600 hover:scale-105 transition-all"><Upload size={14} /></button>
-                    <button onClick={() => setShowShareModal(true)} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"><Share2 size={18} /></button>
+                    <button
+                        onClick={() => setShowShareModal(true)}
+                        className="flex items-center gap-1.5 px-3.5 py-1.5 bg-gray-100 text-gray-700 rounded-full text-[10px] font-bold active:scale-95 transition-all"
+                    >
+                        <Upload size={14} />
+                        <span>{t.share || "Share"}</span>
+                    </button>
                 </div>
             </div>
 
@@ -256,14 +261,13 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     {/* Global Actions */}
                     <button onClick={toggleLang} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                     <button
-                        onClick={() => handleGateCheck(() => setShowSubmitModal(true))}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-full text-xs font-bold hover:shadow-md hover:scale-105 transition-all"
-                        title="將您的行程分享給社群"
+                        onClick={() => handleGateCheck(() => setShowShareModal(true))}
+                        className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-xs font-bold transition-all active:scale-95"
+                        title={t.share || "Share"}
                     >
-                        <Upload size={14} />
-                        <span className="hidden lg:inline">提交審核</span>
+                        <Upload size={16} />
+                        <span>{t.share || "Share"}</span>
                     </button>
-                    <button onClick={() => handleGateCheck(() => setShowShareModal(true))} className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors" title={t.shareHub || '分享'}><Share2 size={18} /></button>
                 </div>
             </div>
         </>

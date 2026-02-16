@@ -131,7 +131,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps,
     const calculatedJPY = Math.round((parseInt(tempLimit) || 0) / (parseFloat(tempRate) || 1));
 
     return (
-        <div className="h-full bg-white rounded-2xl p-4 lg:p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto flex flex-col">
+        <div className="schedule-content h-full bg-white rounded-2xl p-4 lg:p-8 shadow-sm border border-gray-100 max-w-4xl mx-auto flex flex-col">
             {/* Header / Tabs */}
             <div className="mb-6">
                 <div className="flex bg-gray-100/50 p-1 rounded-xl w-full max-w-md mx-auto">
