@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
-import { Template, ScheduleItem } from '../../types';
+import { Template, ScheduleItem, DaySchedule, FullSchedule } from '../../types';
 
 interface TemplatePreviewModalProps {
     isOpen: boolean;
@@ -30,7 +30,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     // Unified way to get all items regardless of schedule structure
     const allItems: ScheduleItem[] = ('morning' in template.schedule)
         ? Object.values(template.schedule as DaySchedule).flat()
-        : Object.values(template.schedule as FullSchedule).flatMap(day => Object.values(day).flat());
+        : Object.values(template.schedule as FullSchedule).flatMap(day => Object.values(day as DaySchedule).flat());
 
     // Calculate highlights from template data if not provided
     const highlights = template.highlights || {
@@ -47,7 +47,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
         : (template.schedule as FullSchedule)['Day 1'] || Object.values(template.schedule as FullSchedule)[0];
 
     const dayPreviews = template.dayPreviews || [
-        { day: 1, summary: firstDay?.morning?.slice(0, 3).map((i: ScheduleItem) => i.title).join(' → ') || '行程安排中...' },
+        { day: 1, summary: (firstDay as DaySchedule)?.morning?.slice(0, 3).map((i: ScheduleItem) => i.title).join(' → ') || '行程安排中...' },
     ];
 
     // Default whatYouGet
@@ -240,7 +240,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                     </span>
                                 </div>
                                 <p className="text-sm text-gray-600 flex items-center flex-wrap gap-1">
-                                    {[...template.schedule.morning, ...template.schedule.afternoon]
+                                    {[...((firstDay as DaySchedule).morning || []), ...((firstDay as DaySchedule).afternoon || [])]
                                         .slice(0, 4)
                                         .map((item: ScheduleItem, idx, arr) => (
                                             <React.Fragment key={idx}>

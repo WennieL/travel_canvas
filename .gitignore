@@ -40,6 +40,8 @@ coverage/
 # TypeScript
 *.tsbuildinfo
 
+# Temporary build/check logs
+tsc_output*.txt
 # Vite
 vite.config.ts.timestamp-*
 

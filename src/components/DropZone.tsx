@@ -269,7 +269,24 @@ const DropZone: React.FC<DropZoneProps> = ({
                                             <NoteIcon size={12} />
                                         </button>
                                         <button onClick={(e) => { e.stopPropagation(); onMoveItem(idx); }} className="bg-white text-gray-400 hover:text-blue-500 p-1 rounded-full shadow border border-gray-100" title={t.moveToDay || "Move to Day"}> <MoveRight size={12} /> </button>
-                                        <button onClick={(e) => { e.stopPropagation(); onDelete(slot, idx); }} className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"> <Trash2 size={12} /> </button>
+                                        <button
+                                            onClick={async (e) => {
+                                                e.stopPropagation();
+                                                const confirmed = await confirm({
+                                                    title: lang === 'zh' ? '刪除項目' : 'Delete Item',
+                                                    message: lang === 'zh' ? '確定要刪除此項目嗎？' : 'Are you sure you want to delete this item?',
+                                                    type: 'warning',
+                                                    confirmText: lang === 'zh' ? '刪除' : 'Delete',
+                                                    cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                                                });
+                                                if (confirmed) {
+                                                    onDelete(slot, idx);
+                                                }
+                                            }}
+                                            className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"
+                                        >
+                                            <Trash2 size={12} />
+                                        </button>
                                     </div>
                                     <div className="hidden md:block text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
 
@@ -450,6 +467,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                             <button
                                                                 onClick={async (e) => {
                                                                     e.stopPropagation();
+                                                                    setOpenMenuId(null); // Close menu immediately
                                                                     const confirmed = await confirm({
                                                                         title: lang === 'zh' ? '刪除項目' : 'Delete Item',
                                                                         message: lang === 'zh' ? '確定要刪除此項目嗎？' : 'Are you sure you want to delete this item?',
@@ -460,7 +478,6 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                                     if (confirmed) {
                                                                         onDelete(slot, idx);
                                                                     }
-                                                                    setOpenMenuId(null);
                                                                 }}
                                                                 className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg w-full text-left"
                                                             >

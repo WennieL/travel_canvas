@@ -1,6 +1,6 @@
 import React from 'react';
 import { Star } from 'lucide-react';
-import { Template, LangType, creator } from '../../types';
+import { Template, LangType } from '../../types';
 
 interface TemplateItemCardProps {
     template: Template;

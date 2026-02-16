@@ -107,7 +107,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     });
 
     return (
-        <div className={`flex flex-col h-full bg-white transition-all duration-300 ${highlight ? 'ring-4 ring-teal-400/50 shadow-[0_0_30px_rgba(45,212,191,0.3)] animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}>
+        <div className={`flex flex-col flex-1 min-h-0 bg-white transition-all duration-300 ${highlight ? 'ring-4 ring-teal-400/50 shadow-[0_0_30px_rgba(45,212,191,0.3)] animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}>
             <div className="flex border-b border-gray-100">
                 <button onClick={() => setActiveTab('assets')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'assets' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.assets}</button>
                 <button onClick={() => setActiveTab('templates')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'templates' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.templates}</button>
@@ -179,7 +179,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 </div>
 
                 {/* Layer 3: Main Content Area */}
-                <div className="p-4 pt-2">
+                <div className="p-4 pt-2 pb-12">
                     {activeTab === 'assets' && (
                         <div className="grid grid-cols-2 gap-2">
                             {filteredAssets.map((item) => (

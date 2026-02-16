@@ -63,6 +63,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
         }
 
         setIsEditing(false);
+        onClose();
     };
 
     const hasCoordinates = item.lat && item.lng;
