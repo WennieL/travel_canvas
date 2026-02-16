@@ -33,13 +33,14 @@ interface SidebarContentProps {
     onCreatorClick: (creatorId: string) => void;
     onPreviewTemplate?: (template: Template) => void;
     highlight?: boolean;
+    isSlim?: boolean; // [NEW] Flag to trigger Phase 1 simplified UI
 }
 
 const SidebarContent: React.FC<SidebarContentProps> = ({
     activeTab, setActiveTab, searchQuery, setSearchQuery, activeCategory, setActiveCategory,
     activeRegion, setActiveRegion,
     setShowCustomItemModal, handleDragStart, handleTapToAdd, applyTemplate, t, lang = 'zh', customAssets = [],
-    subscribedCreators = [], onCreatorClick, onPreviewTemplate, highlight
+    subscribedCreators = [], onCreatorClick, onPreviewTemplate, highlight, isSlim = false
 }) => {
     const { confirm } = useConfirm();
     // Local tag filter state
@@ -108,42 +109,76 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
 
     return (
         <div className={`flex flex-col flex-1 min-h-0 bg-white transition-all duration-300 ${highlight ? 'ring-4 ring-teal-400/50 shadow-[0_0_30px_rgba(45,212,191,0.3)] animate-[wiggle_0.5s_ease-in-out_infinite]' : ''}`}>
-            <div className="flex border-b border-gray-100">
-                <button onClick={() => setActiveTab('assets')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'assets' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.assets}</button>
-                <button onClick={() => setActiveTab('templates')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'templates' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.templates}</button>
-            </div>
+            {!isSlim && (
+                <div className="flex border-b border-gray-100">
+                    <button onClick={() => setActiveTab('assets')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'assets' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.assets}</button>
+                    <button onClick={() => setActiveTab('templates')} className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'templates' ? 'text-teal-600 border-b-2 border-teal-600 bg-teal-50' : 'text-gray-500 hover:bg-gray-50'}`}>{t.templates}</button>
+                </div>
+            )}
 
             {/* Main Scrollable Area */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain no-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
-                {/* Layer 1: Region Selection (Scrolls with text) */}
-                <RegionCarousel
-                    activeCountry={activeCountry}
-                    setActiveCountry={setActiveCountry}
-                    activeRegion={activeRegion}
-                    setActiveRegion={setActiveRegion}
-                    lang={lang}
-                />
+                {/* Layer 1: Region Selection (Scrolls with text) - Hidden in Slim Mode */}
+                {!isSlim && (
+                    <RegionCarousel
+                        activeCountry={activeCountry}
+                        setActiveCountry={setActiveCountry}
+                        activeRegion={activeRegion}
+                        setActiveRegion={setActiveRegion}
+                        lang={lang}
+                    />
+                )}
 
                 {/* Layer 2: Sticky Toolbar (Search + Categories + Tags) */}
-                <div className="sticky top-0 z-[50] bg-white px-4 py-4 space-y-4 shadow-md border-b border-gray-100">
+                <div className={`sticky top-0 z-[50] bg-white px-4 space-y-4 shadow-sm border-b border-gray-100 ${isSlim ? 'py-2' : 'py-4'}`}>
                     {activeTab === 'assets' && (
                         <>
-                            <div className="relative">
-                                <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
-                                <input
-                                    type="text"
-                                    placeholder={t.searchPlaceholder}
-                                    className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                />
+                            <div className="flex items-center gap-2">
+                                {isSlim && (
+                                    <select
+                                        value={activeRegion}
+                                        onChange={(e) => setActiveRegion(e.target.value as Region)}
+                                        className="h-9 px-2 bg-teal-50 border-none rounded-lg text-xs font-bold text-teal-700 focus:ring-1 focus:ring-teal-500 appearance-none cursor-pointer"
+                                    >
+                                        <optgroup label={lang === 'zh' ? '日本' : 'Japan'}>
+                                            <option value="tokyo">Tokyo ▾</option>
+                                            <option value="osaka">Osaka ▾</option>
+                                            <option value="kyoto">Kyoto ▾</option>
+                                        </optgroup>
+                                        <optgroup label={lang === 'zh' ? '澳洲' : 'Australia'}>
+                                            <option value="melbourne">Melbourne ▾</option>
+                                        </optgroup>
+                                        <option value="all">{lang === 'zh' ? '全部地區' : 'All Regions'} ▾</option>
+                                    </select>
+                                )}
+                                <div className="relative flex-1">
+                                    <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
+                                    <input
+                                        type="text"
+                                        placeholder={t.searchPlaceholder}
+                                        className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all h-9"
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
+                                </div>
+                                {isSlim && (
+                                    <button
+                                        onClick={() => setShowCustomItemModal(true)}
+                                        className="h-9 px-3 bg-white border border-dashed border-teal-200 text-teal-600 rounded-lg flex items-center justify-center hover:bg-teal-50"
+                                        title={t.createCustom}
+                                    >
+                                        <Plus size={16} />
+                                    </button>
+                                )}
                             </div>
-                            <button
-                                onClick={() => setShowCustomItemModal(true)}
-                                className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"
-                            >
-                                <Plus size={14} /> {t.createCustom}
-                            </button>
+                            {!isSlim && (
+                                <button
+                                    onClick={() => setShowCustomItemModal(true)}
+                                    className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"
+                                >
+                                    <Plus size={14} /> {t.createCustom}
+                                </button>
+                            )}
 
                             <CategoryCarousel
                                 activeCategory={activeCategory}
@@ -270,7 +305,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         {/* Content */}
                         <div className="px-5 pb-24">
                             {/* Header */}
-                            <div className="flex items-start gap-3 mb-4">
+                            <div className="flex items-center gap-3 mb-4">
                                 <div className="text-4xl bg-gray-50 w-16 h-16 flex items-center justify-center rounded-xl">
                                     {mobilePreviewItem.image || getFallbackImage(mobilePreviewItem.type)}
                                 </div>
@@ -278,14 +313,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     <h3 className="font-bold text-gray-800 text-lg">
                                         {(lang === 'en' && mobilePreviewItem.titleEn) ? mobilePreviewItem.titleEn : mobilePreviewItem.title}
                                     </h3>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        {mobilePreviewItem.rating && (
-                                            <span className="text-yellow-500 text-sm">★ {mobilePreviewItem.rating}</span>
-                                        )}
-                                        <span className="text-teal-600 font-bold text-sm">
-                                            {mobilePreviewItem.price === 0 ? (lang === 'en' ? 'Free' : '免費') : `¥${mobilePreviewItem.price?.toLocaleString()}`}
-                                        </span>
-                                    </div>
                                 </div>
                             </div>
 
@@ -375,9 +402,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                             ? hoveredItem.marketingTitle
                                             : hoveredItem.title)}
                             </h5>
-                            {hoveredItem.rating && (
-                                <span className="text-yellow-500 text-xs">★ {hoveredItem.rating}</span>
-                            )}
                         </div>
                     </div>
 
@@ -389,10 +413,6 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 <span>{hoveredItem.openingHours}</span>
                             </div>
                         )}
-                        <div className="flex items-center gap-1.5 text-teal-600 font-bold">
-                            <span>💴</span>
-                            <span>{hoveredItem.price === 0 ? (lang === 'en' ? 'Free' : '免費') : `¥${hoveredItem.price?.toLocaleString()}`}</span>
-                        </div>
                         {hoveredItem.address && (
                             <div className="flex items-center gap-1.5 text-gray-400">
                                 <span>📍</span>

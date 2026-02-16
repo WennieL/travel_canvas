@@ -58,6 +58,7 @@ export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {
                     <SidebarContent
                         {...props}
                         highlight={false} // No wiggle needed inside drawer
+                        isSlim={true}
                     />
                 </div>
             </div>

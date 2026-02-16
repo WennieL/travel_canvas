@@ -99,6 +99,11 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                             ) : (
                                 <h2 className="font-bold text-xl text-gray-800 flex items-center gap-2">
                                     {lang === 'en' && (item as any).titleEn ? (item as any).titleEn : item.title}
+                                    {item.rating && (
+                                        <span className="flex items-center gap-0.5 text-amber-500 text-sm font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                                            <Star size={12} fill="currentColor" /> {item.rating}
+                                        </span>
+                                    )}
                                 </h2>
                             )}
                             <p className="text-sm text-gray-400 capitalize flex items-center gap-1">
@@ -219,14 +224,6 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                 <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
                                     <div className="text-xs text-gray-400 mb-1 flex items-center gap-1"><Clock size={10} /> {t.durationLabel || 'Duration'}</div>
                                     <div className="font-bold text-gray-800">{item.duration}</div>
-                                </div>
-                            )}
-                            {item.rating && (
-                                <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                    <div className="text-xs text-gray-400 mb-1 flex items-center gap-1"><Star size={10} /> {t.ratingLabel || 'Rating'}</div>
-                                    <div className="font-bold text-gray-800 flex items-center gap-1">
-                                        {item.rating} <Star size={12} className="text-yellow-400 fill-yellow-400" />
-                                    </div>
                                 </div>
                             )}
                             <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
