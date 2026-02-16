@@ -32,7 +32,7 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={`group border rounded-lg p-2 cursor-grab active:cursor-grabbing transition-all flex flex-col gap-1.5 relative hover:shadow-md touch-none select-none
+            className={`group border rounded-lg p-2 cursor-grab active:cursor-grabbing transition-all flex flex-col gap-1.5 relative hover:shadow-md
                 ${isPremium
                     ? 'bg-gradient-to-br from-amber-50/80 to-purple-50/80 border-amber-200 hover:border-amber-400'
                     : 'bg-white border-gray-100 hover:border-teal-400'
