@@ -59,7 +59,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     const [editingNoteId, setEditingNoteId] = React.useState<string | null>(null);
     const [editingPriceId, setEditingPriceId] = React.useState<string | null>(null);
     const [openMenuId, setOpenMenuId] = React.useState<string | null>(null);
-    const [menuPosition, setMenuPosition] = useState<{ top: number, left: number } | null>(null);
+    const [menuPosition, setMenuPosition] = useState<{ top: number, left: number, openUpwards: boolean } | null>(null);
     const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, index, nextMode); };
     const handleCrossSlotTransportClick = (e: React.MouseEvent, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(slot, 0, nextMode); };
@@ -444,7 +444,14 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         e.stopPropagation();
                                                         // Pass the button element to position the portal
                                                         const rect = e.currentTarget.getBoundingClientRect();
-                                                        setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.right - 150 + window.scrollX }); // Align right
+                                                        const spaceBelow = window.innerHeight - rect.bottom;
+                                                        const openUpwards = spaceBelow < 250; // Threshold for menu height + nav bar
+
+                                                        setMenuPosition({
+                                                            top: openUpwards ? rect.top + window.scrollY : rect.bottom + window.scrollY,
+                                                            left: rect.right - 150 + window.scrollX,
+                                                            openUpwards
+                                                        });
                                                         setOpenMenuId(openMenuId === item.instanceId ? null : item.instanceId);
                                                     }}
                                                     className="p-1.5 text-gray-400 hover:text-teal-600 rounded-full active:bg-gray-100"
@@ -460,7 +467,9 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         {/* Dropdown Menu - Positioned via Portal */}
                                                         <div
                                                             style={{ top: menuPosition?.top, left: menuPosition?.left }}
-                                                            className="absolute w-[150px] bg-white border border-gray-100 shadow-xl rounded-xl p-1.5 flex flex-col gap-1 z-[9999] animate-in fade-in zoom-in-95 duration-200"
+                                                            className={`absolute w-[150px] bg-white border border-gray-100 shadow-xl rounded-xl p-1.5 flex flex-col gap-1 z-[9999] animate-in fade-in zoom-in-95 duration-200 
+                                                                ${menuPosition?.openUpwards ? 'origin-bottom -translate-y-full mb-1' : 'origin-top mt-1'}
+                                                            `}
                                                             onClick={(e) => e.stopPropagation()}
                                                         >
                                                             <button
