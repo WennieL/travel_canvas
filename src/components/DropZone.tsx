@@ -151,17 +151,20 @@ const DropZone: React.FC<DropZoneProps> = ({
                 </div>
             )}
             <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-3 flex flex-col space-y-2' : showTimeline ? 'min-h-[80px] border-2 border-dashed py-3 pr-3 flex flex-col space-y-2' : 'min-h-[80px] border-2 border-dashed px-0 md:p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
-                {items.length === 0 && !isCompact && (
-                    <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors py-4 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'}`}>
-                        {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!"))}
-                        {!isDraggingGlobal && !isAccommodation && (
+                {items.length === 0 && (
+                    <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors transition-all py-2 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'} ${isCompact ? 'min-h-[40px]' : 'py-4'}`}>
+                        {!isCompact && (isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (t.emptySlot || "Start your adventure!")))}
+                        {!isDraggingGlobal && (
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     console.log("Quick Fill Clicked", slot, !!onQuickFill);
                                     if (onQuickFill) onQuickFill(slot);
                                 }}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-50 text-teal-600 rounded-full text-xs font-bold hover:bg-teal-100 transition-colors animate-in fade-in zoom-in duration-300"
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-colors animate-in fade-in zoom-in duration-300
+                                    ${isAccommodation ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100' : 'bg-teal-50 text-teal-600 hover:bg-teal-100'}
+                                    ${isCompact ? 'scale-90' : ''}
+                                `}
                             >
                                 <Sparkles size={12} />
                                 {t.quickFill || "Quick Fill"}
@@ -375,16 +378,43 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         </div>
 
                                         {(item.notes || editingNoteId === item.instanceId) && (
-                                            <input
-                                                type="text"
-                                                placeholder={t.addNote}
-                                                value={item.notes || ''}
-                                                autoFocus={editingNoteId === item.instanceId}
-                                                onBlur={() => setEditingNoteId(null)}
-                                                onClick={(e) => e.stopPropagation()}
-                                                onChange={(e) => onNoteChange(slot, idx, e.target.value)}
-                                                className="w-full text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-500 placeholder-gray-300 focus:placeholder-gray-400 animate-in fade-in slide-in-from-top-1 duration-200"
-                                            />
+                                            <div
+                                                className={`mt-1 flex items-start gap-1 pb-1 pt-0.5 rounded transition-all group/note relative ${editingNoteId === item.instanceId ? 'bg-amber-50/50 ring-1 ring-amber-200 px-1.5' : 'hover:bg-gray-50/80 cursor-pointer'}`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setEditingNoteId(item.instanceId);
+                                                }}
+                                            >
+                                                <span className={`text-[10px] font-bold shrink-0 mt-0.5 ${editingNoteId === item.instanceId ? 'text-amber-600' : 'text-amber-500/80'}`}>
+                                                    {t.noteLabel || "📝 Note"}:
+                                                </span>
+                                                {editingNoteId === item.instanceId ? (
+                                                    <input
+                                                        type="text"
+                                                        placeholder={t.addNote}
+                                                        value={item.notes || ''}
+                                                        autoFocus
+                                                        onBlur={() => setEditingNoteId(null)}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                        onChange={(e) => onNoteChange(slot, idx, e.target.value)}
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === 'Enter') setEditingNoteId(null);
+                                                        }}
+                                                        className="flex-1 text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-700 placeholder-gray-300 animate-in fade-in duration-200 font-medium"
+                                                    />
+                                                ) : (
+                                                    <span className="flex-1 text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                                                        {item.notes || (lang === 'zh' ? '點擊加入備註...' : 'Click to add note...')}
+                                                    </span>
+                                                )}
+
+                                                {/* Mobile Edit Indicator */}
+                                                {!editingNoteId && (
+                                                    <div className="md:hidden absolute right-1 top-1/2 -translate-y-1/2 opacity-30">
+                                                        <NoteIcon size={8} />
+                                                    </div>
+                                                )}
+                                            </div>
                                         )}
 
 

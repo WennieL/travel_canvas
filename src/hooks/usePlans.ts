@@ -40,15 +40,9 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             if (savedPlans) {
                 const parsedPlans = JSON.parse(savedPlans);
                 if (Array.isArray(parsedPlans) && parsedPlans.length > 0) {
-                    // Validate and sanitize plans
-                    const validPlans = parsedPlans.map((p: any) => {
-                        // Ensure schedule exists and has at least Day 1
-                        if (!p.schedule || Object.keys(p.schedule).length === 0) {
-                            return { ...p, schedule: TOKYO_DEMO_PLAN.schedule };
-                        }
-                        return p;
-                    });
-                    setPlans(validPlans);
+                    // Hydrate plans with latest asset data if missing
+                    const hydratedPlans = hydratePlans(parsedPlans);
+                    setPlans(hydratedPlans);
                 }
             }
             if (savedActiveId) {
@@ -56,9 +50,60 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             }
         } catch (e) {
             console.error("Failed to load plans from storage", e);
-            // Fallback is already set in initial state
         }
     }, []);
+
+    // Helper to enrich stale items with latest data from master lists
+    const hydratePlans = (plansToHydrate: Plan[]): Plan[] => {
+        const { ALL_SUGGESTIONS } = require('../data/suggestions');
+        const { SAMPLE_ASSETS } = require('../data/sample-assets');
+        const { MELBOURNE_ASSETS } = require('../data/melbourne-assets');
+
+        // Flat array of all possible master assets to match against
+        const masterAssets = [
+            ...SAMPLE_ASSETS,
+            ...MELBOURNE_ASSETS,
+            ...Object.values(ALL_SUGGESTIONS as any).flatMap((region: any) => Object.values(region).flat())
+        ];
+
+        return plansToHydrate.map(plan => {
+            const newSchedule = { ...plan.schedule };
+
+            Object.keys(newSchedule).forEach(day => {
+                const dayData = newSchedule[day];
+                ['morning', 'afternoon', 'evening', 'night', 'accommodation'].forEach(slot => {
+                    const items = (dayData as any)[slot] as ScheduleItem[];
+                    if (items && Array.isArray(items)) {
+                        (dayData as any)[slot] = items.map(item => {
+                            // If item already has full data (insiderTip), skip hydration
+                            if (item.insiderTip && item.lat && item.lng) return item;
+
+                            // Look for matching master asset by ID
+                            const master = masterAssets.find(m => m.id === item.id);
+                            if (master) {
+                                // Hydrate missing fields but keep instance specifics (startTime, transport, etc.)
+                                return {
+                                    ...item,
+                                    titleEn: item.titleEn || master.titleEn,
+                                    description: item.description || master.description,
+                                    descriptionEn: item.descriptionEn || master.descriptionEn,
+                                    lat: item.lat || master.lat,
+                                    lng: item.lng || master.lng,
+                                    insiderTip: item.insiderTip || master.insiderTip,
+                                    tags: (item as any).tags || master.tags,
+                                    address: item.address || master.address,
+                                    rating: item.rating || master.rating
+                                };
+                            }
+                            return item;
+                        });
+                    }
+                });
+            });
+
+            return { ...plan, schedule: newSchedule };
+        });
+    };
 
     // Save to localStorage
     useEffect(() => {

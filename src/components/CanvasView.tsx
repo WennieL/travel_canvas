@@ -216,6 +216,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         planRegion={activePlan.region}
                         isCompact={showContextMap}
                         showTimeline={isTimeline}
+                        onQuickFill={() => handleQuickFill('accommodation')}
                         startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)}
                     />
 

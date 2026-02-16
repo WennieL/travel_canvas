@@ -190,18 +190,13 @@ export function useItinerary(
         const itemData = regionSuggestions[Math.floor(Math.random() * regionSuggestions.length)];
         if (itemData) {
             const newItem: ScheduleItem = {
+                ...itemData,
                 instanceId: Date.now().toString(),
-                id: itemData.id,
-                title: itemData.title,
-                titleEn: itemData.titleEn,
-                type: itemData.type as any,
-                duration: itemData.duration,
-                price: itemData.price,
-                region: itemData.region,
-                notes: itemData.description,
-                rating: 4.8,
-                isLocked: false,
-                arrivalTransport: 'car'
+                arrivalTransport: 'car',
+                startTime: slot === 'morning' ? '09:00' :
+                    slot === 'afternoon' ? '13:00' :
+                        slot === 'evening' ? '18:00' :
+                            slot === 'night' ? '22:00' : '15:00' // Accommodation default 15:00 check-in
             };
 
             const currentDayKey = `Day ${currentDay}`;
