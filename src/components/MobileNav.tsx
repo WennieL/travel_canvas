@@ -34,7 +34,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             </button>
             <button
                 onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
-                className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                className={`flex flex-col items-center justify-center w-full transition-colors ${(viewMode as any) === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
             >
                 <MapIcon size={20} />
                 <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.map || 'Map'}</span>

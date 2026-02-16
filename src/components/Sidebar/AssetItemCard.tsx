@@ -27,7 +27,7 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
 
     return (
         <div
-            draggable={true}
+            draggable={!isMobile}
             onDragStart={onDragStart}
             onClick={onClick}
             onMouseEnter={onMouseEnter}

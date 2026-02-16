@@ -122,6 +122,7 @@ const DropZone: React.FC<DropZoneProps> = ({
         return null;
     };
     const capacityStatus = getCapacityStatus();
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
     return (
         <div className={`relative transition-all duration-300 overflow-hidden ${isAccommodation ? 'mt-4' : showTimeline ? 'pl-16 lg:pl-24' : 'lg:pl-8'}`}>
@@ -150,6 +151,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                     </div>
                 </div>
             )}
+
             <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-3 flex flex-col space-y-2' : showTimeline ? 'min-h-[80px] border-2 border-dashed py-3 pr-3 flex flex-col space-y-2' : 'min-h-[80px] border-2 border-dashed px-0 md:p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors transition-all py-2 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'} ${isCompact ? 'min-h-[40px]' : 'py-4'}`}>
@@ -226,7 +228,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     </>
                                 )}
                                 <div
-                                    draggable={true}
+                                    draggable={!isMobile}
                                     onDragStart={(e) => onDragStart(e, item, 'canvas', slot, idx)}
                                     onClick={() => onItemClick(item)}
                                     id={`item-${item.instanceId}`}
