@@ -172,7 +172,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                         )}
                     </div>
                 )}
-                {previousItem && items.length > 0 && !isCompact && (() => { const suggestion = getTransportSuggestion(previousItem, items[0]); return (<div className="relative w-full flex items-center py-1.5" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {lang === 'en' ? suggestion.labelEn : suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
+                {previousItem && items.length > 0 && !isCompact && (() => { const suggestion = getTransportSuggestion(previousItem, items[0], t); return (<div className="relative w-full flex items-center py-1.5" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
                 {items.map((item, idx) => {
                     const prevItemInSlot = idx > 0 ? items[idx - 1] : null;
 
@@ -198,7 +198,7 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                     return (
                         <React.Fragment key={item.instanceId}>
-                            {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item); return (<div className="relative w-full flex items-center py-1.5" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {lang === 'en' ? suggestion.labelEn : suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
+                            {prevItemInSlot && (() => { const suggestion = getTransportSuggestion(prevItemInSlot, item, t); return (<div className="relative w-full flex items-center py-1.5" onClick={(e) => handleCrossSlotTransportClick(e, items[0].arrivalTransport)} title={t.transport}> <div className="flex items-center gap-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-200 hover:border-teal-300 rounded-full px-3 py-1 cursor-pointer transition-all group/transport"> <span className="text-teal-500 group-hover/transport:text-teal-600"> {getTransportIcon(suggestion.mode)} </span> <span className="text-[10px] text-teal-700 font-medium"> {suggestion.label} </span> <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" /> </div> </div>); })()}
                             <div className="relative">
                                 {/* Timeline dot for this card */}
                                 {showTimeline && !isAccommodation && (
@@ -276,11 +276,11 @@ const DropZone: React.FC<DropZoneProps> = ({
                                             onClick={async (e) => {
                                                 e.stopPropagation();
                                                 const confirmed = await confirm({
-                                                    title: lang === 'zh' ? '刪除項目' : 'Delete Item',
-                                                    message: lang === 'zh' ? '確定要刪除此項目嗎？' : 'Are you sure you want to delete this item?',
+                                                    title: t.deleteItemConfirmTitle || 'Delete Item',
+                                                    message: t.deleteItemConfirmMessage || 'Are you sure you want to delete this item?',
                                                     type: 'warning',
-                                                    confirmText: lang === 'zh' ? '刪除' : 'Delete',
-                                                    cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                                                    confirmText: t.delete || 'Delete',
+                                                    cancelText: t.cancel || 'Cancel'
                                                 });
                                                 if (confirmed) {
                                                     onDelete(slot, idx);
@@ -338,7 +338,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         onClick={(e) => { e.stopPropagation(); onUnlockItem?.(item); }}
                                                         className="text-[10px] font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm flex items-center gap-1"
                                                     >
-                                                        <Lock size={8} /> Unlock
+                                                        <Lock size={8} /> {t.unlockLabel || 'Unlock'}
                                                     </button>
                                                 ) : (
                                                     editingPriceId === item.instanceId ? (
@@ -404,7 +404,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                     />
                                                 ) : (
                                                     <span className="flex-1 text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
-                                                        {item.notes || (lang === 'zh' ? '點擊加入備註...' : 'Click to add note...')}
+                                                        {item.notes || (t.clickToAddNote || 'Click to add note...')}
                                                     </span>
                                                 )}
 
@@ -499,11 +499,11 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                                     e.stopPropagation();
                                                                     setOpenMenuId(null); // Close menu immediately
                                                                     const confirmed = await confirm({
-                                                                        title: lang === 'zh' ? '刪除項目' : 'Delete Item',
-                                                                        message: lang === 'zh' ? '確定要刪除此項目嗎？' : 'Are you sure you want to delete this item?',
+                                                                        title: t.deleteItemConfirmTitle || 'Delete Item',
+                                                                        message: t.deleteItemConfirmMessage || 'Are you sure you want to delete this item?',
                                                                         type: 'warning',
-                                                                        confirmText: lang === 'zh' ? '刪除' : 'Delete',
-                                                                        cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                                                                        confirmText: t.delete || 'Delete',
+                                                                        cancelText: t.cancel || 'Cancel'
                                                                     });
                                                                     if (confirmed) {
                                                                         onDelete(slot, idx);
@@ -522,7 +522,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                         </div>
                                         {hasConflict && (
                                             <span className="text-[10px] text-red-500 bg-red-50 px-1.5 py-0.5 rounded font-bold animate-pulse">
-                                                ⚠️ 時間衝突
+                                                ⚠️ {t.timeConflict || 'Time Conflict'}
                                             </span>
                                         )}
                                     </div>
@@ -542,7 +542,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                 >
                     <div className="lg:hidden flex items-center gap-2">
                         <Plus size={16} className={`group-hover:scale-110 transition-transform ${items.length === 0 ? 'text-teal-500' : ''}`} />
-                        {items.length === 0 ? ("+ Add items...") : (t.addItem || "Add Item")}
+                        {items.length === 0 ? (t.addItemsPlaceholder || "+ Add items...") : (t.addItem || "Add Item")}
                     </div>
 
                     <div className="hidden lg:flex items-center gap-2 text-gray-400 group-hover:text-teal-600">

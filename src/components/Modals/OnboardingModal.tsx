@@ -5,6 +5,7 @@ interface OnboardingModalProps {
     isOpen: boolean;
     onClose: () => void;
     lang?: string;
+    t: any;
 }
 
 const slides = {
@@ -50,7 +51,7 @@ const slides = {
     ]
 };
 
-export const OnboardingModal: React.FC<OnboardingModalProps> = ({ isOpen, onClose, lang = 'zh' }) => {
+export const OnboardingModal: React.FC<OnboardingModalProps> = ({ isOpen, onClose, lang = 'zh', t }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const currentSlides = slides[lang as keyof typeof slides] || slides.zh;
     const slide = currentSlides[currentSlide];
@@ -122,8 +123,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ isOpen, onClos
                                 key={idx}
                                 onClick={() => setCurrentSlide(idx)}
                                 className={`w-2 h-2 rounded-full transition-all ${idx === currentSlide
-                                        ? 'bg-teal-500 w-6'
-                                        : 'bg-gray-300 hover:bg-gray-400'
+                                    ? 'bg-teal-500 w-6'
+                                    : 'bg-gray-300 hover:bg-gray-400'
                                     }`}
                             />
                         ))}
@@ -137,7 +138,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ isOpen, onClos
                                 className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-1"
                             >
                                 <ChevronLeft size={18} />
-                                {lang === 'zh' ? '上一步' : 'Back'}
+                                {t.backLabel || (lang === 'zh' ? '上一步' : 'Back')}
                             </button>
                         )}
                         <button
@@ -148,8 +149,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ isOpen, onClos
                                 } text-white rounded-xl font-bold hover:opacity-90 transition-all flex items-center justify-center gap-1`}
                         >
                             {isLast
-                                ? (lang === 'zh' ? '開始使用' : 'Get Started')
-                                : (lang === 'zh' ? '下一步' : 'Next')
+                                ? (t.getStarted || (lang === 'zh' ? '開始使用' : 'Get Started'))
+                                : (t.nextLabel || (lang === 'zh' ? '下一步' : 'Next'))
                             }
                             {!isLast && <ChevronRight size={18} />}
                         </button>

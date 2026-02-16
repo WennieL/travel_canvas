@@ -480,11 +480,10 @@ export function App() {
                 onExpertMode={enterExpertCreationMode}
                 handleDeletePlan={onDeletePlan}
                 handleCreateCustomItem={handleCreateCustomItem}
-                activePlan={activePlan} currentDay={currentDay} generateExportText={generateExportText}
-                setPlans={setPlans} setActivePlanIdDirect={setActivePlanId}
-                setCustomAssets={setCustomAssets} setBudgetLimit={setBudgetLimit}
-                setSubscribedCreators={setSubscribedCreators}
-                customAssets={customAssets} budgetLimit={budgetLimit}
+                activePlan={activePlan} currentDay={currentDay}
+                setPlans={setPlans}
+                setCustomAssets={setCustomAssets}
+                customAssets={customAssets}
                 subscribedCreators={subscribedCreators}
                 onOpenMobilePreview={() => setShowMobilePreview(true)}
                 confirmUnlock={confirmUnlock}

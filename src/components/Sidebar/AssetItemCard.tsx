@@ -6,6 +6,7 @@ import { getFallbackImage } from '../../utils';
 interface AssetItemCardProps {
     item: TravelItem;
     lang: LangType;
+    t: Record<string, string>;
     isMobile: boolean;
     onDragStart: (e: React.DragEvent) => void;
     onClick: () => void;
@@ -14,7 +15,7 @@ interface AssetItemCardProps {
 }
 
 export const AssetItemCard: React.FC<AssetItemCardProps> = ({
-    item, lang, isMobile, onDragStart, onClick, onMouseEnter, onMouseLeave
+    item, lang, t, isMobile, onDragStart, onClick, onMouseEnter, onMouseLeave
 }) => {
     const isPremium = item.tier === 'premium';
     const isLocked = item.isLocked;
@@ -41,7 +42,7 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
             {isPremium && (
                 <div className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-amber-400 to-amber-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm z-10 flex items-center gap-0.5">
                     <span>💎</span>
-                    <span>Secret</span>
+                    <span>{t.secretBadge || 'Secret'}</span>
                 </div>
             )}
 
@@ -72,7 +73,7 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                     <span className="text-[10px] text-gray-400">{item.duration}</span>
                     {isLocked ? (
                         <span className="text-[10px] font-bold text-amber-600 flex items-center gap-0.5">
-                            <Lock size={8} /> Unlock
+                            <Lock size={8} /> {t.unlockLabel || 'Unlock'}
                         </span>
                     ) : (
                         <span className="text-[10px] font-bold text-teal-600">¥{item.price?.toLocaleString()}</span>

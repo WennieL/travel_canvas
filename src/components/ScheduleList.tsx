@@ -176,7 +176,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps,
                                 value={newItemText}
                                 onChange={(e) => setNewItemText(e.target.value)}
                                 onKeyDown={handleKeyDown}
-                                placeholder={t.addItem || "新增準備事項..."}
+                                placeholder={t.preparationPlaceholder || "新增準備事項..."}
                                 className="w-full pl-4 pr-12 py-3 bg-gray-50 border-2 border-transparent focus:border-teal-400 focus:bg-white rounded-xl text-sm transition-all focus:outline-none placeholder:text-gray-400"
                             />
                             <button
@@ -243,7 +243,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ activePlan, t, budgetProps,
                                     <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                                         <Calendar size={24} className="text-gray-300" />
                                     </div>
-                                    <p className="text-gray-400 text-sm">{t.noItems || '還沒有準備事項，點擊上方新增吧！'}</p>
+                                    <p className="text-gray-400 text-sm">{t.noPreparationItems || '還沒有準備事項，點擊上方新增吧！'}</p>
                                 </div>
                             )}
                         </div>

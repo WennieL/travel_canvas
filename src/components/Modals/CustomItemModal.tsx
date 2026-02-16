@@ -99,7 +99,7 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
 
                 {/* Type Selector */}
                 <div className="mb-4">
-                    <label className="text-xs text-gray-500 mb-1 block">{t.type || '類型'}</label>
+                    <label className="text-xs text-gray-500 mb-1 block">{t.typeLabel || 'Type'}</label>
                     <div className="flex flex-wrap gap-2">
                         {(['attraction', 'food', 'hotel', 'transport', 'custom'] as ItemType[]).map(type => (
                             <button
@@ -124,17 +124,17 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                 {/* Transport-specific fields */}
                 {itemType === 'transport' && (
                     <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                        <div className="text-xs text-blue-600 font-medium mb-2">✈️ 交通資訊</div>
+                        <div className="text-xs text-blue-600 font-medium mb-2">{t.transportInfo}</div>
                         <div className="grid grid-cols-2 gap-2">
                             <input
                                 className="border rounded-lg p-2 text-sm"
-                                placeholder="出發地 (如: 台北)"
+                                placeholder={t.originPlaceholder}
                                 value={origin}
                                 onChange={e => setOrigin(e.target.value)}
                             />
                             <input
                                 className="border rounded-lg p-2 text-sm"
-                                placeholder="目的地 (如: 東京)"
+                                placeholder={t.destinationPlaceholder}
                                 value={destination}
                                 onChange={e => setDestination(e.target.value)}
                             />
@@ -145,11 +145,11 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                 {/* Name (optional for transport if origin/dest provided) */}
                 <div className="mb-3">
                     <label className="text-xs text-gray-500 mb-1 block">
-                        {t.name} {itemType === 'transport' && <span className="text-gray-400">(可選，留空則自動產生)</span>}
+                        {t.name} {itemType === 'transport' && <span className="text-gray-400">{t.optionalForTransport}</span>}
                     </label>
                     <input
                         className="w-full border rounded-lg p-2 text-sm"
-                        placeholder={itemType === 'transport' ? '如: CI100航班' : t.name}
+                        placeholder={itemType === 'transport' ? t.transportNamePlaceholder : t.name}
                         value={name}
                         onChange={e => setName(e.target.value)}
                     />
@@ -158,7 +158,7 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                 {/* Time & Price Row */}
                 <div className="grid grid-cols-2 gap-3 mb-3">
                     <div>
-                        <label className="text-xs text-gray-500 mb-1 block">🕐 時間</label>
+                        <label className="text-xs text-gray-500 mb-1 block">{t.timeLabel}</label>
                         <input
                             className="w-full border rounded-lg p-2 text-sm"
                             type="time"
@@ -180,7 +180,7 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
 
                 {/* Region Selector */}
                 <div className="mb-4">
-                    <label className="text-xs text-gray-500 mb-1 block">🌍 {t.region || '地區'}</label>
+                    <label className="text-xs text-gray-500 mb-1 block">{t.regionLabel || 'Region'}</label>
                     <div className="flex flex-wrap gap-2">
                         {(['all', 'tokyo', 'osaka', 'kyoto', 'melbourne'] as const).map(reg => (
                             <button
@@ -205,11 +205,11 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
 
                 {/* Notes */}
                 <div className="mb-4">
-                    <label className="text-xs text-gray-500 mb-1 block">📝 備註</label>
+                    <label className="text-xs text-gray-500 mb-1 block">{t.notesLabel}</label>
                     <textarea
                         className="w-full border rounded-lg p-2 text-sm resize-none"
                         rows={2}
-                        placeholder="航班號、座位、提醒事項..."
+                        placeholder={t.notesPlaceholder}
                         value={notes}
                         onChange={e => setNotes(e.target.value)}
                     />

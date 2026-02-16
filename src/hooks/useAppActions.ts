@@ -40,13 +40,11 @@ export const useAppActions = (deps: AppActionsDeps) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
         if (!skipConfirm) {
             const confirmed = await confirm({
-                title: lang === 'zh' ? '套用模板' : 'Apply Template',
-                message: lang === 'zh'
-                    ? `⚠️ 確定要套用「${templateName}」嗎？\n\n目前的行程將被取代。`
-                    : `⚠️ Apply "${templateName}"?\n\nCurrent itinerary will be replaced.`,
+                title: t.applyTemplateConfirmTitle || 'Apply Template',
+                message: (t.applyTemplateConfirmMessage || '⚠️ Apply "{name}"?\n\nCurrent itinerary will be replaced.').replace('{name}', templateName),
                 type: 'warning',
-                confirmText: lang === 'zh' ? '套用' : 'Apply',
-                cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                confirmText: t.confirm || (lang === 'zh' ? '套用' : 'Apply'),
+                cancelText: t.cancel || (lang === 'zh' ? '取消' : 'Cancel')
             });
             if (!confirmed) return;
         }
@@ -118,7 +116,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
         ui.setShowMobileLibrary(false);
         ui.setShowPlanManager(false);
         ui.setViewMode('canvas');
-        showToastMessage(lang === 'zh' ? `✅ 已套用「${templateName}」！` : `✅ "${templateName}" applied!`);
+        showToastMessage((t.appliedTemplate || '✅ "{name}" applied!').replace('{name}', templateName));
     }, [lang, confirm, isCreatingNewPlan, plans, setPlans, setActivePlanId, setIsCreatingNewPlan, updateActivePlan, setCurrentDay, ui, showToastMessage]);
 
     const handleCreateCustomItem = useCallback((data: any) => {
@@ -172,13 +170,11 @@ export const useAppActions = (deps: AppActionsDeps) => {
     const onDeleteDay = useCallback(async (dayToDelete: number, e?: React.MouseEvent) => {
         e?.stopPropagation();
         const confirmed = await confirm({
-            title: lang === 'zh' ? '刪除天數' : 'Delete Day',
-            message: lang === 'zh'
-                ? `確定要刪除第 ${dayToDelete} 天嗎？\n此動作無法復原。`
-                : `Are you sure you want to delete Day ${dayToDelete}?\nThis action cannot be undone.`,
+            title: t.deleteDayConfirmTitle || 'Delete Day',
+            message: (t.deleteDayConfirmMessage || 'Are you sure you want to delete Day {day}?\nThis action cannot be undone.').replace('{day}', dayToDelete.toString()),
             type: 'warning',
-            confirmText: lang === 'zh' ? '刪除' : 'Delete',
-            cancelText: lang === 'zh' ? '取消' : 'Cancel'
+            confirmText: t.delete || (lang === 'zh' ? '刪除' : 'Delete'),
+            cancelText: t.cancel || (lang === 'zh' ? '取消' : 'Cancel')
         });
         if (confirmed) {
             _handleDeleteDay(dayToDelete, e);
@@ -190,13 +186,11 @@ export const useAppActions = (deps: AppActionsDeps) => {
         const planToDelete = plans.find(p => p.id === id);
         const planName = planToDelete?.name || '';
         const confirmed = await confirm({
-            title: lang === 'zh' ? '刪除行程' : 'Delete Trip',
-            message: lang === 'zh'
-                ? `確定要刪除「${planName}」嗎？`
-                : `Are you sure you want to delete "${planName}"?`,
+            title: t.deleteTripConfirmTitle || 'Delete Trip',
+            message: (t.deleteTripConfirmMessage || 'Are you sure you want to delete "{name}"?').replace('{name}', planName),
             type: 'error',
-            confirmText: lang === 'zh' ? '刪除' : 'Delete',
-            cancelText: lang === 'zh' ? '取消' : 'Cancel'
+            confirmText: t.delete || (lang === 'zh' ? '刪除' : 'Delete'),
+            cancelText: t.cancel || (lang === 'zh' ? '取消' : 'Cancel')
         });
         if (confirmed) {
             _handleDeletePlan(id, e);
@@ -216,7 +210,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
         updateActivePlan({ schedule: newSchedule });
         setUnlockTarget(null);
         setBatchUnlockCount(0);
-        showToastMessage("🎉 Unlocked!");
+        showToastMessage("🎉 " + (t.unlocked || "Unlocked!"));
     }, [activePlan, updateActivePlan, showToastMessage]);
 
     const executeMoveItem = useCallback((targetDay: number) => {

@@ -194,7 +194,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
                         <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
                             <List size={14} /> {t.schedule}{t.attraction}
                         </span>
-                        <span className="text-[10px] text-gray-400">{points.length} {lang === 'en' ? 'Spots' : '個地點'}</span>
+                        <span className="text-[10px] text-gray-400">{points.length} {t.spotsLabel}</span>
                     </div>
                     <div className="flex-1 overflow-y-auto no-scrollbar" ref={listRef}>
                         <div className={`${isMobile ? 'p-2 space-y-2' : ''}`}>
@@ -215,7 +215,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
                                         <h4 className={`${isMobile ? 'text-sm' : 'text-xs'} font-bold text-gray-800 truncate leading-tight`}>
                                             {lang === 'en' ? (p.item.titleEn || p.item.title) : p.item.title}
                                         </h4>
-                                        <div className="text-[10px] text-gray-500 truncate">{p.item.address || p.item.startTime || (lang === 'en' ? 'No address' : '無地址')}</div>
+                                        <div className="text-[10px] text-gray-500 truncate">{p.item.address || p.item.startTime || t.noAddress}</div>
                                     </div>
                                 </div>
                             ))}

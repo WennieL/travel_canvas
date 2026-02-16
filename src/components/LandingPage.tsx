@@ -57,6 +57,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
 
             <ProductPreview
                 lang={lang}
+                t={t}
                 onStart={onStart}
             />
 

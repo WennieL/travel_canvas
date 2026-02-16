@@ -214,8 +214,17 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
         } else {
             const month = start.getMonth() + 1;
             const date = start.getDate();
-            const dayOfWeek = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'][start.getDay()];
-            return `${month}月${date}日 ${dayOfWeek}`;
+            const dayOfWeekMap: Record<number, string> = {
+                0: t.sun || '週日',
+                1: t.mon || '週一',
+                2: t.tue || '週二',
+                3: t.wed || '週三',
+                4: t.thu || '週四',
+                5: t.fri || '週五',
+                6: t.sat || '週六'
+            };
+            const dayOfWeek = dayOfWeekMap[start.getDay()];
+            return (t.monthDay || '{month}月{date}日').replace('{month}', month.toString()).replace('{date}', date.toString()) + ` ${dayOfWeek}`;
         }
     };
 

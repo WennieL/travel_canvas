@@ -1,46 +1,19 @@
 import React from 'react';
 import { X, Sparkles, Layout, ArrowRight } from 'lucide-react';
-import { LangType } from '../../types';
 
 interface StartPickerModalProps {
     isOpen: boolean;
     onClose: () => void;
     onChooseBlank: () => void;
     onChooseTemplate: () => void;
-    lang: LangType;
+    lang?: string;
+    t: any;
 }
 
 export const StartPickerModal: React.FC<StartPickerModalProps> = ({
-    isOpen,
-    onClose,
-    onChooseBlank,
-    onChooseTemplate,
-    lang
+    isOpen, onClose, onChooseBlank, onChooseTemplate, lang = 'zh', t
 }) => {
     if (!isOpen) return null;
-
-    const t = {
-        zh: {
-            title: '如何開始您的旅程？',
-            subtitle: '選擇一個起始方式，讓規劃變得更輕鬆',
-            blankTitle: '從空白開始',
-            blankDesc: '充滿創意地親手打造您專屬的每一天',
-            templateTitle: '套用達人模板',
-            templateDesc: '由在地人精選的行程，一鍵完整同步',
-            startBtn: '開始規劃',
-            browseBtn: '瀏覽模板'
-        },
-        en: {
-            title: 'How would you like to start?',
-            subtitle: 'Choose a way to begin your perfect journey',
-            blankTitle: 'Blank Canvas',
-            blankDesc: 'Build your unique itinerary from scratch',
-            templateTitle: 'Expert Templates',
-            templateDesc: 'Curated plans by locals, sync with one click',
-            startBtn: 'Start Fresh',
-            browseBtn: 'Browse Templates'
-        }
-    }[lang];
 
     return (
         <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4">
@@ -60,10 +33,10 @@ export const StartPickerModal: React.FC<StartPickerModalProps> = ({
                 <div className="p-8 md:p-12">
                     <div className="text-center mb-10">
                         <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-2 leading-tight">
-                            {t.title}
+                            {t.title || (lang === 'zh' ? '如何開始您的旅程？' : 'How would you like to start?')}
                         </h2>
                         <p className="text-gray-500 font-medium">
-                            {t.subtitle}
+                            {t.subtitle || (lang === 'zh' ? '選擇一個起始方式，讓規劃變得更輕鬆' : 'Choose a way to begin your perfect journey')}
                         </p>
                     </div>
 
@@ -77,13 +50,13 @@ export const StartPickerModal: React.FC<StartPickerModalProps> = ({
                                 <Layout size={28} />
                             </div>
                             <h3 className="text-xl font-bold text-gray-800 mb-2 transition-colors group-hover:text-teal-600">
-                                {t.blankTitle}
+                                {t.blankTitle || (lang === 'zh' ? '從空白開始' : 'Blank Canvas')}
                             </h3>
                             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                                {t.blankDesc}
+                                {t.blankDesc || (lang === 'zh' ? '充滿創意地親手打造您專屬的每一天' : 'Build your unique itinerary from scratch')}
                             </p>
                             <div className="flex items-center gap-2 text-teal-600 font-bold text-sm">
-                                {t.startBtn} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                {t.startBtn || (lang === 'zh' ? '開始規劃' : 'Start Fresh')} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </div>
                         </button>
 
@@ -99,20 +72,20 @@ export const StartPickerModal: React.FC<StartPickerModalProps> = ({
                                 <Sparkles size={28} />
                             </div>
                             <h3 className="text-xl font-bold text-gray-800 mb-2 transition-colors group-hover:text-emerald-600">
-                                {t.templateTitle}
+                                {t.templateTitle || (lang === 'zh' ? '套用達人模板' : 'Expert Templates')}
                             </h3>
                             <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                                {t.templateDesc}
+                                {t.templateDesc || (lang === 'zh' ? '由在地人精選的行程，一鍵完整同步' : 'Curated plans by locals, sync with one click')}
                             </p>
                             <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm">
-                                {t.browseBtn} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                {t.browseBtn || (lang === 'zh' ? '瀏覽模板' : 'Browse Templates')} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </div>
                         </button>
                     </div>
 
                     <div className="mt-10 text-center">
                         <p className="text-xs text-gray-400 font-medium italic">
-                            {lang === 'zh' ? 'Beta 期間，所有專業達人模板免費探索 ⚡️' : 'All pro templates are free for exploration during Beta ⚡️'}
+                            {t.allProTemplatesFree || (lang === 'zh' ? 'Beta 期間，所有專業達人模板免費探索 ⚡️' : 'All pro templates are free for exploration during Beta ⚡️')}
                         </p>
                     </div>
                 </div>
@@ -120,3 +93,5 @@ export const StartPickerModal: React.FC<StartPickerModalProps> = ({
         </div>
     );
 };
+
+export default StartPickerModal;

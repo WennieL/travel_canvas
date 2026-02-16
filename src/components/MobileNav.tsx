@@ -4,20 +4,15 @@ import { LangType, ViewMode } from '../types';
 
 interface MobileNavProps {
     viewMode: ViewMode;
-    showPlanManager: boolean;
     setViewMode: (mode: ViewMode) => void;
+    showPlanManager: boolean;
     setShowPlanManager: (show: boolean) => void;
-    lang: LangType;
+    lang: string;
     t: any;
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({
-    viewMode,
-    showPlanManager,
-    setViewMode,
-    setShowPlanManager,
-    lang,
-    t
+export const MobileNav: React.FC<MobileNavProps> = ({
+    viewMode, setViewMode, showPlanManager, setShowPlanManager, lang, t
 }) => {
     if (viewMode === 'map') return null;
 
@@ -28,7 +23,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'discovery' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
             >
                 <Compass size={20} />
-                <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{lang === 'zh' ? '發現' : 'Explore'}</span>
+                <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.explore || (lang === 'zh' ? '發現' : 'Explore')}</span>
             </button>
             <button
                 onClick={() => { setViewMode('canvas'); setShowPlanManager(false); }}
@@ -39,7 +34,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
             </button>
             <button
                 onClick={() => { setViewMode('map'); setShowPlanManager(false); }}
-                className={`flex flex-col items-center justify-center w-full transition-colors ${(viewMode as string) === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
+                className={`flex flex-col items-center justify-center w-full transition-colors ${viewMode === 'map' && !showPlanManager ? 'text-teal-600' : 'text-gray-400'}`}
             >
                 <MapIcon size={20} />
                 <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{t.map || 'Map'}</span>

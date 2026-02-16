@@ -12,6 +12,7 @@ interface CreatorProfileProps {
     onToggleSubscribe: () => void;
     onExploreTemplate: (template: Template) => void;
     lang?: 'zh' | 'en';
+    t: Record<string, string>;
 }
 
 export const CreatorProfile: React.FC<CreatorProfileProps> = ({
@@ -22,7 +23,8 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
     isSubscribed,
     onToggleSubscribe,
     onExploreTemplate,
-    lang = 'zh'
+    lang = 'zh',
+    t
 }) => {
     const { confirm } = useConfirm();
     if (!isOpen) return null;
@@ -77,23 +79,23 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                 highestTier === 'creator' ? 'bg-teal-100 text-teal-700 border border-teal-300' :
                                     'bg-gray-100 text-gray-600 border border-gray-300'
                                 }`}>
-                                {highestTier === 'official' && (lang === 'zh' ? '🏆 官方精選' : '🏆 Official Pick')}
-                                {highestTier === 'creator' && (lang === 'zh' ? '⭐ 認證達人' : '⭐ Verified Creator')}
-                                {highestTier === 'community' && (lang === 'zh' ? '👤 社群貢獲者' : '👤 Community')}
+                                {highestTier === 'official' && t.officialPick}
+                                {highestTier === 'creator' && t.verifiedCreator}
+                                {highestTier === 'community' && t.communityContributor}
                             </span>
                         )}
                     </div>
 
                     <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
                         <span className="flex items-center gap-1">
-                            <span className="font-bold text-gray-800">{creator.followers.toLocaleString()}</span> {lang === 'zh' ? '粉絲' : 'Followers'}
+                            <span className="font-bold text-gray-800">{creator.followers.toLocaleString()}</span> {t.followers}
                         </span>
                         <span>•</span>
-                        <span>{templates.length} {lang === 'zh' ? '個行程' : 'Plans'}</span>
+                        <span>{templates.length} {t.plans}</span>
                         {totalCopied > 0 && (
                             <>
                                 <span>•</span>
-                                <span className="text-teal-600">🔗 {totalCopied.toLocaleString()} {lang === 'zh' ? '累計套用' : 'uses'}</span>
+                                <span className="text-teal-600">🔗 {totalCopied.toLocaleString()} {t.totalUses}</span>
                             </>
                         )}
                     </div>
@@ -120,8 +122,8 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                         >
                             {isSubscribed ? <UserCheck size={18} /> : <UserPlus size={18} />}
                             {isSubscribed
-                                ? (lang === 'zh' ? '已追蹤' : 'Subscribed')
-                                : (lang === 'zh' ? '追蹤' : 'Subscribe')}
+                                ? t.subscribedLabel
+                                : t.subscribeLabel}
                         </button>
 
                         {creator.blogUrl && (
@@ -142,7 +144,7 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                 <div className="flex-1 p-6 bg-gray-50">
                     <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
                         <MapPin size={18} className="text-teal-600" />
-                        {lang === 'zh' ? '創作的行程' : 'Created Plans'}
+                        {t.createdPlans}
                     </h3>
 
                     <div className="grid grid-cols-1 gap-4">
@@ -154,13 +156,13 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                     if (template.isLocked && !template.purchased) {
                                         // Mock Purchase Interaction
                                         const confirmed = await confirm({
-                                            title: lang === 'zh' ? '解鎖行程' : 'Unlock Plan',
+                                            title: t.unlockPlan,
                                             message: lang === 'zh'
-                                                ? `確定要解鎖此付費行程嗎？(模擬付款: $${template.price})`
-                                                : `Unlock this premium plan for $${template.price}? (Mock Payment)`,
+                                                ? `${t.unlockPlanConfirm}(${t.mockPayment}: $${template.price})`
+                                                : `Unlock this premium plan for $${template.price}? (${t.mockPayment})`,
                                             type: 'info',
-                                            confirmText: lang === 'zh' ? '解鎖' : 'Unlock',
-                                            cancelText: lang === 'zh' ? '取消' : 'Cancel'
+                                            confirmText: t.unlockLabel || 'Unlock',
+                                            cancelText: t.cancel || 'Cancel'
                                         });
                                         if (confirmed) {
                                             template.purchased = true; // Local mutation for demo
@@ -186,7 +188,7 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                     )}
 
                                     <div className="absolute top-2 right-2 bg-black/40 text-white px-2 py-1 rounded text-xs font-medium backdrop-blur-sm">
-                                        {template.duration} {lang === 'zh' ? '天' : 'Days'}
+                                        {template.duration} {t.daysUnit}
                                     </div>
 
                                     {/* Early Bird Badge */}
@@ -235,9 +237,9 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
                                             ⭐ <span className="text-gray-600">{template.rating}</span>
                                         </div>
                                         {template.isLocked && !template.purchased ? (
-                                            <span className="text-teal-600 font-bold">{lang === 'zh' ? '點擊解鎖' : 'Tap to Unlock'}</span>
+                                            <span className="text-teal-600 font-bold">{t.tapToUnlock}</span>
                                         ) : (
-                                            <span>{lang === 'zh' ? '查看詳情' : 'View Details'}</span>
+                                            <span>{t.viewDetailsLabel}</span>
                                         )}
                                     </div>
                                 </div>

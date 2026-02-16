@@ -176,7 +176,9 @@ export function useItinerary(
                 3000
             );
         } else {
-            const addedMsg = lang === 'en' ? `✅ "${itemName}" added to ${slotLabel}` : `✅ 「${itemName}」已加入${slotLabel}`;
+            const addedMsg = (t.itemAddedTo || (lang === 'en' ? `✅ \"${itemName}\" added to ${slotLabel}` : `✅ 「${itemName}」已加入${slotLabel}`))
+                .replace('{name}', itemName)
+                .replace('{slot}', slotLabel);
             showToastMessage(addedMsg, 'success', 2500);
         }
     };

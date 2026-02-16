@@ -134,30 +134,32 @@ export const calculateDistance = (lat1?: number, lng1?: number, lat2?: number, l
  */
 export const getTransportSuggestion = (
     item1: { lat?: number; lng?: number },
-    item2: { lat?: number; lng?: number }
-): { mode: TransportMode; time: number; distance: number; label: string; labelEn: string } => {
+    item2: { lat?: number; lng?: number },
+    t: any
+): { mode: TransportMode; time: number; distance: number; label: string } => {
     const distance = calculateDistance(item1.lat, item1.lng, item2.lat, item2.lng);
+    const minLabel = t.minuteLabel || 'min';
 
     if (distance < 0.5) {
         // Less than 500m -> Walk
-        const time = Math.round(distance / 0.08); // ~80m/min walking
+        const time = Math.max(Math.round(distance / 0.08), 5); // ~80m/min walking
         return {
             mode: 'walk',
-            time: Math.max(time, 5),
+            time,
             distance,
-            label: `步行 ${Math.max(time, 5)} 分鐘`,
-            labelEn: `Walk ${Math.max(time, 5)} min`
+            label: `${t.walkLabel || 'Walk'} ${time} ${minLabel}`
         };
     } else if (distance < 2) {
         // 500m - 2km -> Walk or Public
         const walkTime = Math.round(distance / 0.08);
         const publicTime = Math.round(distance / 0.5 + 5); // 5 min waiting/transfer
+        const isWalk = walkTime < 20;
+        const time = isWalk ? walkTime : publicTime;
         return {
-            mode: walkTime < 20 ? 'walk' : 'public',
-            time: walkTime < 20 ? walkTime : publicTime,
+            mode: isWalk ? 'walk' : 'public',
+            time,
             distance,
-            label: walkTime < 20 ? `步行 ${walkTime} 分鐘` : `搭地鐵 ${publicTime} 分鐘`,
-            labelEn: walkTime < 20 ? `Walk ${walkTime} min` : `Subway ${publicTime} min`
+            label: isWalk ? `${t.walkLabel || 'Walk'} ${time} ${minLabel}` : `${t.subwayLabel || 'Subway'} ${time} ${minLabel}`
         };
     } else if (distance < 10) {
         // 2km - 10km -> Public transit
@@ -166,8 +168,7 @@ export const getTransportSuggestion = (
             mode: 'public',
             time,
             distance,
-            label: `搭地鐵 ${time} 分鐘`,
-            labelEn: `Subway ${time} min`
+            label: `${t.subwayLabel || 'Subway'} ${time} ${minLabel}`
         };
     } else {
         // > 10km -> Public transit (longer)
@@ -176,8 +177,7 @@ export const getTransportSuggestion = (
             mode: 'public',
             time,
             distance,
-            label: `搭電車 ${time} 分鐘`,
-            labelEn: `Train ${time} min`
+            label: `${t.trainLabel || 'Train'} ${time} ${minLabel}`
         };
     }
 };

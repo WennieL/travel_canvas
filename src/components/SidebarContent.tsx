@@ -172,7 +172,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
                                     }`}
                             >
-                                {showSubscribedOnly ? '✓ 已關注' : '只看已關注'}
+                                {showSubscribedOnly ? (t.subscribed || '✓ 已關注') : (t.subscribedOnly || '只看已關注')}
                             </button>
                         </div>
                     )}
@@ -187,6 +187,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                     key={item.id}
                                     item={item}
                                     lang={lang}
+                                    t={t}
                                     isMobile={isMobile}
                                     onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
                                     onClick={() => {
@@ -227,10 +228,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                             tpl.purchased = true;
                                             tpl.isLocked = false;
                                             confirm({
-                                                title: lang === 'zh' ? '解鎖成功' : 'Unlocked Success',
-                                                message: lang === 'zh' ? "🎁 Beta 免費解鎖成功！" : "🎁 Beta Unlocked successfully!",
+                                                title: t.unlockSuccess || '解鎖成功',
+                                                message: t.unlockedBeta || "🎁 Beta 免費解鎖成功！",
                                                 type: 'success',
-                                                confirmText: lang === 'zh' ? '太棒了' : 'Awesome'
+                                                confirmText: t.awesome || '太棒了'
                                             });
                                         }
                                         applyTemplate({ name: tpl.name, duration: tpl.duration, schedule: tpl.schedule, region: tpl.region });
@@ -239,9 +240,9 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             ))}
                             {filteredTemplates.length === 0 && (
                                 <div className="text-center text-gray-400 text-sm py-8 bg-gray-50 rounded-lg border border-dashed border-gray-200">
-                                    <p className="mb-2">😕 找不到模板</p>
+                                    <p className="mb-2">{t.noTemplatesFound || '😕 找不到模板'}</p>
                                     <button onClick={() => setShowSubscribedOnly(false)} className="text-teal-600 hover:underline text-xs">
-                                        {showSubscribedOnly ? '查看所有達人' : '嘗試其他篩選'}
+                                        {showSubscribedOnly ? (t.viewAllCreators || '查看所有達人') : (t.tryOtherFilters || '嘗試其他篩選')}
                                     </button>
                                 </div>
                             )}
@@ -299,12 +300,12 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             <div className="grid grid-cols-2 gap-3 mb-4">
                                 {mobilePreviewItem.openingHours && (
                                     <div className="bg-orange-50 p-3 rounded-lg">
-                                        <div className="text-orange-400 text-xs font-bold mb-1">⏰ 營業時間</div>
+                                        <div className="text-orange-400 text-xs font-bold mb-1">{t.openingHours || '⏰ 營業時間'}</div>
                                         <div className="text-orange-700 text-sm">{mobilePreviewItem.openingHours}</div>
                                     </div>
                                 )}
                                 <div className="bg-blue-50 p-3 rounded-lg">
-                                    <div className="text-blue-400 text-xs font-bold mb-1">⏱️ 建議停留</div>
+                                    <div className="text-blue-400 text-xs font-bold mb-1">{t.recommendedStay || '⏱️ 建議停留'}</div>
                                     <div className="text-blue-700 text-sm">{mobilePreviewItem.duration || '-'}</div>
                                 </div>
                             </div>
@@ -320,7 +321,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             {/* Tips */}
                             {mobilePreviewItem.tips && (
                                 <div className="bg-purple-50 border-l-3 border-purple-400 p-3 rounded-r-lg mb-3">
-                                    <div className="text-purple-600 text-xs font-bold mb-1">💡 小撇步</div>
+                                    <div className="text-purple-600 text-xs font-bold mb-1">{t.insiderTips || '💡 小撇步'}</div>
                                     <div className="text-purple-700 text-sm">{mobilePreviewItem.tips}</div>
                                 </div>
                             )}
@@ -328,7 +329,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             {/* Fun Fact */}
                             {mobilePreviewItem.funFact && (
                                 <div className="bg-yellow-50 border-l-3 border-yellow-400 p-3 rounded-r-lg mb-4">
-                                    <div className="text-yellow-600 text-xs font-bold mb-1">✨ 冷知識</div>
+                                    <div className="text-yellow-600 text-xs font-bold mb-1">{t.funFactsBadge || '✨ 冷知識'}</div>
                                     <div className="text-yellow-700 text-sm">{mobilePreviewItem.funFact}</div>
                                 </div>
                             )}
@@ -341,7 +342,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                                 }}
                                 className="w-full py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all"
                             >
-                                加入行程
+                                {t.addToItinerary || '加入行程'}
                             </button>
                         </div>
                     </div>

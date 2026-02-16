@@ -179,18 +179,18 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                         {/* Description */}
                         <div>
                             <h3 className="font-bold text-gray-800 mb-2 text-sm uppercase tracking-wide opacity-70">
-                                {lang === 'zh' ? '描述' : 'Description'}
+                                {t.descriptionLabel || (lang === 'zh' ? '描述' : 'Description')}
                             </h3>
                             {isEditing ? (
                                 <textarea
                                     className="w-full h-32 text-gray-600 leading-relaxed text-lg p-3 bg-blue-50/30 border border-blue-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
                                     value={editedDescription}
                                     onChange={e => setEditedDescription(e.target.value)}
-                                    placeholder={lang === 'zh' ? '在此輸入描述...' : 'Enter description here...'}
+                                    placeholder={t.enterDescriptionPlaceholder || (lang === 'zh' ? '在此輸入描述...' : 'Enter description here...')}
                                 />
                             ) : (
                                 <p className="text-gray-600 leading-relaxed text-lg">
-                                    {lang === 'en' && (item as any).descriptionEn ? (item as any).descriptionEn : (item.description || (lang === 'zh' ? '暫無描述' : 'No description available.'))}
+                                    {lang === 'en' && (item as any).descriptionEn ? (item as any).descriptionEn : (item.description || (t.noDescription || (lang === 'zh' ? '暫無描述' : 'No description available.')))}
                                 </p>
                             )}
                         </div>
@@ -199,7 +199,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {item.price !== undefined && (
                                 <div className={`p-3 rounded-lg border transition-colors ${isEditing ? 'bg-blue-50/50 border-blue-200' : 'bg-gray-50 border-gray-100'}`}>
-                                    <div className="text-xs text-gray-400 mb-1">Price</div>
+                                    <div className="text-xs text-gray-400 mb-1">{t.priceLabel || 'Price'}</div>
                                     {isEditing ? (
                                         <div className="flex items-center gap-1">
                                             <span className="text-gray-400 font-bold">¥</span>
@@ -217,21 +217,21 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                             )}
                             {item.duration && (
                                 <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                    <div className="text-xs text-gray-400 mb-1 flex items-center gap-1"><Clock size={10} /> Duration</div>
+                                    <div className="text-xs text-gray-400 mb-1 flex items-center gap-1"><Clock size={10} /> {t.durationLabel || 'Duration'}</div>
                                     <div className="font-bold text-gray-800">{item.duration}</div>
                                 </div>
                             )}
                             {item.rating && (
                                 <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                    <div className="text-xs text-gray-400 mb-1 flex items-center gap-1"><Star size={10} /> Rating</div>
+                                    <div className="text-xs text-gray-400 mb-1 flex items-center gap-1"><Star size={10} /> {t.ratingLabel || 'Rating'}</div>
                                     <div className="font-bold text-gray-800 flex items-center gap-1">
                                         {item.rating} <Star size={12} className="text-yellow-400 fill-yellow-400" />
                                     </div>
                                 </div>
                             )}
                             <div className="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                <div className="text-xs text-gray-400 mb-1">Items</div>
-                                <div className="font-bold text-gray-800">{(item as any).tags?.length || 0} Tags</div>
+                                <div className="text-xs text-gray-400 mb-1">{t.tagsLabel || 'Tags'}</div>
+                                <div className="font-bold text-gray-800">{(item as any).tags?.length || 0} {t.tagsLabel || 'Tags'}</div>
                             </div>
                         </div>
 
@@ -241,13 +241,13 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                 <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${isEditing ? 'bg-blue-50/50 border border-blue-200' : 'hover:bg-gray-50'}`}>
                                     <MapPin className={`w-5 h-5 mt-0.5 shrink-0 ${isEditing ? 'text-blue-500' : 'text-gray-400'}`} />
                                     <div className="flex-1">
-                                        <div className="font-medium text-gray-900">Address</div>
+                                        <div className="font-medium text-gray-900">{t.addressLabel || 'Address'}</div>
                                         {isEditing ? (
                                             <input
                                                 className="text-gray-600 text-sm bg-transparent w-full focus:outline-none border-b border-blue-200"
                                                 value={editedAddress}
                                                 onChange={e => setEditedAddress(e.target.value)}
-                                                placeholder={lang === 'zh' ? '輸入地址或地點...' : 'Enter address or location...'}
+                                                placeholder={t.enterAddressPlaceholder || (lang === 'zh' ? '輸入地址或地點...' : 'Enter address or location...')}
                                             />
                                         ) : (
                                             <div className="text-gray-500 text-sm">{item.address}</div>
@@ -280,7 +280,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                 <div className="flex items-start gap-3 p-3 rounded-lg bg-yellow-50/50 border border-yellow-100">
                                     <div className="text-xl">💡</div>
                                     <div>
-                                        <div className="font-bold text-yellow-800 text-sm">Pro Tip</div>
+                                        <div className="font-bold text-yellow-800 text-sm">{t.proTipLabel || 'Pro Tip'}</div>
                                         <div className="text-yellow-700 text-sm">{item.tips}</div>
                                     </div>
                                 </div>
@@ -291,7 +291,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                 <div className="p-4 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
                                     <div className="flex items-center gap-2 mb-3">
                                         <Star size={16} className="text-amber-500" fill="currentColor" />
-                                        <span className="font-bold text-amber-800 tracking-wide">INSIDER TIP</span>
+                                        <span className="font-bold text-amber-800 tracking-wide">{t.insiderTipLabel || 'INSIDER TIP'}</span>
                                     </div>
 
                                     {/* Teaser / Summary */}
@@ -315,7 +315,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">📍</span>
                                                         <div>
-                                                            <div className="font-medium text-amber-900">{lang === 'zh' ? '精確位置' : 'Exact Location'}</div>
+                                                            <div className="font-medium text-amber-900">{t.exactLocationLabel || '精確位置'}</div>
                                                             <div className="text-amber-700">{lang === 'en' && item.insiderTip.full.exactLocationEn ? item.insiderTip.full.exactLocationEn : item.insiderTip.full.exactLocation}</div>
                                                         </div>
                                                     </div>
@@ -324,7 +324,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">🎯</span>
                                                         <div>
-                                                            <div className="font-medium text-amber-900">{lang === 'zh' ? '必點推薦' : 'Must Try'}</div>
+                                                            <div className="font-medium text-amber-900">{t.mustTryLabel || '必點推薦'}</div>
                                                             <div className="text-amber-700">{lang === 'en' && item.insiderTip.full.mustTryEn ? item.insiderTip.full.mustTryEn : item.insiderTip.full.mustTry}</div>
                                                         </div>
                                                     </div>
@@ -333,7 +333,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">⏰</span>
                                                         <div>
-                                                            <div className="font-medium text-amber-900">{lang === 'zh' ? '最佳時段' : 'Best Time'}</div>
+                                                            <div className="font-medium text-amber-900">{t.bestTimeLabel || '最佳時段'}</div>
                                                             <div className="text-amber-700">{item.insiderTip.full.bestTime}</div>
                                                         </div>
                                                     </div>
@@ -342,7 +342,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                                     <div className="flex items-start gap-2">
                                                         <span className="text-base">⚠️</span>
                                                         <div>
-                                                            <div className="font-medium text-red-700">{lang === 'zh' ? '避坑提醒' : 'Avoid'}</div>
+                                                            <div className="font-medium text-red-700">{t.avoidPromptLabel || '避坑提醒'}</div>
                                                             <div className="text-red-600">{lang === 'en' && item.insiderTip.full.avoidEn ? item.insiderTip.full.avoidEn : item.insiderTip.full.avoid}</div>
                                                         </div>
                                                     </div>

@@ -79,7 +79,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                     <span className="max-w-[60px] truncate">
                                         {(() => {
                                             const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
-                                            if (!city) return lang === 'en' ? 'All' : '全部';
+                                            if (!city) return t.allRegion || '全部';
                                             return lang === 'en' ? city.labelEn : city.label;
                                         })()}
                                     </span>
@@ -127,7 +127,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             </div>
                         </div>
                     )}
-                    <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate} <span className="opacity-80">({activePlan.totalDays} {lang === 'en' ? 'Days' : '天'})</span></span>
+                    <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate} <span className="opacity-80">({activePlan.totalDays} {t.daysUnit || '天'})</span></span>
                 </div>
                 <div className="flex gap-1 flex-shrink-0 items-center">
                     <button onClick={toggleLang} className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
@@ -170,7 +170,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         className="text-[10px] text-gray-400 font-medium tracking-wide cursor-pointer hover:text-teal-600 hover:underline underline-offset-2 decoration-dotted transition-colors"
                         title={t.editDateHint}
                     >
-                        📅 {activePlan.startDate} ~ {activePlan.endDate} <span className="text-gray-300 ml-1 font-normal">({activePlan.totalDays} {lang === 'en' ? 'Days' : '天'})</span>
+                        📅 {activePlan.startDate} ~ {activePlan.endDate} <span className="text-gray-300 ml-1 font-normal">({activePlan.totalDays} {t.daysUnit || '天'})</span>
                     </span>
                 </div>
 
@@ -184,7 +184,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         <span className="whitespace-nowrap">
                             {(() => {
                                 const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
-                                if (!city) return lang === 'en' ? 'All Cities' : '所有城市';
+                                if (!city) return t.allCities || '所有城市';
                                 return lang === 'en' ? city.labelEn : city.label;
                             })()}
                         </span>
@@ -196,7 +196,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             <div className="fixed inset-0 z-40" onClick={() => setShowCitySelector(false)} />
                             <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                                 <div className="flex items-center justify-between px-2 py-1 mb-1">
-                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{lang === 'zh' ? '選擇城市' : 'Select City'}</div>
+                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.selectCity || '選擇城市'}</div>
                                     <button onClick={() => setShowCitySelector(false)} className="text-gray-400 hover:text-gray-600"><X size={12} /></button>
                                 </div>
                                 <div className="max-h-64 overflow-y-auto">
@@ -244,10 +244,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         <button
                             onClick={() => setShowContextMap(!showContextMap)}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${showContextMap ? 'bg-teal-50 text-teal-600 border-teal-200' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'}`}
-                            title={lang === 'zh' ? '顯示輔助地圖' : 'Show Side Map'}
+                            title={t.showMap || '顯示輔助地圖'}
                         >
                             <MapIcon size={14} />
-                            <span>{lang === 'zh' ? '地圖' : 'Map'}</span>
+                            <span>{t.map || '地圖'}</span>
                         </button>
 
                         <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>

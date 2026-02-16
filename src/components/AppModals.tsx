@@ -117,6 +117,12 @@ interface AppModalsProps {
     selectedItem: ScheduleItem | null;
     setSelectedItem: (item: ScheduleItem | null) => void;
     onUpdateScheduleItem?: (instanceId: string, updates: Partial<ScheduleItem>) => void;
+
+    // Additional state for children
+    setPlans: (plans: Plan[]) => void;
+    setCustomAssets: React.Dispatch<React.SetStateAction<TravelItem[]>>;
+    customAssets: TravelItem[];
+    subscribedCreators: string[];
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
@@ -127,9 +133,9 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         onTriggerPicker, onCreateBlank, onExpertMode,
         handleDeletePlan, activeRegion,
         showCustomItemModal, setShowCustomItemModal, handleCreateCustomItem,
-        showExportModal, setShowExportModal, activePlan, currentDay, generateExportText,
-        setPlans, setActivePlanIdDirect, setCustomAssets, setBudgetLimit, setSubscribedCreators,
-        customAssets, budgetLimit, subscribedCreators,
+        activePlan, currentDay,
+        setPlans, setCustomAssets,
+        customAssets, subscribedCreators,
         showShareModal, setShowShareModal, onOpenMobilePreview,
         showDateModal, setShowDateModal, tempStartDate, tempEndDate, onDateConfirm,
         selectedCreatorId, setSelectedCreatorId, activeCreator, creatorTemplates, isSubscribed, toggleSubscription, applyTemplate,
@@ -151,6 +157,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 isOpen={showStartPicker}
                 onClose={() => setShowStartPicker(false)}
                 lang={lang}
+                t={t}
                 onChooseBlank={() => {
                     onCreateBlank(activeRegion);
                     setShowStartPicker(false);
@@ -224,6 +231,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     setSelectedCreatorId(null);
                 }}
                 lang={lang}
+                t={t}
             />
 
             <MoveToDayModal
