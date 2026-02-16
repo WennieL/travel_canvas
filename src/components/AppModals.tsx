@@ -239,6 +239,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 onClose={() => setShowMoveModal(false)}
                 totalDays={activePlan.totalDays}
                 currentDay={currentDay}
+                currentSlot={moveTarget?.slot || 'morning'}
                 onExecute={executeMoveItem}
                 t={t}
             />

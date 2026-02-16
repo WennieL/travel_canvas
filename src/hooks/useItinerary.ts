@@ -38,11 +38,28 @@ export function useItinerary(
                 arrivalTransport: 'car'
             };
             newSchedule[currentDayKey][targetSlot].push(newItem);
+
+            // Show added toast for sidebar items
+            const itemName = (lang === 'en' && dragged.item.titleEn) ? dragged.item.titleEn : dragged.item.title;
+            const slotLabel = t[targetSlot] || targetSlot;
+            const addedMsg = (t.itemAddedTo || (lang === 'en' ? `✅ "${itemName}" added to ${slotLabel}` : `✅ 「${itemName}」已加入${slotLabel}`))
+                .replace('{name}', itemName)
+                .replace('{slot}', slotLabel);
+            showToastMessage(addedMsg, 'success', 2500);
+
         } else if (dragged.source === 'canvas' && dragged.sourceSlot && dragged.index !== undefined) {
             if (dragged.sourceSlot !== targetSlot) {
                 newSchedule[currentDayKey][dragged.sourceSlot] = [...newSchedule[currentDayKey][dragged.sourceSlot]];
             }
             const item = newSchedule[currentDayKey][dragged.sourceSlot].splice(dragged.index, 1)[0];
+
+            // Reset time if moving to a different slot type
+            if (dragged.sourceSlot !== targetSlot) {
+                item.startTime = '';
+                // Show reminder to set new time
+                showToastMessage(t.rememberSetTime || "Remember to set a new time!", 'info', 3000);
+            }
+
             newSchedule[currentDayKey][targetSlot].push(item);
         }
 

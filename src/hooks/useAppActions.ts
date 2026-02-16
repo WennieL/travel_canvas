@@ -213,7 +213,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
         showToastMessage("🎉 " + (t.unlocked || "Unlocked!"));
     }, [activePlan, updateActivePlan, showToastMessage]);
 
-    const executeMoveItem = useCallback((targetDay: number) => {
+    const executeMoveItem = useCallback((targetDay: number, targetSlot?: TimeSlot) => {
         if (!ui.moveTarget) return;
         const sourceDayKey = `Day ${currentDay}`;
         const targetDayKey = `Day ${targetDay}`;
@@ -225,12 +225,19 @@ export const useAppActions = (deps: AppActionsDeps) => {
 
         const sourceDayRef = newSchedule[sourceDayKey] as DaySchedule;
         const targetDayRef = newSchedule[targetDayKey] as DaySchedule;
-        const slot = ui.moveTarget.slot as TimeSlot;
+        const sourceSlot = ui.moveTarget.slot as TimeSlot;
+        const destSlot = targetSlot || sourceSlot;
 
-        const [item] = sourceDayRef[slot].splice(ui.moveTarget.index, 1);
-        targetDayRef[slot].push(item);
+        const [item] = sourceDayRef[sourceSlot].splice(ui.moveTarget.index, 1);
 
-        targetDayRef[slot].sort((a: ScheduleItem, b: ScheduleItem) => {
+        // Reset time if moving to a different slot type
+        if (destSlot !== sourceSlot) {
+            item.startTime = '';
+        }
+
+        targetDayRef[destSlot].push(item);
+
+        targetDayRef[destSlot].sort((a: ScheduleItem, b: ScheduleItem) => {
             const timeA = a.startTime || 'ZZZZ';
             const timeB = b.startTime || 'ZZZZ';
             return timeA.localeCompare(timeB);
@@ -238,7 +245,15 @@ export const useAppActions = (deps: AppActionsDeps) => {
 
         updateActivePlan({ schedule: newSchedule });
         ui.setShowMoveModal(false);
-        showToastMessage(`${t.movedTo || 'Moved to'} Day ${targetDay}`);
+
+        const slotLabel = t[destSlot] || destSlot;
+        let message = `${t.movedTo || 'Moved to'} Day ${targetDay} · ${slotLabel}`;
+
+        if (destSlot !== sourceSlot) {
+            message += `. ${t.rememberSetTime || 'Remember to set a new time!'}`;
+        }
+
+        showToastMessage(message);
     }, [ui, currentDay, activePlan, updateActivePlan, showToastMessage, t]);
 
     return {
