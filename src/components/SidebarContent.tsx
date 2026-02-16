@@ -114,7 +114,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             </div>
 
             {/* Main Scrollable Area */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-200">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain no-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {/* Layer 1: Region Selection (Scrolls with text) */}
                 <RegionCarousel
                     activeCountry={activeCountry}

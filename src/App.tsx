@@ -391,7 +391,7 @@ export function App() {
                 )}
 
                 {/* Canvas Area */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 lg:p-8 custom-scrollbar">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 lg:p-8 no-scrollbar">
                     {/* View Switcher Content */}
                     {viewMode === 'map' ? (
                         <div className="h-full">

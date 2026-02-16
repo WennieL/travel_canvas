@@ -54,7 +54,7 @@ export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {
                 </div>
 
                 {/* Content - Reuse SidebarContent */}
-                <div className="flex-1 overflow-hidden relative">
+                <div className="flex-1 flex flex-col min-h-0 overflow-hidden relative">
                     <SidebarContent
                         {...props}
                         highlight={false} // No wiggle needed inside drawer
