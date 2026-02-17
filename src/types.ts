@@ -78,6 +78,7 @@ export interface ScheduleItem extends TravelItem {
         image?: string;
         description: string;
     };
+    day?: number; // [NEW] Optional day context for move operations
 }
 
 export interface ChecklistItem {

@@ -44,6 +44,7 @@ interface CanvasViewProps {
     setUnlockTarget: (item: ScheduleItem | null) => void;
     setSelectedItem: (item: ScheduleItem | null) => void;
     setIsSidebarOpen: (open: boolean) => void;
+    setActiveTab: (tab: 'assets' | 'templates') => void;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -66,7 +67,8 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     setSidebarHighlight,
     setUnlockTarget,
     setSelectedItem,
-    setIsSidebarOpen
+    setIsSidebarOpen,
+    setActiveTab
 }) => {
     const isTimeline = !showContextMap;
 
@@ -148,6 +150,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                         onItemClick={setSelectedItem}
                                         onDragStart={handleDragStart}
                                         onAddItem={() => {
+                                            setActiveTab('assets');
                                             if (window.innerWidth < 1024) {
                                                 setAddToSlotTarget(slot);
                                                 setShowMobileLibrary(true);
@@ -202,6 +205,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         onItemClick={setSelectedItem}
                         onDragStart={handleDragStart}
                         onAddItem={() => {
+                            setActiveTab('assets');
                             if (window.innerWidth < 1024) {
                                 setAddToSlotTarget('accommodation');
                                 setShowMobileLibrary(true);

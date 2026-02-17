@@ -11,10 +11,11 @@ import {
     ItemDetailModal,
     StartPickerModal,
     MoveToDayModal,
+    CreatorProfileModal,
+    TemplateStoryPreview,
 } from './Modals';
 import { MobileLibrary } from './MobileLibrary';
 import { MobilePreview } from './MobilePreview';
-import { CreatorProfile } from './CreatorProfile';
 import { Plan, LangType, Template, TimeSlot, ScheduleItem, ItemType, TransportMode, Region, TravelItem, ViewMode } from '../types';
 
 interface AppModalsProps {
@@ -113,6 +114,10 @@ interface AppModalsProps {
     showStartPicker: boolean;
     setShowStartPicker: (show: boolean) => void;
 
+    // Story Preview
+    showStoryPreview: boolean;
+    setShowStoryPreview: (show: boolean) => void;
+
     // Item Detail Modal
     selectedItem: ScheduleItem | null;
     setSelectedItem: (item: ScheduleItem | null) => void;
@@ -148,7 +153,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         showStartPicker, setShowStartPicker,
         isSidebarOpen, setIsSidebarOpen,
         setViewMode,
-        selectedItem, setSelectedItem
+        selectedItem, setSelectedItem,
+        showStoryPreview, setShowStoryPreview,
     } = props;
 
     return (
@@ -219,15 +225,14 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 t={t}
             />
 
-            <CreatorProfile
+            <CreatorProfileModal
                 isOpen={!!selectedCreatorId && !!activeCreator}
                 onClose={() => setSelectedCreatorId(null)}
                 creator={activeCreator}
-                templates={creatorTemplates}
                 isSubscribed={isSubscribed}
-                onToggleSubscribe={() => selectedCreatorId && toggleSubscription(selectedCreatorId)}
-                onExploreTemplate={(tpl: Template) => {
-                    applyTemplate(tpl);
+                onToggleSubscribe={toggleSubscription}
+                onPreviewTemplate={(tpl: Template) => {
+                    setPreviewTemplate(tpl);
                     setSelectedCreatorId(null);
                 }}
                 lang={lang}
@@ -317,6 +322,10 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                         setUnlockTarget(firstItem);
                         setBatchUnlockCount(1);
                     }}
+                    onViewCreator={(authorId) => {
+                        setPreviewTemplate(null);
+                        setSelectedCreatorId(authorId);
+                    }}
                     t={t}
                     lang={lang}
                 />
@@ -352,6 +361,19 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     }}
                 />
             )}
+
+            <TemplateStoryPreview
+                isOpen={showStoryPreview}
+                onClose={() => setShowStoryPreview(false)}
+                template={previewTemplate}
+                onApply={(tpl) => {
+                    applyTemplate(tpl);
+                    setShowStoryPreview(false);
+                }}
+                onSubscribe={toggleSubscription}
+                isSubscribed={isSubscribed}
+                lang={lang}
+            />
         </>
     );
 };

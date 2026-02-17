@@ -172,13 +172,18 @@ export function App() {
         }
     }, [lang, sidebarWidth, isInitialized]);
 
-    // [NEW] Sync Sidebar Region with Active Plan
-    // When switching plans or applying templates, automatically switch the sidebar category
     useEffect(() => {
         if (activePlan?.region && activePlan.region !== 'all') {
             ui.setActiveRegion(activePlan.region);
         }
     }, [activePlan?.id, activePlan?.region]);
+
+    // [FIX] Force "Assets" tab when mobile library or specific adding actions are triggered
+    useEffect(() => {
+        if (showMobileLibrary) {
+            setActiveTab('assets');
+        }
+    }, [showMobileLibrary, setActiveTab]);
 
     const [showContextMap, setShowContextMap] = useState(false);
 
@@ -211,10 +216,24 @@ export function App() {
     // Derived State
 
     // Removed local activeRegion derived state to avoid confusion with ui.activeRegion
-    const activeCreator = SAMPLE_CREATORS.find(c => c.id === selectedCreatorId);
+    const activeCreator = SAMPLE_CREATORS.find(c => c.id === selectedCreatorId) || null;
     const creatorTemplates = activeCreator ? TEMPLATES.filter(tpl => tpl.authorId === activeCreator.id) : [];
     const [subscribedCreators, setSubscribedCreators] = useState<string[]>([]);
     const [customAssets, setCustomAssets] = useState<TravelItem[]>([]);
+
+    const handleToggleSubscribe = useCallback((creatorId: string) => {
+        setSubscribedCreators(prev => {
+            const isSubscribed = prev.includes(creatorId);
+            const next = isSubscribed ? prev.filter(id => id !== creatorId) : [...prev, creatorId];
+            showToastMessage(
+                isSubscribed
+                    ? (lang === 'zh' ? '已取消關注' : 'Unsubscribed')
+                    : (lang === 'zh' ? '已關注達人！' : 'Subscribed to Creator!'),
+                'success'
+            );
+            return next;
+        });
+    }, [lang, showToastMessage]);
 
     const toggleLang = () => setLang(prev => prev === 'en' ? 'zh' : 'en');
 
@@ -406,14 +425,19 @@ export function App() {
                     ) : viewMode === 'discovery' ? (
                         <div className="h-full">
                             <DiscoveryView
-                                lang={lang}
-                                t={t}
+                                onPreviewTemplate={setPreviewTemplate}
+                                onStoryPreview={(tpl) => {
+                                    setPreviewTemplate(tpl);
+                                    ui.setShowStoryPreview(true);
+                                }}
+                                onCreatorClick={ui.setSelectedCreatorId}
+                                setActiveTab={setActiveTab}
                                 activeRegion={ui.activeRegion}
                                 setActiveRegion={ui.setActiveRegion}
                                 showToastMessage={showToastMessage}
                                 toggleLang={toggleLang}
-                                onPreviewTemplate={setPreviewTemplate}
-                                setActiveTab={setActiveTab}
+                                lang={lang}
+                                t={t}
                             />
                         </div>
                     ) : viewMode === 'checklist' ? (
@@ -457,6 +481,7 @@ export function App() {
                             setIsSidebarOpen={ui.setIsSidebarOpen}
                             setUnlockTarget={setUnlockTarget}
                             setSelectedItem={ui.setSelectedItem}
+                            setActiveTab={setActiveTab}
                         />
                     )}
                 </div>
@@ -472,45 +497,102 @@ export function App() {
             </div>
 
             <AppModals
-                {...ui}
+                // Shared & Language
                 lang={lang} t={t} showToastMessage={showToastMessage}
+
+                // View State & Sidebar
+                activeTab={activeTab} setActiveTab={setActiveTab}
+                searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                activeCategory={activeCategory} setActiveCategory={setActiveCategory}
+                activeRegion={ui.activeRegion} setActiveRegion={setActiveRegion}
+                isSidebarOpen={isSidebarOpen} setIsSidebarOpen={ui.setIsSidebarOpen}
+                setViewMode={setViewMode}
+
+                // Handlers & Library
+                handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
+                showMobileLibrary={showMobileLibrary} setShowMobileLibrary={ui.setShowMobileLibrary}
+                addToSlotTarget={addToSlotTarget}
+
+                // Plan Management
+                showPlanManager={showPlanManager} setShowPlanManager={setShowPlanManager}
                 plans={plans} activePlanId={activePlanId} setActivePlanId={setActivePlanId}
                 onTriggerPicker={handleTriggerStartPicker}
                 onCreateBlank={executeCreateBlankPlan}
                 onExpertMode={enterExpertCreationMode}
-                handleDeletePlan={onDeletePlan}
-                handleCreateCustomItem={handleCreateCustomItem}
-                activePlan={activePlan} currentDay={currentDay}
+                handleDeletePlan={_handleDeletePlan}
                 setPlans={setPlans}
-                setCustomAssets={setCustomAssets}
-                customAssets={customAssets}
-                subscribedCreators={subscribedCreators}
+
+                // Custom Items
+                showCustomItemModal={showCustomItemModal} setShowCustomItemModal={setShowCustomItemModal}
+                handleCreateCustomItem={(data: any) => {
+                    const newItem = { ...data, id: `custom-${Date.now()}`, isCustom: true };
+                    setCustomAssets(prev => [newItem, ...prev]);
+                    handleTapToAdd(newItem);
+                    setShowCustomItemModal(false);
+                }}
+                customAssets={customAssets} setCustomAssets={setCustomAssets}
+
+                // Share & Export
+                showShareModal={showShareModal} setShowShareModal={setShowShareModal}
                 onOpenMobilePreview={() => setShowMobilePreview(true)}
-                confirmUnlock={confirmUnlock}
+                activePlan={activePlan} currentDay={currentDay}
+
+                // Dates
+                showDateModal={showDateModal} setShowDateModal={setShowDateModal}
+                tempStartDate={activePlan.startDate} tempEndDate={activePlan.endDate}
                 onDateConfirm={(start, end) => {
                     const diff = Math.ceil(Math.abs(new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60 * 24)) + 1;
                     updateActivePlan({ startDate: start, endDate: end, totalDays: diff });
                     setShowDateModal(false);
                 }}
-                activeCreator={activeCreator} creatorTemplates={creatorTemplates}
-                isSubscribed={subscribedCreators.includes(selectedCreatorId || '')}
-                toggleSubscription={(id) => setSubscribedCreators(prev => prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id])}
-                applyTemplate={applyTemplate}
-                executeMoveItem={executeMoveItem}
-                tempStartDate={activePlan.startDate}
-                tempEndDate={activePlan.endDate}
-                selectedItem={ui.selectedItem}
-                setSelectedItem={ui.setSelectedItem}
-                onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
 
-                // Pass View State & Handlers for Mobile Library
-                activeTab={activeTab} setActiveTab={setActiveTab}
-                searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-                activeCategory={activeCategory} setActiveCategory={setActiveCategory}
-                activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
-                handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
-                showMobileLibrary={showMobileLibrary} setShowMobileLibrary={setShowMobileLibrary}
-                addToSlotTarget={addToSlotTarget}
+                // Creator & Subscription
+                selectedCreatorId={selectedCreatorId} setSelectedCreatorId={setSelectedCreatorId}
+                activeCreator={activeCreator} creatorTemplates={creatorTemplates}
+                isSubscribed={!!selectedCreatorId && subscribedCreators.includes(selectedCreatorId)}
+                toggleSubscription={handleToggleSubscribe}
+                subscribedCreators={subscribedCreators}
+                applyTemplate={applyTemplate}
+
+                // Move Item
+                showMoveModal={showMoveModal} setShowMoveModal={setShowMoveModal}
+                moveTarget={ui.moveTarget}
+                executeMoveItem={(day: number) => {
+                    if (ui.moveTarget) {
+                        const { slot, index } = ui.moveTarget;
+                        const item = activePlan.schedule[`Day ${currentDay}`][slot as keyof DaySchedule][index] as ScheduleItem;
+                        handleRemoveItem(slot as keyof DaySchedule, index);
+
+                        const targetPlan = { ...activePlan };
+                        const targetDayKey = `Day ${day}`;
+                        if (!targetPlan.schedule[targetDayKey]) targetPlan.schedule[targetDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+                        (targetPlan.schedule[targetDayKey][slot as keyof DaySchedule] as ScheduleItem[]).push({ ...item, day });
+
+                        updateActivePlan({ schedule: targetPlan.schedule });
+                        showToastMessage(lang === 'zh' ? `已移動至第 ${day} 天` : `Moved to Day ${day}`);
+                    }
+                    setShowMoveModal(false);
+                }}
+
+                // Submit & Feedback
+                showSubmitModal={showSubmitModal} setShowSubmitModal={setShowSubmitModal}
+
+                // Mobile States
+                showMobilePreview={showMobilePreview} setShowMobilePreview={setShowMobilePreview}
+
+                // Template & Unlock
+                previewTemplate={previewTemplate} setPreviewTemplate={setPreviewTemplate}
+                unlockTarget={unlockTarget} setUnlockTarget={setUnlockTarget}
+                batchUnlockCount={batchUnlockCount} setBatchUnlockCount={setBatchUnlockCount}
+                confirmUnlock={confirmUnlock}
+
+                // Initialization & Misc
+                showStoryPreview={ui.showStoryPreview} setShowStoryPreview={ui.setShowStoryPreview}
+
+                // Initialization & Misc
+                showStartPicker={ui.showStartPicker} setShowStartPicker={ui.setShowStartPicker}
+                selectedItem={ui.selectedItem} setSelectedItem={ui.setSelectedItem}
+                onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
             />
 
             {toast.show && <Toast message={toast.message} type={toast.type} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}
