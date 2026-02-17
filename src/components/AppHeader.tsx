@@ -130,7 +130,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate} <span className="opacity-80">({activePlan.totalDays} {t.daysUnit || '天'})</span></span>
                 </div>
                 <div className="flex gap-1 flex-shrink-0 items-center">
-                    <button onClick={toggleLang} className="hidden p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                     <button
                         onClick={() => setShowShareModal(true)}
                         className="flex items-center gap-1.5 px-3.5 py-1.5 bg-gray-100 text-gray-700 rounded-full text-[10px] font-bold active:scale-95 transition-all"
@@ -259,7 +258,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
 
                     {/* Global Actions */}
-                    <button onClick={toggleLang} className="hidden md:flex w-9 h-9 items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
+                    <button onClick={toggleLang} className="hidden lg:flex w-9 h-9 items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                     <button
                         onClick={() => handleGateCheck(() => setShowShareModal(true))}
                         className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-xs font-bold transition-all active:scale-95"
