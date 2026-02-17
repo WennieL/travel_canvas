@@ -79,7 +79,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 z-[1000] flex justify-center items-end md:items-center pointer-events-none">
+        <div className="fixed inset-0 z-[3000] flex justify-center items-center pointer-events-none p-4">
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm pointer-events-auto transition-opacity duration-300"
@@ -87,7 +87,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
             />
 
             {/* Modal Container */}
-            <div className="bg-white w-full max-w-[480px] h-[90vh] md:h-[85vh] md:max-h-[800px] md:rounded-3xl rounded-t-3xl shadow-2xl pointer-events-auto flex flex-col relative overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+            <div className="bg-white w-full max-w-[480px] h-[85vh] max-h-[800px] rounded-[32px] shadow-2xl pointer-events-auto flex flex-col relative overflow-hidden animate-in zoom-in-95 slide-in-from-bottom-10 duration-500 ease-out">
 
                 {/* Close Button */}
                 <button
@@ -306,7 +306,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                 </div>
 
                 {/* ===== 7. STICKY CTA FOOTER ===== */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+                <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-5 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-50">
                     <div className="flex gap-3">
                         {/* Primary CTA */}
                         <button

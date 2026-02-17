@@ -112,7 +112,7 @@ export const TemplateStoryPreview: React.FC<TemplateStoryPreviewProps> = ({
     const currentPage = storyPages[currentIndex];
 
     return (
-        <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black">
+        <div className="fixed inset-0 z-[3000] flex items-center justify-center bg-black">
             {/* Story Container */}
             <div className="relative w-full h-[100dvh] max-w-lg overflow-hidden bg-slate-900 shadow-2xl">
 

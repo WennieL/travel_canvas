@@ -225,7 +225,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
             )}
 
             {/* Map Area */}
-            <div className={`relative z-0 ${isMobile && !isFullScreen ? (isLandscape ? 'w-1/2 h-full' : 'h-[60svh] w-full') : 'flex-1'}`}>
+            <div className={`relative z-0 ${isMobile && !isFullScreen ? (isLandscape ? 'w-1/2 h-full' : 'flex-1 w-full') : 'flex-1'}`}>
                 <MapContainer center={[35.6762, 139.6503]} zoom={13} style={{ height: '100%', width: '100%' }} zoomControl={false}>
                     <TileLayer attribution='&copy; OpenStreetMap contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 

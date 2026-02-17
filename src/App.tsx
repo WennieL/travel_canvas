@@ -54,6 +54,8 @@ import AppToolbar from './components/AppToolbar';
 import AppModals from './components/AppModals';
 import MobileNav from './components/MobileNav';
 import CanvasView from './components/CanvasView';
+import DesktopSidebar from './components/DesktopSidebar';
+import FavoritesView from './components/FavoritesView';
 import { ALL_SUGGESTIONS } from './data/suggestions';
 
 export function App() {
@@ -220,6 +222,7 @@ export function App() {
     const creatorTemplates = activeCreator ? TEMPLATES.filter(tpl => tpl.authorId === activeCreator.id) : [];
     const [subscribedCreators, setSubscribedCreators] = useState<string[]>([]);
     const [customAssets, setCustomAssets] = useState<TravelItem[]>([]);
+    const [showFavorites, setShowFavorites] = useState(false);
 
     const handleToggleSubscribe = useCallback((creatorId: string) => {
         setSubscribedCreators(prev => {
@@ -340,7 +343,8 @@ export function App() {
                         </button>
                     </div>
                     <SidebarContent
-                        activeTab={activeTab} setActiveTab={setActiveTab}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
                         searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                         activeCategory={activeCategory} setActiveCategory={setActiveCategory}
                         activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
@@ -370,7 +374,7 @@ export function App() {
 
             {/* Main Area */}
             <div className="flex-1 flex flex-col min-w-0 bg-white relative overflow-x-hidden">
-                {viewMode !== 'discovery' && (
+                {viewMode !== 'discovery' && !showFavorites && (
                     <AppHeader
                         lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
                         isEditingName={isEditingName} editingName={editingName} setEditingName={setEditingName}
@@ -400,17 +404,33 @@ export function App() {
                     return null;
                 })()}
 
-                {viewMode !== 'discovery' && (
+                {viewMode !== 'discovery' && !showFavorites && (
                     <DayTabs
                         activePlan={activePlan} currentDay={currentDay} setCurrentDay={setCurrentDay}
                         handleAddDay={handleAddDay} handleDeleteDay={onDeleteDay}
                         getShortDate={getShortDate} t={t}
                         dayTabsContainerRef={dayTabsContainerRef} mobileDayTabsRef={mobileDayTabsRef}
+                        viewMode={viewMode} setViewMode={setViewMode} lang={lang}
                     />
                 )}
 
+                {/* Favorites View (Mobile) */}
+                {showFavorites && (
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden bg-white pb-20">
+                        <FavoritesView
+                            lang={lang}
+                            t={t}
+                            customAssets={customAssets}
+                            subscribedCreators={subscribedCreators}
+                            onCreatorClick={ui.setSelectedCreatorId}
+                            onSetShowCustomItemModal={setShowCustomItemModal}
+                            onNavigateToExplore={() => { setShowFavorites(false); setViewMode('discovery'); }}
+                        />
+                    </div>
+                )}
+
                 {/* Canvas Area */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 lg:p-8 no-scrollbar">
+                {!showFavorites && <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 pb-24 lg:p-8 no-scrollbar">
                     {/* View Switcher Content */}
                     {viewMode === 'map' ? (
                         <div className="h-full">
@@ -484,16 +504,7 @@ export function App() {
                             setActiveTab={setActiveTab}
                         />
                     )}
-                </div>
-
-                <MobileNav
-                    viewMode={viewMode as any}
-                    showPlanManager={showPlanManager}
-                    setViewMode={setViewMode}
-                    setShowPlanManager={setShowPlanManager}
-                    lang={lang}
-                    t={t}
-                />
+                </div>}
             </div>
 
             <AppModals
@@ -593,6 +604,24 @@ export function App() {
                 showStartPicker={ui.showStartPicker} setShowStartPicker={ui.setShowStartPicker}
                 selectedItem={ui.selectedItem} setSelectedItem={ui.setSelectedItem}
                 onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
+            />
+
+            {/* Mobile Bottom Tab Navigation */}
+            <MobileNav
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                showPlanManager={showPlanManager}
+                setShowPlanManager={setShowPlanManager}
+                showFavorites={showFavorites}
+                setShowFavorites={setShowFavorites}
+                hasActivePlan={!!activePlan}
+                onNewPlan={() => ui.setShowStartPicker(true)}
+                onShowBudget={() => {
+                    // TODO: Implement budget modal trigger
+                }}
+                onSetLang={toggleLang}
+                lang={lang}
+                t={t}
             />
 
             {toast.show && <Toast message={toast.message} type={toast.type} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}

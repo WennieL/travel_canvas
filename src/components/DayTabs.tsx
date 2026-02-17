@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Plus, X, ChevronDown, Check } from 'lucide-react';
-import { Plan } from '../types';
+import { Plus, X, ChevronDown, Check, Map as MapIcon, Calendar } from 'lucide-react';
+import { Plan, ViewMode, LangType } from '../types';
 
 interface DayTabsProps {
     activePlan: Plan;
@@ -12,12 +12,16 @@ interface DayTabsProps {
     t: any;
     dayTabsContainerRef?: React.RefObject<HTMLDivElement | null>;
     mobileDayTabsRef?: React.RefObject<HTMLDivElement | null>;
+    viewMode?: ViewMode;
+    setViewMode?: (mode: ViewMode) => void;
+    lang?: LangType;
 }
 
 const DayTabs: React.FC<DayTabsProps> = ({
     activePlan, currentDay, setCurrentDay,
     handleAddDay, handleDeleteDay, getShortDate, t,
-    dayTabsContainerRef, mobileDayTabsRef
+    dayTabsContainerRef, mobileDayTabsRef,
+    viewMode, setViewMode, lang = 'zh'
 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const VISIBLE_LIMIT = 5;
@@ -28,32 +32,48 @@ const DayTabs: React.FC<DayTabsProps> = ({
 
     return (
         <>
-            {/* Mobile Day Selector - Sticky Horizontal Scroll */}
+            {/* Mobile Day Selector - Sticky */}
             <div className="lg:hidden sticky top-14 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-2 max-w-[100vw] overflow-hidden">
-                <div ref={mobileDayTabsRef} className="flex px-4 gap-2 overflow-x-auto scrollbar-hide items-center">
-                    {Array.from({ length: activePlan.totalDays }).map((_, i) => (
+                <div className="flex items-center pl-4 pr-3 gap-3">
+                    {/* Scrollable Day Tabs */}
+                    <div ref={mobileDayTabsRef} className="flex-1 flex gap-2 overflow-x-auto scrollbar-hide items-center min-w-0">
+                        {Array.from({ length: activePlan.totalDays }).map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setCurrentDay(i + 1)}
+                                className={`flex-shrink-0 pl-4 pr-2 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${currentDay === i + 1
+                                    ? 'bg-teal-600 text-white shadow-sm'
+                                    : 'bg-gray-50 text-gray-500 border border-gray-100'
+                                    }`}
+                            >
+                                <span>{t.day} {i + 1}</span>
+                                {activePlan.totalDays > 1 && (
+                                    <div
+                                        onClick={(e) => handleDeleteDay(i + 1, e)}
+                                        className={`p-1 rounded-full ${currentDay === i + 1 ? 'bg-teal-500/50 hover:bg-teal-500 text-teal-50' : 'bg-gray-200/50 hover:bg-gray-200 text-gray-400'}`}
+                                    >
+                                        <X size={10} />
+                                    </div>
+                                )}
+                            </button>
+                        ))}
+                        <button onClick={handleAddDay} className="flex-shrink-0 w-8 h-8 rounded-full border border-dashed border-gray-300 text-gray-400 flex items-center justify-center">
+                            <Plus size={14} />
+                        </button>
+                    </div>
+
+                    {/* Map Toggle */}
+                    {setViewMode && (
                         <button
-                            key={i}
-                            onClick={() => setCurrentDay(i + 1)}
-                            className={`flex-shrink-0 pl-4 pr-2 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${currentDay === i + 1
-                                ? 'bg-teal-600 text-white shadow-sm'
-                                : 'bg-gray-50 text-gray-500 border border-gray-100'
+                            onClick={() => setViewMode(viewMode === 'map' ? 'canvas' : 'map')}
+                            className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all ${viewMode === 'map'
+                                    ? 'bg-teal-50 text-teal-600 ring-1 ring-teal-200'
+                                    : 'bg-gray-50 text-gray-400 hover:text-gray-600'
                                 }`}
                         >
-                            <span>{t.day} {i + 1}</span>
-                            {activePlan.totalDays > 1 && (
-                                <div
-                                    onClick={(e) => handleDeleteDay(i + 1, e)}
-                                    className={`p-1 rounded-full ${currentDay === i + 1 ? 'bg-teal-500/50 hover:bg-teal-500 text-teal-50' : 'bg-gray-200/50 hover:bg-gray-200 text-gray-400'}`}
-                                >
-                                    <X size={10} />
-                                </div>
-                            )}
+                            <MapIcon size={16} />
                         </button>
-                    ))}
-                    <button onClick={handleAddDay} className="flex-shrink-0 w-8 h-8 rounded-full border border-dashed border-gray-300 text-gray-400 flex items-center justify-center">
-                        <Plus size={14} />
-                    </button>
+                    )}
                 </div>
             </div>
 

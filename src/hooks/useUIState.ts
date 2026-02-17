@@ -50,6 +50,9 @@ export const useUIState = () => {
     // Region State (Sidebar Filter)
     const [activeRegion, setActiveRegion] = useState<Region>('all');
 
+    // Desktop Navigation State (for Canva-style nav)
+    const [activeView, setActiveView] = useState<string>('assets');
+
     return {
         // States
         showLanding, setShowLanding,
@@ -84,5 +87,6 @@ export const useUIState = () => {
         moveTarget, setMoveTarget,
         addToSlotTarget, setAddToSlotTarget,
         showStoryPreview, setShowStoryPreview,
+        activeView, setActiveView,
     };
 };
