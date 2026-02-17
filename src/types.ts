@@ -2,7 +2,7 @@ export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping
 export type TransportMode = 'car' | 'walk' | 'public';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation';
-export type ViewMode = 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery'; // Supports split view and mobile map
+export type ViewMode = 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery' | 'favorites' | 'projects'; // Supports split view and mobile map
 export type Region = 'tokyo' | 'osaka' | 'kyoto' | 'melbourne' | 'all';
 
 export interface TravelItem {

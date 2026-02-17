@@ -276,6 +276,14 @@ export function App() {
         handleUnlockConfirm, executeMoveItem
     } = actions;
 
+    const handleNavigate = (view: ViewMode) => {
+        setIsSidebarOpen(false); // Default close assets when switching main views
+        setShowFavorites(view === 'favorites');
+        setShowPlanManager(view === 'projects');
+        setViewMode(view);
+    };
+
+
     const confirmUnlock = () => handleUnlockConfirm(unlockTarget, batchUnlockCount, setUnlockTarget, setBatchUnlockCount);
 
     const handleGateCheck = (action: () => void) => {
@@ -329,49 +337,53 @@ export function App() {
 
     return (
         <div className="flex flex-col md:flex-row h-[100dvh] bg-white text-slate-800 font-sans overflow-x-hidden max-w-[100vw]">
-            {/* Desktop Sidebar */}
+            {/* [NEW] Desktop Icon Sidebar (Canva Style) */}
+            {!isFullscreen && (
+                <DesktopSidebar
+                    activePlan={activePlan}
+                    activeView={isSidebarOpen ? 'assets' : (showFavorites ? 'favorites' : (showPlanManager ? 'projects' : viewMode))}
+                    onNavigate={(view) => handleNavigate(view as ViewMode)}
+                    onNewPlan={() => ui.setShowStartPicker(true)}
+                    onShowPlanManager={() => {
+                        setShowFavorites(false);
+                        setShowPlanManager(true);
+                        setIsSidebarOpen(false);
+                    }}
+                    lang={lang}
+                    isSidebarOpen={isSidebarOpen}
+                    setIsSidebarOpen={setIsSidebarOpen}
+                />
+            )}
+
+            {/* Sidebar Content (Assets/Templates) */}
             {!isFullscreen && (
                 <div
                     className={`hidden lg:flex flex-col border-r border-gray-100 bg-white relative z-20 transition-all duration-300 overflow-hidden ${isSidebarOpen ? 'opacity-100' : 'w-0 opacity-0'}`}
                     style={{ width: isSidebarOpen ? sidebarWidth : 0 }}
                 >
-                    <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                        <button onClick={() => setShowLanding(true)} className="text-lg font-bold flex items-center gap-2 text-teal-600 hover:opacity-80 transition-opacity">
-                            <MapIcon className="w-5 h-5" /> {t.appTitle}
-                        </button>
-                        <button onClick={() => setShowPlanManager(true)} className="p-1.5 hover:bg-gray-100 rounded-md text-gray-400">
-                            <FolderOpen size={18} />
-                        </button>
+                    {/* Sidebar Header Title */}
+                    <div className="px-5 pt-6 pb-2">
+                        <h2 className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
+                            {t.assets}
+                        </h2>
+                        <p className="text-[10px] text-gray-400 font-medium uppercase tracking-[0.2em] mt-1 opacity-70">
+                            Asset Library
+                        </p>
                     </div>
+
                     <SidebarContent
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
                         searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                         activeCategory={activeCategory} setActiveCategory={setActiveCategory}
                         activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
                         setShowCustomItemModal={setShowCustomItemModal}
                         handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
                         applyTemplate={applyTemplate} t={t} lang={lang}
-                        customAssets={customAssets} subscribedCreators={subscribedCreators}
-                        onCreatorClick={setSelectedCreatorId} onPreviewTemplate={setPreviewTemplate}
+                        customAssets={customAssets}
                         highlight={ui.sidebarHighlight}
                     />
                 </div>
             )}
 
-            {/* Sidebar Toggle Button (Always Visible) */}
-            {!isFullscreen && (
-                <div className="hidden lg:block relative z-30">
-                    <button
-                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className={`absolute top-1/2 left-0 transform -translate-y-1/2 w-6 h-12 bg-white border border-gray-200 border-l-0 rounded-r-lg shadow-sm flex items-center justify-center text-gray-400 hover:text-teal-600 transition-all duration-300 ${isSidebarOpen ? '' : 'translate-x-[0px]'}`}
-                        style={{ left: isSidebarOpen ? 0 : 0 }}
-                        aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
-                    >
-                        {isSidebarOpen ? <SidebarClose size={12} /> : <SidebarClose size={12} className="rotate-180" />}
-                    </button>
-                </div>
-            )}
 
             {/* Main Area */}
             <div className="flex-1 flex flex-col min-w-0 bg-white relative overflow-x-hidden">
@@ -647,15 +659,21 @@ export function App() {
             {/* Mobile Bottom Tab Navigation */}
             <MobileNav
                 viewMode={viewMode}
-                setViewMode={setViewMode}
+                setViewMode={handleNavigate}
                 showPlanManager={showPlanManager}
-                setShowPlanManager={setShowPlanManager}
+                setShowPlanManager={(show) => {
+                    if (show) setShowFavorites(false);
+                    setShowPlanManager(show);
+                }}
                 showFavorites={showFavorites}
-                setShowFavorites={setShowFavorites}
+                setShowFavorites={(show) => {
+                    if (show) setShowPlanManager(false);
+                    setShowFavorites(show);
+                }}
                 hasActivePlan={!!activePlan}
                 onNewPlan={() => ui.setShowStartPicker(true)}
                 onShowBudget={() => {
-                    // TODO: Implement budget modal trigger
+                    handleNavigate('budget');
                 }}
                 onSetLang={toggleLang}
                 lang={lang}

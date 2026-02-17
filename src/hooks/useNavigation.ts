@@ -1,70 +1,149 @@
 import { useMemo } from 'react';
+import {
+    Compass,
+    Heart,
+    Calendar,
+    User,
+    MoreHorizontal,
+    DollarSign,
+    ListTodo,
+    Settings,
+    Globe,
+    Plus,
+    Map as MapIcon,
+    Package
+} from 'lucide-react';
 import { LangType } from '../types';
 
 export interface NavItem {
     id: string;
-    icon: string;
+    icon: any; // Lucide icon component
     label: string;
     labelEn: string;
     alwaysShow: boolean;      // Show in all states
     showWhen?: 'editing';     // Or only when editing
     desktop?: boolean;        // Desktop-only items
     mobile?: boolean;         // Mobile-only items
+    isMobilePrimary?: boolean; // Shows in the bottom 5 tabs
+    isMobileMore?: boolean;    // Shows in the "More" bottom sheet
     action?: 'navigate' | 'modal' | 'menu';  // Action type
 }
 
 // Navigation configuration - single source of truth
 const NAV_CONFIG: NavItem[] = [
     {
-        id: 'explore',
-        icon: '🔍',
+        id: 'discovery',
+        icon: Compass,
         label: '探索',
         labelEn: 'Explore',
         alwaysShow: true,
+        isMobilePrimary: true,
         action: 'navigate',
     },
     {
-        id: 'projects',
-        icon: '📂',
-        label: '我的創作',
-        labelEn: 'My Projects',
+        id: 'favorites',
+        icon: Heart,
+        label: '收藏',
+        labelEn: 'Favorites',
         alwaysShow: true,
+        isMobilePrimary: true,
+        action: 'navigate',
+    },
+    {
+        id: 'plan',
+        icon: Calendar,
+        label: '行程',
+        labelEn: 'Plan',
+        alwaysShow: true,
+        isMobilePrimary: true,
         action: 'navigate',
     },
     {
         id: 'new',
-        icon: '➕',
+        icon: Plus,
         label: '新計畫',
         labelEn: 'New Plan',
         alwaysShow: true,
+        desktop: true, // Only as a standalone button on desktop
         action: 'modal',
     },
     {
+        id: 'projects',
+        icon: User,
+        label: '我的',
+        labelEn: 'My Projects',
+        alwaysShow: true,
+        isMobilePrimary: true,
+        action: 'navigate',
+    },
+    {
         id: 'assets',
-        icon: '🎨',
+        icon: Package,
         label: '素材庫',
         labelEn: 'Assets',
         alwaysShow: false,
         showWhen: 'editing',
+        desktop: true,
         action: 'navigate',
     },
     {
         id: 'map',
-        icon: '🗺️',
+        icon: MapIcon,
         label: '地圖',
         labelEn: 'Map',
         alwaysShow: false,
         showWhen: 'editing',
-        desktop: true,  // Desktop shows map in sidebar, mobile in "More" menu
+        desktop: true,
         action: 'navigate',
     },
     {
+        id: 'budget',
+        icon: DollarSign,
+        label: '預算追蹤',
+        labelEn: 'Budget',
+        alwaysShow: false,
+        showWhen: 'editing',
+        isMobileMore: true,
+        desktop: true,
+        action: 'navigate',
+    },
+    {
+        id: 'checklist',
+        icon: ListTodo,
+        label: '打包清單',
+        labelEn: 'Checklist',
+        alwaysShow: false,
+        showWhen: 'editing',
+        isMobileMore: true,
+        desktop: true,
+        action: 'navigate',
+    },
+    {
+        id: 'lang',
+        icon: Globe,
+        label: '切換語言',
+        labelEn: 'Language',
+        alwaysShow: true,
+        isMobileMore: true,
+        action: 'menu',
+    },
+    {
+        id: 'settings',
+        icon: Settings,
+        label: '設定',
+        labelEn: 'Settings',
+        alwaysShow: true,
+        isMobileMore: true,
+        action: 'menu',
+    },
+    {
         id: 'more',
-        icon: '•••',
+        icon: MoreHorizontal,
         label: '更多',
         labelEn: 'More',
         alwaysShow: true,
-        mobile: true,  // Mobile-only
+        mobile: true,
+        isMobilePrimary: true,
         action: 'menu',
     },
 ];
@@ -80,7 +159,7 @@ export const useNavigation = ({
     platform = 'desktop',
     lang = 'zh'
 }: UseNavigationOptions) => {
-    const visibleItems = useMemo(() => {
+    const items = useMemo(() => {
         return NAV_CONFIG.filter(item => {
             // Filter by platform
             if (item.desktop && platform === 'mobile') return false;
@@ -94,13 +173,27 @@ export const useNavigation = ({
         });
     }, [hasActivePlan, platform]);
 
+    const mobilePrimary = useMemo(() => {
+        return items.filter(i => i.isMobilePrimary);
+    }, [items]);
+
+    const mobileMore = useMemo(() => {
+        return NAV_CONFIG.filter(i => i.isMobileMore).filter(item => {
+            if (item.alwaysShow) return true;
+            if (item.showWhen === 'editing' && hasActivePlan) return true;
+            return false;
+        });
+    }, [hasActivePlan]);
+
     // Get label based on language
     const getLabel = (item: NavItem) => {
         return lang === 'en' ? item.labelEn : item.label;
     };
 
     return {
-        items: visibleItems,
+        items,
+        mobilePrimary,
+        mobileMore,
         getLabel,
         // Helper to find specific nav item
         findItem: (id: string) => NAV_CONFIG.find(item => item.id === id),
