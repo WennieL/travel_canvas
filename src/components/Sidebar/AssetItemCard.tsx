@@ -70,11 +70,9 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                     <h4 className={`font-bold text-xs truncate ${isPremium ? 'text-amber-900' : 'text-gray-700'}`} title={title}>
                         {title}
                     </h4>
-                    {item.rating && (
-                        <span className="flex items-center gap-0.5 text-amber-500 font-bold text-[9px] shrink-0">
-                            <Star size={8} fill="currentColor" /> {item.rating}
-                        </span>
-                    )}
+                    <span className="flex items-center gap-0.5 text-amber-500 font-bold text-[9px] shrink-0">
+                        <Star size={8} fill="currentColor" /> {item.rating || '4.5'}
+                    </span>
                 </div>
                 <div className="flex items-center justify-between mt-0.5">
                     <span className="text-[10px] text-gray-400">{item.duration}</span>

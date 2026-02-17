@@ -308,12 +308,6 @@ const DropZone: React.FC<DropZoneProps> = ({
                                             <div className="flex items-center gap-2 overflow-hidden mr-2 min-w-0 flex-1">
                                                 <h4 className={`font-bold text-sm truncate ${isLocked ? 'text-gray-600 italic' : 'text-gray-700'}`}>{displayTitle}</h4>
 
-                                                {/* Rating - Moved next to Title */}
-                                                {item.rating && (
-                                                    <div className="flex items-center gap-0.5 text-[10px] text-yellow-600 font-bold bg-yellow-50 px-1 rounded flex-shrink-0">
-                                                        <Star size={8} fill="currentColor" /> {item.rating}
-                                                    </div>
-                                                )}
                                                 {/* Scheme B: Visual Tag for Cross-Region */}
                                                 {item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion && (
                                                     <span className="text-[9px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-bold tracking-wider uppercase border border-gray-200 flex-shrink-0">

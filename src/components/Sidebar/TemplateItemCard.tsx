@@ -70,12 +70,10 @@ export const TemplateItemCard: React.FC<TemplateItemCardProps> = ({
                         🔗 <span className="font-medium">{template.copiedCount.toLocaleString()}</span> {lang === 'en' ? 'applied' : '已套用'}
                     </span>
                 )}
-                {template.rating && (
-                    <span className="flex items-center gap-0.5 text-yellow-600">
-                        <Star size={10} fill="currentColor" />
-                        <span className="font-medium">{template.rating}</span>
-                    </span>
-                )}
+                <span className="flex items-center gap-0.5 text-yellow-600">
+                    <Star size={10} fill="currentColor" />
+                    <span className="font-medium">{template.rating || '4.5'}</span>
+                </span>
             </div>
 
             <div

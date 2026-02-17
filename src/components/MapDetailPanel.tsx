@@ -129,14 +129,12 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
                             </div>
                         </div>
                     )}
-                    {rating && (
-                        <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                            <div className="text-xs text-gray-400 mb-1">{t.rating || "Rating"}</div>
-                            <div className="font-semibold text-gray-800 flex items-center gap-1">
-                                {rating} <Star size={12} className="fill-amber-400 text-amber-400" />
-                            </div>
+                    <div className="bg-amber-50 p-2 rounded-lg border border-amber-100 flex-1">
+                        <div className="text-xs text-gray-400 mb-1">{t.rating || "Rating"}</div>
+                        <div className="font-bold text-amber-600 flex items-center gap-1">
+                            {rating || '4.5'} <Star size={12} className="fill-amber-400 text-amber-400" />
                         </div>
-                    )}
+                    </div>
                     {item.duration && (
                         <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
                             <div className="text-xs text-gray-400 mb-1">{t.duration || "Duration"}</div>

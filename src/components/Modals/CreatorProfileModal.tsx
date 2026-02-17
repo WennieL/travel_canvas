@@ -144,7 +144,7 @@ export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({
                                         <div className="absolute top-3 left-3">
                                             <div className="bg-white/90 backdrop-blur-md px-2 py-1 rounded-full border border-white/50 flex items-center gap-1 shadow-sm">
                                                 <Star size={10} className="text-amber-500 fill-amber-500" />
-                                                <span className="text-[9px] font-black text-gray-800">{tpl.rating || '4.9'}</span>
+                                                <span className="text-[9px] font-black text-gray-800">{tpl.rating || '4.5'}</span>
                                             </div>
                                         </div>
                                     </div>

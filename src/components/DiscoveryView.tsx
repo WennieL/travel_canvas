@@ -147,7 +147,7 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
                                     </div>
                                     <div className="absolute top-2 right-2">
                                         <span className="bg-amber-500/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5">
-                                            <Star size={8} fill="currentColor" /> {tpl.rating || '4.9'}
+                                            <Star size={8} fill="currentColor" /> {tpl.rating || '4.5'}
                                         </span>
                                     </div>
                                 </div>
@@ -372,7 +372,7 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
                                     <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between pointer-events-none z-10">
                                         <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-2xl shadow-2xl border border-white/40 flex items-center gap-3 transition-transform group-hover:scale-105">
                                             <span className="flex items-center gap-1 text-amber-500 font-black text-[11px]">
-                                                <Star size={12} fill="currentColor" /> {tpl.rating || '4.9'}
+                                                <Star size={12} fill="currentColor" /> {tpl.rating || '4.5'}
                                             </span>
                                             <div className="w-[1px] h-3 bg-gray-200" />
                                             <span className="text-[11px] text-gray-800 font-black tracking-tight">

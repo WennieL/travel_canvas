@@ -75,8 +75,8 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
     };
 
     return (
-        <div className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
-            <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4 pb-28 md:pb-4 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col h-auto max-h-[75vh] md:max-h-[90vh]">
                 {/* Header */}
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white z-10">
                     <div className="flex items-center gap-3">
@@ -99,11 +99,10 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                             ) : (
                                 <h2 className="font-bold text-xl text-gray-800 flex items-center gap-2">
                                     {lang === 'en' && (item as any).titleEn ? (item as any).titleEn : item.title}
-                                    {item.rating && (
-                                        <span className="flex items-center gap-0.5 text-amber-500 text-sm font-bold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
-                                            <Star size={12} fill="currentColor" /> {item.rating}
-                                        </span>
-                                    )}
+                                    <span className="flex items-center gap-1 text-amber-500 font-bold px-3 py-1 bg-amber-50 rounded-full text-xs shadow-sm border border-amber-100">
+                                        <Star size={14} fill="currentColor" />
+                                        {item.rating || '4.5'}
+                                    </span>
                                 </h2>
                             )}
                             <p className="text-sm text-gray-400 capitalize flex items-center gap-1">
@@ -350,6 +349,8 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                 </div>
                             )}
                         </div>
+                        {/* Bottom Spacer for Mobile Navigation Clearance */}
+                        <div className="h-10 md:hidden"></div>
                     </div>
                 </div>
             </div>

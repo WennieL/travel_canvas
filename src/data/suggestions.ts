@@ -13,6 +13,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Famous for its wooden stage that was built without a single nail.',
                 lat: 34.9949,
                 lng: 135.7850,
+                rating: 4.9,
                 tags: ['古蹟', '網美'],
                 insiderTip: {
                     teaser: '繞過人潮的秘密路線',
@@ -37,6 +38,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Famous for its thousands of vermilion torii gates.',
                 lat: 34.9671,
                 lng: 135.7726,
+                rating: 4.9,
                 tags: ['必去', '攝影'],
                 insiderTip: {
                     teaser: '傍晚登山的魔幻體驗',
@@ -63,6 +65,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'A natural tunnel of towering bamboo stalks.',
                 lat: 35.0094,
                 lng: 135.6667,
+                rating: 4.8,
                 tags: ['自然', '攝影'],
                 insiderTip: {
                     teaser: '空無一人的竹林拍攝秘訣',
@@ -87,6 +90,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The golden pavilion, a stunning Zen temple covered in gold leaf.',
                 lat: 35.0393,
                 lng: 135.7292,
+                rating: 4.8,
                 tags: ['古蹟', '必去'],
                 insiderTip: {
                     teaser: '倒影拍攝的黃金時刻',
@@ -113,6 +117,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Look for geishas in this historic district.',
                 lat: 35.0024,
                 lng: 135.7735,
+                rating: 4.6,
                 tags: ['文化', '散策'],
                 insiderTip: {
                     teaser: '巧遇藝妓的黃昏時刻',
@@ -137,6 +142,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Enjoy a unique riverside dining experience in summer.',
                 lat: 35.0050,
                 lng: 135.7712,
+                rating: 4.8,
                 tags: ['美食', '景觀'],
                 insiderTip: {
                     teaser: '平價享受納涼床的攻略',
@@ -163,6 +169,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Experience Japanese nightlife with local drinks and snacks.',
                 lat: 35.0062,
                 lng: 135.7695,
+                rating: 4.4,
                 tags: ['消遣', '美食'],
                 insiderTip: {
                     teaser: '隱藏在先斗町的小店',
@@ -217,6 +224,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Tokyo\'s oldest temple, featuring the Kaminarimon gate.',
                 lat: 35.7147,
                 lng: 139.7967,
+                rating: 4.8,
                 tags: ['必去'],
                 insiderTip: {
                     teaser: '早起鳥的秘密風景',
@@ -241,6 +249,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'A paradise for fresh seafood breakfast.',
                 lat: 35.6654,
                 lng: 139.7706,
+                rating: 4.7,
                 tags: ['海鮮'],
                 insiderTip: {
                     teaser: '避開排隊名店的聰明吃法',
@@ -267,6 +276,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'A shrine dedicated to Emperor Meiji, featuring forest paths.',
                 lat: 35.6763,
                 lng: 139.6993,
+                rating: 4.6,
                 tags: ['神社', '森林'],
                 insiderTip: {
                     teaser: '清酒牆拍照秘訣',
@@ -291,6 +301,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The world\'s busiest and most famous pedestrian crossing.',
                 lat: 35.6595,
                 lng: 139.7005,
+                rating: 4.6,
                 tags: ['必去'],
                 insiderTip: {
                     teaser: '最佳高空拍攝位',
@@ -317,6 +328,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The iconic landmark of Tokyo with a classic night view.',
                 lat: 35.6586,
                 lng: 139.7454,
+                rating: 4.6,
                 tags: ['地標', '夜景'],
                 insiderTip: {
                     teaser: '芝公園的秘密拍照地',
@@ -341,6 +353,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Tokyo\'s red-light district, known for its neon signs.',
                 lat: 35.6938,
                 lng: 139.7035,
+                rating: 4.2,
                 tags: ['夜生活', '攝影'],
                 insiderTip: {
                     teaser: '哥吉拉頭像與霓虹一條街',
@@ -367,6 +380,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Sky Deck with a panoramic view of Tokyo.',
                 lat: 35.6605,
                 lng: 139.7291,
+                rating: 4.7,
                 tags: ['夜景', '浪漫'],
                 insiderTip: {
                     teaser: 'Sky Deck 露天展望台',
@@ -421,6 +435,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The landmark of Osaka, featuring the impressive castle tower.',
                 lat: 34.6873,
                 lng: 135.5262,
+                rating: 4.7,
                 tags: ['地標', '歷史'],
                 insiderTip: {
                     teaser: '免費進城拍攝時段',
@@ -495,6 +510,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The nostalgic landmark of Osaka in the Shinsekai district.',
                 lat: 34.6524,
                 lng: 135.5063,
+                rating: 4.6,
                 tags: ['地標', '復古'],
                 insiderTip: {
                     teaser: '摸摸 Biliken 的腳底',
@@ -521,6 +537,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Famous for the Glico Man neon sign and street food.',
                 lat: 34.6687,
                 lng: 135.5012,
+                rating: 4.8,
                 tags: ['美食', '必去'],
                 insiderTip: {
                     teaser: '隱藏在巷弄的法善寺',
@@ -571,6 +588,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The Floating Garden Observatory with a unique circular roof.',
                 lat: 34.7052,
                 lng: 135.4905,
+                rating: 4.7,
                 tags: ['建築', '夜景'],
                 insiderTip: {
                     teaser: '戶外螢光步道',
@@ -625,6 +643,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Iconic standing-room-only coffee bar.',
                 lat: -37.8136,
                 lng: 144.9631,
+                rating: 4.8,
                 tags: ['咖啡', '必訪'],
                 insiderTip: {
                     teaser: '體驗在地站立咖啡文化',
@@ -649,6 +668,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The largest open-air market in the Southern Hemisphere.',
                 lat: -37.8067,
                 lng: 144.9567,
+                rating: 4.4,
                 tags: ['市場', '美食'],
                 insiderTip: {
                     teaser: '熱果醬甜甜圈的傳說',
@@ -675,6 +695,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'World-famous street art laneway.',
                 lat: -37.8168,
                 lng: 144.9691,
+                rating: 4.6,
                 tags: ['街頭藝術', '拍照'],
                 insiderTip: {
                     teaser: '巷尾的隱藏視角',
@@ -699,6 +720,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'The beautiful heritage library with its iconic dome.',
                 lat: -37.8105,
                 lng: 144.9642,
+                rating: 4.8,
                 tags: ['必去', '建築'],
                 insiderTip: {
                     teaser: '高空俯瞰放射狀座位',
@@ -725,6 +747,7 @@ export const ALL_SUGGESTIONS: Record<string, Record<string, any[]>> = {
                 descriptionEn: 'Stroll along the river and enjoy the city skyline.',
                 lat: -37.8200,
                 lng: 144.9650,
+                rating: 4.7,
                 tags: ['散步', '夜景'],
                 insiderTip: {
                     teaser: 'Southbank 的火花秀',
