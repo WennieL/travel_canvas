@@ -1,5 +1,4 @@
-import React from 'react';
-import { Calendar, Map as MapIcon, ListTodo, ZoomIn, ZoomOut } from 'lucide-react';
+import { Calendar, Map as MapIcon, ListTodo, ZoomIn, ZoomOut, DollarSign } from 'lucide-react';
 import { ViewMode } from '../types';
 
 interface AppToolbarProps {
@@ -19,7 +18,8 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
                 {[
                     { mode: 'canvas', icon: <Calendar size={18} />, label: t.schedule },
                     // Map mode removed in favor of Split View Toggle
-                    { mode: 'checklist', icon: <ListTodo size={18} />, label: t.preparation }
+                    { mode: 'checklist', icon: <ListTodo size={18} />, label: t.preparation },
+                    { mode: 'budget', icon: <DollarSign size={18} />, label: t.budget || 'Budget' }
                 ].map((item) => (
                     <button
                         key={item.mode}

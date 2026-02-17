@@ -42,6 +42,7 @@ import MapView from './components/MapView';
 import SidebarContent from './components/SidebarContent';
 import DropZone from './components/DropZone';
 import ChecklistView from './components/ChecklistView';
+import BudgetView from './components/BudgetView';
 import ScheduleList from './components/ScheduleList';
 import DiscoveryView from './components/DiscoveryView';
 import { Toast } from './components/Toast';
@@ -462,21 +463,25 @@ export function App() {
                         </div>
                     ) : viewMode === 'checklist' ? (
                         <div className="h-full pb-20 lg:pb-0">
-                            <ScheduleList
+                            <ChecklistView
                                 activePlan={activePlan}
                                 lang={lang}
                                 t={t}
-                                budgetProps={{
-                                    spent: calculateTotalBudget(),
-                                    limit: budgetLimit,
-                                    breakdown: calculateCategoryBreakdown(),
-                                    currency: activePlan.targetCurrency,
-                                    exchangeRate: activePlan.exchangeRate,
-                                    onSetLimit: setBudgetLimit,
-                                    onSetSettings: (currency: string, rate: number) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })
-                                }}
                                 showToastMessage={showToastMessage}
                                 onUpdateChecklist={updateChecklist}
+                            />
+                        </div>
+                    ) : viewMode === 'budget' ? (
+                        <div className="h-full pb-20 lg:pb-0">
+                            <BudgetView
+                                spent={calculateTotalBudget()}
+                                limit={budgetLimit}
+                                breakdown={calculateCategoryBreakdown()}
+                                currency={activePlan.targetCurrency || 'TWD'}
+                                exchangeRate={activePlan.exchangeRate || 0.21}
+                                onSetLimit={setBudgetLimit}
+                                onSetSettings={(currency: string, rate: number) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })}
+                                t={t}
                             />
                         </div>
                     ) : (

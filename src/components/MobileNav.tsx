@@ -90,7 +90,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             {
                 icon: DollarSign,
                 label: lang === 'zh' ? '預算追蹤' : 'Budget',
-                onClick: () => { onShowBudget(); setShowMoreMenu(false); }
+                onClick: () => { setViewMode('budget'); setShowMoreMenu(false); setShowFavorites(false); setShowPlanManager(false); }
             },
             {
                 icon: ListTodo,
