@@ -573,19 +573,52 @@ export function App() {
                 // Move Item
                 showMoveModal={showMoveModal} setShowMoveModal={setShowMoveModal}
                 moveTarget={ui.moveTarget}
-                executeMoveItem={(day: number) => {
+                executeMoveItem={(day: number, targetSlot: TimeSlot) => {
                     if (ui.moveTarget) {
-                        const { slot, index } = ui.moveTarget;
-                        const item = activePlan.schedule[`Day ${currentDay}`][slot as keyof DaySchedule][index] as ScheduleItem;
-                        handleRemoveItem(slot as keyof DaySchedule, index);
-
-                        const targetPlan = { ...activePlan };
+                        const { slot: sourceSlot, index } = ui.moveTarget;
+                        const sourceDayKey = `Day ${currentDay}`;
                         const targetDayKey = `Day ${day}`;
-                        if (!targetPlan.schedule[targetDayKey]) targetPlan.schedule[targetDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
-                        (targetPlan.schedule[targetDayKey][slot as keyof DaySchedule] as ScheduleItem[]).push({ ...item, day });
 
-                        updateActivePlan({ schedule: targetPlan.schedule });
-                        showToastMessage(lang === 'zh' ? `已移動至第 ${day} 天` : `Moved to Day ${day}`);
+                        // 1. Create a deep clone of the current schedule to perform all operations atomically
+                        const newSchedule = { ...activePlan.schedule };
+
+                        // 2. Extract and Remove from source
+                        if (!newSchedule[sourceDayKey] || !newSchedule[sourceDayKey][sourceSlot as keyof DaySchedule]) return;
+
+                        // Clone the source day and slot array
+                        newSchedule[sourceDayKey] = { ...newSchedule[sourceDayKey] };
+                        newSchedule[sourceDayKey][sourceSlot as keyof DaySchedule] = [...newSchedule[sourceDayKey][sourceSlot as keyof DaySchedule]];
+
+                        const item = newSchedule[sourceDayKey][sourceSlot as keyof DaySchedule].splice(index, 1)[0];
+
+                        if (!item) return;
+
+                        // 3. Prepare target day
+                        if (!newSchedule[targetDayKey]) {
+                            newSchedule[targetDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+                        } else {
+                            newSchedule[targetDayKey] = { ...newSchedule[targetDayKey] };
+                        }
+
+                        // 4. Add to target slot
+                        const targetSlotKey = (targetSlot || sourceSlot) as keyof DaySchedule;
+                        newSchedule[targetDayKey][targetSlotKey] = [...(newSchedule[targetDayKey][targetSlotKey] || [])];
+
+                        // Update the item's day property and push to target
+                        (newSchedule[targetDayKey][targetSlotKey] as ScheduleItem[]).push({
+                            ...item,
+                            day,
+                            startTime: (sourceSlot !== targetSlotKey) ? '' : item.startTime // Reset time if slot changes
+                        });
+
+                        // 5. Update state ONCE
+                        updateActivePlan({ schedule: newSchedule });
+
+                        showToastMessage(
+                            lang === 'zh'
+                                ? `已將「${item.title}」移動至第 ${day} 天 ${t[targetSlotKey] || targetSlotKey}`
+                                : `Moved "${item.title}" to Day ${day} ${t[targetSlotKey] || targetSlotKey}`
+                        );
                     }
                     setShowMoveModal(false);
                 }}

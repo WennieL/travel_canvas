@@ -85,7 +85,7 @@ interface AppModalsProps {
     showMoveModal: boolean;
     setShowMoveModal: (show: boolean) => void;
     moveTarget: { slot: TimeSlot, index: number } | null;
-    executeMoveItem: (day: number) => void;
+    executeMoveItem: (day: number, slot: TimeSlot) => void;
 
     // Submit Modal
     showSubmitModal: boolean;
