@@ -381,7 +381,7 @@ export const TRANSLATIONS: any = {
         // CustomItemModal
         transportInfo: "✈️ 交通資訊",
         originPlaceholder: "出發地 (如: 台北)",
-        destinationPlaceholder: "目的地 (如: 東京)",
+        destinationPlaceholder: "目的地 (如: Tokyo)",
         optionalForTransport: "(可選，留空則自動產生)",
         transportNamePlaceholder: "如: CI100航班",
         timeLabel: "🕐 時間",
@@ -391,7 +391,12 @@ export const TRANSLATIONS: any = {
         regionLabel: "🌍 地區",
 
         // Canvas / AssetItemCard
-        secretBadge: "秘境"
+        secretBadge: "秘境",
+
+        // Mobile Menu
+        creatorProfile: "創作者中心",
+        proMember: "專家創作者",
+        following: "追蹤中"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -784,6 +789,11 @@ export const TRANSLATIONS: any = {
         notesLabel: "📝 Notes",
         notesPlaceholder: "Flight number, seat, reminders...",
         typeLabel: "Type",
-        regionLabel: "🌍 Region"
+        regionLabel: "🌍 Region",
+
+        // Mobile Menu
+        creatorProfile: "Creator Studio",
+        proMember: "Pro Creator",
+        following: "Following"
     }
 };

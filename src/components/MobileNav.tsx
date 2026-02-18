@@ -55,7 +55,12 @@ export const MobileNav: React.FC<MobileNavProps> = ({
 
     const handleTabClick = (itemId: string) => {
         if (itemId === 'more') {
-            setShowMoreMenu(!showMoreMenu);
+            const isOpening = !showMoreMenu;
+            if (isOpening) {
+                setShowFavorites(false);
+                setShowPlanManager(false);
+            }
+            setShowMoreMenu(isOpening);
             return;
         }
 
@@ -86,19 +91,27 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     };
 
     const handleMoreClick = (itemId: string) => {
-        setShowMoreMenu(false);
         switch (itemId) {
+            case 'account':
+                // Account management placeholder
+                break;
+            case 'creator_center':
+                // Creator Studio placeholder
+                break;
             case 'budget':
+                setShowMoreMenu(false);
                 setViewMode('budget');
                 setShowFavorites(false);
                 setShowPlanManager(false);
                 break;
             case 'checklist':
+                setShowMoreMenu(false);
                 setViewMode('checklist');
                 setShowFavorites(false);
                 setShowPlanManager(false);
                 break;
             case 'lang':
+                // Don't close for language toggle
                 onSetLang();
                 break;
             case 'settings':
@@ -119,29 +132,69 @@ export const MobileNav: React.FC<MobileNavProps> = ({
 
             {/* More Menu Bottom Sheet */}
             {showMoreMenu && (
-                <div className="lg:hidden fixed bottom-16 left-4 right-4 bg-white rounded-2xl shadow-2xl z-[2050] border border-gray-100 overflow-hidden">
-                    <div className="p-3 space-y-0.5">
-                        <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-3" />
-                        {mobileMore.map((item: NavItem) => {
-                            const MenuIcon = item.icon;
-                            const label = getLabel(item);
+                <div className="lg:hidden fixed bottom-16 left-0 right-0 bg-white rounded-t-[32px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.08)] z-[2050] border-t border-gray-100 overflow-hidden animate-in slide-in-from-bottom duration-300">
+                    {/* Grabber */}
+                    <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mt-4 mb-2" />
 
-                            // Add a visual divider before Language if Budget exists
-                            const needsDivider = item.id === 'lang' && mobileMore.some((m: NavItem) => m.id === 'budget');
+                    <div className="p-6 pt-2">
+                        {/* Profile Header Block */}
+                        <div className="flex items-center gap-4 p-4 mb-4 rounded-2xl bg-gray-50/80 border border-gray-100/50">
+                            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-xl shadow-sm border-2 border-white">
+                                W
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <h4 className="font-bold text-gray-900 truncate flex items-center gap-1.5 text-lg">
+                                    Wennie L.
+                                    <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 text-[10px] rounded uppercase tracking-wider font-extrabold">{t.proMember || 'PRO'}</span>
+                                </h4>
+                                <div className="flex items-center gap-3 mt-1">
+                                    <div className="flex flex-col">
+                                        <span className="text-[11px] font-bold text-gray-900 leading-none">12</span>
+                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.plans || 'Plans'}</span>
+                                    </div>
+                                    <div className="w-px h-4 bg-gray-200" />
+                                    <div className="flex flex-col">
+                                        <span className="text-[11px] font-bold text-gray-900 leading-none">856</span>
+                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.followers || 'Followers'}</span>
+                                    </div>
+                                    <div className="w-px h-4 bg-gray-200" />
+                                    <div className="flex flex-col">
+                                        <span className="text-[11px] font-bold text-gray-900 leading-none">42</span>
+                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.following || 'Following'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                            return (
-                                <React.Fragment key={item.id}>
-                                    {needsDivider && <div className="h-px bg-gray-100 my-1.5" />}
-                                    <button
-                                        onClick={() => handleMoreClick(item.id)}
-                                        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors"
-                                    >
-                                        <MenuIcon size={18} className="text-gray-500" />
-                                        <span className="text-sm font-medium text-gray-700">{label}</span>
-                                    </button>
-                                </React.Fragment>
-                            );
-                        })}
+                        <div className="space-y-1 mt-2 mb-4">
+                            {mobileMore.map((item: NavItem) => {
+                                // Don't render 'account' or 'creator_center' in the main list if we want them inside the header or specific sections
+                                // Actually, let's keep them but with better styling.
+                                if (item.id === 'account') return null; // We'll handle account in the header
+
+                                const MenuIcon = item.icon;
+                                const label = getLabel(item);
+
+                                // Logic for section dividers
+                                const needsTopDivider = (item.id === 'lang' || item.id === 'budget');
+
+                                return (
+                                    <React.Fragment key={item.id}>
+                                        {needsTopDivider && <div className="h-px bg-gray-100 my-2 mx-2" />}
+                                        <button
+                                            onClick={() => handleMoreClick(item.id)}
+                                            className="w-full flex items-center gap-4 px-3 py-3 rounded-xl hover:bg-gray-50 active:bg-gray-100 transition-all group"
+                                        >
+                                            <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 group-hover:text-teal-600 group-hover:bg-teal-50 transition-colors">
+                                                <MenuIcon size={18} />
+                                            </div>
+                                            <span className="text-[15px] font-semibold text-gray-700 flex-1 text-left">{label}</span>
+                                            {item.action === 'navigate' && <Plus size={14} className="text-gray-300" />}
+                                        </button>
+                                    </React.Fragment>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             )}

@@ -119,6 +119,24 @@ const NAV_CONFIG: NavItem[] = [
         action: 'navigate',
     },
     {
+        id: 'account',
+        icon: User,
+        label: '個人帳戶',
+        labelEn: 'My Account',
+        alwaysShow: true,
+        isMobileMore: true,
+        action: 'navigate',
+    },
+    {
+        id: 'creator_center',
+        icon: Plus, // We can change this to something more "creative" later
+        label: '創作者中心',
+        labelEn: 'Creator Studio',
+        alwaysShow: true,
+        isMobileMore: true,
+        action: 'navigate',
+    },
+    {
         id: 'lang',
         icon: Globe,
         label: '切換語言',
