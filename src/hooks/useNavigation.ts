@@ -26,6 +26,7 @@ export interface NavItem {
     mobile?: boolean;         // Mobile-only items
     isMobilePrimary?: boolean; // Shows in the bottom 5 tabs
     isMobileMore?: boolean;    // Shows in the "More" bottom sheet
+    isDesktopMore?: boolean;   // Shows in the desktop avatar popover
     action?: 'navigate' | 'modal' | 'menu';  // Action type
 }
 
@@ -125,6 +126,7 @@ const NAV_CONFIG: NavItem[] = [
         labelEn: 'My Account',
         alwaysShow: true,
         isMobileMore: true,
+        isDesktopMore: true,
         action: 'navigate',
     },
     {
@@ -134,6 +136,7 @@ const NAV_CONFIG: NavItem[] = [
         labelEn: 'Creator Studio',
         alwaysShow: true,
         isMobileMore: true,
+        isDesktopMore: true,
         action: 'navigate',
     },
     {
@@ -143,6 +146,7 @@ const NAV_CONFIG: NavItem[] = [
         labelEn: 'Language',
         alwaysShow: true,
         isMobileMore: true,
+        isDesktopMore: true,
         action: 'menu',
     },
     {
@@ -152,6 +156,7 @@ const NAV_CONFIG: NavItem[] = [
         labelEn: 'Settings',
         alwaysShow: true,
         isMobileMore: true,
+        isDesktopMore: true,
         action: 'menu',
     },
     {
@@ -183,6 +188,9 @@ export const useNavigation = ({
             if (item.desktop && platform === 'mobile') return false;
             if (item.mobile && platform === 'desktop') return false;
 
+            // [NEW] On desktop, filter out items that belong to the "More" popover
+            if (platform === 'desktop' && item.isDesktopMore) return false;
+
             // Filter by state (editing vs non-editing)
             if (item.alwaysShow) return true;
             if (item.showWhen === 'editing' && hasActivePlan) return true;
@@ -203,6 +211,10 @@ export const useNavigation = ({
         });
     }, [hasActivePlan]);
 
+    const desktopMore = useMemo(() => {
+        return NAV_CONFIG.filter(i => i.isDesktopMore);
+    }, []);
+
     // Get label based on language
     const getLabel = (item: NavItem) => {
         return lang === 'en' ? item.labelEn : item.label;
@@ -212,6 +224,7 @@ export const useNavigation = ({
         items,
         mobilePrimary,
         mobileMore,
+        desktopMore,
         getLabel,
         // Helper to find specific nav item
         findItem: (id: string) => NAV_CONFIG.find(item => item.id === id),

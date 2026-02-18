@@ -280,6 +280,7 @@ export function App() {
         setIsSidebarOpen(false); // Default close assets when switching main views
         setShowFavorites(view === 'favorites');
         setShowPlanManager(view === 'projects');
+        ui.setShowStartPicker(false); // [FIX] Ensure picker closes on nav
         setViewMode(view);
     };
 
@@ -348,7 +349,9 @@ export function App() {
                         setShowFavorites(false);
                         setShowPlanManager(true);
                         setIsSidebarOpen(false);
+                        ui.setShowStartPicker(false);
                     }}
+                    onSetLang={toggleLang}
                     lang={lang}
                     isSidebarOpen={isSidebarOpen}
                     setIsSidebarOpen={setIsSidebarOpen}
