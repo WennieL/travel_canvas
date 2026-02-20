@@ -143,6 +143,10 @@ interface AppModalsProps {
     currency?: string;
     exchangeRate?: number;
     onSetSettings?: (currency: string, rate: number) => void;
+
+    // Phase 12 Refinement: Handoff State
+    pendingWizardData: any;
+    setPendingWizardData: (data: any) => void;
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
@@ -151,7 +155,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         activeTab, setActiveTab,
         showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId,
         onTriggerPicker, onExpertMode,
-        handleDeletePlan, activeRegion,
+        handleDeletePlan, activeRegion, setActiveRegion,
         showCustomItemModal, setShowCustomItemModal, handleCreateCustomItem,
         activePlan, currentDay,
         setPlans, setCustomAssets,
@@ -173,29 +177,54 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         showStoryPreview, setShowStoryPreview,
         budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
         onUpdateChecklist, currency, exchangeRate, onSetSettings,
-        onCreatorClick, onPreviewTemplate
+        onCreatorClick, onPreviewTemplate,
+        pendingWizardData, setPendingWizardData
     } = props;
 
     return (
         <>
             <StartPickerModal
                 isOpen={showStartPicker}
-                onClose={() => setShowStartPicker(false)}
+                onClose={() => {
+                    setShowStartPicker(false);
+                    setPendingWizardData(null); // Clear context on close
+                }}
                 lang={lang}
                 t={t}
                 onChooseBlank={() => {
-                    setShowCheckIn(true);
-                    setShowStartPicker(false);
+                    if (pendingWizardData) {
+                        handleCreatePlan(pendingWizardData);
+                        setActiveRegion(pendingWizardData.destination);
+                        setShowStartPicker(false);
+                        setPendingWizardData(null);
+                        setViewMode('canvas');
+                    } else {
+                        // Fallback if no wizard data (should not happen in new flow)
+                        setShowCheckIn(true);
+                        setShowStartPicker(false);
+                    }
                 }}
-                onChooseTemplate={onExpertMode}
+                onChooseTemplate={() => {
+                    if (pendingWizardData) {
+                        // Enter Discovery view but filtered by region
+                        setActiveRegion(pendingWizardData.destination);
+                        setViewMode('discovery');
+                        setActiveTab('templates');
+                        setShowStartPicker(false);
+                        // We keep pendingWizardData until applyTemplate is called
+                    } else {
+                        onExpertMode();
+                    }
+                }}
+                pendingData={pendingWizardData}
             />
             <CheckInWizardModal
                 isOpen={showCheckIn}
                 onClose={() => setShowCheckIn(false)}
                 onComplete={(data) => {
-                    handleCreatePlan(data);
+                    setPendingWizardData(data);
                     setShowCheckIn(false);
-                    setViewMode('canvas');
+                    setShowStartPicker(true);
                 }}
                 lang={lang}
                 t={t}

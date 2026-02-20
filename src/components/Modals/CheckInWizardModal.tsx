@@ -24,19 +24,18 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
 }) => {
     const [step, setStep] = useState(1);
     const [destination, setDestination] = useState<Region>('tokyo');
-    const [origin, setOrigin] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
     const [totalDays, setTotalDays] = useState(4);
 
     if (!isOpen) return null;
 
     const handleNext = () => {
-        if (step < 3) setStep(step + 1);
+        if (step < 2) setStep(step + 1);
         else {
             const end = new Date(startDate);
             end.setDate(end.getDate() + totalDays - 1);
             onComplete({
-                origin: origin || 'TPE',
+                origin: 'TPE', // Default or derived
                 destination,
                 startDate,
                 endDate: end.toISOString().split('T')[0],
@@ -64,19 +63,18 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
                         <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
                             <Plane size={18} className="text-white" />
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Flight Check-in</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Smart Check-in</span>
                     </div>
 
                     <h2 className="text-3xl font-black leading-tight">
-                        {step === 1 ? (lang === 'zh' ? '您想去哪裡？' : 'To?') :
-                            step === 2 ? (lang === 'zh' ? '從哪出發？' : 'From?') :
-                                (lang === 'zh' ? '何時出發？' : 'When?')}
+                        {step === 1 ? (lang === 'zh' ? '您想去哪裡？' : 'Where to?') :
+                            (lang === 'zh' ? '何時出發？' : 'When exactly?')}
                     </h2>
 
                     {/* Progress Bar */}
                     <div className="flex gap-2 mt-6">
-                        {[1, 2, 3].map(s => (
-                            <div key={s} className={`h-1 rounded-full transition-all duration-500 ${s <= step ? 'w-12 bg-white' : 'w-4 bg-white/30'}`} />
+                        {[1, 2].map(s => (
+                            <div key={s} className={`h-1.5 rounded-full transition-all duration-500 ${s <= step ? 'w-16 bg-white' : 'w-4 bg-white/30'}`} />
                         ))}
                     </div>
                 </div>
@@ -85,7 +83,7 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
                 <div className="p-8 md:p-10 bg-white">
                     {step === 1 && (
                         <div className="space-y-4 animate-in slide-in-from-right-4 duration-300">
-                            <p className="text-gray-500 font-bold text-sm mb-4">{lang === 'zh' ? '選擇目的地以獲取在地推薦' : 'Select a destination for local tips'}</p>
+                            <p className="text-gray-500 font-bold text-sm mb-4">{lang === 'zh' ? '選擇目的地，我們將為您準備專屬素材' : 'Select a destination, and we\'ll prepare your workspace'}</p>
                             <div className="grid grid-cols-2 gap-3">
                                 {REGION_FILTERS.filter(c => c.id !== 'all').map((city: any) => (
                                     <button
@@ -111,42 +109,6 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
                     )}
 
                     {step === 2 && (
-                        <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
-                            <div>
-                                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">{lang === 'zh' ? '出發城市' : 'From'}</label>
-                                <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-500 group-focus-within:scale-110 transition-transform">
-                                        <MapPin size={20} />
-                                    </div>
-                                    <input
-                                        type="text"
-                                        placeholder={lang === 'zh' ? '例如：台北、TPE...' : 'e.g. Taipei, TPE...'}
-                                        value={origin}
-                                        onChange={(e) => setOrigin(e.target.value)}
-                                        autoFocus
-                                        className="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl py-4 pl-12 pr-4 font-bold text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-50 shadow-inner transition-all"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-2">
-                                {ORIGIN_CHIPS.map(chip => (
-                                    <button
-                                        key={chip}
-                                        onClick={() => setOrigin(chip)}
-                                        className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all border ${origin === chip
-                                            ? 'bg-teal-600 text-white border-teal-600 shadow-md scale-110'
-                                            : 'bg-white text-gray-500 border-gray-200 hover:border-teal-300 hover:text-teal-600'
-                                            }`}
-                                    >
-                                        {chip}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    {step === 3 && (
                         <div className="space-y-8 animate-in slide-in-from-right-4 duration-300">
                             <div className="grid grid-cols-2 gap-6">
                                 <div>
@@ -185,11 +147,11 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
                                 <div className="flex items-center gap-4 relative z-10">
                                     <div className="flex flex-col">
                                         <span className="text-[10px] font-black uppercase tracking-widest opacity-70">Travel Summary</span>
-                                        <div className="text-xl font-black">{origin || 'TPE'} ✈ {destination.toUpperCase()}</div>
+                                        <div className="text-xl font-black">{destination.toUpperCase()}</div>
                                         <div className="text-xs font-bold opacity-90 mt-1">{startDate} ({totalDays} Days)</div>
                                     </div>
                                     <div className="ml-auto w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
-                                        <Plane size={24} className="text-white" />
+                                        <MapPin size={24} className="text-white" />
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +175,7 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
                             onClick={handleNext}
                             className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-4 rounded-[1.25rem] font-black text-sm flex items-center gap-2 transition-all shadow-lg shadow-teal-200 active:scale-95 group"
                         >
-                            {step === 3 ? (lang === 'zh' ? '完成並登機' : 'Complete & Board') : (lang === 'zh' ? '繼續下一步' : 'Next Step')}
+                            {step === 2 ? (lang === 'zh' ? '完成並登機' : 'Complete & Board') : (lang === 'zh' ? '繼續下一步' : 'Next Step')}
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>

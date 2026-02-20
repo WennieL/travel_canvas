@@ -92,6 +92,14 @@ export function App() {
     const t = TRANSLATIONS[lang];
 
     // Business Logic Hooks
+    const [pendingWizardData, setPendingWizardData] = useState<{
+        origin: string;
+        destination: Region;
+        startDate: string;
+        endDate: string;
+        totalDays: number;
+    } | null>(null);
+
     const {
         plans, activePlanId, activePlan, currentDay,
         setPlans, setActivePlanId, setCurrentDay,
@@ -100,7 +108,9 @@ export function App() {
     } = usePlans(isInitialized, TRANSLATIONS[lang], lang);
 
     const handleTriggerStartPicker = () => {
-        ui.setShowStartPicker(true);
+        // [PHASE 12 REFINEMENT转为3步流] 
+        // 内部触发一律先走 Wizard
+        ui.setShowCheckIn(true);
     };
 
     const executeCreateBlankPlan = (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number }) => {
@@ -122,7 +132,6 @@ export function App() {
         budgetSettings, updateBudgetSettings
     } = useBudget(activePlan, TRANSLATIONS[lang]);
 
-    // Toast State
     const [toast, setToast] = useState<{ show: boolean, message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number }>({ show: false, message: '' });
     const showToastMessage = useCallback((message: string, type: 'success' | 'warning' | 'error' | 'info' = 'success', duration: number = 2000) => {
         setToast({ show: true, message, type, duration });
@@ -309,8 +318,8 @@ export function App() {
             // If they have no plans, show picker. If they have plans, just go to canvas.
             setShowLanding(false);
             if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
-                // Might be a fresh start or demo
-                ui.setShowStartPicker(true);
+                // [PHASE 12] Jump straight to Wizard for 2-step flow
+                ui.setShowCheckIn(true);
             }
         }
     }} lang={lang} toggleLang={toggleLang} />;
@@ -505,14 +514,16 @@ export function App() {
                                     setPreviewTemplate(tpl);
                                     ui.setShowStoryPreview(true);
                                 }}
-                                onCreatorClick={ui.setSelectedCreatorId}
+                                onCreatorClick={setSelectedCreatorId}
                                 setActiveTab={setActiveTab}
-                                activeRegion={ui.activeRegion}
-                                setActiveRegion={ui.setActiveRegion}
+                                activeRegion={activeRegion}
+                                setActiveRegion={setActiveRegion}
                                 showToastMessage={showToastMessage}
                                 toggleLang={toggleLang}
                                 lang={lang}
                                 t={t}
+                                pendingWizardData={pendingWizardData}
+                                setPendingWizardData={setPendingWizardData}
                             />
                         </div>
                     ) : viewMode === 'checklist' ? (
@@ -697,6 +708,8 @@ export function App() {
                 handleCreatePlan={executeCreateBlankPlan}
                 selectedItem={ui.selectedItem} setSelectedItem={ui.setSelectedItem}
                 onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
+                pendingWizardData={pendingWizardData}
+                setPendingWizardData={setPendingWizardData}
 
                 // Tools data
                 budgetLimit={budgetLimit}

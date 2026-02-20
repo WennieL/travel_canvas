@@ -149,14 +149,15 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             <div className="hidden md:flex flex-col h-36 bg-gray-50/10 items-center justify-start py-4 px-6 z-40 relative">
                 <div className="w-full max-w-5xl h-28 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100/50 flex items-center overflow-hidden active:shadow-md transition-all relative">
 
-                    {/* World Map Background (Subtle) */}
                     <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none flex items-center justify-center overflow-hidden">
                         <svg viewBox="0 0 1000 500" className="w-[120%] h-auto text-teal-900 fill-current">
                             <path d="M150,100 Q200,50 250,100 T350,150 T450,100 T550,150 T650,100 T750,150 T850,100" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
                             <circle cx="150" cy="100" r="5" />
                             <circle cx="850" cy="100" r="5" />
                             <text x="150" y="90" fontSize="12" fontWeight="bold">TPE</text>
-                            <text x="850" y="90" fontSize="12" fontWeight="bold">TYO</text>
+                            <text x="850" y="90" fontSize="12" fontWeight="bold">
+                                {activePlan.region === 'melbourne' ? 'MEL' : activePlan.region === 'osaka' ? 'OSA' : activePlan.region === 'kyoto' ? 'UKY' : 'TYO'}
+                            </text>
                         </svg>
                     </div>
 
@@ -226,7 +227,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             <div className="flex flex-col">
                                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-0.5">DESTINATION</span>
                                 <span className="font-black text-3xl text-gray-800 tracking-tight uppercase leading-none">
-                                    {activePlan.destination || 'TOKYO'}
+                                    {activePlan.destination || activePlan.region?.toUpperCase() || 'TOKYO'}
                                 </span>
                             </div>
                         </div>

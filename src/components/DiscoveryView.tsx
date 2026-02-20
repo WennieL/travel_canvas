@@ -14,6 +14,8 @@ interface DiscoveryViewProps {
     toggleLang: () => void;
     lang: LangType;
     t: any;
+    pendingWizardData?: any;
+    setPendingWizardData?: (data: any) => void;
 }
 
 const DiscoveryView: React.FC<DiscoveryViewProps> = ({
@@ -26,10 +28,20 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
     showToastMessage,
     toggleLang,
     lang,
-    t
+    t,
+    pendingWizardData,
+    setPendingWizardData
 }) => {
     // Current view state: null = Picker, Region = Hub
     const [discoveryCity, setDiscoveryCity] = useState<Region | null>(null);
+
+    useEffect(() => {
+        if (pendingWizardData?.destination && !discoveryCity) {
+            setDiscoveryCity(pendingWizardData.destination);
+            setActiveRegion(pendingWizardData.destination);
+        }
+    }, [pendingWizardData, discoveryCity, setActiveRegion]);
+
     const [searchQuery, setSearchQuery] = useState('');
 
     const allCities = [

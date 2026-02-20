@@ -90,6 +90,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
             const newPlan: Plan = {
                 id,
                 name: templateName,
+                destination: region.toUpperCase(), // [PHASE 12] Fix: Add destination for header sync
                 startDate: new Date().toISOString().split('T')[0],
                 endDate: new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0],
                 totalDays: template.duration,
@@ -106,6 +107,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
         } else {
             updateActivePlan({
                 name: templateName,
+                destination: region.toUpperCase(), // [PHASE 12] Fix: Update destination for header sync
                 totalDays: template.duration,
                 schedule: newSchedule,
                 region: region,

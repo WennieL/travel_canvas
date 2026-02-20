@@ -194,37 +194,9 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain no-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {activeTab === 'assets' && (
                     <>
-                        {/* Layer 1: Region Selection (Scrolls with text) - Hidden in Slim Mode */}
-                        {!isSlim && (
-                            <RegionCarousel
-                                activeCountry={activeCountry}
-                                setActiveCountry={setActiveCountry}
-                                activeRegion={activeRegion}
-                                setActiveRegion={setActiveRegion}
-                                lang={lang}
-                            />
-                        )}
-
                         {/* Layer 2: Sticky Toolbar (Search + Categories + Tags) */}
                         <div className={`sticky top-0 z-[50] bg-white px-4 space-y-4 shadow-sm border-b border-gray-100 ${isSlim ? 'py-2' : 'py-4'}`}>
                             <div className="flex items-center gap-2">
-                                {isSlim && (
-                                    <select
-                                        value={activeRegion}
-                                        onChange={(e) => setActiveRegion(e.target.value as Region)}
-                                        className="h-9 px-2 bg-teal-50 border-none rounded-lg text-xs font-bold text-teal-700 focus:ring-1 focus:ring-teal-500 appearance-none cursor-pointer"
-                                    >
-                                        <optgroup label={lang === 'zh' ? '日本' : 'Japan'}>
-                                            <option value="tokyo">Tokyo ▾</option>
-                                            <option value="osaka">Osaka ▾</option>
-                                            <option value="kyoto">Kyoto ▾</option>
-                                        </optgroup>
-                                        <optgroup label={lang === 'zh' ? '澳洲' : 'Australia'}>
-                                            <option value="melbourne">Melbourne ▾</option>
-                                        </optgroup>
-                                        <option value="all">{lang === 'zh' ? '全部地區' : 'All Regions'} ▾</option>
-                                    </select>
-                                )}
                                 <div className="relative flex-1">
                                     <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
                                     <input
