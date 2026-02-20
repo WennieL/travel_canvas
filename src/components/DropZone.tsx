@@ -536,25 +536,49 @@ const DropZone: React.FC<DropZoneProps> = ({
                         </React.Fragment>
                     );
                 })}
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onAddItem?.();
-                    }}
-                    className={`w-full py-2 border rounded-lg transition-all flex items-center justify-center gap-2 text-sm mt-2 group 
-                        ${items.length === 0 ? 'animate-pulse bg-gray-50 border-dashed border-gray-300' : 'border-dashed border-gray-300 text-gray-400 hover:text-teal-600 hover:border-teal-400 hover:bg-teal-50'}
-                    `}
-                >
-                    <div className="lg:hidden flex items-center gap-2">
-                        <Plus size={16} className={`group-hover:scale-110 transition-transform ${items.length === 0 ? 'text-teal-500' : ''}`} />
-                        {items.length === 0 ? (t.addItemsPlaceholder || "+ Add items...") : (t.addItem || "Add Item")}
-                    </div>
+                {items.length > 0 ? (
+                    /* Timeline Node Style (Subtle Add for Populated Lists) */
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onAddItem?.();
+                        }}
+                        className="w-full flex flex-col items-center justify-center group mt-0 relative py-1"
+                    >
+                        {/* Connecting Line */}
+                        <div className={`w-0.5 h-4 bg-gray-200 lg:hidden transition-colors group-hover:bg-teal-300`} />
 
-                    <div className="hidden lg:flex items-center gap-2 text-gray-400 group-hover:text-teal-600">
-                        <MoveLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                        <span>{t.dragFromSidebar || "Drag items from sidebar"}</span>
-                    </div>
-                </button>
+                        {/* Node Button with Text */}
+                        <div className={`
+                            flex items-center justify-center gap-1
+                            px-3 py-1.5 rounded-full 
+                            bg-white border text-gray-400 border-gray-200 
+                            shadow-sm transition-all 
+                            group-hover:scale-110 group-hover:border-teal-400 group-hover:text-teal-600 group-active:scale-95
+                            lg:w-auto lg:h-auto lg:px-4 lg:py-2 lg:rounded-lg lg:border-dashed lg:border-gray-300 lg:bg-transparent lg:shadow-none lg:text-sm lg:gap-2
+                        `}>
+                            <Plus size={12} className="lg:w-4 lg:h-4" />
+                            <span className="text-[10px] font-bold lg:text-sm">{lang === 'zh' ? '新增' : 'Add'}</span>
+                        </div>
+                    </button>
+                ) : (
+                    /* Large Placeholder Style (Empty State) */
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onAddItem?.();
+                        }}
+                        className={`w-full py-4 border-2 border-dashed rounded-xl transition-all flex flex-col items-center justify-center gap-2 text-sm mt-2 group 
+                            animate-pulse bg-gray-50 border-gray-300 text-gray-400 hover:text-teal-600 hover:border-teal-400 hover:bg-teal-50
+                        `}
+                    >
+                        <div className="flex items-center gap-2">
+                            <Plus size={20} className="group-hover:scale-110 transition-transform text-teal-500" />
+                            <span className="font-bold">{t.addItemsPlaceholder || "Adds..."}</span>
+                        </div>
+                        <span className="text-xs font-normal opacity-70 hidden lg:inline">{t.dragFromSidebar || "Drag items from sidebar"}</span>
+                    </button>
+                )}
             </div>
         </div >
     );

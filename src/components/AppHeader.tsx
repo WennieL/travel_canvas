@@ -116,6 +116,9 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
                         {/* Right Actions */}
                         <div className="flex items-center gap-1 pr-2 h-full border-l border-dashed border-gray-100 bg-gray-50/10 pl-2">
+                            {/* Toolbar (if any) */}
+                            {toolbar && <div className="scale-90">{toolbar}</div>}
+
                             {/* Share Compact */}
                             <button
                                 onClick={() => setShowShareModal(true)}
@@ -236,6 +239,13 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
 
                         <div className="flex items-center gap-4">
+                            {/* Toolbar Integration */}
+                            {toolbar && (
+                                <div className="mr-2">
+                                    {toolbar}
+                                </div>
+                            )}
+
                             <button
                                 onClick={() => handleGateCheck(() => setShowShareModal(true))}
                                 className="flex items-center gap-2 px-6 py-3 border border-gray-200 bg-white text-gray-500 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm active:scale-95 whitespace-nowrap"

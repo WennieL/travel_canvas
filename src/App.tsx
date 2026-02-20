@@ -184,18 +184,7 @@ export function App() {
 
     const [showContextMap, setShowContextMap] = useState(false);
 
-    // [NEW] Auto-Collapse Sidebar on Map View (Layout Optimization)
-    useEffect(() => {
-        if (window.innerWidth >= 1024) { // Only on Desktop
-            if (showContextMap) {
-                // Auto-collapse sidebar in Split View
-                setIsSidebarOpen(false);
-            } else if (viewMode === 'canvas') {
-                // Restore sidebar in Canvas View
-                setIsSidebarOpen(true);
-            }
-        }
-    }, [viewMode, showContextMap]);
+
 
     // Context Map Scroll Handler
     const handleMapItemClick = (item: any) => {
@@ -451,7 +440,8 @@ export function App() {
                         calculateTotalBudget={calculateTotalBudget} calculateCategoryBreakdown={calculateCategoryBreakdown}
                         toolbar={<AppToolbar
                             viewMode={viewMode} setViewMode={setViewMode}
-                            t={t}
+                            showContextMap={showContextMap} setShowContextMap={setShowContextMap}
+                            t={t} lang={lang}
                         />}
                         showContextMap={showContextMap} setShowContextMap={setShowContextMap} // Pass context map state
                         viewMode={viewMode} setViewMode={setViewMode}
