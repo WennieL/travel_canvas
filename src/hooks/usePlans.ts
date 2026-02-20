@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region } from '../types';
+import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule } from '../types';
 import { TOKYO_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS } from '../data';
 
 export interface UsePlansReturn {
@@ -17,7 +17,13 @@ export interface UsePlansReturn {
     // Actions
     updateActivePlan: (updates: Partial<Plan>) => void;
     updateChecklist: (newChecklist: ChecklistItem[]) => void;
-    handleCreatePlan: (region?: Region) => void;
+    handleCreatePlan: (data: {
+        origin: string;
+        destination: Region;
+        startDate: string;
+        endDate: string;
+        totalDays: number;
+    }) => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
     handleAddDay: () => void;
     handleDeleteDay: (dayToDelete: number, e?: React.MouseEvent) => void;
@@ -127,20 +133,35 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
     };
 
     // Create new plan
-    const handleCreatePlan = (region: Region = 'tokyo') => {
-        const now = new Date();
-        const defaultChecklist = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
+    const handleCreatePlan = (data: {
+        origin: string;
+        destination: Region;
+        startDate: string;
+        endDate: string;
+        totalDays: number;
+    }) => {
+        const { origin, destination, startDate, endDate, totalDays } = data;
+        const defaultChecklist = REGION_DEFAULT_CHECKLISTS[destination]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
+
+        // Generate schedule skeleton based on totalDays
+        const schedule: FullSchedule = {};
+        for (let i = 1; i <= totalDays; i++) {
+            schedule[`Day ${i}`] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+        }
+
         const newPlan: Plan = {
             id: `plan_${Date.now()}`,
-            name: t.newPlan || 'New Trip',
-            startDate: now.toISOString().split('T')[0],
-            endDate: new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            totalDays: 4,
-            schedule: { 'Day 1': { morning: [], afternoon: [], evening: [], night: [], accommodation: [] } },
-            targetCurrency: region === 'melbourne' ? 'AUD' : 'TWD',
-            exchangeRate: region === 'melbourne' ? 21.0 : 0.22,
+            name: `${destination.toUpperCase()} Trip`,
+            origin,
+            destination: destination.toUpperCase(),
+            startDate,
+            endDate,
+            totalDays,
+            schedule,
+            targetCurrency: destination === 'melbourne' ? 'AUD' : 'TWD',
+            exchangeRate: destination === 'melbourne' ? 21.0 : 0.22,
             checklist: defaultChecklist,
-            region: region,
+            region: destination,
             createdAt: Date.now()
         };
         setPlans([...plans, newPlan]);

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Map as MapIcon, Globe, FolderOpen, Upload, Share2, X, Check } from 'lucide-react';
-import { LangType, Plan, Region } from '../types';
+import React, { useState } from 'react';
+import { Map as MapIcon, Globe, FolderOpen, Upload, Share2, X, Check, Calendar, Pencil, Plane, ListChecks } from 'lucide-react';
+import { LangType, Plan, Region, ViewMode } from '../types';
 import { CITY_FILTERS } from '../data/index';
 import { BudgetWidget } from './BudgetWidget';
 
@@ -35,6 +35,9 @@ interface AppHeaderProps {
     showContextMap: boolean;
     setShowContextMap: (show: boolean) => void;
     toolbar?: React.ReactNode;
+    viewMode: ViewMode;
+    setViewMode: (mode: ViewMode) => void;
+    showToastMessage: (message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number) => void;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -43,230 +46,188 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     openDatePicker, showCitySelector, setShowCitySelector, activeRegion, setActiveRegion, updateActivePlan,
     setShowLanding, setShowPlanManager, setShowSubmitModal, setShowShareModal, handleGateCheck,
     isSidebarOpen, budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
-    showContextMap, setShowContextMap, toolbar
+    showContextMap, setShowContextMap, toolbar,
+    viewMode, setViewMode,
+    showToastMessage
 }) => {
+    const MAX_NAME_LENGTH = 25;
     return (
         <>
-            {/* Mobile Header */}
-            <div className="md:hidden h-14 bg-white/90 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 z-30 max-w-[100vw]">
-                <div className="flex flex-col mr-2 min-w-0">
-                    {isEditingName ? (
-                        <input
-                            ref={nameInputRef}
-                            type="text"
-                            value={editingName}
-                            onChange={(e) => setEditingName(e.target.value)}
-                            onBlur={saveName}
-                            onKeyDown={handleNameKeyDown}
-                            autoFocus
-                            className="font-bold text-teal-700 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
-                        />
-                    ) : (
-                        <div className="flex items-center gap-2">
-                            <h1 onClick={startEditingName} className="font-bold text-teal-700 flex items-center gap-1.5 truncate text-sm leading-tight cursor-pointer active:opacity-70 transition-opacity">
-                                <MapIcon className="w-3.5 h-3.5 flex-shrink-0" /> {activePlan.name}
+            {/* Mobile Header - Boarding Pass Style (Phase 8 Upgrade) */}
+            <div className="md:hidden h-16 bg-white sticky top-0 z-30 px-3 py-2 border-b border-gray-100 flex items-center justify-between">
+                <div className="flex flex-1 items-center gap-3 min-w-0">
+                    {/* Ticket Stub Visual flair */}
+                    <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0 border border-teal-100 shadow-sm relative overflow-hidden">
+                        <MapIcon className="w-5 h-5 text-teal-600" />
+                        <div className="absolute top-0 right-0 w-2 h-2 bg-teal-500 rounded-full -mr-1 -mt-1" />
+                    </div>
+
+                    <div className="flex flex-col min-w-0">
+                        {isEditingName ? (
+                            <input
+                                ref={nameInputRef}
+                                type="text"
+                                value={editingName}
+                                onChange={(e) => {
+                                    if (e.target.value.length <= MAX_NAME_LENGTH) {
+                                        setEditingName(e.target.value);
+                                    } else {
+                                        showToastMessage(lang === 'zh' ? `項目名稱不能超過 ${MAX_NAME_LENGTH} 個字喔！` : `Name cannot exceed ${MAX_NAME_LENGTH} characters!`, 'warning');
+                                    }
+                                }}
+                                onBlur={saveName}
+                                onKeyDown={handleNameKeyDown}
+                                autoFocus
+                                className="font-bold text-gray-900 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
+                            />
+                        ) : (
+                            <h1 onClick={startEditingName} className="font-black text-gray-900 truncate text-sm leading-tight flex items-center gap-1.5 group">
+                                {activePlan.name}
+                                <Pencil size={10} className="text-gray-400 opacity-60 group-hover:text-teal-500 transition-colors" />
                             </h1>
-                            {/* Mobile City Selector */}
-                            <div className="relative">
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setShowCitySelector(!showCitySelector);
-                                    }}
-                                    className={`flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold transition-all whitespace-nowrap ${showCitySelector ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-500'}`}
-                                >
-                                    <span>📍</span>
-                                    <span className="max-w-[60px] truncate">
-                                        {(() => {
-                                            const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
-                                            if (!city) return t.allRegion || '全部';
-                                            return lang === 'en' ? city.labelEn : city.label;
-                                        })()}
-                                    </span>
-                                    <span className={`text-[8px] ml-0.5 transition-transform ${showCitySelector ? 'rotate-180' : ''}`}>▼</span>
-                                </button>
-
-                                {showCitySelector && (
-                                    <>
-                                        <div className="fixed inset-0 z-40" onClick={() => setShowCitySelector(false)} />
-                                        <div className="absolute top-full left-0 mt-2 w-44 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                                            <div className="max-h-60 overflow-y-auto">
-                                                <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
-                                                {CITY_FILTERS?.japan?.map(city => (
-                                                    <button
-                                                        key={city.id}
-                                                        onClick={() => {
-                                                            setActiveRegion(city.id);
-                                                            updateActivePlan({ region: city.id });
-                                                            setShowCitySelector(false);
-                                                        }}
-                                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                                    >
-                                                        <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                                    </button>
-                                                ))}
-                                                <div className="h-px bg-gray-100 my-1"></div>
-                                                <div className="text-[9px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
-                                                {CITY_FILTERS?.australia?.map(city => (
-                                                    <button
-                                                        key={city.id}
-                                                        onClick={() => {
-                                                            setActiveRegion(city.id);
-                                                            updateActivePlan({ region: city.id });
-                                                            setShowCitySelector(false);
-                                                        }}
-                                                        className={`w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium flex items-center gap-2 mb-0.5 whitespace-nowrap ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                                    >
-                                                        <span>{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    )}
-                    <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 truncate leading-tight mt-0.5 active:text-teal-600 transition-colors">{activePlan.startDate} ~ {activePlan.endDate} <span className="opacity-80">({activePlan.totalDays} {t.daysUnit || '天'})</span></span>
-                </div>
-                <div className="flex gap-1 flex-shrink-0 items-center">
-                    <button
-                        onClick={() => setShowShareModal(true)}
-                        className="flex items-center gap-1.5 px-3.5 py-1.5 bg-gray-100 text-gray-700 rounded-full text-[10px] font-bold active:scale-95 transition-all"
-                    >
-                        <Upload size={14} />
-                        <span>{t.share || "Share"}</span>
-                    </button>
-                </div>
-            </div>
-
-            {/* Desktop Header */}
-            <div className="hidden md:flex h-14 bg-white border-b border-gray-100 items-center justify-between px-6 shadow-[0_2px_10px_-5px_rgba(0,0,0,0.05)] z-40 relative">
-                {/* Trip Name Display - Editable */}
-                <div className={`flex flex-col justify-center flex-shrink-0 ${!isSidebarOpen ? 'lg:ml-10' : ''}`}>
-                    {isEditingName ? (
-                        <input
-                            ref={nameInputRef}
-                            type="text"
-                            value={editingName}
-                            onChange={(e) => setEditingName(e.target.value)}
-                            onBlur={saveName}
-                            onKeyDown={handleNameKeyDown}
-                            className="font-bold text-lg text-gray-800 max-w-[280px] leading-tight bg-gray-50 border border-teal-400 rounded px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
-                        />
-                    ) : (
-                        <h1
-                            onClick={startEditingName}
-                            className="font-bold text-lg text-gray-800 truncate max-w-[280px] leading-tight cursor-pointer hover:text-teal-600 hover:underline underline-offset-2 decoration-dotted transition-colors group"
-                            title={t.editTitleHint}
-                        >
-                            {activePlan.name}
-                            <span className="ml-1 text-gray-300 group-hover:text-teal-400 text-sm">✏️</span>
-                        </h1>
-                    )}
-                    <span
-                        onClick={openDatePicker}
-                        className="text-[10px] text-gray-400 font-medium tracking-wide cursor-pointer hover:text-teal-600 hover:underline underline-offset-2 decoration-dotted transition-colors"
-                        title={t.editDateHint}
-                    >
-                        📅 {activePlan.startDate} ~ {activePlan.endDate} <span className="text-gray-300 ml-1 font-normal">({activePlan.totalDays} {t.daysUnit || '天'})</span>
-                    </span>
-                </div>
-
-                {/* City Selector */}
-                <div className="relative ml-4 z-20">
-                    <button
-                        onClick={() => setShowCitySelector(!showCitySelector)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${showCitySelector ? 'bg-teal-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-                    >
-                        <span>📍</span>
-                        <span className="whitespace-nowrap">
-                            {(() => {
-                                const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
-                                if (!city) return t.allCities || '所有城市';
-                                return lang === 'en' ? city.labelEn : city.label;
-                            })()}
+                        )}
+                        <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 font-bold truncate mt-0.5 uppercase tracking-wide flex items-center gap-1">
+                            <Calendar size={10} className="text-teal-500/70" />
+                            {activePlan.startDate} ~ {activePlan.endDate} ({activePlan.totalDays}D)
                         </span>
-                        <span className={`text-[10px] ml-0.5 transition-transform ${showCitySelector ? 'rotate-180' : ''}`}>▼</span>
-                    </button>
-
-                    {showCitySelector && (
-                        <>
-                            <div className="fixed inset-0 z-40" onClick={() => setShowCitySelector(false)} />
-                            <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                                <div className="flex items-center justify-between px-2 py-1 mb-1">
-                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.selectCity || '選擇城市'}</div>
-                                    <button onClick={() => setShowCitySelector(false)} className="text-gray-400 hover:text-gray-600"><X size={12} /></button>
-                                </div>
-                                <div className="max-h-64 overflow-y-auto">
-                                    <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Japan</div>
-                                    {CITY_FILTERS?.japan?.map(city => (
-                                        <button
-                                            key={city.id}
-                                            onClick={() => {
-                                                setActiveRegion(city.id);
-                                                updateActivePlan({ region: city.id });
-                                                setShowCitySelector(false);
-                                            }}
-                                            className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                        >
-                                            <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                            {activeRegion === city.id && <Check size={12} className="ml-auto" />}
-                                        </button>
-                                    ))}
-                                    <div className="h-px bg-gray-100 my-1 mx-2"></div>
-                                    <div className="text-[10px] font-bold text-gray-400 px-2 py-1 uppercase tracking-wider opacity-60">Australia</div>
-                                    {CITY_FILTERS?.australia?.map(city => (
-                                        <button
-                                            key={city.id}
-                                            onClick={() => {
-                                                setActiveRegion(city.id);
-                                                updateActivePlan({ region: city.id });
-                                                setShowCitySelector(false);
-                                            }}
-                                            className={`w-full text-left px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 mb-0.5 transition-colors ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                        >
-                                            <span className="text-sm">{city.icon}</span> {lang === 'zh' ? city.label : city.labelEn}
-                                            {activeRegion === city.id && <Check size={12} className="ml-auto" />}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </>
-                    )}
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-
-                    <div className="hidden lg:flex items-center gap-2">
-                        {/* Context Map Toggle (Split View) */}
-                        <button
-                            onClick={() => setShowContextMap(!showContextMap)}
-                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${showContextMap ? 'bg-teal-50 text-teal-600 border-teal-200' : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'}`}
-                            title={t.showMap || '顯示輔助地圖'}
-                        >
-                            <MapIcon size={14} />
-                            <span>{t.map || '地圖'}</span>
-                        </button>
-
-                        <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
-
-                        {/* View Switcher/Zoom Toolbar */}
-                        {toolbar}
-                    </div>
-
-                    <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
-
-                    {/* Global Actions */}
-                    <button onClick={toggleLang} className="hidden lg:flex w-9 h-9 items-center justify-center text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-full transition-colors font-bold text-xs"><Globe size={18} /></button>
                     <button
-                        onClick={() => handleGateCheck(() => setShowShareModal(true))}
-                        className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-xs font-bold transition-all active:scale-95"
-                        title={t.share || "Share"}
+                        onClick={() => setShowShareModal(true)}
+                        className="w-9 h-9 flex items-center justify-center bg-gray-50 text-gray-500 rounded-full active:scale-95 transition-all border border-gray-100"
                     >
                         <Upload size={16} />
-                        <span>{t.share || "Share"}</span>
                     </button>
+
+                    {/* Compact Budget (Always visible on mobile header now) */}
+                    <div className="scale-90 origin-right">
+                        <BudgetWidget
+                            spent={calculateTotalBudget()}
+                            limit={budgetLimit}
+                            breakdown={calculateCategoryBreakdown()}
+                            onSetLimit={setBudgetLimit}
+                            t={t}
+                            compact={true}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Desktop Header - Boarding Pass Style (Phase 11: Classic Aviation) */}
+            <div className="hidden md:flex flex-col h-36 bg-gray-50/10 items-center justify-start py-4 px-6 z-40 relative">
+                <div className="w-full max-w-5xl h-28 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100/50 flex items-center overflow-hidden active:shadow-md transition-all relative">
+
+                    {/* World Map Background (Subtle) */}
+                    <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none flex items-center justify-center overflow-hidden">
+                        <svg viewBox="0 0 1000 500" className="w-[120%] h-auto text-teal-900 fill-current">
+                            <path d="M150,100 Q200,50 250,100 T350,150 T450,100 T550,150 T650,100 T750,150 T850,100" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
+                            <circle cx="150" cy="100" r="5" />
+                            <circle cx="850" cy="100" r="5" />
+                            <text x="150" y="90" fontSize="12" fontWeight="bold">TPE</text>
+                            <text x="850" y="90" fontSize="12" fontWeight="bold">TYO</text>
+                        </svg>
+                    </div>
+
+                    {/* Ticket Stub Area (Left) - Trip Name & Barcode */}
+                    <div className="flex-1 h-full flex items-center border-r border-dashed border-gray-200 relative z-10 bg-white/80 backdrop-blur-[2px]">
+                        {/* Cutout notches */}
+                        <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner z-20" />
+                        <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner z-20" />
+
+                        <div className="flex-1 pl-16 pr-8 relative group">
+                            {/* Vertical Barcode */}
+                            <div className="absolute left-6 top-0.5 bottom-0.5 w-4 opacity-50">
+                                <div className="w-full h-full bg-[repeating-linear-gradient(to_bottom,transparent,transparent_2px,#000_2px,#000_4px)]" />
+                            </div>
+
+                            <div className="flex flex-col justify-center">
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <span className="text-[9px] font-black text-teal-600 uppercase tracking-[0.2em] bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">Boarding Pass</span>
+                                </div>
+
+                                {isEditingName ? (
+                                    <input
+                                        ref={nameInputRef}
+                                        type="text"
+                                        value={editingName}
+                                        onChange={(e) => {
+                                            if (e.target.value.length <= MAX_NAME_LENGTH) {
+                                                setEditingName(e.target.value);
+                                            } else {
+                                                showToastMessage(lang === 'zh' ? `項目名稱不能超過 ${MAX_NAME_LENGTH} 個字喔！` : `Name cannot exceed ${MAX_NAME_LENGTH} characters!`, 'warning');
+                                            }
+                                        }}
+                                        onBlur={saveName}
+                                        onKeyDown={handleNameKeyDown}
+                                        className="font-black text-2xl text-gray-900 leading-tight bg-gray-50 border border-teal-400 rounded px-2 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
+                                    />
+                                ) : (
+                                    <div className="flex flex-col">
+                                        <h1
+                                            onClick={startEditingName}
+                                            className="font-black text-2xl text-gray-900 truncate leading-tight cursor-pointer hover:text-teal-600 transition-colors flex items-center gap-2"
+                                        >
+                                            {activePlan.name}
+                                            <Pencil size={14} className="opacity-0 group-hover:opacity-100 text-gray-400 transition-all hover:text-teal-500" />
+                                        </h1>
+                                        <span
+                                            onClick={(e) => { e.stopPropagation(); openDatePicker(); }}
+                                            className="text-xs text-gray-400 font-bold uppercase tracking-[0.1em] mt-1.5 cursor-pointer hover:text-teal-500 transition-colors flex items-center gap-1.5"
+                                        >
+                                            <Calendar size={12} className="text-teal-500/70" />
+                                            {activePlan.startDate} ~ {activePlan.endDate} ({activePlan.totalDays}D)
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Ticket Area - City Info (Secondary) */}
+                    <div className="h-full px-16 flex items-center justify-center z-10">
+                        {/* Origin ✈ Destination Branding */}
+                        <div className="flex items-center gap-8 w-full justify-center">
+                            <div className="flex flex-col items-center">
+                                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">From</span>
+                                <span className="font-bold text-lg text-gray-700 tracking-tight uppercase">{activePlan.origin || 'TAIPEI'}</span>
+                            </div>
+
+                            <div className="flex flex-col items-center justify-center px-4 h-full text-teal-500/80">
+                                <Plane size={24} fill="currentColor" className="rotate-45" />
+                            </div>
+
+                            <div className="flex flex-col items-center">
+                                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">To</span>
+                                <span className="font-bold text-lg text-gray-700 tracking-tight uppercase">{activePlan.destination || 'TOKYO'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Action Stub Area (Right) - Share button back inside */}
+                    <div className="h-full flex items-center border-l border-dashed border-gray-200 pl-8 pr-6 relative bg-gray-50/30 z-10">
+                        {/* Cutout notches */}
+                        <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
+                        <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
+
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => handleGateCheck(() => setShowShareModal(true))}
+                                className="flex items-center gap-2 px-6 py-3 border border-gray-200 bg-white text-gray-500 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm active:scale-95 whitespace-nowrap"
+                            >
+                                <Upload size={14} />
+                                <span>{t.share || "Share Plan"}</span>
+                            </button>
+
+                            {/* Ticket Edge Detail */}
+                            <div className="flex flex-col gap-1.5 ml-2 opacity-30">
+                                {[...Array(8)].map((_, i) => (
+                                    <div key={i} className="w-1 h-3 bg-teal-600/20 rounded-full" />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

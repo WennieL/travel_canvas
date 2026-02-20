@@ -343,7 +343,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                             <input
                                                                 type="number"
                                                                 autoFocus
-                                                                className="w-12 text-[10px] font-medium text-gray-700 p-0 border-none focus:ring-0 bg-transparent"
+                                                                className="w-12 text-[10px] font-medium text-gray-700 p-0 border-none focus:ring-0 outline-none bg-transparent appearance-none"
                                                                 placeholder="0"
                                                                 value={item.price || ''}
                                                                 onChange={(e) => {
@@ -396,7 +396,7 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                         onKeyDown={(e) => {
                                                             if (e.key === 'Enter') setEditingNoteId(null);
                                                         }}
-                                                        className="flex-1 text-[11px] bg-transparent border-none focus:ring-0 p-0 text-gray-700 placeholder-gray-300 animate-in fade-in duration-200 font-medium"
+                                                        className="flex-1 text-[11px] bg-transparent border-none focus:ring-0 outline-none p-0 text-gray-700 placeholder-gray-300 animate-in fade-in duration-200 font-medium"
                                                     />
                                                 ) : (
                                                     <span className="flex-1 text-[11px] text-gray-500 line-clamp-2 leading-relaxed">

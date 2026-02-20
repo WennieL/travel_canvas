@@ -14,6 +14,9 @@ interface DesktopSidebarProps {
     lang: LangType;
     isSidebarOpen: boolean;
     setIsSidebarOpen: (open: boolean) => void;
+    isSidebarPinned: boolean;
+    setIsSidebarPinned: (pinned: boolean) => void;
+    setActiveTab: (tab: any) => void;
 }
 
 const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
@@ -25,7 +28,10 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
     onSetLang,
     lang,
     isSidebarOpen,
-    setIsSidebarOpen
+    setIsSidebarOpen,
+    isSidebarPinned,
+    setIsSidebarPinned,
+    setActiveTab
 }) => {
     const { items, desktopMore, getLabel } = useNavigation({
         hasActivePlan: !!activePlan,
@@ -43,10 +49,20 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
         } else if (item.action === 'navigate') {
             if (item.id === 'projects') {
                 onShowPlanManager();
-            } else if (item.id === 'assets') {
-                setIsSidebarOpen(!isSidebarOpen);
+            } else if (item.id === 'assets' || item.id === 'templates' || item.id === 'budget' || item.id === 'checklist') {
+                setActiveTab(item.id === 'assets' ? 'assets' : item.id);
+                setIsSidebarOpen(true);
+                setIsSidebarPinned(true);
+                // If the user navigates to a sidebar item, we should make sure Discovery is closed
+                if (activeView === 'discovery') {
+                    onNavigate('canvas'); // Return to canvas if in discovery
+                }
             } else {
                 onNavigate(item.id);
+                if (item.id === 'discovery') {
+                    setIsSidebarOpen(false);
+                    setIsSidebarPinned(false);
+                }
             }
         }
     };
@@ -80,7 +96,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
     }, []);
 
     return (
-        <div className="hidden lg:flex flex-col w-20 bg-white border-r border-gray-200 items-center py-4 gap-2 z-[2000]">
+        <div className="hidden lg:flex flex-col w-20 bg-transparent items-center py-4 gap-2 z-[2000]">
             {/* Logo area */}
             <div className="w-full px-2 mb-4 flex flex-col items-center gap-4">
                 <div
@@ -106,21 +122,16 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
                                 group relative w-full h-14 rounded-lg flex flex-col items-center justify-center
                                 transition-all duration-200
                                 ${isActive
-                                    ? 'bg-teal-50 text-teal-600'
-                                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                    ? 'bg-teal-500/10 text-teal-600 border border-teal-500/20 shadow-[0_2px_8px_rgba(20,184,166,0.1)]'
+                                    : 'text-slate-600 opacity-80 hover:bg-white/40 hover:text-slate-900'
                                 }
                             `}
                         >
                             <Icon size={22} className={isActive ? 'text-teal-600' : ''} />
-                            <span className={`text-[10px] mt-1 font-medium leading-tight text-center px-1 break-words w-full ${isActive ? 'text-teal-600' : 'text-gray-400'}`}>
+                            <span className={`text-[10px] mt-1 font-bold leading-tight text-center px-1 break-words w-full ${isActive ? 'text-teal-600' : 'text-slate-600 opacity-80'}`}>
                                 {label}
                             </span>
 
-                            {/* Tooltip on hover */}
-                            <div className="absolute left-full ml-3 px-2 py-1 bg-gray-900 text-white text-[11px] rounded shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap transition-opacity z-[60]">
-                                {label}
-                                <div className="absolute top-1/2 -left-1 transform -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45" />
-                            </div>
                         </button>
                     );
                 })}
@@ -132,7 +143,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
                     onClick={() => setShowMore(!showMore)}
                     className={`
                         w-full h-14 rounded-lg flex flex-col items-center justify-center transition-all duration-200
-                        ${showMore ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:bg-gray-50'}
+                        ${showMore ? 'bg-white/60 text-slate-900 border border-white/50 shadow-sm' : 'text-slate-600 hover:bg-white/40'}
                     `}
                 >
                     <div className="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold text-xs shadow-sm mb-1">

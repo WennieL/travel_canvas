@@ -6,9 +6,9 @@ import { LangType, TravelItem, Template, Plan, Region, ItemType, DaySchedule } f
 interface MobileLibraryProps {
     onClose: () => void;
 
-    // Props required by SidebarContent
-    activeTab: 'assets' | 'templates';
-    setActiveTab: (tab: 'assets' | 'templates') => void;
+    // View State (Required by SidebarContent)
+    activeTab: 'assets' | 'templates' | 'budget' | 'checklist';
+    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist') => void;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     activeCategory: 'all' | ItemType;
@@ -18,13 +18,25 @@ interface MobileLibraryProps {
     setShowCustomItemModal: (show: boolean) => void;
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
     handleTapToAdd: (item: TravelItem) => void;
-    applyTemplate: (template: { name: string; duration: number; schedule: DaySchedule; region: Region }) => void;
+    applyTemplate: (template: any) => void;
     t: any;
     lang: LangType;
     customAssets: TravelItem[];
     subscribedCreators: string[];
     onCreatorClick: (id: string) => void;
     onPreviewTemplate: (template: Template) => void;
+
+    // Tools props
+    activePlan: Plan;
+    budgetLimit: number;
+    setBudgetLimit: (limit: number) => void;
+    calculateTotalBudget: () => number;
+    calculateCategoryBreakdown: () => any;
+    onUpdateChecklist: (checklist: any[]) => void;
+    showToastMessage: (message: string, type: any) => void;
+    currency?: string;
+    exchangeRate?: number;
+    onSetSettings?: (currency: string, rate: number) => void;
 }
 
 export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {

@@ -14,6 +14,8 @@ export interface UseBudgetReturn {
     setBudgetLimit: React.Dispatch<React.SetStateAction<number>>;
     calculateTotalBudget: () => number;
     calculateCategoryBreakdown: () => CategoryBreakdownItem[];
+    budgetSettings: { currency: string; exchangeRate: number };
+    updateBudgetSettings: (currency: string, exchangeRate: number) => void;
 }
 
 export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudgetReturn {
@@ -27,10 +29,29 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
         }
     });
 
+    // Budget settings (currency, exchange rate)
+    const [budgetSettings, setBudgetSettings] = useState(() => {
+        try {
+            const saved = localStorage.getItem('budget_settings');
+            return saved ? JSON.parse(saved) : { currency: 'TWD', exchangeRate: 0.21 };
+        } catch {
+            return { currency: 'TWD', exchangeRate: 0.21 };
+        }
+    });
+
     // Persist budget limit
     useEffect(() => {
         localStorage.setItem('budget_limit', String(budgetLimit));
     }, [budgetLimit]);
+
+    // Persist budget settings
+    useEffect(() => {
+        localStorage.setItem('budget_settings', JSON.stringify(budgetSettings));
+    }, [budgetSettings]);
+
+    const updateBudgetSettings = (currency: string, exchangeRate: number) => {
+        setBudgetSettings({ currency, exchangeRate });
+    };
 
     // Calculate total budget from all schedule items
     const calculateTotalBudget = (): number => {
@@ -82,6 +103,8 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
         budgetLimit,
         setBudgetLimit,
         calculateTotalBudget,
-        calculateCategoryBreakdown
+        calculateCategoryBreakdown,
+        budgetSettings,
+        updateBudgetSettings
     };
 }

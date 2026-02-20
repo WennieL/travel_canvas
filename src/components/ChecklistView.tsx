@@ -145,7 +145,7 @@ const ChecklistView: React.FC<ChecklistViewProps> = ({
                                     onChange={(e) => setEditingText(e.target.value)}
                                     onBlur={saveEdit}
                                     onKeyDown={handleEditKeyDown}
-                                    className="flex-1 bg-white border-b-2 border-teal-400 outline-none text-sm py-0.5 text-gray-700 font-medium"
+                                    className="flex-1 bg-transparent border-none outline-none text-sm py-0.5 text-gray-700 font-medium focus:ring-0"
                                 />
                             ) : (
                                 <span

@@ -151,7 +151,16 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                             <circle cx="20" cy="20" r={radius} fill="none" stroke={getRingColor()} strokeWidth="3" strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} strokeLinecap="round" className="transition-all duration-500 ease-out" />
                         </svg>
                     )}
-                    <Wallet size={18} className={isOverBudget ? 'text-red-500' : 'text-gray-600'} />
+                    <div
+                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all bg-white
+                            ${limit === 0 ? 'border-gray-100 text-gray-300' :
+                                isOverBudget || percentage >= 90 ? 'border-red-500 text-red-500' :
+                                    percentage >= 70 ? 'border-yellow-500 text-yellow-500' :
+                                        'border-gray-900 text-gray-900'}
+                        `}
+                    >
+                        <Wallet size={16} className="transition-transform group-hover:scale-110" />
+                    </div>
                 </button>
 
                 {isHovered && !showModal && (
@@ -214,21 +223,30 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
         <>
             <button
                 onClick={() => setShowModal(true)}
-                className="flex items-center gap-2 text-xs font-medium text-gray-500 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100 hover:border-teal-300 hover:bg-teal-50 transition-all group"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="relative flex items-center justify-center p-2 rounded-full transition-all active:scale-95 group"
             >
-                <Wallet size={14} className="text-teal-600" />
-                <span>¥{spent.toLocaleString()}</span>
-                {limit > 0 && (
-                    <>
-                        <span className="text-gray-300">/</span>
-                        <span className="text-gray-400">¥{limit.toLocaleString()}</span>
-                        <div className="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                            <div className={`h-full ${getProgressColor()} transition-all`} style={{ width: `${percentage}%` }} />
+                <div
+                    className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all bg-white shadow-sm
+                        ${limit === 0 ? 'border-gray-100 text-gray-300' :
+                            isOverBudget || percentage >= 90 ? 'border-red-500 bg-red-50 text-red-600 shadow-red-100' :
+                                percentage >= 70 ? 'border-yellow-500 bg-yellow-50 text-yellow-600 shadow-yellow-100' :
+                                    'border-gray-900 bg-white text-gray-900 hover:border-teal-500 hover:text-teal-600'}
+                    `}
+                >
+                    <Wallet size={20} className="transition-transform group-hover:scale-110" />
+                </div>
+
+                {/* Hover Tooltip - Quick Info */}
+                {isHovered && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-2 bg-gray-900 text-white rounded-xl text-xs font-bold whitespace-nowrap z-50 animate-in fade-in zoom-in-95 duration-200 shadow-xl">
+                        <div className="flex items-center gap-2">
+                            <span>¥{spent.toLocaleString()}</span>
+                            {limit > 0 && <span className="opacity-50">/ ¥{limit.toLocaleString()}</span>}
                         </div>
-                    </>
-                )}
-                {limit === 0 && (
-                    <span className="text-gray-400 text-[10px]">{t.setBudget || '設定預算'}</span>
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
+                    </div>
                 )}
             </button>
 
@@ -319,7 +337,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                             type="number"
                             value={tempLimit}
                             onChange={(e: any) => setTempLimit(e.target.value)}
-                            className="w-full border border-gray-200 rounded-lg py-2 pl-12 pr-3 text-lg font-medium focus:outline-none focus:border-teal-500"
+                            className="w-full border-none rounded-lg py-2 pl-12 pr-3 text-lg font-medium focus:outline-none focus:ring-0 bg-transparent"
                             placeholder="30000"
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
@@ -347,7 +365,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                                     setTempLimit(Math.round(limit * newRate).toString());
                                 }
                             }}
-                            className="border border-gray-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-teal-500 bg-white"
+                            className="border-none rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-0 bg-white"
                         >
                             {['TWD', 'USD', 'AUD'].map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
@@ -358,7 +376,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                                 step="0.0001"
                                 value={tempRate}
                                 onChange={(e: any) => setTempRate(e.target.value)}
-                                className="w-full border border-gray-200 rounded-lg py-2 pl-14 pr-3 text-sm font-medium focus:outline-none focus:border-teal-500"
+                                className="w-full border-none rounded-lg py-2 pl-14 pr-3 text-sm font-medium focus:outline-none focus:ring-0 bg-transparent"
                                 placeholder="0.21"
                             />
                         </div>

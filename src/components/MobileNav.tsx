@@ -200,11 +200,33 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             )}
 
             {/* Bottom Tab Bar */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 grid grid-cols-5 items-center pb-2 z-[2050] shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-dashed border-gray-200 grid grid-cols-5 items-center pb-2 z-[2050] shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+                {/* Decorative notches for the bottom nav (Mirroring header ticket) */}
+                <div className="absolute -top-1 left-4 w-2 h-2 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
+                <div className="absolute -top-1 right-4 w-2 h-2 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
+
                 {mobilePrimary.map((tab: NavItem) => {
                     const Icon = tab.icon;
                     const label = getLabel(tab);
                     const isActive = tab.id === 'more' ? showMoreMenu : activeTab === (tab.id === 'projects' ? 'my' : tab.id);
+
+                    if (tab.id === 'more') {
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => handleTabClick(tab.id)}
+                                className="flex flex-col items-center justify-center w-full transition-all active:scale-90"
+                            >
+                                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all ${isActive
+                                        ? 'bg-teal-600 text-white border-teal-200 shadow-md ring-2 ring-teal-50'
+                                        : 'bg-gradient-to-br from-teal-400 to-teal-600 text-white border-white shadow-sm'
+                                    }`}>
+                                    W
+                                </div>
+                                <span className={`text-[10px] mt-1 font-bold whitespace-nowrap ${isActive ? 'text-teal-600' : 'text-gray-400'}`}>{label}</span>
+                            </button>
+                        );
+                    }
 
                     return (
                         <button

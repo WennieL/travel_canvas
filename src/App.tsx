@@ -1,15 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import {
-    SidebarClose,
-    ListTodo,
-    Calendar,
-    Map as MapIcon,
-    Plus,
-    FolderOpen,
-    Globe,
-    Share2,
-    Upload
-} from 'lucide-react';
+import { Plus, X, Search, Map as MapIcon, Calendar, Download, Share2, Package, Layout, CheckSquare, Settings, ExternalLink, Globe, Menu, ChevronLeft, ChevronRight, Filter, Grid, List, Info, AlertTriangle, CheckCircle, Smartphone, Monitor, Zap, Wallet, ListChecks, MapPin, Navigation, History, Star, HelpCircle, ArrowRight, Eye, Wand2, Sparkles, Smile, MessageSquare, PlusCircle } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 
 import {
@@ -30,7 +20,8 @@ import {
     TravelItem,
     Region,
     Template,
-    DaySchedule
+    DaySchedule,
+    ChecklistItem
 } from './types';
 import {
     getSlotLabel,
@@ -112,10 +103,10 @@ export function App() {
         ui.setShowStartPicker(true);
     };
 
-    const executeCreateBlankPlan = (region?: Region) => {
-        _handleCreatePlan(region);
+    const executeCreateBlankPlan = (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number }) => {
+        _handleCreatePlan(data);
         setIsCreatingNewPlan(false);
-        showToastMessage(lang === 'zh' ? '計畫已建立！' : 'Plan created!');
+        showToastMessage(lang === 'zh' ? '祝您旅途愉快！✈️' : 'Have a great trip! ✈️');
     };
 
     const enterExpertCreationMode = () => {
@@ -126,7 +117,10 @@ export function App() {
         showToastMessage(lang === 'zh' ? '請從靈感牆中挑選一個您喜歡的行程 ✨' : 'Please pick a template you like from the inspiration wall ✨');
     };
 
-    const { budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown } = useBudget(activePlan, TRANSLATIONS[lang]);
+    const {
+        budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
+        budgetSettings, updateBudgetSettings
+    } = useBudget(activePlan, TRANSLATIONS[lang]);
 
     // Toast State
     const [toast, setToast] = useState<{ show: boolean, message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number }>({ show: false, message: '' });
@@ -337,13 +331,13 @@ export function App() {
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
     return (
-        <div className="flex flex-col md:flex-row h-[100dvh] bg-white text-slate-800 font-sans overflow-x-hidden max-w-[100vw]">
+        <div className="flex flex-col md:flex-row h-[100dvh] bg-[#fafafa] text-slate-800 font-sans overflow-x-hidden max-w-[100vw]">
             {/* [NEW] Desktop Icon Sidebar (Canva Style) */}
             {!isFullscreen && (
                 <DesktopSidebar
                     activePlan={activePlan}
-                    activeView={isSidebarOpen ? 'assets' : (showFavorites ? 'favorites' : (showPlanManager ? 'projects' : viewMode))}
-                    onNavigate={(view) => handleNavigate(view as ViewMode)}
+                    activeView={isSidebarOpen ? activeTab : (showFavorites ? 'favorites' : (showPlanManager ? 'projects' : viewMode))}
+                    onNavigate={(view) => handleNavigate(view as any)}
                     onNewPlan={() => ui.setShowStartPicker(true)}
                     onShowPlanManager={() => {
                         setShowFavorites(false);
@@ -355,41 +349,94 @@ export function App() {
                     lang={lang}
                     isSidebarOpen={isSidebarOpen}
                     setIsSidebarOpen={setIsSidebarOpen}
+                    isSidebarPinned={ui.isSidebarPinned}
+                    setIsSidebarPinned={ui.setIsSidebarPinned}
+                    setActiveTab={setActiveTab}
                 />
             )}
 
             {/* Sidebar Content (Assets/Templates) */}
             {!isFullscreen && (
                 <div
-                    className={`hidden lg:flex flex-col border-r border-gray-100 bg-white relative z-20 transition-all duration-300 overflow-hidden ${isSidebarOpen ? 'opacity-100' : 'w-0 opacity-0'}`}
-                    style={{ width: isSidebarOpen ? sidebarWidth : 0 }}
+                    className={`hidden lg:flex flex-col bg-white/90 backdrop-blur-md relative z-20 transition-all duration-300 overflow-visible group/sidebar border-r border-white/40
+                        ${isSidebarOpen && viewMode !== 'discovery' ? 'opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
+                    style={{
+                        width: isSidebarOpen && viewMode !== 'discovery' ? sidebarWidth : 0,
+                    }}
                 >
-                    {/* Sidebar Header Title */}
-                    <div className="px-5 pt-6 pb-2">
-                        <h2 className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">
-                            {t.assets}
-                        </h2>
-                        <p className="text-[10px] text-gray-400 font-medium uppercase tracking-[0.2em] mt-1 opacity-70">
-                            Asset Library
-                        </p>
-                    </div>
+                    {/* [NEW] Collapse Handle (Canva Style) */}
+                    {isSidebarOpen && viewMode !== 'discovery' && (
+                        <button
+                            onClick={() => {
+                                setIsSidebarOpen(false);
+                                ui.setIsSidebarPinned(false);
+                            }}
+                            className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-12 bg-white border border-gray-100 shadow-sm rounded-full flex items-center justify-center text-gray-400 hover:text-teal-600 hover:scale-110 transition-all z-30 opacity-0 group-hover/sidebar:opacity-100"
+                        >
+                            <ChevronLeft size={16} />
+                        </button>
+                    )}
 
-                    <SidebarContent
-                        searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-                        activeCategory={activeCategory} setActiveCategory={setActiveCategory}
-                        activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
-                        setShowCustomItemModal={setShowCustomItemModal}
-                        handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
-                        applyTemplate={applyTemplate} t={t} lang={lang}
-                        customAssets={customAssets}
-                        highlight={ui.sidebarHighlight}
-                    />
+                    <div className="flex flex-col h-full w-full" style={{ width: sidebarWidth }}>
+                        {/* Sidebar Header Tabs */}
+                        <div className="flex items-center border-b border-gray-100 bg-gray-50/20 pt-4">
+                            <button
+                                onClick={() => setActiveTab('assets')}
+                                className={`flex-1 flex flex-col items-center py-3 px-2 transition-all relative ${activeTab === 'assets' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
+                            >
+                                <Package size={20} className="mb-1" />
+                                <span className="text-[10px] font-bold uppercase tracking-wider">Library</span>
+                                {activeTab === 'assets' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500" />}
+                            </button>
+
+                            <button
+                                onClick={() => setActiveTab('budget')}
+                                className={`flex-1 flex flex-col items-center py-3 px-2 transition-all relative ${activeTab === 'budget' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
+                            >
+                                <Wallet size={20} className="mb-1" />
+                                <span className="text-[10px] font-bold uppercase tracking-wider">Budget</span>
+                                {activeTab === 'budget' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500" />}
+                            </button>
+
+                            <button
+                                onClick={() => setActiveTab('checklist')}
+                                className={`flex-1 flex flex-col items-center py-3 px-2 transition-all relative ${activeTab === 'checklist' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
+                            >
+                                <ListChecks size={20} className="mb-1" />
+                                <span className="text-[10px] font-bold uppercase tracking-wider">Check</span>
+                                {activeTab === 'checklist' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500" />}
+                            </button>
+                        </div>
+
+                        <SidebarContent
+                            searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                            activeCategory={activeCategory} setActiveCategory={setActiveCategory}
+                            activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
+                            setShowCustomItemModal={setShowCustomItemModal}
+                            handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
+                            applyTemplate={applyTemplate} t={t} lang={lang}
+                            customAssets={customAssets}
+                            highlight={ui.sidebarHighlight}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                            activePlan={activePlan}
+                            budgetLimit={budgetLimit}
+                            setBudgetLimit={setBudgetLimit}
+                            calculateTotalBudget={calculateTotalBudget}
+                            calculateCategoryBreakdown={calculateCategoryBreakdown}
+                            onUpdateChecklist={(checklist: ChecklistItem[]) => updateActivePlan({ checklist })}
+                            showToastMessage={showToastMessage}
+                            currency={budgetSettings.currency}
+                            exchangeRate={budgetSettings.exchangeRate}
+                            onSetSettings={updateBudgetSettings}
+                        />
+                    </div>
                 </div>
             )}
 
 
             {/* Main Area */}
-            <div className="flex-1 flex flex-col min-w-0 bg-white relative overflow-x-hidden">
+            <div className="flex-1 flex flex-col min-w-0 bg-premium-paper relative overflow-x-hidden">
                 {viewMode !== 'discovery' && !showFavorites && (
                     <AppHeader
                         lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
@@ -407,6 +454,8 @@ export function App() {
                             t={t}
                         />}
                         showContextMap={showContextMap} setShowContextMap={setShowContextMap} // Pass context map state
+                        viewMode={viewMode} setViewMode={setViewMode}
+                        showToastMessage={showToastMessage}
                     />
                 )}
 
@@ -446,7 +495,7 @@ export function App() {
                 )}
 
                 {/* Canvas Area */}
-                {!showFavorites && <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50/30 p-4 pb-24 lg:p-8 no-scrollbar">
+                {!showFavorites && <div className="flex-1 overflow-y-auto overflow-x-hidden bg-transparent p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4 no-scrollbar">
                     {/* View Switcher Content */}
                     {viewMode === 'map' ? (
                         <div className="h-full">
@@ -492,10 +541,10 @@ export function App() {
                                 spent={calculateTotalBudget()}
                                 limit={budgetLimit}
                                 breakdown={calculateCategoryBreakdown()}
-                                currency={activePlan.targetCurrency || 'TWD'}
-                                exchangeRate={activePlan.exchangeRate || 0.21}
+                                currency={budgetSettings.currency}
+                                exchangeRate={budgetSettings.exchangeRate}
                                 onSetLimit={setBudgetLimit}
-                                onSetSettings={(currency: string, rate: number) => updateActivePlan({ targetCurrency: currency, exchangeRate: rate })}
+                                onSetSettings={updateBudgetSettings}
                                 t={t}
                             />
                         </div>
@@ -548,7 +597,6 @@ export function App() {
                 showPlanManager={showPlanManager} setShowPlanManager={setShowPlanManager}
                 plans={plans} activePlanId={activePlanId} setActivePlanId={setActivePlanId}
                 onTriggerPicker={handleTriggerStartPicker}
-                onCreateBlank={executeCreateBlankPlan}
                 onExpertMode={enterExpertCreationMode}
                 handleDeletePlan={_handleDeletePlan}
                 setPlans={setPlans}
@@ -655,8 +703,22 @@ export function App() {
 
                 // Initialization & Misc
                 showStartPicker={ui.showStartPicker} setShowStartPicker={ui.setShowStartPicker}
+                showCheckIn={ui.showCheckIn} setShowCheckIn={ui.setShowCheckIn}
+                handleCreatePlan={executeCreateBlankPlan}
                 selectedItem={ui.selectedItem} setSelectedItem={ui.setSelectedItem}
                 onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
+
+                // Tools data
+                budgetLimit={budgetLimit}
+                setBudgetLimit={setBudgetLimit}
+                calculateTotalBudget={calculateTotalBudget}
+                calculateCategoryBreakdown={calculateCategoryBreakdown}
+                onUpdateChecklist={(checklist: ChecklistItem[]) => updateActivePlan({ checklist })}
+                currency={budgetSettings.currency}
+                exchangeRate={budgetSettings.exchangeRate}
+                onSetSettings={updateBudgetSettings}
+                onCreatorClick={(id: string) => setSelectedCreatorId(id)}
+                onPreviewTemplate={(tpl: Template) => setPreviewTemplate(tpl)}
             />
 
             {/* Mobile Bottom Tab Navigation */}

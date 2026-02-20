@@ -76,7 +76,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
         <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
             {/* Schedule List Area */}
             <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                <div className={`schedule-content relative pb-24 lg:pb-12 lg:max-w-3xl mx-auto w-full max-w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
+                <div className={`schedule-content relative pb-24 lg:pb-12 lg:max-w-5xl mx-auto w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
                     {(() => {
                         const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
                         let cumulativeIndex = 0;

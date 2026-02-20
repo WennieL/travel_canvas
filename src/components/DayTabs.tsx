@@ -33,7 +33,7 @@ const DayTabs: React.FC<DayTabsProps> = ({
     return (
         <>
             {/* Mobile Day Selector - Sticky */}
-            <div className="lg:hidden sticky top-14 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-100 py-2 max-w-[100vw] overflow-hidden">
+            <div className="lg:hidden sticky top-14 z-20 bg-transparent py-2 max-w-[100vw] overflow-hidden">
                 <div className="flex items-center pl-4 pr-3 gap-3">
                     {/* Scrollable Day Tabs */}
                     <div ref={mobileDayTabsRef} className="flex-1 flex gap-2 overflow-x-auto scrollbar-hide items-center min-w-0">
@@ -67,8 +67,8 @@ const DayTabs: React.FC<DayTabsProps> = ({
                         <button
                             onClick={() => setViewMode(viewMode === 'map' ? 'canvas' : 'map')}
                             className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all ${viewMode === 'map'
-                                    ? 'bg-teal-50 text-teal-600 ring-1 ring-teal-200'
-                                    : 'bg-gray-50 text-gray-400 hover:text-gray-600'
+                                ? 'bg-teal-50 text-teal-600 ring-1 ring-teal-200'
+                                : 'bg-gray-50 text-gray-400 hover:text-gray-600'
                                 }`}
                         >
                             <MapIcon size={16} />
@@ -78,8 +78,8 @@ const DayTabs: React.FC<DayTabsProps> = ({
             </div>
 
             {/* Desktop Day Tabs Bar */}
-            <div className="hidden lg:flex h-12 bg-white/80 backdrop-blur-sm border-b border-gray-100 items-center px-6 gap-3 z-30 relative">
-                <div ref={dayTabsContainerRef} className="flex-1 flex items-center gap-2 overflow-visible">
+            <div className="hidden lg:flex h-12 bg-transparent items-center justify-center z-30 relative overflow-hidden">
+                <div ref={dayTabsContainerRef} className="w-full max-w-5xl px-6 flex items-center gap-2 overflow-visible">
                     {/* Render Visible Tabs (1-5) */}
                     {visibleDays.map(dayNum => (
                         <button

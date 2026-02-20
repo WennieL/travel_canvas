@@ -108,6 +108,8 @@ export interface Plan {
     schedule: FullSchedule;
     checklist: ChecklistItem[];
     region?: Region; // [NEW] Track the city/region of the plan
+    origin?: string; // [NEW] Departure city (e.g., 'TAIPEI')
+    destination?: string; // [NEW] Arrival city (e.g., 'TOKYO')
     targetCurrency?: string; // e.g. 'TWD'
     exchangeRate?: number;   // e.g. 0.21 (1 JPY = 0.21 TWD)
     createdAt: number;

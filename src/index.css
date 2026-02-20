@@ -127,6 +127,16 @@ h6 {
   /* Chrome/Safari/Opera */
 }
 
+/* Canvas & Background Texture */
+.bg-premium-paper {
+  background-color: #fafafa;
+}
+
+.bg-dotted-canvas {
+  background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+  background-size: 32px 32px;
+}
+
 /* Print Styles */
 @media print {
   .print\:hidden {

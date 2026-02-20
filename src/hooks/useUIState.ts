@@ -7,6 +7,7 @@ export const useUIState = () => {
     const [viewMode, setViewMode] = useState<ViewMode>('canvas');
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarPinned, setIsSidebarPinned] = useState(true);
     const [sidebarHighlight, setSidebarHighlight] = useState(false);
 
     // Name Editing
@@ -26,6 +27,7 @@ export const useUIState = () => {
     const [showMobilePreview, setShowMobilePreview] = useState(false);
     const [showMoveModal, setShowMoveModal] = useState(false);
     const [showStartPicker, setShowStartPicker] = useState(false);
+    const [showCheckIn, setShowCheckIn] = useState(false);
     const [selectedCreatorId, setSelectedCreatorId] = useState<string | null>(null);
     const [moveTarget, setMoveTarget] = useState<{ slot: TimeSlot, index: number } | null>(null);
     const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
@@ -36,7 +38,7 @@ export const useUIState = () => {
     const [showStoryPreview, setShowStoryPreview] = useState(false);
 
     // Sidebar States
-    const [activeTab, setActiveTab] = useState<'assets' | 'templates'>('assets');
+    const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist'>('assets');
     const [activeCategory, setActiveCategory] = useState<'all' | ItemType>('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -59,6 +61,7 @@ export const useUIState = () => {
         viewMode, setViewMode,
         isFullscreen, setIsFullscreen,
         isSidebarOpen, setIsSidebarOpen,
+        isSidebarPinned, setIsSidebarPinned,
         sidebarHighlight, setSidebarHighlight,
         isEditingName, setIsEditingName,
         editingName, setEditingName,
@@ -74,6 +77,7 @@ export const useUIState = () => {
         showMobilePreview, setShowMobilePreview,
         showMoveModal, setShowMoveModal,
         showStartPicker, setShowStartPicker,
+        showCheckIn, setShowCheckIn,
         activeTab, setActiveTab,
         activeCategory, setActiveCategory,
         searchQuery, setSearchQuery,

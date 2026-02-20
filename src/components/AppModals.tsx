@@ -13,10 +13,11 @@ import {
     MoveToDayModal,
     CreatorProfileModal,
     TemplateStoryPreview,
+    CheckInWizardModal,
 } from './Modals';
 import { MobileLibrary } from './MobileLibrary';
 import { MobilePreview } from './MobilePreview';
-import { Plan, LangType, Template, TimeSlot, ScheduleItem, ItemType, TransportMode, Region, TravelItem, ViewMode } from '../types';
+import { Plan, LangType, Template, TimeSlot, ScheduleItem, ItemType, TransportMode, Region, TravelItem, ViewMode, ChecklistItem } from '../types';
 
 interface AppModalsProps {
     // Shared
@@ -25,8 +26,8 @@ interface AppModalsProps {
     showToastMessage: (msg: string) => void;
 
     // View State (Required for Mobile Library)
-    activeTab: 'assets' | 'templates';
-    setActiveTab: (tab: 'assets' | 'templates') => void;
+    activeTab: 'assets' | 'templates' | 'budget' | 'checklist';
+    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist') => void;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     activeCategory: 'all' | ItemType;
@@ -48,7 +49,6 @@ interface AppModalsProps {
     activePlanId: string;
     setActivePlanId: (id: string) => void;
     onTriggerPicker: () => void;
-    onCreateBlank: (region?: Region) => void;
     onExpertMode: () => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
 
@@ -110,9 +110,12 @@ interface AppModalsProps {
     setBatchUnlockCount: (count: number) => void;
     confirmUnlock: () => void;
 
-    // Start Picker
+    // Start Picker / Check-in
     showStartPicker: boolean;
     setShowStartPicker: (show: boolean) => void;
+    showCheckIn: boolean;
+    setShowCheckIn: (show: boolean) => void;
+    handleCreatePlan: (data: any) => void;
 
     // Story Preview
     showStoryPreview: boolean;
@@ -128,6 +131,18 @@ interface AppModalsProps {
     setCustomAssets: React.Dispatch<React.SetStateAction<TravelItem[]>>;
     customAssets: TravelItem[];
     subscribedCreators: string[];
+    onCreatorClick: (id: string) => void;
+    onPreviewTemplate: (tpl: Template) => void;
+
+    // Tools props for Sidebar/MobileLibrary
+    budgetLimit: number;
+    setBudgetLimit: (limit: number) => void;
+    calculateTotalBudget: () => number;
+    calculateCategoryBreakdown: () => any;
+    onUpdateChecklist: (checklist: ChecklistItem[]) => void;
+    currency?: string;
+    exchangeRate?: number;
+    onSetSettings?: (currency: string, rate: number) => void;
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
@@ -135,7 +150,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         lang, t, showToastMessage,
         activeTab, setActiveTab,
         showPlanManager, setShowPlanManager, plans, activePlanId, setActivePlanId,
-        onTriggerPicker, onCreateBlank, onExpertMode,
+        onTriggerPicker, onExpertMode,
         handleDeletePlan, activeRegion,
         showCustomItemModal, setShowCustomItemModal, handleCreateCustomItem,
         activePlan, currentDay,
@@ -151,10 +166,14 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         previewTemplate, setPreviewTemplate,
         unlockTarget, setUnlockTarget, batchUnlockCount, setBatchUnlockCount, confirmUnlock,
         showStartPicker, setShowStartPicker,
-        isSidebarOpen, setIsSidebarOpen,
-        setViewMode,
+        showCheckIn, setShowCheckIn,
+        handleCreatePlan,
+        setIsSidebarOpen, setViewMode,
         selectedItem, setSelectedItem,
         showStoryPreview, setShowStoryPreview,
+        budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
+        onUpdateChecklist, currency, exchangeRate, onSetSettings,
+        onCreatorClick, onPreviewTemplate
     } = props;
 
     return (
@@ -165,10 +184,21 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 lang={lang}
                 t={t}
                 onChooseBlank={() => {
-                    onCreateBlank(activeRegion);
+                    setShowCheckIn(true);
                     setShowStartPicker(false);
                 }}
                 onChooseTemplate={onExpertMode}
+            />
+            <CheckInWizardModal
+                isOpen={showCheckIn}
+                onClose={() => setShowCheckIn(false)}
+                onComplete={(data) => {
+                    handleCreatePlan(data);
+                    setShowCheckIn(false);
+                    setViewMode('canvas');
+                }}
+                lang={lang}
+                t={t}
             />
             <ItemDetailModal
                 isOpen={!!selectedItem}
@@ -297,10 +327,17 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                         setSelectedCreatorId(id);
                         setShowMobileLibrary(false);
                     }}
-                    onPreviewTemplate={(tpl) => {
-                        setPreviewTemplate(tpl);
-                        setShowMobileLibrary(false);
-                    }}
+                    onPreviewTemplate={onPreviewTemplate}
+                    activePlan={activePlan}
+                    budgetLimit={budgetLimit}
+                    setBudgetLimit={setBudgetLimit}
+                    calculateTotalBudget={calculateTotalBudget}
+                    calculateCategoryBreakdown={calculateCategoryBreakdown}
+                    onUpdateChecklist={onUpdateChecklist}
+                    showToastMessage={showToastMessage}
+                    currency={currency}
+                    exchangeRate={exchangeRate}
+                    onSetSettings={onSetSettings}
                 />
             )}
 
