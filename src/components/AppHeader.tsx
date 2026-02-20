@@ -54,63 +54,90 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     return (
         <>
             {/* Mobile Header - Boarding Pass Style (Phase 8 Upgrade) */}
-            <div className="md:hidden h-16 bg-white sticky top-0 z-30 px-3 py-2 border-b border-gray-100 flex items-center justify-between">
-                <div className="flex flex-1 items-center gap-3 min-w-0">
-                    {/* Ticket Stub Visual flair */}
-                    <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0 border border-teal-100 shadow-sm relative overflow-hidden">
-                        <MapIcon className="w-5 h-5 text-teal-600" />
-                        <div className="absolute top-0 right-0 w-2 h-2 bg-teal-500 rounded-full -mr-1 -mt-1" />
+            <div className="md:hidden h-24 bg-gray-50/95 backdrop-blur-md sticky top-0 z-30 px-3 py-2 border-b border-gray-200/50 flex items-center justify-center">
+                <div className="w-full h-full bg-white rounded-xl shadow-sm border border-gray-200/60 flex items-center overflow-hidden relative">
+
+                    {/* Left Edge Visuals (Ticket Notch) */}
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-3 bg-gray-50 rounded-r-full border-r border-t border-b border-gray-200" />
+                    <div className="h-full w-12 border-r border-dashed border-gray-100 flex items-center justify-center bg-gray-50/30">
+                        {/* Barcode Visual */}
+                        <div className="w-6 h-10 flex flex-col justify-between opacity-40">
+                            <div className="w-full h-full bg-[repeating-linear-gradient(180deg,transparent,transparent_2px,#000_2px,#000_4px)]" />
+                        </div>
                     </div>
 
-                    <div className="flex flex-col min-w-0">
-                        {isEditingName ? (
-                            <input
-                                ref={nameInputRef}
-                                type="text"
-                                value={editingName}
-                                onChange={(e) => {
-                                    if (e.target.value.length <= MAX_NAME_LENGTH) {
-                                        setEditingName(e.target.value);
-                                    } else {
-                                        showToastMessage(lang === 'zh' ? `項目名稱不能超過 ${MAX_NAME_LENGTH} 個字喔！` : `Name cannot exceed ${MAX_NAME_LENGTH} characters!`, 'warning');
-                                    }
-                                }}
-                                onBlur={saveName}
-                                onKeyDown={handleNameKeyDown}
-                                autoFocus
-                                className="font-bold text-gray-900 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
-                            />
-                        ) : (
-                            <h1 onClick={startEditingName} className="font-black text-gray-900 truncate text-sm leading-tight flex items-center gap-1.5 group">
-                                {activePlan.name}
-                                <Pencil size={10} className="text-gray-400 opacity-60 group-hover:text-teal-500 transition-colors" />
-                            </h1>
-                        )}
-                        <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 font-bold truncate mt-0.5 uppercase tracking-wide flex items-center gap-1">
-                            <Calendar size={10} className="text-teal-500/70" />
-                            {activePlan.startDate} ~ {activePlan.endDate} ({activePlan.totalDays}D)
-                        </span>
-                    </div>
-                </div>
+                    {/* Center Content - Split for Title & Route */}
+                    <div className="flex-1 min-w-0 px-3 flex items-center justify-between h-full gap-2 relative">
+                        {/* Title & Date (Left) */}
+                        <div className="flex flex-col justify-center min-w-0 flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className="text-[10px] font-black text-teal-600 uppercase tracking-wider">
+                                    BOARDING PASS
+                                </span>
+                            </div>
 
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={() => setShowShareModal(true)}
-                        className="w-9 h-9 flex items-center justify-center bg-gray-50 text-gray-500 rounded-full active:scale-95 transition-all border border-gray-100"
-                    >
-                        <Upload size={16} />
-                    </button>
+                            {isEditingName ? (
+                                <input
+                                    ref={nameInputRef}
+                                    type="text"
+                                    value={editingName}
+                                    onChange={(e) => {
+                                        if (e.target.value.length <= MAX_NAME_LENGTH) {
+                                            setEditingName(e.target.value);
+                                        } else {
+                                            showToastMessage(lang === 'zh' ? `項目名稱不能超過 ${MAX_NAME_LENGTH} 個字喔！` : `Name cannot exceed ${MAX_NAME_LENGTH} characters!`, 'warning');
+                                        }
+                                    }}
+                                    onBlur={saveName}
+                                    onKeyDown={handleNameKeyDown}
+                                    autoFocus
+                                    className="font-black text-gray-900 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
+                                />
+                            ) : (
+                                <h1 onClick={startEditingName} className="font-black text-gray-900 truncate text-sm leading-tight group tracking-tight uppercase">
+                                    {activePlan.name}
+                                </h1>
+                            )}
+                            <div className="flex flex-col gap-0.5 mt-0.5">
+                                <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 font-bold truncate uppercase tracking-wide flex items-center gap-1">
+                                    <Calendar size={10} className="text-teal-500/70" />
+                                    {activePlan.startDate} ~ {activePlan.endDate} ({activePlan.totalDays}D)
+                                </span>
 
-                    {/* Compact Budget (Always visible on mobile header now) */}
-                    <div className="scale-90 origin-right">
-                        <BudgetWidget
-                            spent={calculateTotalBudget()}
-                            limit={budgetLimit}
-                            breakdown={calculateCategoryBreakdown()}
-                            onSetLimit={setBudgetLimit}
-                            t={t}
-                            compact={true}
-                        />
+                                {/* Destination (New Row) */}
+                                <div className="flex items-center gap-1.5 opacity-90">
+                                    <Plane size={12} className="text-teal-500 -rotate-45" fill="currentColor" />
+                                    <span className="text-[11px] font-black text-gray-800 leading-none uppercase tracking-wide">
+                                        TO {activePlan.destination || 'TOKYO'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Actions */}
+                        <div className="flex items-center gap-1 pr-2 h-full border-l border-dashed border-gray-100 bg-gray-50/10 pl-2">
+                            {/* Share Compact */}
+                            <button
+                                onClick={() => setShowShareModal(true)}
+                                className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-teal-600 rounded-full active:bg-gray-100 transition-all"
+                            >
+                                <Upload size={16} />
+                            </button>
+
+                            {/* Compact Budget */}
+                            <div className="scale-75 origin-center -ml-1">
+                                <BudgetWidget
+                                    spent={calculateTotalBudget()}
+                                    limit={budgetLimit}
+                                    breakdown={calculateCategoryBreakdown()}
+                                    onSetLimit={setBudgetLimit}
+                                    t={t}
+                                    compact={true}
+                                    disableHover={true}
+                                    onClick={() => setViewMode('budget')}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -144,7 +171,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
                             <div className="flex flex-col justify-center">
                                 <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="text-[9px] font-black text-teal-600 uppercase tracking-[0.2em] bg-teal-50 px-1.5 py-0.5 rounded border border-teal-100">Boarding Pass</span>
+                                    <span className="text-[10px] font-black text-teal-600 uppercase tracking-[0.2em]">Boarding Pass</span>
                                 </div>
 
                                 {isEditingName ? (
@@ -185,22 +212,19 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         </div>
                     </div>
 
-                    {/* Main Ticket Area - City Info (Secondary) */}
-                    <div className="h-full px-16 flex items-center justify-center z-10">
-                        {/* Origin ✈ Destination Branding */}
-                        <div className="flex items-center gap-8 w-full justify-center">
-                            <div className="flex flex-col items-center">
-                                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">From</span>
-                                <span className="font-bold text-lg text-gray-700 tracking-tight uppercase">{activePlan.origin || 'TAIPEI'}</span>
-                            </div>
+                    {/* Main Ticket Area - Destination Focus (Secondary) */}
+                    <div className="h-full px-16 flex items-center justify-center z-10 w-96 max-w-md">
+                        {/* Destination Branding - Refined (Icon -> Text) */}
+                        <div className="flex items-center gap-4">
+                            {/* Icon First (Minimalist - No Box) */}
+                            <Plane size={24} className="text-teal-500 -rotate-45" fill="currentColor" />
 
-                            <div className="flex flex-col items-center justify-center px-4 h-full text-teal-500/80">
-                                <Plane size={24} fill="currentColor" className="rotate-45" />
-                            </div>
-
-                            <div className="flex flex-col items-center">
-                                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">To</span>
-                                <span className="font-bold text-lg text-gray-700 tracking-tight uppercase">{activePlan.destination || 'TOKYO'}</span>
+                            {/* Text Block */}
+                            <div className="flex flex-col">
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-0.5">DESTINATION</span>
+                                <span className="font-black text-3xl text-gray-800 tracking-tight uppercase leading-none">
+                                    {activePlan.destination || 'TOKYO'}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -230,6 +254,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     </div>
                 </div>
             </div>
+
         </>
     );
 };

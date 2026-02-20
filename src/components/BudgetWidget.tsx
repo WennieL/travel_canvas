@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Wallet, X, PieChart, TrendingUp } from 'lucide-react';
 
 interface CategoryBreakdown {
@@ -19,6 +20,8 @@ interface BudgetWidgetProps {
     t: any;
     compact?: boolean;
     showToastMessage?: (message: string, type: 'success' | 'error') => void;
+    disableHover?: boolean;
+    onClick?: () => void;
 }
 
 export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
@@ -31,7 +34,9 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     onSetSettings,
     t,
     compact = false,
-    showToastMessage
+    showToastMessage,
+    disableHover = false,
+    onClick
 }) => {
     const [showModal, setShowModal] = useState(false);
     // Initialize tempLimit in Home Currency (approx)
@@ -136,12 +141,12 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
         return (
             <div
                 className="relative"
-                onMouseEnter={() => setIsHovered(true)}
+                onMouseEnter={() => !disableHover && setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 {/* ... button svg ... */}
                 <button
-                    onClick={() => setShowModal(true)}
+                    onClick={() => onClick ? onClick() : setShowModal(true)}
                     className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
                     title={`${t.budgetManagement || '預算管理'} (${percentage.toFixed(0)}%)`}
                 >
@@ -191,7 +196,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                     </div>
                 )}
 
-                {showModal && (
+                {showModal && createPortal(
                     <BudgetOverview
                         showModal={showModal}
                         setShowModal={setShowModal}
@@ -213,7 +218,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                         t={t}
                         generatePieGradient={generatePieGradient}
                         calculatedJPY={calculatedJPY} // Pass this
-                    />
+                    />,
+                    document.body
                 )}
             </div>
         );
@@ -222,8 +228,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     return (
         <>
             <button
-                onClick={() => setShowModal(true)}
-                onMouseEnter={() => setIsHovered(true)}
+                onClick={() => onClick ? onClick() : setShowModal(true)}
+                onMouseEnter={() => !disableHover && setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className="relative flex items-center justify-center p-2 rounded-full transition-all active:scale-95 group"
             >
@@ -250,7 +256,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                 )}
             </button>
 
-            {showModal && (
+            {showModal && createPortal(
                 <BudgetOverview
                     showModal={showModal}
                     setShowModal={setShowModal}
@@ -273,7 +279,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                     generatePieGradient={generatePieGradient}
                     calculatedJPY={calculatedJPY} // Pass this
                     isSuccess={isSuccess}
-                />
+                />,
+                document.body
             )}
         </>
     );
