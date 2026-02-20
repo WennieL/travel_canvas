@@ -360,7 +360,7 @@ export function App() {
                                 setIsSidebarOpen(false);
                                 ui.setIsSidebarPinned(false);
                             }}
-                            className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-12 bg-white border border-gray-100 shadow-sm rounded-full flex items-center justify-center text-gray-400 hover:text-teal-600 hover:scale-110 transition-all z-30"
+                            className="absolute -right-5 top-1/2 -translate-y-1/2 w-6 h-12 bg-white border border-gray-100 shadow-sm rounded-full flex items-center justify-center text-gray-400 hover:text-teal-600 hover:scale-110 transition-all z-30"
                         >
                             <ChevronLeft size={16} />
                         </button>
