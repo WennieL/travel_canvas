@@ -92,13 +92,9 @@ export function App() {
     const t = TRANSLATIONS[lang];
 
     // Business Logic Hooks
-    const [pendingWizardData, setPendingWizardData] = useState<{
-        origin: string;
-        destination: Region;
-        startDate: string;
-        endDate: string;
-        totalDays: number;
-    } | null>(null);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+
+    const [pendingWizardData, setPendingWizardData] = useState<any>(null);
 
     const {
         plans, activePlanId, activePlan, currentDay,
@@ -375,60 +371,40 @@ export function App() {
                         </button>
                     )}
 
-                    <div className="flex flex-col h-full w-full" style={{ width: sidebarWidth }}>
-                        {/* Sidebar Header Tabs */}
-                        <div className="flex items-center border-b border-gray-100 bg-gray-50/20 pt-4">
-                            <button
-                                onClick={() => setActiveTab('assets')}
-                                className={`flex-1 flex flex-col items-center py-3 px-2 transition-all relative ${activeTab === 'assets' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
-                            >
-                                <Package size={20} className="mb-1" />
-                                <span className="text-[10px] font-bold uppercase tracking-wider">Library</span>
-                                {activeTab === 'assets' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500" />}
-                            </button>
-
-                            <button
-                                onClick={() => setActiveTab('budget')}
-                                className={`flex-1 flex flex-col items-center py-3 px-2 transition-all relative ${activeTab === 'budget' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
-                            >
-                                <Wallet size={20} className="mb-1" />
-                                <span className="text-[10px] font-bold uppercase tracking-wider">Budget</span>
-                                {activeTab === 'budget' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500" />}
-                            </button>
-
-                            <button
-                                onClick={() => setActiveTab('checklist')}
-                                className={`flex-1 flex flex-col items-center py-3 px-2 transition-all relative ${activeTab === 'checklist' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
-                            >
-                                <ListChecks size={20} className="mb-1" />
-                                <span className="text-[10px] font-bold uppercase tracking-wider">Check</span>
-                                {activeTab === 'checklist' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500" />}
-                            </button>
+                    {isSidebarOpen && viewMode !== 'discovery' && (
+                        <div className="flex flex-col h-full w-full" style={{ width: sidebarWidth }}>
+                            <SidebarContent
+                                searchQuery={searchQuery}
+                                setSearchQuery={setSearchQuery}
+                                activeCategory={activeCategory}
+                                setActiveCategory={setActiveCategory}
+                                activeRegion={ui.activeRegion}
+                                setActiveRegion={setActiveRegion}
+                                setShowCustomItemModal={setShowCustomItemModal}
+                                handleDragStart={handleDragStart}
+                                handleTapToAdd={handleTapToAdd}
+                                applyTemplate={applyTemplate} t={t} lang={lang}
+                                customAssets={customAssets}
+                                highlight={ui.sidebarHighlight}
+                                activeTab={ui.activeTab}
+                                setActiveTab={ui.setActiveTab}
+                                activePlan={activePlan}
+                                plans={plans}
+                                onSelectPlan={setActivePlanId}
+                                handleCreatePlan={() => handleTriggerStartPicker()}
+                                handleDeletePlan={_handleDeletePlan}
+                                budgetLimit={budgetLimit}
+                                setBudgetLimit={setBudgetLimit}
+                                calculateTotalBudget={calculateTotalBudget}
+                                calculateCategoryBreakdown={calculateCategoryBreakdown}
+                                onUpdateChecklist={(checklist: ChecklistItem[]) => updateActivePlan({ checklist })}
+                                showToastMessage={showToastMessage}
+                                currency={budgetSettings.currency}
+                                exchangeRate={budgetSettings.exchangeRate}
+                                onSetSettings={updateBudgetSettings}
+                            />
                         </div>
-
-                        <SidebarContent
-                            searchQuery={searchQuery} setSearchQuery={setSearchQuery}
-                            activeCategory={activeCategory} setActiveCategory={setActiveCategory}
-                            activeRegion={ui.activeRegion} setActiveRegion={ui.setActiveRegion}
-                            setShowCustomItemModal={setShowCustomItemModal}
-                            handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
-                            applyTemplate={applyTemplate} t={t} lang={lang}
-                            customAssets={customAssets}
-                            highlight={ui.sidebarHighlight}
-                            activeTab={activeTab}
-                            setActiveTab={setActiveTab}
-                            activePlan={activePlan}
-                            budgetLimit={budgetLimit}
-                            setBudgetLimit={setBudgetLimit}
-                            calculateTotalBudget={calculateTotalBudget}
-                            calculateCategoryBreakdown={calculateCategoryBreakdown}
-                            onUpdateChecklist={(checklist: ChecklistItem[]) => updateActivePlan({ checklist })}
-                            showToastMessage={showToastMessage}
-                            currency={budgetSettings.currency}
-                            exchangeRate={budgetSettings.exchangeRate}
-                            onSetSettings={updateBudgetSettings}
-                        />
-                    </div>
+                    )}
                 </div>
             )}
 

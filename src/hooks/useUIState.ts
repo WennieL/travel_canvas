@@ -38,7 +38,7 @@ export const useUIState = () => {
     const [showStoryPreview, setShowStoryPreview] = useState(false);
 
     // Sidebar States
-    const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist'>('assets');
+    const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist' | 'projects'>('assets');
     const [activeCategory, setActiveCategory] = useState<'all' | ItemType>('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [sidebarWidth, setSidebarWidth] = useState(() => {

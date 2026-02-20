@@ -7,8 +7,8 @@ interface MobileLibraryProps {
     onClose: () => void;
 
     // View State (Required by SidebarContent)
-    activeTab: 'assets' | 'templates' | 'budget' | 'checklist';
-    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist') => void;
+    activeTab: 'assets' | 'templates' | 'budget' | 'checklist' | 'projects';
+    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist' | 'projects') => void;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     activeCategory: 'all' | ItemType;
@@ -28,6 +28,10 @@ interface MobileLibraryProps {
 
     // Tools props
     activePlan: Plan;
+    plans: Plan[];
+    onSelectPlan: (id: string) => void;
+    handleCreatePlan: (data?: any) => void;
+    handleDeletePlan: (id: string, e: React.MouseEvent) => void;
     budgetLimit: number;
     setBudgetLimit: (limit: number) => void;
     calculateTotalBudget: () => number;

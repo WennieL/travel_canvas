@@ -13,6 +13,7 @@ import { AssetItemCard } from './Sidebar/AssetItemCard';
 import { CategoryCarousel } from './Sidebar/CategoryCarousel';
 import { RegionCarousel } from './Sidebar/RegionCarousel';
 import { TagCarousel } from './Sidebar/TagCarousel';
+import { PlanListView } from './Sidebar/PlanListView';
 
 interface SidebarContentProps {
     searchQuery: string;
@@ -30,9 +31,13 @@ interface SidebarContentProps {
     customAssets?: TravelItem[];
     highlight?: boolean;
     isSlim?: boolean; // [NEW] Flag to trigger Phase 1 simplified UI
-    activeTab: 'assets' | 'templates' | 'budget' | 'checklist';
-    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist') => void;
+    activeTab: 'assets' | 'templates' | 'budget' | 'checklist' | 'projects';
+    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist' | 'projects') => void;
     activePlan: Plan;
+    plans: Plan[];
+    onSelectPlan: (id: string) => void;
+    handleCreatePlan: (data?: any) => void;
+    handleDeletePlan: (id: string, e: React.MouseEvent) => void;
     budgetLimit: number;
     setBudgetLimit: (limit: number) => void;
     calculateTotalBudget: () => number;
@@ -49,7 +54,8 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
     activeRegion, setActiveRegion,
     setShowCustomItemModal, handleDragStart, handleTapToAdd, applyTemplate, t, lang = 'zh', customAssets = [],
     highlight, isSlim = false,
-    activeTab, setActiveTab, activePlan, budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
+    activeTab, setActiveTab, activePlan, plans, onSelectPlan, handleCreatePlan, handleDeletePlan,
+    budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
     onUpdateChecklist, showToastMessage, currency = 'TWD', exchangeRate = 0.21, onSetSettings
 }) => {
     const { confirm } = useConfirm();
@@ -301,6 +307,18 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             hideTitle={true}
                         />
                     </div>
+                )}
+
+                {activeTab === 'projects' && (
+                    <PlanListView
+                        plans={plans}
+                        activePlanId={activePlan.id}
+                        onSelectPlan={onSelectPlan}
+                        onCreatePlan={handleCreatePlan}
+                        onDeletePlan={handleDeletePlan}
+                        t={t}
+                        lang={lang}
+                    />
                 )}
             </div>
 

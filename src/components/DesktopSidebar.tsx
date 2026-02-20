@@ -48,7 +48,9 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
             if (item.id === 'new') onNewPlan();
         } else if (item.action === 'navigate') {
             if (item.id === 'projects') {
-                onShowPlanManager();
+                setActiveTab('projects');
+                setIsSidebarOpen(true);
+                setIsSidebarPinned(true);
             } else if (item.id === 'assets' || item.id === 'templates' || item.id === 'budget' || item.id === 'checklist') {
                 setActiveTab(item.id === 'assets' ? 'assets' : item.id);
                 setIsSidebarOpen(true);

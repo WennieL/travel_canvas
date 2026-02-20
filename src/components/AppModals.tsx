@@ -26,8 +26,8 @@ interface AppModalsProps {
     showToastMessage: (msg: string) => void;
 
     // View State (Required for Mobile Library)
-    activeTab: 'assets' | 'templates' | 'budget' | 'checklist';
-    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist') => void;
+    activeTab: 'assets' | 'templates' | 'budget' | 'checklist' | 'projects';
+    setActiveTab: (tab: 'assets' | 'templates' | 'budget' | 'checklist' | 'projects') => void;
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     activeCategory: 'all' | ItemType;
@@ -363,6 +363,10 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     calculateTotalBudget={calculateTotalBudget}
                     calculateCategoryBreakdown={calculateCategoryBreakdown}
                     onUpdateChecklist={onUpdateChecklist}
+                    plans={plans}
+                    onSelectPlan={setActivePlanId}
+                    handleCreatePlan={onTriggerPicker}
+                    handleDeletePlan={handleDeletePlan}
                     showToastMessage={showToastMessage}
                     currency={currency}
                     exchangeRate={exchangeRate}
