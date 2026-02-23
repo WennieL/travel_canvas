@@ -20,6 +20,8 @@ interface CustomItemModalProps {
     t: Record<string, string>;
     initialType?: ItemType;    // [NEW] Smart default type
     currentRegion?: string;   // [NEW] To show where it's being added
+    onExploreMap?: () => void; // [NEW] Phase 19 Discovery shortcut
+    lang?: string;
 }
 
 export const CustomItemModal: React.FC<CustomItemModalProps> = ({
@@ -28,7 +30,9 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
     onCreateItem,
     t,
     initialType = 'attraction',
-    currentRegion = 'all'
+    currentRegion = 'all',
+    onExploreMap,
+    lang = 'zh'
 }) => {
     const [itemType, setItemType] = useState<ItemType>(initialType);
     const [name, setName] = useState('');
@@ -96,6 +100,29 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                     <Plus size={18} className="text-teal-600" />
                     {t.createCustom}
                 </h3>
+
+                {/* Phase 19: Explore Recommendations CTA */}
+                {onExploreMap && (
+                    <div className="mb-6 p-4 bg-gradient-to-br from-teal-500 to-indigo-600 rounded-2xl text-white relative overflow-hidden group">
+                        <div className="relative z-10">
+                            <h4 className="text-sm font-black mb-1 flex items-center gap-2">
+                                <span className="text-lg">💡</span>
+                                {lang === 'zh' ? '沒靈感嗎？' : 'Need inspiration?'}
+                            </h4>
+                            <p className="text-[10px] text-white/80 font-bold uppercase tracking-wider mb-3">
+                                {lang === 'zh' ? '探索達人推薦的私房景點' : 'Explore expert hidden gems on map'}
+                            </p>
+                            <button
+                                onClick={onExploreMap}
+                                className="bg-white text-teal-600 text-[10px] font-black px-4 py-2 rounded-xl shadow-lg hover:bg-teal-50 transition-all transform active:scale-95"
+                            >
+                                {lang === 'zh' ? '去地圖看看' : 'Explore on Map'}
+                            </button>
+                        </div>
+                        {/* Abstract blob effect */}
+                        <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-white/10 blur-2xl rounded-full" />
+                    </div>
+                )}
 
                 {/* Type Selector */}
                 <div className="mb-4">

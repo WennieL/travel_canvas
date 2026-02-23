@@ -10,10 +10,10 @@ interface CreatorProfileModalProps {
     isSubscribed: boolean;
     onToggleSubscribe: (creatorId: string) => void;
     onPreviewTemplate: (template: Template) => void;
+    onExploreMap?: (authorId: string, authorName: string) => void;
     lang?: LangType;
     t: any;
 }
-
 export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({
     isOpen,
     onClose,
@@ -21,9 +21,12 @@ export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({
     isSubscribed,
     onToggleSubscribe,
     onPreviewTemplate,
+    onExploreMap,
     lang = 'zh',
     t
 }) => {
+    const [activeTab, setActiveTab] = React.useState<'plans' | 'spots'>('plans');
+
     if (!isOpen || !creator) return null;
 
     const creatorTemplates = TEMPLATES.filter(tpl => tpl.authorId === creator.id);
@@ -119,51 +122,105 @@ export const CreatorProfileModal: React.FC<CreatorProfileModalProps> = ({
                         </div>
                     </div>
 
-                    <div className="border-t border-gray-100 pt-10">
-                        <div className="flex items-center gap-2 mb-6">
-                            <Compass size={18} className="text-teal-600" />
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{t.expertsTemplates || 'Creator Templates'}</h3>
-                        </div>
+                    {/* Tabs Selection */}
+                    <div className="flex border-b border-gray-100 mb-8">
+                        <button
+                            onClick={() => setActiveTab('plans')}
+                            className={`flex-1 flex items-center justify-center gap-2 py-4 text-xs font-black uppercase tracking-widest transition-all relative
+                                ${activeTab === 'plans' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
+                        >
+                            <Calendar size={16} />
+                            {lang === 'zh' ? '行程模板' : 'Travel Plans'}
+                            {activeTab === 'plans' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-600" />}
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('spots')}
+                            className={`flex-1 flex items-center justify-center gap-2 py-4 text-xs font-black uppercase tracking-widest transition-all relative
+                                ${activeTab === 'spots' ? 'text-teal-600' : 'text-gray-400 hover:text-gray-600'}`}
+                        >
+                            <MapPin size={16} />
+                            {lang === 'zh' ? '私房景點' : 'Hidden Spots'}
+                            {activeTab === 'spots' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-600" />}
+                        </button>
+                    </div>
 
-                        {/* Template Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {creatorTemplates.map(tpl => (
-                                <button
-                                    key={tpl.id}
-                                    onClick={() => onPreviewTemplate(tpl)}
-                                    className="text-left group flex flex-col"
-                                >
-                                    <div className="relative aspect-video rounded-3xl overflow-hidden mb-3 bg-gray-100 border-2 border-white shadow-md group-hover:shadow-xl group-hover:translate-y-[-2px] transition-all">
-                                        {tpl.coverImage ? (
-                                            <img src={tpl.coverImage} alt={tpl.name} className="w-full h-full object-cover" />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center bg-teal-50 text-teal-200">
-                                                <Calendar size={32} />
-                                            </div>
-                                        )}
-                                        <div className="absolute top-3 left-3">
-                                            <div className="bg-white/90 backdrop-blur-md px-2 py-1 rounded-full border border-white/50 flex items-center gap-1 shadow-sm">
-                                                <Star size={10} className="text-amber-500 fill-amber-500" />
-                                                <span className="text-[9px] font-black text-gray-800">{tpl.rating || '4.5'}</span>
+                    {/* Tab Content */}
+                    <div className="pb-10">
+                        {activeTab === 'plans' ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {creatorTemplates.map(tpl => (
+                                    <button
+                                        key={tpl.id}
+                                        onClick={() => onPreviewTemplate(tpl)}
+                                        className="text-left group flex flex-col"
+                                    >
+                                        <div className="relative aspect-video rounded-3xl overflow-hidden mb-3 bg-gray-100 border-2 border-white shadow-md group-hover:shadow-xl group-hover:translate-y-[-2px] transition-all">
+                                            {tpl.coverImage ? (
+                                                <img src={tpl.coverImage} alt={tpl.name} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center bg-teal-50 text-teal-200">
+                                                    <Calendar size={32} />
+                                                </div>
+                                            )}
+                                            <div className="absolute top-3 left-3">
+                                                <div className="bg-white/90 backdrop-blur-md px-2 py-1 rounded-full border border-white/50 flex items-center gap-1 shadow-sm">
+                                                    <Star size={10} className="text-amber-500 fill-amber-500" />
+                                                    <span className="text-[9px] font-black text-gray-800">{tpl.rating || '4.5'}</span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <h4 className="font-black text-gray-900 line-clamp-1 group-hover:text-teal-600 transition-colors text-sm">
+                                            {lang === 'zh' ? tpl.name : tpl.nameEn || tpl.name}
+                                        </h4>
+                                        <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">
+                                            <span>{tpl.duration} {lang === 'zh' ? '天' : 'Days'}</span>
+                                            <div className="w-1 h-1 rounded-full bg-gray-300" />
+                                            <span>{tpl.region.toUpperCase()}</span>
+                                        </div>
+                                    </button>
+                                ))}
+                                {creatorTemplates.length === 0 && (
+                                    <div className="col-span-2 py-12 text-center bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-100">
+                                        <p className="text-gray-400 font-bold italic">No templates shared yet.</p>
                                     </div>
-                                    <h4 className="font-black text-gray-900 line-clamp-1 group-hover:text-teal-600 transition-colors">
-                                        {lang === 'zh' ? tpl.name : tpl.nameEn || tpl.name}
-                                    </h4>
-                                    <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">
-                                        <span>{tpl.duration} {lang === 'zh' ? '天' : 'Days'}</span>
-                                        <div className="w-1 h-1 rounded-full bg-gray-300" />
-                                        <span>{tpl.region.toUpperCase()}</span>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="space-y-6">
+                                {/* Explore Map CTA */}
+                                <button
+                                    onClick={() => onExploreMap?.(creator.id, creator.name)}
+                                    className="w-full p-6 bg-gradient-to-r from-amber-50 to-orange-50 rounded-[2rem] border-2 border-amber-100 flex items-center justify-between group overflow-hidden relative"
+                                >
+                                    <div className="relative z-10 flex items-center gap-4">
+                                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-amber-500 shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                            <Compass size={24} />
+                                        </div>
+                                        <div className="text-left">
+                                            <div className="font-black text-amber-900 text-sm">{lang === 'zh' ? '在地靈感地圖' : 'Local Inspiration Map'}</div>
+                                            <div className="text-[10px] text-amber-700 font-bold uppercase tracking-wider">{lang === 'zh' ? '查看達人的所有私房推薦' : 'Explore all hidden spots on map'}</div>
+                                        </div>
                                     </div>
+                                    <div className="relative z-10 px-4 py-2 bg-amber-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md transform group-hover:translate-x-1 transition-transform">
+                                        Explore Map
+                                    </div>
+                                    {/* Abstract Map Graphic */}
+                                    <div className="absolute right-[-10%] top-[-50%] w-[40%] aspect-square bg-amber-400/10 blur-[40px] rounded-full" />
                                 </button>
-                            ))}
-                            {creatorTemplates.length === 0 && (
-                                <div className="col-span-2 py-12 text-center bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-100">
-                                    <p className="text-gray-400 font-bold italic">No templates shared yet.</p>
+
+                                {/* Mini Grid of Spots */}
+                                <div className="grid grid-cols-3 gap-2">
+                                    {[1, 2, 3, 4, 5, 6].map(i => (
+                                        <div key={i} className="aspect-square bg-gray-100 rounded-2xl overflow-hidden relative group cursor-pointer">
+                                            <img src={`https://images.unsplash.com/photo-${1500000000000 + i * 100000}?auto=format&fit=crop&q=80&w=200`} className="w-full h-full object-cover transition-transform group-hover:scale-110" alt="" />
+                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                                <MapPin className="text-white opacity-0 group-hover:opacity-100 transition-opacity" size={20} />
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

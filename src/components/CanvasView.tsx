@@ -45,6 +45,7 @@ interface CanvasViewProps {
     setSelectedItem: (item: ScheduleItem | null) => void;
     setIsSidebarOpen: (open: boolean) => void;
     setActiveTab: (tab: 'assets' | 'templates') => void;
+    discoveryCreatorId?: string | null;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -68,7 +69,8 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     setUnlockTarget,
     setSelectedItem,
     setIsSidebarOpen,
-    setActiveTab
+    setActiveTab,
+    discoveryCreatorId
 }) => {
     const isTimeline = !showContextMap;
 
@@ -238,6 +240,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         t={t}
                         onItemClick={handleMapItemClick}
                         isEmbedded={true}
+                        discoveryCreatorId={discoveryCreatorId}
                     />
                 </div>
             )}

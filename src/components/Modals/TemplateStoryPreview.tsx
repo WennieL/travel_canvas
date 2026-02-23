@@ -11,6 +11,7 @@ interface TemplateStoryPreviewProps {
     onSubscribe: (creatorId: string) => void;
     isSubscribed: boolean;
     lang?: LangType;
+    onCreatorClick?: (creatorId: string) => void;
 }
 
 export const TemplateStoryPreview: React.FC<TemplateStoryPreviewProps> = ({
@@ -20,7 +21,8 @@ export const TemplateStoryPreview: React.FC<TemplateStoryPreviewProps> = ({
     onApply,
     onSubscribe,
     isSubscribed,
-    lang = 'zh'
+    lang = 'zh',
+    onCreatorClick
 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
@@ -137,11 +139,14 @@ export const TemplateStoryPreview: React.FC<TemplateStoryPreviewProps> = ({
 
                 {/* Header Info */}
                 <div className="absolute top-8 left-4 right-4 z-50 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xl border border-white/30">
-                            {currentPage.avatar || '🗺️'}
+                    <button
+                        onClick={() => onCreatorClick?.(template.authorId)}
+                        className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xl border border-white/30 overflow-hidden">
+                            <img src={`https://i.pravatar.cc/100?img=${template.authorId.length % 70}`} alt="" className="w-full h-full object-cover" />
                         </div>
-                        <div>
+                        <div className="text-left">
                             <div className="text-white text-xs font-black drop-shadow-md">
                                 {lang === 'zh' ? template.author : template.authorEn || template.author}
                             </div>
@@ -149,7 +154,7 @@ export const TemplateStoryPreview: React.FC<TemplateStoryPreviewProps> = ({
                                 {currentPage.type === 'cover' ? 'Featured Itinerary' : `Day ${currentPage.day} Preview`}
                             </div>
                         </div>
-                    </div>
+                    </button>
                     <button
                         onClick={onClose}
                         className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/40 transition-all border border-white/10"

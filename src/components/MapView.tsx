@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { ScheduleItem, TimeSlot, LangType } from '../types';
-import { List, Map as MapIcon, Navigation, ExternalLink, X, Maximize2, Minimize2 } from 'lucide-react';
+import { ScheduleItem, TimeSlot, LangType, TravelItem } from '../types';
+import { List, Map as MapIcon, Navigation, ExternalLink, X, Maximize2, Minimize2, PlusCircle } from 'lucide-react';
 import { SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../data';
 import { useMapEvents } from 'react-leaflet';
 
@@ -12,8 +12,10 @@ interface MapViewProps {
     lang: LangType;
     t: any;
     onItemClick?: (item: ScheduleItem) => void;
+    onAddItem?: (item: TravelItem) => void;
     isEmbedded?: boolean; // Scheme B: Split view
     onClose?: () => void; // [NEW] Close handler for Mobile Full Screen
+    discoveryCreatorId?: string | null;
 }
 
 // Helper to center map on points
@@ -64,7 +66,7 @@ const MapController: React.FC<{ selectedItem: ScheduleItem | null }> = ({ select
     return null;
 };
 
-const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmbedded = false, onClose }) => {
+const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAddItem, isEmbedded = false, onClose, discoveryCreatorId }) => {
     const [showList, setShowList] = useState(!isEmbedded); // Default hidden if embedded
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
@@ -90,7 +92,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
     // Collect valid points
     const points = useMemo(() => {
         const slots = ['morning', 'afternoon', 'evening', 'night', 'accommodation'];
-        const list: { item: ScheduleItem; slot: string; lat: number; lng: number, index: number }[] = [];
+        const list: { item: ScheduleItem; slot: string; lat: number; lng: number, index: number, isDiscovery?: boolean }[] = [];
 
         let globalIndex = 0; // Global sequential numbering (1, 2, 3... n)
         slots.forEach(slot => {
@@ -117,8 +119,31 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
                 });
             }
         });
+
+        // [PHASE 19] Inject Discovery Points if filter is active
+        if (discoveryCreatorId) {
+            const allAssets = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS];
+            const discoveryAssets = allAssets.filter(asset =>
+                asset.authorId === discoveryCreatorId &&
+                !list.some(p => p.item.id === asset.id || p.item.title === asset.title)
+            );
+
+            discoveryAssets.forEach(asset => {
+                if (asset.lat && asset.lng) {
+                    list.push({
+                        item: { ...asset, instanceId: `discovery-${asset.id}` } as any,
+                        slot: 'discovery',
+                        lat: asset.lat,
+                        lng: asset.lng,
+                        index: -1,
+                        isDiscovery: true
+                    });
+                }
+            });
+        }
+
         return list;
-    }, [schedule]);
+    }, [schedule, discoveryCreatorId]);
 
     const getSlotColor = (slot: string) => {
         switch (slot) {
@@ -127,14 +152,41 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
             case 'evening': return 'bg-purple-500 border-purple-600';
             case 'night': return 'bg-indigo-900 border-indigo-950';
             case 'accommodation': return 'bg-indigo-600 border-indigo-700';
+            case 'discovery': return 'bg-amber-400 border-amber-500';
             default: return 'bg-gray-500 border-gray-600';
         }
     };
 
-    const createIcon = (item: ScheduleItem, slot: string, index: number, isHovered: boolean, isSelected: boolean) => {
+    const createIcon = (item: ScheduleItem, slot: string, index: number, isHovered: boolean, isSelected: boolean, isDiscovery?: boolean) => {
         const colorClass = getSlotColor(slot);
         const isActive = isHovered || isSelected;
         const displayTitle = lang === 'en' ? (item.titleEn || item.title) : item.title;
+
+        // Custom visualization for Discovery pins (Visual Bubbles)
+        if (isDiscovery) {
+            const html = `
+                <div class="relative flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-50'}">
+                    <div class="absolute -top-12 left-1/2 -translate-x-1/2 px-2 py-1 bg-amber-500 text-white text-[10px] font-black rounded-lg shadow-xl whitespace-nowrap pointer-events-none transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}">
+                        ${displayTitle}
+                        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-amber-500 rotate-45"></div>
+                    </div>
+
+                    <div class="w-10 h-10 rounded-full border-2 border-white shadow-2xl overflow-hidden bg-gray-100 ring-4 ring-amber-400/20 group animate-in zoom-in duration-500">
+                        ${item.coverImage ? `
+                            <img src="${item.coverImage}" class="w-full h-full object-cover" />
+                        ` : `
+                            <div class="w-full h-full flex items-center justify-center text-xl bg-amber-50">${item.image || '📍'}</div>
+                        `}
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent"></div>
+                    </div>
+                    
+                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[10px] font-bold border border-amber-200 shadow-sm text-amber-600">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                </div>
+            `;
+            return L.divIcon({ html, className: 'bg-transparent', iconSize: [40, 40], iconAnchor: [20, 20] });
+        }
 
         const html = `
             <div class="relative flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-10'}">
@@ -241,7 +293,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
                         <Marker
                             key={idx}
                             position={[p.lat, p.lng]}
-                            icon={createIcon(p.item, p.slot, p.index, hoveredIndex === idx, selectedItem?.instanceId === p.item.instanceId)}
+                            icon={createIcon(p.item, p.slot, p.index, hoveredIndex === idx, selectedItem?.instanceId === p.item.instanceId, p.isDiscovery)}
                             eventHandlers={{
                                 mouseover: () => !isMobile && setHoveredIndex(idx),
                                 mouseout: () => !isMobile && setHoveredIndex(null),
@@ -250,19 +302,60 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, isEmb
                                     handleItemSelection(p.item, idx);
                                 }
                             }}
-                        />
+                        >
+                            {p.isDiscovery && (
+                                <Popup closeButton={false} className="discovery-popup">
+                                    <div className="w-48 overflow-hidden rounded-xl bg-white shadow-2xl flex flex-col">
+                                        <div className="h-24 w-full relative">
+                                            <img src={p.item.coverImage} className="w-full h-full object-cover" alt="cover" />
+                                            <div className="absolute top-2 left-2 bg-amber-500 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-lg">
+                                                Creator's Pick
+                                            </div>
+                                        </div>
+                                        <div className="p-3">
+                                            <h4 className="font-black text-gray-900 text-sm mb-1 leading-tight">{lang === 'zh' ? p.item.title : p.item.titleEn}</h4>
+                                            <div className="flex items-center gap-1.5 mb-3">
+                                                <div className="w-4 h-4 rounded-full overflow-hidden border border-gray-100">
+                                                    <img src={`https://i.pravatar.cc/100?img=${discoveryCreatorId ? discoveryCreatorId.length % 70 : 0}`} className="w-full h-full object-cover" alt="author" />
+                                                </div>
+                                                <span className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">{p.item.author || 'Wennie'}</span>
+                                            </div>
+                                            <button
+                                                onClick={() => {
+                                                    onAddItem?.(p.item as any);
+                                                    setSelectedItem(null);
+                                                }}
+                                                className="w-full bg-teal-600 hover:bg-teal-700 text-white text-[10px] font-black uppercase py-2.5 rounded-lg transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
+                                            >
+                                                <PlusCircle size={12} />
+                                                {lang === 'zh' ? '加入我的計畫' : 'Add to Plan'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            )}
+                        </Marker>
                     ))}
                 </MapContainer>
 
                 {/* Desktop Toggle overlay */}
                 {!isEmbedded && !isMobile && (
-                    <button
-                        onClick={() => setShowList(!showList)}
-                        className={`absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md z-[500] flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
-                    >
-                        <List size={14} />
-                        {showList ? (t.hideList || '隱藏列表') : (t.showList || '顯示列表')}
-                    </button>
+                    <div className="absolute top-4 left-4 z-[500] flex flex-col gap-2">
+                        <button
+                            onClick={() => setShowList(!showList)}
+                            className={`bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
+                        >
+                            <List size={14} />
+                            {showList ? (t.hideList || '隱藏列表') : (t.showList || '顯示列表')}
+                        </button>
+
+                        {discoveryCreatorId && (
+                            <div className="bg-amber-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-lg flex items-center gap-2 animate-in slide-in-from-left duration-500">
+                                <Navigation size={12} className="fill-white" />
+                                {lang === 'zh' ? '探索模式：達人私房點' : 'Discovery Mode: Hidden Spots'}
+                            </div>
+                        )}
+                    </div>
                 )}
 
                 {/* Mobile Fullscreen Toggle */}

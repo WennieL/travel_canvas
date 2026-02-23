@@ -6,6 +6,7 @@ import { TEMPLATES, CITY_FILTERS } from '../data';
 interface DiscoveryViewProps {
     onPreviewTemplate: (tpl: Template) => void;
     onStoryPreview: (tpl: Template) => void;
+    onExploreCreatorMap: (authorId: string, authorName: string) => void;
     onCreatorClick: (creatorId: string) => void;
     setActiveTab: (tab: 'assets' | 'templates') => void;
     activeRegion: Region;
@@ -21,6 +22,7 @@ interface DiscoveryViewProps {
 const DiscoveryView: React.FC<DiscoveryViewProps> = ({
     onPreviewTemplate,
     onStoryPreview,
+    onExploreCreatorMap,
     onCreatorClick,
     setActiveTab,
     activeRegion,

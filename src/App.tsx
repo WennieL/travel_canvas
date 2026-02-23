@@ -86,7 +86,8 @@ export function App() {
         batchUnlockCount, setBatchUnlockCount,
         moveTarget, setMoveTarget,
         activeRegion, setActiveRegion,
-        addToSlotTarget, setAddToSlotTarget
+        addToSlotTarget, setAddToSlotTarget,
+        discoveryCreatorId, setDiscoveryCreatorId
     } = ui;
 
     const t = TRANSLATIONS[lang];
@@ -236,6 +237,12 @@ export function App() {
 
     const toggleLang = () => setLang(prev => prev === 'en' ? 'zh' : 'en');
 
+    const handleExploreCreatorMap = (authorId: string, authorName: string) => {
+        ui.setDiscoveryCreatorId(authorId);
+        setViewMode('canvas');
+        showToastMessage(lang === 'zh' ? `正在探索 ${authorName} 的私房景點 🗺️` : `Exploring ${authorName}'s hidden spots 🗺️`);
+    };
+
     // Handlers
     const startEditingName = () => {
         setEditingName(activePlan?.name || '');
@@ -282,6 +289,7 @@ export function App() {
         if (view !== 'discovery') {
             setIsCreatingNewPlan(false);
             setPendingWizardData(null);
+            ui.setDiscoveryCreatorId(null); // Reset discovery mode when leaving main discovery flow
         }
 
         setViewMode(view);
@@ -505,7 +513,9 @@ export function App() {
                                 lang={lang}
                                 t={t}
                                 onItemClick={ui.setSelectedItem}
-                                onClose={() => setViewMode('canvas')} // [NEW] Return to Canvas view
+                                onClose={() => setViewMode('canvas')}
+                                discoveryCreatorId={discoveryCreatorId}
+                                onAddItem={(item) => handleTapToAdd(item)}
                             />
                         </div>
                     ) : viewMode === 'discovery' ? (
@@ -517,6 +527,7 @@ export function App() {
                                     ui.setShowStoryPreview(true);
                                 }}
                                 onCreatorClick={setSelectedCreatorId}
+                                onExploreCreatorMap={handleExploreCreatorMap}
                                 setActiveTab={setActiveTab}
                                 activeRegion={activeRegion}
                                 setActiveRegion={setActiveRegion}
@@ -574,6 +585,7 @@ export function App() {
                             setUnlockTarget={setUnlockTarget}
                             setSelectedItem={ui.setSelectedItem}
                             setActiveTab={setActiveTab}
+                            discoveryCreatorId={discoveryCreatorId}
                         />
                     )}
                 </div>}
@@ -635,6 +647,7 @@ export function App() {
                 toggleSubscription={handleToggleSubscribe}
                 subscribedCreators={subscribedCreators}
                 applyTemplate={applyTemplate}
+                onExploreCreatorMap={handleExploreCreatorMap}
 
                 // Move Item
                 showMoveModal={showMoveModal} setShowMoveModal={setShowMoveModal}
@@ -722,7 +735,11 @@ export function App() {
                 currency={budgetSettings.currency}
                 exchangeRate={budgetSettings.exchangeRate}
                 onSetSettings={updateBudgetSettings}
-                onCreatorClick={(id: string) => setSelectedCreatorId(id)}
+                onCreatorClick={(id: string) => {
+                    setSelectedCreatorId(id);
+                    ui.setShowStoryPreview(false);
+                    setPreviewTemplate(null);
+                }}
                 onPreviewTemplate={(tpl: Template) => setPreviewTemplate(tpl)}
             />
 

@@ -80,6 +80,7 @@ interface AppModalsProps {
     isSubscribed: boolean;
     toggleSubscription: (id: string) => void;
     applyTemplate: (template: any) => void;
+    onExploreCreatorMap: (authorId: string, authorName: string) => void;
 
     // Move Item Modal
     showMoveModal: boolean;
@@ -178,6 +179,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
         onUpdateChecklist, currency, exchangeRate, onSetSettings,
         onCreatorClick, onPreviewTemplate,
+        onExploreCreatorMap,
         pendingWizardData, setPendingWizardData
     } = props;
 
@@ -259,6 +261,12 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                             props.addToSlotTarget === 'evening' ? 'food' : 'custom'
                 }
                 currentRegion={props.activeRegion}
+                lang={lang}
+                onExploreMap={() => {
+                    props.setShowCustomItemModal(false);
+                    // Use Melbourne expert by default for demo, or active creator if selected
+                    onExploreCreatorMap(selectedCreatorId || 'c-mel', activeCreator?.author || 'Expert');
+                }}
             />
 
 
@@ -296,6 +304,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 }}
                 lang={lang}
                 t={t}
+                onExploreMap={onExploreCreatorMap}
             />
 
             <MoveToDayModal
@@ -443,6 +452,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 onSubscribe={toggleSubscription}
                 isSubscribed={isSubscribed}
                 lang={lang}
+                onCreatorClick={onCreatorClick}
             />
         </>
     );

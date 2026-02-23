@@ -304,6 +304,9 @@ export const SAMPLE_ASSETS: TravelItem[] = [
         region: 'tokyo',
         tier: 'premium',
         isLocked: true,
+        authorId: 'c-mel', // Associated with Wennie for discovery demo
+        author: 'Wennie',
+        coverImage: 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=800',
         insiderTip: {
             teaser: '99% 觀光客不知道的拍照秘境',
             teaserEn: 'Secret photo spot unknown to 99% tourists',
@@ -529,6 +532,9 @@ export const SAMPLE_ASSETS: TravelItem[] = [
         region: 'osaka',
         tier: 'premium',
         isLocked: true,
+        authorId: 'c-osaka',
+        author: 'Osaka Fun Guide',
+        coverImage: 'https://images.unsplash.com/photo-1590559891276-075c676f84d9?auto=format&fit=crop&q=80&w=800',
         insiderTip: {
             teaser: '只有 2 班的隱藏版觀光船',
             full: {

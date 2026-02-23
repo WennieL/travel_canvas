@@ -37,6 +37,11 @@ export interface TravelItem {
     isLocked?: boolean;     // If true, hide address/real title
     isCustom?: boolean;     // [NEW] Flag to identify user-created items
     insiderTip?: InsiderTip;
+
+    // [PHASE 19] Creator Discovery Fields
+    authorId?: string;
+    author?: string;
+    coverImage?: string;
 }
 
 // [NEW] Enhanced Insider Tip Structure
