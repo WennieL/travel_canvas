@@ -65,7 +65,7 @@ const NAV_CONFIG: NavItem[] = [
         label: '新計畫',
         labelEn: 'New Plan',
         alwaysShow: true,
-        desktop: true, // Only as a standalone button on desktop
+        mobile: true, // Only as a standalone button on mobile (bottom nav if added)
         action: 'modal',
     },
     {

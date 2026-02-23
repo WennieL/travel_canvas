@@ -106,12 +106,19 @@ export function App() {
     const handleTriggerStartPicker = () => {
         // [PHASE 12 REFINEMENT转为3步流] 
         // 内部触发一律先走 Wizard
+        setIsCreatingNewPlan(true); // [PHASE 17 FIX] Ensure we mark as "Creating" when starting wizard
         ui.setShowCheckIn(true);
     };
 
     const executeCreateBlankPlan = (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number }) => {
         _handleCreatePlan(data);
         setIsCreatingNewPlan(false);
+
+        // [PHASE 17 FIX] Ensure sidebar shows the plan list immediately after creation
+        ui.setActiveTab('projects');
+        ui.setIsSidebarOpen(true);
+        ui.setIsSidebarPinned(true);
+
         showToastMessage(lang === 'zh' ? '祝您旅途愉快！✈️' : 'Have a great trip! ✈️');
     };
 
@@ -256,7 +263,8 @@ export function App() {
         currentDay, setCurrentDay, lang, t, confirm, showToastMessage,
         isCreatingNewPlan, setIsCreatingNewPlan, ui, setCustomAssets,
         _handleDeleteDay: (day: number, e?: React.MouseEvent) => _handleDeleteDay(day, e),
-        _handleDeletePlan: (id: string, e: React.MouseEvent) => _handleDeletePlan(id, e)
+        _handleDeletePlan: (id: string, e: React.MouseEvent) => _handleDeletePlan(id, e),
+        pendingWizardData, setPendingWizardData
     });
 
     const {
@@ -269,6 +277,13 @@ export function App() {
         setShowFavorites(view === 'favorites');
         setShowPlanManager(view === 'projects');
         ui.setShowStartPicker(false); // [FIX] Ensure picker closes on nav
+
+        // [PHASE 17] Reset creation state when navigating away from creation flow
+        if (view !== 'discovery') {
+            setIsCreatingNewPlan(false);
+            setPendingWizardData(null);
+        }
+
         setViewMode(view);
     };
 

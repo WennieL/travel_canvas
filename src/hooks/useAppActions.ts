@@ -26,6 +26,8 @@ interface AppActionsDeps {
     setCustomAssets: React.Dispatch<React.SetStateAction<TravelItem[]>>;
     _handleDeleteDay: (day: number, e?: any) => void;
     _handleDeletePlan: (id: string, e?: any) => void;
+    pendingWizardData: any;
+    setPendingWizardData: (data: any) => void;
 }
 
 export const useAppActions = (deps: AppActionsDeps) => {
@@ -33,12 +35,16 @@ export const useAppActions = (deps: AppActionsDeps) => {
         plans, setPlans, activePlan, updateActivePlan, activePlanId, setActivePlanId,
         currentDay, setCurrentDay, lang, t, confirm, showToastMessage,
         isCreatingNewPlan, setIsCreatingNewPlan, ui, setCustomAssets,
-        _handleDeleteDay, _handleDeletePlan
+        _handleDeleteDay, _handleDeletePlan, pendingWizardData, setPendingWizardData
     } = deps;
 
     const applyTemplate = useCallback(async (template: Template, skipConfirm: boolean = false) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
-        if (!skipConfirm) {
+
+        // [PHASE 17] Bypass confirmation if we are in the middle of "Creating New Plan" flow
+        const shouldSkip = skipConfirm || isCreatingNewPlan;
+
+        if (!shouldSkip) {
             const confirmed = await confirm({
                 title: t.applyTemplateConfirmTitle || 'Apply Template',
                 message: (t.applyTemplateConfirmMessage || '⚠️ Apply "{name}"?\n\nCurrent itinerary will be replaced.').replace('{name}', templateName),
@@ -87,12 +93,18 @@ export const useAppActions = (deps: AppActionsDeps) => {
 
         if (isCreatingNewPlan) {
             const id = `plan-${Date.now()}`;
+
+            // [PHASE 17] Sync data from Wizard if available
+            const finalDestination = pendingWizardData?.destination?.toUpperCase() || region.toUpperCase();
+            const finalStart = pendingWizardData?.startDate || new Date().toISOString().split('T')[0];
+            const finalEnd = pendingWizardData?.endDate || new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0];
+
             const newPlan: Plan = {
                 id,
                 name: templateName,
-                destination: region.toUpperCase(), // [PHASE 12] Fix: Add destination for header sync
-                startDate: new Date().toISOString().split('T')[0],
-                endDate: new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0],
+                destination: finalDestination,
+                startDate: finalStart,
+                endDate: finalEnd,
                 totalDays: template.duration,
                 schedule: newSchedule,
                 region: region,
@@ -103,7 +115,8 @@ export const useAppActions = (deps: AppActionsDeps) => {
             };
             setPlans([...plans, newPlan]);
             setActivePlanId(id);
-            setIsCreatingNewPlan(false);
+            setIsCreatingNewPlan(false); // [PHASE 17] Important: reset after successful creation
+            setPendingWizardData(null); // Clear once used
         } else {
             updateActivePlan({
                 name: templateName,
@@ -117,9 +130,15 @@ export const useAppActions = (deps: AppActionsDeps) => {
         setCurrentDay(1);
         ui.setShowMobileLibrary(false);
         ui.setShowPlanManager(false);
+
+        // [PHASE 17 FIX] Ensure sidebar shows the plan list immediately after creation/application
+        ui.setActiveTab('projects');
+        ui.setIsSidebarOpen(true);
+        ui.setIsSidebarPinned(true);
+
         ui.setViewMode('canvas');
         showToastMessage((t.appliedTemplate || '✅ "{name}" applied!').replace('{name}', templateName));
-    }, [lang, confirm, isCreatingNewPlan, plans, setPlans, setActivePlanId, setIsCreatingNewPlan, updateActivePlan, setCurrentDay, ui, showToastMessage]);
+    }, [lang, confirm, isCreatingNewPlan, plans, setPlans, setActivePlanId, setIsCreatingNewPlan, updateActivePlan, setCurrentDay, ui, showToastMessage, pendingWizardData, setPendingWizardData, t]);
 
     const handleCreateCustomItem = useCallback((data: any) => {
         const currentDayKey = `Day ${currentDay}`;
