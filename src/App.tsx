@@ -273,7 +273,7 @@ export function App() {
     } = actions;
 
     const handleNavigate = (view: ViewMode) => {
-        setIsSidebarOpen(false); // Default close assets when switching main views
+        if (isMobile) setIsSidebarOpen(false); // Only auto-close sidebar on mobile
         setShowFavorites(view === 'favorites');
         setShowPlanManager(view === 'projects');
         ui.setShowStartPicker(false); // [FIX] Ensure picker closes on nav
@@ -285,6 +285,22 @@ export function App() {
         }
 
         setViewMode(view);
+    };
+
+    const handleSelectPlan = (id: string) => {
+        setActivePlanId(id);
+        setShowPlanManager(false);
+        // Switch to canvas view if in discovery or other non-itinerary views
+        if (viewMode === 'discovery' || viewMode === 'projects' || viewMode === 'favorites') {
+            setViewMode('canvas');
+        }
+        // Force sidebar open/projects tab if user selection happened in the sidebar
+        if (isMobile) {
+            ui.setShowMobileLibrary(false);
+        } else {
+            ui.setActiveTab('projects');
+            ui.setIsSidebarOpen(true);
+        }
     };
 
 
@@ -405,7 +421,7 @@ export function App() {
                                 setActiveTab={ui.setActiveTab}
                                 activePlan={activePlan}
                                 plans={plans}
-                                onSelectPlan={setActivePlanId}
+                                onSelectPlan={handleSelectPlan}
                                 handleCreatePlan={() => handleTriggerStartPicker()}
                                 handleDeletePlan={_handleDeletePlan}
                                 budgetLimit={budgetLimit}
@@ -582,7 +598,7 @@ export function App() {
 
                 // Plan Management
                 showPlanManager={showPlanManager} setShowPlanManager={setShowPlanManager}
-                plans={plans} activePlanId={activePlanId} setActivePlanId={setActivePlanId}
+                plans={plans} activePlanId={activePlanId} setActivePlanId={handleSelectPlan}
                 onTriggerPicker={handleTriggerStartPicker}
                 onExpertMode={enterExpertCreationMode}
                 handleDeletePlan={_handleDeletePlan}

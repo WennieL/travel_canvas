@@ -51,6 +51,10 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
                 setActiveTab('projects');
                 setIsSidebarOpen(true);
                 setIsSidebarPinned(true);
+                // [PHASE 18] Important: Exit discovery mode to show sidebar content
+                if (activeView === 'discovery') {
+                    onNavigate('canvas');
+                }
             } else if (item.id === 'assets' || item.id === 'templates' || item.id === 'budget' || item.id === 'checklist') {
                 setActiveTab(item.id === 'assets' ? 'assets' : item.id);
                 setIsSidebarOpen(true);
