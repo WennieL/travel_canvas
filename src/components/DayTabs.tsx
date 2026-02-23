@@ -62,18 +62,6 @@ const DayTabs: React.FC<DayTabsProps> = ({
                         </button>
                     </div>
 
-                    {/* Map Toggle */}
-                    {setViewMode && (
-                        <button
-                            onClick={() => setViewMode(viewMode === 'map' ? 'canvas' : 'map')}
-                            className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all ${viewMode === 'map'
-                                ? 'bg-teal-50 text-teal-600 ring-1 ring-teal-200'
-                                : 'bg-gray-50 text-gray-400 hover:text-gray-600'
-                                }`}
-                        >
-                            <MapIcon size={16} />
-                        </button>
-                    )}
                 </div>
             </div>
 

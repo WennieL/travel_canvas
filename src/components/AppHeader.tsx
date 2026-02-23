@@ -115,20 +115,25 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         </div>
 
                         {/* Right Actions */}
-                        <div className="flex items-center gap-1 pr-2 h-full border-l border-dashed border-gray-100 bg-gray-50/10 pl-2">
-                            {/* Toolbar (if any) */}
-                            {toolbar && <div className="scale-90">{toolbar}</div>}
+                        <div className="flex items-center gap-0.5 pr-2 h-full border-l border-dashed border-gray-100 bg-gray-50/10 pl-1.5">
+                            {/* Map Toggle (New Standalone Position for Mobile) */}
+                            <button
+                                onClick={() => setViewMode(viewMode === 'map' ? 'canvas' : 'map')}
+                                className={`w-9 h-9 flex items-center justify-center rounded-full transition-all ${viewMode === 'map' ? 'text-teal-600 bg-teal-50' : 'text-gray-400 active:bg-gray-100'}`}
+                            >
+                                <MapIcon size={18} />
+                            </button>
 
                             {/* Share Compact */}
                             <button
                                 onClick={() => setShowShareModal(true)}
-                                className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-teal-600 rounded-full active:bg-gray-100 transition-all"
+                                className="w-9 h-9 flex items-center justify-center text-gray-400 active:text-teal-600 rounded-full active:bg-gray-100 transition-all"
                             >
-                                <Upload size={16} />
+                                <Upload size={18} />
                             </button>
 
-                            {/* Compact Budget */}
-                            <div className="scale-75 origin-center -ml-1">
+                            {/* Compact Budget (Dynamic progress ring preserved) */}
+                            <div className="scale-[0.85] origin-center">
                                 <BudgetWidget
                                     spent={calculateTotalBudget()}
                                     limit={budgetLimit}
