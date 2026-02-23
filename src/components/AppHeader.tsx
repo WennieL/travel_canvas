@@ -54,7 +54,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     return (
         <>
             {/* Mobile Header - Boarding Pass Style (Phase 8 Upgrade) */}
-            <div className="md:hidden h-24 bg-gray-50/95 backdrop-blur-md sticky top-0 z-30 px-3 py-2 border-b border-gray-200/50 flex items-center justify-center">
+            <div className="lg:hidden h-24 bg-gray-50/95 backdrop-blur-md sticky top-0 z-30 px-3 py-2 border-b border-gray-200/50 flex items-center justify-center">
                 <div className="w-full h-full bg-white rounded-xl shadow-sm border border-gray-200/60 flex items-center overflow-hidden relative">
 
                     {/* Left Edge Visuals (Ticket Notch) */}
@@ -151,7 +151,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             </div>
 
             {/* Desktop Header - Boarding Pass Style (Phase 11: Classic Aviation) */}
-            <div className="hidden md:flex flex-col h-36 bg-gray-50/10 items-center justify-start py-4 px-6 z-40 relative">
+            <div className="hidden lg:flex flex-col h-36 bg-gray-50/10 items-center justify-start py-4 px-6 z-40 relative">
                 <div className="w-full max-w-5xl h-28 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100/50 flex items-center overflow-hidden active:shadow-md transition-all relative">
 
                     <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none flex items-center justify-center overflow-hidden">
@@ -238,32 +238,43 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         </div>
                     </div>
 
-                    {/* Action Stub Area (Right) - Share button back inside */}
-                    <div className="h-full flex items-center border-l border-dashed border-gray-200 pl-8 pr-6 relative bg-gray-50/30 z-10">
+                    {/* Action Stub Area (Right) - Streamlined Aviation UX */}
+                    <div className="h-full flex items-center border-l border-dashed border-gray-200 pl-6 pr-6 relative bg-gray-50/10 z-10">
                         {/* Cutout notches */}
                         <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
                         <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
 
-                        <div className="flex items-center gap-4">
-                            {/* Toolbar Integration */}
-                            {toolbar && (
-                                <div className="mr-2">
-                                    {toolbar}
-                                </div>
-                            )}
-
+                        <div className="flex items-center gap-1">
+                            {/* Map Mode / Split View Toggle */}
                             <button
-                                onClick={() => handleGateCheck(() => setShowShareModal(true))}
-                                className="flex items-center gap-2 px-6 py-3 border border-gray-200 bg-white text-gray-500 rounded-xl text-xs font-black uppercase tracking-wider hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm active:scale-95 whitespace-nowrap"
+                                onClick={() => {
+                                    if (viewMode === 'canvas') {
+                                        setShowContextMap(!showContextMap);
+                                    } else {
+                                        setViewMode(viewMode === 'map' ? 'canvas' : 'map');
+                                    }
+                                }}
+                                className={`w-10 h-10 flex flex-col items-center justify-center rounded-xl transition-all group ${showContextMap || viewMode === 'map' ? 'bg-teal-50 text-teal-600 border border-teal-200 shadow-sm' : 'text-gray-400 hover:bg-white hover:border-gray-200 border border-transparent hover:text-teal-600'}`}
+                                title={viewMode === 'canvas' ? (showContextMap ? t.hideMap : t.showMap) : (viewMode === 'map' ? 'Back to Schedule' : 'Show Map')}
                             >
-                                <Upload size={14} />
-                                <span>{t.share || "Share Plan"}</span>
+                                <MapIcon size={18} />
+                                <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">MAP</span>
                             </button>
 
-                            {/* Ticket Edge Detail */}
-                            <div className="flex flex-col gap-1.5 ml-2 opacity-30">
-                                {[...Array(8)].map((_, i) => (
-                                    <div key={i} className="w-1 h-3 bg-teal-600/20 rounded-full" />
+                            {/* Share Action */}
+                            <button
+                                onClick={() => handleGateCheck(() => setShowShareModal(true))}
+                                className="w-10 h-10 flex flex-col items-center justify-center rounded-xl text-gray-400 hover:bg-white hover:border-gray-200 border border-transparent hover:text-teal-600 transition-all group"
+                                title={t.share || "Share Plan"}
+                            >
+                                <Upload size={18} />
+                                <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">SHARE</span>
+                            </button>
+
+                            {/* Ticket Edge Detail (Classic Aviation) */}
+                            <div className="flex flex-col gap-1.5 ml-4 opacity-20">
+                                {[...Array(6)].map((_, i) => (
+                                    <div key={i} className="w-1 h-2 bg-teal-600/30 rounded-full" />
                                 ))}
                             </div>
                         </div>

@@ -423,11 +423,6 @@ export function App() {
                         setShowSubmitModal={setShowSubmitModal} setShowShareModal={setShowShareModal} handleGateCheck={handleGateCheck}
                         isSidebarOpen={isSidebarOpen} budgetLimit={budgetLimit} setBudgetLimit={setBudgetLimit}
                         calculateTotalBudget={calculateTotalBudget} calculateCategoryBreakdown={calculateCategoryBreakdown}
-                        toolbar={<AppToolbar
-                            viewMode={viewMode} setViewMode={setViewMode}
-                            showContextMap={showContextMap} setShowContextMap={setShowContextMap}
-                            t={t} lang={lang}
-                        />}
                         showContextMap={showContextMap} setShowContextMap={setShowContextMap} // Pass context map state
                         viewMode={viewMode} setViewMode={setViewMode}
                         showToastMessage={showToastMessage}
