@@ -268,9 +268,6 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
                             {lang === 'zh' ? city.label : city.labelEn}
                         </h2>
                     </div>
-                    <button onClick={toggleLang} className="p-2 text-xs font-bold text-gray-400">
-                        {lang === 'zh' ? 'EN' : '中'}
-                    </button>
                 </div>
 
                 {/* Hero / Banner - Immersive Premium Look */}

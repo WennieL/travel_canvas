@@ -1,4 +1,4 @@
-import { Home, FolderOpen, Plus, Package, Map as MapIcon, PanelsTopLeft, Settings, Globe, MoreHorizontal, User } from 'lucide-react';
+import { Home, FolderOpen, Plus, Package, Map as MapIcon, PanelsTopLeft, Settings, Globe, MoreHorizontal, User, ChevronRight } from 'lucide-react';
 import { useNavigation, NavItem } from '../hooks/useNavigation';
 import { LangType } from '../types';
 import { TRANSLATIONS } from '../data/translations';
@@ -208,7 +208,15 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
                                         <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500 group-hover:text-teal-600 group-hover:bg-teal-50 transition-colors">
                                             <Icon size={18} />
                                         </div>
-                                        <span className="text-sm font-semibold">{label}</span>
+                                        <span className="text-sm font-semibold flex-1 text-left">{label}</span>
+                                        {item.id === 'lang' && (
+                                            <div className="flex items-center gap-1 text-gray-400">
+                                                <span className="text-xs font-medium">
+                                                    {lang === 'zh' ? '繁體中文' : 'English'}
+                                                </span>
+                                                <ChevronRight size={14} />
+                                            </div>
+                                        )}
                                     </button>
                                 );
                             })}

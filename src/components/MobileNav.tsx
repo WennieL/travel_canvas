@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Compass, Heart, Calendar, User, MoreHorizontal, DollarSign, ListTodo, Settings, Globe, Plus } from 'lucide-react';
+import { Compass, Heart, Calendar, User, MoreHorizontal, DollarSign, ListTodo, Settings, Globe, Plus, ChevronRight } from 'lucide-react';
 import { useNavigation, NavItem } from '../hooks/useNavigation';
 import { LangType, ViewMode } from '../types';
 
@@ -189,7 +189,16 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                                                 <MenuIcon size={18} />
                                             </div>
                                             <span className="text-[15px] font-semibold text-gray-700 flex-1 text-left">{label}</span>
-                                            {item.action === 'navigate' && <Plus size={14} className="text-gray-300" />}
+                                            {item.id === 'lang' ? (
+                                                <div className="flex items-center gap-1 text-gray-400">
+                                                    <span className="text-xs font-medium">
+                                                        {lang === 'zh' ? '繁體中文' : 'English'}
+                                                    </span>
+                                                    <ChevronRight size={14} />
+                                                </div>
+                                            ) : (
+                                                item.action === 'navigate' && <Plus size={14} className="text-gray-300" />
+                                            )}
                                         </button>
                                     </React.Fragment>
                                 );
@@ -218,8 +227,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                                 className="flex flex-col items-center justify-center w-full transition-all active:scale-90"
                             >
                                 <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all ${isActive
-                                        ? 'bg-teal-600 text-white border-teal-200 shadow-md ring-2 ring-teal-50'
-                                        : 'bg-gradient-to-br from-teal-400 to-teal-600 text-white border-white shadow-sm'
+                                    ? 'bg-teal-600 text-white border-teal-200 shadow-md ring-2 ring-teal-50'
+                                    : 'bg-gradient-to-br from-teal-400 to-teal-600 text-white border-white shadow-sm'
                                     }`}>
                                     W
                                 </div>

@@ -9,6 +9,7 @@ import {
     ListTodo,
     Settings,
     Globe,
+    Languages,
     Plus,
     Map as MapIcon,
     Package
@@ -141,8 +142,8 @@ const NAV_CONFIG: NavItem[] = [
     },
     {
         id: 'lang',
-        icon: Globe,
-        label: '切換語言',
+        icon: Languages,
+        label: '語言',
         labelEn: 'Language',
         alwaysShow: true,
         isMobileMore: true,
