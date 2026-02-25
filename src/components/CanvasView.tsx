@@ -46,6 +46,11 @@ interface CanvasViewProps {
     setIsSidebarOpen: (open: boolean) => void;
     setActiveTab: (tab: 'assets' | 'templates') => void;
     discoveryCreatorId?: string | null;
+    currentDay?: number;
+    addToSlotTarget?: TimeSlot | null;
+    onExitDiscovery?: () => void;
+    onAddItem?: (item: TravelItem) => void;
+    setSidebarMode?: (mode: 'list' | 'map') => void;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -70,7 +75,12 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     setSelectedItem,
     setIsSidebarOpen,
     setActiveTab,
-    discoveryCreatorId
+    discoveryCreatorId,
+    currentDay,
+    addToSlotTarget,
+    onExitDiscovery,
+    onAddItem,
+    setSidebarMode,
 }) => {
     const isTimeline = !showContextMap;
 
@@ -153,6 +163,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                         onDragStart={handleDragStart}
                                         onAddItem={() => {
                                             setActiveTab('assets');
+                                            setSidebarMode?.('list');
                                             if (window.innerWidth < 1024) {
                                                 setAddToSlotTarget(slot);
                                                 setShowMobileLibrary(true);
@@ -208,6 +219,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         onDragStart={handleDragStart}
                         onAddItem={() => {
                             setActiveTab('assets');
+                            setSidebarMode?.('list');
                             if (window.innerWidth < 1024) {
                                 setAddToSlotTarget('accommodation');
                                 setShowMobileLibrary(true);
@@ -241,6 +253,11 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         onItemClick={handleMapItemClick}
                         isEmbedded={true}
                         discoveryCreatorId={discoveryCreatorId}
+                        currentDay={currentDay}
+                        addToSlotTarget={addToSlotTarget}
+                        onExitDiscovery={onExitDiscovery}
+                        activeRegion={activePlan.region}
+                        onAddItem={onAddItem}
                     />
                 </div>
             )}

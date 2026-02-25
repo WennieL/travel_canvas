@@ -87,7 +87,8 @@ export function App() {
         moveTarget, setMoveTarget,
         activeRegion, setActiveRegion,
         addToSlotTarget, setAddToSlotTarget,
-        discoveryCreatorId, setDiscoveryCreatorId
+        discoveryCreatorId, setDiscoveryCreatorId,
+        sidebarMode, setSidebarMode
     } = ui;
 
     const t = TRANSLATIONS[lang];
@@ -239,8 +240,44 @@ export function App() {
 
     const handleExploreCreatorMap = (authorId: string, authorName: string) => {
         ui.setDiscoveryCreatorId(authorId);
-        setViewMode('canvas');
+        // [PHASE 22 FIX] Always switch to map view for map exploration
+        setViewMode('map');
+        // Ensure sidebar is in map mode to show sidekick view
+        ui.setSidebarMode('map');
+
+        // On mobile, force switch to map view for better immersion
+        if (window.innerWidth < 1024) {
+            setViewMode('map');
+        }
         showToastMessage(lang === 'zh' ? `正在探索 ${authorName} 的私房景點 🗺️` : `Exploring ${authorName}'s hidden spots 🗺️`);
+    };
+
+    const handleSidebarModeChange = (mode: 'list' | 'map') => {
+        ui.setSidebarMode(mode);
+        if (mode === 'map') {
+            // [PHASE 22.4 FIX] Mobile Optimization: Use full-screen map for mobile, split-view for desktop
+            if (isMobile) {
+                setViewMode('map');
+                setShowContextMap(false);
+                ui.setShowMobileLibrary(false); // [PHASE 22.4 FIX] Close drawer to reveal map behind
+            } else {
+                setViewMode('canvas');
+                setShowContextMap(true);
+            }
+
+            // Activate aggregate discovery layer by setting a global keyword
+            if (!ui.discoveryCreatorId) {
+                ui.setDiscoveryCreatorId('all'); // 'all' triggers the multi-creator aggregation
+            }
+
+            // Ensure sidebar stays open on desktop for the sidekick experience
+            if (!isMobile) setIsSidebarOpen(true);
+        } else {
+            // Restore to main itinerary view (Timeline)
+            setShowContextMap(false);
+            // Clear discovery context when returning to list mode
+            ui.setDiscoveryCreatorId(null);
+        }
     };
 
     // Handlers
@@ -441,6 +478,17 @@ export function App() {
                                 currency={budgetSettings.currency}
                                 exchangeRate={budgetSettings.exchangeRate}
                                 onSetSettings={updateBudgetSettings}
+                                addToSlotTarget={addToSlotTarget}
+                                currentDay={currentDay}
+                                onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                                setShowMobileLibrary={ui.setShowMobileLibrary}
+                                onExploreCreatorMap={handleExploreCreatorMap}
+                                onModeChange={handleSidebarModeChange}
+                                sidebarMode={sidebarMode}
+                                setSidebarMode={setSidebarMode}
+                                onSelectItem={(item: any) => ui.setSelectedItem(item)}
+                                selectedItem={ui.selectedItem}
+                                discoveryCreatorId={ui.discoveryCreatorId}
                             />
                         </div>
                     )}
@@ -516,6 +564,10 @@ export function App() {
                                 onClose={() => setViewMode('canvas')}
                                 discoveryCreatorId={discoveryCreatorId}
                                 onAddItem={(item) => handleTapToAdd(item)}
+                                currentDay={currentDay}
+                                addToSlotTarget={addToSlotTarget}
+                                onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                                activeRegion={activePlan.region}
                             />
                         </div>
                     ) : viewMode === 'discovery' ? (
@@ -586,6 +638,11 @@ export function App() {
                             setSelectedItem={ui.setSelectedItem}
                             setActiveTab={setActiveTab}
                             discoveryCreatorId={discoveryCreatorId}
+                            currentDay={currentDay}
+                            addToSlotTarget={addToSlotTarget}
+                            onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                            onAddItem={handleTapToAdd}
+                            setSidebarMode={ui.setSidebarMode}
                         />
                     )}
                 </div>}
@@ -607,6 +664,12 @@ export function App() {
                 handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
                 showMobileLibrary={showMobileLibrary} setShowMobileLibrary={ui.setShowMobileLibrary}
                 addToSlotTarget={addToSlotTarget}
+                currentDay={currentDay}
+                onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                onExploreCreatorMap={handleExploreCreatorMap}
+                onModeChange={handleSidebarModeChange}
+                sidebarMode={sidebarMode}
+                setSidebarMode={setSidebarMode}
 
                 // Plan Management
                 showPlanManager={showPlanManager} setShowPlanManager={setShowPlanManager}
@@ -629,7 +692,7 @@ export function App() {
                 // Share & Export
                 showShareModal={showShareModal} setShowShareModal={setShowShareModal}
                 onOpenMobilePreview={() => setShowMobilePreview(true)}
-                activePlan={activePlan} currentDay={currentDay}
+                activePlan={activePlan}
 
                 // Dates
                 showDateModal={showDateModal} setShowDateModal={setShowDateModal}
@@ -647,7 +710,6 @@ export function App() {
                 toggleSubscription={handleToggleSubscribe}
                 subscribedCreators={subscribedCreators}
                 applyTemplate={applyTemplate}
-                onExploreCreatorMap={handleExploreCreatorMap}
 
                 // Move Item
                 showMoveModal={showMoveModal} setShowMoveModal={setShowMoveModal}

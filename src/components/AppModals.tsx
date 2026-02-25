@@ -99,6 +99,8 @@ interface AppModalsProps {
     // Mobile Library
     showMobileLibrary: boolean;
     setShowMobileLibrary: (show: boolean) => void;
+    onExitDiscovery?: () => void;
+    onModeChange?: (mode: 'list' | 'map') => void;
 
     // Template Preview
     previewTemplate: Template | null;
@@ -148,6 +150,10 @@ interface AppModalsProps {
     // Phase 12 Refinement: Handoff State
     pendingWizardData: any;
     setPendingWizardData: (data: any) => void;
+
+    // Phase 22 Extension
+    sidebarMode: 'list' | 'map';
+    setSidebarMode: (mode: 'list' | 'map') => void;
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
@@ -180,6 +186,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         onUpdateChecklist, currency, exchangeRate, onSetSettings,
         onCreatorClick, onPreviewTemplate,
         onExploreCreatorMap,
+        onModeChange,
+        sidebarMode, setSidebarMode,
         pendingWizardData, setPendingWizardData
     } = props;
 
@@ -376,10 +384,14 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     onSelectPlan={setActivePlanId}
                     handleCreatePlan={onTriggerPicker}
                     handleDeletePlan={handleDeletePlan}
-                    showToastMessage={showToastMessage}
-                    currency={currency}
-                    exchangeRate={exchangeRate}
                     onSetSettings={onSetSettings}
+                    addToSlotTarget={props.addToSlotTarget}
+                    currentDay={props.currentDay}
+                    onExitDiscovery={props.onExitDiscovery}
+                    onExploreCreatorMap={props.onExploreCreatorMap}
+                    onModeChange={onModeChange}
+                    sidebarMode={sidebarMode}
+                    setSidebarMode={setSidebarMode}
                 />
             )}
 

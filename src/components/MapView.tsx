@@ -16,6 +16,10 @@ interface MapViewProps {
     isEmbedded?: boolean; // Scheme B: Split view
     onClose?: () => void; // [NEW] Close handler for Mobile Full Screen
     discoveryCreatorId?: string | null;
+    currentDay?: number;
+    addToSlotTarget?: TimeSlot | null;
+    onExitDiscovery?: () => void;
+    activeRegion?: string;
 }
 
 // Helper to center map on points
@@ -66,7 +70,12 @@ const MapController: React.FC<{ selectedItem: ScheduleItem | null }> = ({ select
     return null;
 };
 
-const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAddItem, isEmbedded = false, onClose, discoveryCreatorId }) => {
+const MapView: React.FC<MapViewProps> = ({
+    schedule, lang, t, onItemClick, onAddItem,
+    isEmbedded = false, onClose, discoveryCreatorId,
+    currentDay, addToSlotTarget, onExitDiscovery,
+    activeRegion = 'all'
+}) => {
     const [showList, setShowList] = useState(!isEmbedded); // Default hidden if embedded
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
@@ -120,11 +129,13 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
             }
         });
 
-        // [PHASE 19] Inject Discovery Points if filter is active
+        // [PHASE 22.3] Multi-Creator Aggregate Discovery Layer (Region-Aware)
         if (discoveryCreatorId) {
             const allAssets = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS];
+            // Show points from ALL creators who have recommended something in THIS specific region
             const discoveryAssets = allAssets.filter(asset =>
-                asset.authorId === discoveryCreatorId &&
+                asset.authorId &&
+                (activeRegion === 'all' || asset.region === activeRegion) &&
                 !list.some(p => p.item.id === asset.id || p.item.title === asset.title)
             );
 
@@ -143,50 +154,45 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
         }
 
         return list;
-    }, [schedule, discoveryCreatorId]);
+    }, [schedule, discoveryCreatorId, activeRegion]);
 
-    const getSlotColor = (slot: string) => {
-        switch (slot) {
-            case 'morning': return 'bg-orange-500 border-orange-600';
-            case 'afternoon': return 'bg-blue-500 border-blue-600';
-            case 'evening': return 'bg-purple-500 border-purple-600';
-            case 'night': return 'bg-indigo-900 border-indigo-950';
-            case 'accommodation': return 'bg-indigo-600 border-indigo-700';
-            case 'discovery': return 'bg-amber-400 border-amber-500';
-            default: return 'bg-gray-500 border-gray-600';
-        }
+    const getSlotColor = (slot: string, index: number) => {
+        if (slot === 'discovery') return 'bg-amber-400 border-amber-500 ring-amber-400/30';
+        if (index >= 0) return 'bg-teal-500 border-white ring-teal-500/20'; // Brand color for scheduled items
+        return 'bg-gray-300 border-white ring-gray-300/10'; // Faded for background/unscheduled
     };
 
     const createIcon = (item: ScheduleItem, slot: string, index: number, isHovered: boolean, isSelected: boolean, isDiscovery?: boolean) => {
-        const colorClass = getSlotColor(slot);
         const isActive = isHovered || isSelected;
         const displayTitle = lang === 'en' ? (item.titleEn || item.title) : item.title;
 
-        // Custom visualization for Discovery pins (Visual Bubbles)
+        // [IG STYLE] Expert Picks: Circular Thumbnail + Golden Halo
         if (isDiscovery) {
             const html = `
                 <div class="relative flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-50'}">
-                    <div class="absolute -top-12 left-1/2 -translate-x-1/2 px-2 py-1 bg-amber-500 text-white text-[10px] font-black rounded-lg shadow-xl whitespace-nowrap pointer-events-none transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}">
-                        ${displayTitle}
-                        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-amber-500 rotate-45"></div>
-                    </div>
-
-                    <div class="w-10 h-10 rounded-full border-2 border-white shadow-2xl overflow-hidden bg-gray-100 ring-4 ring-amber-400/20 group animate-in zoom-in duration-500">
-                        ${item.coverImage ? `
-                            <img src="${item.coverImage}" class="w-full h-full object-cover" />
-                        ` : `
-                            <div class="w-full h-full flex items-center justify-center text-xl bg-amber-50">${item.image || '📍'}</div>
-                        `}
-                        <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent"></div>
+                    <!-- Premium Portal-style Circle -->
+                    <div class="group relative w-11 h-11 p-0.5 rounded-full bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-600 shadow-2xl animate-in zoom-in duration-500">
+                        <div class="w-full h-full rounded-full border-2 border-white overflow-hidden bg-gray-100 ring-4 ring-amber-400/20">
+                            ${item.coverImage ? `
+                                <img src="${item.coverImage}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            ` : `
+                                <div class="w-full h-full flex items-center justify-center text-xl bg-amber-50">${item.image || '📍'}</div>
+                            `}
+                        </div>
                     </div>
                     
-                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[10px] font-bold border border-amber-200 shadow-sm text-amber-600">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <!-- Star Badge -->
+                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[10px] font-bold border border-amber-200 shadow-sm text-amber-600 z-[60]">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     </div>
                 </div>
             `;
-            return L.divIcon({ html, className: 'bg-transparent', iconSize: [40, 40], iconAnchor: [20, 20] });
+            return L.divIcon({ html, className: 'bg-transparent', iconSize: [44, 44], iconAnchor: [22, 22] });
         }
+
+        // [HIERARCHY] Scheduled (Teal) vs. Others (Grey)
+        const isScheduled = index >= 0;
+        const colorClass = getSlotColor(slot, index);
 
         const html = `
             <div class="relative flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-10'}">
@@ -196,20 +202,22 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
                     <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900/90 rotate-45"></div>
                 </div>
                 
-                <!-- Pulse Effect -->
+                <!-- Pulse Effect for Selected -->
                 ${isSelected ? `
                     <div class="absolute w-12 h-12 bg-teal-400/30 rounded-full animate-ping"></div>
-                    <div class="absolute w-10 h-10 border-2 border-teal-500/50 rounded-full animate-pulse"></div>
                 ` : ''}
 
-                <div class="${colorClass} w-8 h-8 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-lg bg-opacity-90 backdrop-blur-sm relative">
-                    ${item.image || '📍'}
-                    ${isSelected ? '<div class="absolute -inset-1 rounded-full border-2 border-yellow-400"></div>' : ''}
+                <!-- Pin Dot -->
+                <div class="${colorClass} ${isScheduled ? 'w-8 h-8' : 'w-4 h-4'} rounded-full border-2 border-white shadow-lg flex items-center justify-center text-lg bg-opacity-100 relative">
+                    ${isScheduled ? (item.image || '📍') : ''}
+                    ${isSelected ? '<div class="absolute -inset-2 rounded-full border-2 border-teal-400 bg-teal-400/10"></div>' : ''}
                 </div>
                 
-                <div class="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center text-[10px] font-bold border border-gray-200 shadow-sm">
-                    ${index + 1}
-                </div>
+                ${isScheduled ? `
+                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[10px] font-black border-2 border-teal-500 shadow-sm text-teal-600">
+                        ${index + 1}
+                    </div>
+                ` : ''}
             </div>
         `;
         return L.divIcon({
@@ -260,7 +268,7 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
                                     onMouseLeave={() => !isMobile && setHoveredIndex(null)}
                                     onClick={() => handleItemSelection(p.item, idx)}
                                 >
-                                    <div className={`${isMobile ? 'w-6 h-6' : 'w-5 h-5 mt-0.5'} rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm ${getSlotColor(p.slot).split(' ')[0]}`}>
+                                    <div className={`${isMobile ? 'w-6 h-6' : 'w-5 h-5 mt-0.5'} rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm ${getSlotColor(p.slot, p.index).split(' ')[0]}`}>
                                         {p.index + 1}
                                     </div>
                                     <div className="min-w-0 flex-1">
@@ -288,7 +296,12 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
                     <MapController selectedItem={selectedItem} />
 
                     <MapEvents onMapClick={() => setSelectedItem(null)} />
-                    {points.length > 1 && <Polyline positions={points.map(p => [p.lat, p.lng])} pathOptions={{ color: '#0d9488', weight: 4, opacity: 0.6, dashArray: '10, 10' }} />}
+                    {points.length > 1 && (
+                        <Polyline
+                            positions={points.filter(p => !p.isDiscovery).map(p => [p.lat, p.lng])}
+                            pathOptions={{ color: '#0d9488', weight: 4, opacity: 0.6, dashArray: '10, 10' }}
+                        />
+                    )}
                     {points.map((p, idx) => (
                         <Marker
                             key={idx}
@@ -305,30 +318,42 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
                         >
                             {p.isDiscovery && (
                                 <Popup closeButton={false} className="discovery-popup">
-                                    <div className="w-48 overflow-hidden rounded-xl bg-white shadow-2xl flex flex-col">
-                                        <div className="h-24 w-full relative">
+                                    <div className="w-56 overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col border border-gray-100 animate-in zoom-in slide-in-from-bottom-2 duration-300">
+                                        <div className="h-32 w-full relative">
                                             <img src={p.item.coverImage} className="w-full h-full object-cover" alt="cover" />
-                                            <div className="absolute top-2 left-2 bg-amber-500 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-lg">
-                                                Creator's Pick
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                            <div className="absolute top-3 left-3 bg-amber-500 text-white text-[9px] font-black uppercase px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                                {lang === 'zh' ? '達人私房點' : 'Expert Pick'}
+                                            </div>
+                                            <div className="absolute bottom-3 left-3 right-3">
+                                                <h4 className="font-black text-white text-sm leading-tight drop-shadow-md">
+                                                    {lang === 'zh' ? p.item.title : p.item.titleEn}
+                                                </h4>
                                             </div>
                                         </div>
-                                        <div className="p-3">
-                                            <h4 className="font-black text-gray-900 text-sm mb-1 leading-tight">{lang === 'zh' ? p.item.title : p.item.titleEn}</h4>
-                                            <div className="flex items-center gap-1.5 mb-3">
-                                                <div className="w-4 h-4 rounded-full overflow-hidden border border-gray-100">
+                                        <div className="p-4 bg-white/80 backdrop-blur-md">
+                                            <div className="flex items-center gap-2 mb-4">
+                                                <div className="w-6 h-6 rounded-full overflow-hidden border border-white shadow-sm ring-2 ring-gray-100">
                                                     <img src={`https://i.pravatar.cc/100?img=${discoveryCreatorId ? discoveryCreatorId.length % 70 : 0}`} className="w-full h-full object-cover" alt="author" />
                                                 </div>
-                                                <span className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">{p.item.author || 'Wennie'}</span>
+                                                <div className="flex flex-col">
+                                                    <span className="text-[10px] text-gray-800 font-bold">{p.item.author || 'Wennie'}</span>
+                                                    <span className="text-[8px] text-gray-400 font-medium uppercase tracking-wider italic">
+                                                        {lang === 'zh' ? '推坑理由...' : 'Highly Recommended'}
+                                                    </span>
+                                                </div>
                                             </div>
+
                                             <button
                                                 onClick={() => {
                                                     onAddItem?.(p.item as any);
                                                     setSelectedItem(null);
                                                 }}
-                                                className="w-full bg-teal-600 hover:bg-teal-700 text-white text-[10px] font-black uppercase py-2.5 rounded-lg transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
+                                                className="w-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-black uppercase py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 border-b-4 border-teal-800"
                                             >
-                                                <PlusCircle size={12} />
-                                                {lang === 'zh' ? '加入我的計畫' : 'Add to Plan'}
+                                                <PlusCircle size={14} />
+                                                {lang === 'zh' ? '加入行程' : 'Add to Plan'}
                                             </button>
                                         </div>
                                     </div>
@@ -338,25 +363,56 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
                     ))}
                 </MapContainer>
 
-                {/* Desktop Toggle overlay */}
-                {!isEmbedded && !isMobile && (
-                    <div className="absolute top-4 left-4 z-[500] flex flex-col gap-2">
-                        <button
-                            onClick={() => setShowList(!showList)}
-                            className={`bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
-                        >
-                            <List size={14} />
-                            {showList ? (t.hideList || '隱藏列表') : (t.showList || '顯示列表')}
-                        </button>
-
-                        {discoveryCreatorId && (
-                            <div className="bg-amber-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-lg flex items-center gap-2 animate-in slide-in-from-left duration-500">
-                                <Navigation size={12} className="fill-white" />
-                                {lang === 'zh' ? '探索模式：達人私房點' : 'Discovery Mode: Hidden Spots'}
+                {/* [PHASE 20] Discovery Mode Context Header (DISABLED) */}
+                {/* 
+                {discoveryCreatorId && (
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] w-[90%] max-w-md animate-in slide-in-from-top duration-500">
+                        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
+                            <div className="bg-amber-500 px-4 py-2 flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-white">
+                                    <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                                        <Navigation size={12} className="fill-white" />
+                                    </div>
+                                    <span className="text-[10px] font-black uppercase tracking-widest leading-none">
+                                        {t.discoveryMode}
+                                    </span>
+                                </div>
+                                <button
+                                    onClick={onExitDiscovery}
+                                    className="text-white/80 hover:text-white transition-colors"
+                                >
+                                    <X size={16} />
+                                </button>
                             </div>
-                        )}
+                            <div className="p-3 flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-100 shadow-sm shrink-0">
+                                    <img src={`https://i.pravatar.cc/100?img=${discoveryCreatorId.length % 70}`} className="w-full h-full object-cover" alt="creator" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-[9px] text-amber-600 font-black uppercase tracking-tighter mb-0.5">{t.hiddenSpotsBy}</div>
+                                    <h4 className="text-xs font-bold text-gray-800 truncate">{points.find(p => p.isDiscovery)?.item.author || 'Travel Expert'}</h4>
+                                </div>
+                                <div className="h-8 w-px bg-gray-100 mx-1" />
+                                <div className="text-right shrink-0">
+                                    <div className="text-[9px] text-gray-400 font-bold uppercase tracking-tighter mb-0.5">{t.addingTo}</div>
+                                    <div className="flex items-center gap-1.5 text-teal-600 font-black text-[10px]">
+                                        <div className="px-1.5 py-0.5 bg-teal-50 rounded border border-teal-100">{t.dayX.replace('{day}', (currentDay || 1).toString())}</div>
+                                        <div className="px-1.5 py-0.5 bg-teal-50 rounded border border-teal-100">{addToSlotTarget ? t[addToSlotTarget] : t.flexible}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {isMobile && (
+                                <button
+                                    onClick={onExitDiscovery}
+                                    className="w-full bg-gray-50 border-t border-gray-100 py-2 text-[10px] font-bold text-gray-500 hover:bg-gray-100 transition-colors uppercase tracking-widest"
+                                >
+                                    {t.exitDiscovery}
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )}
+                */}
 
                 {/* Mobile Fullscreen Toggle */}
                 {isMobile && !isEmbedded && (
@@ -388,6 +444,29 @@ const MapView: React.FC<MapViewProps> = ({ schedule, lang, t, onItemClick, onAdd
                     </div>
                 )}
             </div>
+
+            {/* Desktop Toggle overlay */}
+            {!isEmbedded && !isMobile && (
+                <div className="absolute top-4 left-4 z-[500] flex flex-col gap-2">
+                    <button
+                        onClick={() => setShowList(!showList)}
+                        className={`bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
+                    >
+                        <List size={14} />
+                        {showList ? (t.hideList || '隱藏列表') : (t.showList || '顯示列表')}
+                    </button>
+
+                    {/* [DISABLED] Top-left Discovery Banner */}
+                    {/* 
+                    {discoveryCreatorId && (
+                        <div className="bg-amber-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-lg flex items-center gap-2 animate-in slide-in-from-left duration-500">
+                            <Navigation size={12} className="fill-white" />
+                            {lang === 'zh' ? '探索模式：達人私房點' : 'Discovery Mode: Hidden Spots'}
+                        </div>
+                    )}
+                    */}
+                </div>
+            )}
 
             <style>{`
                 .leaflet-popup-content-wrapper { @apply rounded-xl shadow-xl border border-gray-100 p-0 overflow-hidden; } 

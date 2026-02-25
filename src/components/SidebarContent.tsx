@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Search, Plus, X, Check, MapPin, Package, Wallet, ListChecks } from 'lucide-react';
-import { ItemType, TravelItem, Region, LangType, Plan, ChecklistItem } from '../types';
+import { Search, Plus, X, Check, MapPin, Map, Package, Wallet, ListChecks } from 'lucide-react';
+import { ItemType, TravelItem, Region, LangType, Plan, ChecklistItem, TimeSlot, ScheduleItem } from '../types';
 import BudgetView from './BudgetView';
 import ChecklistView from './ChecklistView';
-import { SAMPLE_ASSETS, CATEGORY_FILTERS, CITY_FILTERS } from '../data/index';
+import { SAMPLE_ASSETS, MELBOURNE_ASSETS, CATEGORY_FILTERS, CITY_FILTERS, SAMPLE_CREATORS } from '../data/index';
 import { getFallbackImage } from '../utils';
 import { useConfirm } from '../hooks';
 
@@ -47,18 +47,44 @@ interface SidebarContentProps {
     currency?: string;
     exchangeRate?: number;
     onSetSettings?: (currency: string, rate: number) => void;
+
+    // Phase 20 additions
+    addToSlotTarget?: TimeSlot | null;
+    currentDay?: number;
+    onExitDiscovery?: () => void;
+    discoveryCreatorId?: string | null;
+
+    // Phase 21 additions
+    setShowMobileLibrary?: (show: boolean) => void;
+    onExploreCreatorMap?: (creatorId: string, name: string) => void;
+    onModeChange?: (mode: 'list' | 'map') => void;
+    sidebarMode?: 'list' | 'map';
+    onSelectItem?: (item: TravelItem) => void;
+    setSidebarMode?: (mode: 'list' | 'map') => void;
+    selectedItem?: TravelItem | ScheduleItem | null;
 }
 
-const SidebarContent: React.FC<SidebarContentProps> = ({
+export const SidebarContent: React.FC<SidebarContentProps> = ({
     searchQuery, setSearchQuery, activeCategory, setActiveCategory,
     activeRegion, setActiveRegion,
     setShowCustomItemModal, handleDragStart, handleTapToAdd, applyTemplate, t, lang = 'zh', customAssets = [],
     highlight, isSlim = false,
     activeTab, setActiveTab, activePlan, plans, onSelectPlan, handleCreatePlan, handleDeletePlan,
     budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
-    onUpdateChecklist, showToastMessage, currency = 'TWD', exchangeRate = 0.21, onSetSettings
+    onUpdateChecklist, showToastMessage, currency = 'TWD', exchangeRate = 0.21, onSetSettings,
+    addToSlotTarget, currentDay, onExitDiscovery, discoveryCreatorId,
+    setShowMobileLibrary, onExploreCreatorMap, onModeChange,
+    sidebarMode = 'list', setSidebarMode, onSelectItem,
+    selectedItem
 }) => {
     const { confirm } = useConfirm();
+
+    // Internal handler to wrap the prop and ensure parent logic (App.tsx) runs
+    const handleModeChange = (mode: 'list' | 'map') => {
+        if (setSidebarMode) setSidebarMode(mode);
+        if (onModeChange) onModeChange(mode);
+    };
+
     // Local tag filter state
     const [activeTag, setActiveTag] = useState<string | null>(null);
     const [showCitySelector, setShowCitySelector] = useState(false);
@@ -110,8 +136,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 ? isCustomItem
                 : item.type === activeCategory;
 
-        const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            (item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
+        const safeTitle = item.title || '';
+        const safeSearch = searchQuery || '';
+        const matchesSearch = safeTitle.toLowerCase().includes(safeSearch.toLowerCase()) ||
+            (item.tags && item.tags.some(tag => tag && typeof tag === 'string' && tag.toLowerCase().includes(safeSearch.toLowerCase())));
         const matchesTag = !activeTag || (item.tags && item.tags.includes(activeTag));
         return matchesRegion && matchesCategory && matchesSearch && matchesTag;
     });
@@ -196,6 +224,33 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                 </div>
             </div>
 
+
+            {/* [NEW] Phase 21: Segmented Control (Find vs Explore) */}
+            {activeTab === 'assets' && (
+                <div className="px-5 pt-2 pb-0 flex gap-1">
+                    <button
+                        onClick={() => handleModeChange('list')}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-bold transition-all ${sidebarMode === 'list'
+                            ? 'bg-teal-50 text-teal-600 shadow-sm ring-1 ring-teal-200'
+                            : 'bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+                            }`}
+                    >
+                        <Search size={14} />
+                        {t.findSpots || (lang === 'zh' ? '找景點' : 'Find Spots')}
+                    </button>
+                    <button
+                        onClick={() => handleModeChange('map')}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-bold transition-all ${sidebarMode === 'map'
+                            ? 'bg-teal-50 text-teal-600 shadow-sm ring-1 ring-teal-200'
+                            : 'bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+                            }`}
+                    >
+                        <Map size={14} />
+                        {t.expertMap || (lang === 'zh' ? '地圖引導' : 'Expert Map')}
+                    </button>
+                </div>
+            )}
+
             {/* Main Scrollable Area */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain no-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {activeTab === 'assets' && (
@@ -246,37 +301,122 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                             />
                         </div>
 
-                        {/* Layer 3: Main Content Area */}
-                        <div className="p-4 pt-2 pb-12">
-                            <div className="grid grid-cols-2 gap-2">
-                                {filteredAssets.map((item) => (
-                                    <AssetItemCard
-                                        key={item.id}
-                                        item={item}
-                                        lang={lang}
-                                        t={t}
-                                        isMobile={isMobile}
-                                        onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
-                                        onClick={() => {
-                                            if (isMobile) setMobilePreviewItem(item);
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            if (!isMobile) {
-                                                const rect = e.currentTarget.getBoundingClientRect();
-                                                setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top - 8 });
-                                                setHoveredItem(item);
-                                            }
-                                        }}
-                                        onMouseLeave={() => setHoveredItem(null)}
-                                    />
-                                ))}
-                                {filteredAssets.length === 0 && (
-                                    <div className="col-span-2 text-center text-gray-400 text-sm py-8">
-                                        {t.searchPlaceholder}...
-                                    </div>
-                                )}
+                        {/* Layer 3: Main Content Area (Hidden if in Map mode) */}
+                        {sidebarMode === 'list' ? (
+                            <div className="p-4 pt-2 pb-12">
+                                <div className="grid grid-cols-2 gap-2">
+                                    {filteredAssets.map((item) => (
+                                        <AssetItemCard
+                                            key={item.id}
+                                            item={item}
+                                            lang={lang}
+                                            t={t}
+                                            isMobile={isMobile}
+                                            onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
+                                            onClick={() => {
+                                                if (isMobile) setMobilePreviewItem(item);
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                if (!isMobile) {
+                                                    const rect = e.currentTarget.getBoundingClientRect();
+                                                    setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top - 8 });
+                                                    setHoveredItem(item);
+                                                }
+                                            }}
+                                            onMouseLeave={() => setHoveredItem(null)}
+                                        />
+                                    ))}
+                                    {filteredAssets.length === 0 && (
+                                        <div className="col-span-2 text-center text-gray-400 text-sm py-8">
+                                            {t.searchPlaceholder}...
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            /* Map Discovery Sidekick View (Phase 22 Extension) */
+                            <div className="p-0 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                {/* Creator Header Card (Dynamic) */}
+                                {(() => {
+                                    const creator = selectedItem?.authorId
+                                        ? SAMPLE_CREATORS.find(c => c.id === selectedItem.authorId)
+                                        : (discoveryCreatorId && discoveryCreatorId !== 'all'
+                                            ? SAMPLE_CREATORS.find(c => c.id === discoveryCreatorId)
+                                            : SAMPLE_CREATORS.find(c => c.id === 'c-mel')); // Default fallback
+
+                                    return (
+                                        <div className="px-5 py-6 bg-gradient-to-br from-teal-50 to-indigo-50 border-b border-teal-100 transition-all duration-500">
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <div className="w-16 h-16 rounded-2xl bg-white shadow-lg p-1">
+                                                    <div className="w-full h-full rounded-xl bg-teal-100 flex items-center justify-center text-2xl overflow-hidden">
+                                                        {creator?.avatar ? (
+                                                            <img src={creator.avatar} className="w-full h-full object-cover" alt="avatar" />
+                                                        ) : (
+                                                            '🕵️‍♀️'
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h3 className="font-black text-gray-800 text-lg">{creator?.name || 'Travel Expert'}</h3>
+                                                    <p className="text-xs text-teal-600 font-bold uppercase tracking-wider">
+                                                        {(creator as any)?.role || (lang === 'zh' ? '旅遊達人' : 'Expert')}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p className="text-sm text-gray-600 leading-relaxed italic mb-4">
+                                                "{creator?.description || (lang === 'zh' ? '這些是我私心收藏的隱藏景點，希望妳也喜歡！' : 'These are my personal hidden gems. Hope you enjoy them!')}"
+                                            </p>
+                                        </div>
+                                    );
+                                })()}
+
+                                {/* Curated List */}
+                                <div className="p-4">
+                                    <div className="flex items-center justify-between mb-4 px-1">
+                                        <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                                            {selectedItem ? (lang === 'zh' ? '景點詳情' : 'Spot Details') : (lang === 'zh' ? '達人私藏清單' : 'Expert Picks')}
+                                        </h4>
+                                        <div className="px-2 py-0.5 bg-teal-100 text-teal-700 text-[10px] font-bold rounded-lg capitalize">
+                                            {activeRegion !== 'all' ? activeRegion : 'Global'}
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {/* Show filtered assets or selection context (Region-Aware) */}
+                                        {(discoveryCreatorId === 'all'
+                                            ? ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS]
+                                                .filter(a => a.authorId && (activeRegion === 'all' || a.region === activeRegion))
+                                                .slice(0, 8))
+                                            : filteredAssets.slice(0, 6)).map((item) => (
+                                                <AssetItemCard
+                                                    key={`discover-${item.id}`}
+                                                    item={item}
+                                                    lang={lang}
+                                                    t={t}
+                                                    isMobile={isMobile}
+                                                    onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
+                                                    onClick={() => {
+                                                        if (isMobile) setMobilePreviewItem(item);
+                                                        onSelectItem?.(item);
+                                                    }}
+                                                    onMouseEnter={() => { }}
+                                                    onMouseLeave={() => { }}
+                                                />
+                                            ))}
+                                    </div>
+
+                                    <button
+                                        onClick={() => {
+                                            if (onExitDiscovery) onExitDiscovery();
+                                            handleModeChange('list');
+                                        }}
+                                        className="w-full mt-8 py-3 bg-white border-2 border-dashed border-gray-200 text-gray-400 rounded-2xl text-xs font-bold hover:border-teal-300 hover:text-teal-600 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        {lang === 'zh' ? '退出地圖導覽' : 'Exit Map Discovery'}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </>
                 )}
 
@@ -320,7 +460,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         lang={lang}
                     />
                 )}
-            </div>
+            </div >
 
             {/* Mobile Preview Bottom Sheet */}
             {mobilePreviewItem && (
@@ -410,60 +550,63 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
 
             {/* Desktop Hover Tooltip - Portal (rendered at body level, above sidebar overflow) */}
-            {hoveredItem && typeof document !== 'undefined' && createPortal(
-                <div
-                    className="fixed z-[9999] w-52 bg-teal-50 rounded-lg shadow-2xl border border-teal-200 p-3 pointer-events-none"
-                    style={{
-                        left: Math.max(120, tooltipPos.x), // Minimum 120px from left edge
-                        top: tooltipPos.y,
-                        transform: 'translate(-50%, -100%)'
-                    }}
-                >
-                    {/* Arrow pointing down */}
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-teal-50"></div>
+            {
+                hoveredItem && typeof document !== 'undefined' && createPortal(
+                    <div
+                        className="fixed z-[9999] w-52 bg-teal-50 rounded-lg shadow-2xl border border-teal-200 p-3 pointer-events-none"
+                        style={{
+                            left: Math.max(120, tooltipPos.x), // Minimum 120px from left edge
+                            top: tooltipPos.y,
+                            transform: 'translate(-50%, -100%)'
+                        }}
+                    >
+                        {/* Arrow pointing down */}
+                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-teal-50"></div>
 
-                    {/* Header */}
-                    <div className="flex items-center gap-2 mb-2">
-                        <span className="text-2xl">{hoveredItem.image || getFallbackImage(hoveredItem.type)}</span>
-                        <div className="flex-1 min-w-0">
-                            <h5 className="font-bold text-gray-800 text-sm leading-tight truncate">
-                                {(lang === 'en' && hoveredItem.isLocked && hoveredItem.marketingTitleEn
-                                    ? hoveredItem.marketingTitleEn
-                                    : lang === 'en' && hoveredItem.titleEn
-                                        ? hoveredItem.titleEn
-                                        : hoveredItem.isLocked && hoveredItem.marketingTitle
-                                            ? hoveredItem.marketingTitle
-                                            : hoveredItem.title)}
-                            </h5>
+                        {/* Header */}
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="text-2xl">{hoveredItem.image || getFallbackImage(hoveredItem.type)}</span>
+                            <div className="flex-1 min-w-0">
+                                <h5 className="font-bold text-gray-800 text-sm leading-tight truncate">
+                                    {(lang === 'en' && hoveredItem.isLocked && hoveredItem.marketingTitleEn
+                                        ? hoveredItem.marketingTitleEn
+                                        : lang === 'en' && hoveredItem.titleEn
+                                            ? hoveredItem.titleEn
+                                            : hoveredItem.isLocked && hoveredItem.marketingTitle
+                                                ? hoveredItem.marketingTitle
+                                                : hoveredItem.title)}
+                                </h5>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Key Info */}
-                    <div className="text-xs space-y-1">
-                        {hoveredItem.openingHours && (
-                            <div className="flex items-center gap-1.5 text-gray-500">
-                                <span>⏰</span>
-                                <span>{hoveredItem.openingHours}</span>
-                            </div>
-                        )}
-                        {hoveredItem.address && (
-                            <div className="flex items-center gap-1.5 text-gray-400">
-                                <span>📍</span>
-                                {hoveredItem.isLocked ? (
-                                    <span className="italic opacity-60">Unlock to view address</span>
-                                ) : (
-                                    <span className="truncate">{hoveredItem.address}</span>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>,
-                document.body
-            )}
-        </div>
+                        {/* Key Info */}
+                        <div className="text-xs space-y-1">
+                            {hoveredItem.openingHours && (
+                                <div className="flex items-center gap-1.5 text-gray-500">
+                                    <span>⏰</span>
+                                    <span>{hoveredItem.openingHours}</span>
+                                </div>
+                            )}
+                            {hoveredItem.address && (
+                                <div className="flex items-center gap-1.5 text-gray-400">
+                                    <span>📍</span>
+                                    {hoveredItem.isLocked ? (
+                                        <span className="italic opacity-60">Unlock to view address</span>
+                                    ) : (
+                                        <span className="truncate">{hoveredItem.address}</span>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </div>,
+                    document.body
+                )
+            }
+        </div >
     );
 };
 

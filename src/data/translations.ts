@@ -396,7 +396,12 @@ export const TRANSLATIONS: any = {
         // Mobile Menu
         creatorProfile: "創作者中心",
         proMember: "專家創作者",
-        following: "追蹤中"
+        following: "追蹤中",
+        discoveryMode: "探索模式",
+        addingTo: "正在加入",
+        hiddenSpotsBy: "達人的私房景點：",
+        exitDiscovery: "結束探索",
+        dayX: "第{day}天"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -794,6 +799,11 @@ export const TRANSLATIONS: any = {
         // Mobile Menu
         creatorProfile: "Creator Studio",
         proMember: "Pro Creator",
-        following: "Following"
+        following: "Following",
+        discoveryMode: "Discovery Mode",
+        addingTo: "Adding to",
+        hiddenSpotsBy: "Hidden spots by ",
+        exitDiscovery: "Exit Discovery",
+        dayX: "Day {day}"
     }
 };

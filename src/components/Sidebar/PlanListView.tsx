@@ -23,9 +23,11 @@ export const PlanListView: React.FC<PlanListViewProps> = ({
 }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
-    const filteredPlans = plans.filter(p =>
-        p.name.toLowerCase().includes(searchQuery.toLowerCase())
-    ).sort((a, b) => b.createdAt - a.createdAt);
+    const filteredPlans = plans.filter(p => {
+        const safeName = p.name || '';
+        const safeSearch = searchQuery || '';
+        return safeName.toLowerCase().includes(safeSearch.toLowerCase());
+    }).sort((a, b) => b.createdAt - a.createdAt);
 
     return (
         <div className="flex flex-col h-full bg-white">

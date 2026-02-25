@@ -37,6 +37,7 @@ export const useUIState = () => {
     const [addToSlotTarget, setAddToSlotTarget] = useState<TimeSlot | null>(null); // Track which slot user clicked "Add Item"
     const [showStoryPreview, setShowStoryPreview] = useState(false);
     const [discoveryCreatorId, setDiscoveryCreatorId] = useState<string | null>(null);
+    const [sidebarMode, setSidebarMode] = useState<'list' | 'map'>('list');
 
     // Sidebar States
     const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist' | 'projects'>('assets');
@@ -94,5 +95,6 @@ export const useUIState = () => {
         showStoryPreview, setShowStoryPreview,
         activeView, setActiveView,
         discoveryCreatorId, setDiscoveryCreatorId,
+        sidebarMode, setSidebarMode,
     };
 };
