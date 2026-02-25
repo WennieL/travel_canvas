@@ -4,6 +4,16 @@ export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation';
 export type ViewMode = 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery' | 'favorites' | 'projects'; // Supports split view and mobile map
 export type Region = 'tokyo' | 'osaka' | 'kyoto' | 'melbourne' | 'all';
+export type ConfirmType = 'info' | 'warning' | 'error' | 'success';
+
+export interface ConfirmOptions {
+    title?: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    type?: ConfirmType;
+}
+
 
 export interface TravelItem {
     id: string;

@@ -41,12 +41,20 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
 
     // Persist budget limit
     useEffect(() => {
-        localStorage.setItem('budget_limit', String(budgetLimit));
+        try {
+            localStorage.setItem('budget_limit', String(budgetLimit));
+        } catch (e) {
+            console.warn('Failed to save budget limit:', e);
+        }
     }, [budgetLimit]);
 
     // Persist budget settings
     useEffect(() => {
-        localStorage.setItem('budget_settings', JSON.stringify(budgetSettings));
+        try {
+            localStorage.setItem('budget_settings', JSON.stringify(budgetSettings));
+        } catch (e) {
+            console.warn('Failed to save budget settings:', e);
+        }
     }, [budgetSettings]);
 
     const updateBudgetSettings = (currency: string, exchangeRate: number) => {
@@ -61,7 +69,7 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
         Object.values(activePlan.schedule).forEach(day => {
             Object.values(day).forEach(slotItems => {
                 (slotItems as ScheduleItem[]).forEach((item: ScheduleItem) => {
-                    total += item.price || 0;
+                    total += Number(item.price) || 0;
                 });
             });
         });
@@ -85,7 +93,7 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
                 (slotItems as ScheduleItem[]).forEach((item: ScheduleItem) => {
                     const type = item.type || 'other';
                     const key = ['attraction', 'food', 'hotel', 'transport'].includes(type) ? type : 'other';
-                    breakdown[key] += item.price || 0;
+                    breakdown[key] += Number(item.price) || 0;
                 });
             });
         });

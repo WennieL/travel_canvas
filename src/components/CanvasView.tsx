@@ -4,24 +4,10 @@ import DropZone from './DropZone';
 import MapView from './MapView';
 import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle } from 'lucide-react';
 import { getSlotLabel, parseDuration } from '../utils';
+import { TimelineSlotHeader } from './Canvas/TimelineSlotHeader';
 
 // Slot visual configuration
-const slotConfig: Record<string, { color: string; time: string }> = {
-    morning: { color: 'text-orange-500', time: '06:00 - 12:00' },
-    afternoon: { color: 'text-blue-500', time: '12:00 - 18:00' },
-    evening: { color: 'text-purple-500', time: '18:00 - 22:00' },
-    night: { color: 'text-indigo-900', time: '22:00 - 06:00' },
-};
-
-const getSlotIcon = (slot: string) => {
-    switch (slot) {
-        case 'morning': return <Sun size={14} />;
-        case 'afternoon': return <Coffee size={14} />;
-        case 'evening': return <Sunset size={14} />;
-        case 'night': return <Moon size={14} />;
-        default: return <Clock size={14} />;
-    }
-};
+// Redundant slot visual configuration removed
 
 interface CanvasViewProps {
     showContextMap: boolean;
@@ -104,8 +90,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                 ? prevSlotItems[prevSlotItems.length - 1]
                                 : null;
 
-                            const config = slotConfig[slot];
-
                             // Capacity Logic
                             const totalMins = slotItems.reduce((acc, item) => acc + parseDuration(item.duration), 0);
                             const threshold = slot === 'evening' ? 240 : 360;
@@ -113,42 +97,13 @@ const CanvasView: React.FC<CanvasViewProps> = ({
 
                             return (
                                 <React.Fragment key={slot}>
-                                    {/* Timeline Slot Label */}
+                                    {/* Timeline Slot Header */}
                                     {isTimeline && (
-                                        <div className="relative flex items-center h-12 py-3 pl-12 lg:pl-16">
-                                            {/* Line segment through this label */}
-                                            <div className="absolute left-[20px] lg:left-[24px] top-0 bottom-0 w-0.5 bg-gray-200" />
-
-                                            {/* Slot label anchored to the line */}
-                                            <div className="absolute left-0 right-0 flex items-center z-10">
-                                                {/* Icon centered on spine */}
-                                                <div className={`absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white ${config.color} ${config.color.replace('text-', 'bg-').replace('500', '50')} ${config.color.replace('text-', 'border-').replace('500', '200')}`}>
-                                                    <span className="text-xl">{getSlotIcon(slot)}</span>
-                                                </div>
-
-                                                {/* Text labels shifted right of the icon */}
-                                                <div className="pl-12 lg:pl-14 flex flex-col justify-center">
-                                                    <div className="flex items-center gap-4">
-                                                        <h3 className={`text-base lg:text-lg font-black uppercase tracking-widest ${config.color}`}>
-                                                            {getSlotLabel(slot, t)}
-                                                        </h3>
-                                                        <span className="text-xs lg:text-sm text-gray-400 font-bold tracking-tight bg-gray-50/50 px-2 py-0.5 rounded-full border border-gray-100">
-                                                            {config.time}
-                                                        </span>
-                                                        {capacityStatus === 'busy' && (
-                                                            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-yellow-50 text-yellow-600 text-[10px] font-bold border border-yellow-100 uppercase animate-pulse">
-                                                                <Clock size={10} /> {t.statusBusy}
-                                                            </span>
-                                                        )}
-                                                        {capacityStatus === 'overload' && (
-                                                            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-50 text-red-600 text-[10px] font-bold border border-red-100 uppercase">
-                                                                <AlertTriangle size={10} /> {t.statusOverload}
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <TimelineSlotHeader
+                                            slot={slot}
+                                            t={t}
+                                            capacityStatus={capacityStatus}
+                                        />
                                     )}
 
                                     <DropZone
@@ -187,23 +142,13 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         });
                     })()}
 
-                    {/* Accommodation Slot */}
+                    {/* Accommodation Slot Header */}
                     {isTimeline && (
-                        <div className="relative flex items-center h-12 py-3 pl-12 lg:pl-16 mt-10">
-                            {/* Slot label (no line segment here, as requested) */}
-                            <div className="absolute left-0 right-0 flex items-center z-10">
-                                {/* Icon positioned to match spine alignment */}
-                                <div className="absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white border-indigo-200 bg-indigo-50">
-                                    <BedDouble className="w-5 h-5 text-indigo-600" />
-                                </div>
-
-                                {/* Text label shifted right to match activity slots */}
-                                <div className="pl-12 lg:pl-14 flex flex-col justify-center">
-                                    <h3 className="text-base lg:text-lg font-black uppercase tracking-widest text-indigo-600">
-                                        {t.accommodation || 'Accommodation'}
-                                    </h3>
-                                </div>
-                            </div>
+                        <div className="mt-10">
+                            <TimelineSlotHeader
+                                slot="accommodation"
+                                t={t}
+                            />
                         </div>
                     )}
 

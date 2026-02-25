@@ -33,15 +33,16 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
     setIsSidebarPinned,
     setActiveTab
 }) => {
+    const t = TRANSLATIONS[lang];
     const { items, desktopMore, getLabel } = useNavigation({
         hasActivePlan: !!activePlan,
         platform: 'desktop',
-        lang
+        lang,
+        t
     });
 
     const [showMore, setShowMore] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
-    const t = TRANSLATIONS[lang];
 
     const handleNavClick = (item: any) => {
         if (item.action === 'modal') {

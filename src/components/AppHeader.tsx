@@ -72,7 +72,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         <div className="flex flex-col justify-center min-w-0 flex-1">
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="text-[10px] font-black text-teal-600 uppercase tracking-wider">
-                                    BOARDING PASS
+                                    {t.boardingPass}
                                 </span>
                             </div>
 
@@ -85,7 +85,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                         if (e.target.value.length <= MAX_NAME_LENGTH) {
                                             setEditingName(e.target.value);
                                         } else {
-                                            showToastMessage(lang === 'zh' ? `項目名稱不能超過 ${MAX_NAME_LENGTH} 個字喔！` : `Name cannot exceed ${MAX_NAME_LENGTH} characters!`, 'warning');
+                                            showToastMessage(t.nameLimitReached.replace('{max}', MAX_NAME_LENGTH.toString()), 'warning');
                                         }
                                     }}
                                     onBlur={saveName}
@@ -108,7 +108,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 <div className="flex items-center gap-1.5 opacity-90">
                                     <Plane size={12} className="text-teal-500 -rotate-45" fill="currentColor" />
                                     <span className="text-[11px] font-black text-gray-800 leading-none uppercase tracking-wide">
-                                        TO {activePlan.destination || 'TOKYO'}
+                                        TO {activePlan.destination || (activePlan.region === 'melbourne' ? 'MELBOURNE' : activePlan.region === 'osaka' ? 'OSAKA' : activePlan.region === 'kyoto' ? 'KYOTO' : 'TOKYO')}
                                     </span>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
                             <div className="flex flex-col justify-center">
                                 <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="text-[10px] font-black text-teal-600 uppercase tracking-[0.2em]">Boarding Pass</span>
+                                    <span className="text-[10px] font-black text-teal-600 uppercase tracking-[0.2em]">{t.boardingPass}</span>
                                 </div>
 
                                 {isEditingName ? (
@@ -230,7 +230,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
                             {/* Text Block */}
                             <div className="flex flex-col">
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-0.5">DESTINATION</span>
+                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-0.5">{t.destinationHeader}</span>
                                 <span className="font-black text-3xl text-gray-800 tracking-tight uppercase leading-none">
                                     {activePlan.destination || activePlan.region?.toUpperCase() || 'TOKYO'}
                                 </span>
@@ -258,7 +258,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 title={viewMode === 'canvas' ? (showContextMap ? t.hideMap : t.showMap) : (viewMode === 'map' ? 'Back to Schedule' : 'Show Map')}
                             >
                                 <MapIcon size={18} />
-                                <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">MAP</span>
+                                <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">{t.mapBtn}</span>
                             </button>
 
                             {/* Share Action */}
@@ -268,7 +268,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 title={t.share || "Share Plan"}
                             >
                                 <Upload size={18} />
-                                <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">SHARE</span>
+                                <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">{t.shareBtn}</span>
                             </button>
 
                             {/* Ticket Edge Detail (Classic Aviation) */}

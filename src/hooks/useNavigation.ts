@@ -19,8 +19,7 @@ import { LangType } from '../types';
 export interface NavItem {
     id: string;
     icon: any; // Lucide icon component
-    label: string;
-    labelEn: string;
+    labelKey: string;         // [NEW] Key in translations.ts
     alwaysShow: boolean;      // Show in all states
     showWhen?: 'editing';     // Or only when editing
     desktop?: boolean;        // Desktop-only items
@@ -36,8 +35,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'discovery',
         icon: Compass,
-        label: '探索',
-        labelEn: 'Explore',
+        labelKey: 'discover',
         alwaysShow: true,
         isMobilePrimary: true,
         action: 'navigate',
@@ -45,8 +43,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'favorites',
         icon: Heart,
-        label: '收藏',
-        labelEn: 'Favorites',
+        labelKey: 'favoritesLabel',
         alwaysShow: true,
         isMobilePrimary: true,
         action: 'navigate',
@@ -54,8 +51,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'plan',
         icon: Calendar,
-        label: '行程',
-        labelEn: 'Plan',
+        labelKey: 'plan',
         alwaysShow: true,
         isMobilePrimary: true,
         action: 'navigate',
@@ -63,17 +59,15 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'new',
         icon: Plus,
-        label: '新計畫',
-        labelEn: 'New Plan',
+        labelKey: 'newPlanLabel',
         alwaysShow: true,
-        mobile: true, // Only as a standalone button on mobile (bottom nav if added)
+        mobile: true,
         action: 'modal',
     },
     {
         id: 'projects',
         icon: User,
-        label: '我的',
-        labelEn: 'My Projects',
+        labelKey: 'myPlans',
         alwaysShow: true,
         isMobilePrimary: true,
         action: 'navigate',
@@ -81,8 +75,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'assets',
         icon: Package,
-        label: '素材庫',
-        labelEn: 'Assets',
+        labelKey: 'assets',
         alwaysShow: false,
         showWhen: 'editing',
         desktop: true,
@@ -91,8 +84,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'map',
         icon: MapIcon,
-        label: '地圖',
-        labelEn: 'Map',
+        labelKey: 'map',
         alwaysShow: false,
         showWhen: 'editing',
         desktop: true,
@@ -101,8 +93,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'budget',
         icon: DollarSign,
-        label: '預算追蹤',
-        labelEn: 'Budget',
+        labelKey: 'budget',
         alwaysShow: false,
         showWhen: 'editing',
         isMobileMore: true,
@@ -112,8 +103,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'checklist',
         icon: ListTodo,
-        label: '打包清單',
-        labelEn: 'Checklist',
+        labelKey: 'checklist',
         alwaysShow: false,
         showWhen: 'editing',
         isMobileMore: true,
@@ -123,8 +113,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'account',
         icon: User,
-        label: '個人帳戶',
-        labelEn: 'My Account',
+        labelKey: 'accountLabel',
         alwaysShow: true,
         isMobileMore: true,
         isDesktopMore: true,
@@ -132,9 +121,8 @@ const NAV_CONFIG: NavItem[] = [
     },
     {
         id: 'creator_center',
-        icon: Plus, // We can change this to something more "creative" later
-        label: '創作者中心',
-        labelEn: 'Creator Studio',
+        icon: Plus,
+        labelKey: 'creatorProfile',
         alwaysShow: true,
         isMobileMore: true,
         isDesktopMore: true,
@@ -143,8 +131,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'lang',
         icon: Languages,
-        label: '語言',
-        labelEn: 'Language',
+        labelKey: 'languageLabel',
         alwaysShow: true,
         isMobileMore: true,
         isDesktopMore: true,
@@ -153,8 +140,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'settings',
         icon: Settings,
-        label: '設定',
-        labelEn: 'Settings',
+        labelKey: 'settingsLabel',
         alwaysShow: true,
         isMobileMore: true,
         isDesktopMore: true,
@@ -163,8 +149,7 @@ const NAV_CONFIG: NavItem[] = [
     {
         id: 'more',
         icon: MoreHorizontal,
-        label: '更多',
-        labelEn: 'More',
+        labelKey: 'moreLabel',
         alwaysShow: true,
         mobile: true,
         isMobilePrimary: true,
@@ -176,12 +161,14 @@ interface UseNavigationOptions {
     hasActivePlan: boolean;
     platform?: 'desktop' | 'mobile';
     lang?: LangType;
+    t?: any; // [NEW] Translation object
 }
 
 export const useNavigation = ({
     hasActivePlan,
     platform = 'desktop',
-    lang = 'zh'
+    lang = 'zh',
+    t
 }: UseNavigationOptions) => {
     const items = useMemo(() => {
         return NAV_CONFIG.filter(item => {
@@ -216,9 +203,11 @@ export const useNavigation = ({
         return NAV_CONFIG.filter(i => i.isDesktopMore);
     }, []);
 
-    // Get label based on language
+    // Get label based on language or translation key
     const getLabel = (item: NavItem) => {
-        return lang === 'en' ? item.labelEn : item.label;
+        if (t && t[item.labelKey]) return t[item.labelKey];
+        // Fallback or specific logic if needed
+        return item.labelKey;
     };
 
     return {

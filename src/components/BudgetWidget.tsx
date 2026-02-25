@@ -305,6 +305,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                 </div>
                 {/* Large Budget Display */}
                 <div className="mt-4">
+                    <div className="text-sm text-teal-100 opacity-80 mb-1">{t.totalSpent || '已花費'}</div>
                     <div className="text-3xl font-bold">¥{spent.toLocaleString()}</div>
                     {currency && exchangeRate && (
                         <div className="text-sm text-teal-100 opacity-90">

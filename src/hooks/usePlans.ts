@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule } from '../types';
-import { TOKYO_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS } from '../data';
+import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule, TravelItem } from '../types';
+import { TOKYO_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
 
 export interface UsePlansReturn {
     // State
@@ -61,15 +61,14 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
 
     // Helper to enrich stale items with latest data from master lists
     const hydratePlans = (plansToHydrate: Plan[]): Plan[] => {
-        const { ALL_SUGGESTIONS } = require('../data/suggestions');
-        const { SAMPLE_ASSETS } = require('../data/sample-assets');
-        const { MELBOURNE_ASSETS } = require('../data/melbourne-assets');
+        // Master assets for hydration
 
         // Flat array of all possible master assets to match against
-        const masterAssets = [
+        const masterAssets: TravelItem[] = [
             ...SAMPLE_ASSETS,
-            ...MELBOURNE_ASSETS,
-            ...Object.values(ALL_SUGGESTIONS as any).flatMap((region: any) => Object.values(region).flat())
+            ...Object.values(ALL_SUGGESTIONS as any).flatMap((region: any) =>
+                Object.values(region).flat() as TravelItem[]
+            )
         ];
 
         return plansToHydrate.map(plan => {
@@ -114,8 +113,12 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
     // Save to localStorage
     useEffect(() => {
         if (isInitialized) {
-            localStorage.setItem('travel_plans', JSON.stringify(plans));
-            localStorage.setItem('active_plan_id', activePlanId);
+            try {
+                localStorage.setItem('travel_plans', JSON.stringify(plans));
+                localStorage.setItem('active_plan_id', activePlanId);
+            } catch (e) {
+                console.warn('Failed to save plans to localStorage:', e);
+            }
         }
     }, [plans, activePlanId, isInitialized]);
 
@@ -236,16 +239,16 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             const month = start.getMonth() + 1;
             const date = start.getDate();
             const dayOfWeekMap: Record<number, string> = {
-                0: t.sun || '週日',
-                1: t.mon || '週一',
-                2: t.tue || '週二',
-                3: t.wed || '週三',
-                4: t.thu || '週四',
-                5: t.fri || '週五',
-                6: t.sat || '週六'
+                0: t.sun,
+                1: t.mon,
+                2: t.tue,
+                3: t.wed,
+                4: t.thu,
+                5: t.fri,
+                6: t.sat
             };
             const dayOfWeek = dayOfWeekMap[start.getDay()];
-            return (t.monthDay || '{month}月{date}日').replace('{month}', month.toString()).replace('{date}', date.toString()) + ` ${dayOfWeek}`;
+            return (t.monthDay || '{month}/{date}').replace('{month}', month.toString()).replace('{date}', date.toString()) + ` ${dayOfWeek}`;
         }
     };
 

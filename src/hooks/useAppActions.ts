@@ -277,12 +277,35 @@ export const useAppActions = (deps: AppActionsDeps) => {
         showToastMessage(message);
     }, [ui, currentDay, activePlan, updateActivePlan, showToastMessage, t]);
 
+    const handleGateCheck = useCallback((action: () => void, setUnlockTarget: (item: ScheduleItem | null) => void, setBatchUnlockCount: (count: number) => void) => {
+        let lockedCount = 0;
+        let firstLockedItem: ScheduleItem | null = null;
+        Object.values(activePlan.schedule).forEach(day => {
+            Object.values(day).forEach((slotItems: ScheduleItem[]) => {
+                slotItems.forEach((item: ScheduleItem) => {
+                    if (item.isLocked) {
+                        lockedCount++;
+                        if (!firstLockedItem) firstLockedItem = item;
+                    }
+                });
+            });
+        });
+
+        if (lockedCount > 0 && firstLockedItem) {
+            setBatchUnlockCount(lockedCount);
+            setUnlockTarget(firstLockedItem);
+        } else {
+            action();
+        }
+    }, [activePlan.schedule]);
+
     return {
         applyTemplate,
         handleCreateCustomItem,
         onDeleteDay,
         onDeletePlan,
         handleUnlockConfirm,
-        executeMoveItem
+        executeMoveItem,
+        handleGateCheck
     };
 };

@@ -33,8 +33,20 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
 
     const shareUrl = `https://travelcanvas.app/share/${plan.id}`;
 
-    const handleCopyLink = () => {
-        navigator.clipboard.writeText(shareUrl);
+    const handleCopyLink = async () => {
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+        } catch {
+            // Fallback for HTTP or denied permission
+            const textarea = document.createElement('textarea');
+            textarea.value = shareUrl;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
         showToast(t.copied || '已複製到剪貼簿！');
     };
 

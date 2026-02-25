@@ -2,8 +2,8 @@
 // 所有資料模組從這裡統一導出，方便其他檔案引用
 
 export { TRANSLATIONS } from './translations';
-export { SAMPLE_ASSETS } from './sample-assets';
-export { MELBOURNE_ASSETS } from './melbourne-assets';
+export { ALL_REGIONAL_ASSETS as SAMPLE_ASSETS, TOKYO_ASSETS, OSAKA_ASSETS, KYOTO_ASSETS, MELBOURNE_ASSETS } from './assets';
+export { ALL_SUGGESTIONS } from './suggestions';
 export { SAMPLE_CREATORS } from './creators';
 export { TEMPLATES } from './templates';
 export {

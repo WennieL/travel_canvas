@@ -1,8 +1,6 @@
-import { TravelItem } from '../types';
+import { TravelItem } from '../../types';
 
-// Melbourne 咖啡 & 巷弄景點
 export const MELBOURNE_ASSETS: TravelItem[] = [
-    // ===== COFFEE SPOTS =====
     {
         id: 'mel-1',
         title: 'Patricia Coffee Brewers',
@@ -69,7 +67,6 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
             }
         }
     },
-    // ===== LANEWAYS & ART =====
     {
         id: 'mel-3',
         title: 'Hosier Lane 塗鴉巷',
@@ -136,7 +133,6 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
             }
         }
     },
-    // ===== HIDDEN BARS =====
     {
         id: 'mel-5',
         title: 'Eau de Vie',
@@ -165,7 +161,7 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 story: '這間隱藏酒吧入口是一扇沒有標示的門，進去後會看到一個假書架 — 推開它就是酒吧。但真正的秘密是：書架後面還有另一個房間，叫 Whisky Room，只有熟客才知道。',
                 storyEn: 'Enter through an unmarked door, find a fake bookshelf - push it to enter. But the real secret: there\'s another room behind called the Whisky Room, known only to regulars.',
                 exactLocation: 'Malthouse Lane，找有門鈴的無標示黑門，按鈴等人開門',
-                mustTry: '問 bartender "本週的 hidden menu"，他們有不在菜單上的實驗調酒',
+                mustTry: '問 bartender "本週的 hidden menu"，他們 have 不在菜單上的實驗調酒',
                 avoid: '週五晚上 8 點後要排隊，平日 7 點到最佳',
                 bestTime: '19:00-20:00'
             }
@@ -193,7 +189,7 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         marketingTitle: '柏林圍牆的另一邊',
         marketingTitleEn: 'The Other Side of the Wall',
         insiderTip: {
-            teaser: '東西柏林主題酒吧',
+            teaser: '东西柏林主題酒吧',
             teaserEn: 'East vs West Berlin themed bar',
             full: {
                 story: '找到發光的熊標誌就對了。按門鈴後會有人來開門，進去後你會被帶到「東柏林」或「西柏林」— 兩邊氛圍完全不同。',
@@ -274,5 +270,3 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         }
     }
 ];
-
-export default MELBOURNE_ASSETS;

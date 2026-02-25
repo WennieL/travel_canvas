@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react';
 import { X, AlertTriangle, Info, CheckCircle2, AlertCircle } from 'lucide-react';
-import { ConfirmType } from '../../contexts/ConfirmContext';
+import { ConfirmType, ConfirmOptions } from '../../types';
 
-interface ConfirmDialogProps {
+interface ConfirmDialogProps extends ConfirmOptions {
     isOpen: boolean;
-    title?: string;
-    message: string;
-    confirmText?: string;
-    cancelText?: string;
-    type?: ConfirmType;
     onConfirm: () => void;
     onCancel: () => void;
 }
@@ -64,15 +59,15 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 w-full max-w-sm overflow-hidden animate-zoom-in">
                 {/* Header Decoration */}
                 <div className={`h-1.5 w-full ${type === 'warning' ? 'bg-amber-500' :
-                        type === 'error' ? 'bg-red-500' :
-                            type === 'success' ? 'bg-emerald-500' : 'bg-teal-500'
+                    type === 'error' ? 'bg-red-500' :
+                        type === 'success' ? 'bg-emerald-500' : 'bg-teal-500'
                     }`} />
 
                 <div className="p-6">
                     <div className="flex items-start gap-4">
                         <div className={`p-3 rounded-xl ${type === 'warning' ? 'bg-amber-50' :
-                                type === 'error' ? 'bg-red-50' :
-                                    type === 'success' ? 'bg-emerald-50' : 'bg-blue-50'
+                            type === 'error' ? 'bg-red-50' :
+                                type === 'success' ? 'bg-emerald-50' : 'bg-blue-50'
                             }`}>
                             {getIcon()}
                         </div>

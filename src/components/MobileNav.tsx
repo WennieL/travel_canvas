@@ -39,7 +39,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     const { mobilePrimary, mobileMore, getLabel } = useNavigation({
         hasActivePlan,
         platform: 'mobile',
-        lang
+        lang,
+        t
     });
 
     // Determine active tab
@@ -144,23 +145,23 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                             </div>
                             <div className="flex-1 min-w-0">
                                 <h4 className="font-bold text-gray-900 truncate flex items-center gap-1.5 text-lg">
-                                    Wennie L.
-                                    <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 text-[10px] rounded uppercase tracking-wider font-extrabold">{t.proMember || 'PRO'}</span>
+                                    {t.proMember}
+                                    <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 text-[10px] rounded uppercase tracking-wider font-extrabold">{t.proMember}</span>
                                 </h4>
                                 <div className="flex items-center gap-3 mt-1">
                                     <div className="flex flex-col">
                                         <span className="text-[11px] font-bold text-gray-900 leading-none">12</span>
-                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.plans || 'Plans'}</span>
+                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.plans}</span>
                                     </div>
                                     <div className="w-px h-4 bg-gray-200" />
                                     <div className="flex flex-col">
                                         <span className="text-[11px] font-bold text-gray-900 leading-none">856</span>
-                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.followers || 'Followers'}</span>
+                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.followers}</span>
                                     </div>
                                     <div className="w-px h-4 bg-gray-200" />
                                     <div className="flex flex-col">
                                         <span className="text-[11px] font-bold text-gray-900 leading-none">42</span>
-                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.following || 'Following'}</span>
+                                        <span className="text-[9px] text-gray-400 uppercase tracking-tighter mt-0.5">{t.following}</span>
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +193,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                                             {item.id === 'lang' ? (
                                                 <div className="flex items-center gap-1 text-gray-400">
                                                     <span className="text-xs font-medium">
-                                                        {lang === 'zh' ? '繁體中文' : 'English'}
+                                                        {lang === 'zh' ? t.chinese : t.english}
                                                     </span>
                                                     <ChevronRight size={14} />
                                                 </div>

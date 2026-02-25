@@ -1,6 +1,5 @@
 import { Template } from '../types';
-import { SAMPLE_ASSETS } from './sample-assets';
-import { MELBOURNE_ASSETS } from './melbourne-assets';
+import { TOKYO_ASSETS, OSAKA_ASSETS, KYOTO_ASSETS, MELBOURNE_ASSETS } from './assets';
 
 // 達人模板 - Curated for MVP Launch
 export const TEMPLATES: Template[] = [
@@ -36,19 +35,21 @@ export const TEMPLATES: Template[] = [
         price: 0.99,
         isLocked: false,
         schedule: {
-            morning: [
-                { ...MELBOURNE_ASSETS[0], instanceId: 'mel-c-1', startTime: '08:00', arrivalTransport: 'public' },
-                { ...MELBOURNE_ASSETS[1], instanceId: 'mel-c-2', startTime: '09:30', arrivalTransport: 'walk' }
-            ],
-            afternoon: [
-                { ...MELBOURNE_ASSETS[2], instanceId: 'mel-c-3', startTime: '11:00', arrivalTransport: 'walk' },
-                { ...MELBOURNE_ASSETS[3], instanceId: 'mel-c-4', startTime: '12:30', arrivalTransport: 'walk' }
-            ],
-            evening: [
-                { ...MELBOURNE_ASSETS[4], instanceId: 'mel-c-5', startTime: '19:00', arrivalTransport: 'public' }
-            ],
-            night: [],
-            accommodation: []
+            'Day 1': {
+                morning: [
+                    { ...MELBOURNE_ASSETS[0], instanceId: 'mel-c-1', startTime: '08:00', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[1], instanceId: 'mel-c-2', startTime: '09:30', arrivalTransport: 'walk' }
+                ],
+                afternoon: [
+                    { ...MELBOURNE_ASSETS[2], instanceId: 'mel-c-3', startTime: '11:00', arrivalTransport: 'walk' },
+                    { ...MELBOURNE_ASSETS[3], instanceId: 'mel-c-4', startTime: '12:30', arrivalTransport: 'walk' }
+                ],
+                evening: [
+                    { ...MELBOURNE_ASSETS[4], instanceId: 'mel-c-5', startTime: '19:00', arrivalTransport: 'public' }
+                ],
+                night: [],
+                accommodation: []
+            }
         }
     },
     {
@@ -83,16 +84,18 @@ export const TEMPLATES: Template[] = [
         originalPrice: 4.99,
         isLocked: true,
         schedule: {
-            morning: [],
-            afternoon: [],
-            evening: [
-                { ...MELBOURNE_ASSETS[4], instanceId: 'mel-b-1', startTime: '19:00', arrivalTransport: 'public' },
-                { ...MELBOURNE_ASSETS[5], instanceId: 'mel-b-2', startTime: '21:00', arrivalTransport: 'walk' }
-            ],
-            night: [
-                { ...MELBOURNE_ASSETS[6], instanceId: 'mel-b-3', startTime: '23:00', arrivalTransport: 'public' }
-            ],
-            accommodation: []
+            'Day 1': {
+                morning: [],
+                afternoon: [],
+                evening: [
+                    { ...MELBOURNE_ASSETS[4], instanceId: 'mel-b-1', startTime: '19:00', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[5], instanceId: 'mel-b-2', startTime: '21:00', arrivalTransport: 'walk' }
+                ],
+                night: [
+                    { ...MELBOURNE_ASSETS[6], instanceId: 'mel-b-3', startTime: '23:00', arrivalTransport: 'public' }
+                ],
+                accommodation: []
+            }
         }
     },
     // ===== JAPAN TEMPLATES =====
@@ -126,73 +129,75 @@ export const TEMPLATES: Template[] = [
         tier: 'official',
         copiedCount: 1205,
         schedule: {
-            morning: [
-                {
-                    ...SAMPLE_ASSETS[0], // 淺草寺
-                    instanceId: 't1-1',
-                    startTime: '07:00',
-                    arrivalTransport: 'public',
-                    insiderTip: {
-                        teaser: '早起鳥的秘密風景',
-                        teaserEn: 'Early bird secret view',
-                        full: {
-                            story: '在此時段抵達，仲見世通的鐵捲門彩繪還沒拉上去，是只有早鳥才能看見的浮世繪卷。',
-                            storyEn: 'Arrive at this time and you\'ll see the painted shutters of Nakamise-dori.',
-                            bestTime: '07:00-08:00',
-                            exactLocation: '從雷門進去左手邊第三家店前',
-                            mustTry: '拍攝鐵捲門上的浮世繪圖案',
-                            avoid: '不要等到9點後，商店開門就看不到了'
+            'Day 1': {
+                morning: [
+                    {
+                        ...TOKYO_ASSETS[0], // 淺草寺
+                        instanceId: 't1-1',
+                        startTime: '07:00',
+                        arrivalTransport: 'public',
+                        insiderTip: {
+                            teaser: '早起鳥的秘密風景',
+                            teaserEn: 'Early bird secret view',
+                            full: {
+                                story: '在此時段抵達，仲見世通的鐵捲門彩繪還沒拉上去，是只有早鳥才能看見的浮世繪卷。',
+                                storyEn: 'Arrive at this time and you\'ll see the painted shutters of Nakamise-dori.',
+                                bestTime: '07:00-08:00',
+                                exactLocation: '從雷門進去左手邊第三家店前',
+                                mustTry: '拍攝鐵捲門上的浮世繪圖案',
+                                avoid: '不要等到9點後，商店開門就看不到了'
+                            }
                         }
+                    },
+                    {
+                        ...TOKYO_ASSETS[1], // 東京晴空塔
+                        instanceId: 't1-1b',
+                        startTime: '09:30',
+                        arrivalTransport: 'walk'
                     }
-                },
-                {
-                    ...SAMPLE_ASSETS[1], // 東京晴空塔
-                    instanceId: 't1-1b',
-                    startTime: '09:30',
-                    arrivalTransport: 'walk'
-                }
-            ],
-            afternoon: [
-                {
-                    ...SAMPLE_ASSETS[2], // 澀谷十字路口
-                    instanceId: 't1-2',
-                    startTime: '13:30',
-                    arrivalTransport: 'public'
-                },
-                {
-                    ...SAMPLE_ASSETS[3], // TeamLab Planets
-                    instanceId: 't1-3',
-                    startTime: '15:30',
-                    arrivalTransport: 'public',
-                    price: 3800
-                },
-                {
-                    ...SAMPLE_ASSETS[4], // 明治神宮
-                    instanceId: 't1-4',
-                    startTime: '17:30',
-                    arrivalTransport: 'public'
-                }
-            ],
-            evening: [
-                {
-                    ...SAMPLE_ASSETS[6], // 一蘭拉麵
-                    instanceId: 't1-5',
-                    startTime: '19:00',
-                    arrivalTransport: 'walk'
-                }
-            ],
-            night: [
-                {
-                    ...SAMPLE_ASSETS[16], // Shibuya Sky Garden (Premium)
-                    instanceId: 't1-6',
-                    startTime: '21:00',
-                    arrivalTransport: 'walk',
-                    isLocked: true
-                }
-            ],
-            accommodation: [
-                { ...SAMPLE_ASSETS[9], instanceId: 't1-h1', startTime: '23:00', arrivalTransport: 'public' }
-            ]
+                ],
+                afternoon: [
+                    {
+                        ...TOKYO_ASSETS[2], // 澀谷十字路口
+                        instanceId: 't1-2',
+                        startTime: '13:30',
+                        arrivalTransport: 'public'
+                    },
+                    {
+                        ...TOKYO_ASSETS[3], // TeamLab Planets
+                        instanceId: 't1-3',
+                        startTime: '15:30',
+                        arrivalTransport: 'public',
+                        price: 3800
+                    },
+                    {
+                        ...TOKYO_ASSETS[4], // 明治神宮
+                        instanceId: 't1-4',
+                        startTime: '17:30',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                evening: [
+                    {
+                        ...TOKYO_ASSETS[6], // 一蘭拉麵
+                        instanceId: 't1-5',
+                        startTime: '19:00',
+                        arrivalTransport: 'walk'
+                    }
+                ],
+                night: [
+                    {
+                        ...TOKYO_ASSETS[16], // Shibuya Sky Garden (Premium)
+                        instanceId: 't1-6',
+                        startTime: '21:00',
+                        arrivalTransport: 'walk',
+                        isLocked: true
+                    }
+                ],
+                accommodation: [
+                    { ...TOKYO_ASSETS[9], instanceId: 't1-h1', startTime: '23:00', arrivalTransport: 'public' }
+                ]
+            }
         }
     },
     {
@@ -211,7 +216,7 @@ export const TEMPLATES: Template[] = [
         vibes: [
             { tag: '#海鮮控', color: 'bg-blue-100 text-blue-800' },
             { tag: '#燒肉天堂', color: 'bg-red-100 text-red-800' },
-            { tag: '#深夜食堂', color: 'bg-amber-50 text-amber-700' }
+            { tag: '#深夜食堂', color: 'bg-amber-50 text-teal-700' }
         ],
         coverStory: {
             quote: '在東京，胃永遠不夠大，時間永遠不夠長。',
@@ -224,76 +229,78 @@ export const TEMPLATES: Template[] = [
         tier: 'creator',
         copiedCount: 856,
         schedule: {
-            morning: [
-                {
-                    ...SAMPLE_ASSETS[7], // 築地場外市場
-                    instanceId: 't2-1',
-                    startTime: '06:00',
-                    arrivalTransport: 'public'
-                },
-                {
-                    ...SAMPLE_ASSETS[0], // 淺草寺（消化散步）
-                    instanceId: 't2-1b',
-                    startTime: '08:30',
-                    arrivalTransport: 'public'
-                }
-            ],
-            afternoon: [
-                {
-                    ...SAMPLE_ASSETS[8], // 敘敘苑燒肉
-                    instanceId: 't2-2',
-                    startTime: '11:30',
-                    arrivalTransport: 'public',
-                    insiderTip: {
-                        teaser: '午餐套餐是最划算的吃法',
-                        full: {
-                            story: '午餐的「特選和牛套餐」¥3,800 就能吃到晚餐要 ¥15,000 以上的 A5 和牛。11:30 開門前 15 分鐘排隊，通常可以順利入場。',
-                            exactLocation: '六本木店視野最好',
-                            bestTime: '平日 11:15 開始排隊',
-                            mustTry: '特選ハラミ + 特製醬油ダレ'
-                        }
+            'Day 1': {
+                morning: [
+                    {
+                        ...TOKYO_ASSETS[7], // 築地市場
+                        instanceId: 't2-1',
+                        startTime: '06:00',
+                        arrivalTransport: 'public'
+                    },
+                    {
+                        ...TOKYO_ASSETS[0], // 淺草寺
+                        instanceId: 't2-1b',
+                        startTime: '08:30',
+                        arrivalTransport: 'public'
                     }
-                },
-                {
-                    id: 'custom-cafe',
-                    title: '表參道下午茶散步',
-                    titleEn: 'Omotesando Cafe Hopping',
-                    type: 'attraction',
-                    duration: '2小時',
-                    image: '☕',
-                    description: '消化一下燒肉，在表參道逛逛設計師小店',
-                    price: 0,
-                    region: 'tokyo',
-                    instanceId: 't2-3',
-                    startTime: '14:30',
-                    arrivalTransport: 'walk'
-                }
-            ],
-            evening: [
-                {
-                    ...SAMPLE_ASSETS[6], // 一蘭拉麵
-                    instanceId: 't2-4',
-                    startTime: '18:00',
-                    arrivalTransport: 'public'
-                }
-            ],
-            night: [
-                {
-                    id: 'golden-gai',
-                    title: '新宿黃金街',
-                    titleEn: 'Shinjuku Golden Gai',
-                    type: 'attraction',
-                    duration: '2小時',
-                    image: '🍺',
-                    description: '超過 200 間迷你酒吧的復古巷弄',
-                    price: 3000,
-                    region: 'tokyo',
-                    instanceId: 't2-5',
-                    startTime: '21:00',
-                    arrivalTransport: 'public'
-                }
-            ],
-            accommodation: []
+                ],
+                afternoon: [
+                    {
+                        ...TOKYO_ASSETS[8], // 燒肉
+                        instanceId: 't2-2',
+                        startTime: '11:30',
+                        arrivalTransport: 'public',
+                        insiderTip: {
+                            teaser: '午餐套餐是最划算的吃法',
+                            full: {
+                                story: '午餐的「特選和牛套餐」¥3,800 就能吃到晚餐要 ¥15,000 以上的 A5 和牛。11:30 開門前 15 分鐘排隊，通常可以順利入場。',
+                                exactLocation: '六本木店視野最好',
+                                bestTime: '平日 11:15 開始排隊',
+                                mustTry: '特選ハラミ + 特製醬油ダレ'
+                            }
+                        }
+                    },
+                    {
+                        id: 'custom-cafe',
+                        title: '表參道下午茶散步',
+                        titleEn: 'Omotesando Cafe Hopping',
+                        type: 'attraction',
+                        duration: '2小時',
+                        image: '☕',
+                        description: '消化一下燒肉，在表參道逛逛設計師小店',
+                        price: 0,
+                        region: 'tokyo',
+                        instanceId: 't2-3',
+                        startTime: '14:30',
+                        arrivalTransport: 'walk'
+                    }
+                ],
+                evening: [
+                    {
+                        ...TOKYO_ASSETS[6], // 一蘭拉麵
+                        instanceId: 't2-4',
+                        startTime: '18:00',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                night: [
+                    {
+                        id: 'golden-gai',
+                        title: '新宿黃金街',
+                        titleEn: 'Shinjuku Golden Gai',
+                        type: 'attraction',
+                        duration: '2小時',
+                        image: '🍺',
+                        description: '超過 200 間迷你酒吧的復古巷弄',
+                        price: 3000,
+                        region: 'tokyo',
+                        instanceId: 't2-5',
+                        startTime: '21:00',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                accommodation: []
+            }
         }
     },
     {
@@ -328,52 +335,54 @@ export const TEMPLATES: Template[] = [
         originalPrice: 4.99,
         isLocked: true,
         schedule: {
-            morning: [
-                {
-                    ...SAMPLE_ASSETS[22], // 金閣寺
-                    instanceId: 't5-1',
-                    startTime: '09:00',
-                    arrivalTransport: 'public'
-                },
-                {
-                    ...SAMPLE_ASSETS[25], // 嵐山竹林
-                    instanceId: 't5-1b',
-                    startTime: '11:00',
-                    arrivalTransport: 'public'
-                }
-            ],
-            afternoon: [
-                {
-                    ...SAMPLE_ASSETS[23], // 清水寺
-                    instanceId: 't5-2',
-                    startTime: '13:00',
-                    arrivalTransport: 'public'
-                },
-                {
-                    ...SAMPLE_ASSETS[26], // 中村藤吉
-                    instanceId: 't5-2b',
-                    startTime: '15:30',
-                    arrivalTransport: 'public'
-                }
-            ],
-            evening: [
-                {
-                    ...SAMPLE_ASSETS[24], // 伏見稻荷
-                    instanceId: 't5-3',
-                    startTime: '17:00',
-                    arrivalTransport: 'public'
-                }
-            ],
-            night: [
-                {
-                    ...SAMPLE_ASSETS[27], // 村上春樹爵士吧
-                    instanceId: 't5-4',
-                    startTime: '20:00',
-                    arrivalTransport: 'public',
-                    isLocked: true
-                }
-            ],
-            accommodation: []
+            'Day 1': {
+                morning: [
+                    {
+                        ...KYOTO_ASSETS[0], // 金閣寺
+                        instanceId: 't5-1',
+                        startTime: '09:00',
+                        arrivalTransport: 'public'
+                    },
+                    {
+                        ...KYOTO_ASSETS[3], // 嵐山竹林
+                        instanceId: 't5-1b',
+                        startTime: '11:00',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                afternoon: [
+                    {
+                        ...KYOTO_ASSETS[1], // 清水寺
+                        instanceId: 't5-2',
+                        startTime: '13:00',
+                        arrivalTransport: 'public'
+                    },
+                    {
+                        ...KYOTO_ASSETS[4], // 中村藤吉
+                        instanceId: 't5-2b',
+                        startTime: '15:30',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                evening: [
+                    {
+                        ...KYOTO_ASSETS[2], // 伏見稻荷
+                        instanceId: 't5-3',
+                        startTime: '17:00',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                night: [
+                    {
+                        ...KYOTO_ASSETS[5], // 村上春樹爵士吧
+                        instanceId: 't5-4',
+                        startTime: '20:00',
+                        arrivalTransport: 'public',
+                        isLocked: true
+                    }
+                ],
+                accommodation: []
+            }
         }
     },
     // ===== OSAKA TEMPLATE (NEW) =====
@@ -408,55 +417,50 @@ export const TEMPLATES: Template[] = [
         price: 0.99,
         isLocked: false,
         schedule: {
-            morning: [
-                {
-                    ...SAMPLE_ASSETS[17], // 環球影城
-                    instanceId: 'osaka-1',
-                    startTime: '08:00',
-                    arrivalTransport: 'public'
-                }
-            ],
-            afternoon: [
-                {
-                    ...SAMPLE_ASSETS[15], // 道頓堀
-                    instanceId: 'osaka-2',
-                    startTime: '15:00',
-                    arrivalTransport: 'public'
-                },
-                {
-                    ...SAMPLE_ASSETS[14], // 大阪城
-                    instanceId: 'osaka-3',
-                    startTime: '17:00',
-                    arrivalTransport: 'public'
-                }
-            ],
-            evening: [
-                {
-                    ...SAMPLE_ASSETS[21], // 千房大阪燒
-                    instanceId: 'osaka-4',
-                    startTime: '19:00',
-                    arrivalTransport: 'public',
-                    insiderTip: {
-                        teaser: '自己煎才是大阪流',
-                        full: {
-                            story: '點「豪華海鮮版」，自己在鐵板上煎。不會煎沒關係，店員會教你。最後撒上大量的柴魚片 and 美乃滋，這才是正宗大阪味。',
-                            mustTry: '海鮮デラックス + 焼きそば'
-                        }
+            'Day 1': {
+                morning: [
+                    {
+                        ...OSAKA_ASSETS[3], // 環球影城
+                        instanceId: 'osaka-1',
+                        startTime: '08:00',
+                        arrivalTransport: 'public'
                     }
-                }
-            ],
-            night: [
-                {
-                    ...SAMPLE_ASSETS[18], // Premium 爵士觀光船
-                    instanceId: 'osaka-5',
-                    startTime: '21:00',
-                    arrivalTransport: 'walk',
-                    isLocked: true
-                }
-            ],
-            accommodation: [
-                { ...SAMPLE_ASSETS[19], instanceId: 'osaka-h1', startTime: '23:00', arrivalTransport: 'public' }
-            ]
+                ],
+                afternoon: [
+                    {
+                        ...OSAKA_ASSETS[2], // 道頓堀
+                        instanceId: 'osaka-2',
+                        startTime: '15:00',
+                        arrivalTransport: 'public'
+                    },
+                    {
+                        ...OSAKA_ASSETS[1], // 大阪城
+                        instanceId: 'osaka-3',
+                        startTime: '17:00',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                evening: [
+                    {
+                        ...OSAKA_ASSETS[7], // 千房大阪燒
+                        instanceId: 'osaka-4',
+                        startTime: '19:00',
+                        arrivalTransport: 'public'
+                    }
+                ],
+                night: [
+                    {
+                        ...OSAKA_ASSETS[4], // 爵士觀光船 (Premium)
+                        instanceId: 'osaka-5',
+                        startTime: '21:00',
+                        arrivalTransport: 'walk',
+                        isLocked: true
+                    }
+                ],
+                accommodation: [
+                    { ...OSAKA_ASSETS[8], instanceId: 'osaka-h1', startTime: '23:00', arrivalTransport: 'public' }
+                ]
+            }
         }
     }
 ];

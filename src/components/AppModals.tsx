@@ -239,13 +239,6 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 lang={lang}
                 t={t}
             />
-            <ItemDetailModal
-                isOpen={!!selectedItem}
-                onClose={() => setSelectedItem(null)}
-                item={selectedItem}
-                t={t}
-                lang={lang}
-            />
 
             <PlanManagerModal
                 isOpen={showPlanManager}
@@ -330,7 +323,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 onClose={() => setShowSubmitModal(false)}
                 plan={activePlan}
                 onSubmit={() => {
-                    showToastMessage('🎉 已提交審核！我們會在 24 小時內回覆您');
+                    showToastMessage(t.submitSuccessToast);
                 }}
                 t={t}
             />
@@ -392,6 +385,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     onModeChange={onModeChange}
                     sidebarMode={sidebarMode}
                     setSidebarMode={setSidebarMode}
+                    showToastMessage={showToastMessage}
                 />
             )}
 

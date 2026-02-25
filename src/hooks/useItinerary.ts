@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { TimeSlot, ScheduleItem, Plan, LangType, TravelItem } from '../types';
-import { ALL_SUGGESTIONS } from '../data/suggestions';
+import { ALL_SUGGESTIONS } from '../data';
 
 export function useItinerary(
     activePlan: Plan,

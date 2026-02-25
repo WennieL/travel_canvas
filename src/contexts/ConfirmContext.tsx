@@ -1,14 +1,6 @@
 import React, { createContext, useState, useCallback, ReactNode } from 'react';
 
-export type ConfirmType = 'info' | 'warning' | 'error' | 'success';
-
-export interface ConfirmOptions {
-    title?: string;
-    message: string;
-    confirmText?: string;
-    cancelText?: string;
-    type?: ConfirmType;
-}
+import { ConfirmType, ConfirmOptions } from '../types';
 
 interface ConfirmContextType {
     confirm: (options: ConfirmOptions) => Promise<boolean>;
