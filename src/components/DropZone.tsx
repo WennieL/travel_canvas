@@ -251,16 +251,16 @@ const DropZone: React.FC<DropZoneProps> = ({
                                     )}
 
                                     {/* Desktop Hover Actions - Visible >= 1024px */}
-                                    <div className="hidden lg:flex absolute top-2 right-2 gap-1 transition-all z-20 opacity-0 group-hover:opacity-100">
+                                    <div className="hidden lg:flex absolute top-2 right-2 gap-1.5 transition-all z-20 opacity-40 group-hover:opacity-100">
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 setEditingPriceId(item.instanceId);
                                             }}
-                                            className="bg-white text-gray-400 hover:text-teal-500 p-1 rounded-full shadow border border-gray-100"
+                                            className="bg-white text-gray-400 hover:text-teal-500 p-2 rounded-full shadow-md border border-gray-100 transition-all hover:scale-110 active:scale-95"
                                             title={t.setBudget || "Set Budget"}
                                         >
-                                            <Banknote size={12} />
+                                            <Banknote size={18} />
                                         </button>
 
                                         <button
@@ -268,12 +268,18 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                 e.stopPropagation();
                                                 setEditingNoteId(item.instanceId);
                                             }}
-                                            className="bg-white text-gray-400 hover:text-amber-500 p-1 rounded-full shadow border border-gray-100"
+                                            className="bg-white text-gray-400 hover:text-amber-500 p-2 rounded-full shadow-md border border-gray-100 transition-all hover:scale-110 active:scale-95"
                                             title={t.addNote || "Add Note"}
                                         >
-                                            <NoteIcon size={12} />
+                                            <NoteIcon size={18} />
                                         </button>
-                                        <button onClick={(e) => { e.stopPropagation(); onMoveItem(idx); }} className="bg-white text-gray-400 hover:text-blue-500 p-1 rounded-full shadow border border-gray-100" title={t.moveToDay || "Move to Day"}> <MoveRight size={12} /> </button>
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onMoveItem(idx); }}
+                                            className="bg-white text-gray-400 hover:text-blue-500 p-2 rounded-full shadow-md border border-gray-100 transition-all hover:scale-110 active:scale-95"
+                                            title={t.moveToDay || "Move to Day"}
+                                        >
+                                            <MoveRight size={18} />
+                                        </button>
                                         <button
                                             onClick={async (e) => {
                                                 e.stopPropagation();
@@ -288,12 +294,13 @@ const DropZone: React.FC<DropZoneProps> = ({
                                                     onDelete(slot, idx);
                                                 }
                                             }}
-                                            className="bg-white text-gray-400 hover:text-red-500 p-1 rounded-full shadow border border-gray-100"
+                                            className="bg-white text-gray-400 hover:text-red-500 p-2 rounded-full shadow-md border border-gray-100 transition-all hover:scale-110 active:scale-95"
+                                            title={t.delete || "Delete"}
                                         >
-                                            <Trash2 size={12} />
+                                            <Trash2 size={18} />
                                         </button>
                                     </div>
-                                    <div className="hidden md:block text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity"> <GripVertical size={16} /> </div>
+                                    <div className="hidden md:block text-gray-300 cursor-grab flex-shrink-0 mt-1.5 opacity-40 group-hover:opacity-100 transition-opacity"> <GripVertical size={18} /> </div>
 
                                     <div className={`relative flex-shrink-0 bg-gray-50 flex items-center justify-center rounded-md overflow-hidden w-10 h-10 text-2xl`}>
                                         {isLocked && (
