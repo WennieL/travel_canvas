@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Plus } from 'lucide-react';
 import { ItemType, TransportMode } from '../../types';
+import { REGIONS, getRegionEmoji } from '../../data/regions';
 
 interface CustomItemData {
     name: string;
@@ -187,22 +188,27 @@ export const CustomItemModal: React.FC<CustomItemModalProps> = ({
                 <div className="mb-4">
                     <label className="text-xs text-gray-500 mb-1 block">{t.regionLabel || 'Region'}</label>
                     <div className="flex flex-wrap gap-2">
-                        {(['all', 'tokyo', 'osaka', 'kyoto', 'melbourne'] as const).map(reg => (
+                        <button
+                            type="button"
+                            onClick={() => setRegion('all')}
+                            className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${region === 'all'
+                                ? 'bg-teal-600 border-teal-600 text-white'
+                                : 'bg-white border-gray-200 text-gray-600 hover:border-teal-300'
+                                }`}
+                        >
+                            🌏 {t['all'] || 'All'}
+                        </button>
+                        {REGIONS.map(reg => (
                             <button
-                                key={reg}
+                                key={reg.id}
                                 type="button"
-                                onClick={() => setRegion(reg)}
-                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${region === reg
+                                onClick={() => setRegion(reg.id)}
+                                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${region === reg.id
                                     ? 'bg-teal-600 border-teal-600 text-white'
                                     : 'bg-white border-gray-200 text-gray-600 hover:border-teal-300'
                                     }`}
                             >
-                                {reg === 'all' && '🌏 '}
-                                {reg === 'tokyo' && '🗼 '}
-                                {reg === 'osaka' && '🏯 '}
-                                {reg === 'kyoto' && '⛩️ '}
-                                {reg === 'melbourne' && '☕ '}
-                                {t[reg] || reg}
+                                {reg.emoji} {lang === 'en' ? reg.nameEn : reg.name}
                             </button>
                         ))}
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search, Compass, MapPin } from 'lucide-react';
 import { Template, LangType, Region } from '../../types';
-import { CITY_FILTERS, TEMPLATES } from '../../data';
+import { CITY_FILTERS, COUNTRY_FILTERS, TEMPLATES } from '../../data';
 
 interface CityPickerProps {
     searchQuery: string;
@@ -20,10 +20,8 @@ const CityPicker: React.FC<CityPickerProps> = ({
     lang,
     t
 }) => {
-    const allCities = [
-        ...CITY_FILTERS.japan,
-        ...CITY_FILTERS.australia
-    ];
+    // Data-driven: collect all cities from all countries
+    const allCities = Object.keys(CITY_FILTERS).flatMap(countryId => CITY_FILTERS[countryId] || []);
 
     const filteredCities = allCities.filter(city => {
         const query = searchQuery.toLowerCase();
@@ -75,9 +73,12 @@ const CityPicker: React.FC<CityPickerProps> = ({
 
                     {/* Action Pills */}
                     <div className="flex justify-center gap-2 overflow-x-auto scrollbar-hide pb-10 px-4">
-                        {['#拉麵特輯', '#免費景點', '#東京必去', '#親子行程'].map(tag => (
+                        {(lang === 'zh'
+                            ? ['#台北老宅', '#台中米其林', '#拉麵特輯', '#免費景點', '#東京必去', '#夜市攻略']
+                            : ['#Taipei Alleys', '#Taichung Michelin', '#Ramen Guide', '#Free Spots', '#Tokyo Musts', '#Night Markets']
+                        ).map(tag => (
                             <button key={tag} className="flex-shrink-0 px-3 py-1 bg-white/50 border border-gray-100 rounded-full text-[10px] font-bold text-gray-500 hover:bg-teal-50 hover:text-teal-600 transition-colors shadow-sm">
-                                {lang === 'zh' ? tag : tag.replace('#', '# ')}
+                                {tag}
                             </button>
                         ))}
                     </div>
@@ -116,7 +117,23 @@ const CityPicker: React.FC<CityPickerProps> = ({
                     </button>
                 </div>
                 <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-1">
-                    {TEMPLATES.slice(0, 4).map(tpl => (
+                    {(() => {
+                        // Pick diverse templates: 1 from each region, then fill to 6
+                        const seen = new Set<string>();
+                        const diverse: Template[] = [];
+                        for (const tpl of TEMPLATES) {
+                            if (!seen.has(tpl.region)) {
+                                seen.add(tpl.region);
+                                diverse.push(tpl);
+                            }
+                        }
+                        // Fill remaining slots if under 6
+                        for (const tpl of TEMPLATES) {
+                            if (diverse.length >= 6) break;
+                            if (!diverse.includes(tpl)) diverse.push(tpl);
+                        }
+                        return diverse.slice(0, 6);
+                    })().map(tpl => (
                         <button
                             key={tpl.id}
                             onClick={() => onPreviewTemplate(tpl)}
@@ -142,7 +159,7 @@ const CityPicker: React.FC<CityPickerProps> = ({
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -109,5 +109,42 @@ export const SAMPLE_CREATORS: Creator[] = [
         tags: ['大阪', '美食', '樂園'],
         tagsEn: ['Osaka', 'Food', 'Theme Park'],
         blogUrl: 'https://osaka-fun.jp'
+    },
+    // ── Taiwan Creators ──
+    {
+        id: 'c-tw1',
+        name: '台北文青散步',
+        nameEn: 'Taipei Culture Walk',
+        avatar: '🌿',
+        description: '用走路的速度感受台北，專門探索巷弄裡的老宅咖啡和秘密景點。',
+        descriptionEn: 'Exploring Taipei at walking pace. Old houses, hidden cafés, and secret spots in alleyways.',
+        followers: 6800,
+        tags: ['台北', '文青', '咖啡'],
+        tagsEn: ['Taipei', 'Culture', 'Coffee'],
+        blogUrl: 'https://taipei-walk.tw'
+    },
+    {
+        id: 'c-tw2',
+        name: '台南吃貨阿嬤',
+        nameEn: 'Tainan Foodie Grandma',
+        avatar: '👵',
+        description: '在台南住了 60 年的阿嬤，帶你吃最道地的在地人美食。',
+        descriptionEn: 'A grandma who lived in Tainan for 60 years. Authentic local food only.',
+        followers: 4500,
+        tags: ['台南', '小吃', '在地'],
+        tagsEn: ['Tainan', 'Street Food', 'Local'],
+        blogUrl: 'https://tainan-grandma.tw'
+    },
+    {
+        id: 'c-tw3',
+        name: '台中巷弄探索家',
+        nameEn: 'Taichung Alley Explorer',
+        avatar: '☕',
+        description: '住在逢甲附近的老宅控，專門挖掘台中巷弄裡的咖啡廳和米其林隱藏美食。',
+        descriptionEn: 'Old house enthusiast near Feng Chia. Digging up hidden cafés and Michelin gems in Taichung alleys.',
+        followers: 5200,
+        tags: ['台中', '老宅', '米其林'],
+        tagsEn: ['Taichung', 'Old Houses', 'Michelin'],
+        blogUrl: 'https://taichung-alley.tw'
     }
 ];

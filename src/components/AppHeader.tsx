@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Map as MapIcon, Globe, FolderOpen, Upload, Share2, X, Check, Calendar, Pencil, Plane, ListChecks } from 'lucide-react';
 import { LangType, Plan, Region, ViewMode } from '../types';
 import { CITY_FILTERS } from '../data/index';
+import { getRegionName } from '../data/regions';
 import { BudgetWidget } from './BudgetWidget';
 
 interface AppHeaderProps {
@@ -108,7 +109,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 <div className="flex items-center gap-1.5 opacity-90">
                                     <Plane size={12} className="text-teal-500 -rotate-45" fill="currentColor" />
                                     <span className="text-[11px] font-black text-gray-800 leading-none uppercase tracking-wide">
-                                        TO {activePlan.destination || (activePlan.region === 'melbourne' ? 'MELBOURNE' : activePlan.region === 'osaka' ? 'OSAKA' : activePlan.region === 'kyoto' ? 'KYOTO' : 'TOKYO')}
+                                        TO {activePlan.destination || getRegionName(activePlan.region || '', 'en').toUpperCase() || 'TOKYO'}
                                     </span>
                                 </div>
                             </div>
@@ -161,7 +162,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             <circle cx="850" cy="100" r="5" />
                             <text x="150" y="90" fontSize="12" fontWeight="bold">TPE</text>
                             <text x="850" y="90" fontSize="12" fontWeight="bold">
-                                {activePlan.region === 'melbourne' ? 'MEL' : activePlan.region === 'osaka' ? 'OSA' : activePlan.region === 'kyoto' ? 'UKY' : 'TYO'}
+                                {activePlan.region ? getRegionName(activePlan.region, 'en').substring(0, 3).toUpperCase() : 'TYO'}
                             </text>
                         </svg>
                     </div>

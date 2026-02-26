@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule, TravelItem } from '../types';
 import { TOKYO_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
+import { getRegionCurrency, getRegionExchangeRate } from '../data/regions';
 
 export interface UsePlansReturn {
     // State
@@ -161,8 +162,8 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             endDate,
             totalDays,
             schedule,
-            targetCurrency: destination === 'melbourne' ? 'AUD' : 'TWD',
-            exchangeRate: destination === 'melbourne' ? 21.0 : 0.22,
+            targetCurrency: getRegionCurrency(destination),
+            exchangeRate: getRegionExchangeRate(destination),
             checklist: defaultChecklist,
             region: destination,
             createdAt: Date.now()

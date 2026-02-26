@@ -3,7 +3,7 @@ export type TransportMode = 'car' | 'walk' | 'public';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation';
 export type ViewMode = 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery' | 'favorites' | 'projects'; // Supports split view and mobile map
-export type Region = 'tokyo' | 'osaka' | 'kyoto' | 'melbourne' | 'all';
+export type Region = string; // Data-driven, managed by REGIONS config in regions.ts
 export type ConfirmType = 'info' | 'warning' | 'error' | 'success';
 
 export interface ConfirmOptions {
@@ -12,6 +12,21 @@ export interface ConfirmOptions {
     confirmText?: string;
     cancelText?: string;
     type?: ConfirmType;
+}
+
+// [NEW] Data-driven Region config — replaces hardcoded switch/case
+export interface RegionConfig {
+    id: string;           // 'taipei', 'tokyo'
+    name: string;         // '台北'
+    nameEn: string;       // 'Taipei'
+    emoji: string;        // '🇹🇼' or '🗼'
+    continent: string;    // 'asia' (for future grouping)
+    country: string;      // 'taiwan' (for future grouping)
+    gradient: string;     // Tailwind gradient classes
+    heroEmoji?: string;   // Large icon for region page fallback
+    coverImage?: string;  // Region page banner image URL
+    currency?: string;    // 'TWD', 'JPY', 'AUD'
+    exchangeRate?: number; // Relative exchange rate
 }
 
 
@@ -108,6 +123,12 @@ export interface DaySchedule {
     evening: ScheduleItem[];
     night: ScheduleItem[];
     accommodation: ScheduleItem[];
+    // [NEW] Themed day enhancements
+    theme?: string;               // "咖啡廳 & 文青小店"
+    themeEn?: string;             // "Cafés & Indie Shops"
+    themeEmoji?: string;          // "☕"
+    swapSuggestion?: string;      // "咖啡廳可替換為獨立書店"
+    swapSuggestionEn?: string;
 }
 
 export interface FullSchedule {
@@ -122,12 +143,15 @@ export interface Plan {
     totalDays: number;
     schedule: FullSchedule;
     checklist: ChecklistItem[];
-    region?: Region; // [NEW] Track the city/region of the plan
-    origin?: string; // [NEW] Departure city (e.g., 'TAIPEI')
-    destination?: string; // [NEW] Arrival city (e.g., 'TOKYO')
+    region?: Region; // Track the city/region of the plan
+    origin?: string; // Departure city (e.g., 'TAIPEI')
+    destination?: string; // Arrival city (e.g., 'TOKYO')
     targetCurrency?: string; // e.g. 'TWD'
     exchangeRate?: number;   // e.g. 0.21 (1 JPY = 0.21 TWD)
     createdAt: number;
+    // [NEW] Template metadata — preserved when applying a template
+    templateId?: string;
+    travelStyle?: string[];  // e.g. ['慢活', '文青'] or ['michelin']
 }
 
 export interface Creator {
@@ -178,7 +202,7 @@ export interface Template {
     isLocked?: boolean;    // If true, requires purchase/unlock
     purchased?: boolean;   // Local state to track if user unlocked it
 
-    // [NEW] Phase 1 UX Upgrade Fields
+    // Phase 1 UX Upgrade Fields
     coverImage?: string;   // Hero image URL
     highlights?: {
         days: number;
@@ -193,4 +217,18 @@ export interface Template {
         summary: string;   // "淺草寺 → 晴空塔 → 隅田川夜景"
     }>;
     hiddenCount?: number;  // Number of hidden/locked items
+
+    // [NEW] Location × Style architecture fields
+    travelStyle?: string[];  // e.g. ['慢活', '文青', 'michelin']
+    targetAudience?: {
+        personas: string[];       // ['慢活族', '文青', '咖啡控']
+        personasEn?: string[];    // ['Slow Traveler', 'Culture Lover']
+        description?: string;     // Free-text description
+        descriptionEn?: string;
+        paceLevel?: 'slow' | 'moderate' | 'fast';
+    };
+    travelTips?: Array<{
+        tip: string;
+        tipEn?: string;
+    }>;
 }

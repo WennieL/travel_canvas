@@ -84,6 +84,63 @@ export const REGION_DEFAULT_CHECKLISTS: Record<Region, Record<string, ChecklistI
             { id: 'mel_4', text: 'Exchange AUD cash', checked: false },
         ]
     },
+    // ── Taiwan Regions ──
+    taipei: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'tp_1', text: '辦好悠遊卡（捷運/公車/超商都能用）', checked: false },
+            { id: 'tp_2', text: '下載「台北捷運 Go」APP', checked: false },
+            { id: 'tp_3', text: '準備雨具（台北常下雨）', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'tp_1', text: 'Get an EasyCard (MRT/Bus/convenience stores)', checked: false },
+            { id: 'tp_2', text: 'Download "Taipei Metro Go" app', checked: false },
+            { id: 'tp_3', text: 'Pack rain gear (Taipei rains often)', checked: false },
+        ]
+    },
+    tainan: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'tn_1', text: '租機車或規劃包車（台南必備）', checked: false },
+            { id: 'tn_2', text: '查好各小吃店營業時間（很多限時營業）', checked: false },
+            { id: 'tn_3', text: '準備防曬用品（台南很熱）', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'tn_1', text: 'Rent a scooter or book a car (essential in Tainan)', checked: false },
+            { id: 'tn_2', text: 'Check street food opening hours (many have limited hours)', checked: false },
+            { id: 'tn_3', text: 'Pack sunscreen (Tainan is very hot)', checked: false },
+        ]
+    },
+    taichung: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'tc_1', text: '下載「台中公車」APP（搭公車 10 公里免費）', checked: false },
+            { id: 'tc_2', text: '台中咖啡廳通常中午才開，不要太早去', checked: false },
+            { id: 'tc_3', text: 'MINIMAL 冰淇淋需提前 2 週預約', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'tc_1', text: 'Download "Taichung Bus" app (first 10km free)', checked: false },
+            { id: 'tc_2', text: 'Taichung cafés usually open at noon, don\'t go too early', checked: false },
+            { id: 'tc_3', text: 'MINIMAL ice cream requires 2-week advance booking', checked: false },
+        ]
+    },
+    hualien: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'hl_1', text: '預訂火車票（台鐵經常售罄）', checked: false },
+            { id: 'hl_2', text: '安排自駕或包車（大眾交通不方便）', checked: false },
+            { id: 'hl_3', text: '太魯閣需申請入山證（部分步道）', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'hl_1', text: 'Book train tickets early (TRA sells out fast)', checked: false },
+            { id: 'hl_2', text: 'Arrange car rental or charter (limited public transit)', checked: false },
+            { id: 'hl_3', text: 'Some Taroko trails need mountain entry permits', checked: false },
+        ]
+    },
     all: { zh: DEFAULT_CHECKLIST.zh, en: DEFAULT_CHECKLIST.en }
 };
 
@@ -405,11 +462,18 @@ export const CATEGORY_FILTERS: { id: 'all' | ItemType; label: string; labelEn: s
 // 地區過濾器 - 兩層結構：國家 → 城市
 export const COUNTRY_FILTERS = [
     { id: 'all', label: '全部', labelEn: 'All', icon: '🌏' },
+    { id: 'taiwan', label: '台灣', labelEn: 'Taiwan', icon: '🇹🇼' },
     { id: 'japan', label: '日本', labelEn: 'Japan', icon: '🇯🇵' },
     { id: 'australia', label: '澳洲', labelEn: 'Australia', icon: '🇦🇺' },
 ];
 
 export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: string; icon: string }[]> = {
+    taiwan: [
+        { id: 'taipei', label: '台北', labelEn: 'Taipei', icon: '🏙️' },
+        { id: 'tainan', label: '台南', labelEn: 'Tainan', icon: '🏮' },
+        { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
+        { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
+    ],
     japan: [
         { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
         { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
@@ -423,6 +487,10 @@ export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: 
 // Legacy support - keep REGION_FILTERS for backwards compatibility
 export const REGION_FILTERS: { id: Region; label: string; labelEn: string; icon: string }[] = [
     { id: 'all', label: '全部', labelEn: 'All', icon: '🌏' },
+    { id: 'taipei', label: '台北', labelEn: 'Taipei', icon: '🏙️' },
+    { id: 'tainan', label: '台南', labelEn: 'Tainan', icon: '🏮' },
+    { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
+    { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
     { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
     { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
     { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },

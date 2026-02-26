@@ -5,6 +5,7 @@ import {
     TimeSlot, TravelItem
 } from '../types';
 import { REGION_DEFAULT_CHECKLISTS } from '../data/index';
+import { getRegionCurrency, getRegionExchangeRate } from '../data/regions';
 
 interface AppActionsDeps {
     plans: Plan[];
@@ -110,8 +111,10 @@ export const useAppActions = (deps: AppActionsDeps) => {
                 region: region,
                 checklist: localizedDefaults,
                 createdAt: Date.now(),
-                targetCurrency: region === 'melbourne' ? 'AUD' : 'TWD',
-                exchangeRate: region === 'melbourne' ? 21.0 : 0.22
+                targetCurrency: getRegionCurrency(region),
+                exchangeRate: getRegionExchangeRate(region),
+                templateId: template.id,
+                travelStyle: template.travelStyle || template.targetAudience?.personas || [],
             };
             setPlans([...plans, newPlan]);
             setActivePlanId(id);
@@ -120,11 +123,13 @@ export const useAppActions = (deps: AppActionsDeps) => {
         } else {
             updateActivePlan({
                 name: templateName,
-                destination: region.toUpperCase(), // [PHASE 12] Fix: Update destination for header sync
+                destination: region.toUpperCase(),
                 totalDays: template.duration,
                 schedule: newSchedule,
                 region: region,
-                checklist: localizedDefaults
+                checklist: localizedDefaults,
+                templateId: template.id,
+                travelStyle: template.travelStyle || template.targetAudience?.personas || [],
             });
         }
         setCurrentDay(1);

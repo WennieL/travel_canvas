@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
 import { Template, ScheduleItem, DaySchedule, FullSchedule } from '../../types';
+import { getGradient, getRegionEmoji, getRegionName } from '../../data/regions';
 
 interface TemplatePreviewModalProps {
     isOpen: boolean;
@@ -67,16 +68,8 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     const hiddenCount = template.hiddenCount ||
         Object.values(template.schedule).flat().filter((item: ScheduleItem) => item.isLocked).length || 2;
 
-    // City-based gradient for cover placeholder
-    const getCoverGradient = (region: string) => {
-        switch (region) {
-            case 'tokyo': return 'from-indigo-500 via-purple-500 to-pink-500';
-            case 'kyoto': return 'from-emerald-500 via-teal-500 to-cyan-500';
-            case 'osaka': return 'from-orange-500 via-red-500 to-pink-500';
-            case 'melbourne': return 'from-amber-500 via-yellow-500 to-lime-500';
-            default: return 'from-teal-500 via-emerald-500 to-green-500';
-        }
-    };
+    // City-based gradient for cover placeholder (data-driven)
+    const coverGradient = getGradient(template.region);
 
     return (
         <div className="fixed inset-0 z-[3000] flex justify-center items-center pointer-events-none p-4">
@@ -109,12 +102,9 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                 className="w-full h-48 md:h-56 object-cover"
                             />
                         ) : (
-                            <div className={`w-full h-48 md:h-56 bg-gradient-to-br ${getCoverGradient(template.region)} flex items-center justify-center`}>
+                            <div className={`w-full h-48 md:h-56 bg-gradient-to-br ${coverGradient} flex items-center justify-center`}>
                                 <div className="text-white/30 text-6xl">
-                                    {template.region === 'tokyo' ? '🗼' :
-                                        template.region === 'kyoto' ? '⛩️' :
-                                            template.region === 'osaka' ? '🏯' :
-                                                template.region === 'melbourne' ? '☕' : '🌏'}
+                                    {getRegionEmoji(template.region)}
                                 </div>
                             </div>
                         )}
@@ -173,15 +163,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                             {lang === 'en' && template.authorEn ? template.authorEn : template.author}
                                         </span>
                                         <span className="text-xs text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full font-medium">
-                                            {lang === 'zh'
-                                                ? (template.region === 'tokyo' ? t.tokyoExpert :
-                                                    template.region === 'kyoto' ? t.kyotoExpert :
-                                                        template.region === 'osaka' ? t.osakaExpert :
-                                                            template.region === 'melbourne' ? t.melbourneLocal : t.travelExpert)
-                                                : (template.region === 'tokyo' ? t.tokyoExpert :
-                                                    template.region === 'kyoto' ? t.kyotoExpert :
-                                                        template.region === 'osaka' ? t.osakaExpert :
-                                                            template.region === 'melbourne' ? t.melbourneLocal : t.travelExpert)}
+                                            {t[`${template.region}Expert`] || getRegionName(template.region, lang === 'en' ? 'en' : 'zh') + (lang === 'zh' ? '達人' : ' Expert')}
                                         </span>
                                     </div>
                                     {template.coverStory?.quote && (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, X, Check } from 'lucide-react';
 import { Region, LangType } from '../../types';
-import { CITY_FILTERS } from '../../data';
+import { CITY_FILTERS, COUNTRY_FILTERS } from '../../data';
 
 interface CitySelectorProps {
     activeRegion: Region;
@@ -18,6 +18,18 @@ export const CitySelector: React.FC<CitySelectorProps> = ({
 }) => {
     const [showCitySelector, setShowCitySelector] = useState(false);
 
+    // Data-driven city lookup across all countries
+    const findCity = (regionId: Region) => {
+        for (const countryId in CITY_FILTERS) {
+            const city = CITY_FILTERS[countryId]?.find(c => c.id === regionId);
+            if (city) return city;
+        }
+        return null;
+    };
+
+    // Get non-'all' countries for the dropdown sections
+    const countryEntries = COUNTRY_FILTERS.filter(c => c.id !== 'all');
+
     return (
         <div className="px-5 pt-2 pb-2 border-b border-gray-50 bg-gray-50/30">
             <div className="relative">
@@ -29,7 +41,7 @@ export const CitySelector: React.FC<CitySelectorProps> = ({
                         <MapPin size={14} className={showCitySelector ? 'text-white' : 'text-teal-500'} />
                         <span className="whitespace-nowrap">
                             {(() => {
-                                const city = CITY_FILTERS?.japan?.find(c => c.id === activeRegion) || CITY_FILTERS?.australia?.find(c => c.id === activeRegion);
+                                const city = findCity(activeRegion);
                                 if (!city) return t.allCities || (lang === 'zh' ? '所有城市' : 'All Cities');
                                 return lang === 'en' ? city.labelEn : city.label;
                             })()}
@@ -47,46 +59,30 @@ export const CitySelector: React.FC<CitySelectorProps> = ({
                                 <button onClick={() => setShowCitySelector(false)} className="text-gray-400 hover:text-gray-600"><X size={14} /></button>
                             </div>
                             <div className="max-h-72 overflow-y-auto pr-1 custom-scrollbar">
-                                <div className="text-[10px] font-bold text-gray-400 px-2 py-2 uppercase tracking-wider opacity-60 flex items-center gap-2">
-                                    <div className="w-1 h-1 rounded-full bg-gray-300" /> Japan
-                                </div>
-                                {CITY_FILTERS?.japan?.map(city => (
-                                    <button
-                                        key={city.id}
-                                        onClick={() => {
-                                            setActiveRegion(city.id);
-                                            setShowCitySelector(false);
-                                        }}
-                                        className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium flex items-center gap-2 mb-1 transition-all ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                    >
-                                        <span className="text-lg">{city.icon}</span>
-                                        <div className="flex flex-col">
-                                            <span className="font-bold">{lang === 'zh' ? city.label : city.labelEn}</span>
-                                            <span className="text-[9px] text-gray-400 font-normal uppercase tracking-tight">{city.id}</span>
+                                {countryEntries.map((country, idx) => (
+                                    <React.Fragment key={country.id}>
+                                        {idx > 0 && <div className="h-px bg-gray-100 my-2 mx-2"></div>}
+                                        <div className="text-[10px] font-bold text-gray-400 px-2 py-2 uppercase tracking-wider opacity-60 flex items-center gap-2">
+                                            <div className="w-1 h-1 rounded-full bg-gray-300" /> {country.icon} {lang === 'en' ? country.labelEn : country.label}
                                         </div>
-                                        {activeRegion === city.id && <Check size={14} className="ml-auto" />}
-                                    </button>
-                                ))}
-                                <div className="h-px bg-gray-100 my-2 mx-2"></div>
-                                <div className="text-[10px] font-bold text-gray-400 px-2 py-2 uppercase tracking-wider opacity-60 flex items-center gap-2">
-                                    <div className="w-1 h-1 rounded-full bg-gray-300" /> Australia
-                                </div>
-                                {CITY_FILTERS?.australia?.map(city => (
-                                    <button
-                                        key={city.id}
-                                        onClick={() => {
-                                            setActiveRegion(city.id);
-                                            setShowCitySelector(false);
-                                        }}
-                                        className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium flex items-center gap-2 mb-1 transition-all ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
-                                    >
-                                        <span className="text-lg">{city.icon}</span>
-                                        <div className="flex flex-col">
-                                            <span className="font-bold">{lang === 'zh' ? city.label : city.labelEn}</span>
-                                            <span className="text-[9px] text-gray-400 font-normal uppercase tracking-tight">{city.id}</span>
-                                        </div>
-                                        {activeRegion === city.id && <Check size={14} className="ml-auto" />}
-                                    </button>
+                                        {CITY_FILTERS?.[country.id]?.map(city => (
+                                            <button
+                                                key={city.id}
+                                                onClick={() => {
+                                                    setActiveRegion(city.id);
+                                                    setShowCitySelector(false);
+                                                }}
+                                                className={`w-full text-left px-3 py-2 rounded-xl text-xs font-medium flex items-center gap-2 mb-1 transition-all ${activeRegion === city.id ? 'bg-teal-50 text-teal-600' : 'hover:bg-gray-50 text-gray-700'}`}
+                                            >
+                                                <span className="text-lg">{city.icon}</span>
+                                                <div className="flex flex-col">
+                                                    <span className="font-bold">{lang === 'zh' ? city.label : city.labelEn}</span>
+                                                    <span className="text-[9px] text-gray-400 font-normal uppercase tracking-tight">{city.id}</span>
+                                                </div>
+                                                {activeRegion === city.id && <Check size={14} className="ml-auto" />}
+                                            </button>
+                                        ))}
+                                    </React.Fragment>
                                 ))}
                             </div>
                         </div>
