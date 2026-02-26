@@ -588,6 +588,7 @@ export const TEMPLATES: Template[] = [
         nameEn: 'Taipei Slow Travel 3-Day',
         title: '用走路的速度，感受台北的呼吸',
         titleEn: 'Feel Taipei at Walking Pace',
+        coverImage: 'https://images.unsplash.com/photo-1601534622119-e9b3aa7c7bdf?auto=format&fit=crop&q=80&w=1000',
         author: '台北文青散步',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
@@ -670,6 +671,7 @@ export const TEMPLATES: Template[] = [
         nameEn: 'Tainan Food Walk 2-Day',
         title: '跟著阿孆的口袋名單，吃遍台南',
         titleEn: 'Follow Grandma\'s Secret Food List Through Tainan',
+        coverImage: 'https://images.unsplash.com/photo-1633228491597-b39f823e0541?auto=format&fit=crop&q=80&w=1000',
         author: '台南吃貨阿孆',
         authorEn: 'Tainan Foodie Grandma',
         authorId: 'c-tw2',
@@ -732,6 +734,7 @@ export const TEMPLATES: Template[] = [
         nameEn: 'Hualien Nature Healing 3-Day',
         title: '山海之間，找回呼吸的節奏',
         titleEn: 'Between Mountains & Sea, Find Your Rhythm',
+        coverImage: 'https://images.unsplash.com/photo-1592833905014-498499c6381c?auto=format&fit=crop&q=80&w=1000',
         author: '台北文青散步',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
@@ -806,6 +809,7 @@ export const TEMPLATES: Template[] = [
         nameEn: 'Taichung Old House Caf\u00e9 & Alley Tour 3-Day',
         title: '推開木門，走進台中的時光膠囊',
         titleEn: 'Push Open the Wooden Door, Step Into Taichung\'s Time Capsule',
+        coverImage: 'https://images.unsplash.com/photo-1583654979589-aa7a6053a0d6?auto=format&fit=crop&q=80&w=1000',
         author: '台中巷弄探索家',
         authorEn: 'Taichung Alley Explorer',
         authorId: 'c-tw3',
@@ -896,6 +900,7 @@ export const TEMPLATES: Template[] = [
         nameEn: '🌟 Taichung Michelin Alley Food 2-Day',
         title: '從全球唯一米其林冰淇淋開始，吃遍台中巷弄',
         titleEn: 'Start from the World\'s Only Michelin Ice Cream, Eat Through Taichung Alleys',
+        coverImage: 'https://images.unsplash.com/photo-1647685103344-d593814c00c3?auto=format&fit=crop&q=80&w=1000',
         author: '台中巷弄探索家',
         authorEn: 'Taichung Alley Explorer',
         authorId: 'c-tw3',
@@ -918,7 +923,7 @@ export const TEMPLATES: Template[] = [
         coverStory: {
             quote: '台中的米其林不在高樓裡，在你找不到的巷子裡。',
             quoteEn: 'Taichung\'s Michelin isn\'t in skyscrapers — it\'s in alleys you can\'t find.',
-            description: '全球唯一米其林星級冰淇淋 MINIMAL，藏在巷子裡的必比登台菜，週只開三天的眷村麵。餐與餐之間穿插咖啡廳和藝術館。',
+            description: '全球唯一米其林星級冰淇淋 MINIMAL，藏在巷子裡的必比登台菜，週只開三天的眷村麵。餐與餐之間穿穿咖啡廳和藝術館。',
             authorLabel: '台中米其林探索者'
         },
         travelTips: [
@@ -996,6 +1001,7 @@ export const TEMPLATES: Template[] = [
         nameEn: 'Taipei Night Markets & Culture 2-Day',
         title: '白天文青、晚上夜市，台北的雙面魅力',
         titleEn: 'Culture by Day, Night Markets by Night: Taipei\'s Dual Charm',
+        coverImage: 'https://images.unsplash.com/photo-1572715381359-002b1eabd56b?auto=format&fit=crop&q=80&w=1000',
         author: '台北文青散步',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
@@ -1006,7 +1012,7 @@ export const TEMPLATES: Template[] = [
         targetAudience: {
             personas: ['夜貓族', '文青'],
             personasEn: ['Night Owl', 'Culture Lover'],
-            description: '適合悄晚以後才有精神、喜歡夜市能量的人',
+            description: '適合晚以後才有精神、喜歡夜市能量的人',
             paceLevel: 'moderate'
         },
         vibes: [

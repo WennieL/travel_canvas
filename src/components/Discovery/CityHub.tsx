@@ -56,10 +56,10 @@ const CityHub: React.FC<CityHubProps> = ({
                             melbourne: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?q=80&w=2071&auto=format&fit=crop',
                             osaka: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?q=80&w=2000&auto=format&fit=crop',
                             kyoto: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2000&auto=format&fit=crop',
-                            taipei: 'https://images.unsplash.com/photo-1470004914212-05527e49370b?q=80&w=2000&auto=format&fit=crop',
-                            tainan: 'https://images.unsplash.com/photo-1604662407468-ba1a07cd5ce7?q=80&w=2000&auto=format&fit=crop',
-                            taichung: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?q=80&w=2094&auto=format&fit=crop',
-                            hualien: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2000&auto=format&fit=crop',
+                            taipei: 'https://images.unsplash.com/photo-1598935898639-81586f7d2129?auto=format&fit=crop&q=80&w=2000',
+                            tainan: 'https://images.unsplash.com/photo-1650039635890-e9f79cb10e38?auto=format&fit=crop&q=80&w=2000',
+                            taichung: 'https://images.unsplash.com/photo-1657724738729-3b4ec7b665de?auto=format&fit=crop&q=80&w=2000',
+                            hualien: 'https://images.unsplash.com/photo-1600795581415-2c921178cc2a?auto=format&fit=crop&q=80&w=2000',
                         }[regionId as string] || 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1974&auto=format&fit=crop'}
                         className="w-full h-full object-cover opacity-80 transition-transform duration-[12s] group-hover:scale-110 ease-out"
                         alt={city.label}
