@@ -29,14 +29,32 @@ export const TEMPLATES: Template[] = [
             description: '跟著在地人的腳步，從站著喝咖啡的儀式感開始，穿越塗鴉巷弄，最後在隱藏酒吧結束完美的一天。',
             authorLabel: '墨爾本在地人私房推薦'
         },
+        travelStyle: ['咖啡', '文化'],
+        targetAudience: {
+            personas: ['咖啡控', '文青'],
+            personasEn: ['Coffee Nerd', 'Culture Lover'],
+            description: '適合喜歡在地咖啡文化、街頭藝術和巷弄探索的旅人',
+            paceLevel: 'moderate'
+        },
+        travelTips: [
+            { tip: '墨爾本咖啡店通常不提供外帶杯，自備杯子更環保', tipEn: 'Melbourne cafés often don\'t offer takeaway cups, bring your own' },
+            { tip: '巷弄塗鴉會定期更換，每次去都有新驚喜', tipEn: 'Laneway graffiti changes regularly, always something new' }
+        ],
         duration: 1,
         rating: 4.9,
         tier: 'official',
         copiedCount: 0,
         price: 0.99,
         isLocked: false,
+        highlights: { days: 1, spots: 5, tips: 4, rating: 4.9, usageCount: 0 },
+        dayPreviews: [
+            { day: 1, summary: 'Patricia Coffee → Hosier Lane → Queen Vic Market → Bar Americano' }
+        ],
         schedule: {
             'Day 1': {
+                theme: '\u5496\u5561\u6587\u5316 & \u5df7\u5f04\u85dd\u8853',
+                themeEn: 'Coffee Culture & Laneway Art',
+                themeEmoji: '\u2615',
                 morning: [
                     { ...MELBOURNE_ASSETS[0], instanceId: 'mel-c-1', startTime: '08:00', arrivalTransport: 'public' },
                     { ...MELBOURNE_ASSETS[1], instanceId: 'mel-c-2', startTime: '09:30', arrivalTransport: 'walk' }
@@ -77,6 +95,17 @@ export const TEMPLATES: Template[] = [
             description: '從書架後的禁酒時期酒吧，到冷藏庫門後的熱帶天堂。這不是普通的酒吧巡禮，而是一場城市尋寶。',
             authorLabel: '夜生活達人精選路線'
         },
+        travelStyle: ['夜生活', '探險'],
+        targetAudience: {
+            personas: ['夜貓族', '調酒愛好者'],
+            personasEn: ['Night Owl', 'Cocktail Enthusiast'],
+            description: '適合喜歡探索隱藏酒吧、享受精緻調酒的夜生活玩家',
+            paceLevel: 'slow'
+        },
+        travelTips: [
+            { tip: '大部分隱藏酒吧不接受預約，直接去排隊', tipEn: 'Most hidden bars don\'t take reservations, just queue up' },
+            { tip: '穿著不要太休閒，部分酒吧有 dress code', tipEn: 'Don\'t dress too casually, some bars have dress codes' }
+        ],
         duration: 1,
         rating: 4.8,
         tier: 'creator',
@@ -84,8 +113,15 @@ export const TEMPLATES: Template[] = [
         price: 0.99,
         originalPrice: 4.99,
         isLocked: true,
+        highlights: { days: 1, spots: 3, tips: 4, rating: 4.8, usageCount: 0 },
+        dayPreviews: [
+            { day: 1, summary: 'Bar Americano → Eau de Vie → Robot Bar' }
+        ],
         schedule: {
             'Day 1': {
+                theme: '禁酒時期酒吧巡禮',
+                themeEn: 'Prohibition Era Bar Crawl',
+                themeEmoji: '🥃',
                 morning: [],
                 afternoon: [],
                 evening: [
@@ -124,13 +160,35 @@ export const TEMPLATES: Template[] = [
             description: '從下町的昭和喛茶店，到隱藏在表參道巷弄的設計師聚落。這不是觀光客的打卡行程，而是一場與東京老靈魂的對話。',
             authorLabel: '東京在地 10 年設計師推薦'
         },
+        travelStyle: ['文青', '深度'],
+        targetAudience: {
+            personas: ['初心者', '文青', '攝影師'],
+            personasEn: ['First-Timer', 'Culture Lover', 'Photographer'],
+            description: '適合第一次去東京、想避開觀光客路線的深度旅行者',
+            paceLevel: 'moderate'
+        },
+        travelTips: [
+            { tip: '購買 Suica 卡，搭地鐵比計程車方便很多', tipEn: 'Get a Suica card, subway is much more convenient than taxis' },
+            { tip: '便利商店的食物品質超乎想像，不要小看它', tipEn: 'Convenience store food quality is incredible, don\'t underestimate it' },
+            { tip: '記得帶零錢，很多自動販賣機不收大鈔', tipEn: 'Bring small change, many vending machines don\'t accept large bills' }
+        ],
         duration: 4,
         rating: 4.8,
         price: 0.99,
         tier: 'official',
         copiedCount: 1205,
+        highlights: { days: 4, spots: 10, tips: 6, rating: 4.8, usageCount: 1205 },
+        dayPreviews: [
+            { day: 1, summary: '淺草寺 → 晴空塔 → 澀谷 → TeamLab → Shibuya Sky' },
+            { day: 2, summary: '築地市場 → 銀座 → 六本木' },
+            { day: 3, summary: '新宿御苑 → 原宿 → 表參道' },
+            { day: 4, summary: '秋葉原 → 上野公園 → 阿美橫町' }
+        ],
         schedule: {
             'Day 1': {
+                theme: '下町散步 & 昭和風情',
+                themeEn: 'Downtown Walk & Showa Vibes',
+                themeEmoji: '⛩️',
                 morning: [
                     {
                         ...TOKYO_ASSETS[0], // 淺草寺
@@ -225,12 +283,30 @@ export const TEMPLATES: Template[] = [
             description: '這不是普通的美食清單。從凌晨5點的築地市場，到深夜的黃金街居酒屋，帶你吃遍在地人的口袋名單。',
             authorLabel: '東京美食評論家推薦'
         },
+        travelStyle: ['美食', '吃貨'],
+        targetAudience: {
+            personas: ['吃貨', '美食探險家'],
+            personasEn: ['Foodie', 'Food Adventurer'],
+            description: '適合想用一天吃遍東京精華的美食狂人',
+            paceLevel: 'fast'
+        },
+        travelTips: [
+            { tip: '築地市場要早上 6 點前到，太晚人太多', tipEn: 'Arrive at Tsukiji before 6 AM, too crowded later' },
+            { tip: '午餐的燒肉套餐比晚餐便宜很多', tipEn: 'Lunch yakiniku sets are much cheaper than dinner' }
+        ],
         duration: 1,
         rating: 4.6,
         tier: 'creator',
         copiedCount: 856,
+        highlights: { days: 1, spots: 6, tips: 4, rating: 4.6, usageCount: 856 },
+        dayPreviews: [
+            { day: 1, summary: '築地市場 → 淺草 → 燒肉 → 表參道 → 一蘭拉麵 → 黃金街' }
+        ],
         schedule: {
             'Day 1': {
+                theme: '從早吃到晚的美食馬拉松',
+                themeEn: 'Dawn-to-Dusk Food Marathon',
+                themeEmoji: '🍜',
                 morning: [
                     {
                         ...TOKYO_ASSETS[7], // 築地市場
@@ -328,6 +404,18 @@ export const TEMPLATES: Template[] = [
             description: '清晨無人的竹林小徑、隱藏在町家裡的茶室、只有在地人知道的賞楓秘境。這是一趟讓心慢下來的旅程。',
             authorLabel: '京都在住者私房路線'
         },
+        travelStyle: ['慢活', '禪意'],
+        targetAudience: {
+            personas: ['慢活族', '禪意旅人'],
+            personasEn: ['Slow Traveler', 'Zen Seeker'],
+            description: '適合想遠離人潮、在千年古都中找到內心平靜的旅人',
+            paceLevel: 'slow'
+        },
+        travelTips: [
+            { tip: '清晨的竹林沒什麼人，6 點出發最好', tipEn: 'Bamboo grove is empty at dawn, leave at 6 AM' },
+            { tip: '京都巴士一日券非常划算，到處都能到', tipEn: 'Kyoto bus day pass is great value, goes everywhere' },
+            { tip: '穿和服走在石板路上要小心，建議穿平底鞋', tipEn: 'Be careful walking on stone paths in kimono, flat shoes recommended' }
+        ],
         duration: 3,
         rating: 4.8,
         tier: 'creator',
@@ -335,8 +423,17 @@ export const TEMPLATES: Template[] = [
         price: 0.99,
         originalPrice: 4.99,
         isLocked: true,
+        highlights: { days: 3, spots: 6, tips: 6, rating: 4.8, usageCount: 567 },
+        dayPreviews: [
+            { day: 1, summary: '金閣寺 → 嵐山竹林 → 清水寺 → 中村藤吉抹茶' },
+            { day: 2, summary: '伏見稻荷 → 祇園 → 花見小路' },
+            { day: 3, summary: '哲學之道 → 銀閣寺 → 村上春樹爵士吧' }
+        ],
         schedule: {
             'Day 1': {
+                theme: '金閣 & 竹林秘境',
+                themeEn: 'Golden Temple & Bamboo Secrets',
+                themeEmoji: '🎋',
                 morning: [
                     {
                         ...KYOTO_ASSETS[0], // 金閣寺
@@ -411,14 +508,33 @@ export const TEMPLATES: Template[] = [
             description: '從 USJ 的瘋狂冒險，到道頓堀的美食轟炸。這是一跟讓你笑著來、撐著走的大阪之旅。',
             authorLabel: '大阪在地人私房推薦'
         },
+        travelStyle: ['歡樂', '美食'],
+        targetAudience: {
+            personas: ['親子', '吃貨', '樂園控'],
+            personasEn: ['Family', 'Foodie', 'Theme Park Fan'],
+            description: '適合想要同時享受美食和遊樂園的歡樂旅人',
+            paceLevel: 'fast'
+        },
+        travelTips: [
+            { tip: 'USJ 快速通關券建議提前線上購買', tipEn: 'Buy USJ Express Pass online in advance' },
+            { tip: '道頓堀的章魚燒排隊很長，推薦去旁邊巷子的在地店', tipEn: 'Skip the long takoyaki lines on Dotonbori, try local shops in side alleys' }
+        ],
         duration: 2,
         rating: 4.7,
         tier: 'official',
         copiedCount: 432,
         price: 0.99,
         isLocked: false,
+        highlights: { days: 2, spots: 6, tips: 4, rating: 4.7, usageCount: 432 },
+        dayPreviews: [
+            { day: 1, summary: '環球影城 → 道頓堀 → 大阪城 → 千房大阪燒' },
+            { day: 2, summary: '黑門市場 → 通天閣 → 新世界串炸' }
+        ],
         schedule: {
             'Day 1': {
+                theme: '環球影城 & 道頓堀美食',
+                themeEn: 'Universal Studios & Dotonbori Eats',
+                themeEmoji: '🎢',
                 morning: [
                     {
                         ...OSAKA_ASSETS[3], // 環球影城

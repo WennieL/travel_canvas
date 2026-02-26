@@ -22,10 +22,8 @@ const CityHub: React.FC<CityHubProps> = ({
     lang,
     t
 }) => {
-    const allCities = [
-        ...CITY_FILTERS.japan,
-        ...CITY_FILTERS.australia
-    ];
+    // Data-driven: collect all cities from all countries
+    const allCities = Object.keys(CITY_FILTERS).flatMap(countryId => CITY_FILTERS[countryId] || []);
 
     const city = allCities.find(c => c.id === regionId);
     if (!city) return null;
@@ -53,12 +51,16 @@ const CityHub: React.FC<CityHubProps> = ({
             <div className="px-5 mt-6 mb-10">
                 <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-[2.5rem] overflow-hidden bg-gray-900 shadow-2xl group border-4 border-white">
                     <img
-                        src={regionId === 'tokyo'
-                            ? "https://images.unsplash.com/photo-1540959733332-e9ab42be6125?q=80&w=2094&auto=format&fit=crop"
-                            : regionId === 'melbourne'
-                                ? "https://images.unsplash.com/photo-1514395462725-fb4566210144?q=80&w=2071&auto=format&fit=crop"
-                                : "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1974&auto=format&fit=crop"
-                        }
+                        src={{
+                            tokyo: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?q=80&w=2094&auto=format&fit=crop',
+                            melbourne: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?q=80&w=2071&auto=format&fit=crop',
+                            osaka: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?q=80&w=2000&auto=format&fit=crop',
+                            kyoto: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2000&auto=format&fit=crop',
+                            taipei: 'https://images.unsplash.com/photo-1470004914212-05527e49370b?q=80&w=2000&auto=format&fit=crop',
+                            tainan: 'https://images.unsplash.com/photo-1604662407468-ba1a07cd5ce7?q=80&w=2000&auto=format&fit=crop',
+                            taichung: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?q=80&w=2094&auto=format&fit=crop',
+                            hualien: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2000&auto=format&fit=crop',
+                        }[regionId as string] || 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1974&auto=format&fit=crop'}
                         className="w-full h-full object-cover opacity-80 transition-transform duration-[12s] group-hover:scale-110 ease-out"
                         alt={city.label}
                     />
