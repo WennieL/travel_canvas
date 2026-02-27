@@ -187,6 +187,36 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             }
         }
     },
+    // === HOTEL ===
+    {
+        id: 'tw-h1',
+        title: '町·記憶旅店',
+        titleEn: 'Cho Memory Hotel',
+        type: 'hotel' as const,
+        duration: '0',
+        image: '🏨',
+        description: '西門町巷弄中的文青設計旅店，走路 3 分鐘到西門捷運站。',
+        descriptionEn: 'Boutique design hotel in Ximending alleys, 3-min walk to MRT.',
+        price: 2200,
+        address: '台北市萬華區西門町',
+        rating: 4.5,
+        lat: 25.0425,
+        lng: 121.5081,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['住宿', '設計旅店'],
+        insiderTip: {
+            teaser: '西門町最有設計感的平價旅店',
+            teaserEn: 'Most stylish budget hotel in Ximending',
+            full: {
+                story: '日式簡約風設計，每層樓以不同台灣意象為主題。頂樓有小露台可以看西門町夜景。櫃檯提供免費在地小食地圖。',
+                exactLocation: '西門站 6 號出口步行 3 分鐘',
+                mustTry: '頂樓露台看西門町霓虹夜景',
+                avoid: '假日建議提早訂房',
+                bestTime: '入住後到頂樓看夜景'
+            }
+        }
+    },
 ];
 
 // ── Tainan 台南 ──────────────────────────────────────────
@@ -283,6 +313,36 @@ export const TAINAN_ASSETS: TravelItem[] = [
             }
         }
     },
+    // === HOTEL ===
+    {
+        id: 'tn-h1',
+        title: '煙波大飯店台南館',
+        titleEn: 'Lakeshore Hotel Tainan',
+        type: 'hotel' as const,
+        duration: '0',
+        image: '🏨',
+        description: '中西區核心地段設計飯店，步行可達國華街與神農街。',
+        descriptionEn: 'Design hotel in Tainan core area, walking distance to Guohua St. and Shennong St.',
+        price: 2800,
+        address: '台南市中西區',
+        rating: 4.6,
+        lat: 22.9933,
+        lng: 120.2010,
+        region: 'tainan',
+        authorId: 'c-tw2',
+        tags: ['住宿', '設計旅店'],
+        insiderTip: {
+            teaser: '走路就能到國華街和神農街',
+            teaserEn: 'Walking distance to Guohua St. and Shennong St.',
+            full: {
+                story: '位置極佳，步行就能到台南最精華的美食區。房間設計融入台南老宅元素，早餐自助吧有在地美食。建議住高樓層可以看到台南老城區夜景。',
+                exactLocation: '中西區市中心',
+                mustTry: '早餐自助吧的台南在地小吃',
+                avoid: '假日價格較高',
+                bestTime: '入住後散步到神農街看夜景'
+            }
+        }
+    },
 ];
 
 // ── Hualien 花蓮 ────────────────────────────────────────
@@ -375,6 +435,36 @@ export const HUALIEN_ASSETS: TravelItem[] = [
                 mustTry: '坐露天座位點一杯手沖',
                 avoid: '下雨天露天區關閉',
                 bestTime: '下午 15:00-17:00'
+            }
+        }
+    },
+    // === HOTEL ===
+    {
+        id: 'hl-h1',
+        title: '煙波花蓮太魯閣',
+        titleEn: 'Lakeshore Hotel Taroko',
+        type: 'hotel' as const,
+        duration: '0',
+        image: '🏨',
+        description: '太魯閣入口處的度假飯店，無邊際泳池望向中央山脈。',
+        descriptionEn: 'Resort hotel at Taroko entrance, infinity pool facing Central Mountain Range.',
+        price: 4500,
+        address: '花蓮縣秀林鄉',
+        rating: 4.7,
+        lat: 24.1560,
+        lng: 121.6210,
+        region: 'hualien',
+        authorId: 'c-tw1',
+        tags: ['住宿', '度假'],
+        insiderTip: {
+            teaser: '花蓮最美無邊際泳池飯店',
+            teaserEn: 'Most beautiful infinity pool hotel in Hualien',
+            full: {
+                story: '泳池直接面向中央山脈，日出時的景色令人屏息。房間寬敞，每間都有陽台。建議傍晚到頂樓酒吧看夕陽。',
+                exactLocation: '太魯閣國家公園入口處',
+                mustTry: '頂樓酒吧看夕陽 + 無邊際泳池',
+                avoid: '旺季需提前一個月訂房',
+                bestTime: '清晨泳池看日出'
             }
         }
     },
@@ -595,6 +685,36 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
                 mustTry: '終點的手工粉圓冰',
                 avoid: '雨天步道濕滑',
                 bestTime: '清晨或傍晚'
+            }
+        }
+    },
+    // === HOTEL ===
+    {
+        id: 'tc-h1',
+        title: '植光花園酒店',
+        titleEn: 'SOF Hotel',
+        type: 'hotel' as const,
+        duration: '0',
+        image: '🏨',
+        description: '台中火車站旁廢墟改造的設計酒店，清水模 × 綠植的工業風美學。',
+        descriptionEn: 'Ruin-renovated design hotel near Taichung Station. Industrial chic with concrete × plants.',
+        price: 2600,
+        address: '台中市中區',
+        rating: 4.6,
+        lat: 24.1370,
+        lng: 120.6870,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['住宿', '設計旅店', '老建築'],
+        insiderTip: {
+            teaser: '廢墟重生的台中最潮設計旅店',
+            teaserEn: 'Taichung\'s trendiest hotel, reborn from ruins',
+            full: {
+                story: '原本是一棟即將拆除的老建築，被設計師改造成充滿植物的工業風酒店。大廳挑高三層，陽光從天井灑下來。每間房間風格不同，推薦「森林房」。',
+                exactLocation: '台中火車站步行 5 分鐘',
+                mustTry: '在大廳的植物叢林裡喝一杯咖啡',
+                avoid: '隔音普通，怕吵的選高樓層',
+                bestTime: '下午 check-in 後到大廳拍照'
             }
         }
     },

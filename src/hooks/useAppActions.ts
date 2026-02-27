@@ -73,7 +73,10 @@ export const useAppActions = (deps: AppActionsDeps) => {
                     afternoon: copy(fullSched[dayKey].afternoon),
                     evening: copy(fullSched[dayKey].evening),
                     night: copy(fullSched[dayKey].night),
-                    accommodation: copy(fullSched[dayKey].accommodation)
+                    accommodation: copy(fullSched[dayKey].accommodation),
+                    theme: fullSched[dayKey].theme,
+                    themeEn: fullSched[dayKey].themeEn,
+                    themeEmoji: fullSched[dayKey].themeEmoji
                 };
             });
         } else {
@@ -84,7 +87,10 @@ export const useAppActions = (deps: AppActionsDeps) => {
                     afternoon: copy(daySched.afternoon),
                     evening: copy(daySched.evening),
                     night: copy(daySched.night),
-                    accommodation: copy(daySched.accommodation)
+                    accommodation: copy(daySched.accommodation),
+                    theme: daySched.theme,
+                    themeEn: daySched.themeEn,
+                    themeEmoji: daySched.themeEmoji
                 };
             }
         }
@@ -135,6 +141,9 @@ export const useAppActions = (deps: AppActionsDeps) => {
         setCurrentDay(1);
         ui.setShowMobileLibrary(false);
         ui.setShowPlanManager(false);
+
+        // [FIX] Sync sidebar/map region with the template's region
+        ui.setActiveRegion(region);
 
         // [PHASE 17 FIX] Ensure sidebar shows the plan list immediately after creation/application
         ui.setActiveTab('projects');

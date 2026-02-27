@@ -201,10 +201,16 @@ export function useItinerary(
     };
 
     const handleQuickFill = (slot: TimeSlot) => {
-        const region = activePlan.region || 'kyoto';
-        const regionData = ALL_SUGGESTIONS[region] || ALL_SUGGESTIONS['kyoto'];
-        const regionSuggestions = regionData[slot] || [];
-        if (regionSuggestions.length === 0) return;
+        const region = activePlan.region || Object.keys(ALL_SUGGESTIONS)[0] || 'tokyo';
+        const regionData = ALL_SUGGESTIONS[region] || ALL_SUGGESTIONS[Object.keys(ALL_SUGGESTIONS)[0]];
+        const regionSuggestions = regionData?.[slot] || [];
+        if (regionSuggestions.length === 0) {
+            showToastMessage(
+                lang === 'zh' ? '此時段暫無建議項目' : 'No suggestions for this slot yet',
+                'info', 2500
+            );
+            return;
+        }
 
         const itemData = regionSuggestions[Math.floor(Math.random() * regionSuggestions.length)];
         if (itemData) {

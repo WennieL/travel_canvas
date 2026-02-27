@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
+import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Users, Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
 import { Template, ScheduleItem, DaySchedule, FullSchedule } from '../../types';
 import { getGradient, getRegionEmoji, getRegionName } from '../../data/regions';
 
@@ -145,6 +145,30 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                 )}
                             </span>
                         </div>
+
+                        {/* Who is this for? */}
+                        {template.targetAudience && (
+                            <div className="bg-slate-50 flex items-start gap-3 p-3.5 rounded-2xl border border-gray-100 mb-5 text-left">
+                                <div className="p-2 bg-white rounded-xl shadow-sm">
+                                    <Users size={16} className="text-slate-400" />
+                                </div>
+                                <div className="flex-1">
+                                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">
+                                        {lang === 'zh' ? '適合對象' : 'Who is this for?'}
+                                    </div>
+                                    <div className="flex flex-wrap gap-1.5 mb-2">
+                                        {(lang === 'zh' ? template.targetAudience.personas : (template.targetAudience.personasEn || template.targetAudience.personas)).map(p => (
+                                            <span key={p} className="text-[10px] font-bold text-slate-600 bg-white px-2 py-0.5 rounded-md border border-gray-100 italic">
+                                                #{p}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <p className="text-xs text-slate-500 leading-snug">
+                                        {lang === 'zh' ? template.targetAudience.description : (template.targetAudience.descriptionEn || template.targetAudience.description)}
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* ===== 3. CREATOR CARD ===== */}
@@ -171,6 +195,11 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                             "{lang === 'en' && template.coverStory?.quoteEn
                                                 ? template.coverStory.quoteEn
                                                 : template.coverStory.quote}"
+                                        </p>
+                                    )}
+                                    {template.coverStory?.description && (
+                                        <p className="mt-3 text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-3">
+                                            {template.coverStory.description}
                                         </p>
                                     )}
                                     {/* View More Link */}
@@ -258,6 +287,28 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                             )}
                         </div>
                     </div>
+
+                    {/* ===== 5.1 TRAVEL TIPS ===== */}
+                    {template.travelTips && template.travelTips.length > 0 && (
+                        <div className="px-5 mb-5 text-left">
+                            <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <Sparkles size={14} className="text-amber-500" />
+                                {t.travelTipsTitle || (lang === 'zh' ? '旅行小撇步' : 'Travel Tips')}
+                            </h3>
+                            <div className="space-y-2">
+                                {template.travelTips.map((tip, idx) => (
+                                    <div key={idx} className="bg-amber-50/30 border border-amber-100/50 rounded-xl p-3 flex items-start gap-3">
+                                        <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center text-[10px] font-black text-amber-600 shrink-0">
+                                            {idx + 1}
+                                        </div>
+                                        <p className="text-xs text-amber-900/70 leading-relaxed">
+                                            {lang === 'zh' ? tip.tip : (tip.tipEn || tip.tip)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* ===== 6. HIDDEN CONTENT TEASER ===== */}
                     {hiddenCount > 0 && (

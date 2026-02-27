@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plan, ScheduleItem } from '../types';
+import { Plan, ScheduleItem, DaySchedule } from '../types';
 
 // Type for formatted category breakdown item
 export interface CategoryBreakdownItem {
@@ -62,15 +62,20 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
     };
 
     // Calculate total budget from all schedule items
+    // Calculate total budget from all schedule items
     const calculateTotalBudget = (): number => {
         let total = 0;
         if (!activePlan || !activePlan.schedule) return total;
 
+        const SLOTS = ['morning', 'afternoon', 'evening', 'night', 'accommodation'] as const;
         Object.values(activePlan.schedule).forEach(day => {
-            Object.values(day).forEach(slotItems => {
-                (slotItems as ScheduleItem[]).forEach((item: ScheduleItem) => {
-                    total += Number(item.price) || 0;
-                });
+            SLOTS.forEach(slot => {
+                const slotItems = day[slot];
+                if (Array.isArray(slotItems)) {
+                    slotItems.forEach((item: ScheduleItem) => {
+                        total += Number(item.price) || 0;
+                    });
+                }
             });
         });
         return total;
@@ -88,13 +93,17 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
 
         if (!activePlan || !activePlan.schedule) return [];
 
+        const SLOTS = ['morning', 'afternoon', 'evening', 'night', 'accommodation'] as const;
         Object.values(activePlan.schedule).forEach(day => {
-            Object.values(day).forEach(slotItems => {
-                (slotItems as ScheduleItem[]).forEach((item: ScheduleItem) => {
-                    const type = item.type || 'other';
-                    const key = ['attraction', 'food', 'hotel', 'transport'].includes(type) ? type : 'other';
-                    breakdown[key] += Number(item.price) || 0;
-                });
+            SLOTS.forEach(slot => {
+                const slotItems = day[slot];
+                if (Array.isArray(slotItems)) {
+                    slotItems.forEach((item: ScheduleItem) => {
+                        const type = item.type || 'other';
+                        const key = ['attraction', 'food', 'hotel', 'transport'].includes(type) ? type : 'other';
+                        breakdown[key] += Number(item.price) || 0;
+                    });
+                }
             });
         });
 

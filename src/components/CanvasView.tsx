@@ -75,6 +75,29 @@ const CanvasView: React.FC<CanvasViewProps> = ({
             {/* Schedule List Area */}
             <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
                 <div className={`schedule-content relative pb-24 lg:pb-12 lg:max-w-4xl mx-auto w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
+
+                    {/* ===== 0. DAY HEADER (PHASE 7) ===== */}
+                    <div className="mb-10 mt-2 px-2">
+                        <div className="flex items-center gap-3 mb-3">
+                            <span className="bg-slate-900 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] shadow-lg shadow-slate-200">
+                                {t.day || (lang === 'zh' ? '第' : 'Day')} {currentDay} {lang === 'zh' ? '天' : ''}
+                            </span>
+                            {currentDaySchedule.themeEmoji && (
+                                <span className="text-2xl filter drop-shadow-md">{currentDaySchedule.themeEmoji}</span>
+                            )}
+                        </div>
+                        {currentDaySchedule.theme && (
+                            <h2 className="text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                                {lang === 'zh' ? currentDaySchedule.theme : (currentDaySchedule.themeEn || currentDaySchedule.theme)}
+                            </h2>
+                        )}
+                        {!currentDaySchedule.theme && (
+                            <h2 className="text-3xl font-black text-slate-400/50 tracking-tight leading-tight italic">
+                                {lang === 'zh' ? '未踏足的旅程...' : 'Uncharted journey...'}
+                            </h2>
+                        )}
+                    </div>
+
                     {(() => {
                         const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
                         let cumulativeIndex = 0;

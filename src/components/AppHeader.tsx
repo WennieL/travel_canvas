@@ -95,9 +95,16 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                     className="font-black text-gray-900 text-sm leading-tight bg-gray-50 border border-teal-400 rounded px-1 py-0.5 focus:outline-none focus:ring-2 focus:ring-teal-500 w-full"
                                 />
                             ) : (
-                                <h1 onClick={startEditingName} className="font-black text-gray-900 truncate text-sm leading-tight group tracking-tight uppercase">
-                                    {activePlan.name}
-                                </h1>
+                                <div className="flex items-center gap-2 overflow-hidden">
+                                    <h1 onClick={startEditingName} className="font-black text-gray-900 truncate text-sm leading-tight group tracking-tight uppercase">
+                                        {activePlan.name}
+                                    </h1>
+                                    {activePlan.travelStyle && activePlan.travelStyle.length > 0 && (
+                                        <span className="shrink-0 bg-teal-50 text-teal-600 text-[8px] font-black px-1.5 py-0.5 rounded border border-teal-100">
+                                            #{activePlan.travelStyle[0]}
+                                        </span>
+                                    )}
+                                </div>
                             )}
                             <div className="flex flex-col gap-0.5 mt-0.5">
                                 <span onClick={(e) => { e.stopPropagation(); openDatePicker(); }} className="text-[10px] text-gray-400 font-bold truncate uppercase tracking-wide flex items-center gap-1">
@@ -202,13 +209,22 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                     />
                                 ) : (
                                     <div className="flex flex-col">
-                                        <h1
-                                            onClick={startEditingName}
-                                            className="font-black text-2xl text-gray-900 truncate leading-tight cursor-pointer hover:text-teal-600 transition-colors flex items-center gap-2"
-                                        >
-                                            {activePlan.name}
-                                            <Pencil size={14} className="opacity-0 group-hover:opacity-100 text-gray-400 transition-all hover:text-teal-500" />
-                                        </h1>
+                                        <div className="flex items-center gap-3">
+                                            <h1
+                                                onClick={startEditingName}
+                                                className="font-black text-2xl text-gray-900 truncate leading-tight cursor-pointer hover:text-teal-600 transition-colors flex items-center gap-2"
+                                            >
+                                                {activePlan.name}
+                                                <Pencil size={14} className="opacity-0 group-hover:opacity-100 text-gray-400 transition-all hover:text-teal-500" />
+                                            </h1>
+                                            <div className="flex items-center gap-1.5 pt-1">
+                                                {activePlan.travelStyle?.map(style => (
+                                                    <span key={style} className="bg-slate-100 text-slate-500 text-[10px] font-black px-2 py-0.5 rounded-full border border-slate-200 uppercase tracking-wider">
+                                                        #{style}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
                                         <span
                                             onClick={(e) => { e.stopPropagation(); openDatePicker(); }}
                                             className="text-xs text-gray-400 font-bold uppercase tracking-[0.1em] mt-1.5 cursor-pointer hover:text-teal-500 transition-colors flex items-center gap-1.5"
