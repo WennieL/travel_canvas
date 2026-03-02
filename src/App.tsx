@@ -27,6 +27,7 @@ import {
 } from './utils';
 
 import LandingPage from './components/LandingPage';
+import WelcomeSlides from './components/WelcomeSlides';
 import { Toast } from './components/Toast';
 import { usePlans, useBudget, useUIState, useConfirm, useItinerary, useAppActions, useAppHandlers } from './hooks';
 
@@ -38,6 +39,7 @@ export function App() {
     const [lang, setLang] = useState<LangType>('zh');
     const [isInitialized, setIsInitialized] = useState(false);
     const [isCreatingNewPlan, setIsCreatingNewPlan] = useState(false);
+    const [showOnboarding, setShowOnboarding] = useState(false);
 
     // UI State Management Hook
     const ui = useUIState();
@@ -226,11 +228,11 @@ export function App() {
             const template = TEMPLATES.find(t => t.id === templateId);
             if (template) setTimeout(() => applyTemplate(template), 100);
         } else {
-            // Logic for "Start" button on Landing Page
-            // If they have no plans, show picker. If they have plans, just go to canvas.
             setShowLanding(false);
-            if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
-                // [PHASE 12] Jump straight to Wizard for 2-step flow
+            // Show onboarding for first-time users
+            if (!localStorage.getItem('tc_onboarding_done')) {
+                setShowOnboarding(true);
+            } else if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
                 ui.setShowCheckIn(true);
             }
         }
@@ -238,7 +240,21 @@ export function App() {
 
     if (!activePlan) return <div className="h-screen w-screen flex items-center justify-center text-gray-500">Loading...</div>;
 
-    return (
+    // Welcome Slides overlay (renders on top of app)
+    const welcomeOverlay = showOnboarding ? (
+        <WelcomeSlides
+            lang={lang}
+            onComplete={() => {
+                setShowOnboarding(false);
+                // After onboarding, show wizard if new user
+                if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
+                    ui.setShowCheckIn(true);
+                }
+            }}
+        />
+    ) : null;
+
+    return (<>
         <AppLayout
             lang={lang} t={t} activePlan={activePlan} plans={plans} activePlanId={activePlanId}
             currentDay={currentDay} setCurrentDay={setCurrentDay}
@@ -311,7 +327,8 @@ export function App() {
             // Wizard
             pendingWizardData={pendingWizardData} setPendingWizardData={setPendingWizardData}
         />
-    );
+        {welcomeOverlay}
+    </>);
 }
 
 export default App;
