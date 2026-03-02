@@ -224,7 +224,7 @@ export function App() {
         if (templateId) {
             setShowLanding(false);
             const template = TEMPLATES.find(t => t.id === templateId);
-            if (template) setTimeout(() => applyTemplate(template, true), 100);
+            if (template) setTimeout(() => applyTemplate(template), 100);
         } else {
             // Logic for "Start" button on Landing Page
             // If they have no plans, show picker. If they have plans, just go to canvas.
@@ -292,7 +292,7 @@ export function App() {
             // Plans
             setPlans={setPlans} updateActivePlan={updateActivePlan}
             updateChecklist={updateChecklist} handleAddDay={handleAddDay}
-            _handleDeletePlan={_handleDeletePlan} getShortDate={getShortDate}
+            _handleDeletePlan={onDeletePlan} getShortDate={getShortDate}
             handleTriggerStartPicker={handleTriggerStartPicker}
             executeCreateBlankPlan={executeCreateBlankPlan}
             enterExpertCreationMode={enterExpertCreationMode}

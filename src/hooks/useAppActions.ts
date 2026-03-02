@@ -39,22 +39,8 @@ export const useAppActions = (deps: AppActionsDeps) => {
         _handleDeleteDay, _handleDeletePlan, pendingWizardData, setPendingWizardData
     } = deps;
 
-    const applyTemplate = useCallback(async (template: Template, skipConfirm: boolean = false) => {
+    const applyTemplate = useCallback(async (template: Template) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
-
-        // [PHASE 17] Bypass confirmation if we are in the middle of "Creating New Plan" flow
-        const shouldSkip = skipConfirm || isCreatingNewPlan;
-
-        if (!shouldSkip) {
-            const confirmed = await confirm({
-                title: t.applyTemplateConfirmTitle || 'Apply Template',
-                message: (t.applyTemplateConfirmMessage || '⚠️ Apply "{name}"?\n\nCurrent itinerary will be replaced.').replace('{name}', templateName),
-                type: 'warning',
-                confirmText: t.confirm || (lang === 'zh' ? '套用' : 'Apply'),
-                cancelText: t.cancel || (lang === 'zh' ? '取消' : 'Cancel')
-            });
-            if (!confirmed) return;
-        }
 
         const copy = (items: ScheduleItem[]) => (items || []).map(i => ({
             ...i,
@@ -98,61 +84,50 @@ export const useAppActions = (deps: AppActionsDeps) => {
         const region = template.region || 'tokyo';
         const localizedDefaults = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
 
-        if (isCreatingNewPlan) {
-            const id = `plan-${Date.now()}`;
+        // Always create a new plan — never replace an existing one
+        const id = `plan-${Date.now()}`;
 
-            // [PHASE 17] Sync data from Wizard if available
-            const finalDestination = pendingWizardData?.destination?.toUpperCase() || region.toUpperCase();
-            const finalStart = pendingWizardData?.startDate || new Date().toISOString().split('T')[0];
-            const finalEnd = pendingWizardData?.endDate || new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0];
+        // Sync data from Wizard if available
+        const finalDestination = pendingWizardData?.destination?.toUpperCase() || region.toUpperCase();
+        const finalStart = pendingWizardData?.startDate || new Date().toISOString().split('T')[0];
+        const finalEnd = pendingWizardData?.endDate || new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0];
 
-            const newPlan: Plan = {
-                id,
-                name: templateName,
-                destination: finalDestination,
-                startDate: finalStart,
-                endDate: finalEnd,
-                totalDays: template.duration,
-                schedule: newSchedule,
-                region: region,
-                checklist: localizedDefaults,
-                createdAt: Date.now(),
-                targetCurrency: getRegionCurrency(region),
-                exchangeRate: getRegionExchangeRate(region),
-                templateId: template.id,
-                travelStyle: template.travelStyle || template.targetAudience?.personas || [],
-            };
-            setPlans([...plans, newPlan]);
-            setActivePlanId(id);
-            setIsCreatingNewPlan(false); // [PHASE 17] Important: reset after successful creation
-            setPendingWizardData(null); // Clear once used
-        } else {
-            updateActivePlan({
-                name: templateName,
-                destination: region.toUpperCase(),
-                totalDays: template.duration,
-                schedule: newSchedule,
-                region: region,
-                checklist: localizedDefaults,
-                templateId: template.id,
-                travelStyle: template.travelStyle || template.targetAudience?.personas || [],
-            });
-        }
+        const newPlan: Plan = {
+            id,
+            name: templateName,
+            destination: finalDestination,
+            startDate: finalStart,
+            endDate: finalEnd,
+            totalDays: template.duration,
+            schedule: newSchedule,
+            region: region,
+            checklist: localizedDefaults,
+            createdAt: Date.now(),
+            targetCurrency: getRegionCurrency(region),
+            exchangeRate: getRegionExchangeRate(region),
+            templateId: template.id,
+            travelStyle: template.travelStyle || template.targetAudience?.personas || [],
+        };
+        setPlans([...plans, newPlan]);
+        setActivePlanId(id);
+        if (isCreatingNewPlan) setIsCreatingNewPlan(false);
+        if (pendingWizardData) setPendingWizardData(null);
+
         setCurrentDay(1);
         ui.setShowMobileLibrary(false);
         ui.setShowPlanManager(false);
 
-        // [FIX] Sync sidebar/map region with the template's region
+        // Sync sidebar/map region with the template's region
         ui.setActiveRegion(region);
 
-        // [PHASE 17 FIX] Ensure sidebar shows the plan list immediately after creation/application
+        // Ensure sidebar shows the plan list immediately after creation
         ui.setActiveTab('projects');
         ui.setIsSidebarOpen(true);
         ui.setIsSidebarPinned(true);
 
         ui.setViewMode('canvas');
         showToastMessage((t.appliedTemplate || '✅ "{name}" applied!').replace('{name}', templateName));
-    }, [lang, confirm, isCreatingNewPlan, plans, setPlans, setActivePlanId, setIsCreatingNewPlan, updateActivePlan, setCurrentDay, ui, showToastMessage, pendingWizardData, setPendingWizardData, t]);
+    }, [lang, isCreatingNewPlan, plans, setPlans, setActivePlanId, setIsCreatingNewPlan, updateActivePlan, setCurrentDay, ui, showToastMessage, pendingWizardData, setPendingWizardData, t]);
 
     const handleCreateCustomItem = useCallback((data: any) => {
         const currentDayKey = `Day ${currentDay}`;
