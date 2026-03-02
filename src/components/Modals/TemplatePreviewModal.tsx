@@ -236,55 +236,69 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                         </div>
                     </div>
 
-                    {/* ===== 5. DAY PREVIEW ===== */}
+                    {/* ===== 5. DAY PREVIEW (with daily themes) ===== */}
                     <div className="px-5 mb-5">
                         <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
                             <MapPin size={14} className="text-teal-500" />
                             {t.itineraryPreview || (lang === 'zh' ? '行程預覽' : 'Itinerary Preview')}
                         </h3>
                         <div className="space-y-2">
-                            {/* Show first day from actual schedule */}
-                            <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <span className="bg-slate-800 text-white text-[10px] font-black px-2 py-0.5 rounded">
-                                        DAY 1
-                                    </span>
-                                </div>
-                                <p className="text-sm text-gray-600 flex items-center flex-wrap gap-1">
-                                    {[...((firstDay as DaySchedule).morning || []), ...((firstDay as DaySchedule).afternoon || [])]
-                                        .slice(0, 4)
-                                        .map((item: ScheduleItem, idx, arr) => (
-                                            <React.Fragment key={idx}>
-                                                <span className="font-medium text-gray-800">{item.title}</span>
-                                                {idx < arr.length - 1 && (
-                                                    <ArrowRight size={12} className="text-gray-300" />
-                                                )}
-                                            </React.Fragment>
-                                        ))
-                                    }
-                                </p>
-                            </div>
+                            {(() => {
+                                const isMultiDay = !('morning' in template.schedule);
+                                const days = isMultiDay
+                                    ? Object.entries(template.schedule as FullSchedule)
+                                    : [['Day 1', template.schedule as DaySchedule]];
 
-                            {/* Blurred preview for remaining days */}
-                            {template.duration > 1 && (
-                                <div className="bg-gray-50 rounded-xl p-3 border border-gray-100 relative overflow-hidden">
-                                    <div className="blur-[6px]">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="bg-slate-800 text-white text-[10px] font-black px-2 py-0.5 rounded">
-                                                DAY 2-{template.duration}
-                                            </span>
+                                return days.map(([dayKey, daySchedule], idx) => {
+                                    const ds = daySchedule as DaySchedule;
+                                    const dayItems = [
+                                        ...(ds.morning || []),
+                                        ...(ds.afternoon || []),
+                                        ...(ds.evening || []),
+                                    ].filter(item => item && item.title);
+                                    const dayNum = idx + 1;
+                                    const themeEmoji = ds.themeEmoji || '';
+                                    const themeTitle = lang === 'zh'
+                                        ? (ds.theme || '')
+                                        : (ds.themeEn || ds.theme || '');
+
+                                    return (
+                                        <div key={String(dayKey)} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                            <div className="flex items-center gap-2 mb-1.5">
+                                                {themeEmoji && (
+                                                    <span className="text-base">{themeEmoji}</span>
+                                                )}
+                                                <span className="text-xs font-bold text-gray-800">
+                                                    Day {dayNum}
+                                                </span>
+                                                {themeTitle && (
+                                                    <>
+                                                        <span className="text-gray-300">—</span>
+                                                        <span className="text-xs font-medium text-gray-500">
+                                                            {themeTitle}
+                                                        </span>
+                                                    </>
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-gray-600 flex items-center flex-wrap gap-1">
+                                                {dayItems.slice(0, 3).map((item: ScheduleItem, i, arr) => (
+                                                    <React.Fragment key={i}>
+                                                        <span className="font-medium text-gray-700">{item.title}</span>
+                                                        {i < arr.length - 1 && (
+                                                            <ArrowRight size={10} className="text-gray-300" />
+                                                        )}
+                                                    </React.Fragment>
+                                                ))}
+                                                {dayItems.length === 0 && (
+                                                    <span className="text-gray-400 italic text-xs">
+                                                        {lang === 'zh' ? '自由探索' : 'Free exploration'}
+                                                    </span>
+                                                )}
+                                            </p>
                                         </div>
-                                        <p className="text-sm text-gray-600">
-                                            {t.moreToExplore || (lang === 'zh' ? '更多精彩行程等你探索...' : 'More exciting stops to explore...')}
-                                        </p>
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <span className="text-xs font-medium text-gray-500 bg-white/90 px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
-                                            {t.applyToSeeFull || (lang === 'zh' ? '套用後查看完整行程' : 'Apply to see full itinerary')}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
+                                    );
+                                });
+                            })()}
                         </div>
                     </div>
 
