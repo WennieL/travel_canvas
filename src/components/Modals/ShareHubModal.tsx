@@ -1,8 +1,8 @@
-import React from 'react';
-import { X, Share2, Globe, FileText, Copy, Map as MapIcon, Download, Check, MoveRight } from 'lucide-react';
-import * as htmlToImage from 'html-to-image';
+import React, { useState } from 'react';
+import { X, Share2, Globe, FileText, Copy, Map as MapIcon, Check, MoveRight, ClipboardCopy, HardDrive, Upload as UploadIcon } from 'lucide-react';
 import { useConfirm } from '../../hooks';
-import { Plan } from '../../types';
+import { Plan, LangType } from '../../types';
+import { generateTextItinerary, downloadPdf } from '../../utils/textExport';
 
 interface ShareHubModalProps {
     isOpen: boolean;
@@ -28,6 +28,8 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
     currentDay
 }) => {
     const { confirm } = useConfirm();
+    const [textCopied, setTextCopied] = useState(false);
+    const [showTextPreview, setShowTextPreview] = useState(false);
 
     if (!isOpen) return null;
 
@@ -37,7 +39,6 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
         try {
             await navigator.clipboard.writeText(shareUrl);
         } catch {
-            // Fallback for HTTP or denied permission
             const textarea = document.createElement('textarea');
             textarea.value = shareUrl;
             textarea.style.position = 'fixed';
@@ -50,42 +51,70 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
         showToast(t.copied || '已複製到剪貼簿！');
     };
 
-    const handlePrint = () => {
-        window.print();
-        showToast('🖨️ ' + (t.printStarted || '準備列印...'));
+    const handleDownloadPdf = () => {
+        downloadPdf(plan, lang as LangType);
+        showToast(lang === 'zh' ? '📄 PDF 頁面已開啟，請選擇「儲存為 PDF」' : '📄 PDF page opened. Choose "Save as PDF"');
     };
 
-    const handleDownloadImage = async () => {
-        const node = document.querySelector('.schedule-content') as HTMLElement;
-        if (node) {
-            try {
-                const dataUrl = await htmlToImage.toPng(node, {
-                    backgroundColor: '#ffffff',
-                    pixelRatio: 2
-                });
-                const link = document.createElement('a');
-                link.download = `${plan.name}-Day${currentDay}.png`;
-                link.href = dataUrl;
-                link.click();
-                showToast('✅ ' + (t.downloadImage || '圖片已下載!'));
-            } catch (error) {
-                console.error('Export image failed:', error);
-                confirm({
-                    title: 'Export Error',
-                    message: 'Export failed. Please check console for details.',
-                    type: 'error',
-                    confirmText: 'OK'
-                });
-            }
-        } else {
-            confirm({
-                title: 'Export Error',
-                message: 'Unable to find schedule content',
-                type: 'error',
-                confirmText: 'OK'
-            });
+    // ── Text Export ──
+    const handleCopyText = async () => {
+        const text = generateTextItinerary(plan, lang as LangType);
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
         }
+        setTextCopied(true);
+        showToast(lang === 'zh' ? '📋 行程已複製！直接貼到 Line 分享吧' : '📋 Itinerary copied! Paste it anywhere');
+        setTimeout(() => setTextCopied(false), 3000);
     };
+
+    // ── JSON Backup ──
+    const handleDownloadBackup = () => {
+        const allPlans = localStorage.getItem('travel_plans');
+        if (!allPlans) return;
+        const blob = new Blob([allPlans], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `TravelCanvas_backup_${new Date().toISOString().slice(0, 10)}.json`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast(lang === 'zh' ? '💾 備份檔已下載！' : '💾 Backup downloaded!');
+    };
+
+    const handleImportBackup = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = async (e) => {
+            const file = (e.target as HTMLInputElement).files?.[0];
+            if (!file) return;
+            try {
+                const text = await file.text();
+                const plans = JSON.parse(text);
+                if (Array.isArray(plans) && plans.length > 0 && plans[0].id && plans[0].schedule) {
+                    localStorage.setItem('travel_plans', JSON.stringify(plans));
+                    showToast(lang === 'zh' ? '✅ 匯入成功！重新整理頁面中...' : '✅ Import successful! Refreshing...');
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    showToast(lang === 'zh' ? '❌ 檔案格式不正確' : '❌ Invalid file format');
+                }
+            } catch {
+                showToast(lang === 'zh' ? '❌ 匯入失敗，請確認檔案格式' : '❌ Import failed. Check file format.');
+            }
+        };
+        input.click();
+    };
+
+    const textPreview = showTextPreview ? generateTextItinerary(plan, lang as LangType) : '';
 
     return (
         <div className="fixed inset-0 bg-black/60 z-[1000] flex items-center justify-center p-4 backdrop-blur-md print:hidden" onClick={onClose}>
@@ -109,39 +138,59 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                     </button>
                 </div>
 
-                <div className="p-8 space-y-8 max-h-[75vh] overflow-y-auto scrollbar-hide">
-                    {/* Primary Actions: Integrated Buttons */}
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button
-                                onClick={handlePrint}
-                                className="py-5 bg-gray-900 hover:bg-black text-white rounded-3xl font-black text-base shadow-xl shadow-gray-200 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 group"
-                            >
-                                <FileText size={20} className="text-teal-400 group-hover:scale-110 transition-transform" />
-                                {lang === 'zh' ? 'PDF / 列印' : 'PDF / Print'}
-                            </button>
-                            <button
-                                onClick={handleDownloadImage}
-                                className="py-5 bg-white hover:bg-teal-50 text-teal-600 border-2 border-teal-600 rounded-3xl font-black text-base shadow-sm transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 group"
-                            >
-                                <MapIcon size={20} className="group-hover:scale-110 transition-transform" />
-                                {t.downloadImage || '下載圖片'}
-                            </button>
-                        </div>
-
-                        {/* Offline Tip Alert */}
-                        <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 flex gap-3 items-start animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
-                            <span className="text-xl">🎒</span>
-                            <p className="text-[11px] text-amber-800 font-medium leading-relaxed">
-                                {t.offlineTip || "💡 Pro Tip: Download as PDF or Image for offline access on planes or subways!"}
-                            </p>
-                        </div>
+                <div className="p-8 space-y-6 max-h-[75vh] overflow-y-auto scrollbar-hide">
+                    {/* ── Primary Row: 3 Action Cards ── */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <button
+                            onClick={handleCopyText}
+                            className={`py-4 rounded-2xl font-bold text-sm shadow-sm transition-all hover:scale-[1.03] active:scale-95 flex flex-col items-center justify-center gap-2 border ${textCopied
+                                ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                                : 'bg-gray-900 border-gray-900 text-white hover:bg-black'
+                                }`}
+                        >
+                            {textCopied ? <Check size={20} /> : <ClipboardCopy size={20} className="text-teal-400" />}
+                            <span>{textCopied ? (lang === 'zh' ? '已複製！' : 'Copied!') : (lang === 'zh' ? '複製文字' : 'Copy Text')}</span>
+                        </button>
+                        <button
+                            onClick={handleDownloadPdf}
+                            className="py-4 bg-white hover:bg-teal-50 text-teal-700 border-2 border-teal-200 rounded-2xl font-bold text-sm shadow-sm transition-all hover:scale-[1.03] active:scale-95 flex flex-col items-center justify-center gap-2"
+                        >
+                            <FileText size={20} className="text-teal-500" />
+                            <span>{lang === 'zh' ? '下載 PDF' : 'PDF'}</span>
+                        </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* ── Text Preview Toggle ── */}
+                    <button
+                        onClick={() => setShowTextPreview(!showTextPreview)}
+                        className="w-full text-xs text-teal-600 font-bold hover:underline text-center"
+                    >
+                        {showTextPreview
+                            ? (lang === 'zh' ? '▲ 隱藏預覽' : '▲ Hide Preview')
+                            : (lang === 'zh' ? '▼ 預覽文字行程' : '▼ Preview Text')
+                        }
+                    </button>
+                    {showTextPreview && (
+                        <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100 max-h-60 overflow-y-auto">
+                            <pre className="text-[11px] text-gray-600 whitespace-pre-wrap font-mono leading-relaxed">{textPreview}</pre>
+                        </div>
+                    )}
+
+                    {/* ── Offline Tip ── */}
+                    <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 flex gap-3 items-start">
+                        <span className="text-xl">🎒</span>
+                        <p className="text-[11px] text-amber-800 font-medium leading-relaxed">
+                            {lang === 'zh'
+                                ? '💡 提示：複製文字行程直接貼到 Line 群組分享，或下載圖片存手機，飛機上也能看！'
+                                : '💡 Tip: Copy the text itinerary to share on LINE/WhatsApp, or save the image for offline access!'}
+                        </p>
+                    </div>
+
+                    {/* ── Share Link & QR ── */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* QR Code Section */}
-                        <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-100 group transition-all hover:border-teal-200 hover:bg-teal-50/10">
-                            <div className="w-32 h-32 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center relative mb-3 group-hover:scale-110 transition-transform duration-500">
+                        <div className="flex flex-col items-center justify-center p-5 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-100 group transition-all hover:border-teal-200">
+                            <div className="w-28 h-28 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center relative mb-3 group-hover:scale-105 transition-transform">
                                 <div className="grid grid-cols-7 gap-[2px] w-full h-full p-2 opacity-80">
                                     {Array.from({ length: 49 }).map((_, i) => {
                                         const isCorner = (i < 3 || (i >= 4 && i < 7)) || (i >= 7 && i < 10) || (i >= 14 && i < 21) ||
@@ -153,32 +202,30 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                                     })}
                                 </div>
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-10 h-10 bg-white rounded-xl shadow-md border border-gray-50 flex items-center justify-center text-teal-600">
-                                        <MapIcon size={24} />
+                                    <div className="w-8 h-8 bg-white rounded-xl shadow-md border border-gray-50 flex items-center justify-center text-teal-600">
+                                        <MapIcon size={20} />
                                     </div>
                                 </div>
                             </div>
-                            <p className="text-[10px] font-black text-gray-400 group-hover:text-teal-600 transition-colors uppercase tracking-widest">
+                            <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">
                                 {t.scanToPreview || 'Scan to view'}
                             </p>
                         </div>
 
-                        {/* Link & Mobile Preview */}
-                        <div className="flex flex-col justify-between py-2">
-                            <div className="space-y-3">
-                                <label className="text-[11px] font-black text-gray-400 uppercase tracking-wider ml-1">{t.shareLinkTitle || 'Share Link'}</label>
-                                <div className="flex flex-col gap-2">
-                                    <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100 text-xs text-gray-400 font-mono truncate">
-                                        {shareUrl}
-                                    </div>
-                                    <button
-                                        onClick={handleCopyLink}
-                                        className="w-full py-3 bg-white hover:bg-gray-50 text-teal-600 border-2 border-teal-600 rounded-2xl font-black text-xs transition-all active:scale-95 flex items-center justify-center gap-2"
-                                    >
-                                        <Copy size={14} />
-                                        {t.copy || 'Copy Link'}
-                                    </button>
+                        {/* Link & Preview */}
+                        <div className="flex flex-col justify-between py-1">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-wider ml-1">{t.shareLinkTitle || 'Share Link'}</label>
+                                <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100 text-xs text-gray-400 font-mono truncate">
+                                    {shareUrl}
                                 </div>
+                                <button
+                                    onClick={handleCopyLink}
+                                    className="w-full py-2.5 bg-white hover:bg-gray-50 text-teal-600 border-2 border-teal-600 rounded-2xl font-black text-xs transition-all active:scale-95 flex items-center justify-center gap-2"
+                                >
+                                    <Copy size={14} />
+                                    {t.copy || 'Copy Link'}
+                                </button>
                             </div>
 
                             <button
@@ -186,7 +233,7 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                                     onClose();
                                     setTimeout(onOpenMobilePreview, 100);
                                 }}
-                                className="w-full py-3 bg-gray-900 hover:bg-black text-white rounded-2xl font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-4"
+                                className="w-full py-2.5 bg-gray-900 hover:bg-black text-white rounded-2xl font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-3"
                             >
                                 <Globe size={14} className="text-teal-400" />
                                 {t.mobilePreview || 'Mobile Preview'}
@@ -194,29 +241,55 @@ export const ShareHubModal: React.FC<ShareHubModalProps> = ({
                         </div>
                     </div>
 
-                    {/* Secondary Action: Publish to Community */}
-                    <div className="pt-6 border-t border-gray-100">
-                        <div className="flex items-center justify-between p-5 bg-gradient-to-r from-gray-50 to-white rounded-3xl border border-gray-100 group cursor-pointer hover:border-teal-200 transition-all"
+                    {/* ── Backup & Restore ── */}
+                    <div className="pt-4 border-t border-gray-100">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-wider ml-1 mb-3 block">
+                            {t.exportBackup || 'Backup'}
+                        </label>
+                        <div className="grid grid-cols-2 gap-3">
+                            <button
+                                onClick={handleDownloadBackup}
+                                className="py-3 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-2xl font-bold text-xs transition-all active:scale-95 flex items-center justify-center gap-2 border border-gray-200"
+                            >
+                                <HardDrive size={14} />
+                                {t.downloadBackup || (lang === 'zh' ? '下載備份' : 'Download')}
+                            </button>
+                            <button
+                                onClick={handleImportBackup}
+                                className="py-3 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-2xl font-bold text-xs transition-all active:scale-95 flex items-center justify-center gap-2 border border-gray-200"
+                            >
+                                <UploadIcon size={14} />
+                                {t.importBackup || (lang === 'zh' ? '匯入備份' : 'Import')}
+                            </button>
+                        </div>
+                        <p className="text-[10px] text-gray-400 mt-2 text-center">
+                            {t.backupDesc || (lang === 'zh' ? '下載 JSON 檔案，可在其他電腦或瀏覽器還原行程' : 'Download a JSON backup to restore on any device')}
+                        </p>
+                    </div>
+
+                    {/* ── Publish to Community ── */}
+                    <div className="pt-4 border-t border-gray-100">
+                        <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-3xl border border-gray-100 group cursor-pointer hover:border-teal-200 transition-all"
                             onClick={() => {
                                 onClose();
                                 onOpenSubmitModal();
                             }}>
                             <div className="flex gap-4 items-center">
-                                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-teal-500 shadow-sm border border-gray-50 group-hover:scale-110 transition-transform">
-                                    <Globe size={20} />
+                                <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-teal-500 shadow-sm border border-gray-50 group-hover:scale-110 transition-transform">
+                                    <Globe size={18} />
                                 </div>
                                 <div className="flex flex-col">
                                     <h4 className="text-sm font-black text-gray-900">{t.publishToCommunity || "Want to inspire others?"}</h4>
-                                    <p className="text-[11px] text-gray-400 font-medium">{t.publishAction || "Publish to Community"}</p>
+                                    <p className="text-[10px] text-gray-400 font-medium">{t.publishAction || "Publish to Community"}</p>
                                 </div>
                             </div>
-                            <MoveRight className="text-gray-300 group-hover:text-teal-500 group-hover:translate-x-1 transition-all" size={20} />
+                            <MoveRight className="text-gray-300 group-hover:text-teal-500 group-hover:translate-x-1 transition-all" size={18} />
                         </div>
                     </div>
                 </div>
 
-                {/* Footer Tip */}
-                <div className="p-5 bg-gray-50 text-center border-t border-gray-100">
+                {/* Footer */}
+                <div className="p-4 bg-gray-50 text-center border-t border-gray-100">
                     <p className="text-[10px] text-gray-400 font-medium">✨ {t.shareTip || 'Tip: Share this link to your friends!'}</p>
                 </div>
             </div>
