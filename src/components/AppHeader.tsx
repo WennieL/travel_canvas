@@ -280,7 +280,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 
                             {/* Share Action */}
                             <button
-                                onClick={() => handleGateCheck(() => setShowShareModal(true))}
+                                onClick={() => setShowShareModal(true)}
                                 className="w-10 h-10 flex flex-col items-center justify-center rounded-xl text-gray-400 hover:bg-white hover:border-gray-200 border border-transparent hover:text-teal-600 transition-all group"
                                 title={t.share || "Share Plan"}
                             >
