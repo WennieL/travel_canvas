@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, Compass, MapPin } from 'lucide-react';
 import { Template, LangType, Region } from '../../types';
 import { CITY_FILTERS, COUNTRY_FILTERS, TEMPLATES } from '../../data';
@@ -20,6 +20,8 @@ const CityPicker: React.FC<CityPickerProps> = ({
     lang,
     t
 }) => {
+    const [showAllTemplates, setShowAllTemplates] = useState(false);
+
     // Data-driven: collect all cities from all countries
     const allCities = Object.keys(CITY_FILTERS).flatMap(countryId => CITY_FILTERS[countryId] || []);
 
@@ -112,12 +114,19 @@ const CityPicker: React.FC<CityPickerProps> = ({
                         <Compass size={16} className="text-teal-500" />
                         <h3 className="text-xs font-black uppercase tracking-widest text-gray-400">{t.popularInspiration}</h3>
                     </div>
-                    <button className="text-[10px] font-bold text-teal-600 hover:underline">
-                        {t.viewAll}
+                    <button
+                        onClick={() => setShowAllTemplates(!showAllTemplates)}
+                        className="text-[10px] font-bold text-teal-600 hover:underline transition-colors"
+                    >
+                        {showAllTemplates ? (lang === 'zh' ? '收起' : 'Show Less') : t.viewAll}
                     </button>
                 </div>
-                <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-1">
+                <div className={showAllTemplates
+                    ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4 px-1 animate-in fade-in duration-300"
+                    : "flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-1"
+                }>
                     {(() => {
+                        if (showAllTemplates) return TEMPLATES;
                         // Pick diverse templates: 1 from each region, then fill to 6
                         const seen = new Set<string>();
                         const diverse: Template[] = [];
@@ -137,7 +146,7 @@ const CityPicker: React.FC<CityPickerProps> = ({
                         <button
                             key={tpl.id}
                             onClick={() => onPreviewTemplate(tpl)}
-                            className="flex-shrink-0 w-64 text-left group"
+                            className={`text-left group ${showAllTemplates ? 'w-full' : 'flex-shrink-0 w-64'}`}
                         >
                             <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-3 shadow-lg">
                                 <img
