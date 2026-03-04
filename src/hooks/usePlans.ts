@@ -9,6 +9,7 @@ export interface UsePlansReturn {
     activePlanId: string;
     activePlan: Plan;
     currentDay: number;
+    lastSavedAt: number | null;
 
     // Setters
     setPlans: React.Dispatch<React.SetStateAction<Plan[]>>;
@@ -111,12 +112,15 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
         });
     };
 
+    const [lastSavedAt, setLastSavedAt] = useState<number | null>(null);
+
     // Save to localStorage
     useEffect(() => {
         if (isInitialized) {
             try {
                 localStorage.setItem('travel_plans', JSON.stringify(plans));
                 localStorage.setItem('active_plan_id', activePlanId);
+                setLastSavedAt(Date.now());
             } catch (e) {
                 console.warn('Failed to save plans to localStorage:', e);
             }
@@ -276,6 +280,7 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
         handleAddDay,
         handleDeleteDay,
         getDisplayDate,
-        getShortDate
+        getShortDate,
+        lastSavedAt
     };
 }

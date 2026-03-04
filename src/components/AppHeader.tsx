@@ -295,6 +295,12 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 ))}
                             </div>
                         </div>
+
+                        {/* Auto-save indicator */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 text-[9px] text-emerald-500/60 font-medium whitespace-nowrap">
+                            <Check size={9} />
+                            <span>{lang === 'zh' ? '已自動儲存' : 'Saved'}</span>
+                        </div>
                     </div>
                 </div>
             </div>
