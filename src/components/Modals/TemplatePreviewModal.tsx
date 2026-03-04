@@ -140,7 +140,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                             <span className="flex items-center gap-1">
                                 <Star size={12} className="text-amber-400 fill-amber-400" />
                                 <span className="font-medium">{highlights.rating}</span>
-                                {highlights.usageCount && (
+                                {(highlights.usageCount ?? 0) > 0 && (
                                     <span className="text-gray-400">({highlights.usageCount} {t.usesCount || (lang === 'zh' ? '次套用' : 'uses')})</span>
                                 )}
                             </span>
