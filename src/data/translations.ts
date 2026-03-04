@@ -421,7 +421,10 @@ export const TRANSLATIONS: any = {
         featuredThisMonth: "本月推薦目的地",
         recentlyEdited: "最近編輯",
         expertsLeadWayTitle: "讓達人為您帶路",
-        expertsLeadWayDesc: "我們相信，完美的旅行始於最在地的小插曲。"
+        expertsLeadWayDesc: "我們相信，完美的旅行始於最在地的小插曲。",
+        setDuration: "設定停留時間",
+        customDuration: "自訂",
+        halfDay: "半天"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -857,6 +860,9 @@ export const TRANSLATIONS: any = {
         featuredThisMonth: "Featured This Month",
         recentlyEdited: "Recently edited",
         expertsLeadWayTitle: "Let Experts Lead the Way",
-        expertsLeadWayDesc: "We believe the perfect trip starts with the most local episodes."
+        expertsLeadWayDesc: "We believe the perfect trip starts with the most local episodes.",
+        setDuration: "Set Duration",
+        customDuration: "Custom",
+        halfDay: "Half day"
     }
 };

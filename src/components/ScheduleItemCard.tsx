@@ -44,6 +44,9 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
     const { confirm } = useConfirm();
     const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
     const [editingPriceId, setEditingPriceId] = useState<string | null>(null);
+    const [editingDurationId, setEditingDurationId] = useState<string | null>(null);
+    const [customDurationHr, setCustomDurationHr] = useState('');
+    const [customDurationMin, setCustomDurationMin] = useState('');
     const [openMenuId, setOpenMenuId] = useState<string | null>(null);
     const [menuPosition, setMenuPosition] = useState<{ top: number, left: number, openUpwards: boolean } | null>(null);
 
@@ -196,11 +199,94 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                     {/* Metadata Row: Duration, Price, Rating */}
                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
 
-                        {/* Duration Badge */}
-                        <div className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
-                            <Clock size={10} />
-                            {item.duration || t.flexible}
-                        </div>
+                        {/* Duration Badge — Inline Editable */}
+                        {editingDurationId === item.instanceId ? (
+                            <div
+                                className="flex flex-col gap-1.5 bg-white border border-teal-300 rounded-lg px-2 py-1.5 shadow-lg z-30 animate-in fade-in zoom-in-95 duration-150"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="flex items-center gap-1 flex-wrap">
+                                    {['30m', '1hr', '1.5hr', '2hr', '3hr'].map((preset) => (
+                                        <button
+                                            key={preset}
+                                            onClick={() => {
+                                                onUpdateItem(index, { duration: preset === '30m' ? '30分' : preset });
+                                                setEditingDurationId(null);
+                                            }}
+                                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all hover:scale-105 active:scale-95 ${item.duration === preset || item.duration === (preset === '30m' ? '30分' : preset)
+                                                    ? 'bg-teal-600 text-white border-teal-600'
+                                                    : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'
+                                                }`}
+                                        >
+                                            {preset}
+                                        </button>
+                                    ))}
+                                    <button
+                                        onClick={() => {
+                                            onUpdateItem(index, { duration: lang === 'zh' ? '半天' : 'Half day' });
+                                            setEditingDurationId(null);
+                                        }}
+                                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all hover:scale-105 active:scale-95 ${item.duration === '半天' || item.duration === 'Half day'
+                                                ? 'bg-teal-600 text-white border-teal-600'
+                                                : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'
+                                            }`}
+                                    >
+                                        {t.halfDay}
+                                    </button>
+                                </div>
+                                <div className="flex items-center gap-1 border-t border-gray-100 pt-1">
+                                    <span className="text-[9px] text-gray-400 font-bold">{t.customDuration}:</span>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max="24"
+                                        placeholder="0"
+                                        value={customDurationHr}
+                                        onChange={(e) => setCustomDurationHr(e.target.value)}
+                                        className="w-8 text-[10px] text-center font-medium text-gray-700 border border-gray-200 rounded px-0.5 py-0.5 focus:border-teal-400 outline-none bg-transparent"
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
+                                    <span className="text-[9px] text-gray-400">h</span>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        max="59"
+                                        placeholder="0"
+                                        value={customDurationMin}
+                                        onChange={(e) => setCustomDurationMin(e.target.value)}
+                                        className="w-8 text-[10px] text-center font-medium text-gray-700 border border-gray-200 rounded px-0.5 py-0.5 focus:border-teal-400 outline-none bg-transparent"
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
+                                    <span className="text-[9px] text-gray-400">m</span>
+                                    <button
+                                        onClick={() => {
+                                            const hr = parseInt(customDurationHr) || 0;
+                                            const min = parseInt(customDurationMin) || 0;
+                                            if (hr === 0 && min === 0) { setEditingDurationId(null); return; }
+                                            const parts: string[] = [];
+                                            if (hr > 0) parts.push(`${hr}hr`);
+                                            if (min > 0) parts.push(`${min}min`);
+                                            onUpdateItem(index, { duration: parts.join('') });
+                                            setCustomDurationHr('');
+                                            setCustomDurationMin('');
+                                            setEditingDurationId(null);
+                                        }}
+                                        className="text-[9px] font-bold text-white bg-teal-600 hover:bg-teal-700 px-2 py-0.5 rounded transition-all active:scale-95"
+                                    >
+                                        OK
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                onClick={(e) => { e.stopPropagation(); setEditingDurationId(item.instanceId); }}
+                                title={t.setDuration}
+                                className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200 cursor-pointer hover:border-teal-300 hover:text-teal-600 transition-colors"
+                            >
+                                <Clock size={10} />
+                                {item.duration || t.flexible}
+                            </div>
+                        )}
 
                         {/* Price Badge - Only valid price or locked or edit mode */}
                         {(isLocked || (item.price !== undefined && item.price > 0) || editingPriceId === item.instanceId) && (
