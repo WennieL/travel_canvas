@@ -217,13 +217,6 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                                 {activePlan.name}
                                                 <Pencil size={14} className="opacity-0 group-hover:opacity-100 text-gray-400 transition-all hover:text-teal-500" />
                                             </h1>
-                                            <div className="flex items-center gap-1.5 pt-1">
-                                                {activePlan.travelStyle?.map(style => (
-                                                    <span key={style} className="bg-slate-100 text-slate-500 text-[10px] font-black px-2 py-0.5 rounded-full border border-slate-200 uppercase tracking-wider">
-                                                        #{style}
-                                                    </span>
-                                                ))}
-                                            </div>
                                         </div>
                                         <span
                                             onClick={(e) => { e.stopPropagation(); openDatePicker(); }}
