@@ -29,6 +29,10 @@ export const TEMPLATES: Template[] = [
             description: '跟著在地人的腳步，從站著喝咖啡的儀式感開始，穿越塗鴉巷弄，最後在隱藏酒吧結束完美的一天。',
             authorLabel: '墨爾本在地人私房推薦'
         },
+        authorStory: {
+            zh: '我在墨爾本住了 6 年，從一杯 Flat White 開始愛上這座城市。這份路線是我每次朋友來訪時帶他們走的私房行程，從站著喝咖啡的 Patricia 到塗鴉巷弄，每一站都是我的日常。',
+            en: 'I\'ve lived in Melbourne for 6 years. It all started with a Flat White. This route is the one I take every friend through — from standing-room-only Patricia to the graffiti laneways. Every stop is part of my daily life.'
+        },
         travelStyle: ['咖啡', '文化'],
         targetAudience: {
             personas: ['咖啡控', '文青'],
@@ -95,6 +99,10 @@ export const TEMPLATES: Template[] = [
             description: '從書架後的禁酒時期酒吧，到冷藏庫門後的熱帶天堂。這不是普通的酒吧巡禮，而是一場城市尋寶。',
             authorLabel: '夜生活達人精選路線'
         },
+        authorStory: {
+            zh: '身為調酒師 4 年，我親自拜訪過墨爾本 200+ 間酒吧。這條路線精選了最難找到入口、但最值得一訪的 Speakeasy，每一間都有獨特的故事和招牌調酒。',
+            en: 'As a bartender for 4 years, I\'ve visited 200+ bars in Melbourne. This route features the hardest-to-find Speakeasies that are most worth visiting — each with its own story and signature cocktails.'
+        },
         travelStyle: ['夜生活', '探險'],
         targetAudience: {
             personas: ['夜貓族', '調酒愛好者'],
@@ -159,6 +167,10 @@ export const TEMPLATES: Template[] = [
             quoteEn: 'Tired of Shinjuku crowds? This route helps you find Tokyo\'s true rhythm.',
             description: '從下町的昭和喛茶店，到隱藏在表參道巷弄的設計師聚落。這不是觀光客的打卡行程，而是一場與東京老靈魂的對話。',
             authorLabel: '東京在地 10 年設計師推薦'
+        },
+        authorStory: {
+            zh: '我是旅居東京 10 年的台灣設計師。這份行程不是觀光客路線，而是我每天生活的東京 — 清晨在淺草寺散步、下午在代官山的咖啡店工作、傍晚在隅田川看夕陽。希望你也能感受到這座城市安靜而溫柔的一面。',
+            en: 'I\'m a Taiwanese designer who\'s lived in Tokyo for 10 years. This isn\'t a tourist route — it\'s the Tokyo I live in every day. Morning walks at Sensoji, afternoon coffee in Daikanyama, sunset by Sumida River. I hope you\'ll feel the quiet, gentle side of this city too.'
         },
         travelStyle: ['文青', '深度'],
         targetAudience: {
@@ -283,6 +295,10 @@ export const TEMPLATES: Template[] = [
             description: '這不是普通的美食清單。從凌晨5點的築地市場，到深夜的黃金街居酒屋，帶你吃遍在地人的口袋名單。',
             authorLabel: '東京美食評論家推薦'
         },
+        authorStory: {
+            zh: '我是東京美食評論家，在這座城市吃了 8 年。這份行程不是 Google 推薦的觀光名店，而是我透過無數次試吃、被拒絕、再回訪後精選的絕佳名単 — 從築地的魚市場到深夜居酒屋。',
+            en: 'I\'m a Tokyo food critic who\'s been eating in this city for 8 years. This isn\'t a Google-recommended tourist list — it\'s curated from countless tastings, rejections, and revisits. From Tsukiji fish markets to late-night izakayas.'
+        },
         travelStyle: ['美食', '吃貨'],
         targetAudience: {
             personas: ['吃貨', '美食探險家'],
@@ -404,6 +420,10 @@ export const TEMPLATES: Template[] = [
             description: '清晨無人的竹林小徑、隱藏在町家裡的茶室、只有在地人知道的賞楓秘境。這是一趟讓心慢下來的旅程。',
             authorLabel: '京都在住者私房路線'
         },
+        authorStory: {
+            zh: '我在京都住了 3 年，每天騎腳踏車穿梭在古寺與町家之間。這份路線只會帶你去「觀光客看不到」的京都 — 清晨無人的竹林、隱藏在巷子裡的抹茶私房、只有在地人知道的賭楓秘境。',
+            en: 'I lived in Kyoto for 3 years, cycling between ancient temples and machiya houses every day. This route takes you to the Kyoto that tourists never see — an empty bamboo grove at dawn, hidden matcha spots in the alleys, and secret autumn foliage spots only locals know.'
+        },
         travelStyle: ['慢活', '禪意'],
         targetAudience: {
             personas: ['慢活族', '禪意旅人'],
@@ -507,6 +527,10 @@ export const TEMPLATES: Template[] = [
             quoteEn: 'They say: Kyoto spends on clothes, Osaka spends on food!',
             description: '從 USJ 的瘋狂冒險，到道頓堀的美食轟炸。這是一跟讓你笑著來、撐著走的大阪之旅。',
             authorLabel: '大阪在地人私房推薦'
+        },
+        authorStory: {
+            zh: '我是土生土長的大阪人，在道頓堀附近長大。每次朋友來大阪我都會帶他們走這條路線 — 面店、串炸、居酒屋，都是在地人的口袋名張，而不是觀光客排隊名店。',
+            en: 'I\'m a born-and-raised Osaka local who grew up near Dotonbori. Whenever friends visit, I take them on this exact route — ramen shops, kushikatsu, izakayas — all local favorites, not the tourist-queue spots.'
         },
         travelStyle: ['歡樂', '美食'],
         targetAudience: {
@@ -614,6 +638,10 @@ export const TEMPLATES: Template[] = [
             description: '從文學基地的日式宿舍群開始，穿過赤峰街的獨立書店，在寶藏巖的山城藝術村發呆。',
             authorLabel: '台北在地文青推薦'
         },
+        authorStory: {
+            zh: '我是在台北長大的文青部落客，專門寫巷弄探索與獨立書店。這份路線是我花了 5 年走遍台北大街小巷後，精選出最能代表「台北文化靈魂」的地點 — 每一站都有我自己的故事。',
+            en: 'I\'m a Taipei-born blogger who writes about alley exploration and indie bookstores. This route took 5 years of wandering every corner of Taipei to curate — each stop represents the cultural soul of this city and holds a personal story of mine.'
+        },
         travelTips: [
             { tip: '台北捷運非常方便，但巷弄探索建議用走的', tipEn: 'MRT is convenient, but walk to discover alleys' },
             { tip: '每間咖啡廳都有自己的個性，不要只去連鎖店', tipEn: 'Each caf\u00e9 has its own personality, skip chains' },
@@ -696,6 +724,10 @@ export const TEMPLATES: Template[] = [
             description: '從早上 6 點的虔肉米糕開始，到神農街的隱藏酒吧結束。中間穿插世界得獎冰淇淋。',
             authorLabel: '台南 60 年在地人推薦'
         },
+        authorStory: {
+            zh: '我家在台南住了三代，阿嬬從小帶我吃的店，很多都開了 50 年以上。這份行程是我小時候的味道 — 早上排隊的虐肉飯、下午的古早味紅茶、晚上神農街的安靜。希望你也能吃到我的童年。',
+            en: 'My family has lived in Tainan for three generations. The shops my grandma took me to as a kid have been open for 50+ years. This itinerary is my childhood flavor — morning queues for braised rice, afternoon vintage black tea, and peaceful evenings on Shennong Street.'
+        },
         travelTips: [
             { tip: '台南小吃通常下午才開，早上去市場吃', tipEn: 'Most street food opens in afternoon, eat at markets in the morning' },
             { tip: '蛋山派吃完不妨走過去神農街散步', tipEn: 'After eating, walk to Shennong St. to digest' }
@@ -758,6 +790,10 @@ export const TEMPLATES: Template[] = [
             quoteEn: 'Hualien\'s beauty is the kind of silence that makes you forget time.',
             description: '從吉利潭的絕美倒影，到四八高地的月牙灣全景，再到出海口的隱密咖啡基地。',
             authorLabel: '花蓮在地探索者推薦'
+        },
+        authorStory: {
+            zh: '我從台北搬到花蓮已經 4 年，從都市人變成山海人。這份行程是我每個週末在花蓮探索的精華 — 不只是太魯閣，而是當地人才知道的秘境海灘、山中咖啡廳和部落文化體驗。',
+            en: 'I moved from Taipei to Hualien 4 years ago, transforming from a city person to a mountain-and-sea person. This route is the essence of my weekend explorations — not just Taroko, but secret beaches, mountain cafés, and indigenous cultural experiences that only locals know.'
         },
         travelTips: [
             { tip: '花蓮必須自駕或包車，大眾交通不方便', tipEn: 'Driving or chartering a car is essential in Hualien' },
@@ -833,6 +869,10 @@ export const TEMPLATES: Template[] = [
             quoteEn: 'Taichung\'s charm lies in places you only discover when you push open the door.',
             description: '從勤美商圈的眾小樓開始，穿過國美館旁的自家烘焙咖啡廳，最後在五權車站旁的日式老宅裡發呆一個下午。',
             authorLabel: '台中在地老宅控推薦'
+        },
+        authorStory: {
+            zh: '我是台中土生土長的老宅控，5 年來探訪了 100+ 間台中老房子改建的咖啡廳。這份路線是我的「台中老宅地圖」精選版 — 推開每一扉門，都是一段時光旅行。',
+            en: 'I\'m a Taichung-born old house fanatic who\'s explored 100+ renovated heritage cafés over 5 years. This route is the curated edition of my "Taichung Old House Map" — behind every door is a journey through time.'
         },
         travelTips: [
             { tip: '台中咖啡廳通常中午才開，不要太早去', tipEn: 'Taichung caf\u00e9s usually open at noon, don\'t go too early' },

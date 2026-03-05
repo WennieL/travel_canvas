@@ -231,4 +231,10 @@ export interface Template {
         tip: string;
         tipEn?: string;
     }>;
+    // [NEW] Author Story — personal narrative from template creator
+    authorStory?: {
+        zh: string;
+        en: string;
+    };
 }
+

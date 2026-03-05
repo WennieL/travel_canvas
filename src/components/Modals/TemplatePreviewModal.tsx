@@ -410,6 +410,42 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                         </div>
                     </div>
 
+                    {/* ===== 5.3 AUTHOR STORY ===== */}
+                    {template.authorStory && (
+                        <div className="px-5 mb-5 text-left">
+                            <button
+                                onClick={() => setOpenFaq(openFaq === 'authorStory' ? null : 'authorStory')}
+                                className="w-full bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100 rounded-xl p-4 hover:from-teal-100/50 hover:to-cyan-100/50 transition-all"
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
+                                            <User size={14} className="text-teal-600" />
+                                        </div>
+                                        <div className="text-left">
+                                            <span className="text-xs font-bold text-teal-800 block">
+                                                {lang === 'zh' ? '✍️ 作者小故事' : '✍️ Author Story'}
+                                            </span>
+                                            <span className="text-[10px] text-teal-500">
+                                                {lang === 'zh'
+                                                    ? `by ${template.author}`
+                                                    : `by ${template.authorEn || template.author}`}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ChevronDown size={14} className={`text-teal-400 transition-transform ${openFaq === 'authorStory' ? 'rotate-180' : ''}`} />
+                                </div>
+                                {openFaq === 'authorStory' && (
+                                    <div className="mt-3 pt-3 border-t border-teal-100 text-left animate-in fade-in slide-in-from-top-1 duration-200">
+                                        <p className="text-xs text-teal-700 leading-relaxed italic">
+                                            "{lang === 'zh' ? template.authorStory.zh : template.authorStory.en}"
+                                        </p>
+                                    </div>
+                                )}
+                            </button>
+                        </div>
+                    )}
+
                     {hiddenCount > 0 && (
                         <div className="px-5 mb-6">
                             <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 rounded-xl p-4 relative overflow-hidden">
