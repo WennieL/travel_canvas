@@ -47,10 +47,10 @@ export const TEMPLATES: Template[] = [
         duration: 1,
         rating: 4.9,
         tier: 'official',
-        copiedCount: 0,
+        copiedCount: 284,
         price: 0.99,
         isLocked: false,
-        highlights: { days: 1, spots: 5, tips: 4, rating: 4.9, usageCount: 0 },
+        highlights: { days: 1, spots: 5, tips: 4, rating: 4.9, usageCount: 284 },
         dayPreviews: [
             { day: 1, summary: 'Patricia Coffee → Hosier Lane → Queen Vic Market → Bar Americano' }
         ],
@@ -117,11 +117,11 @@ export const TEMPLATES: Template[] = [
         duration: 1,
         rating: 4.8,
         tier: 'creator',
-        copiedCount: 0,
+        copiedCount: 192,
         price: 0.99,
         originalPrice: 4.99,
         isLocked: true,
-        highlights: { days: 1, spots: 3, tips: 4, rating: 4.8, usageCount: 0 },
+        highlights: { days: 1, spots: 3, tips: 4, rating: 4.8, usageCount: 192 },
         dayPreviews: [
             { day: 1, summary: 'Bar Americano → Eau de Vie → Robot Bar' }
         ],
