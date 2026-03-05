@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
     Trash2, Clock, StickyNote as NoteIcon, GripVertical,
-    MoveRight, Lock, Banknote, MoreVertical, AlertTriangle
+    MoveRight, Lock, Banknote, MoreVertical, AlertTriangle, Pencil
 } from 'lucide-react';
 import {
     TimeSlot,
@@ -214,8 +214,8 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                                                 setEditingDurationId(null);
                                             }}
                                             className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all hover:scale-105 active:scale-95 ${item.duration === preset || item.duration === (preset === '30m' ? '30分' : preset)
-                                                    ? 'bg-teal-600 text-white border-teal-600'
-                                                    : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'
+                                                ? 'bg-teal-600 text-white border-teal-600'
+                                                : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'
                                                 }`}
                                         >
                                             {preset}
@@ -227,8 +227,8 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                                             setEditingDurationId(null);
                                         }}
                                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full border transition-all hover:scale-105 active:scale-95 ${item.duration === '半天' || item.duration === 'Half day'
-                                                ? 'bg-teal-600 text-white border-teal-600'
-                                                : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'
+                                            ? 'bg-teal-600 text-white border-teal-600'
+                                            : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-teal-400 hover:text-teal-600'
                                             }`}
                                     >
                                         {t.halfDay}
@@ -281,9 +281,10 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                             <div
                                 onClick={(e) => { e.stopPropagation(); setEditingDurationId(item.instanceId); }}
                                 title={t.setDuration}
-                                className="flex items-center gap-1 text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200 cursor-pointer hover:border-teal-300 hover:text-teal-600 transition-colors"
+                                className="group/dur flex items-center gap-1 text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200 cursor-pointer hover:border-teal-300 hover:text-teal-600 hover:bg-teal-50 transition-all"
                             >
-                                <Clock size={10} />
+                                <Clock size={10} className="group-hover/dur:hidden" />
+                                <Pencil size={10} className="hidden group-hover/dur:block text-teal-500" />
                                 {item.duration || t.flexible}
                             </div>
                         )}
@@ -434,6 +435,17 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                                         >
                                             <Banknote size={14} />
                                             {t.setBudget}
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setEditingDurationId(item.instanceId);
+                                                setOpenMenuId(null);
+                                            }}
+                                            className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-teal-50 hover:text-teal-600 rounded-lg w-full text-left"
+                                        >
+                                            <Clock size={14} />
+                                            {t.setDuration || (lang === 'zh' ? '設定停留時間' : 'Set Duration')}
                                         </button>
                                         <button
                                             onClick={(e) => {
