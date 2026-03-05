@@ -265,14 +265,12 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             {/* Map Mode / Split View Toggle */}
                             <button
                                 onClick={() => {
-                                    if (viewMode === 'canvas') {
-                                        setShowContextMap(!showContextMap);
-                                    } else {
-                                        setViewMode(viewMode === 'map' ? 'canvas' : 'map');
-                                    }
+                                    setShowContextMap(!showContextMap);
+                                    // If currently in full-map mode, return to canvas first
+                                    if (viewMode === 'map') setViewMode('canvas');
                                 }}
-                                className={`w-10 h-10 flex flex-col items-center justify-center rounded-xl transition-all group ${showContextMap || viewMode === 'map' ? 'bg-teal-50 text-teal-600 border border-teal-200 shadow-sm' : 'text-gray-400 hover:bg-white hover:border-gray-200 border border-transparent hover:text-teal-600'}`}
-                                title={viewMode === 'canvas' ? (showContextMap ? t.hideMap : t.showMap) : (viewMode === 'map' ? 'Back to Schedule' : 'Show Map')}
+                                className={`w-10 h-10 flex flex-col items-center justify-center rounded-xl transition-all group ${showContextMap ? 'bg-teal-50 text-teal-600 border border-teal-200 shadow-sm' : 'text-gray-400 hover:bg-white hover:border-gray-200 border border-transparent hover:text-teal-600'}`}
+                                title={showContextMap ? t.hideMap : t.showMap}
                             >
                                 <MapIcon size={18} />
                                 <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5 leading-none">{t.mapBtn}</span>

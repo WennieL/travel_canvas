@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Users, Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
+import { X, Clock, MapPin, Star, Lock, CheckCircle2, User, Users, Sparkles, ArrowRight, ChevronRight, ChevronDown } from 'lucide-react';
 import { Template, ScheduleItem, DaySchedule, FullSchedule } from '../../types';
 import { getGradient, getRegionEmoji, getRegionName } from '../../data/regions';
 
@@ -24,6 +24,8 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     t,
     lang = 'zh'
 }) => {
+    const [openFaq, setOpenFaq] = React.useState<string | null>(null);
+
     if (!isOpen || !template) return null;
 
     const isLocked = template.isLocked && !template.purchased;
@@ -324,7 +326,39 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                         </div>
                     )}
 
-                    {/* ===== 6. HIDDEN CONTENT TEASER ===== */}
+                    {/* ===== 5.2 KNOW BEFORE YOU GO (FAQ) ===== */}
+                    <div className="px-5 mb-5 text-left">
+                        <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <Sparkles size={14} className="text-amber-500" />
+                            {t.knowBeforeYouGo || (lang === 'zh' ? '行前必看 (FAQ)' : 'Know Before You Go')}
+                        </h3>
+                        <div className="space-y-2">
+                            {[
+                                { id: 'time', title: t.bestTimeToVisit || (lang === 'zh' ? '最佳旅遊時間' : 'Best Time to Visit'), icon: '⏰', text: lang === 'zh' ? '建議清晨或平日前往以避開人潮，如果是賞花季則建議提前 2 週關注花況。' : 'Early mornings or weekdays are best to avoid crowds. For flower seasons, check forecasts 2 weeks ahead.' },
+                                { id: 'transport', title: t.gettingAround || (lang === 'zh' ? '交通攻略' : 'Getting Around'), icon: '🚌', text: lang === 'zh' ? '大部分景點可透過地鐵抵達，部分偏遠地點建議搭配計程車或共享單車。' : 'Most spots are reachable by subway. For remote areas, taxis or bike-sharing are recommended.' },
+                                { id: 'advice', title: t.expertAdvice || (lang === 'zh' ? '達人私房建議' : 'Expert Advice'), icon: '💡', text: lang === 'zh' ? '記得攜帶行動電源與舒適的步鞋，部分老宅店面僅收現金，建議準備充足。' : 'Bring a power bank and comfortable walking shoes. Some traditional shops only accept cash.' }
+                            ].map((faq) => (
+                                <div key={faq.id} className="border border-gray-100 rounded-xl overflow-hidden">
+                                    <button
+                                        onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
+                                        className="w-full flex items-center justify-between p-3 bg-gray-50/50 hover:bg-gray-50 transition-colors"
+                                    >
+                                        <span className="flex items-center gap-2 text-xs font-bold text-gray-700">
+                                            <span>{faq.icon}</span>
+                                            {faq.title}
+                                        </span>
+                                        <ChevronDown size={14} className={`text-gray-400 transition-transform ${openFaq === faq.id ? 'rotate-180' : ''}`} />
+                                    </button>
+                                    {openFaq === faq.id && (
+                                        <div className="p-3 text-xs text-gray-500 leading-relaxed bg-white border-t border-gray-50 animate-in fade-in slide-in-from-top-1 duration-200">
+                                            {faq.text}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     {hiddenCount > 0 && (
                         <div className="px-5 mb-6">
                             <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-100 rounded-xl p-4 relative overflow-hidden">
