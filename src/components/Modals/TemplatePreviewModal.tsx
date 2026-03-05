@@ -73,6 +73,61 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     // City-based gradient for cover placeholder (data-driven)
     const coverGradient = getGradient(template.region);
 
+    // Per-region FAQ content
+    type FaqContent = { zh: string; en: string };
+    const regionFaqMap: Record<string, { time: FaqContent; transport: FaqContent; advice: FaqContent }> = {
+        tokyo: {
+            time: { zh: '3月下旬賞櫻、11月賞楓最熱鬧，建議清晨 8 點前抵達熱門景點。', en: 'Late March for cherry blossoms, November for fall foliage. Arrive at popular spots before 8am.' },
+            transport: { zh: 'JR Pass 或 IC 卡（Suica/Pasmo）搭地鐵最方便，避開早 8-9 點通勤高峰。', en: 'JR Pass or IC card (Suica/Pasmo) for easy subway access. Avoid rush hour 8-9am.' },
+            advice: { zh: '便利商店早餐物美價廉，建議攜帶現金，許多傳統店家不收卡。', en: 'Convenience store breakfasts are great value. Carry cash — many traditional shops are cash only.' },
+        },
+        kyoto: {
+            time: { zh: '4月初人潮最多，建議開門前（9點前）抵達，或選擇工作日前往嵐山竹林。', en: 'April is busiest. Arrive before 9am or visit on weekdays to beat crowds at Arashiyama.' },
+            transport: { zh: '市區以公車和地鐵為主，嵐山建議租借腳踏車探索，多日可購買巴士一日券。', en: 'Bus and subway cover most areas. Rent a bike in Arashiyama. A 1-day bus pass is great for multi-stop days.' },
+            advice: { zh: '和服租借建議提前預訂，清水寺日落前 1 小時光線最美，拍照最佳。', en: 'Book kimono rentals in advance. Kiyomizudera is most photogenic 1 hour before sunset.' },
+        },
+        osaka: {
+            time: { zh: '道頓堀夜晚最熱鬧，下午 3 點後才逛可避開午間人潮；黑門市場建議週間上午前往。', en: 'Dotonbori is best at night. Visit Kuromon Market on weekday mornings for freshest seafood.' },
+            transport: { zh: 'Osaka Amazing Pass 可無限搭乘地鐵並免費進入多項景點，CP 值極高。', en: 'Osaka Amazing Pass offers unlimited subway rides + free entry to many attractions — great value.' },
+            advice: { zh: '串炸和燒肉人均約 800-1500 yen，建議避開假日晚餐高峰，排隊時間較長。', en: 'Kushikatsu and yakiniku average ¥800-1500/person. Expect waits on weekend evenings.' },
+        },
+        taipei: {
+            time: { zh: '春秋兩季最宜，象山日落後 30 分鐘是拍 101 夜景的黃金時刻。', en: 'Oct-Nov is ideal. Head to Elephant Mountain 30 min after sunset for the best 101 night views.' },
+            transport: { zh: '悠遊卡搭捷運最方便，桃園機場捷運到台北市區約 35 分鐘。', en: 'EasyCard for MRT is best. Airport to city is ~35 min via Taoyuan Airport MRT.' },
+            advice: { zh: '夜市攜帶小額現金；九份建議搭公車上山，傍晚燈籠點燈最美。', en: 'Bring small cash for night markets. Take the bus to Jiufen — twilight lanterns are magical.' },
+        },
+        tainan: {
+            time: { zh: '早晨是台南黃金時段！百年早餐老店 7-10 點就座無虛席，建議早起出發。', en: 'Morning is golden hour in Tainan! Century-old breakfast shops fill up 7-10am — rise early.' },
+            transport: { zh: '景點密集，租借 YouBike 或步行最適合；市區多為單行道，租車停車較麻煩。', en: 'Rent a YouBike or walk — sights are dense. Driving is tricky with many one-way streets.' },
+            advice: { zh: '赤崁樓和安平古堡附近小吃最道地，建議留半天慢逛安平老街。', en: 'Best street food clusters near Chikan Tower and Anping Fort. Allow half a day for Anping Old Street.' },
+        },
+        hualien: {
+            time: { zh: '太魯閣建議早上 8 點前或下午 3 點後進入人潮較少；颱風季（7-9 月）注意封路。', en: 'Enter Taroko before 8am or after 3pm to avoid crowds. Watch for closures during typhoon season (Jul-Sep).' },
+            transport: { zh: '花蓮市區租車最方便，太魯閣可搭台灣好行或包車，不建議騎機車進峽谷。', en: 'Rent a car in Hualien city. For Taroko, join a tour or hire a cab — scooters are not advised in the gorge.' },
+            advice: { zh: '東大門夜市是在地人最愛，新鮮麻糬必買；峽谷步道請備足水和防曬。', en: 'Dongdamen Night Market is a local favourite. Fresh mochi is a must-buy. Hike with water and sunscreen.' },
+        },
+        taichung: {
+            time: { zh: '彩虹眷村早上 9 點開門，建議平日上午前往；逢甲夜市下午 4 點後逐漸熱鬧。', en: 'Rainbow Village opens at 9am — weekday mornings are crowd-free. Fengjia Night Market picks up after 4pm.' },
+            transport: { zh: '市區以公車和 BRT 為主，景點距離較遠，建議租車或共乘。', en: 'City bus and BRT cover major sites. Attractions are spread out — renting a car or ride-sharing is helpful.' },
+            advice: { zh: '台中是甜點之都！審計新村和一中街都值得半天探索，預留下午茶時間。', en: 'Taichung is a dessert paradise! Budget half a day for Shen Ji New Village or Yizhong Street.' },
+        },
+        melbourne: {
+            time: { zh: '墨爾本天氣多變「一天四季」，洋蔥式穿法是不二法門，隨身帶薄外套。', en: "Melbourne's weather is famously unpredictable — layer up and always carry a light jacket." },
+            transport: { zh: 'Myki 卡搭大眾交通，CBD 免費電車圈範圍廣，機場建議搭 SkyBus 較划算。', en: 'Myki card covers all public transport. Free tram zone covers the CBD. SkyBus is the best-value airport transfer.' },
+            advice: { zh: '別點美式咖啡，試試 Flat White！Queen Victoria Market 週二/三公休，出發前確認。', en: 'Order a Flat White like a local! Queen Victoria Market is closed Tue/Wed — check before visiting.' },
+        },
+    };
+    const regionFaq = regionFaqMap[template.region] || {
+        time: { zh: '建議清晨或平日前往以避開人潮，旺季請提前確認開放狀況。', en: 'Early mornings or weekdays are best. Confirm opening hours during peak season.' },
+        transport: { zh: '大部分景點可透過大眾交通抵達，偏遠地點建議搭計程車或共享單車。', en: 'Most spots are reachable by public transit. For remote areas, taxis or bike-sharing are recommended.' },
+        advice: { zh: '攜帶行動電源與舒適步鞋，部分傳統店家僅收現金。', en: 'Bring a power bank and comfortable shoes. Some traditional shops only accept cash.' },
+    };
+    const faqItems = [
+        { id: 'time', title: t.bestTimeToVisit || (lang === 'zh' ? '最佳旅遊時間' : 'Best Time to Visit'), icon: '⏰', text: lang === 'zh' ? regionFaq.time.zh : regionFaq.time.en },
+        { id: 'transport', title: t.gettingAround || (lang === 'zh' ? '交通攻略' : 'Getting Around'), icon: '🚌', text: lang === 'zh' ? regionFaq.transport.zh : regionFaq.transport.en },
+        { id: 'advice', title: t.expertAdvice || (lang === 'zh' ? '達人私房建議' : 'Expert Advice'), icon: '💡', text: lang === 'zh' ? regionFaq.advice.zh : regionFaq.advice.en },
+    ];
+
     return (
         <div className="fixed inset-0 z-[3000] flex justify-center items-center pointer-events-none p-4">
             {/* Backdrop */}
@@ -333,11 +388,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                             {t.knowBeforeYouGo || (lang === 'zh' ? '行前必看 (FAQ)' : 'Know Before You Go')}
                         </h3>
                         <div className="space-y-2">
-                            {[
-                                { id: 'time', title: t.bestTimeToVisit || (lang === 'zh' ? '最佳旅遊時間' : 'Best Time to Visit'), icon: '⏰', text: lang === 'zh' ? '建議清晨或平日前往以避開人潮，如果是賞花季則建議提前 2 週關注花況。' : 'Early mornings or weekdays are best to avoid crowds. For flower seasons, check forecasts 2 weeks ahead.' },
-                                { id: 'transport', title: t.gettingAround || (lang === 'zh' ? '交通攻略' : 'Getting Around'), icon: '🚌', text: lang === 'zh' ? '大部分景點可透過地鐵抵達，部分偏遠地點建議搭配計程車或共享單車。' : 'Most spots are reachable by subway. For remote areas, taxis or bike-sharing are recommended.' },
-                                { id: 'advice', title: t.expertAdvice || (lang === 'zh' ? '達人私房建議' : 'Expert Advice'), icon: '💡', text: lang === 'zh' ? '記得攜帶行動電源與舒適的步鞋，部分老宅店面僅收現金，建議準備充足。' : 'Bring a power bank and comfortable walking shoes. Some traditional shops only accept cash.' }
-                            ].map((faq) => (
+                            {faqItems.map((faq) => (
                                 <div key={faq.id} className="border border-gray-100 rounded-xl overflow-hidden">
                                     <button
                                         onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}

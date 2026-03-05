@@ -21,6 +21,16 @@ const CityPicker: React.FC<CityPickerProps> = ({
     t
 }) => {
     const [showAllTemplates, setShowAllTemplates] = useState(false);
+    const [activeFilter, setActiveFilter] = useState('all');
+
+    const filters = [
+        { id: 'all', label: lang === 'zh' ? '全部' : 'All' },
+        { id: '1day', label: lang === 'zh' ? '1日快閃' : '1 Day' },
+        { id: 'short', label: lang === 'zh' ? '2-3日' : '2-3 Days' },
+        { id: 'long', label: lang === 'zh' ? '4日以上' : '4+ Days' },
+        { id: 'budget', label: lang === 'zh' ? '小資旅行' : 'Budget' },
+        { id: 'premium', label: lang === 'zh' ? '奠華體驗' : 'Premium' },
+    ];
 
     // Data-driven: collect all cities from all countries
     const allCities = Object.keys(CITY_FILTERS).flatMap(countryId => CITY_FILTERS[countryId] || []);
@@ -110,9 +120,26 @@ const CityPicker: React.FC<CityPickerProps> = ({
             {/* Recommended Plans */}
             <div className="px-6 py-6 overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                        <Compass size={16} className="text-teal-500" />
-                        <h3 className="text-xs font-black uppercase tracking-widest text-gray-400">{t.popularInspiration}</h3>
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <Compass size={16} className="text-teal-500" />
+                            <h3 className="text-xs font-black uppercase tracking-widest text-gray-400">{t.popularInspiration}</h3>
+                        </div>
+                        {/* Filter Capsules - Desktop */}
+                        <div className="hidden md:flex items-center gap-1 bg-gray-50 p-1 rounded-full border border-gray-100">
+                            {filters.map(f => (
+                                <button
+                                    key={f.id}
+                                    onClick={() => setActiveFilter(f.id)}
+                                    className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${activeFilter === f.id
+                                            ? 'bg-teal-600 text-white shadow-sm'
+                                            : 'text-gray-400 hover:text-gray-600'
+                                        }`}
+                                >
+                                    {f.label}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                     <button
                         onClick={() => setShowAllTemplates(!showAllTemplates)}
@@ -121,13 +148,39 @@ const CityPicker: React.FC<CityPickerProps> = ({
                         {showAllTemplates ? (lang === 'zh' ? '收起' : 'Show Less') : t.viewAll}
                     </button>
                 </div>
+
+                {/* Filter Capsules - Mobile (scrollable) */}
+                <div className="md:hidden flex gap-2 overflow-x-auto scrollbar-hide mb-4">
+                    {filters.map(f => (
+                        <button
+                            key={f.id}
+                            onClick={() => setActiveFilter(f.id)}
+                            className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[10px] font-bold border transition-all ${activeFilter === f.id
+                                    ? 'bg-teal-600 border-teal-600 text-white shadow-md'
+                                    : 'bg-white border-gray-100 text-gray-400'
+                                }`}
+                        >
+                            {f.label}
+                        </button>
+                    ))}
+                </div>
+
                 <div className={showAllTemplates
                     ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4 px-1 animate-in fade-in duration-300"
                     : "flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-1"
                 }>
                     {(() => {
-                        if (showAllTemplates) return TEMPLATES;
-                        // Pick diverse templates: 1 from each region, then fill to 6
+                        // Apply filter
+                        let filtered = TEMPLATES;
+                        if (activeFilter === '1day') filtered = TEMPLATES.filter(tpl => tpl.duration === 1);
+                        else if (activeFilter === 'short') filtered = TEMPLATES.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
+                        else if (activeFilter === 'long') filtered = TEMPLATES.filter(tpl => tpl.duration >= 4);
+                        else if (activeFilter === 'budget') filtered = TEMPLATES.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
+                        else if (activeFilter === 'premium') filtered = TEMPLATES.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
+
+                        if (showAllTemplates) return filtered;
+
+                        // Pick diverse templates (1 per region) then fill to 6
                         const seen = new Set<string>();
                         const diverse: Template[] = [];
                         for (const tpl of TEMPLATES) {
