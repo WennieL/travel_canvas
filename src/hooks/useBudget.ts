@@ -69,6 +69,7 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
 
         const SLOTS = ['morning', 'afternoon', 'evening', 'night', 'accommodation'] as const;
         Object.values(activePlan.schedule).forEach(day => {
+            if (!day) return; // Safety check
             SLOTS.forEach(slot => {
                 const slotItems = day[slot];
                 if (Array.isArray(slotItems)) {
@@ -95,6 +96,7 @@ export function useBudget(activePlan: Plan, t: Record<string, string>): UseBudge
 
         const SLOTS = ['morning', 'afternoon', 'evening', 'night', 'accommodation'] as const;
         Object.values(activePlan.schedule).forEach(day => {
+            if (!day) return; // Safety check
             SLOTS.forEach(slot => {
                 const slotItems = day[slot];
                 if (Array.isArray(slotItems)) {
