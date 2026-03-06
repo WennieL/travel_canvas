@@ -66,7 +66,7 @@ const DayTabs: React.FC<DayTabsProps> = ({
             </div>
 
             {/* Desktop Day Tabs Bar */}
-            <div className="hidden lg:flex h-12 bg-transparent items-center justify-center z-30 relative overflow-hidden">
+            <div className="hidden lg:flex h-12 bg-transparent items-center justify-center z-30 relative overflow-hidden pt-3">
                 <div ref={dayTabsContainerRef} className="w-full max-w-5xl px-6 flex items-center gap-2 overflow-visible">
                     {/* Render Visible Tabs (1-5) */}
                     {visibleDays.map(dayNum => (
