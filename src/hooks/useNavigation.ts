@@ -82,15 +82,6 @@ const NAV_CONFIG: NavItem[] = [
         action: 'navigate',
     },
     {
-        id: 'map',
-        icon: MapIcon,
-        labelKey: 'map',
-        alwaysShow: false,
-        showWhen: 'editing',
-        desktop: true,
-        action: 'navigate',
-    },
-    {
         id: 'budget',
         icon: DollarSign,
         labelKey: 'budget',
