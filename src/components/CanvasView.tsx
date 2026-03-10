@@ -37,6 +37,7 @@ interface CanvasViewProps {
     onExitDiscovery?: () => void;
     onAddItem?: (item: TravelItem) => void;
     setSidebarMode?: (mode: 'list' | 'map') => void;
+    onSelectItem?: (item: TravelItem | ScheduleItem | null, source: 'map' | 'sidebar' | 'canvas' | null) => void;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -67,6 +68,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     onExitDiscovery,
     onAddItem,
     setSidebarMode,
+    onSelectItem,
 }) => {
     const isTimeline = !showContextMap;
 
@@ -196,7 +198,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         schedule={currentDaySchedule}
                         lang={lang}
                         t={t}
-                        onItemClick={handleMapItemClick}
+                        onItemClick={(item) => onSelectItem ? onSelectItem(item, 'map') : handleMapItemClick(item)}
                         isEmbedded={true}
                         discoveryCreatorId={discoveryCreatorId}
                         currentDay={currentDay}

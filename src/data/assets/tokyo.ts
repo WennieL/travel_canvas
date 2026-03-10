@@ -177,11 +177,69 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaser: '變形時間表 + 最佳拍攝角度',
             teaserEn: 'Transformation schedule + best photo spots',
             full: {
-                story: '獨角獸鋼彈每天三場變形秀（19:30、20:30、21:30），會從 Unicorn Mode 變成 Destroy Mode，角和盔甲會展開發光！最佳拍攝位置是正前方的台階區，提前 10 分鐘卡位。旁邊的 Diver City 商場 7F 有「THE GUNDAM BASE TOKYO」，鋼彈迷必逛。',
+                story: '獨角獸鋼彈每天三場變形秀（19:30、20:30、21:30），會從 Unicorn Mode 變成 Destroy Mode，角 and 盔甲會展開發光！最佳拍攝位置是正前方的台階區，提前 10 分鐘卡位。旁邊的 Diver City 商場 7F 有「THE GUNDAM BASE TOKYO」，鋼彈迷必逛。',
                 exactLocation: 'Diver City Tokyo Plaza 正前方台階區',
                 mustTry: '進入 Diver City 2F 的鋼彈咖啡廳，有限定拉花',
                 avoid: '週末晚上人太多，建議平日去',
                 bestTime: '20:30'
+            }
+        }
+    },
+    {
+        id: 'a-secret-1',
+        title: '豪德寺',
+        titleEn: 'Gotokuji Temple',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🐱',
+        description: '招財貓的發源地，成千上萬隻招財貓整齊排列，是貓奴必訪的療癒聖地。',
+        descriptionEn: 'The birthplace of Maneki-neko, home to thousands of waving cat statues.',
+        price: 0,
+        address: '東京都世田谷區豪德寺2-24-7',
+        rating: 4.8,
+        lat: 35.6483,
+        lng: 139.6472,
+        openingHours: '06:00-18:00',
+        tags: ['療癒', '秘境', '貓奴'],
+        region: 'tokyo',
+        insiderTip: {
+            teaser: '萬貓奔騰！東京最療癒的招財貓森林',
+            teaserEn: 'Thousands of cats! Tokyo\'s most healing forest',
+            full: {
+                story: '豪德寺是招財貓的發源地。這裡的招財貓舉的是右手，而且不帶金幣。在「招福殿」旁邊，幾千隻招財貓擠在一起，那個畫面震撼又可愛，是 IG 上最紅的東京秘境之一。',
+                exactLocation: '本殿左後方的「招福殿」旁區域',
+                mustTry: '買一隻最小的招財貓御守 (¥300)，許願後帶回家',
+                avoid: '這裡是很莊嚴的寺廟，拍照時請保持安靜，不要移動貓咪雕像',
+                bestTime: '09:00 陽光斜射進森林時最美'
+            }
+        }
+    },
+    {
+        id: 'a-secret-2',
+        title: '新橋居酒屋街',
+        titleEn: 'Shimbashi Izakaya Alley',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🏮',
+        description: '東京上班族「下班後的戰場」，藏在鐵道下的懷舊居酒屋，感受最道地的東京夜生活。',
+        descriptionEn: 'The "after-work battlefield" for salarymen, featuring nostalgic izakayas under the tracks.',
+        price: 3000,
+        address: '東京都港區新橋2丁目',
+        rating: 4.7,
+        lat: 35.6664,
+        lng: 139.7583,
+        openingHours: '17:00-24:00',
+        tags: ['在地', '美食', '攝影'],
+        region: 'tokyo',
+        insiderTip: {
+            teaser: '比起新宿，這裡才是真正的東京下班人生',
+            teaserEn: 'More authentic than Shinjuku, the real salaryman life',
+            full: {
+                story: '忘掉遊客眾多的思出橫丁吧！新橋車站鐵道下的這些店，才是東京上班族每天打卡的地方。濃煙、啤酒、火烤雞肉串，這裡的氛圍非常「賽博龐克」，也是街頭攝影師的私藏地點。',
+                exactLocation: 'JR新橋站烏森口出來的鐵道兩側',
+                mustTry: '隨便找一家看起來很舊的串燒店，點一份「燒鳥拼盤」',
+                avoid: '不要在 18:00-19:00 去，那是剛下班最擠的時候',
+                bestTime: '21:00 後氣氛最 High'
             }
         }
     },

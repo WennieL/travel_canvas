@@ -19,6 +19,8 @@ import MobileNav from './MobileNav';
 import CanvasView from './CanvasView';
 import DesktopSidebar from './DesktopSidebar';
 import FavoritesView from './FavoritesView';
+import { MobileDiscoveryDrawer } from './Mobile/MobileDiscoveryDrawer';
+import { SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../data';
 
 // This is the props interface - it accepts all the values that App.tsx passes down
 export interface AppLayoutProps {
@@ -79,6 +81,7 @@ export interface AppLayoutProps {
     discoveryCreatorId: string | null;
     sidebarMode: 'map' | 'list';
     setSidebarMode: React.Dispatch<React.SetStateAction<'map' | 'list'>>;
+    selectionSource: 'map' | 'sidebar' | 'canvas' | null;
 
     // Handlers from useAppHandlers
     showContextMap: boolean;
@@ -176,6 +179,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         activeRegion, setActiveRegion,
         addToSlotTarget, setAddToSlotTarget,
         discoveryCreatorId, sidebarMode, setSidebarMode,
+        selectionSource,
         // Handlers
         showContextMap, setShowContextMap,
         selectedCreatorId, setSelectedCreatorId,
@@ -208,6 +212,44 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     } = props;
 
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+
+    // [PHASE 29] Calculate all recommendations for the mobile drawer
+    // Mirroring logic from DiscoverySidekick.tsx
+    const allRecommendations = React.useMemo(() => {
+        if (!ui.selectedItem) return [];
+        const item = ui.selectedItem as any;
+        const title = item.title;
+        const titleEn = item.titleEn;
+
+        return ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS, ...customAssets] as TravelItem[]).filter(a =>
+            (title && a.title === title) || (titleEn && a.titleEn === titleEn)
+        );
+    }, [ui.selectedItem, customAssets]);
+
+    const handleSelectItem = (item: ScheduleItem | TravelItem | null, source: 'map' | 'sidebar' | 'canvas' | null) => {
+        ui.setSelectedItem(item as any);
+        ui.setSelectionSource(source);
+
+        // [PHASE 27] UNIFIED LOGIC: If selecting from map, ensure we are in a mode that shows the sidebar detail
+        if (source === 'map') {
+            // 1. Force sidebar to Assets tab (where SpotDetailsPanel lives)
+            ui.setActiveTab('assets');
+
+            // 2. Ensure Map mode is active
+            ui.setSidebarMode('map');
+
+            // 3. Ensure sidebar is open on desktop
+            if (!isMobile) {
+                setIsSidebarOpen(true);
+                ui.setIsSidebarPinned(true);
+            }
+
+            // 4. Sync Discovery Creator Context
+            if (item?.authorId) {
+                ui.setDiscoveryCreatorId(item.authorId);
+            }
+        }
+    };
 
     return (
         <div className="flex flex-col md:flex-row h-[100dvh] bg-[#fafafa] text-slate-800 font-sans overflow-x-hidden max-w-[100vw]">
@@ -295,9 +337,11 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                 onModeChange={handleSidebarModeChange}
                                 sidebarMode={sidebarMode}
                                 setSidebarMode={setSidebarMode}
-                                onSelectItem={(item: any) => ui.setSelectedItem(item)}
+                                onSelectItem={(item: any) => handleSelectItem(item, 'sidebar')}
                                 selectedItem={ui.selectedItem}
                                 discoveryCreatorId={ui.discoveryCreatorId}
+                                subscribedCreators={subscribedCreators}
+                                onToggleSubscribe={handleToggleSubscribe}
                             />
                         </div>
                     )}
@@ -350,99 +394,106 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 )}
 
                 {/* Canvas Area */}
-                {!showFavorites && <div className="flex-1 overflow-y-auto overflow-x-hidden bg-transparent p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4 no-scrollbar">
-                    {viewMode === 'map' ? (
-                        <div className="h-full">
-                            <MapView
-                                schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }}
-                                lang={lang}
-                                t={t}
-                                onItemClick={ui.setSelectedItem}
-                                onClose={() => setViewMode('canvas')}
-                                discoveryCreatorId={discoveryCreatorId}
-                                onAddItem={(item) => handleTapToAdd(item)}
-                                currentDay={currentDay}
-                                addToSlotTarget={addToSlotTarget}
-                                onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
-                                activeRegion={activePlan.region}
-                            />
-                        </div>
-                    ) : viewMode === 'discovery' ? (
-                        <div className="h-full">
-                            <DiscoveryView
-                                onPreviewTemplate={setPreviewTemplate}
-                                onStoryPreview={(tpl) => {
-                                    setPreviewTemplate(tpl);
-                                    ui.setShowStoryPreview(true);
-                                }}
-                                onCreatorClick={setSelectedCreatorId}
-                                onExploreCreatorMap={handleExploreCreatorMap}
-                                setActiveTab={setActiveTab}
-                                activeRegion={activeRegion}
-                                setActiveRegion={setActiveRegion}
-                                showToastMessage={showToastMessage}
-                                toggleLang={toggleLang}
-                                lang={lang}
-                                t={t}
-                                pendingWizardData={pendingWizardData}
-                                setPendingWizardData={setPendingWizardData}
-                            />
-                        </div>
-                    ) : viewMode === 'checklist' ? (
-                        <div className="h-full pb-20 lg:pb-0">
-                            <ChecklistView
+                {!showFavorites && (
+                    <div
+                        key={`${activePlan.id}-${viewMode}`}
+                        className="flex-1 overflow-y-auto overflow-x-hidden bg-transparent p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4 no-scrollbar animate-canvas-reveal"
+                    >
+                        {viewMode === 'map' ? (
+                            <div className="h-full">
+                                <MapView
+                                    schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }}
+                                    lang={lang}
+                                    t={t}
+                                    onItemClick={(item) => handleSelectItem(item, 'map')}
+                                    onClose={() => setViewMode('canvas')}
+                                    discoveryCreatorId={discoveryCreatorId}
+                                    onAddItem={(item) => handleTapToAdd(item)}
+                                    currentDay={currentDay}
+                                    addToSlotTarget={addToSlotTarget}
+                                    onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                                    activeRegion={activePlan.region}
+                                    subscribedCreators={subscribedCreators}
+                                />
+                            </div>
+                        ) : viewMode === 'discovery' ? (
+                            <div className="h-full">
+                                <DiscoveryView
+                                    onPreviewTemplate={setPreviewTemplate}
+                                    onStoryPreview={(tpl) => {
+                                        setPreviewTemplate(tpl);
+                                        ui.setShowStoryPreview(true);
+                                    }}
+                                    onCreatorClick={setSelectedCreatorId}
+                                    onExploreCreatorMap={handleExploreCreatorMap}
+                                    setActiveTab={setActiveTab}
+                                    activeRegion={activeRegion}
+                                    setActiveRegion={setActiveRegion}
+                                    showToastMessage={showToastMessage}
+                                    toggleLang={toggleLang}
+                                    lang={lang}
+                                    t={t}
+                                    pendingWizardData={pendingWizardData}
+                                    setPendingWizardData={setPendingWizardData}
+                                />
+                            </div>
+                        ) : viewMode === 'checklist' ? (
+                            <div className="h-full pb-20 lg:pb-0">
+                                <ChecklistView
+                                    activePlan={activePlan}
+                                    lang={lang}
+                                    t={t}
+                                    showToastMessage={showToastMessage}
+                                    onUpdateChecklist={updateChecklist}
+                                />
+                            </div>
+                        ) : viewMode === 'budget' ? (
+                            <div className="h-full pb-20 lg:pb-0">
+                                <BudgetView
+                                    spent={calculateTotalBudget()}
+                                    limit={budgetLimit}
+                                    breakdown={calculateCategoryBreakdown()}
+                                    currency={budgetSettings.currency}
+                                    exchangeRate={budgetSettings.exchangeRate}
+                                    onSetLimit={setBudgetLimit}
+                                    onSetSettings={updateBudgetSettings}
+                                    t={t}
+                                />
+                            </div>
+                        ) : (
+                            <CanvasView
+                                showContextMap={showContextMap}
+                                currentDaySchedule={currentDaySchedule}
                                 activePlan={activePlan}
                                 lang={lang}
                                 t={t}
-                                showToastMessage={showToastMessage}
-                                onUpdateChecklist={updateChecklist}
+                                isSidebarOpen={isSidebarOpen}
+                                handleDrop={handleDrop}
+                                handleRemoveItem={handleRemoveItem}
+                                handleUpdateItem={handleUpdateItem}
+                                handleDragStart={handleDragStart}
+                                handleQuickFill={handleQuickFill}
+                                handleMapItemClick={handleMapItemClick}
+                                setAddToSlotTarget={setAddToSlotTarget}
+                                setShowMoveModal={setShowMoveModal}
+                                setMoveTarget={ui.setMoveTarget}
+                                setShowMobileLibrary={ui.setShowMobileLibrary}
+                                setSidebarHighlight={ui.setSidebarHighlight}
+                                setUnlockTarget={setUnlockTarget}
+                                setSelectedItem={ui.setSelectedItem}
+                                setIsSidebarOpen={setIsSidebarOpen}
+                                setActiveTab={setActiveTab}
+                                discoveryCreatorId={discoveryCreatorId}
+                                currentDay={currentDay}
+                                addToSlotTarget={addToSlotTarget}
+                                onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                                onAddItem={(item) => handleTapToAdd(item)}
+                                setSidebarMode={ui.setSidebarMode}
+                                onSelectItem={handleSelectItem}
                             />
-                        </div>
-                    ) : viewMode === 'budget' ? (
-                        <div className="h-full pb-20 lg:pb-0">
-                            <BudgetView
-                                spent={calculateTotalBudget()}
-                                limit={budgetLimit}
-                                breakdown={calculateCategoryBreakdown()}
-                                currency={budgetSettings.currency}
-                                exchangeRate={budgetSettings.exchangeRate}
-                                onSetLimit={setBudgetLimit}
-                                onSetSettings={updateBudgetSettings}
-                                t={t}
-                            />
-                        </div>
-                    ) : (
-                        <CanvasView
-                            showContextMap={showContextMap}
-                            currentDaySchedule={currentDaySchedule}
-                            activePlan={activePlan}
-                            lang={lang}
-                            t={t}
-                            isSidebarOpen={isSidebarOpen}
-                            handleDrop={handleDrop}
-                            handleRemoveItem={handleRemoveItem}
-                            handleUpdateItem={handleUpdateItem}
-                            handleDragStart={handleDragStart}
-                            handleQuickFill={handleQuickFill}
-                            handleMapItemClick={handleMapItemClick}
-                            setAddToSlotTarget={setAddToSlotTarget}
-                            setShowMoveModal={setShowMoveModal}
-                            setMoveTarget={ui.setMoveTarget}
-                            setShowMobileLibrary={ui.setShowMobileLibrary}
-                            setSidebarHighlight={ui.setSidebarHighlight}
-                            setIsSidebarOpen={ui.setIsSidebarOpen}
-                            setUnlockTarget={setUnlockTarget}
-                            setSelectedItem={ui.setSelectedItem}
-                            setActiveTab={setActiveTab}
-                            discoveryCreatorId={discoveryCreatorId}
-                            currentDay={currentDay}
-                            addToSlotTarget={addToSlotTarget}
-                            onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
-                            onAddItem={handleTapToAdd}
-                            setSidebarMode={ui.setSidebarMode}
-                        />
-                    )}
-                </div>}
+                        )}
+                    </div>
+                )}
             </div>
 
             <AppModals
@@ -456,6 +507,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 activeRegion={ui.activeRegion} setActiveRegion={setActiveRegion}
                 isSidebarOpen={isSidebarOpen} setIsSidebarOpen={ui.setIsSidebarOpen}
                 setViewMode={setViewMode}
+                viewMode={viewMode}
+                selectionSource={selectionSource}
 
                 // Handlers & Library
                 handleDragStart={handleDragStart} handleTapToAdd={handleTapToAdd}
@@ -579,6 +632,17 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             />
 
             {toast.show && <Toast message={toast.message} type={toast.type as any} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}
+            <MobileDiscoveryDrawer
+                isOpen={isMobile && !!ui.selectedItem && ui.selectionSource !== 'canvas'}
+                onClose={() => handleSelectItem(null, null)}
+                item={ui.selectedItem}
+                allRecommendations={allRecommendations}
+                subscribedCreators={subscribedCreators}
+                onToggleSubscribe={handleToggleSubscribe}
+                onAddItem={handleTapToAdd}
+                lang={lang}
+                preferredAuthorId={discoveryCreatorId}
+            />
         </div>
     );
 };

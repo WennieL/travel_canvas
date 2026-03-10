@@ -175,6 +175,8 @@ export function App() {
     useEffect(() => {
         if (activePlan?.region && activePlan.region !== 'all') {
             ui.setActiveRegion(activePlan.region);
+            // [FIX] Clear discovery creator context when switching regions/plans
+            ui.setDiscoveryCreatorId(null);
         }
     }, [activePlan?.id, activePlan?.region]);
 
@@ -282,6 +284,7 @@ export function App() {
             addToSlotTarget={addToSlotTarget} setAddToSlotTarget={setAddToSlotTarget}
             discoveryCreatorId={discoveryCreatorId}
             sidebarMode={sidebarMode} setSidebarMode={setSidebarMode}
+            selectionSource={ui.selectionSource}
             // Handlers
             showContextMap={showContextMap} setShowContextMap={setShowContextMap}
             selectedCreatorId={selectedCreatorId} setSelectedCreatorId={setSelectedCreatorId}

@@ -146,5 +146,41 @@ export const SAMPLE_CREATORS: Creator[] = [
         tags: ['台中', '老宅', '米其林'],
         tagsEn: ['Taichung', 'Old Houses', 'Michelin'],
         blogUrl: 'https://taichung-alley.tw'
+    },
+    {
+        id: 'c-tw4',
+        name: '花蓮山海嚮導',
+        nameEn: 'Hualien Mountain & Sea Guide',
+        avatar: '🏔️',
+        description: '在這裡土生土長，帶你發現花蓮最原始的山海之美。',
+        descriptionEn: 'Born and raised here. Let me show you the raw beauty of Hualien\'s mountains and sea.',
+        followers: 4200,
+        tags: ['花蓮', '秘境', '自然'],
+        tagsEn: ['Hualien', 'Secret', 'Nature'],
+        blogUrl: 'https://hualien-guide.tw'
+    },
+    {
+        id: 'c-tw5',
+        name: '台北夜貓子',
+        nameEn: 'Taipei Night Owl',
+        avatar: '🌃',
+        description: '專門尋找台北深夜的驚喜，從酒吧、宵夜到凌晨的藝文空間。',
+        descriptionEn: 'Exploring Taipei at night. Bars, late-night snacks, and midnight art spaces.',
+        followers: 3500,
+        tags: ['台北', '夜生活', '酒吧'],
+        tagsEn: ['Taipei', 'Nightlife', 'Bars'],
+        blogUrl: 'https://taipei-night.tw'
+    },
+    {
+        id: 'c-tw6',
+        name: '花蓮文青食客',
+        nameEn: 'Hualien Foodie',
+        avatar: '🍜',
+        description: '不打卡網美店，只帶妳去花蓮在地人才知道的道地老店與創意料理。',
+        descriptionEn: 'No IG traps. Only authentic local eateries and creative labs in Hualien.',
+        followers: 2800,
+        tags: ['花蓮', '美食', '老店'],
+        tagsEn: ['Hualien', 'Food', 'Old House'],
+        blogUrl: 'https://hualien-foodie.com'
     }
 ];

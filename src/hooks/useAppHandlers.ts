@@ -165,7 +165,7 @@ export const useAppHandlers = (deps: AppHandlersDeps) => {
         if (isMobile) {
             ui.setShowMobileLibrary(false);
         } else {
-            ui.setActiveTab('projects');
+            ui.setActiveTab('assets');
             ui.setIsSidebarOpen(true);
         }
     }, [setActivePlanId, setShowPlanManager, viewMode, setViewMode, isMobile, ui]);

@@ -58,15 +58,18 @@ interface SidebarContentProps {
     currentDay?: number;
     onExitDiscovery?: () => void;
     discoveryCreatorId?: string | null;
+    onExploreCreatorMap?: (authorId: string, authorName: string) => void;
 
     // Phase 21 additions
     setShowMobileLibrary?: (show: boolean) => void;
-    onExploreCreatorMap?: (creatorId: string, name: string) => void;
     onModeChange?: (mode: 'list' | 'map') => void;
     sidebarMode?: 'list' | 'map';
     onSelectItem?: (item: TravelItem) => void;
     setSidebarMode?: (mode: 'list' | 'map') => void;
     selectedItem?: TravelItem | ScheduleItem | null;
+    selectionSource?: 'map' | 'sidebar' | 'canvas' | null;
+    subscribedCreators: string[];
+    onToggleSubscribe: (creatorId: string) => void;
 }
 
 export const SidebarContent: React.FC<SidebarContentProps> = ({
@@ -80,7 +83,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
     addToSlotTarget, currentDay, onExitDiscovery, discoveryCreatorId,
     setShowMobileLibrary, onExploreCreatorMap, onModeChange,
     sidebarMode = 'list', setSidebarMode, onSelectItem,
-    selectedItem
+    selectedItem, selectionSource,
+    subscribedCreators, onToggleSubscribe
 }) => {
     const { confirm } = useConfirm();
 
@@ -213,6 +217,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                         ) : (
                             <DiscoverySidekick
                                 selectedItem={selectedItem || null}
+                                selectionSource={selectionSource}
                                 discoveryCreatorId={discoveryCreatorId || null}
                                 activeRegion={activeRegion}
                                 lang={lang}
@@ -224,6 +229,12 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                                 handleModeChange={handleModeChange}
                                 handleDragStart={handleDragStart}
                                 filteredAssets={filteredAssets}
+                                onExploreCreatorMap={onExploreCreatorMap}
+                                subscribedCreators={subscribedCreators}
+                                onToggleSubscribe={onToggleSubscribe}
+                                onAddItem={handleTapToAdd}
+                                customAssets={customAssets}
+                                sidebarMode={sidebarMode}
                             />
                         )}
                     </>

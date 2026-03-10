@@ -3,6 +3,68 @@ import { TravelItem } from '../../types';
 // ── Taipei 台北 ──────────────────────────────────────────
 
 export const TAIPEI_ASSETS: TravelItem[] = [
+    {
+        id: 'tw-a5',
+        title: '台北101',
+        titleEn: 'Taipei 101',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🏙️',
+        description: '台北地標，雲端觀景台俯瞰全城。',
+        descriptionEn: 'Taipei skyscraper landmarks with city views from the clouds.',
+        price: 600,
+        address: '台北市信義區信義路五段7號',
+        rating: 4.8,
+        lat: 25.0339,
+        lng: 121.5644,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '11:00-21:00',
+        tags: ['地標', '夜景'],
+        insiderTip: {
+            teaser: '地標觀景台的秘密咖啡廳',
+            teaserEn: 'The Landmark Observatory\'s Secret Cafe',
+            full: {
+                story: '雖然大家都去觀景台，但我更推薦預約 35 樓的星巴克，用一杯咖啡的錢就能享受差不多高度的台北美景。',
+                storyEn: 'While everyone goes to the observatory, I recommend booking the Starbucks on the 35th floor.',
+                exactLocation: '台北101辦公大樓35樓',
+                mustTry: '預約窗邊座位喝拿鐵',
+                avoid: '週末一定要提前一週預約',
+                bestTime: '16:30 銜接日落'
+            }
+        }
+    },
+    {
+        id: 'tw-a5-v2',
+        title: '台北101',
+        titleEn: 'Taipei 101',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🏙️',
+        description: '攝影師心中的 101 最美取景點，不一定要登頂。',
+        descriptionEn: 'The most beautiful photo spots for 101 without going up.',
+        price: 0,
+        address: '台北市信義區信義路五段7號',
+        rating: 4.9,
+        lat: 25.0339,
+        lng: 121.5644,
+        region: 'taipei',
+        authorId: 'c6',
+        openingHours: '24H',
+        tags: ['攝影', '秘境'],
+        insiderTip: {
+            teaser: '不是在 101 內，而是拍 101 的絕佳座標',
+            teaserEn: 'Not in 101, but the perfect spot to capture it.',
+            full: {
+                story: '我最喜歡從四四南村看 101，老眷村建築與現代摩天大樓的強烈對比極具美感。',
+                storyEn: 'I love viewing 101 from 44 South Village. The contrast between old and modern is stunning.',
+                exactLocation: '四四南村草原區',
+                mustTry: '拍下眷村瓦片與 101 的合照',
+                avoid: '假日會有市集，人非常多',
+                bestTime: '17:00 暖黃光影最舒服'
+            }
+        }
+    },
     // === ATTRACTIONS ===
     {
         id: 'tw-a1',
@@ -217,6 +279,92 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             }
         }
     },
+    {
+        id: 'ta2',
+        title: '士林夜市',
+        titleEn: 'Shilin Night Market',
+        type: 'food',
+        duration: '2小時',
+        image: '🍢',
+        description: '台北規模最大、最知名的夜市。',
+        price: 300,
+        address: '台北市士林區基河路101號',
+        rating: 4.4,
+        lat: 25.0885,
+        lng: 121.5234,
+        tags: ['夜市', '必去'],
+        region: 'taipei',
+        authorId: 'c2',
+        insiderTip: {
+            teaser: '避開人潮，內行人才去的地道美食區',
+            teaserEn: 'Skip the crowds, go where locals eat',
+            full: {
+                story: '不要只在基河路上的觀光區買東西！往「大東路」和「慈諴宮」方向走，那裡的店才是士林在地人會吃的。尤其是廟口的麵線和甜不辣。',
+                exactLocation: '慈諴宮前的小攤販區域',
+                mustTry: '炸鮮奶、阿輝麵線、豪大大雞排',
+                avoid: '不要買現切水果攤，價格通常標示不清',
+                bestTime: '17:30 剛開門時人最少'
+            }
+        }
+    },
+    {
+        id: 'ta-secret-1',
+        title: '竹村居酒屋巷弄',
+        titleEn: 'Takemura Izakaya Alley',
+        type: 'attraction',
+        duration: '0.5小時',
+        image: '📸',
+        description: '看見台北 101 的最美角度，台劇《我可能不會愛你》取景地，充滿生活感的日式風味巷弄。',
+        descriptionEn: 'The most beautiful view of Taipei 101, featured in famous dramas.',
+        price: 0,
+        address: '台北市信義區松仁路253巷1弄2號',
+        rating: 4.9,
+        lat: 25.0253,
+        lng: 121.5684,
+        tags: ['網美', '攝影', '偶像劇'],
+        region: 'taipei',
+        authorId: 'c-tw1',
+        insiderTip: {
+            teaser: '101 的隱藏版絕佳機位！就像活在日劇裡',
+            teaserEn: 'Hidden 101 photo spot! Feel like a J-drama',
+            full: {
+                story: '這裡就是李大仁跟程又青喝酒的地方。站在居酒屋前的巷子，可以拍到遠處的台北 101 矗立在兩排矮房中間，視覺對比非常強烈。是 IG 上拍 101 最推薦的私藏機位。',
+                exactLocation: '竹村居酒屋門口的電線桿旁',
+                mustTry: '在這裡拍一張 101 合照，晚上燈光更有氛圍',
+                avoid: '這裡是狹窄巷弄，拍照時要注意路過的機車，不要影響居酒屋做生意',
+                bestTime: '18:00 藍調時刻，101 剛亮燈時'
+            }
+        }
+    },
+    {
+        id: 'ta-secret-2',
+        title: '赤峰街',
+        titleEn: 'Chifeng Street',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🚲',
+        description: '從打鐵街蛻變為文新聚落，藏在舊式公寓裡的選物店、咖啡廳與工作室。',
+        descriptionEn: 'Former ironmonger street turned creative hub with chic boutiques and cafés.',
+        price: 0,
+        address: '台北市大同區赤峰街',
+        rating: 4.7,
+        lat: 25.0538,
+        lng: 121.5203,
+        tags: ['老宅', '選物', '慢活'],
+        region: 'taipei',
+        authorId: 'c-tw1',
+        insiderTip: {
+            teaser: '打鐵街的蛻變：台北最有趣的巷弄漫遊',
+            teaserEn: 'Iron street transformation: Taipei\'s coolest walk',
+            full: {
+                story: '赤峰街以前是賣五金打鐵的，現在則藏了超多厲害的選物店。「心中山」公園蓋好後，這一區變得超好逛。我推薦去「小器梅酒屋」或是找找看藏在二樓的獨立書店。',
+                exactLocation: '捷運中山站與雙連站之間的巷弄',
+                mustTry: '在巷弄弄裡找一家看起來很有感覺的咖啡廳',
+                avoid: '不要只逛主街，橫向的小巷子更有驚喜',
+                bestTime: '14:00 後各店鋪陸續營業'
+            }
+        }
+    },
 ];
 
 // ── Tainan 台南 ──────────────────────────────────────────
@@ -349,32 +497,95 @@ export const TAINAN_ASSETS: TravelItem[] = [
 
 export const HUALIEN_ASSETS: TravelItem[] = [
     {
-        id: 'hl-a1',
+        id: 'tw-h1',
         title: '吉利潭',
         titleEn: 'Jili Lake',
         type: 'attraction',
         duration: '2小時',
-        image: '🌊',
-        description: '只有花蓮在地人才知道的情人湖，阿美族人的戲水秘境。',
-        descriptionEn: 'Only Hualien locals know this lovers\' lake - an Amis tribe swimming secret.',
+        image: '💧',
+        description: '光復鄉的隱世珍珠，平靜如鏡的湖面與拱橋，是縱谷裡最洗滌心靈的角落。',
+        descriptionEn: 'A hidden pearl in Guangfu, Jili Lake offers serene waters and a picturesque bridge in the valley.',
         price: 0,
         address: '花蓮縣光復鄉',
         rating: 4.8,
-        lat: 23.6701,
-        lng: 121.4190,
+        lat: 23.6705,
+        lng: 121.4111,
+        region: 'hualien',
+        authorId: 'c-tw4',
+        openingHours: '24H',
+        tags: ['自然', '洗滌心靈'],
+        insiderTip: {
+            teaser: '縱谷最美的鏡面湖泊',
+            teaserEn: 'The most beautiful mirror lake in the valley.',
+            full: {
+                story: '這裡曾經是儲木池，現在是當地的秘密公園。午後的雲霧壓低在山巒間，湖面的倒影會讓你忘記時間。建議沿著環潭步道走一圈。',
+                storyEn: 'Formerly a log pond, now a secret park. The mirror reflection here is breathtaking.',
+                exactLocation: '光復糖廠往南走5分鐘車程',
+                mustTry: '在拱橋前等夕陽倒影',
+                avoid: '小黑蚊很多，請做足防護',
+                bestTime: '15:30 - 17:00'
+            }
+        }
+    },
+    {
+        id: 'tw-h1-ext',
+        title: '吉利潭',
+        titleEn: 'Jili Lake',
+        type: 'attraction',
+        duration: '1小時',
+        image: '💧',
+        description: '文青必訪的靜謐之境，攝影構圖極佳。',
+        descriptionEn: 'A tranquil spot for culture lovers, perfect for architectural photography.',
+        price: 0,
+        address: '花蓮縣光復鄉',
+        rating: 4.7,
+        lat: 23.6705,
+        lng: 121.4111,
         region: 'hualien',
         authorId: 'c-tw1',
-        openingHours: '全天',
-        tags: ['秘境', '自然'],
+        openingHours: '24H',
+        tags: ['文青', '攝影'],
         insiderTip: {
-            teaser: '在地阿美族人的私房戲水秘境',
-            teaserEn: 'Secret swimming spot of Amis indigenous people',
+            teaser: '中式拱橋與自然山景的絕佳構圖',
+            teaserEn: 'Perfect composition of Chinese bridge and mountains.',
             full: {
-                story: '日治時期的儲木池，後來變成阿美族人的戲水天堂。經過整建後有步道環繞湖畔，水清見底，倒映山景。幾乎不會碰到其他遊客，是真正「只有在地人才知道」的等級。',
-                exactLocation: '光復鄉馬錫山下，需自行開車或包車',
-                mustTry: '環湖步道走一圈約 30 分鐘',
-                avoid: '需要自駕，大眾交通不方便',
-                bestTime: '清晨或黃昏'
+                story: '從台北下來，這裡的安靜程度讓人驚艷。紅瓦拱橋與後方的深綠山色，非常有經典電影的畫面感。',
+                storyEn: 'The silence here is stunning. The red bridge with dark green mountains feels like a movie scene.',
+                exactLocation: '光復鄉吉利路',
+                mustTry: '帶本喜歡的書，在木棧道上坐一會',
+                avoid: '中午太曬，遮蔽物較少',
+                bestTime: '08:00 晨霧尚未散去時'
+            }
+        }
+    },
+    {
+        id: 'tw-h1-v3',
+        title: '吉利潭',
+        titleEn: 'Jili Lake',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '💧',
+        description: '食客眼中的吉利潭，周邊隱藏的在地小吃才是重點。',
+        descriptionEn: 'Foodie\'s view of Jili Lake - the local snacks around it are the real stars.',
+        rating: 4.6,
+        price: 0,
+        address: '花蓮縣光復鄉',
+        lat: 23.6705,
+        lng: 121.4111,
+        region: 'hualien',
+        authorId: 'c-tw6',
+        openingHours: '09:00-17:00',
+        tags: ['美食', '在地'],
+        insiderTip: {
+            teaser: '逛完潭水必買的在地美味',
+            teaserEn: 'Must-buy local snacks after the walk.',
+            full: {
+                story: '來吉利潭除了看風景，一定要順道回家附近的「光復糖廠」吃支冰淇淋，或是找找附近只有在地人才知道的炸雞攤。',
+                storyEn: 'After Jili Lake, visit Guangfu Sugar Factory for ice cream or find local fried chicken stalls.',
+                exactLocation: '光復鄉中山路二段',
+                mustTry: '糖廠紅豆冰棒',
+                avoid: '太晚來攤販都收光了',
+                bestTime: '15:30 點心時間'
             }
         }
     },
@@ -393,7 +604,7 @@ export const HUALIEN_ASSETS: TravelItem[] = [
         lat: 24.0351,
         lng: 121.6224,
         region: 'hualien',
-        authorId: 'c-tw1',
+        authorId: 'c-tw4',
         openingHours: '全天',
         tags: ['景觀', '秘境'],
         insiderTip: {
@@ -423,7 +634,7 @@ export const HUALIEN_ASSETS: TravelItem[] = [
         lat: 23.9800,
         lng: 121.6100,
         region: 'hualien',
-        authorId: 'c-tw1',
+        authorId: 'c-tw4',
         openingHours: '10:00-18:00',
         tags: ['咖啡', '海景'],
         insiderTip: {
@@ -454,7 +665,7 @@ export const HUALIEN_ASSETS: TravelItem[] = [
         lat: 24.1560,
         lng: 121.6210,
         region: 'hualien',
-        authorId: 'c-tw1',
+        authorId: 'c-tw4',
         tags: ['住宿', '度假'],
         insiderTip: {
             teaser: '花蓮最美無邊際泳池飯店',

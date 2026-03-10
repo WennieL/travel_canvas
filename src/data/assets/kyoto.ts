@@ -114,7 +114,95 @@ export const KYOTO_ASSETS: TravelItem[] = [
         }
     },
     {
+        id: 'ka-secret-1',
+        title: '岡崎神社',
+        titleEn: 'Okazaki Shrine',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🐰',
+        description: '京都超人氣「兔子神社」，滿山滿谷的兔子御守與雕像，求姻緣與求子的聖地。',
+        descriptionEn: 'The famous "Rabbit Shrine" of Kyoto, filled with cute rabbit statues and charms.',
+        price: 0,
+        address: '京都市左京區岡崎東天王町51',
+        rating: 4.8,
+        lat: 35.017778,
+        lng: 135.789167,
+        openingHours: '09:00-17:00',
+        tags: ['網美', '秘境', '超萌'],
+        region: 'kyoto',
+        insiderTip: {
+            teaser: '滿山滿谷的兔子！IG 爆紅的求子聖地',
+            teaserEn: 'Statues of rabbits everywhere! IG viral fertility shrine',
+            full: {
+                story: '這裡又被稱為兔子神社，因為兔子多產所以是求子、安產跟求姻緣的神社。IG 上最紅的就是整排紅通通的兔子御守牆，買一個御守記得要在這排隊放上去拍照。',
+                exactLocation: '本殿正面右側的兔子御守牆',
+                mustTry: '買一個兔子御守 (¥500)，許願後放在御守牆上',
+                avoid: '不要大聲喧嘩，這附近還是住宅區',
+                bestTime: '10:00 晨光灑在兔子雕像上最可愛'
+            }
+        }
+    },
+    {
+        id: 'ka-secret-2',
+        title: '祇園白川筋',
+        titleEn: 'Gion Shirakawa Lane',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🏮',
+        description: '被稱為「京都最美街道」，石板路、垂柳、與古老町家，比起主街更有江戶風情。',
+        descriptionEn: 'Arguably Kyoto\'s most beautiful street with weeping willows and old machiyas.',
+        price: 0,
+        address: '京都市東山區元吉町',
+        rating: 4.9,
+        lat: 35.0055,
+        lng: 135.7731,
+        openingHours: '24H',
+        tags: ['慢活', '私藏', '江戶風'],
+        region: 'kyoto',
+        insiderTip: {
+            teaser: '京都最美街道，避開祇園人潮的秘境',
+            teaserEn: 'The most beautiful street, escaping Gion crowds',
+            full: {
+                story: '比起花見小路，我更喜歡這裡。這裡有巽橋、石板路還有伸向河面的垂柳。下雨的夜晚，石板路反射著紅燈籠的光芒，那個氛圍真的會起雞皮疙瘩。',
+                exactLocation: '巽橋 (Tatsumi Bridge) 周邊',
+                mustTry: '在辰巳大明神前雙手合十祈求平安',
+                avoid: '不要對著藝妓拍照（這裡是禁止攝影區域的邊界，需注意告示）',
+                bestTime: '18:30 燈籠剛亮起時'
+            }
+        }
+    },
+    {
         id: 'kf1',
+        title: '預約制：茶之文化體驗',
+        titleEn: 'Private Tea Ceremony',
+        type: 'food',
+        duration: '1.5小時',
+        image: '🍵',
+        description: '在超過百年的町家老屋裡，由專業茶道老師帶領的深度抹茶體驗。',
+        descriptionEn: 'Deep matcha experience in a 100-year-old Machiya led by a tea master.',
+        price: 3500,
+        address: '京都市内 (預約後提供)',
+        rating: 5.0,
+        lat: 35.0116,
+        lng: 135.7681,
+        tags: ['文化', '深體驗'],
+        region: 'kyoto',
+        tier: 'premium',
+        isLocked: true,
+        insiderTip: {
+            teaser: 'Threads 上私藏的預約制茶席',
+            teaserEn: 'Private tea session trended on Threads',
+            full: {
+                story: '這不是一般給觀光客看的表演，而是真正的茶道交流。老師會教你如何攪拌抹茶，以及不同和菓子的正確吃法。一定要穿襪子，這是對老宅的基本禮儀。',
+                exactLocation: '捷運京都市役所前站 步行 10 分鐘',
+                mustTry: '親手刷出一碗細膩泡沫的抹茶',
+                avoid: '不要戴戒指或手鍊，會刮傷昂貴的茶具',
+                bestTime: '14:00'
+            }
+        }
+    },
+    {
+        id: 'kf2',
         title: '中村藤吉本店',
         titleEn: 'Nakamura Tokichi',
         type: 'food',

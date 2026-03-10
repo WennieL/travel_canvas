@@ -4,7 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ScheduleItem, TimeSlot, LangType, TravelItem } from '../types';
 import { List, Map as MapIcon, Navigation, ExternalLink, X, Maximize2, Minimize2, PlusCircle } from 'lucide-react';
-import { SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../data';
+import { SAMPLE_ASSETS, MELBOURNE_ASSETS, SAMPLE_CREATORS } from '../data';
 import { useMapEvents } from 'react-leaflet';
 
 interface MapViewProps {
@@ -20,6 +20,7 @@ interface MapViewProps {
     addToSlotTarget?: TimeSlot | null;
     onExitDiscovery?: () => void;
     activeRegion?: string;
+    subscribedCreators?: string[]; // [NEW] For social proof highlighting
 }
 
 // Helper to center map on points
@@ -74,7 +75,8 @@ const MapView: React.FC<MapViewProps> = ({
     schedule, lang, t, onItemClick, onAddItem,
     isEmbedded = false, onClose, discoveryCreatorId,
     currentDay, addToSlotTarget, onExitDiscovery,
-    activeRegion = 'all'
+    activeRegion = 'all',
+    subscribedCreators = []
 }) => {
     const [showList, setShowList] = useState(!isEmbedded); // Default hidden if embedded
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -132,20 +134,36 @@ const MapView: React.FC<MapViewProps> = ({
         // [PHASE 22.3] Multi-Creator Aggregate Discovery Layer (Region-Aware)
         if (discoveryCreatorId) {
             const allAssets = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS];
-            // Show points from ALL creators who have recommended something in THIS specific region
+            // Show points from ALL creators in this region
             const discoveryAssets = allAssets.filter(asset =>
                 asset.authorId &&
                 (activeRegion === 'all' || asset.region === activeRegion) &&
                 !list.some(p => p.item.id === asset.id || p.item.title === asset.title)
             );
 
+            // [NEW] Group by Location (Lat/Lng) to handle multi-author spots
+            const groupedNearby: Record<string, TravelItem[]> = {};
             discoveryAssets.forEach(asset => {
-                if (asset.lat && asset.lng) {
+                const key = `${asset.lat?.toFixed(4)},${asset.lng?.toFixed(4)}`;
+                if (!groupedNearby[key]) groupedNearby[key] = [];
+                groupedNearby[key].push(asset);
+            });
+
+            Object.entries(groupedNearby).forEach(([key, assets]) => {
+                const primary = assets[0];
+                if (primary.lat && primary.lng) {
                     list.push({
-                        item: { ...asset, instanceId: `discovery-${asset.id}` } as any,
+                        item: {
+                            ...primary,
+                            instanceId: `discovery-group-${primary.id}`,
+                            // Store full assets for multi-author view
+                            allRecommendations: assets,
+                            allAuthors: assets.map(a => a.authorId).filter(Boolean),
+                            recommendationCount: assets.length
+                        } as any,
                         slot: 'discovery',
-                        lat: asset.lat,
-                        lng: asset.lng,
+                        lat: primary.lat,
+                        lng: primary.lng,
                         index: -1,
                         isDiscovery: true
                     });
@@ -166,13 +184,16 @@ const MapView: React.FC<MapViewProps> = ({
         const isActive = isHovered || isSelected;
         const displayTitle = lang === 'en' ? (item.titleEn || item.title) : item.title;
 
-        // [IG STYLE] Expert Picks: Circular Thumbnail + Golden Halo
+        // [IG STYLE] Expert Picks: Circular Thumbnail + Avatar Group
         if (isDiscovery) {
+            const authors = (item as any).allAuthors || [item.authorId];
+            const hasFollowed = authors.some((id: string) => subscribedCreators.includes(id));
+
             const html = `
                 <div class="relative flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-50'}">
                     <!-- Premium Portal-style Circle -->
-                    <div class="group relative w-11 h-11 p-0.5 rounded-full bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-600 shadow-2xl animate-in zoom-in duration-500">
-                        <div class="w-full h-full rounded-full border-2 border-white overflow-hidden bg-gray-100 ring-4 ring-amber-400/20">
+                    <div class="group relative w-12 h-12 p-0.5 rounded-full ${hasFollowed ? 'bg-gradient-to-tr from-teal-500 via-emerald-400 to-teal-500 ring-4 ring-teal-400/30' : 'bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-600'} shadow-2xl animate-in zoom-in duration-500">
+                        <div class="w-full h-full rounded-full border-2 border-white overflow-hidden bg-gray-100">
                             ${item.coverImage ? `
                                 <img src="${item.coverImage}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                             ` : `
@@ -181,13 +202,29 @@ const MapView: React.FC<MapViewProps> = ({
                         </div>
                     </div>
                     
-                    <!-- Star Badge -->
-                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[10px] font-bold border border-amber-200 shadow-sm text-amber-600 z-[60]">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <!-- Avatar Group Overlap (Bottom edge) -->
+                    <div class="absolute -bottom-2 flex -space-x-2">
+                        ${authors.slice(0, 3).map((authId: string, i: number) => `
+                            <div class="w-5 h-5 rounded-full border border-white shadow-sm overflow-hidden bg-white z-[${60 - i}]">
+                                <img src="https://i.pravatar.cc/100?u=${authId}" class="w-full h-full object-cover" />
+                            </div>
+                        `).join('')}
+                        ${authors.length > 3 ? `
+                            <div class="w-5 h-5 rounded-full border border-white shadow-sm bg-gray-800 text-white text-[8px] flex items-center justify-center font-bold z-[50]">
+                                +${authors.length - 3}
+                            </div>
+                        ` : ''}
                     </div>
+
+                    <!-- Followed Creator Badge -->
+                    ${hasFollowed ? `
+                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center text-[10px] text-white border border-white shadow-sm z-[70]">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                    ` : ''}
                 </div>
             `;
-            return L.divIcon({ html, className: 'bg-transparent', iconSize: [44, 44], iconAnchor: [22, 22] });
+            return L.divIcon({ html, className: 'bg-transparent', iconSize: [48, 48], iconAnchor: [24, 24] });
         }
 
         // [HIERARCHY] Scheduled (Teal) vs. Others (Grey)
@@ -239,8 +276,8 @@ const MapView: React.FC<MapViewProps> = ({
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        if (isEmbedded) {
-            onItemClick?.(item);
+        if (onItemClick) {
+            onItemClick(item);
         }
     };
 
@@ -334,11 +371,18 @@ const MapView: React.FC<MapViewProps> = ({
                                         </div>
                                         <div className="p-4 bg-white/80 backdrop-blur-md">
                                             <div className="flex items-center gap-2 mb-4">
-                                                <div className="w-6 h-6 rounded-full overflow-hidden border border-white shadow-sm ring-2 ring-gray-100">
-                                                    <img src={`https://i.pravatar.cc/100?img=${discoveryCreatorId ? discoveryCreatorId.length % 70 : 0}`} className="w-full h-full object-cover" alt="author" />
+                                                <div className="w-6 h-6 rounded-full overflow-hidden border border-white shadow-sm ring-2 ring-gray-100 bg-teal-50 flex items-center justify-center text-[10px]">
+                                                    {(() => {
+                                                        const auth = SAMPLE_CREATORS.find(c => c.id === p.item.authorId);
+                                                        return auth?.avatar ? (
+                                                            <img src={auth.avatar} className="w-full h-full object-cover" alt="author" />
+                                                        ) : '🕵️';
+                                                    })()}
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-[10px] text-gray-800 font-bold">{p.item.author || 'Wennie'}</span>
+                                                    <span className="text-[10px] text-gray-800 font-bold">
+                                                        {SAMPLE_CREATORS.find(c => c.id === p.item.authorId)?.name || p.item.author || 'Travel Expert'}
+                                                    </span>
                                                     <span className="text-[8px] text-gray-400 font-medium uppercase tracking-wider italic">
                                                         {lang === 'zh' ? '推坑理由...' : 'Highly Recommended'}
                                                     </span>

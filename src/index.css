@@ -193,4 +193,55 @@ h6 {
   .itinerary-card {
     page-break-inside: avoid;
   }
+
+  /* Spot-Centric Social Discovery Transitions */
+  .spot-panel-enter {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  .spot-panel-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms ease-out;
+  }
+
+  /* Plan Switching Transitions */
+  @keyframes canvas-reveal {
+    0% {
+      transform: scale(0.98);
+      opacity: 0;
+      filter: blur(4px);
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  .animate-canvas-reveal {
+    animation: canvas-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slide-in-bottom {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-in-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .grayscale-50 {
+    filter: grayscale(0.5);
+  }
 }

@@ -353,6 +353,7 @@ export const TEMPLATES: Template[] = [
                             }
                         }
                     },
+                    { ...TOKYO_ASSETS[14], instanceId: 't2-2', startTime: '13:00', arrivalTransport: 'public' },
                     {
                         id: 'custom-cafe',
                         title: '表參道下午茶散步',
@@ -365,7 +366,18 @@ export const TEMPLATES: Template[] = [
                         region: 'tokyo',
                         instanceId: 't2-3',
                         startTime: '14:30',
-                        arrivalTransport: 'walk'
+                        arrivalTransport: 'walk',
+                        insiderTip: {
+                            teaser: '表參道後巷的隱藏選物店串連',
+                            teaserEn: 'Omotesando back alley boutique loop',
+                            full: {
+                                story: '不要只走表參道的大馬道。穿進「RALPH LAUREN」旁邊的小巷，那裡藏著超多獨立咖啡廳、古著店跟設計師工作室。推薦去「RATIO &C」或是「SHOZO COFFEE STORE」，氣氛超好。',
+                                exactLocation: '表參道與青山通之間的後巷',
+                                mustTry: '在巷弄間找一家有露天座位的咖啡廳',
+                                avoid: '週末下午人潮爆多，建議平日造訪',
+                                bestTime: '15:00'
+                            }
+                        }
                     }
                 ],
                 evening: [
@@ -383,13 +395,24 @@ export const TEMPLATES: Template[] = [
                         titleEn: 'Shinjuku Golden Gai',
                         type: 'attraction',
                         duration: '2小時',
-                        image: '🍺',
-                        description: '超過 200 間迷你酒吧的復古巷弄',
+                        image: '🥃',
+                        description: '200多家小酒吧擠在一起，展現最狂野的東京。',
                         price: 3000,
                         region: 'tokyo',
                         instanceId: 't2-5',
                         startTime: '21:00',
-                        arrivalTransport: 'public'
+                        arrivalTransport: 'public',
+                        insiderTip: {
+                            teaser: '新手的黃金街生存與點餐指南',
+                            teaserEn: 'Survival & ordering guide for newborns',
+                            full: {
+                                story: '黃金街由 6 條小巷組成。找門口有標示「No Cover Charge」的店可以省下 ¥500-¥1,000 的入場費。推薦去「Death Match in Hell」或是「Albatross」，對外國人非常友善。',
+                                exactLocation: '新宿歌舞伎町一丁目，花園神社旁',
+                                mustTry: '隨便點一杯 Highball，感受昭和風情',
+                                avoid: '不要在大街上大聲喧嘩，也不要拿著大相機到處拍，會被白眼',
+                                bestTime: '21:00 後各國酒客聚集最熱鬧'
+                            }
+                        }
                     }
                 ],
                 accommodation: []
@@ -462,9 +485,15 @@ export const TEMPLATES: Template[] = [
                         arrivalTransport: 'public'
                     },
                     {
+                        ...KYOTO_ASSETS[6], // 岡崎神社 (兔子神社)
+                        instanceId: 't5-1-secret',
+                        startTime: '10:30',
+                        arrivalTransport: 'public'
+                    },
+                    {
                         ...KYOTO_ASSETS[3], // 嵐山竹林
                         instanceId: 't5-1b',
-                        startTime: '11:00',
+                        startTime: '11:45',
                         arrivalTransport: 'public'
                     }
                 ],
@@ -569,6 +598,12 @@ export const TEMPLATES: Template[] = [
                 ],
                 afternoon: [
                     {
+                        ...OSAKA_ASSETS[12], // 難波八阪神社
+                        instanceId: 'osaka-secret-1',
+                        startTime: '13:30',
+                        arrivalTransport: 'car'
+                    },
+                    {
                         ...OSAKA_ASSETS[2], // 道頓堀
                         instanceId: 'osaka-2',
                         startTime: '15:00',
@@ -671,7 +706,8 @@ export const TEMPLATES: Template[] = [
                     { ...TAIPEI_ASSETS[5], instanceId: 'tw1-3', startTime: '15:00', arrivalTransport: 'walk' },
                 ],
                 evening: [
-                    { ...TAIPEI_ASSETS[3], instanceId: 'tw1-4', startTime: '18:00', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS[6], instanceId: 'tw1-4-secret', startTime: '17:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS[3], instanceId: 'tw1-4', startTime: '19:00', arrivalTransport: 'public' },
                 ],
                 night: [],
                 accommodation: []
@@ -1086,6 +1122,20 @@ export const TEMPLATES: Template[] = [
                 ],
                 evening: [
                     { ...TAIPEI_ASSETS[3], instanceId: 'twn-2', startTime: '18:00', arrivalTransport: 'public' },
+                ],
+                night: [],
+                accommodation: []
+            },
+            'Day 2': {
+                theme: '雙連散步 & 101 秘境',
+                themeEn: 'Shuanglian Walk & 101 Secret',
+                themeEmoji: '🗼',
+                morning: [],
+                afternoon: [
+                    { ...TAIPEI_ASSETS[7], instanceId: 'twn-3', startTime: '14:00', arrivalTransport: 'public' },
+                ],
+                evening: [
+                    { ...TAIPEI_ASSETS[6], instanceId: 'twn-4', startTime: '17:30', arrivalTransport: 'public' },
                 ],
                 night: [],
                 accommodation: []

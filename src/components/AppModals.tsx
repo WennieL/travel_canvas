@@ -37,6 +37,8 @@ interface AppModalsProps {
     isSidebarOpen: boolean;
     setIsSidebarOpen: (open: boolean) => void;
     setViewMode: (mode: ViewMode) => void;
+    viewMode: ViewMode;
+    selectionSource: 'map' | 'sidebar' | 'canvas' | null;
 
     // Handlers
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
@@ -179,7 +181,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         showStartPicker, setShowStartPicker,
         showCheckIn, setShowCheckIn,
         handleCreatePlan,
-        setIsSidebarOpen, setViewMode,
+        setIsSidebarOpen, setViewMode, viewMode,
+        selectionSource,
         selectedItem, setSelectedItem,
         showStoryPreview, setShowStoryPreview,
         budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
@@ -188,7 +191,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         onExploreCreatorMap,
         onModeChange,
         sidebarMode, setSidebarMode,
-        pendingWizardData, setPendingWizardData
+        pendingWizardData, setPendingWizardData,
+        onUpdateScheduleItem
     } = props;
 
     return (
@@ -431,14 +435,14 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 />
             )}
 
-            {props.selectedItem && (
+            {selectedItem && selectionSource === 'canvas' && (
                 <ItemDetailModal
-                    isOpen={!!props.selectedItem}
-                    onClose={() => props.setSelectedItem(null)}
-                    item={props.selectedItem}
-                    t={props.t}
-                    lang={props.lang}
-                    onUpdateScheduleItem={props.onUpdateScheduleItem}
+                    isOpen={!!selectedItem}
+                    onClose={() => setSelectedItem(null)}
+                    item={selectedItem}
+                    t={t}
+                    lang={lang}
+                    onUpdateScheduleItem={onUpdateScheduleItem}
                     onUpdateCustomAsset={(id, updates) => {
                         props.setCustomAssets((prev: TravelItem[]) => prev.map((asset: TravelItem) =>
                             asset.id === id ? { ...asset, ...updates } : asset

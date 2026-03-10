@@ -38,6 +38,7 @@ export const useUIState = () => {
     const [showStoryPreview, setShowStoryPreview] = useState(false);
     const [discoveryCreatorId, setDiscoveryCreatorId] = useState<string | null>(null);
     const [sidebarMode, setSidebarMode] = useState<'list' | 'map'>('list');
+    const [selectionSource, setSelectionSource] = useState<'map' | 'sidebar' | 'canvas' | null>(null);
 
     // Sidebar States
     const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist' | 'projects'>('assets');
@@ -96,5 +97,6 @@ export const useUIState = () => {
         activeView, setActiveView,
         discoveryCreatorId, setDiscoveryCreatorId,
         sidebarMode, setSidebarMode,
+        selectionSource, setSelectionSource,
     };
 };

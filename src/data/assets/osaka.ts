@@ -110,6 +110,64 @@ export const OSAKA_ASSETS: TravelItem[] = [
         }
     },
     {
+        id: 'oa-secret-1',
+        title: '中崎町',
+        titleEn: 'Nakazakicho',
+        type: 'attraction',
+        duration: '2小時',
+        image: '☕',
+        description: '大阪的文青避風港，由昭和時代老宅改建的咖啡廳與雜貨店，充滿文藝氣息的巷弄。',
+        descriptionEn: 'Osaka\'s hipster haven, featuring Shōwa-era houses converted into cafés and boutiques.',
+        price: 0,
+        address: '大阪府大阪市北區中崎',
+        rating: 4.8,
+        lat: 34.7075,
+        lng: 135.5058,
+        openingHours: '24H (各店鋪不同)',
+        tags: ['慢活', '私藏', '網美'],
+        region: 'osaka',
+        insiderTip: {
+            teaser: '昭和風情老宅！大阪最美的文青散步路線',
+            teaserEn: 'Retro Shōwa vibes! Osaka\'s best creative walk',
+            full: {
+                story: '這裡是二次大戰中少數躲過轟炸的區域，保留了大量昭和初期的長屋建築。IG 上最紅的就是那些藏在防火巷裡的咖啡廳。這裡的節奏跟道頓堀完全不同，適合慢慢逛、慢慢拍。',
+                exactLocation: '中崎町車站周邊，巷弄深處',
+                mustTry: '找一家老宅咖啡廳喝下午茶',
+                avoid: '這裡是住宅區，很多屋主不希望對著私宅拍照，請遵守禮儀',
+                bestTime: '15:00 陽光穿透巷弄的時刻'
+            }
+        }
+    },
+    {
+        id: 'oa-secret-2',
+        title: '難波八阪神社',
+        titleEn: 'Namba Yasaka Shrine',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🦁',
+        description: '以巨大的獅子頭舞台聞名，不僅是強大的打卡點，更是祈求事業順利與退散厄運的聖地。',
+        descriptionEn: 'Known for its massive lion head stage, a unique photo spot and a sacred site for success.',
+        price: 0,
+        address: '大阪市浪速區元町2-9-19',
+        rating: 4.7,
+        lat: 34.6617,
+        lng: 135.4967,
+        openingHours: '06:00-17:00',
+        tags: ['奇特', '必拍', '開運'],
+        region: 'osaka',
+        insiderTip: {
+            teaser: '張大嘴吞掉厄運！大阪視覺衝擊最強的神社',
+            teaserEn: 'Lion head swallowing bad luck! Most striking shrine',
+            full: {
+                story: '這個巨大的獅子頭高 12 公尺，寬 11 公尺，大嘴裡就是一個舞台。傳說這口大嘴可以把你的厄運通通吞掉，並帶來事業與學業上的勝利。是個不僅視覺震撼，感覺也非常有力量的地方。',
+                exactLocation: '入口進去正前方的「獅子殿」',
+                mustTry: '站在獅子嘴巴正前方拍一張合照',
+                avoid: '不要擋到正在參拜的人',
+                bestTime: '10:00-11:00 光線均勻灑在獅子臉上時'
+            }
+        }
+    },
+    {
         id: 'p2',
         title: 'Dotonbori Jazz Boat (Secret)',
         titleEn: 'Dotonbori Jazz Boat',

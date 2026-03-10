@@ -120,8 +120,8 @@ export const useAppActions = (deps: AppActionsDeps) => {
         // Sync sidebar/map region with the template's region
         ui.setActiveRegion(region);
 
-        // Ensure sidebar shows the plan list immediately after creation
-        ui.setActiveTab('projects');
+        // Ensure sidebar shows the assets library immediately after creation
+        ui.setActiveTab('assets');
         ui.setIsSidebarOpen(true);
         ui.setIsSidebarPinned(true);
 
