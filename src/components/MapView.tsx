@@ -184,47 +184,38 @@ const MapView: React.FC<MapViewProps> = ({
         const isActive = isHovered || isSelected;
         const displayTitle = lang === 'en' ? (item.titleEn || item.title) : item.title;
 
-        // [IG STYLE] Expert Picks: Circular Thumbnail + Avatar Group
+        // [IG STYLE] Expert Picks: Circular Thumbnail + Avatar Group + Label
         if (isDiscovery) {
             const authors = (item as any).allAuthors || [item.authorId];
             const hasFollowed = authors.some((id: string) => subscribedCreators.includes(id));
 
             const html = `
-                <div class="relative flex flex-col items-center justify-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-50'}">
-                    <!-- Premium Portal-style Circle -->
-                    <div class="group relative w-12 h-12 p-0.5 rounded-full ${hasFollowed ? 'bg-gradient-to-tr from-teal-500 via-emerald-400 to-teal-500 ring-4 ring-teal-400/30' : 'bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-600'} shadow-2xl animate-in zoom-in duration-500">
-                        <div class="w-full h-full rounded-full border-2 border-white overflow-hidden bg-gray-100">
+                <div class="relative flex flex-col items-center transition-all duration-300 ${isActive ? 'z-[1000] scale-125' : 'z-50'}">
+                    <!-- Main Thumbnail -->
+                    <div class="group relative w-12 h-12 p-0.5 rounded-full ${hasFollowed ? 'bg-teal-500 shadow-teal-500/30' : 'bg-white shadow-black/10'} shadow-xl animate-in zoom-in duration-500">
+                        <div class="w-full h-full rounded-full border-2 border-white overflow-hidden bg-slate-50">
                             ${item.coverImage ? `
                                 <img src="${item.coverImage}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                             ` : `
                                 <div class="w-full h-full flex items-center justify-center text-xl bg-amber-50">${item.image || '📍'}</div>
                             `}
                         </div>
-                    </div>
-                    
-                    <!-- Avatar Group Overlap (Bottom edge) -->
-                    <div class="absolute -bottom-2 flex -space-x-2">
-                        ${authors.slice(0, 3).map((authId: string, i: number) => `
-                            <div class="w-5 h-5 rounded-full border border-white shadow-sm overflow-hidden bg-white z-[${60 - i}]">
-                                <img src="https://i.pravatar.cc/100?u=${authId}" class="w-full h-full object-cover" />
+                        
+                        <!-- Mini Creator Avatar Overlay -->
+                        <div class="absolute -bottom-1 -right-1 flex">
+                            <div class="w-5 h-5 rounded-full border-2 border-white shadow-md overflow-hidden bg-white">
+                                <img src="https://i.pravatar.cc/100?u=${authors[0]}" class="w-full h-full object-cover" />
                             </div>
-                        `).join('')}
-                        ${authors.length > 3 ? `
-                            <div class="w-5 h-5 rounded-full border border-white shadow-sm bg-gray-800 text-white text-[8px] flex items-center justify-center font-bold z-[50]">
-                                +${authors.length - 3}
-                            </div>
-                        ` : ''}
+                        </div>
                     </div>
 
-                    <!-- Followed Creator Badge -->
-                    ${hasFollowed ? `
-                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center text-[10px] text-white border border-white shadow-sm z-[70]">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        </div>
-                    ` : ''}
+                    <!-- IG-Style Label -->
+                    <div class="mt-1.5 px-2 py-0.5 bg-white/95 backdrop-blur-sm rounded-md shadow-md border border-slate-100 max-w-[80px]">
+                        <p class="text-[9px] font-black text-slate-800 truncate text-center">${displayTitle}</p>
+                    </div>
                 </div>
             `;
-            return L.divIcon({ html, className: 'bg-transparent', iconSize: [48, 48], iconAnchor: [24, 24] });
+            return L.divIcon({ html, className: 'bg-transparent', iconSize: [80, 80], iconAnchor: [40, 24] });
         }
 
         // [HIERARCHY] Scheduled (Teal) vs. Others (Grey)
@@ -352,111 +343,9 @@ const MapView: React.FC<MapViewProps> = ({
                                     handleItemSelection(p.item, idx);
                                 }
                             }}
-                        >
-                            {p.isDiscovery && (
-                                <Popup closeButton={false} className="discovery-popup">
-                                    <div className="w-56 overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col border border-gray-100 animate-in zoom-in slide-in-from-bottom-2 duration-300">
-                                        <div className="h-32 w-full relative">
-                                            <img src={p.item.coverImage} className="w-full h-full object-cover" alt="cover" />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                                            <div className="absolute top-3 left-3 bg-amber-500 text-white text-[9px] font-black uppercase px-2.5 py-1 rounded-full shadow-lg flex items-center gap-1.5">
-                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                                {lang === 'zh' ? '達人私房點' : 'Expert Pick'}
-                                            </div>
-                                            <div className="absolute bottom-3 left-3 right-3">
-                                                <h4 className="font-black text-white text-sm leading-tight drop-shadow-md">
-                                                    {lang === 'zh' ? p.item.title : p.item.titleEn}
-                                                </h4>
-                                            </div>
-                                        </div>
-                                        <div className="p-4 bg-white/80 backdrop-blur-md">
-                                            <div className="flex items-center gap-2 mb-4">
-                                                <div className="w-6 h-6 rounded-full overflow-hidden border border-white shadow-sm ring-2 ring-gray-100 bg-teal-50 flex items-center justify-center text-[10px]">
-                                                    {(() => {
-                                                        const auth = SAMPLE_CREATORS.find(c => c.id === p.item.authorId);
-                                                        return auth?.avatar ? (
-                                                            <img src={auth.avatar} className="w-full h-full object-cover" alt="author" />
-                                                        ) : '🕵️';
-                                                    })()}
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-[10px] text-gray-800 font-bold">
-                                                        {SAMPLE_CREATORS.find(c => c.id === p.item.authorId)?.name || p.item.author || 'Travel Expert'}
-                                                    </span>
-                                                    <span className="text-[8px] text-gray-400 font-medium uppercase tracking-wider italic">
-                                                        {lang === 'zh' ? '推坑理由...' : 'Highly Recommended'}
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <button
-                                                onClick={() => {
-                                                    onAddItem?.(p.item as any);
-                                                    setSelectedItem(null);
-                                                }}
-                                                className="w-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-black uppercase py-3 rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 border-b-4 border-teal-800"
-                                            >
-                                                <PlusCircle size={14} />
-                                                {lang === 'zh' ? '加入行程' : 'Add to Plan'}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </Popup>
-                            )}
-                        </Marker>
+                        />
                     ))}
                 </MapContainer>
-
-                {/* [PHASE 20] Discovery Mode Context Header (DISABLED) */}
-                {/* 
-                {discoveryCreatorId && (
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] w-[90%] max-w-md animate-in slide-in-from-top duration-500">
-                        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
-                            <div className="bg-amber-500 px-4 py-2 flex items-center justify-between">
-                                <div className="flex items-center gap-2 text-white">
-                                    <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                                        <Navigation size={12} className="fill-white" />
-                                    </div>
-                                    <span className="text-[10px] font-black uppercase tracking-widest leading-none">
-                                        {t.discoveryMode}
-                                    </span>
-                                </div>
-                                <button
-                                    onClick={onExitDiscovery}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    <X size={16} />
-                                </button>
-                            </div>
-                            <div className="p-3 flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-amber-100 shadow-sm shrink-0">
-                                    <img src={`https://i.pravatar.cc/100?img=${discoveryCreatorId.length % 70}`} className="w-full h-full object-cover" alt="creator" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <div className="text-[9px] text-amber-600 font-black uppercase tracking-tighter mb-0.5">{t.hiddenSpotsBy}</div>
-                                    <h4 className="text-xs font-bold text-gray-800 truncate">{points.find(p => p.isDiscovery)?.item.author || 'Travel Expert'}</h4>
-                                </div>
-                                <div className="h-8 w-px bg-gray-100 mx-1" />
-                                <div className="text-right shrink-0">
-                                    <div className="text-[9px] text-gray-400 font-bold uppercase tracking-tighter mb-0.5">{t.addingTo}</div>
-                                    <div className="flex items-center gap-1.5 text-teal-600 font-black text-[10px]">
-                                        <div className="px-1.5 py-0.5 bg-teal-50 rounded border border-teal-100">{t.dayX.replace('{day}', (currentDay || 1).toString())}</div>
-                                        <div className="px-1.5 py-0.5 bg-teal-50 rounded border border-teal-100">{addToSlotTarget ? t[addToSlotTarget] : t.flexible}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            {isMobile && (
-                                <button
-                                    onClick={onExitDiscovery}
-                                    className="w-full bg-gray-50 border-t border-gray-100 py-2 text-[10px] font-bold text-gray-500 hover:bg-gray-100 transition-colors uppercase tracking-widest"
-                                >
-                                    {t.exitDiscovery}
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                )}
-                */}
 
                 {/* Mobile Fullscreen Toggle */}
                 {isMobile && !isEmbedded && (
@@ -499,16 +388,6 @@ const MapView: React.FC<MapViewProps> = ({
                         <List size={14} />
                         {showList ? (t.hideList || '隱藏列表') : (t.showList || '顯示列表')}
                     </button>
-
-                    {/* [DISABLED] Top-left Discovery Banner */}
-                    {/* 
-                    {discoveryCreatorId && (
-                        <div className="bg-amber-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-lg flex items-center gap-2 animate-in slide-in-from-left duration-500">
-                            <Navigation size={12} className="fill-white" />
-                            {lang === 'zh' ? '探索模式：達人私房點' : 'Discovery Mode: Hidden Spots'}
-                        </div>
-                    )}
-                    */}
                 </div>
             )}
 
