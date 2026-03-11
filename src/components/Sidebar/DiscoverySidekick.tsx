@@ -113,8 +113,8 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
     const allRecommendations = React.useMemo(() => {
         if (!selectedItem) return [];
         const item = selectedItem as any;
-        const title = item.title;
-        const titleEn = item.titleEn;
+        const title = (item as any).title;
+        const titleEn = (item as any).titleEn;
 
         return ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS, ...customAssets] as TravelItem[]).filter(a =>
             (title && a.title === title) || (titleEn && a.titleEn === titleEn)
@@ -203,7 +203,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                             </div>
                             <div>
                                 <h3 className="font-black text-gray-800 text-lg">
-                                    {lang === 'zh' ? selectedItem?.title : (selectedItem?.titleEn || selectedItem?.title)}
+                                    {lang === 'zh' ? (selectedItem as any)?.title : ((selectedItem as any)?.titleEn || (selectedItem as any)?.title)}
                                 </h3>
                                 <div className="flex items-center gap-1.5 px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-black rounded-lg uppercase w-fit">
                                     <span className="animate-pulse">✨</span>
@@ -219,14 +219,14 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 return (
                                     <button
                                         key={authId}
-                                        onClick={() => onExploreCreatorMap?.(authId, auth?.name || 'Expert')}
+                                        onClick={() => onExploreCreatorMap?.(authId, (lang === 'en' && auth?.nameEn ? auth.nameEn : (auth?.name || 'Expert')))}
                                         className="flex-shrink-0 flex items-center gap-2 bg-white/60 hover:bg-white p-1.5 pr-3 rounded-full border border-amber-100 shadow-sm transition-all hover:scale-105 group"
                                     >
                                         <div className="w-6 h-6 rounded-full overflow-hidden ring-2 ring-amber-200">
                                             <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
                                         </div>
                                         <span className="text-[10px] font-bold text-gray-700 group-hover:text-amber-600 transition-colors uppercase">
-                                            {auth?.name.split(' ')[0]}
+                                            {(lang === 'en' && auth?.nameEn ? auth.nameEn : (auth?.name || 'Expert')).split(' ')[0]}
                                         </span>
                                     </button>
                                 );
@@ -247,14 +247,18 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 </div>
                             </div>
                             <div>
-                                <h3 className="font-black text-gray-800 text-lg">{primaryCreator?.name || 'Travel Expert'}</h3>
+                                <h3 className="font-black text-gray-800 text-lg">
+                                    {lang === 'en' && primaryCreator?.nameEn ? primaryCreator.nameEn : (primaryCreator?.name || 'Travel Expert')}
+                                </h3>
                                 <p className="text-xs text-teal-600 font-bold uppercase tracking-wider">
                                     {(primaryCreator as any)?.role || (lang === 'zh' ? '旅遊達人' : 'Expert')}
                                 </p>
                             </div>
                         </div>
                         <p className="text-sm text-gray-600 leading-relaxed italic mb-4">
-                            "{primaryCreator?.description || (lang === 'zh' ? '這些是我私心收藏的隱藏景點，希望妳也喜歡！' : 'These are my personal hidden gems. Hope you enjoy them!')}"
+                            "{lang === 'zh'
+                                ? (primaryCreator?.description || '這些是我私心收藏的隱藏景點，希望妳也喜歡！')
+                                : (primaryCreator?.descriptionEn || primaryCreator?.description || 'These are my personal hidden gems. Hope you enjoy them!')}"
                         </p>
                     </>
                 ) : (
@@ -288,7 +292,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
             </div>
 
             {/* [PHASE 24] Curated List - Suppressed in Map mode to focus on Hero Spot / Map interactions */}
-            {sidebarMode !== 'map' && (
+            {sidebarMode !== (('map' as any)) && (
                 <div className="p-4">
                     <div className="flex items-center justify-between mb-4 px-1">
                         <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">
@@ -320,7 +324,9 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                                 <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-black text-gray-800 lowercase tracking-tighter">@{author?.name.replace(/\s/g, '').toLowerCase()}</span>
+                                                <span className="text-xs font-black text-gray-800 lowercase tracking-tighter">
+                                                    @{((lang === 'en' && author?.nameEn ? author.nameEn : (author?.name || 'Expert'))).replace(/\s/g, '').toLowerCase()}
+                                                </span>
                                                 <span className="text-[10px] text-amber-600 font-bold uppercase tracking-widest">{lang === 'zh' ? '達人私藏' : 'Expert Tip'}</span>
                                             </div>
                                         </div>

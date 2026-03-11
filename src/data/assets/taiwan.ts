@@ -65,6 +65,37 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             }
         }
     },
+    {
+        id: 'tw-a5-v3',
+        title: '台北101',
+        titleEn: 'Taipei 101',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🏙️',
+        description: '台北深夜的地標之美，從高空酒吧俯瞰信義區。',
+        descriptionEn: 'The beauty of Taipei at night, overlooking Xinyi from a high-altitude bar.',
+        price: 800,
+        address: '台北市信義區信義路五段7號',
+        rating: 4.7,
+        lat: 25.0339,
+        lng: 121.5644,
+        region: 'taipei',
+        authorId: 'c-tw5',
+        openingHours: '11:00-02:00',
+        tags: ['地標', '夜生活', '酒吧'],
+        insiderTip: {
+            teaser: '101 的高空微醺時刻',
+            teaserEn: 'A Sky-High Tipsy Moment at 101',
+            full: {
+                story: '與其白天去觀景台人擠人，我更推薦晚上去 85 樓的隨意鳥地方。點一杯調酒，看著底下的車水馬龍，這才是台北夜貓子的正確打開方式。',
+                storyEn: 'Instead of daylight crowds, I recommend the 85F bar at night for a cocktail and the city pulse.',
+                exactLocation: '台北101辦公大樓85樓',
+                mustTry: '點一杯「台北之星」特調調酒',
+                avoid: '週末晚上一定要預約，否則一位難求',
+                bestTime: '21:00 以後，現場還有音樂演奏'
+            }
+        }
+    },
     // === ATTRACTIONS ===
     {
         id: 'tw-a1',

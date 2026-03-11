@@ -34,6 +34,37 @@ export const TOKYO_ASSETS: TravelItem[] = [
         }
     },
     {
+        id: 'a1-v2',
+        title: '淺草寺',
+        titleEn: 'Senso-ji Temple',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '⛩️',
+        description: '夜晚的淺草寺燈火通明，別有一番寂靜之美。',
+        descriptionEn: 'Senso-ji Temple at night is beautifully lit, offering a peaceful atmosphere.',
+        price: 0,
+        address: '東京都台東區淺草2-3-1',
+        rating: 4.9,
+        lat: 35.7147,
+        lng: 139.7967,
+        region: 'tokyo',
+        authorId: 'c6',
+        openingHours: '24H',
+        tags: ['必去', '網美'],
+        insiderTip: {
+            teaser: '避開人潮的「藍調淺草寺」',
+            teaserEn: 'Blue Hour Senso-ji: Avoiding the Crowds',
+            full: {
+                story: '與其白天人擠人，我更推薦晚上 9 點以後來。主殿雖然關門，但燈光會一直亮到 11 點。晚上的雷門和五重塔在燈光映襯下視覺衝擊力極強，是攝影師最愛的取景時刻。',
+                storyEn: 'Skip the crowds and come after 9 PM. The lighting stays on until 11 PM, making the Kaminarimon and Pagoda look stunningly cinematic.',
+                exactLocation: '五重塔前的空地',
+                mustTry: '晚上在雷門前拍一張空無一人的大景照',
+                avoid: '店家 7 點以後就收得差不多了，想逛街不要這時候來',
+                bestTime: '21:00 - 22:30'
+            }
+        }
+    },
+    {
         id: 'a2',
         title: '東京晴空塔',
         titleEn: 'Tokyo Skytree',
@@ -92,6 +123,37 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 mustTry: '錄一段 15 秒的縮時攝影，記得帶手機腳架',
                 avoid: '不要在十字路口中間停下來拍照，會被撞到！',
                 bestTime: '17:00-18:30 黃昏時刻'
+            }
+        }
+    },
+    {
+        id: 'a3-v2',
+        title: '澀谷十字路口',
+        titleEn: 'Shibuya Crossing',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🚶',
+        description: '十字路口旁的隱藏版美食，邊喝咖啡邊看人潮。',
+        descriptionEn: 'Hidden food gems near the crossing. Enjoy coffee with a view.',
+        price: 1200,
+        address: '東京都澀谷區道玄坂2',
+        rating: 4.7,
+        lat: 35.6595,
+        lng: 139.7005,
+        region: 'tokyo',
+        authorId: 'c1',
+        openingHours: '10:00-22:00',
+        tags: ['美食', '必去'],
+        insiderTip: {
+            teaser: '澀谷十字路口旁的隱藏美食觀察位',
+            teaserEn: 'The Perfect Foodie Spot to Watch the Crossing',
+            full: {
+                story: '大家都在上面的星巴克，但我更喜歡去對面的「澀谷西村水果喫茶」。點一客當季的水果聖代，坐在靠窗位，可以非常安靜、無遮蔽地長時間觀察樓下的十字路口。這是我心目中最奢華的澀谷午後。',
+                storyEn: 'Most people are at Starbucks, but I prefer Shibuya Nishimura Fruit Parlor. Order a seasonal parfait and enjoy a quiet, unblocked view of the chaos below.',
+                exactLocation: '澀谷西村水果喫茶 2F 靠窗位',
+                mustTry: '草莓聖代（冬季限定）或 水蜜桃聖代（夏季限定）',
+                avoid: '下午 3 點是下午茶高峰期，建議 2 點前去',
+                bestTime: '14:00 - 15:30'
             }
         }
     },

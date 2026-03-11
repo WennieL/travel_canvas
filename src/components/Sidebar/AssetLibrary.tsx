@@ -22,6 +22,7 @@ interface AssetLibraryProps {
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
     setTooltipPos: (pos: { x: number; y: number }) => void;
     setHoveredItem: (item: TravelItem | null) => void;
+    onSelectItem?: (item: TravelItem) => void;
 }
 
 export const AssetLibrary: React.FC<AssetLibraryProps> = ({
@@ -33,7 +34,8 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
     isSlim, setShowCustomItemModal,
     isMobile, setMobilePreviewItem,
     handleDragStart,
-    setTooltipPos, setHoveredItem
+    setTooltipPos, setHoveredItem,
+    onSelectItem
 }) => {
     return (
         <>
@@ -96,6 +98,7 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
                             onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
                             onClick={() => {
                                 if (isMobile) setMobilePreviewItem(item);
+                                if (onSelectItem) onSelectItem(item);
                             }}
                             onMouseEnter={(e) => {
                                 if (!isMobile) {

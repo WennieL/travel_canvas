@@ -137,6 +137,43 @@ h6 {
   background-size: 32px 32px;
 }
 
+/* IG-Style UI Utilities */
+.bg-instagram-gradient {
+  background: conic-gradient(from 45deg,
+      #f09433 0%,
+      #e6683c 25%,
+      #dc2743 50%,
+      #cc2366 75%,
+      #bc1888 100%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.text-gradient-teal {
+  background: linear-gradient(135deg, #14b8a6, #0d9488);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes rainbow-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-rainbow-slow {
+  animation: rainbow-rotate 4s linear infinite;
+}
+
 /* Print Styles */
 @media print {
   .print\:hidden {

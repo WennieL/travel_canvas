@@ -75,7 +75,7 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                     </span>
                 </div>
                 <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[10px] text-gray-400">{item.duration}</span>
+                    <span className="text-[10px] text-gray-400">{lang === 'en' && item.duration ? item.duration.replace('小時', 'h').replace('分鐘', 'm') : item.duration}</span>
                     {isLocked ? (
                         <span className="text-[10px] font-bold text-amber-600 flex items-center gap-0.5">
                             <Lock size={8} /> {t.unlockLabel || 'Unlock'}

@@ -230,12 +230,13 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         ui.setSelectedItem(item as any);
         ui.setSelectionSource(source);
 
-        // [PHASE 27] UNIFIED LOGIC: If selecting from map, ensure we are in a mode that shows the sidebar detail
-        if (source === 'map') {
-            // 1. Force sidebar to Assets tab (where SpotDetailsPanel lives)
+        // [PHASE 35] UNIFIED LOGIC: Any selection (Map, Sidebar List, or Canvas) 
+        // should reveal the SpotDetailsPanel in the DiscoverySidekick.
+        if (item) {
+            // 1. Force sidebar to Assets tab (where DiscoverySidekick lives)
             ui.setActiveTab('assets');
 
-            // 2. Ensure Map mode is active
+            // 2. Ensure Detail/Map mode is active (this renders DiscoverySidekick -> SpotDetailsPanel)
             ui.setSidebarMode('map');
 
             // 3. Ensure sidebar is open on desktop
@@ -244,10 +245,13 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 ui.setIsSidebarPinned(true);
             }
 
-            // 4. Sync Discovery Creator Context
+            // 4. Sync Discovery Creator Context if available
             if (item?.authorId) {
                 ui.setDiscoveryCreatorId(item.authorId);
             }
+        } else {
+            // If clearing selection, optionally reset mode if needed
+            // ui.setSelectionSource(null);
         }
     };
 

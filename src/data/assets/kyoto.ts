@@ -5,6 +5,8 @@ export const KYOTO_ASSETS: TravelItem[] = [
         id: 'ka1',
         title: '金閣寺',
         titleEn: 'Kinkaku-ji',
+        marketingTitle: '金碧輝煌的夢幻攝影位',
+        marketingTitleEn: 'The Golden Pavilion Reflection',
         type: 'attraction',
         duration: '1小時',
         image: '🕌',
@@ -22,10 +24,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'The golden pavilion reflections',
             full: {
                 story: '開門後前 30 分鐘是拍攝金閣寺倒影最好的時機，水面平靜如鏡。站在「鏡湖池」的東北角（靠近出口那側），可以同時拍到金閣寺和它的完整倒影。冬天下雪時來，雪頂金閣是一絕。',
+                storyEn: 'The first 30 minutes after opening is the best time for reflections. Stand at the northeast corner of Mirror Pond (closed to the exit) to capture the perfect symmetry. It is absolutely stunning with snow on top in winter.',
                 exactLocation: '鏡湖池東北角的大石頭旁',
+                exactLocationEn: 'Northeast corner of Kyoko-chi (Mirror Pond), next to the large rock',
                 mustTry: '買「金箔御守」，是金閣寺限定',
+                mustTryEn: 'Get the "Gold Leaf Omamori" (limited edition)',
                 avoid: '11:00-15:00 團客最多，盡量避開',
-                bestTime: '09:00 開門，08:45 排隊'
+                avoidEn: 'Avoid 11:00 - 15:00 as it is peak time for large tour groups',
+                bestTime: '09:00 開門，08:45 排隊',
+                bestTimeEn: 'Arrive at 08:45 before the 09:00 opening'
             }
         }
     },
@@ -45,15 +52,56 @@ export const KYOTO_ASSETS: TravelItem[] = [
         openingHours: '06:00-18:00',
         tags: ['古蹟', '網美'],
         region: 'kyoto',
+        authorId: 'c4',
         insiderTip: {
             teaser: '繞過人潮的秘密路線',
             teaserEn: 'A hidden escape from crowds',
             full: {
                 story: '不要從正門進去！從「茶碗坂」上去，人潮只有正面的 1/3。音羽瀑布有三道水流：左邊是「學業」、中間是「戀愛」、右邊是「長壽」。選一道喝就好，貪心喝三道反而不靈驗。',
+                storyEn: "Don't enter via the main gate! Walk up Chawan-zaka; it is 1/3 less crowded. At Otowa Waterfall, there are 3 streams: Wisdom (left), Love (middle), and Longevity (right). Choose ONLY one; drinking from all 3 is considered greedy and brings bad luck.",
                 exactLocation: '從五条坂往南走 200 公尺，轉進茶碗坂',
+                exactLocationEn: 'Walk South from Gojo-zaka for 200m, then turn into Chawan-zaka',
                 mustTry: '在音羽瀑布選「戀愛」那道水喝',
+                mustTryEn: 'Drink from the Love stream at Otowa Waterfall',
                 avoid: '不要在清水坂買紀念品，價格最貴',
-                bestTime: '06:00 開門時最空曠'
+                avoidEn: "Don't buy souvenirs at Kiyomizu-zaka; it is the most expensive spot",
+                bestTime: '06:00 開門時最空曠',
+                bestTimeEn: '06:00 right at opening for the quietest atmosphere'
+            }
+        }
+    },
+    {
+        id: 'ka2-v2',
+        title: '清水寺',
+        titleEn: 'Kiyomizu-dera',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🏯',
+        description: '攝影師鏡頭下的清水舞台，捕捉最經典的角度。',
+        descriptionEn: 'The iconic Kiyomizu Stage through a photographer\'s lens.',
+        price: 400,
+        address: '京都市東山區清水1丁目294',
+        rating: 4.8,
+        lat: 34.9949,
+        lng: 135.7850,
+        region: 'kyoto',
+        authorId: 'c6',
+        openingHours: '06:00-18:00',
+        tags: ['古蹟', '攝影'],
+        insiderTip: {
+            teaser: '拍下清水舞台與京都全景的座標',
+            teaserEn: 'The Spot for Kiyomizu Stage & Kyoto Skyline',
+            full: {
+                story: '與其在舞台上人擠人，我更推薦走到對面的「子安塔」。從那裡往回拍，可以同時拍到整個木造舞台、與後方京都市區的強烈對照，這才是清水寺最震撼的角度。',
+                storyEn: 'Instead of standing on the stage, go to Koyasu Pagoda across the way. Looking back, you capture the entire wooden stage against the Kyoto skyline.',
+                exactLocation: '清水寺境內最南端的「子安塔」前廣場',
+                exactLocationEn: 'Plaza in front of Koyasu Pagoda, southernmost point of Kiyomizu-dera',
+                mustTry: '使用廣角鏡頭拍下舞台全景',
+                mustTryEn: 'Use a wide-angle lens for the full stage panorama',
+                avoid: '舞台區雖然開放腳架，但尖峰時刻會影響動線，建議手持拍照',
+                avoidEn: 'Tripods are allowed but discouraged during peak hours to avoid blocking paths; hand-held shooting is recommended',
+                bestTime: '15:30 - 16:30 順光拍攝最美',
+                bestTimeEn: '15:30 - 16:30 for the best front-lit glow'
             }
         }
     },
@@ -146,6 +194,8 @@ export const KYOTO_ASSETS: TravelItem[] = [
         id: 'ka-secret-2',
         title: '祇園白川筋',
         titleEn: 'Gion Shirakawa Lane',
+        marketingTitle: '京都最美街道，避開祇園人潮',
+        marketingTitleEn: 'The Most Beautiful Street in Kyoto',
         type: 'attraction',
         duration: '1.5小時',
         image: '🏮',

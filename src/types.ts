@@ -87,7 +87,9 @@ export interface InsiderTip {
         avoid?: string;          // Pitfalls to avoid
         avoidEn?: string;
         bestTime?: string;       // Best time to visit
+        bestTimeEn?: string;
         reservation?: string;    // Booking link
+        reservationEn?: string;
     };
 
     // Legacy fields for compatibility

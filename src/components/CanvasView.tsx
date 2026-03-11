@@ -117,7 +117,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                         onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem(slot, idx, upd)}
                                         onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot, index: idx }); }}
                                         onUnlockItem={(item) => { setUnlockTarget(item); }}
-                                        onItemClick={setSelectedItem}
+                                        onItemClick={(item) => onSelectItem?.(item, 'canvas')}
                                         onDragStart={handleDragStart}
                                         onAddItem={() => {
                                             setActiveTab('assets');
@@ -163,7 +163,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
                         onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot: 'accommodation', index: idx }); }}
                         onUnlockItem={(item) => { setUnlockTarget(item); }}
-                        onItemClick={setSelectedItem}
+                        onItemClick={(item) => onSelectItem?.(item, 'canvas')}
                         onDragStart={handleDragStart}
                         onAddItem={() => {
                             setActiveTab('assets');
