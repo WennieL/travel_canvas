@@ -41,6 +41,7 @@ export interface TravelItem {
     descriptionEn?: string; // English Description
     price?: number;
     address?: string;
+    addressEn?: string; // English Address
     rating?: number;
     tips?: string;
     x?: number; // relative x (0-100) for demo map
@@ -61,12 +62,35 @@ export interface TravelItem {
     marketingImage?: string; // Vibe photo (Shown when locked)
     isLocked?: boolean;     // If true, hide address/real title
     isCustom?: boolean;     // [NEW] Flag to identify user-created items
-    insiderTip?: InsiderTip;
-
-    // [PHASE 19] Creator Discovery Fields
+    
+    // [PHASE 36] Consolidated Recommendation Architecture
+    recommendations?: Recommendation[];
+    
+    // Legacy support (will be migrated to recommendations)
     authorId?: string;
     author?: string;
+    insiderTip?: InsiderTip;
     coverImage?: string;
+}
+
+// [NEW] Recommendation entity - represents a creator's perspective on a landmark
+export interface Recommendation {
+    id: string; // authorId
+    author: string;
+    authorNameEn?: string;
+    avatar?: string;
+    
+    // Perspective-specific content
+    pricing?: number;
+    description?: string;
+    descriptionEn?: string;
+    tips?: string;
+    duration?: string;
+    coverImage?: string;
+    insiderTip?: InsiderTip;
+    tags?: string[];
+    tier?: 'standard' | 'premium';
+    isLocked?: boolean;
 }
 
 // [NEW] Enhanced Insider Tip Structure
@@ -104,7 +128,12 @@ export interface ScheduleItem extends TravelItem {
     startTime?: string;
     notes?: string;
     arrivalTransport?: TransportMode;
-    // Override insiderTip to allow instance-specific tips (uses same InsiderTip interface)
+    
+    // [PHASE 36] The specific recommendation selected for this schedule item
+    selectedRecommendationId?: string;
+    activeRecommendation?: Recommendation;
+
+    // Legacy fields for compatibility
     insiderTip?: InsiderTip;
     lockedTeaser?: {
         image?: string;

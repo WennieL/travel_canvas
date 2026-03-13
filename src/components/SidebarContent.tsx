@@ -70,6 +70,7 @@ interface SidebarContentProps {
     selectionSource?: 'map' | 'sidebar' | 'canvas' | null;
     subscribedCreators: string[];
     onToggleSubscribe: (creatorId: string) => void;
+    onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
 }
 
 export const SidebarContent: React.FC<SidebarContentProps> = ({
@@ -84,7 +85,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
     setShowMobileLibrary, onExploreCreatorMap, onModeChange,
     sidebarMode = 'list', setSidebarMode, onSelectItem,
     selectedItem, selectionSource,
-    subscribedCreators, onToggleSubscribe
+    subscribedCreators, onToggleSubscribe,
+    onUpdateItem
 }) => {
     const { confirm } = useConfirm();
 
@@ -233,6 +235,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                                 subscribedCreators={subscribedCreators}
                                 onToggleSubscribe={onToggleSubscribe}
                                 onAddItem={handleTapToAdd}
+                                onUpdateItem={onUpdateItem}
+                                showToastMessage={showToastMessage}
                                 customAssets={customAssets}
                                 sidebarMode={sidebarMode}
                             />

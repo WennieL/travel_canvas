@@ -506,5 +506,104 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 bestTime: '日落時分'
             }
         }
+    },
+    {
+        id: 'a7',
+        title: 'TeamLab Borderless 麻布台之丘',
+        titleEn: 'TeamLab Borderless Azabudai Hills',
+        type: 'attraction',
+        duration: '2.5小時',
+        image: '🔮',
+        description: '全新的沉浸式數位藝術空間，展現更震撼的視覺效果。',
+        descriptionEn: 'The brand new immersive digital art space with even more stunning visual effects.',
+        price: 4200,
+        address: '東京都港區麻布台1-2-4 麻布台之丘',
+        addressEn: '1-2-4 Azabudai, Minato-ku, Tokyo (Azabudai Hills)',
+        rating: 5.0,
+        lat: 35.6631,
+        lng: 139.7397,
+        funFact: '沒有地圖的博物館，每個房間的藝術都在流動',
+        openingHours: '10:00-21:00',
+        tags: ['數位藝術', '必去'],
+        region: 'tokyo',
+        authorId: 'c6',
+        insiderTip: {
+            teaser: '與光影共舞的無邊際秘境',
+            teaserEn: 'Dance with lights in a boundless secret realm',
+            full: {
+                story: '比起豐洲，這裡的「光之雕刻」區更具透明感。記得找「泡泡宇宙」展間，光點隨人影晃動的瞬間美得令人窒息。建議穿著純白或淺色衣服，讓身體成為藝術品的一部分投影。',
+                storyEn: 'The "Light Sculpture" area here is more ethereal than Toyosu. Find the "Bubble Universe" room; the way lights sway with your movement is breathtaking. Wear white to become part of the projection.',
+                exactLocation: '麻布台之丘 Garden Plaza B B1F',
+                mustTry: 'EN TEA HOUSE 的「綻放在茶碗中的花朵」，茶喝完花就謝了',
+                avoid: '週末下午人潮擁擠，門票務必提前兩週預訂',
+                bestTime: '10:00 (首場進場)'
+            }
+        }
+    },
+    {
+        id: 'f4',
+        title: 'Bar BenFiddich',
+        titleEn: 'Bar BenFiddich',
+        type: 'food',
+        duration: '1.5小時',
+        image: '🍸',
+        description: '世界 50 最佳酒吧，主打「農場到酒杯」的原創調酒。',
+        descriptionEn: 'World\'s 50 Best Bars, featuring farm-to-glass original cocktails.',
+        price: 3500,
+        address: '東京都新宿區西新宿1-13-7 9F',
+        addressEn: '1-13-7 Nishi-Shinjuku, Shinjuku-ku, Tokyo (9F)',
+        rating: 4.9,
+        lat: 35.6908,
+        lng: 139.6975,
+        funFact: '這裡沒有酒單，調酒師根據你的心情現調',
+        openingHours: '18:00-02:00',
+        tags: ['酒吧', '大人系'],
+        region: 'tokyo',
+        authorId: 'c-tw5',
+        insiderTip: {
+            teaser: '藏在新宿大樓裡的香料魔術師',
+            teaserEn: 'The spice magician hidden in a Shinjuku building',
+            full: {
+                story: '主理人鹿山博康會在自己的農場種植植物與香料。你會看到他在你面前搗碎自家種的大茴香或藥草，那種原始的草本香氣是市售基酒無法比擬的。這裡不只是喝酒，更是一場嗅覺與視覺的冒險。',
+                storyEn: 'Master Hiroyasu Kayama grows his own herbs. Watching him grind fresh star anise right in front of you is a ritual. It\'s not just drinking; it\'s an olfactory adventure.',
+                exactLocation: '西新宿大樓 9 樓，門口非常低調',
+                mustTry: '告訴酒師你喜歡的味道，讓他為你調製「當季草本特調」',
+                avoid: '不接受電話預約，建議開門前 15 分鐘去排隊',
+                bestTime: '18:00'
+            }
+        }
+    },
+    {
+        id: 's1',
+        title: '下北澤東洋百貨店',
+        titleEn: 'Toyo Dept. Store Shimokitazawa',
+        type: 'shopping',
+        duration: '2小時',
+        image: '👕',
+        description: '下北澤古著文化的縮影，藏在廢棄倉庫裡的挖寶天堂。',
+        descriptionEn: 'The epitome of Shimokitazawa thrift culture, a treasure heaven in a converted warehouse.',
+        price: 0,
+        address: '東京都世田谷區北澤2-25-8',
+        addressEn: '2-25-8 Kitazawa, Setagaya-ku, Tokyo',
+        rating: 4.7,
+        lat: 35.6625,
+        lng: 139.6672,
+        funFact: '裡面有超過 20 家獨立古著與手作小店',
+        openingHours: '11:00-20:00',
+        tags: ['古著', '文青'],
+        region: 'tokyo',
+        authorId: 'c-tw1',
+        insiderTip: {
+            teaser: '用 1/3 價格挖到精品等級古著',
+            teaserEn: 'Find premium vintage at 1/3 the price',
+            full: {
+                story: '比起連鎖的古著店，東洋百貨店更像是一個市集。我最推薦裡面的「下北三街」，常能找到 80 年代的 Levi\'s 或品牌刺繡外套。雖然是百貨店，但每間小店都可以小幅度議價，買多一點試試看。',
+                storyEn: 'Toyo feels more like a bazaar. I highly recommend "Shimokita 3rd Street" inside; you can often find 80s Levi\'s. Unlike chain stores, small stalls here might offer tiny discounts if you buy more.',
+                exactLocation: '下北澤站西口步行 3 分鐘',
+                mustTry: '手工製作的古著改造相機帶或配件',
+                avoid: '週末走道非常狹窄，建議側背小包包前往',
+                bestTime: '13:00 - 15:00'
+            }
+        }
     }
 ];

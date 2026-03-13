@@ -213,18 +213,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
 
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
-    // [PHASE 29] Calculate all recommendations for the mobile drawer
-    // Mirroring logic from DiscoverySidekick.tsx
-    const allRecommendations = React.useMemo(() => {
-        if (!ui.selectedItem) return [];
-        const item = ui.selectedItem as any;
-        const title = item.title;
-        const titleEn = item.titleEn;
-
-        return ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS, ...customAssets] as TravelItem[]).filter(a =>
-            (title && a.title === title) || (titleEn && a.titleEn === titleEn)
-        );
-    }, [ui.selectedItem, customAssets]);
 
     const handleSelectItem = (item: ScheduleItem | TravelItem | null, source: 'map' | 'sidebar' | 'canvas' | null) => {
         ui.setSelectedItem(item as any);
@@ -346,6 +334,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                 discoveryCreatorId={ui.discoveryCreatorId}
                                 subscribedCreators={subscribedCreators}
                                 onToggleSubscribe={handleToggleSubscribe}
+                                onUpdateItem={handleUpdateItem}
                             />
                         </div>
                     )}
@@ -640,10 +629,11 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 isOpen={isMobile && !!ui.selectedItem && ui.selectionSource !== 'canvas'}
                 onClose={() => handleSelectItem(null, null)}
                 item={ui.selectedItem}
-                allRecommendations={allRecommendations}
                 subscribedCreators={subscribedCreators}
                 onToggleSubscribe={handleToggleSubscribe}
                 onAddItem={handleTapToAdd}
+                onUpdateItem={handleUpdateItem}
+                showToastMessage={showToastMessage}
                 lang={lang}
                 preferredAuthorId={discoveryCreatorId}
             />

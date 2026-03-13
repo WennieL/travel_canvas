@@ -152,14 +152,16 @@ const MapView: React.FC<MapViewProps> = ({
             Object.entries(groupedNearby).forEach(([key, assets]) => {
                 const primary = assets[0];
                 if (primary.lat && primary.lng) {
+                    // [NEW] Use the consolidated recommendations structure
+                    // If multiple assets were found at the same location, merged them
+                    const mergedRecommendations = assets.flatMap(a => a.recommendations || []);
+                    
                     list.push({
                         item: {
                             ...primary,
                             instanceId: `discovery-group-${primary.id}`,
-                            // Store full assets for multi-author view
-                            allRecommendations: assets,
-                            allAuthors: assets.map(a => a.authorId).filter(Boolean),
-                            recommendationCount: assets.length
+                            recommendations: mergedRecommendations.length > 0 ? mergedRecommendations : (primary.recommendations || []),
+                            authorId: primary.authorId
                         } as any,
                         slot: 'discovery',
                         lat: primary.lat,
@@ -186,7 +188,10 @@ const MapView: React.FC<MapViewProps> = ({
 
         // [IG STYLE] Expert Picks: Circular Thumbnail + Avatar Group + Label
         if (isDiscovery) {
-            const authors = (item as any).allAuthors || [item.authorId];
+            const recommendations = (item as TravelItem).recommendations || [];
+            const authors = recommendations.length > 0 
+                ? recommendations.map(r => r.id) 
+                : [item.authorId || ''];
             const hasFollowed = authors.some((id: string) => subscribedCreators.includes(id));
 
             const html = `
@@ -303,7 +308,7 @@ const MapView: React.FC<MapViewProps> = ({
                                         <h4 className={`${isMobile ? 'text-sm' : 'text-xs'} font-bold text-gray-800 truncate leading-tight`}>
                                             {lang === 'en' ? (p.item.titleEn || p.item.title) : p.item.title}
                                         </h4>
-                                        <div className="text-[10px] text-gray-500 truncate">{p.item.address || p.item.startTime || t.noAddress}</div>
+                                        <div className="text-[10px] text-gray-500 truncate">{(lang === 'en' && (p.item as any).addressEn) ? (p.item as any).addressEn : (p.item.address || p.item.startTime || t.noAddress)}</div>
                                     </div>
                                 </div>
                             ))}

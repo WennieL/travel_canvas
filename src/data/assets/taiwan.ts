@@ -8,93 +8,79 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         title: '台北101',
         titleEn: 'Taipei 101',
         type: 'attraction',
-        duration: '2小時',
         image: '🏙️',
-        description: '台北地標，雲端觀景台俯瞰全城。',
-        descriptionEn: 'Taipei skyscraper landmarks with city views from the clouds.',
-        price: 600,
         address: '台北市信義區信義路五段7號',
         rating: 4.8,
         lat: 25.0339,
         lng: 121.5644,
         region: 'taipei',
-        authorId: 'c-tw1',
         openingHours: '11:00-21:00',
         tags: ['地標', '夜景'],
-        insiderTip: {
-            teaser: '地標觀景台的秘密咖啡廳',
-            teaserEn: 'The Landmark Observatory\'s Secret Cafe',
-            full: {
-                story: '雖然大家都去觀景台，但我更推薦預約 35 樓的星巴克，用一杯咖啡的錢就能享受差不多高度的台北美景。',
-                storyEn: 'While everyone goes to the observatory, I recommend booking the Starbucks on the 35th floor.',
-                exactLocation: '台北101辦公大樓35樓',
-                mustTry: '預約窗邊座位喝拿鐵',
-                avoid: '週末一定要提前一週預約',
-                bestTime: '16:30 銜接日落'
+        recommendations: [
+            {
+                id: 'c-tw1',
+                author: 'Travel Canvas 官方指南',
+                authorNameEn: 'Travel Canvas Official Guide',
+                pricing: 600,
+                duration: '2小時',
+                description: '台北地標，雲端觀景台俯瞰全城。這裡不僅是建築奇蹟，更是俯瞰台北盆地的絕佳制高點。',
+                descriptionEn: 'Taipei skyscraper landmarks with city views from the clouds. An architectural marvel and the ultimate vantage point.',
+                insiderTip: {
+                    teaser: '地標觀景台的秘密咖啡廳',
+                    teaserEn: 'The Landmark Observatory\'s Secret Cafe',
+                    full: {
+                        story: '雖然大家都去觀景台，但我更推薦預約 35 樓的星巴克，用一杯咖啡的錢就能享受差不多高度的台北美景。這裡的人流相對較少，環境也更放鬆。',
+                        storyEn: 'While everyone goes to the observatory, I recommend booking the Starbucks on the 35th floor for the same view with a relaxed vibe.',
+                        exactLocation: '台北101辦公大樓35樓',
+                        mustTry: '預約窗邊座位喝拿鐵',
+                        avoid: '週末一定要提前一週預約',
+                        bestTime: '16:30 銜接日落'
+                    }
+                }
+            },
+            {
+                id: 'c6',
+                author: 'Wennie',
+                authorNameEn: 'Wennie',
+                pricing: 0,
+                duration: '1.5小時',
+                description: '攝影師心中的 101 最美取景點，不一定要登頂。從老建築中看見現代科技，是另一種美。',
+                descriptionEn: 'The most beautiful photo spots for 101 without going up. See modern technology through historic architecture.',
+                insiderTip: {
+                    teaser: '不是在 101 內，而是拍 101 的絕佳座標',
+                    teaserEn: 'Not in 101, but the perfect spot to capture it.',
+                    full: {
+                        story: '我最喜歡從四四南村看 101，老眷村建築與現代摩天大樓的強烈對比極具美感。特別是在夏天的傍晚，天空的漸層色非常迷人。',
+                        storyEn: 'I love viewing 101 from 44 South Village. The contrast between old and modern is stunning, especially on summer evenings.',
+                        exactLocation: '四四南村草原區',
+                        mustTry: '拍下眷村瓦片與 101 的合照',
+                        avoid: '假日會有市集，人非常多',
+                        bestTime: '17:00 暖黃光影最舒服'
+                    }
+                }
+            },
+            {
+                id: 'c-tw5',
+                author: 'Travel Foodie',
+                authorNameEn: 'Travel Foodie',
+                pricing: 800,
+                duration: '2小時',
+                description: '台北深夜的地標之美，從高空酒吧俯瞰信義區。享受美食的同時，也能沉浸在閃爍的夜色中。',
+                descriptionEn: 'The beauty of Taipei at night, overlooking Xinyi from a high-altitude bar. Dine amidst twinkling city lights.',
+                insiderTip: {
+                    teaser: '101 的高空微醺時刻',
+                    teaserEn: 'A Sky-High Tipsy Moment at 101',
+                    full: {
+                        story: '與其白天去觀景台人擠人，我更推薦晚上去 85 樓的隨意鳥地方。點一杯調酒，看著底下的車水馬龍，這才是台北夜貓子的正確打開方式。',
+                        storyEn: 'Instead of daylight crowds, I recommend the 85F bar at night for a cocktail and the city pulse.',
+                        exactLocation: '台北101辦公大樓85樓',
+                        mustTry: '點一杯「台北之星」特調調酒',
+                        avoid: '週末晚上一定要預約，否則一位難求',
+                        bestTime: '21:00 以後，現場還有音樂演奏'
+                    }
+                }
             }
-        }
-    },
-    {
-        id: 'tw-a5-v2',
-        title: '台北101',
-        titleEn: 'Taipei 101',
-        type: 'attraction',
-        duration: '1.5小時',
-        image: '🏙️',
-        description: '攝影師心中的 101 最美取景點，不一定要登頂。',
-        descriptionEn: 'The most beautiful photo spots for 101 without going up.',
-        price: 0,
-        address: '台北市信義區信義路五段7號',
-        rating: 4.9,
-        lat: 25.0339,
-        lng: 121.5644,
-        region: 'taipei',
-        authorId: 'c6',
-        openingHours: '24H',
-        tags: ['攝影', '秘境'],
-        insiderTip: {
-            teaser: '不是在 101 內，而是拍 101 的絕佳座標',
-            teaserEn: 'Not in 101, but the perfect spot to capture it.',
-            full: {
-                story: '我最喜歡從四四南村看 101，老眷村建築與現代摩天大樓的強烈對比極具美感。',
-                storyEn: 'I love viewing 101 from 44 South Village. The contrast between old and modern is stunning.',
-                exactLocation: '四四南村草原區',
-                mustTry: '拍下眷村瓦片與 101 的合照',
-                avoid: '假日會有市集，人非常多',
-                bestTime: '17:00 暖黃光影最舒服'
-            }
-        }
-    },
-    {
-        id: 'tw-a5-v3',
-        title: '台北101',
-        titleEn: 'Taipei 101',
-        type: 'attraction',
-        duration: '2小時',
-        image: '🏙️',
-        description: '台北深夜的地標之美，從高空酒吧俯瞰信義區。',
-        descriptionEn: 'The beauty of Taipei at night, overlooking Xinyi from a high-altitude bar.',
-        price: 800,
-        address: '台北市信義區信義路五段7號',
-        rating: 4.7,
-        lat: 25.0339,
-        lng: 121.5644,
-        region: 'taipei',
-        authorId: 'c-tw5',
-        openingHours: '11:00-02:00',
-        tags: ['地標', '夜生活', '酒吧'],
-        insiderTip: {
-            teaser: '101 的高空微醺時刻',
-            teaserEn: 'A Sky-High Tipsy Moment at 101',
-            full: {
-                story: '與其白天去觀景台人擠人，我更推薦晚上去 85 樓的隨意鳥地方。點一杯調酒，看著底下的車水馬龍，這才是台北夜貓子的正確打開方式。',
-                storyEn: 'Instead of daylight crowds, I recommend the 85F bar at night for a cocktail and the city pulse.',
-                exactLocation: '台北101辦公大樓85樓',
-                mustTry: '點一杯「台北之星」特調調酒',
-                avoid: '週末晚上一定要預約，否則一位難求',
-                bestTime: '21:00 以後，現場還有音樂演奏'
-            }
-        }
+        ]
     },
     // === ATTRACTIONS ===
     {
@@ -378,6 +364,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         descriptionEn: 'Former ironmonger street turned creative hub with chic boutiques and cafés.',
         price: 0,
         address: '台北市大同區赤峰街',
+        addressEn: 'Chifeng St, Datong District, Taipei',
         rating: 4.7,
         lat: 25.0538,
         lng: 121.5203,
@@ -389,10 +376,107 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'Iron street transformation: Taipei\'s coolest walk',
             full: {
                 story: '赤峰街以前是賣五金打鐵的，現在則藏了超多厲害的選物店。「心中山」公園蓋好後，這一區變得超好逛。我推薦去「小器梅酒屋」或是找找看藏在二樓的獨立書店。',
+                storyEn: 'Chifeng Street was once an ironmonger\'s row. Now it\'s full of amazing boutiques. Since the Zhongshan linear park opened, this area has become a joy to walk. Check out the plum wine shop or the 2nd-floor bookstores.',
                 exactLocation: '捷運中山站與雙連站之間的巷弄',
                 mustTry: '在巷弄弄裡找一家看起來很有感覺的咖啡廳',
                 avoid: '不要只逛主街，橫向的小巷子更有驚喜',
                 bestTime: '14:00 後各店鋪陸續營業'
+            }
+        }
+    },
+    {
+        id: 'tw-f4',
+        title: '饒河街 下港名彭臭豆腐',
+        titleEn: 'Hsia Kang Ming Peng Stinky Tofu',
+        type: 'food',
+        duration: '45分',
+        image: '🍢',
+        description: '饒河夜市傳奇攤位，米其林必比登推薦，外酥內嫩的極致口感。',
+        descriptionEn: 'Legendary Raohe Night Market stall with Michelin Bib Gourmand status. Perfect crispy-yet-tender texture.',
+        price: 70,
+        address: '台北市松山區饒河街189號',
+        addressEn: 'No. 189, Raohe St, Songshan District, Taipei',
+        rating: 4.8,
+        lat: 25.0501,
+        lng: 121.5744,
+        region: 'taipei',
+        authorId: 'c2',
+        openingHours: '17:00-24:00',
+        tags: ['🌟米其林', '夜市', '必吃'],
+        insiderTip: {
+            teaser: '饒河夜市真正懂吃的人在排隊的攤位',
+            teaserEn: 'The Raohe stall where real connoisseurs line up',
+            full: {
+                story: '比起夜市門口那些大排長龍的胡椒餅，我更推薦往中間走。這家的臭豆腐炸得非常透，中間挖個洞塞進泡菜，那種鹹甜爽口的味道是台北的首選。他們的麻辣鴨血也是一絕。',
+                storyEn: 'Forget the entrance pepper buns; walk to the middle. This stinky tofu is fried to perfection. Poke a hole, stuff the pickles inside—that salty-sweet crunch is unbeatable. Their spicy duck blood is a gem too.',
+                exactLocation: '饒河夜市中段，靠近慈祐宮方向',
+                mustTry: '炸臭豆腐 + 麻辣鴨血豆腐一碗',
+                avoid: '週末 19:00-21:00 是高峰，排隊可能超過 30 分鐘',
+                bestTime: '17:30 (剛開門最不用排隊)'
+            }
+        }
+    },
+    {
+        id: 'tw-a4',
+        title: '象山 攝手平台',
+        titleEn: 'Elephant Mt. Photographer Platform',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🧗',
+        description: '比六巨石更少人、角度更正的 101 拍攝聖地，攝影師的私房景點。',
+        descriptionEn: 'Less crowded and better angle for Taipei 101 than the Six Giant Rocks. A photographer\'s secret.',
+        price: 0,
+        address: '台北市信義區象山步道',
+        addressEn: 'Elephant Mountain Trail, Xinyi District, Taipei',
+        rating: 4.9,
+        lat: 25.0271,
+        lng: 121.5711,
+        region: 'taipei',
+        authorId: 'c6',
+        openingHours: '24H',
+        tags: ['打卡', '101夜景', '攝影'],
+        insiderTip: {
+            teaser: '拒絕六巨石人擠人！象山最正的 101 視角',
+            teaserEn: 'Skip the Six Rocks crowd! The best 101 angle on Elephant Mt.',
+            full: {
+                story: '大部分遊客爬到六巨石就停了，但再往上走 5 分鐘到「攝手平台」，這裡不僅有更好的 101 正面視角，還有木頭平台可以架腳架。這裡是拍台北跨年煙火的頂級戰區，但平常晚上非常安靜。',
+                storyEn: 'Most tourists stop at Six Giant Rocks. Climb 5 more mins to "The Photographer Platform." You get a better frontal view of 101 and a proper wooden deck for tripods. It\'s the best spot for tranquility.',
+                exactLocation: '象山步道過六巨石後，再步行約 150 公尺',
+                mustTry: '在這裡等 101 亮燈的瞬間',
+                avoid: '不要穿拖鞋爬山，階梯非常陡且可能濕滑',
+                bestTime: '黃昏日落前 1 小時到達'
+            }
+        }
+    },
+    {
+        id: 'tw-c2',
+        title: '大稻埕 郭怡美書店私席',
+        titleEn: 'Kuo-I-Mei Private Tea Room',
+        type: 'food',
+        duration: '2小時',
+        image: '🍵',
+        description: '百年郭怡美商行後院的私密茶室，在迪化街的最深處感受歲月靜好。',
+        descriptionEn: 'A private tea room in the courtyard of the century-old Kuo-I-Mei firm. Deep peace in Dadaocheng.',
+        price: 450,
+        address: '台北市大同區迪化街一段129號',
+        addressEn: 'No. 129, Sec. 1, Dihua St, Datong District, Taipei',
+        rating: 5.0,
+        lat: 25.0565,
+        lng: 121.5105,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '13:00-19:00',
+        tags: ['私密', '老宅', '茶空間'],
+        insiderTip: {
+            teaser: '藏在迪化街書店盡頭的百年茶空間',
+            teaserEn: 'A century-old tea space hidden at the end of a bookstore',
+            full: {
+                story: '穿過滿屋書香的郭怡美書店，在天井的另一頭是極其安靜的茶飲空間。這裡保留了清代紅磚牆與日治時期的樑柱，點一份坪林包種茶，看著窗外中庭的天光，是你能在台北找到最寧靜的時刻。',
+                storyEn: 'Walk through the fragrant bookstore to the courtyard—beyond lies a silent tea space. With Qing-era bricks and Japanese beams, enjoy Pinglin Baozhong tea and watch the sky through the atrium. Pure peace.',
+                exactLocation: '郭怡美書店一樓進到底，穿過中庭',
+                mustTry: '坪林包種茶 + 自製茶點',
+                avoid: '空間很小且安靜，不適合多人聚會聊天',
+                bestTime: '平日午後 15:00'
             }
         }
     },

@@ -21,6 +21,8 @@ interface DiscoverySidekickProps {
     subscribedCreators: string[];
     onToggleSubscribe: (creatorId: string) => void;
     onAddItem: (item: TravelItem) => void;
+    onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
+    showToastMessage?: (msg: string, type: 'success' | 'error') => void;
     customAssets: TravelItem[];
     selectionSource?: 'map' | 'sidebar' | 'canvas' | null;
     sidebarMode?: 'list' | 'map';
@@ -43,6 +45,8 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
     subscribedCreators,
     onToggleSubscribe,
     onAddItem,
+    onUpdateItem,
+    showToastMessage,
     customAssets = [],
     selectionSource,
     sidebarMode
@@ -107,32 +111,16 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
         return activeRegion === 'all' ? SAMPLE_CREATORS.find(c => c.id === 'c-mel') : null;
     }, [selectedItem?.authorId, discoveryCreatorId, activeRegion]);
 
-    // [PHASE 22.5] Global Recommendations Lookup
-    // If a spot is selected, find all other versions/recommendations of this same spot
-    // This allows the Expert Switcher in SpotDetailsPanel to work even for sidebar list clicks.
-    const allRecommendations = React.useMemo(() => {
-        if (!selectedItem) return [];
-        const item = selectedItem as any;
-        const title = (item as any).title;
-        const titleEn = (item as any).titleEn;
-
-        return ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS, ...customAssets] as TravelItem[]).filter(a =>
-            (title && a.title === title) || (titleEn && a.titleEn === titleEn)
-        );
-    }, [selectedItem, customAssets]);
-
-    // [CRITICAL FIX] If a spot is selected (especially via Map), 
-    // we MUST jump straight to the Detail Panel (Option A).
-    // This bypasses the regional creator header/list.
     if (selectedItem) {
         return (
             <SpotDetailsPanel
                 key={`spot-details-${(selectedItem as any).id || (selectedItem as any).instanceId}`}
                 item={selectedItem as TravelItem}
-                allRecommendations={allRecommendations}
                 subscribedCreators={subscribedCreators}
                 onToggleSubscribe={onToggleSubscribe}
                 onAddItem={onAddItem}
+                onUpdateItem={onUpdateItem}
+                showToastMessage={showToastMessage}
                 onClose={() => onSelectItem?.(null as any)}
                 lang={lang}
                 preferredAuthorId={discoveryCreatorId}

@@ -285,7 +285,7 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                             >
                                 <Clock size={10} className="group-hover/dur:hidden" />
                                 <Pencil size={10} className="hidden group-hover/dur:block text-teal-500" />
-                                {item.duration || t.flexible}
+                                {lang === 'en' && item.duration ? item.duration.replace('小時', 'h').replace('分鐘', 'm').replace(/分$/, 'm') : (item.duration || t.flexible)}
                             </div>
                         )}
 

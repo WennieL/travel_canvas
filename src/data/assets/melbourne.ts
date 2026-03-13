@@ -268,5 +268,67 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 bestTime: '20:00-22:00'
             }
         }
+    },
+    {
+        id: 'mel-9',
+        title: 'Duke Street Roasters',
+        titleEn: 'Duke Street Roasters',
+        type: 'food',
+        duration: '1小時',
+        image: '☕',
+        description: 'Abbotsford 的精品咖啡烘焙坊，藏在老工廠裡的極簡味覺饗宴。',
+        descriptionEn: 'Premium coffee roasters in Abbotsford, minimal aesthetic in an old warehouse.',
+        price: 15,
+        address: 'Duke St, Abbotsford',
+        addressEn: 'Duke St, Abbotsford VIC 3067',
+        rating: 4.9,
+        lat: -37.8085,
+        lng: 144.9961,
+        region: 'melbourne',
+        authorId: 'c-mel',
+        tags: ['精品咖啡', '工業風', '私藏'],
+        insiderTip: {
+            teaser: '墨爾本真正的精品咖啡實力派',
+            teaserEn: 'The real deal in Melbourne specialty coffee',
+            full: {
+                story: '如果你想喝到墨爾本最新鮮、最純粹的精品豆，來這裡就對了。這裡也是很多知名咖啡廳的豆源。環境非常工業風，極簡到只有長凳，讓人能完全專注在咖啡的果酸與香氣中。',
+                storyEn: 'If you want the freshest beans in Melb, this is it. It\'s the source for many top cafes. The industrial space is minimal—just benches—allowing complete focus on the coffee\'s profile.',
+                exactLocation: 'Abbotsford 住宅區的小巷，門口掛著低調的 DSR 招牌',
+                mustTry: 'Seasonal Pour Over + 他們家自製的杏仁可頌',
+                avoid: '位置非常少，適合快速享用或外帶豆子',
+                bestTime: '09:00 - 11:00'
+            }
+        }
+    },
+    {
+        id: 'mel-10',
+        title: 'Section 8',
+        titleEn: 'Section 8',
+        type: 'food',
+        duration: '2小時',
+        image: '📦',
+        description: '墨爾本傳奇貨櫃酒吧，停車場空地上的街頭文化聚集地。',
+        descriptionEn: 'Legendary container bar, a hub for street culture in a Former car park.',
+        price: 12,
+        address: 'Tattersalls Lane, Melbourne CBD',
+        addressEn: 'Tattersalls Lane, Melbourne VIC 3000',
+        rating: 4.7,
+        lat: -37.8123,
+        lng: 144.9665,
+        region: 'melbourne',
+        authorId: 'c-mel',
+        tags: ['酒吧', '貨櫃', '街頭文化'],
+        insiderTip: {
+            teaser: '墨爾本巷弄文化的終極代表',
+            teaserEn: 'The ultimate icon of Melb laneway culture',
+            full: {
+                story: '沒有屋頂、沒有牆壁，只有兩個貨櫃和一堆木棧板。這裡代表了墨爾本最隨性、最狂放的一面。你會看到西裝筆挺的上班族跟刺青藝術家坐在一起喝啤酒。音響設備卻是頂級的，常有厲害的 DJ 駐場。',
+                storyEn: 'No roof, no walls—just two containers and pallets. This is Melb\'s rawest side. You\'ll see suits sitting with tattoo artists. Despite the look, the sound system is top-tier with world-class DJs.',
+                exactLocation: 'Tattersalls Lane 中段，看到畫滿塗鴉的門口就是了',
+                mustTry: '當地精釀啤酒 (Craft Beer on Tap) + 體驗坐在木棧板上的氛圍',
+                avoid: '下大雨時體驗會打折，雖然有遮雨棚但還是會濕',
+                bestTime: '週五下午 17:00 (Happy Hour)'
+            }
+        }
     }
 ];

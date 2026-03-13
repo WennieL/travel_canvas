@@ -11,6 +11,8 @@ interface MobileDiscoveryDrawerProps {
     subscribedCreators: string[];
     onToggleSubscribe: (creatorId: string) => void;
     onAddItem: (item: TravelItem) => void;
+    onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
+    showToastMessage?: (msg: string, type: 'success' | 'error') => void;
     lang: LangType;
     preferredAuthorId?: string | null;
 }
@@ -23,6 +25,8 @@ export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
     subscribedCreators,
     onToggleSubscribe,
     onAddItem,
+    onUpdateItem,
+    showToastMessage,
     lang,
     preferredAuthorId
 }) => {
@@ -53,6 +57,8 @@ export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
                         subscribedCreators={subscribedCreators}
                         onToggleSubscribe={onToggleSubscribe}
                         onAddItem={onAddItem}
+                        onUpdateItem={onUpdateItem}
+                        showToastMessage={showToastMessage}
                         onClose={onClose}
                         lang={lang}
                         preferredAuthorId={preferredAuthorId}

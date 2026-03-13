@@ -9,6 +9,8 @@ interface SpotDetailsPanelProps {
     subscribedCreators: string[];
     onToggleSubscribe: (creatorId: string) => void;
     onAddItem: (item: TravelItem) => void;
+    onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
+    showToastMessage?: (msg: string, type: 'success' | 'error') => void;
     onClose: () => void;
     lang: LangType;
     preferredAuthorId?: string | null;
@@ -21,6 +23,8 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     subscribedCreators,
     onToggleSubscribe,
     onAddItem,
+    onUpdateItem,
+    showToastMessage,
     onClose,
     lang,
     preferredAuthorId,
@@ -30,27 +34,39 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     const [activeIndex, setActiveIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
 
-    // Initial setup: If there are recommendations, find the first followed one or default to the first
+    // [PHASE 36] Initial setup: Use consolidated recommendations if available
     useEffect(() => {
-        if (allRecommendations.length > 0) {
-            // Priority 1: Preferred Author (e.g. Creator whose plan we are viewing)
+        const recs = (item as TravelItem).recommendations || [];
+        
+        if (recs.length > 0) {
+            // Priority 1: If viewing a schedule item, find its currently active recommendation
+            const scheduleItem = item as ScheduleItem;
+            if (scheduleItem.selectedRecommendationId) {
+                const activeIdx = recs.findIndex(r => r.id === scheduleItem.selectedRecommendationId);
+                if (activeIdx !== -1) {
+                    setActiveIndex(activeIdx);
+                    return;
+                }
+            }
+
+            // Priority 2: Preferred Author (e.g. Creator whose plan we are viewing)
             if (preferredAuthorId) {
-                const prefIdx = allRecommendations.findIndex(r => r.authorId === preferredAuthorId);
+                const prefIdx = recs.findIndex(r => r.id === preferredAuthorId);
                 if (prefIdx !== -1) {
                     setActiveIndex(prefIdx);
                     return;
                 }
             }
 
-            // Priority 2: Followed Author
-            const followedIdx = allRecommendations.findIndex(r => r.authorId && subscribedCreators.includes(r.authorId));
+            // Priority 3: Followed Author
+            const followedIdx = recs.findIndex(r => r.id && subscribedCreators.includes(r.id));
             if (followedIdx !== -1) {
                 setActiveIndex(followedIdx);
             } else {
                 setActiveIndex(0);
             }
         }
-    }, [allRecommendations, subscribedCreators, preferredAuthorId]);
+    }, [item, subscribedCreators, preferredAuthorId]);
 
     const handleSwitchAuthor = (idx: number) => {
         if (idx === activeIndex) return;
@@ -61,8 +77,13 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
         }, 300);
     };
 
-    const activeRec = allRecommendations.length > 0 ? allRecommendations[activeIndex] : (item as TravelItem);
-    const author = SAMPLE_CREATORS.find(c => c.id === activeRec.authorId);
+    const recommendations = (item as TravelItem).recommendations || [];
+    const activeRec = recommendations.length > 0 ? recommendations[activeIndex] : (item as any);
+    
+    // Support both new Recommendation type and legacy TravelItem structure for fallback
+    const authorId = activeRec.id || activeRec.authorId;
+    const authorName = activeRec.author || activeRec.authorName;
+    const author = SAMPLE_CREATORS.find(c => c.id === authorId);
     const isSubscribed = author ? subscribedCreators.includes(author.id) : false;
 
     // Translation helpers
@@ -75,10 +96,37 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
         recommendedBy: lang === 'zh' ? '推薦達人' : 'Recommended By',
         follow: lang === 'zh' ? '關注' : 'Follow',
         following: lang === 'zh' ? '已關注' : 'Following',
+        applyTip: lang === 'zh' ? '更換為此建議' : 'Apply this Tip',
     };
 
-    const displayName = lang === 'zh' ? activeRec.title : ((activeRec as any).titleEn || activeRec.title);
-    const displayAddress = lang === 'zh' ? activeRec.address : ((activeRec as any).addressEn || activeRec.address);
+    const displayName = lang === 'zh' ? item.title : ((item as any).titleEn || item.title);
+    const displayAddress = lang === 'zh' ? item.address : ((item as any).addressEn || item.address);
+
+    // [PHASE 36] Handle "Apply/Swap" logic for Canvas items
+    const isCanvasItem = 'instanceId' in item;
+    const canApplyTip = isCanvasItem && (item as ScheduleItem).selectedRecommendationId !== activeRec.id && recommendations.length > 0;
+
+    const handleApplyTip = () => {
+        if (!isCanvasItem) return;
+        const scheduleItem = item as ScheduleItem;
+        
+        // Update the item in the itinerary
+        onUpdateItem?.((scheduleItem as any).slot, (scheduleItem as any).index, {
+            selectedRecommendationId: activeRec.id,
+            price: activeRec.pricing || activeRec.price,
+            duration: activeRec.duration,
+            insiderTip: activeRec.insiderTip,
+            // Deep copy specific recommendation fields to the top level for UI compatibility
+            tips: activeRec.tips,
+            description: activeRec.description,
+            descriptionEn: activeRec.descriptionEn,
+            coverImage: activeRec.coverImage,
+            authorId: activeRec.id,
+            author: activeRec.author
+        });
+        
+        showToastMessage?.(lang === 'zh' ? '已成功更換達人建議！ ✨' : 'Tip applied successfully! ✨', 'success');
+    };
 
     return (
         <div className="flex flex-col h-full bg-white animate-in slide-in-from-right duration-300 relative overflow-hidden">
@@ -113,7 +161,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                 <div className="relative w-full aspect-[4/3] overflow-hidden">
                     <div className={`w-full h-full transition-all duration-700 ease-out ${isAnimating ? 'opacity-0 scale-110 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
                         <img
-                            src={activeRec.coverImage || `https://source.unsplash.com/800x800/?${encodeURIComponent(activeRec.title || 'travel')}`}
+                            src={activeRec.coverImage || `https://source.unsplash.com/800x800/?${encodeURIComponent(item.title || 'travel')}`}
                             className="w-full h-full object-cover"
                             alt={displayName}
                             onError={(e) => {
@@ -126,7 +174,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                 </div>
 
                 {/* 2. CREATOR BAR (LIGHTWEIGHT IG HEADER) */}
-                {(allRecommendations.length > 0 || activeRec.authorId) && (
+                {(recommendations.length > 0 || authorId) && (
                     <div className="px-6 -mt-8 relative z-10">
                         <div className="glass-card p-3 px-5 rounded-[2.5rem] shadow-2xl flex items-center justify-between border-white/50">
                             <div className="flex items-center gap-3">
@@ -135,11 +183,11 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                     <div className="absolute -inset-1 bg-instagram-gradient rounded-full animate-rainbow-slow opacity-75 blur-[2px]" />
                                     <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white bg-slate-100 shadow-inner">
                                         <img
-                                            src={author?.avatar || `https://i.pravatar.cc/100?u=${activeRec.authorId || 'official'}`}
+                                            src={author?.avatar || `https://i.pravatar.cc/100?u=${authorId || 'official'}`}
                                             className="w-full h-full object-cover"
                                             alt="avatar"
                                             onError={(e) => {
-                                                (e.target as any).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(author?.name || activeRec.author || 'O')}&background=random`;
+                                                (e.target as any).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(author?.name || authorName || 'O')}&background=random`;
                                             }}
                                         />
                                     </div>
@@ -149,7 +197,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                         {t.recommendedBy}
                                     </span>
                                     <span className="text-sm font-black text-slate-900 leading-tight">
-                                        {lang === 'en' && author?.nameEn ? author.nameEn : (author?.name || activeRec.author || (lang === 'zh' ? '官方指南' : 'Official Guide'))}
+                                        {lang === 'en' && author?.nameEn ? author.nameEn : (author?.name || authorName || (lang === 'zh' ? 'Travel Canvas 官方指南' : 'Travel Canvas Official Guide'))}
                                     </span>
                                 </div>
                             </div>
@@ -173,11 +221,11 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                 <div className="px-6 pt-10 pb-6">
                     <div className="flex items-center gap-3 mb-4">
                         <span className="px-2.5 py-1 bg-teal-50 text-teal-600 text-[10px] font-black rounded-lg border border-teal-100 uppercase tracking-widest">
-                            {activeRec.type || 'Attraction'}
+                            {item.type || 'Attraction'}
                         </span>
                         <div className="flex items-center gap-1 text-amber-500 font-black text-xs">
                             <Star size={12} fill="currentColor" />
-                            <span>{{ rating: activeRec.rating || 4.8 }.rating}</span>
+                            <span>{{ rating: item.rating || 4.8 }.rating}</span>
                         </div>
                     </div>
 
@@ -192,7 +240,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                 </div>
 
                 {/* 4. INSIDER TIPS (GLASSMORPHISM STYLE) */}
-                {((activeRec as any).insiderTip || (activeRec as any).tips) && (
+                {(activeRec.insiderTip || activeRec.tips) && (
                     <div className="px-5 mb-8">
                         <div className="glass-card p-8 pt-10 rounded-[2.5rem] relative overflow-hidden group border-white/40 shadow-xl shadow-slate-100">
                             {/* Background Decor */}
@@ -207,10 +255,10 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                         </div>
                                         <h3 className="text-xl font-black text-slate-900 tracking-tight">{t.insiderTips}</h3>
                                     </div>
-                                    {allRecommendations.length > 1 && (
+                                    {recommendations.length > 1 && (
                                         <div className="flex gap-2">
-                                            {allRecommendations.map((rec, idx) => {
-                                                const recAuthor = SAMPLE_CREATORS.find(c => c.id === rec.authorId);
+                                            {recommendations.map((rec, idx) => {
+                                                const recAuthor = SAMPLE_CREATORS.find(c => c.id === (rec.id || (rec as any).authorId));
                                                 return (
                                                     <button
                                                         key={idx}
@@ -219,7 +267,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                                     >
                                                         <div className="w-full h-full rounded-full border-2 border-white overflow-hidden bg-white">
                                                             <img
-                                                                src={recAuthor?.avatar || `https://i.pravatar.cc/100?u=${rec.authorId}`}
+                                                                src={recAuthor?.avatar || `https://i.pravatar.cc/100?u=${rec.id || idx}`}
                                                                 className="w-full h-full object-cover"
                                                                 alt="avatar"
                                                                 onError={(e) => {
@@ -235,25 +283,35 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                 </div>
 
                                 <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
-                                    {((activeRec as any).insiderTip?.teaser || (activeRec as any).insiderTip?.teaserEn) && (
+                                    {(activeRec.insiderTip?.teaser || activeRec.insiderTip?.teaserEn) && (
                                         <h4 className="text-lg font-black text-slate-900 leading-snug mb-4 text-gradient-teal">
-                                            {lang === 'zh' ? (activeRec as any).insiderTip?.teaser : ((activeRec as any).insiderTip?.teaserEn || (activeRec as any).insiderTip?.teaser)}
+                                            {lang === 'zh' ? activeRec.insiderTip?.teaser : (activeRec.insiderTip?.teaserEn || activeRec.insiderTip?.teaser)}
                                         </h4>
                                     )}
                                     <div className="w-8 h-1 bg-slate-200 rounded-full mb-6" />
                                     <p className="text-sm text-slate-600 leading-relaxed font-medium italic relative">
                                         <span className="text-3xl text-slate-200 absolute -top-4 -left-2 opacity-50 font-serif">"</span>
                                         {lang === 'zh'
-                                            ? ((activeRec as any).insiderTip?.full?.story || activeRec.tips || activeRec.description)
-                                            : ((activeRec as any).insiderTip?.full?.storyEn || (activeRec as any).insiderTip?.full?.story || activeRec.tips || activeRec.descriptionEn || activeRec.description)
+                                            ? (activeRec.insiderTip?.full?.story || activeRec.tips || activeRec.description)
+                                            : (activeRec.insiderTip?.full?.storyEn || activeRec.insiderTip?.full?.story || activeRec.tips || activeRec.descriptionEn || activeRec.description)
                                         }
                                     </p>
                                 </div>
+                                
+                                {/* Apply Tip Button - Remix Action */}
+                                {canApplyTip && (
+                                    <button 
+                                        onClick={handleApplyTip}
+                                        className="mt-4 w-full h-12 bg-teal-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-teal-600 transition-all shadow-lg shadow-teal-500/20 active:scale-95"
+                                    >
+                                        <Check size={16} strokeWidth={3} />
+                                        {t.applyTip}
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
-                )
-                }
+                )}
 
                 {/* Tags Section */}
                 <div className="flex flex-wrap gap-2 px-6 mb-12">
@@ -263,12 +321,12 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                         </span>
                     ))}
                 </div>
-            </div >
+            </div>
 
             {/* Sticky Actions Bar - Floating Glass Pill */}
-            < div className="absolute bottom-6 left-6 right-6 flex gap-3 z-50" >
+            <div className="absolute bottom-6 left-6 right-6 flex gap-3 z-50">
                 <button
-                    onClick={() => onAddItem(activeRec)}
+                    onClick={() => onAddItem(item as TravelItem)}
                     className="flex-1 h-16 bg-slate-900 text-white rounded-[2rem] text-[11px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:translate-y-[-2px] hover:shadow-2xl hover:shadow-slate-900/40 active:scale-95 transition-all"
                 >
                     <Plus size={20} strokeWidth={3} />
@@ -277,7 +335,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                 <button className="w-16 h-16 flex items-center justify-center text-slate-400 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/50 hover:text-pink-500 hover:border-pink-100 transition-all active:scale-90 group">
                     <Heart size={22} className="group-hover:fill-pink-500 transition-colors" />
                 </button>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };

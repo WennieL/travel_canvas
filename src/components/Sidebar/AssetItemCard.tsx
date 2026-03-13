@@ -75,13 +75,38 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                     </span>
                 </div>
                 <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-[10px] text-gray-400">{lang === 'en' && item.duration ? item.duration.replace('小時', 'h').replace('分鐘', 'm') : item.duration}</span>
+                    <div className="flex -space-x-1.5 overflow-hidden">
+                        {item.recommendations ? (
+                            item.recommendations.map((rec, idx) => (
+                                <div 
+                                    key={rec.id} 
+                                    className="w-4 h-4 rounded-full border border-white bg-slate-100 overflow-hidden shrink-0"
+                                    title={lang === 'zh' ? `${rec.author} 的建議` : `${rec.author}'s tip`}
+                                >
+                                    <img 
+                                        src={rec.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(rec.author)}&background=random`} 
+                                        className="w-full h-full object-cover"
+                                        alt={rec.author}
+                                    />
+                                </div>
+                            ))
+                        ) : (
+                            <span className="text-[10px] text-gray-400">
+                                {lang === 'en' && item.duration ? item.duration.replace('小時', 'h').replace('分鐘', 'm').replace(/分$/, 'm') : item.duration}
+                            </span>
+                        )}
+                    </div>
                     {isLocked ? (
                         <span className="text-[10px] font-bold text-amber-600 flex items-center gap-0.5">
                             <Lock size={8} /> {t.unlockLabel || 'Unlock'}
                         </span>
                     ) : (
-                        <span className="text-[10px] font-bold text-teal-600">¥{item.price?.toLocaleString()}</span>
+                        <span className="text-[10px] font-bold text-teal-600">
+                            {item.recommendations && item.recommendations.length > 0 
+                                ? `¥${item.recommendations[0].pricing?.toLocaleString()}`
+                                : `¥${item.price?.toLocaleString() || 0}`
+                            }
+                        </span>
                     )}
                 </div>
             </div>

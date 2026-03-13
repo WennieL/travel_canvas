@@ -301,10 +301,77 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'The jazz bar where Haruki Murakami writes',
             full: {
                 story: '進店請保持安靜。老闆不喜歡人拍照，但如果你點一杯「挪威的森林」特調，他會跟你聊整晚。店內全是黑膠唱片，可以請老闆放你想聽的專輯。',
+                storyEn: 'The jazz bar where Haruki Murakami writes. Please keep quiet inside. The owner dislikes photos but loves a good chat if you order the "Norwegian Wood" special.',
                 exactLocation: '解鎖後查看完整地址',
                 mustTry: '「挪威的森林」特調威士忌',
                 avoid: '解鎖後查看',
                 bestTime: '20:00 後氣氛最棒'
+            }
+        }
+    },
+    {
+        id: 'ka7',
+        title: '嵐山猴子公園 Iwatayama',
+        titleEn: 'Arashiyama Monkey Park Iwatayama',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🐒',
+        description: '位於嵐山山頂，可以近距離與野生猴子互動，並俯瞰京都全景。',
+        descriptionEn: 'Located at the top of Mt. Arashiyama, interact with wild monkeys and enjoy panoramic views of Kyoto.',
+        price: 600,
+        address: '京都市西京區嵐山元錄山町8',
+        addressEn: '8-Genrokuzan-cho, Arashiyama, Nishikyo-ku, Kyoto',
+        rating: 4.7,
+        lat: 35.0092,
+        lng: 135.6742,
+        funFact: '這裡有約 120 隻日本獼猴，牠們是這裡的真正主人',
+        openingHours: '09:00-16:00',
+        tags: ['親子', '自然', '網美'],
+        region: 'kyoto',
+        authorId: 'c5',
+        insiderTip: {
+            teaser: '京都最高機位的「猴子視角」',
+            teaserEn: 'Kyoto\'s best panoramic "Monkey View"',
+            full: {
+                story: '爬上山頂需要大約 20 分鐘的健行，但絕對值得！你可以進到餵食屋裡，買一袋 100 日元的蘋果或花生，猴子會從鐵網外伸出小手跟你要食物，超療癒。而且這裡的京都景色比竹林小徑更開闊。',
+                storyEn: 'A 20-minute hike to the top, but totally worth it! Buy a 100-yen bag of apples inside the rest hut, and the monkeys will reach out their tiny hands. The view of Kyoto is unmatched here.',
+                exactLocation: '山頂休息室（餵食屋）',
+                mustTry: '在休息室買花生親自餵食猴子',
+                avoid: '不要盯著猴子的眼睛看，也不要在休息室以外的地方掏出食物',
+                bestTime: '10:00 (早晨光線好拍)'
+            }
+        }
+    },
+    {
+        id: 'kf4',
+        title: '錦市場 隱藏版生蠔吧',
+        titleEn: 'Nishiki Market Hidden Oyster Bar',
+        type: 'food',
+        duration: '1小時',
+        image: '🦪',
+        description: '隱藏在錦市場巷弄中的鮮蠔專賣店，每日從產地直送。',
+        descriptionEn: 'A hidden oyster gem in Nishiki Market\'s alleys, with fresh daily shipments from the source.',
+        price: 2000,
+        address: '京都市中京區錦小路通',
+        addressEn: 'Nishikikoji-dori, Nakagyo-ku, Kyoto (Nishiki Market)',
+        rating: 4.8,
+        lat: 35.0051,
+        lng: 135.7645,
+        funFact: '錦市場被稱為「京都的廚房」，這家店是廚房裡的祕密',
+        openingHours: '10:00-18:00',
+        tags: ['美食', '海鮮'],
+        region: 'kyoto',
+        authorId: 'c2',
+        insiderTip: {
+            teaser: '比排隊名店更肥美、更安靜的生蠔基地',
+            teaserEn: 'Plumper, quieter oyster base than the famous crowds',
+            full: {
+                story: '大家都在錦市場的主幹道吃烤鰻魚，但這家店藏在側邊的小巷。他們的「岩手縣產巨大生蠔」只要 800 日元一個，味道鮮甜多汁。店內位置很少，但氣氛非常在地，配上一杯冷清酒簡直絕配。',
+                storyEn: 'Everyone stays on the main path, but this spot is in a side alley. Their Iwate jumbo oysters are huge and sweet. Pair them with a cold sake for the ultimate local experience.',
+                exactLocation: '錦小路通與富小路通交叉口往南的一條小巷內',
+                mustTry: '岩手縣產生蠔 + 京都地酒「玉乃光」',
+                avoid: '下午 4 點後生蠔可能售罄，建議午餐時段前往',
+                bestTime: '11:30'
             }
         }
     }

@@ -443,6 +443,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     t={t}
                     lang={lang}
                     onUpdateScheduleItem={onUpdateScheduleItem}
+                    setViewMode={setViewMode}
                     onUpdateCustomAsset={(id, updates) => {
                         props.setCustomAssets((prev: TravelItem[]) => prev.map((asset: TravelItem) =>
                             asset.id === id ? { ...asset, ...updates } : asset
