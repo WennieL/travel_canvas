@@ -39,6 +39,7 @@ interface AppModalsProps {
     setViewMode: (mode: ViewMode) => void;
     viewMode: ViewMode;
     selectionSource: 'map' | 'sidebar' | 'canvas' | null;
+    setSelectionSource: (source: 'map' | 'sidebar' | 'canvas' | null) => void;
 
     // Handlers
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas') => void;
@@ -182,7 +183,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         showCheckIn, setShowCheckIn,
         handleCreatePlan,
         setIsSidebarOpen, setViewMode, viewMode,
-        selectionSource,
+        selectionSource, setSelectionSource,
         selectedItem, setSelectedItem,
         showStoryPreview, setShowStoryPreview,
         budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,

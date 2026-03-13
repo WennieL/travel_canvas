@@ -82,7 +82,8 @@ export interface AppLayoutProps {
     sidebarMode: 'map' | 'list';
     setSidebarMode: React.Dispatch<React.SetStateAction<'map' | 'list'>>;
     selectionSource: 'map' | 'sidebar' | 'canvas' | null;
-
+    setSelectionSource: (source: 'map' | 'sidebar' | 'canvas' | null) => void;
+    
     // Handlers from useAppHandlers
     showContextMap: boolean;
     setShowContextMap: (val: boolean) => void;
@@ -179,7 +180,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         activeRegion, setActiveRegion,
         addToSlotTarget, setAddToSlotTarget,
         discoveryCreatorId, sidebarMode, setSidebarMode,
-        selectionSource,
+        selectionSource, setSelectionSource,
         // Handlers
         showContextMap, setShowContextMap,
         selectedCreatorId, setSelectedCreatorId,
@@ -218,9 +219,12 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         ui.setSelectedItem(item as any);
         ui.setSelectionSource(source);
 
-        // [PHASE 35] UNIFIED LOGIC: Any selection (Map, Sidebar List, or Canvas) 
-        // should reveal the SpotDetailsPanel in the DiscoverySidekick.
-        if (item) {
+        // [PHASE 40] Navigation logic refinement
+        // 1. If source is sidebar/map, ALWAYS sync.
+        // 2. If source is canvas, ONLY sync if we are already in Map Guide mode (to provide info complement).
+        const shouldSyncSidebar = item && (source !== 'canvas' || sidebarMode === 'map');
+
+        if (shouldSyncSidebar) {
             // 1. Force sidebar to Assets tab (where DiscoverySidekick lives)
             ui.setActiveTab('assets');
 
@@ -237,9 +241,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             if (item?.authorId) {
                 ui.setDiscoveryCreatorId(item.authorId);
             }
-        } else {
-            // If clearing selection, optionally reset mode if needed
-            // ui.setSelectionSource(null);
         }
     };
 
@@ -492,6 +493,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             <AppModals
                 // Shared & Language
                 lang={lang} t={t} showToastMessage={showToastMessage}
+                setSelectionSource={setSelectionSource}
 
                 // View State & Sidebar
                 activeTab={activeTab} setActiveTab={setActiveTab}

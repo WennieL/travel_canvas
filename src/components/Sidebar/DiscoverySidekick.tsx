@@ -54,6 +54,16 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
     // [PHASE 24] Hero Spot Logic: Auto-select the first spot once when entering 'map' mode
     const hasAutoSelected = React.useRef(false);
 
+    // [PHASE 40] Persistence Logic: Keep track of the last non-null selection 
+    // to prevent jumping to empty state when global selection/modal is cleared.
+    const [activeItem, setActiveItem] = React.useState<TravelItem | ScheduleItem | null>(selectedItem);
+
+    React.useEffect(() => {
+        if (selectedItem) {
+            setActiveItem(selectedItem);
+        }
+    }, [selectedItem]);
+
     React.useEffect(() => {
         if (sidebarMode === 'map' && !selectedItem && filteredAssets.length > 0 && !hasAutoSelected.current) {
             onSelectItem?.(filteredAssets[0]);
@@ -109,20 +119,27 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
 
         // If "Global" (all), use c-mel as the featured expert, otherwise null
         return activeRegion === 'all' ? SAMPLE_CREATORS.find(c => c.id === 'c-mel') : null;
-    }, [selectedItem?.authorId, discoveryCreatorId, activeRegion]);
+    }, [discoveryCreatorId, activeRegion, selectedItem?.authorId]);
 
-    if (selectedItem) {
+    // [PHASE 40] Rendering Logic: Use activeItem instead of selectedItem for detail panels
+    if (activeItem) {
         return (
             <SpotDetailsPanel
-                key={`spot-details-${(selectedItem as any).id || (selectedItem as any).instanceId}`}
-                item={selectedItem as TravelItem}
+                key={`sidekick-spot-${activeItem.id || (activeItem as any).instanceId}`}
+                item={activeItem as any}
+                onClose={() => {
+                    setActiveItem(null);
+                    // Also clear global selected if it matched
+                    if (selectedItem?.id === activeItem.id) {
+                        if (onExitDiscovery) onExitDiscovery();
+                    }
+                }}
+                lang={lang}
                 subscribedCreators={subscribedCreators}
                 onToggleSubscribe={onToggleSubscribe}
                 onAddItem={onAddItem}
                 onUpdateItem={onUpdateItem}
-                showToastMessage={showToastMessage}
-                onClose={() => onSelectItem?.(null as any)}
-                lang={lang}
+                showToastMessage={showToastMessage as any}
                 preferredAuthorId={discoveryCreatorId}
                 sidebarMode={sidebarMode}
             />
