@@ -177,7 +177,15 @@ export function useItinerary(
 
         updateActivePlan({ schedule: newSchedule });
         ui.setShowMobileLibrary(false);
-        setAddToSlotTarget(null);
+        if (ui.setSidebarMode) {
+            ui.setSidebarMode('list');
+        }
+        if (ui.setSelectedItem) {
+            ui.setSelectedItem(null);
+        }
+        if (setAddToSlotTarget) {
+            setAddToSlotTarget(null);
+        }
 
         const itemName = (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
         const slotLabel = t[targetSlot] || targetSlot;

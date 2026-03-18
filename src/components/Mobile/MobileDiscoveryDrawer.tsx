@@ -53,10 +53,13 @@ export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
                 <div className="h-full overflow-hidden relative">
                     <SpotDetailsPanel
                         item={item}
-                        allRecommendations={allRecommendations}
                         subscribedCreators={subscribedCreators}
                         onToggleSubscribe={onToggleSubscribe}
-                        onAddItem={onAddItem}
+                        onAddItem={(itemToAdd) => {
+                            onAddItem(itemToAdd);
+                            // Auto-close drawer on add
+                            onClose();
+                        }}
                         onUpdateItem={onUpdateItem}
                         showToastMessage={showToastMessage}
                         onClose={onClose}

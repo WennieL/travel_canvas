@@ -65,7 +65,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
     }, [selectedItem]);
 
     React.useEffect(() => {
-        if (sidebarMode === 'map' && !selectedItem && filteredAssets.length > 0 && !hasAutoSelected.current) {
+        if (sidebarMode === 'map' && !isMobile && !selectedItem && filteredAssets.length > 0 && !hasAutoSelected.current) {
             onSelectItem?.(filteredAssets[0]);
             hasAutoSelected.current = true;
         }
@@ -73,7 +73,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
         if (sidebarMode !== 'map') {
             hasAutoSelected.current = false;
         }
-    }, [sidebarMode, selectedItem, filteredAssets, onSelectItem]);
+    }, [sidebarMode, selectedItem, filteredAssets, onSelectItem, isMobile]);
 
     // Creator Header Card logic
     const authors = (selectedItem as any)?.allAuthors || (selectedItem?.authorId ? [selectedItem.authorId] : []);
