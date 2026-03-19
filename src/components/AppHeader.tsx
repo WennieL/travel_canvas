@@ -40,6 +40,7 @@ interface AppHeaderProps {
     setViewMode: (mode: ViewMode) => void;
     showToastMessage: (message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number) => void;
     planRegion?: string;
+    isShrunk?: boolean;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -51,7 +52,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     showContextMap, setShowContextMap, toolbar,
     viewMode, setViewMode,
     showToastMessage,
-    planRegion
+    planRegion,
+    isShrunk
 }) => {
     const MAX_NAME_LENGTH = 25;
 
@@ -85,7 +87,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
         <>
             {/* ===== MOBILE HEADER — Journey Cover ===== */}
             <div className="lg:hidden sticky top-0 z-30">
-                <div className="relative w-full overflow-hidden" style={{ height: '180px' }}>
+                <div className={`relative w-full overflow-hidden transition-all duration-500`} style={{ height: isShrunk ? '64px' : '180px' }}>
                     <img
                         src={coverBg}
                         alt="cover"
@@ -96,7 +98,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/75 pointer-events-none" />
 
                     {/* Overlaid content */}
-                    <div className="absolute inset-0 flex flex-col justify-center px-4 pt-2 pb-3">
+                    <div className={`absolute inset-0 flex flex-col transition-all duration-500 ${isShrunk ? 'justify-center px-4 py-2' : 'justify-center px-4 pt-2 pb-3'}`}>
 
                         {/* Plan name */}
                         {isEditingName ? (
@@ -126,8 +128,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                             </h1>
                         )}
 
-                        {/* Chips row */}
-                        <div className="flex items-center gap-1.5 flex-wrap mb-3">
+                        {/* Chips row - Hide when shrunk on mobile to save space */}
+                        <div className={`flex items-center gap-1.5 flex-wrap mb-3 transition-opacity duration-300 ${isShrunk ? 'opacity-0 h-0 overflow-hidden mb-0' : 'opacity-100'}`}>
                             <span
                                 onClick={(e) => { e.stopPropagation(); openDatePicker(); }}
                                 className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-2 py-0.5 border border-white/20 cursor-pointer"
@@ -146,10 +148,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                         </div>
 
                         {/* Divider */}
-                        <div className="w-full border-t border-white/25 my-2" />
+                        <div className={`w-full border-t border-white/25 my-2 transition-all ${isShrunk ? 'opacity-0 h-0 my-0' : 'opacity-100'}`} />
 
-                        {/* Mobile action toolbar — Map + Share + Budget (icon only) */}
-                        <div className="flex items-center gap-2">
+                        {/* Mobile action toolbar - Hide when shrunk to Maximize schedule visibility */}
+                        <div className={`flex items-center gap-2 transition-all duration-300 ${isShrunk ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
                             <button
                                 onClick={() => setViewMode(viewMode === 'map' ? 'canvas' : 'map')}
                                 className={`w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all ${viewMode === 'map'
@@ -186,8 +188,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             </div>
 
             {/* ===== DESKTOP HEADER — Journey Cover ===== */}
-            <div className="hidden lg:block sticky top-0 z-40">
-                <div className="relative h-80 w-full overflow-hidden">
+            <div className="hidden lg:block sticky top-0 z-40 transition-all duration-500">
+                <div className={`relative w-full overflow-hidden transition-all duration-500 ${isShrunk ? 'h-24 shadow-md' : 'h-80'}`}>
                     <img
                         src={coverBg}
                         alt="cover"
@@ -198,8 +200,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/10 pointer-events-none" />
                     <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
-                    {/* All content: left-aligned, vertically centered */}
-                    <div className="absolute inset-0 flex flex-col justify-center px-8 pointer-events-none">
+                    <div className={`absolute inset-0 flex flex-col justify-center px-8 transition-all duration-500 ${isShrunk ? 'py-2' : ''}`}>
 
                         {/* Plan name */}
                         {isEditingName ? (
@@ -216,69 +217,67 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                                 }}
                                 onBlur={saveName}
                                 onKeyDown={handleNameKeyDown}
-                                className="font-black text-4xl text-white leading-tight bg-white/15 border border-white/40 rounded px-2 py-0.5 focus:outline-none w-96 backdrop-blur-sm pointer-events-auto"
+                                className={`font-black text-white leading-tight bg-white/15 border border-white/40 rounded px-2 py-0.5 focus:outline-none w-96 backdrop-blur-sm pointer-events-auto transition-all ${isShrunk ? 'text-xl' : 'text-4xl'}`}
                             />
                         ) : (
-                            <div className="group flex items-center gap-3 cursor-pointer pointer-events-auto mb-3" onClick={startEditingName}>
-                                <h1 className="font-black text-5xl text-white leading-tight drop-shadow-md">
+                            <div className={`group flex items-center gap-3 cursor-pointer pointer-events-auto transition-all ${isShrunk ? 'mb-0' : 'mb-3'}`} onClick={startEditingName}>
+                                <h1 className={`font-black text-white leading-tight drop-shadow-md transition-all ${isShrunk ? 'text-2xl' : 'text-5xl'}`}>
                                     {activePlan.name}
                                 </h1>
-                                <Pencil size={18} className="text-white/50 opacity-0 group-hover:opacity-100 transition-all" />
+                                <Pencil size={isShrunk ? 14 : 18} className="text-white/50 opacity-0 group-hover:opacity-100 transition-all" />
                             </div>
                         )}
 
-                        {/* Chips */}
-                        <div className="flex items-center gap-2.5 flex-wrap mb-0 pointer-events-auto">
-                            <span
-                                onClick={(e) => { e.stopPropagation(); openDatePicker(); }}
-                                className="flex items-center gap-1.5 text-sm font-bold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/20 cursor-pointer hover:bg-white/25 transition-all"
-                            >
-                                <Calendar size={12} />
-                                {activePlan.startDate} → {activePlan.endDate}
-                            </span>
-                            <span className="flex items-center gap-1 text-sm font-bold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/20">
-                                {activePlan.totalDays}{lang === 'zh' ? ' 天' : ' Days'}
-                            </span>
-                            {(activePlan.destination || activePlan.region) && (
-                                <span className="flex items-center gap-1 text-sm font-bold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/20">
-                                    📍 {activePlan.destination || getRegionName(activePlan.region || '', lang)}
+                        {/* Chips & Actions Row - Combine or Hide when shrunk */}
+                        <div className={`flex items-center gap-4 transition-all duration-500 ${isShrunk ? 'opacity-0 h-0 overflow-hidden mt-0' : 'mt-2'}`}>
+                            {/* Chips */}
+                            <div className="flex items-center gap-2.5 flex-wrap pointer-events-auto">
+                                <span
+                                    onClick={(e) => { e.stopPropagation(); openDatePicker(); }}
+                                    className="flex items-center gap-1.5 text-sm font-bold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/20 cursor-pointer hover:bg-white/25 transition-all"
+                                >
+                                    <Calendar size={12} />
+                                    {activePlan.startDate} → {activePlan.endDate}
                                 </span>
-                            )}
-                        </div>
+                                <span className="flex items-center gap-1 text-sm font-bold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/20">
+                                    {activePlan.totalDays}{lang === 'zh' ? ' 天' : ' Days'}
+                                </span>
+                            </div>
 
-                        {/* Divider */}
-                        <div className="w-full border-t border-white/25 my-4 pointer-events-none" />
+                            {/* Divider */}
+                            <div className="h-4 border-l border-white/25" />
 
-                        {/* Desktop action toolbar — Map (split view) + Share only */}
-                        <div className="flex items-center gap-2 pointer-events-auto">
-                            <button
-                                onClick={() => {
-                                    setShowContextMap(!showContextMap);
-                                    if (viewMode === 'map') setViewMode('canvas');
-                                }}
-                                className={`flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold backdrop-blur-md border transition-all ${showContextMap
-                                    ? 'bg-teal-500/70 border-teal-400/60 text-white'
-                                    : 'bg-white/10 border-white/30 text-white hover:bg-white/20'
-                                    }`}
-                                title={showContextMap ? t.hideMap : t.showMap}
-                            >
-                                <MapIcon size={15} />
-                                <span>{t.mapBtn || (lang === 'zh' ? '地圖' : 'Map')}</span>
-                            </button>
-                            <button
-                                onClick={() => setShowShareModal(true)}
-                                className="flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold bg-white/10 border border-white/30 text-white hover:bg-white/20 backdrop-blur-md transition-all"
-                                title={t.share || 'Share'}
-                            >
-                                <Share2 size={15} />
-                                <span>{t.shareBtn || (lang === 'zh' ? '分享' : 'Share')}</span>
-                            </button>
+                            {/* Desktop action toolbar — Map (split view) + Share only */}
+                            <div className="flex items-center gap-2 pointer-events-auto">
+                                <button
+                                    onClick={() => {
+                                        setShowContextMap(!showContextMap);
+                                        if (viewMode === 'map') setViewMode('canvas');
+                                    }}
+                                    className={`flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold backdrop-blur-md border transition-all ${showContextMap
+                                        ? 'bg-teal-500/70 border-teal-400/60 text-white'
+                                        : 'bg-white/10 border-white/30 text-white hover:bg-white/20'
+                                        }`}
+                                    title={showContextMap ? t.hideMap : t.showMap}
+                                >
+                                    <MapIcon size={15} />
+                                    <span>{t.mapBtn || (lang === 'zh' ? '地圖' : 'Map')}</span>
+                                </button>
+                                <button
+                                    onClick={() => setShowShareModal(true)}
+                                    className="flex items-center gap-2 px-4 h-9 rounded-full text-sm font-bold bg-white/10 border border-white/30 text-white hover:bg-white/20 backdrop-blur-md transition-all"
+                                    title={t.share || 'Share'}
+                                >
+                                    <Share2 size={15} />
+                                    <span>{t.shareBtn || (lang === 'zh' ? '分享' : 'Share')}</span>
+                                </button>
 
-                            {/* Auto-save indicator */}
-                            <span className="ml-3 flex items-center gap-1 text-xs text-emerald-300/80 font-medium">
-                                <Check size={10} />
-                                {lang === 'zh' ? '已儲存' : 'Saved'}
-                            </span>
+                                {/* Auto-save indicator */}
+                                <span className="ml-3 flex items-center gap-1 text-xs text-emerald-300/80 font-medium">
+                                    <Check size={10} />
+                                    {lang === 'zh' ? '已儲存' : 'Saved'}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

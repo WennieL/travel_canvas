@@ -212,6 +212,17 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         pendingWizardData, setPendingWizardData,
     } = props;
 
+    const [isHeaderShrunk, setIsHeaderShrunk] = React.useState(false);
+
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        const scrollTop = e.currentTarget.scrollTop;
+        if (scrollTop > 80 && !isHeaderShrunk) {
+            setIsHeaderShrunk(true);
+        } else if (scrollTop <= 80 && isHeaderShrunk) {
+            setIsHeaderShrunk(false);
+        }
+    };
+
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
 
@@ -360,6 +371,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         viewMode={viewMode} setViewMode={setViewMode}
                         showToastMessage={showToastMessage}
                         planRegion={activePlan.region}
+                        isShrunk={isHeaderShrunk}
                     />
                 )}
 
@@ -392,6 +404,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 {!showFavorites && (
                     <div
                         key={`${activePlan.id}-${viewMode}`}
+                        onScroll={handleScroll}
                         className="flex-1 overflow-y-auto overflow-x-hidden bg-transparent p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4 no-scrollbar animate-canvas-reveal"
                     >
                         {viewMode === 'map' ? (
