@@ -127,7 +127,22 @@ export function App() {
         setToast({ show: true, message, type, duration });
     }, []);
 
-    // Itinerary Management Hook
+    // [FIX] Listen for localStorage quota exceeded event from usePlans
+    useEffect(() => {
+        const handleStorageQuota = () => {
+            showToastMessage(
+                lang === 'zh'
+                    ? '⚠️ 儲存空間不足！請匯出備份後清除舊行程。'
+                    : '⚠️ Storage full! Please export a backup and delete old plans.',
+                'warning',
+                6000
+            );
+        };
+        window.addEventListener('storage-quota-exceeded', handleStorageQuota);
+        return () => window.removeEventListener('storage-quota-exceeded', handleStorageQuota);
+    }, [lang, showToastMessage]);
+
+
     const {
         handleDragStart,
         handleDrop,

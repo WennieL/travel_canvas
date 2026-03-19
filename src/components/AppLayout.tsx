@@ -20,7 +20,7 @@ import CanvasView from './CanvasView';
 import DesktopSidebar from './DesktopSidebar';
 import FavoritesView from './FavoritesView';
 import { MobileDiscoveryDrawer } from './Mobile/MobileDiscoveryDrawer';
-import { SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../data';
+import { SAMPLE_ASSETS } from '../data';
 
 // This is the props interface - it accepts all the values that App.tsx passes down
 export interface AppLayoutProps {

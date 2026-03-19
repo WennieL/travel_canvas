@@ -91,15 +91,32 @@ export const getTransportLabel = (mode: TransportMode, t: any) => {
 export const parseDuration = (durationStr?: string): number => {
     if (!durationStr) return 60;
     let total = 0;
-    // Extract hours
-    const hourMatch = durationStr.match(/(\d+(\.\d+)?)小時|(\d+(\.\d+)?)hr/);
-    if (hourMatch) total += parseFloat(hourMatch[1] || hourMatch[3]) * 60;
-    // Extract minutes
-    const minMatch = durationStr.match(/(\d+)分|(\d+)min/);
-    if (minMatch) total += parseInt(minMatch[1] || minMatch[2]);
 
-    return total === 0 ? 60 : total; // Default 1 hour if parse fails or 0
+    // Normalize: lowercase, trim whitespace
+    const normalized = durationStr.trim().toLowerCase();
+
+    // Formats handled:
+    //   Chinese: 小時 / 分  (e.g. '1小時30分', '2.5小時', '45分')
+    //   English long: hours / hour / hrs / hr  (e.g. '1.5 hours', '2hr')
+    //   English short: h  (e.g. '2h', '1.5h')
+    //   Minutes short: m / min / mins  (e.g. '30m', '45min', '90mins')
+
+    // --- Hours ---
+    const hourMatch = normalized.match(/(\d+(?:\.\d+)?)\s*(?:小時|hours?|hrs?|h(?=[\s\d]|$))/);
+    if (hourMatch) total += parseFloat(hourMatch[1]) * 60;
+
+    // --- Minutes ---
+    const minMatch = normalized.match(/(\d+(?:\.\d+)?)\s*(?:分鐘?|minutes?|mins?|m(?=[\s\d]|$))/);
+    if (minMatch) total += parseFloat(minMatch[1]);
+
+    // Edge case: if input is purely numeric, treat as minutes (e.g. "90")
+    if (total === 0 && /^\d+$/.test(normalized)) {
+        total = parseInt(normalized, 10);
+    }
+
+    return total === 0 ? 60 : Math.round(total); // Default 60 min if parse fails
 };
+
 
 export const addMinutes = (timeStr: string, minutes: number): string => {
     if (!timeStr) return '';

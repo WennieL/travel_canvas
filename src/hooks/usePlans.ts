@@ -122,7 +122,15 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
                 localStorage.setItem('active_plan_id', activePlanId);
                 setLastSavedAt(Date.now());
             } catch (e) {
-                console.warn('Failed to save plans to localStorage:', e);
+                const err = e as DOMException;
+                if (err.name === 'QuotaExceededError' || err.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                    // Storage is full — surface a visible warning to the user
+                    console.error('localStorage quota exceeded. Plans could not be saved.', e);
+                    // We use a custom event so callers can show a toast without prop-drilling
+                    window.dispatchEvent(new CustomEvent('storage-quota-exceeded'));
+                } else {
+                    console.warn('Failed to save plans to localStorage:', e);
+                }
             }
         }
     }, [plans, activePlanId, isInitialized]);

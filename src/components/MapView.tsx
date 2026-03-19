@@ -4,7 +4,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ScheduleItem, TimeSlot, LangType, TravelItem } from '../types';
 import { List, Map as MapIcon, Navigation, ExternalLink, X, Maximize2, Minimize2, PlusCircle } from 'lucide-react';
-import { SAMPLE_ASSETS, MELBOURNE_ASSETS, SAMPLE_CREATORS } from '../data';
+import { SAMPLE_ASSETS, SAMPLE_CREATORS } from '../data';
 import { useMapEvents } from 'react-leaflet';
 
 interface MapViewProps {
@@ -113,8 +113,7 @@ const MapView: React.FC<MapViewProps> = ({
                     let lng = item.lng;
 
                     if (!lat || !lng) {
-                        const allAssets = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS];
-                        const found = allAssets.find(asset => asset.title === item.title || asset.id === item.id || asset.titleEn === item.title);
+                        const found = SAMPLE_ASSETS.find(asset => asset.title === item.title || asset.id === item.id || asset.titleEn === item.title);
                         if (found && found.lat && found.lng) {
                             lat = found.lat;
                             lng = found.lng;
@@ -133,9 +132,8 @@ const MapView: React.FC<MapViewProps> = ({
 
         // [PHASE 22.3] Multi-Creator Aggregate Discovery Layer (Region-Aware)
         if (discoveryCreatorId) {
-            const allAssets = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS];
-            // Show points from ALL creators in this region
-            const discoveryAssets = allAssets.filter(asset =>
+            // Show points from ALL creators in this region (SAMPLE_ASSETS = ALL_REGIONAL_ASSETS)
+            const discoveryAssets = SAMPLE_ASSETS.filter(asset =>
                 asset.authorId &&
                 (activeRegion === 'all' || asset.region === activeRegion) &&
                 !list.some(p => p.item.id === asset.id || p.item.title === asset.title)

@@ -2,48 +2,48 @@ import { Template } from '../types';
 import { TOKYO_ASSETS, OSAKA_ASSETS, KYOTO_ASSETS, MELBOURNE_ASSETS } from './assets';
 import { TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS } from './assets/taiwan';
 
-// 達人模板 - Curated for MVP Launch
+// é”äººæ¨¡æ¿ - Curated for MVP Launch
 export const TEMPLATES: Template[] = [
     // ===== MELBOURNE TEMPLATES (Featured) =====
     {
         id: 'mel-coffee',
         isHidden: true,
-        name: '墨爾本咖啡 & 巷弄文化 1 日',
+        name: 'å¢¨çˆ¾æœ¬å’–å•¡ & å··å¼„æ–‡åŒ– 1 æ—¥',
         nameEn: 'Melbourne Coffee & Laneways 1-Day',
-        title: '在地人帶你喝咖啡、遍巷弄',
+        title: 'åœ¨åœ°äººå¸¶ä½ å–å’–å•¡ã€éå··å¼„',
         titleEn: 'A Local\'s Guide to Coffee & Laneways',
         coverImage: '/images/covers/melbourne.png',
         author: 'Melbourne Local',
         authorEn: 'Melbourne Local',
         authorId: 'c-mel',
         region: 'melbourne',
-        tags: ['咖啡', '巷弄', '文化', '必訪'],
+        tags: ['å’–å•¡', 'å··å¼„', 'æ–‡åŒ–', 'å¿…è¨ª'],
         tagsEn: ['Coffee', 'Laneways', 'Culture', 'Must-Visit'],
         vibes: [
-            { tag: '#咖啡文化', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#街頭藝術', color: 'bg-purple-100 text-purple-800' },
-            { tag: '#隱藏景點', color: 'bg-teal-50 text-teal-700' }
+            { tag: '#å’–å•¡æ–‡åŒ–', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#è¡—é ­è—è¡“', color: 'bg-purple-100 text-purple-800' },
+            { tag: '#éš±è—æ™¯é»ž', color: 'bg-teal-50 text-teal-700' }
         ],
         coverStory: {
-            quote: '墨爾本的咖啡不只是飲料，是一種生活方式。',
+            quote: 'å¢¨çˆ¾æœ¬çš„å’–å•¡ä¸åªæ˜¯é£²æ–™ï¼Œæ˜¯ä¸€ç¨®ç”Ÿæ´»æ–¹å¼ã€‚',
             quoteEn: 'In Melbourne, coffee isn\'t just a drink - it\'s a way of life.',
-            description: '跟著在地人的腳步，從站著喝咖啡的儀式感開始，穿越塗鴉巷弄，最後在隱藏酒吧結束完美的一天。',
-            authorLabel: '墨爾本在地人私房推薦'
+            description: 'è·Ÿè‘—åœ¨åœ°äººçš„è…³æ­¥ï¼Œå¾žç«™è‘—å–å’–å•¡çš„å„€å¼æ„Ÿé–‹å§‹ï¼Œç©¿è¶Šå¡—é´‰å··å¼„ï¼Œæœ€å¾Œåœ¨éš±è—é…’å§çµæŸå®Œç¾Žçš„ä¸€å¤©ã€‚',
+            authorLabel: 'å¢¨çˆ¾æœ¬åœ¨åœ°äººç§æˆ¿æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我在墨爾本住了 6 年，從一杯 Flat White 開始愛上這座城市。這份路線是我每次朋友來訪時帶他們走的私房行程，從站著喝咖啡的 Patricia 到塗鴉巷弄，每一站都是我的日常。',
-            en: 'I\'ve lived in Melbourne for 6 years. It all started with a Flat White. This route is the one I take every friend through — from standing-room-only Patricia to the graffiti laneways. Every stop is part of my daily life.'
+            zh: 'æˆ‘åœ¨å¢¨çˆ¾æœ¬ä½äº† 6 å¹´ï¼Œå¾žä¸€æ¯ Flat White é–‹å§‹æ„›ä¸Šé€™åº§åŸŽå¸‚ã€‚é€™ä»½è·¯ç·šæ˜¯æˆ‘æ¯æ¬¡æœ‹å‹ä¾†è¨ªæ™‚å¸¶ä»–å€‘èµ°çš„ç§æˆ¿è¡Œç¨‹ï¼Œå¾žç«™è‘—å–å’–å•¡çš„ Patricia åˆ°å¡—é´‰å··å¼„ï¼Œæ¯ä¸€ç«™éƒ½æ˜¯æˆ‘çš„æ—¥å¸¸ã€‚',
+            en: 'I\'ve lived in Melbourne for 6 years. It all started with a Flat White. This route is the one I take every friend through â€” from standing-room-only Patricia to the graffiti laneways. Every stop is part of my daily life.'
         },
-        travelStyle: ['咖啡', '文化'],
+        travelStyle: ['å’–å•¡', 'æ–‡åŒ–'],
         targetAudience: {
-            personas: ['咖啡控', '文青'],
+            personas: ['å’–å•¡æŽ§', 'æ–‡é’'],
             personasEn: ['Coffee Nerd', 'Culture Lover'],
-            description: '適合喜歡在地咖啡文化、街頭藝術和巷弄探索的旅人',
+            description: 'é©åˆå–œæ­¡åœ¨åœ°å’–å•¡æ–‡åŒ–ã€è¡—é ­è—è¡“å’Œå··å¼„æŽ¢ç´¢çš„æ—…äºº',
             paceLevel: 'moderate'
         },
         travelTips: [
-            { tip: '墨爾本咖啡店通常不提供外帶杯，自備杯子更環保', tipEn: 'Melbourne cafés often don\'t offer takeaway cups, bring your own' },
-            { tip: '巷弄塗鴉會定期更換，每次去都有新驚喜', tipEn: 'Laneway graffiti changes regularly, always something new' }
+            { tip: 'å¢¨çˆ¾æœ¬å’–å•¡åº—é€šå¸¸ä¸æä¾›å¤–å¸¶æ¯ï¼Œè‡ªå‚™æ¯å­æ›´ç’°ä¿', tipEn: 'Melbourne cafÃ©s often don\'t offer takeaway cups, bring your own' },
+            { tip: 'å··å¼„å¡—é´‰æœƒå®šæœŸæ›´æ›ï¼Œæ¯æ¬¡åŽ»éƒ½æœ‰æ–°é©šå–œ', tipEn: 'Laneway graffiti changes regularly, always something new' }
         ],
         duration: 1,
         rating: 4.9,
@@ -53,7 +53,7 @@ export const TEMPLATES: Template[] = [
         isLocked: false,
         highlights: { days: 1, spots: 5, tips: 4, rating: 4.9, usageCount: 284 },
         dayPreviews: [
-            { day: 1, summary: 'Patricia Coffee → Hosier Lane → Queen Vic Market → Bar Americano' }
+            { day: 1, summary: 'Patricia Coffee â†’ Hosier Lane â†’ Queen Vic Market â†’ Bar Americano' }
         ],
         schedule: {
             'Day 1': {
@@ -62,7 +62,9 @@ export const TEMPLATES: Template[] = [
                 themeEmoji: '\u2615',
                 morning: [
                     { ...MELBOURNE_ASSETS[0], instanceId: 'mel-c-1', startTime: '08:00', arrivalTransport: 'public' },
-                    { ...MELBOURNE_ASSETS[1], instanceId: 'mel-c-2', startTime: '09:30', arrivalTransport: 'walk' }
+                    { ...MELBOURNE_ASSETS[1], instanceId: 'mel-c-2', startTime: '09:30', arrivalTransport: 'walk' },
+                    { ...MELBOURNE_ASSETS[8], instanceId: 'mel-c-8', startTime: '10:30', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[22], instanceId: 'mel-c-note', startTime: '11:45', arrivalTransport: 'walk' }
                 ],
                 afternoon: [
                     { ...MELBOURNE_ASSETS[2], instanceId: 'mel-c-3', startTime: '11:00', arrivalTransport: 'walk' },
@@ -79,42 +81,42 @@ export const TEMPLATES: Template[] = [
     {
         id: 'mel-bars',
         isHidden: true,
-        name: '墨爾本隱藏酒吧巡禮',
+        name: 'å¢¨çˆ¾æœ¬éš±è—é…’å§å·¡ç¦®',
         nameEn: 'Melbourne Hidden Bars Tour',
-        title: '穿過書架、冷藏庫，探索墨爾本地下酒吧',
+        title: 'ç©¿éŽæ›¸æž¶ã€å†·è—åº«ï¼ŒæŽ¢ç´¢å¢¨çˆ¾æœ¬åœ°ä¸‹é…’å§',
         titleEn: 'Behind Bookshelves & Freezers: Melbourne\'s Secret Bars',
         coverImage: '/images/covers/melbourne.png',
         author: 'Melbourne Local',
         authorEn: 'Melbourne Local',
         authorId: 'c-mel',
         region: 'melbourne',
-        tags: ['酒吧', '隱藏景點', '夜生活', 'Premium'],
+        tags: ['é…’å§', 'éš±è—æ™¯é»ž', 'å¤œç”Ÿæ´»', 'Premium'],
         tagsEn: ['Bars', 'Hidden Gems', 'Nightlife', 'Premium'],
         vibes: [
-            { tag: '#禁酒時期', color: 'bg-stone-100 text-stone-800' },
-            { tag: '#秘密入口', color: 'bg-rose-100 text-rose-800' },
-            { tag: '#調酒藝術', color: 'bg-amber-50 text-amber-700' }
+            { tag: '#ç¦é…’æ™‚æœŸ', color: 'bg-stone-100 text-stone-800' },
+            { tag: '#ç§˜å¯†å…¥å£', color: 'bg-rose-100 text-rose-800' },
+            { tag: '#èª¿é…’è—è¡“', color: 'bg-amber-50 text-amber-700' }
         ],
         coverStory: {
-            quote: '墨爾本最好的酒吧，都藏在你找不到的地方。',
+            quote: 'å¢¨çˆ¾æœ¬æœ€å¥½çš„é…’å§ï¼Œéƒ½è—åœ¨ä½ æ‰¾ä¸åˆ°çš„åœ°æ–¹ã€‚',
             quoteEn: 'Melbourne\'s best bars are hidden where you\'d never look.',
-            description: '從書架後的禁酒時期酒吧，到冷藏庫門後的熱帶天堂。這不是普通的酒吧巡禮，而是一場城市尋寶。',
-            authorLabel: '夜生活達人精選路線'
+            description: 'å¾žæ›¸æž¶å¾Œçš„ç¦é…’æ™‚æœŸé…’å§ï¼Œåˆ°å†·è—åº«é–€å¾Œçš„ç†±å¸¶å¤©å ‚ã€‚é€™ä¸æ˜¯æ™®é€šçš„é…’å§å·¡ç¦®ï¼Œè€Œæ˜¯ä¸€å ´åŸŽå¸‚å°‹å¯¶ã€‚',
+            authorLabel: 'å¤œç”Ÿæ´»é”äººç²¾é¸è·¯ç·š'
         },
         authorStory: {
-            zh: '身為調酒師 4 年，我親自拜訪過墨爾本 200+ 間酒吧。這條路線精選了最難找到入口、但最值得一訪的 Speakeasy，每一間都有獨特的故事和招牌調酒。',
-            en: 'As a bartender for 4 years, I\'ve visited 200+ bars in Melbourne. This route features the hardest-to-find Speakeasies that are most worth visiting — each with its own story and signature cocktails.'
+            zh: 'èº«ç‚ºèª¿é…’å¸« 4 å¹´ï¼Œæˆ‘è¦ªè‡ªæ‹œè¨ªéŽå¢¨çˆ¾æœ¬ 200+ é–“é…’å§ã€‚é€™æ¢è·¯ç·šç²¾é¸äº†æœ€é›£æ‰¾åˆ°å…¥å£ã€ä½†æœ€å€¼å¾—ä¸€è¨ªçš„ Speakeasyï¼Œæ¯ä¸€é–“éƒ½æœ‰ç¨ç‰¹çš„æ•…äº‹å’Œæ‹›ç‰Œèª¿é…’ã€‚',
+            en: 'As a bartender for 4 years, I\'ve visited 200+ bars in Melbourne. This route features the hardest-to-find Speakeasies that are most worth visiting â€” each with its own story and signature cocktails.'
         },
-        travelStyle: ['夜生活', '探險'],
+        travelStyle: ['å¤œç”Ÿæ´»', 'æŽ¢éšª'],
         targetAudience: {
-            personas: ['夜貓族', '調酒愛好者'],
+            personas: ['å¤œè²“æ—', 'èª¿é…’æ„›å¥½è€…'],
             personasEn: ['Night Owl', 'Cocktail Enthusiast'],
-            description: '適合喜歡探索隱藏酒吧、享受精緻調酒的夜生活玩家',
+            description: 'é©åˆå–œæ­¡æŽ¢ç´¢éš±è—é…’å§ã€äº«å—ç²¾ç·»èª¿é…’çš„å¤œç”Ÿæ´»çŽ©å®¶',
             paceLevel: 'slow'
         },
         travelTips: [
-            { tip: '大部分隱藏酒吧不接受預約，直接去排隊', tipEn: 'Most hidden bars don\'t take reservations, just queue up' },
-            { tip: '穿著不要太休閒，部分酒吧有 dress code', tipEn: 'Don\'t dress too casually, some bars have dress codes' }
+            { tip: 'å¤§éƒ¨åˆ†éš±è—é…’å§ä¸æŽ¥å—é ç´„ï¼Œç›´æŽ¥åŽ»æŽ’éšŠ', tipEn: 'Most hidden bars don\'t take reservations, just queue up' },
+            { tip: 'ç©¿è‘—ä¸è¦å¤ªä¼‘é–’ï¼Œéƒ¨åˆ†é…’å§æœ‰ dress code', tipEn: 'Don\'t dress too casually, some bars have dress codes' }
         ],
         duration: 1,
         rating: 4.8,
@@ -125,13 +127,13 @@ export const TEMPLATES: Template[] = [
         isLocked: true,
         highlights: { days: 1, spots: 3, tips: 4, rating: 4.8, usageCount: 192 },
         dayPreviews: [
-            { day: 1, summary: 'Bar Americano → Eau de Vie → Robot Bar' }
+            { day: 1, summary: 'Bar Americano â†’ Eau de Vie â†’ Robot Bar' }
         ],
         schedule: {
             'Day 1': {
-                theme: '禁酒時期酒吧巡禮',
+                theme: 'ç¦é…’æ™‚æœŸé…’å§å·¡ç¦®',
                 themeEn: 'Prohibition Era Bar Crawl',
-                themeEmoji: '🥃',
+                themeEmoji: 'ðŸ¥ƒ',
                 morning: [],
                 afternoon: [],
                 evening: [
@@ -148,43 +150,43 @@ export const TEMPLATES: Template[] = [
     // ===== JAPAN TEMPLATES =====
     {
         id: 't1',
-        name: '東京經典初心者 4 日遊',
+        name: 'æ±äº¬ç¶“å…¸åˆå¿ƒè€… 4 æ—¥éŠ',
         nameEn: 'Tokyo Classic Beginner 4-Day Trip',
-        title: '穿越昭和時代：東京 4 日文青散策',
+        title: 'ç©¿è¶Šæ˜­å’Œæ™‚ä»£ï¼šæ±äº¬ 4 æ—¥æ–‡é’æ•£ç­–',
         titleEn: 'Through Showa Era: 4-Day Tokyo Cultural Walk',
         coverImage: '/images/covers/tokyo.png',
-        author: 'TravelCanvas 編輯部',
+        author: 'TravelCanvas ç·¨è¼¯éƒ¨',
         authorEn: 'TravelCanvas Editors',
         authorId: 'c0',
         region: 'tokyo',
-        tags: ['初心者', '經典路線'],
+        tags: ['åˆå¿ƒè€…', 'ç¶“å…¸è·¯ç·š'],
         tagsEn: ['Beginner', 'Classic'],
         vibes: [
-            { tag: '#昭和懷舊', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#攝影聖地', color: 'bg-stone-100 text-stone-600' },
-            { tag: '#深度散步', color: 'bg-teal-50 text-teal-700' }
+            { tag: '#æ˜­å’Œæ‡·èˆŠ', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#æ”å½±è–åœ°', color: 'bg-stone-100 text-stone-600' },
+            { tag: '#æ·±åº¦æ•£æ­¥', color: 'bg-teal-50 text-teal-700' }
         ],
         coverStory: {
-            quote: '如果厭倦了新宿的擁擠，這條路線帶你找回東京呼吸的節奏。',
+            quote: 'å¦‚æžœåŽ­å€¦äº†æ–°å®¿çš„æ“æ“ ï¼Œé€™æ¢è·¯ç·šå¸¶ä½ æ‰¾å›žæ±äº¬å‘¼å¸çš„ç¯€å¥ã€‚',
             quoteEn: 'Tired of Shinjuku crowds? This route helps you find Tokyo\'s true rhythm.',
-            description: '從下町的昭和喛茶店，到隱藏在表參道巷弄的設計師聚落。這不是觀光客的打卡行程，而是一場與東京老靈魂的對話。',
-            authorLabel: '東京在地 10 年設計師推薦'
+            description: 'å¾žä¸‹ç”ºçš„æ˜­å’Œå–›èŒ¶åº—ï¼Œåˆ°éš±è—åœ¨è¡¨åƒé“å··å¼„çš„è¨­è¨ˆå¸«èšè½ã€‚é€™ä¸æ˜¯è§€å…‰å®¢çš„æ‰“å¡è¡Œç¨‹ï¼Œè€Œæ˜¯ä¸€å ´èˆ‡æ±äº¬è€éˆé­‚çš„å°è©±ã€‚',
+            authorLabel: 'æ±äº¬åœ¨åœ° 10 å¹´è¨­è¨ˆå¸«æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我是旅居東京 10 年的台灣設計師。這份行程不是觀光客路線，而是我每天生活的東京 — 清晨在淺草寺散步、下午在代官山的咖啡店工作、傍晚在隅田川看夕陽。希望你也能感受到這座城市安靜而溫柔的一面。',
-            en: 'I\'m a Taiwanese designer who\'s lived in Tokyo for 10 years. This isn\'t a tourist route — it\'s the Tokyo I live in every day. Morning walks at Sensoji, afternoon coffee in Daikanyama, sunset by Sumida River. I hope you\'ll feel the quiet, gentle side of this city too.'
+            zh: 'æˆ‘æ˜¯æ—…å±…æ±äº¬ 10 å¹´çš„å°ç£è¨­è¨ˆå¸«ã€‚é€™ä»½è¡Œç¨‹ä¸æ˜¯è§€å…‰å®¢è·¯ç·šï¼Œè€Œæ˜¯æˆ‘æ¯å¤©ç”Ÿæ´»çš„æ±äº¬ â€” æ¸…æ™¨åœ¨æ·ºè‰å¯ºæ•£æ­¥ã€ä¸‹åˆåœ¨ä»£å®˜å±±çš„å’–å•¡åº—å·¥ä½œã€å‚æ™šåœ¨éš…ç”°å·çœ‹å¤•é™½ã€‚å¸Œæœ›ä½ ä¹Ÿèƒ½æ„Ÿå—åˆ°é€™åº§åŸŽå¸‚å®‰éœè€Œæº«æŸ”çš„ä¸€é¢ã€‚',
+            en: 'I\'m a Taiwanese designer who\'s lived in Tokyo for 10 years. This isn\'t a tourist route â€” it\'s the Tokyo I live in every day. Morning walks at Sensoji, afternoon coffee in Daikanyama, sunset by Sumida River. I hope you\'ll feel the quiet, gentle side of this city too.'
         },
-        travelStyle: ['文青', '深度'],
+        travelStyle: ['æ–‡é’', 'æ·±åº¦'],
         targetAudience: {
-            personas: ['初心者', '文青', '攝影師'],
+            personas: ['åˆå¿ƒè€…', 'æ–‡é’', 'æ”å½±å¸«'],
             personasEn: ['First-Timer', 'Culture Lover', 'Photographer'],
-            description: '適合第一次去東京、想避開觀光客路線的深度旅行者',
+            description: 'é©åˆç¬¬ä¸€æ¬¡åŽ»æ±äº¬ã€æƒ³é¿é–‹è§€å…‰å®¢è·¯ç·šçš„æ·±åº¦æ—…è¡Œè€…',
             paceLevel: 'moderate'
         },
         travelTips: [
-            { tip: '購買 Suica 卡，搭地鐵比計程車方便很多', tipEn: 'Get a Suica card, subway is much more convenient than taxis' },
-            { tip: '便利商店的食物品質超乎想像，不要小看它', tipEn: 'Convenience store food quality is incredible, don\'t underestimate it' },
-            { tip: '記得帶零錢，很多自動販賣機不收大鈔', tipEn: 'Bring small change, many vending machines don\'t accept large bills' }
+            { tip: 'è³¼è²· Suica å¡ï¼Œæ­åœ°éµæ¯”è¨ˆç¨‹è»Šæ–¹ä¾¿å¾ˆå¤š', tipEn: 'Get a Suica card, subway is much more convenient than taxis' },
+            { tip: 'ä¾¿åˆ©å•†åº—çš„é£Ÿç‰©å“è³ªè¶…ä¹Žæƒ³åƒï¼Œä¸è¦å°çœ‹å®ƒ', tipEn: 'Convenience store food quality is incredible, don\'t underestimate it' },
+            { tip: 'è¨˜å¾—å¸¶é›¶éŒ¢ï¼Œå¾ˆå¤šè‡ªå‹•è²©è³£æ©Ÿä¸æ”¶å¤§éˆ”', tipEn: 'Bring small change, many vending machines don\'t accept large bills' }
         ],
         duration: 4,
         rating: 4.8,
@@ -193,37 +195,37 @@ export const TEMPLATES: Template[] = [
         copiedCount: 1205,
         highlights: { days: 4, spots: 10, tips: 6, rating: 4.8, usageCount: 1205 },
         dayPreviews: [
-            { day: 1, summary: '淺草寺 → 晴空塔 → 澀谷 → TeamLab → Shibuya Sky' },
-            { day: 2, summary: '築地市場 → 銀座 → 六本木' },
-            { day: 3, summary: '新宿御苑 → 原宿 → 表參道' },
-            { day: 4, summary: '秋葉原 → 上野公園 → 阿美橫町' }
+            { day: 1, summary: 'æ·ºè‰å¯º â†’ æ™´ç©ºå¡” â†’ æ¾€è°· â†’ TeamLab â†’ Shibuya Sky' },
+            { day: 2, summary: 'ç¯‰åœ°å¸‚å ´ â†’ éŠ€åº§ â†’ å…­æœ¬æœ¨' },
+            { day: 3, summary: 'æ–°å®¿å¾¡è‹‘ â†’ åŽŸå®¿ â†’ è¡¨åƒé“' },
+            { day: 4, summary: 'ç§‹è‘‰åŽŸ â†’ ä¸Šé‡Žå…¬åœ’ â†’ é˜¿ç¾Žæ©«ç”º' }
         ],
         schedule: {
             'Day 1': {
-                theme: '下町散步 & 昭和風情',
+                theme: 'ä¸‹ç”ºæ•£æ­¥ & æ˜­å’Œé¢¨æƒ…',
                 themeEn: 'Downtown Walk & Showa Vibes',
-                themeEmoji: '⛩️',
+                themeEmoji: 'â›©ï¸',
                 morning: [
                     {
-                        ...TOKYO_ASSETS[0], // 淺草寺
+                        ...TOKYO_ASSETS[0], // æ·ºè‰å¯º
                         instanceId: 't1-1',
                         startTime: '07:00',
                         arrivalTransport: 'public',
                         insiderTip: {
-                            teaser: '早起鳥的秘密風景',
+                            teaser: 'æ—©èµ·é³¥çš„ç§˜å¯†é¢¨æ™¯',
                             teaserEn: 'Early bird secret view',
                             full: {
-                                story: '在此時段抵達，仲見世通的鐵捲門彩繪還沒拉上去，是只有早鳥才能看見的浮世繪卷。',
+                                story: 'åœ¨æ­¤æ™‚æ®µæŠµé”ï¼Œä»²è¦‹ä¸–é€šçš„éµæ²é–€å½©ç¹ªé‚„æ²’æ‹‰ä¸ŠåŽ»ï¼Œæ˜¯åªæœ‰æ—©é³¥æ‰èƒ½çœ‹è¦‹çš„æµ®ä¸–ç¹ªå·ã€‚',
                                 storyEn: 'Arrive at this time and you\'ll see the painted shutters of Nakamise-dori.',
                                 bestTime: '07:00-08:00',
-                                exactLocation: '從雷門進去左手邊第三家店前',
-                                mustTry: '拍攝鐵捲門上的浮世繪圖案',
-                                avoid: '不要等到9點後，商店開門就看不到了'
+                                exactLocation: 'å¾žé›·é–€é€²åŽ»å·¦æ‰‹é‚Šç¬¬ä¸‰å®¶åº—å‰',
+                                mustTry: 'æ‹æ”éµæ²é–€ä¸Šçš„æµ®ä¸–ç¹ªåœ–æ¡ˆ',
+                                avoid: 'ä¸è¦ç­‰åˆ°9é»žå¾Œï¼Œå•†åº—é–‹é–€å°±çœ‹ä¸åˆ°äº†'
                             }
                         }
                     },
                     {
-                        ...TOKYO_ASSETS[1], // 東京晴空塔
+                        ...TOKYO_ASSETS[1], // æ±äº¬æ™´ç©ºå¡”
                         instanceId: 't1-1b',
                         startTime: '09:30',
                         arrivalTransport: 'walk'
@@ -231,7 +233,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 afternoon: [
                     {
-                        ...TOKYO_ASSETS[2], // 澀谷十字路口
+                        ...TOKYO_ASSETS[2], // æ¾€è°·åå­—è·¯å£
                         instanceId: 't1-2',
                         startTime: '13:30',
                         arrivalTransport: 'public'
@@ -244,7 +246,7 @@ export const TEMPLATES: Template[] = [
                         price: 3800
                     },
                     {
-                        ...TOKYO_ASSETS[4], // 明治神宮
+                        ...TOKYO_ASSETS[4], // æ˜Žæ²»ç¥žå®®
                         instanceId: 't1-4',
                         startTime: '17:30',
                         arrivalTransport: 'public'
@@ -252,7 +254,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 evening: [
                     {
-                        ...TOKYO_ASSETS[6], // 一蘭拉麵
+                        ...TOKYO_ASSETS[6], // ä¸€è˜­æ‹‰éºµ
                         instanceId: 't1-5',
                         startTime: '19:00',
                         arrivalTransport: 'walk'
@@ -275,42 +277,42 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 't2',
-        name: '東京美食吃貨之旅',
+        name: 'æ±äº¬ç¾Žé£Ÿåƒè²¨ä¹‹æ—…',
         nameEn: 'Tokyo Foodie Tour',
-        title: '從築地到六本木：東京胃袋征服計畫',
+        title: 'å¾žç¯‰åœ°åˆ°å…­æœ¬æœ¨ï¼šæ±äº¬èƒƒè¢‹å¾æœè¨ˆç•«',
         titleEn: 'From Tsukiji to Roppongi: Conquering Tokyo\'s Food Scene',
         coverImage: '/images/covers/tokyo.png',
-        author: '愛吃鬼安安',
+        author: 'æ„›åƒé¬¼å®‰å®‰',
         authorEn: 'Foodie Anan',
         authorId: 'c1',
         region: 'tokyo',
-        tags: ['美食', '吃貨', '必吃'],
+        tags: ['ç¾Žé£Ÿ', 'åƒè²¨', 'å¿…åƒ'],
         tagsEn: ['Foodie', 'Eat', 'Must-Try'],
         vibes: [
-            { tag: '#海鮮控', color: 'bg-blue-100 text-blue-800' },
-            { tag: '#燒肉天堂', color: 'bg-red-100 text-red-800' },
-            { tag: '#深夜食堂', color: 'bg-amber-50 text-teal-700' }
+            { tag: '#æµ·é®®æŽ§', color: 'bg-blue-100 text-blue-800' },
+            { tag: '#ç‡’è‚‰å¤©å ‚', color: 'bg-red-100 text-red-800' },
+            { tag: '#æ·±å¤œé£Ÿå ‚', color: 'bg-amber-50 text-teal-700' }
         ],
         coverStory: {
-            quote: '在東京，胃永遠不夠大，時間永遠不夠長。',
+            quote: 'åœ¨æ±äº¬ï¼Œèƒƒæ°¸é ä¸å¤ å¤§ï¼Œæ™‚é–“æ°¸é ä¸å¤ é•·ã€‚',
             quoteEn: 'In Tokyo, your stomach is never big enough, and time is never long enough.',
-            description: '這不是普通的美食清單。從凌晨5點的築地市場，到深夜的黃金街居酒屋，帶你吃遍在地人的口袋名單。',
-            authorLabel: '東京美食評論家推薦'
+            description: 'é€™ä¸æ˜¯æ™®é€šçš„ç¾Žé£Ÿæ¸…å–®ã€‚å¾žå‡Œæ™¨5é»žçš„ç¯‰åœ°å¸‚å ´ï¼Œåˆ°æ·±å¤œçš„é»ƒé‡‘è¡—å±…é…’å±‹ï¼Œå¸¶ä½ åƒéåœ¨åœ°äººçš„å£è¢‹åå–®ã€‚',
+            authorLabel: 'æ±äº¬ç¾Žé£Ÿè©•è«–å®¶æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我是東京美食評論家，在這座城市吃了 8 年。這份行程不是 Google 推薦的觀光名店，而是我透過無數次試吃、被拒絕、再回訪後精選的絕佳名単 — 從築地的魚市場到深夜居酒屋。',
-            en: 'I\'m a Tokyo food critic who\'s been eating in this city for 8 years. This isn\'t a Google-recommended tourist list — it\'s curated from countless tastings, rejections, and revisits. From Tsukiji fish markets to late-night izakayas.'
+            zh: 'æˆ‘æ˜¯æ±äº¬ç¾Žé£Ÿè©•è«–å®¶ï¼Œåœ¨é€™åº§åŸŽå¸‚åƒäº† 8 å¹´ã€‚é€™ä»½è¡Œç¨‹ä¸æ˜¯ Google æŽ¨è–¦çš„è§€å…‰ååº—ï¼Œè€Œæ˜¯æˆ‘é€éŽç„¡æ•¸æ¬¡è©¦åƒã€è¢«æ‹’çµ•ã€å†å›žè¨ªå¾Œç²¾é¸çš„çµ•ä½³åå˜ â€” å¾žç¯‰åœ°çš„é­šå¸‚å ´åˆ°æ·±å¤œå±…é…’å±‹ã€‚',
+            en: 'I\'m a Tokyo food critic who\'s been eating in this city for 8 years. This isn\'t a Google-recommended tourist list â€” it\'s curated from countless tastings, rejections, and revisits. From Tsukiji fish markets to late-night izakayas.'
         },
-        travelStyle: ['美食', '吃貨'],
+        travelStyle: ['ç¾Žé£Ÿ', 'åƒè²¨'],
         targetAudience: {
-            personas: ['吃貨', '美食探險家'],
+            personas: ['åƒè²¨', 'ç¾Žé£ŸæŽ¢éšªå®¶'],
             personasEn: ['Foodie', 'Food Adventurer'],
-            description: '適合想用一天吃遍東京精華的美食狂人',
+            description: 'é©åˆæƒ³ç”¨ä¸€å¤©åƒéæ±äº¬ç²¾è¯çš„ç¾Žé£Ÿç‹‚äºº',
             paceLevel: 'fast'
         },
         travelTips: [
-            { tip: '築地市場要早上 6 點前到，太晚人太多', tipEn: 'Arrive at Tsukiji before 6 AM, too crowded later' },
-            { tip: '午餐的燒肉套餐比晚餐便宜很多', tipEn: 'Lunch yakiniku sets are much cheaper than dinner' }
+            { tip: 'ç¯‰åœ°å¸‚å ´è¦æ—©ä¸Š 6 é»žå‰åˆ°ï¼Œå¤ªæ™šäººå¤ªå¤š', tipEn: 'Arrive at Tsukiji before 6 AM, too crowded later' },
+            { tip: 'åˆé¤çš„ç‡’è‚‰å¥—é¤æ¯”æ™šé¤ä¾¿å®œå¾ˆå¤š', tipEn: 'Lunch yakiniku sets are much cheaper than dinner' }
         ],
         duration: 1,
         rating: 4.6,
@@ -318,22 +320,22 @@ export const TEMPLATES: Template[] = [
         copiedCount: 856,
         highlights: { days: 1, spots: 6, tips: 4, rating: 4.6, usageCount: 856 },
         dayPreviews: [
-            { day: 1, summary: '築地市場 → 淺草 → 燒肉 → 表參道 → 一蘭拉麵 → 黃金街' }
+            { day: 1, summary: 'ç¯‰åœ°å¸‚å ´ â†’ æ·ºè‰ â†’ ç‡’è‚‰ â†’ è¡¨åƒé“ â†’ ä¸€è˜­æ‹‰éºµ â†’ é»ƒé‡‘è¡—' }
         ],
         schedule: {
             'Day 1': {
-                theme: '從早吃到晚的美食馬拉松',
+                theme: 'å¾žæ—©åƒåˆ°æ™šçš„ç¾Žé£Ÿé¦¬æ‹‰æ¾',
                 themeEn: 'Dawn-to-Dusk Food Marathon',
-                themeEmoji: '🍜',
+                themeEmoji: 'ðŸœ',
                 morning: [
                     {
-                        ...TOKYO_ASSETS[7], // 築地市場
+                        ...TOKYO_ASSETS[7], // ç¯‰åœ°å¸‚å ´
                         instanceId: 't2-1',
                         startTime: '06:00',
                         arrivalTransport: 'public'
                     },
                     {
-                        ...TOKYO_ASSETS[0], // 淺草寺
+                        ...TOKYO_ASSETS[0], // æ·ºè‰å¯º
                         instanceId: 't2-1b',
                         startTime: '08:30',
                         arrivalTransport: 'public'
@@ -341,42 +343,42 @@ export const TEMPLATES: Template[] = [
                 ],
                 afternoon: [
                     {
-                        ...TOKYO_ASSETS[8], // 燒肉
+                        ...TOKYO_ASSETS[8], // ç‡’è‚‰
                         instanceId: 't2-2',
                         startTime: '11:30',
                         arrivalTransport: 'public',
                         insiderTip: {
-                            teaser: '午餐套餐是最划算的吃法',
+                            teaser: 'åˆé¤å¥—é¤æ˜¯æœ€åˆ’ç®—çš„åƒæ³•',
                             full: {
-                                story: '午餐的「特選和牛套餐」¥3,800 就能吃到晚餐要 ¥15,000 以上的 A5 和牛。11:30 開門前 15 分鐘排隊，通常可以順利入場。',
-                                exactLocation: '六本木店視野最好',
-                                bestTime: '平日 11:15 開始排隊',
-                                mustTry: '特選ハラミ + 特製醬油ダレ'
+                                story: 'åˆé¤çš„ã€Œç‰¹é¸å’Œç‰›å¥—é¤ã€Â¥3,800 å°±èƒ½åƒåˆ°æ™šé¤è¦ Â¥15,000 ä»¥ä¸Šçš„ A5 å’Œç‰›ã€‚11:30 é–‹é–€å‰ 15 åˆ†é˜æŽ’éšŠï¼Œé€šå¸¸å¯ä»¥é †åˆ©å…¥å ´ã€‚',
+                                exactLocation: 'å…­æœ¬æœ¨åº—è¦–é‡Žæœ€å¥½',
+                                bestTime: 'å¹³æ—¥ 11:15 é–‹å§‹æŽ’éšŠ',
+                                mustTry: 'ç‰¹é¸ãƒãƒ©ãƒŸ + ç‰¹è£½é†¬æ²¹ãƒ€ãƒ¬'
                             }
                         }
                     },
                     { ...TOKYO_ASSETS[14], instanceId: 't2-2', startTime: '13:00', arrivalTransport: 'public' },
                     {
                         id: 'custom-cafe',
-                        title: '表參道下午茶散步',
+                        title: 'è¡¨åƒé“ä¸‹åˆèŒ¶æ•£æ­¥',
                         titleEn: 'Omotesando Cafe Hopping',
                         type: 'attraction',
-                        duration: '2小時',
-                        image: '☕',
-                        description: '消化一下燒肉，在表參道逛逛設計師小店',
+                        duration: '2å°æ™‚',
+                        image: 'â˜•',
+                        description: 'æ¶ˆåŒ–ä¸€ä¸‹ç‡’è‚‰ï¼Œåœ¨è¡¨åƒé“é€›é€›è¨­è¨ˆå¸«å°åº—',
                         price: 0,
                         region: 'tokyo',
                         instanceId: 't2-3',
                         startTime: '14:30',
                         arrivalTransport: 'walk',
                         insiderTip: {
-                            teaser: '表參道後巷的隱藏選物店串連',
+                            teaser: 'è¡¨åƒé“å¾Œå··çš„éš±è—é¸ç‰©åº—ä¸²é€£',
                             teaserEn: 'Omotesando back alley boutique loop',
                             full: {
-                                story: '不要只走表參道的大馬道。穿進「RALPH LAUREN」旁邊的小巷，那裡藏著超多獨立咖啡廳、古著店跟設計師工作室。推薦去「RATIO &C」或是「SHOZO COFFEE STORE」，氣氛超好。',
-                                exactLocation: '表參道與青山通之間的後巷',
-                                mustTry: '在巷弄間找一家有露天座位的咖啡廳',
-                                avoid: '週末下午人潮爆多，建議平日造訪',
+                                story: 'ä¸è¦åªèµ°è¡¨åƒé“çš„å¤§é¦¬é“ã€‚ç©¿é€²ã€ŒRALPH LAURENã€æ—é‚Šçš„å°å··ï¼Œé‚£è£¡è—è‘—è¶…å¤šç¨ç«‹å’–å•¡å»³ã€å¤è‘—åº—è·Ÿè¨­è¨ˆå¸«å·¥ä½œå®¤ã€‚æŽ¨è–¦åŽ»ã€ŒRATIO &Cã€æˆ–æ˜¯ã€ŒSHOZO COFFEE STOREã€ï¼Œæ°£æ°›è¶…å¥½ã€‚',
+                                exactLocation: 'è¡¨åƒé“èˆ‡é’å±±é€šä¹‹é–“çš„å¾Œå··',
+                                mustTry: 'åœ¨å··å¼„é–“æ‰¾ä¸€å®¶æœ‰éœ²å¤©åº§ä½çš„å’–å•¡å»³',
+                                avoid: 'é€±æœ«ä¸‹åˆäººæ½®çˆ†å¤šï¼Œå»ºè­°å¹³æ—¥é€ è¨ª',
                                 bestTime: '15:00'
                             }
                         }
@@ -384,7 +386,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 evening: [
                     {
-                        ...TOKYO_ASSETS[6], // 一蘭拉麵
+                        ...TOKYO_ASSETS[6], // ä¸€è˜­æ‹‰éºµ
                         instanceId: 't2-4',
                         startTime: '18:00',
                         arrivalTransport: 'public'
@@ -393,26 +395,26 @@ export const TEMPLATES: Template[] = [
                 night: [
                     {
                         id: 'golden-gai',
-                        title: '新宿黃金街',
+                        title: 'æ–°å®¿é»ƒé‡‘è¡—',
                         titleEn: 'Shinjuku Golden Gai',
                         type: 'attraction',
-                        duration: '2小時',
-                        image: '🥃',
-                        description: '200多家小酒吧擠在一起，展現最狂野的東京。',
+                        duration: '2å°æ™‚',
+                        image: 'ðŸ¥ƒ',
+                        description: '200å¤šå®¶å°é…’å§æ“ åœ¨ä¸€èµ·ï¼Œå±•ç¾æœ€ç‹‚é‡Žçš„æ±äº¬ã€‚',
                         price: 3000,
                         region: 'tokyo',
                         instanceId: 't2-5',
                         startTime: '21:00',
                         arrivalTransport: 'public',
                         insiderTip: {
-                            teaser: '新手的黃金街生存與點餐指南',
+                            teaser: 'æ–°æ‰‹çš„é»ƒé‡‘è¡—ç”Ÿå­˜èˆ‡é»žé¤æŒ‡å—',
                             teaserEn: 'Survival & ordering guide for newborns',
                             full: {
-                                story: '黃金街由 6 條小巷組成。找門口有標示「No Cover Charge」的店可以省下 ¥500-¥1,000 的入場費。推薦去「Death Match in Hell」或是「Albatross」，對外國人非常友善。',
-                                exactLocation: '新宿歌舞伎町一丁目，花園神社旁',
-                                mustTry: '隨便點一杯 Highball，感受昭和風情',
-                                avoid: '不要在大街上大聲喧嘩，也不要拿著大相機到處拍，會被白眼',
-                                bestTime: '21:00 後各國酒客聚集最熱鬧'
+                                story: 'é»ƒé‡‘è¡—ç”± 6 æ¢å°å··çµ„æˆã€‚æ‰¾é–€å£æœ‰æ¨™ç¤ºã€ŒNo Cover Chargeã€çš„åº—å¯ä»¥çœä¸‹ Â¥500-Â¥1,000 çš„å…¥å ´è²»ã€‚æŽ¨è–¦åŽ»ã€ŒDeath Match in Hellã€æˆ–æ˜¯ã€ŒAlbatrossã€ï¼Œå°å¤–åœ‹äººéžå¸¸å‹å–„ã€‚',
+                                exactLocation: 'æ–°å®¿æ­Œèˆžä¼Žç”ºä¸€ä¸ç›®ï¼ŒèŠ±åœ’ç¥žç¤¾æ—',
+                                mustTry: 'éš¨ä¾¿é»žä¸€æ¯ Highballï¼Œæ„Ÿå—æ˜­å’Œé¢¨æƒ…',
+                                avoid: 'ä¸è¦åœ¨å¤§è¡—ä¸Šå¤§è²å–§å˜©ï¼Œä¹Ÿä¸è¦æ‹¿è‘—å¤§ç›¸æ©Ÿåˆ°è™•æ‹ï¼Œæœƒè¢«ç™½çœ¼',
+                                bestTime: '21:00 å¾Œå„åœ‹é…’å®¢èšé›†æœ€ç†±é¬§'
                             }
                         }
                     }
@@ -423,43 +425,43 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 't5',
-        name: '京都古都靜心之旅 3 日',
+        name: 'äº¬éƒ½å¤éƒ½éœå¿ƒä¹‹æ—… 3 æ—¥',
         nameEn: 'Kyoto Ancient Capital 3-Day Retreat',
-        title: '避開人潮的京都秘境探訪',
+        title: 'é¿é–‹äººæ½®çš„äº¬éƒ½ç§˜å¢ƒæŽ¢è¨ª',
         titleEn: 'Escape the Crowds: Kyoto\'s Hidden Sanctuaries',
         coverImage: '/images/covers/kyoto.png',
-        author: '京都慢活',
+        author: 'äº¬éƒ½æ…¢æ´»',
         authorEn: 'Kyoto Slow Life',
         authorId: 'c4',
         region: 'kyoto',
-        tags: ['古蹟', '文化', '慢活', 'Premium'],
+        tags: ['å¤è¹Ÿ', 'æ–‡åŒ–', 'æ…¢æ´»', 'Premium'],
         tagsEn: ['Historic', 'Culture', 'Slow Travel', 'Premium'],
         vibes: [
-            { tag: '#千年古都', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#禪意生活', color: 'bg-stone-100 text-stone-600' },
-            { tag: '#抹茶文化', color: 'bg-green-100 text-green-800' }
+            { tag: '#åƒå¹´å¤éƒ½', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#ç¦ªæ„ç”Ÿæ´»', color: 'bg-stone-100 text-stone-600' },
+            { tag: '#æŠ¹èŒ¶æ–‡åŒ–', color: 'bg-green-100 text-green-800' }
         ],
         coverStory: {
-            quote: '京都最美的風景，都藏在觀光客看不到的地方。',
+            quote: 'äº¬éƒ½æœ€ç¾Žçš„é¢¨æ™¯ï¼Œéƒ½è—åœ¨è§€å…‰å®¢çœ‹ä¸åˆ°çš„åœ°æ–¹ã€‚',
             quoteEn: 'Kyoto\'s most beautiful scenery is hidden where tourists never look.',
-            description: '清晨無人的竹林小徑、隱藏在町家裡的茶室、只有在地人知道的賞楓秘境。這是一趟讓心慢下來的旅程。',
-            authorLabel: '京都在住者私房路線'
+            description: 'æ¸…æ™¨ç„¡äººçš„ç«¹æž—å°å¾‘ã€éš±è—åœ¨ç”ºå®¶è£¡çš„èŒ¶å®¤ã€åªæœ‰åœ¨åœ°äººçŸ¥é“çš„è³žæ¥“ç§˜å¢ƒã€‚é€™æ˜¯ä¸€è¶Ÿè®“å¿ƒæ…¢ä¸‹ä¾†çš„æ—…ç¨‹ã€‚',
+            authorLabel: 'äº¬éƒ½åœ¨ä½è€…ç§æˆ¿è·¯ç·š'
         },
         authorStory: {
-            zh: '我在京都住了 3 年，每天騎腳踏車穿梭在古寺與町家之間。這份路線只會帶你去「觀光客看不到」的京都 — 清晨無人的竹林、隱藏在巷子裡的抹茶私房、只有在地人知道的賭楓秘境。',
-            en: 'I lived in Kyoto for 3 years, cycling between ancient temples and machiya houses every day. This route takes you to the Kyoto that tourists never see — an empty bamboo grove at dawn, hidden matcha spots in the alleys, and secret autumn foliage spots only locals know.'
+            zh: 'æˆ‘åœ¨äº¬éƒ½ä½äº† 3 å¹´ï¼Œæ¯å¤©é¨Žè…³è¸è»Šç©¿æ¢­åœ¨å¤å¯ºèˆ‡ç”ºå®¶ä¹‹é–“ã€‚é€™ä»½è·¯ç·šåªæœƒå¸¶ä½ åŽ»ã€Œè§€å…‰å®¢çœ‹ä¸åˆ°ã€çš„äº¬éƒ½ â€” æ¸…æ™¨ç„¡äººçš„ç«¹æž—ã€éš±è—åœ¨å··å­è£¡çš„æŠ¹èŒ¶ç§æˆ¿ã€åªæœ‰åœ¨åœ°äººçŸ¥é“çš„è³­æ¥“ç§˜å¢ƒã€‚',
+            en: 'I lived in Kyoto for 3 years, cycling between ancient temples and machiya houses every day. This route takes you to the Kyoto that tourists never see â€” an empty bamboo grove at dawn, hidden matcha spots in the alleys, and secret autumn foliage spots only locals know.'
         },
-        travelStyle: ['慢活', '禪意'],
+        travelStyle: ['æ…¢æ´»', 'ç¦ªæ„'],
         targetAudience: {
-            personas: ['慢活族', '禪意旅人'],
+            personas: ['æ…¢æ´»æ—', 'ç¦ªæ„æ—…äºº'],
             personasEn: ['Slow Traveler', 'Zen Seeker'],
-            description: '適合想遠離人潮、在千年古都中找到內心平靜的旅人',
+            description: 'é©åˆæƒ³é é›¢äººæ½®ã€åœ¨åƒå¹´å¤éƒ½ä¸­æ‰¾åˆ°å…§å¿ƒå¹³éœçš„æ—…äºº',
             paceLevel: 'slow'
         },
         travelTips: [
-            { tip: '清晨的竹林沒什麼人，6 點出發最好', tipEn: 'Bamboo grove is empty at dawn, leave at 6 AM' },
-            { tip: '京都巴士一日券非常划算，到處都能到', tipEn: 'Kyoto bus day pass is great value, goes everywhere' },
-            { tip: '穿和服走在石板路上要小心，建議穿平底鞋', tipEn: 'Be careful walking on stone paths in kimono, flat shoes recommended' }
+            { tip: 'æ¸…æ™¨çš„ç«¹æž—æ²’ä»€éº¼äººï¼Œ6 é»žå‡ºç™¼æœ€å¥½', tipEn: 'Bamboo grove is empty at dawn, leave at 6 AM' },
+            { tip: 'äº¬éƒ½å·´å£«ä¸€æ—¥åˆ¸éžå¸¸åˆ’ç®—ï¼Œåˆ°è™•éƒ½èƒ½åˆ°', tipEn: 'Kyoto bus day pass is great value, goes everywhere' },
+            { tip: 'ç©¿å’Œæœèµ°åœ¨çŸ³æ¿è·¯ä¸Šè¦å°å¿ƒï¼Œå»ºè­°ç©¿å¹³åº•éž‹', tipEn: 'Be careful walking on stone paths in kimono, flat shoes recommended' }
         ],
         duration: 3,
         rating: 4.8,
@@ -470,30 +472,30 @@ export const TEMPLATES: Template[] = [
         isLocked: true,
         highlights: { days: 3, spots: 6, tips: 6, rating: 4.8, usageCount: 567 },
         dayPreviews: [
-            { day: 1, summary: '金閣寺 → 嵐山竹林 → 清水寺 → 中村藤吉抹茶' },
-            { day: 2, summary: '伏見稻荷 → 祇園 → 花見小路' },
-            { day: 3, summary: '哲學之道 → 銀閣寺 → 村上春樹爵士吧' }
+            { day: 1, summary: 'é‡‘é–£å¯º â†’ åµå±±ç«¹æž— â†’ æ¸…æ°´å¯º â†’ ä¸­æ‘è—¤å‰æŠ¹èŒ¶' },
+            { day: 2, summary: 'ä¼è¦‹ç¨»è· â†’ ç¥‡åœ’ â†’ èŠ±è¦‹å°è·¯' },
+            { day: 3, summary: 'å“²å­¸ä¹‹é“ â†’ éŠ€é–£å¯º â†’ æ‘ä¸Šæ˜¥æ¨¹çˆµå£«å§' }
         ],
         schedule: {
             'Day 1': {
-                theme: '金閣 & 竹林秘境',
+                theme: 'é‡‘é–£ & ç«¹æž—ç§˜å¢ƒ',
                 themeEn: 'Golden Temple & Bamboo Secrets',
-                themeEmoji: '🎋',
+                themeEmoji: 'ðŸŽ‹',
                 morning: [
                     {
-                        ...KYOTO_ASSETS[0], // 金閣寺
+                        ...KYOTO_ASSETS[0], // é‡‘é–£å¯º
                         instanceId: 't5-1',
                         startTime: '09:00',
                         arrivalTransport: 'public'
                     },
                     {
-                        ...KYOTO_ASSETS[6], // 岡崎神社 (兔子神社)
+                        ...KYOTO_ASSETS[6], // å²¡å´Žç¥žç¤¾ (å…”å­ç¥žç¤¾)
                         instanceId: 't5-1-secret',
                         startTime: '10:30',
                         arrivalTransport: 'public'
                     },
                     {
-                        ...KYOTO_ASSETS[3], // 嵐山竹林
+                        ...KYOTO_ASSETS[3], // åµå±±ç«¹æž—
                         instanceId: 't5-1b',
                         startTime: '11:45',
                         arrivalTransport: 'public'
@@ -501,13 +503,13 @@ export const TEMPLATES: Template[] = [
                 ],
                 afternoon: [
                     {
-                        ...KYOTO_ASSETS[1], // 清水寺
+                        ...KYOTO_ASSETS[1], // æ¸…æ°´å¯º
                         instanceId: 't5-2',
                         startTime: '13:00',
                         arrivalTransport: 'public'
                     },
                     {
-                        ...KYOTO_ASSETS[4], // 中村藤吉
+                        ...KYOTO_ASSETS[4], // ä¸­æ‘è—¤å‰
                         instanceId: 't5-2b',
                         startTime: '15:30',
                         arrivalTransport: 'public'
@@ -515,7 +517,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 evening: [
                     {
-                        ...KYOTO_ASSETS[2], // 伏見稻荷
+                        ...KYOTO_ASSETS[2], // ä¼è¦‹ç¨»è·
                         instanceId: 't5-3',
                         startTime: '17:00',
                         arrivalTransport: 'public'
@@ -523,7 +525,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 night: [
                     {
-                        ...KYOTO_ASSETS[5], // 村上春樹爵士吧
+                        ...KYOTO_ASSETS[5], // æ‘ä¸Šæ˜¥æ¨¹çˆµå£«å§
                         instanceId: 't5-4',
                         startTime: '20:00',
                         arrivalTransport: 'public',
@@ -537,42 +539,42 @@ export const TEMPLATES: Template[] = [
     // ===== OSAKA TEMPLATE (NEW) =====
     {
         id: 'osaka-classic',
-        name: '大阪 2 日玩樂攻略',
+        name: 'å¤§é˜ª 2 æ—¥çŽ©æ¨‚æ”»ç•¥',
         nameEn: 'Osaka 2-Day Fun Guide',
-        title: '吃倒在大阪：美食與樂園完美攻略',
+        title: 'åƒå€’åœ¨å¤§é˜ªï¼šç¾Žé£Ÿèˆ‡æ¨‚åœ’å®Œç¾Žæ”»ç•¥',
         titleEn: 'Eat Till You Drop: The Ultimate Osaka Food & Fun Guide',
         coverImage: '/images/covers/osaka.png',
         author: 'Osaka Fun Guide',
         authorEn: 'Osaka Fun Guide',
         authorId: 'c-osaka',
         region: 'osaka',
-        tags: ['美食', '樂園', '夜生活'],
+        tags: ['ç¾Žé£Ÿ', 'æ¨‚åœ’', 'å¤œç”Ÿæ´»'],
         tagsEn: ['Food', 'Theme Park', 'Nightlife'],
         vibes: [
-            { tag: '#吃倒大阪', color: 'bg-orange-100 text-orange-800' },
-            { tag: '#環球影城', color: 'bg-blue-100 text-blue-800' },
-            { tag: '#道頓堀', color: 'bg-red-100 text-red-800' }
+            { tag: '#åƒå€’å¤§é˜ª', color: 'bg-orange-100 text-orange-800' },
+            { tag: '#ç’°çƒå½±åŸŽ', color: 'bg-blue-100 text-blue-800' },
+            { tag: '#é“é “å €', color: 'bg-red-100 text-red-800' }
         ],
         coverStory: {
-            quote: '大阪人說：京都人穿到破，大阪人吃到倒。',
+            quote: 'å¤§é˜ªäººèªªï¼šäº¬éƒ½äººç©¿åˆ°ç ´ï¼Œå¤§é˜ªäººåƒåˆ°å€’ã€‚',
             quoteEn: 'They say: Kyoto spends on clothes, Osaka spends on food!',
-            description: '從 USJ 的瘋狂冒險，到道頓堀的美食轟炸。這是一跟讓你笑著來、撐著走的大阪之旅。',
-            authorLabel: '大阪在地人私房推薦'
+            description: 'å¾ž USJ çš„ç˜‹ç‹‚å†’éšªï¼Œåˆ°é“é “å €çš„ç¾Žé£Ÿè½Ÿç‚¸ã€‚é€™æ˜¯ä¸€è·Ÿè®“ä½ ç¬‘è‘—ä¾†ã€æ’è‘—èµ°çš„å¤§é˜ªä¹‹æ—…ã€‚',
+            authorLabel: 'å¤§é˜ªåœ¨åœ°äººç§æˆ¿æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我是土生土長的大阪人，在道頓堀附近長大。每次朋友來大阪我都會帶他們走這條路線 — 面店、串炸、居酒屋，都是在地人的口袋名張，而不是觀光客排隊名店。',
-            en: 'I\'m a born-and-raised Osaka local who grew up near Dotonbori. Whenever friends visit, I take them on this exact route — ramen shops, kushikatsu, izakayas — all local favorites, not the tourist-queue spots.'
+            zh: 'æˆ‘æ˜¯åœŸç”ŸåœŸé•·çš„å¤§é˜ªäººï¼Œåœ¨é“é “å €é™„è¿‘é•·å¤§ã€‚æ¯æ¬¡æœ‹å‹ä¾†å¤§é˜ªæˆ‘éƒ½æœƒå¸¶ä»–å€‘èµ°é€™æ¢è·¯ç·š â€” é¢åº—ã€ä¸²ç‚¸ã€å±…é…’å±‹ï¼Œéƒ½æ˜¯åœ¨åœ°äººçš„å£è¢‹åå¼µï¼Œè€Œä¸æ˜¯è§€å…‰å®¢æŽ’éšŠååº—ã€‚',
+            en: 'I\'m a born-and-raised Osaka local who grew up near Dotonbori. Whenever friends visit, I take them on this exact route â€” ramen shops, kushikatsu, izakayas â€” all local favorites, not the tourist-queue spots.'
         },
-        travelStyle: ['歡樂', '美食'],
+        travelStyle: ['æ­¡æ¨‚', 'ç¾Žé£Ÿ'],
         targetAudience: {
-            personas: ['親子', '吃貨', '樂園控'],
+            personas: ['è¦ªå­', 'åƒè²¨', 'æ¨‚åœ’æŽ§'],
             personasEn: ['Family', 'Foodie', 'Theme Park Fan'],
-            description: '適合想要同時享受美食和遊樂園的歡樂旅人',
+            description: 'é©åˆæƒ³è¦åŒæ™‚äº«å—ç¾Žé£Ÿå’ŒéŠæ¨‚åœ’çš„æ­¡æ¨‚æ—…äºº',
             paceLevel: 'fast'
         },
         travelTips: [
-            { tip: 'USJ 快速通關券建議提前線上購買', tipEn: 'Buy USJ Express Pass online in advance' },
-            { tip: '道頓堀的章魚燒排隊很長，推薦去旁邊巷子的在地店', tipEn: 'Skip the long takoyaki lines on Dotonbori, try local shops in side alleys' }
+            { tip: 'USJ å¿«é€Ÿé€šé—œåˆ¸å»ºè­°æå‰ç·šä¸Šè³¼è²·', tipEn: 'Buy USJ Express Pass online in advance' },
+            { tip: 'é“é “å €çš„ç« é­šç‡’æŽ’éšŠå¾ˆé•·ï¼ŒæŽ¨è–¦åŽ»æ—é‚Šå··å­çš„åœ¨åœ°åº—', tipEn: 'Skip the long takoyaki lines on Dotonbori, try local shops in side alleys' }
         ],
         duration: 2,
         rating: 4.7,
@@ -582,17 +584,17 @@ export const TEMPLATES: Template[] = [
         isLocked: false,
         highlights: { days: 2, spots: 6, tips: 4, rating: 4.7, usageCount: 432 },
         dayPreviews: [
-            { day: 1, summary: '環球影城 → 道頓堀 → 大阪城 → 千房大阪燒' },
-            { day: 2, summary: '黑門市場 → 通天閣 → 新世界串炸' }
+            { day: 1, summary: 'ç’°çƒå½±åŸŽ â†’ é“é “å € â†’ å¤§é˜ªåŸŽ â†’ åƒæˆ¿å¤§é˜ªç‡’' },
+            { day: 2, summary: 'é»‘é–€å¸‚å ´ â†’ é€šå¤©é–£ â†’ æ–°ä¸–ç•Œä¸²ç‚¸' }
         ],
         schedule: {
             'Day 1': {
-                theme: '環球影城 & 道頓堀美食',
+                theme: 'ç’°çƒå½±åŸŽ & é“é “å €ç¾Žé£Ÿ',
                 themeEn: 'Universal Studios & Dotonbori Eats',
-                themeEmoji: '🎢',
+                themeEmoji: 'ðŸŽ¢',
                 morning: [
                     {
-                        ...OSAKA_ASSETS[3], // 環球影城
+                        ...OSAKA_ASSETS[3], // ç’°çƒå½±åŸŽ
                         instanceId: 'osaka-1',
                         startTime: '08:00',
                         arrivalTransport: 'public'
@@ -600,19 +602,19 @@ export const TEMPLATES: Template[] = [
                 ],
                 afternoon: [
                     {
-                        ...OSAKA_ASSETS[12], // 難波八阪神社
+                        ...OSAKA_ASSETS[12], // é›£æ³¢å…«é˜ªç¥žç¤¾
                         instanceId: 'osaka-secret-1',
                         startTime: '13:30',
                         arrivalTransport: 'car'
                     },
                     {
-                        ...OSAKA_ASSETS[2], // 道頓堀
+                        ...OSAKA_ASSETS[2], // é“é “å €
                         instanceId: 'osaka-2',
                         startTime: '15:00',
                         arrivalTransport: 'public'
                     },
                     {
-                        ...OSAKA_ASSETS[1], // 大阪城
+                        ...OSAKA_ASSETS[1], // å¤§é˜ªåŸŽ
                         instanceId: 'osaka-3',
                         startTime: '17:00',
                         arrivalTransport: 'public'
@@ -620,7 +622,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 evening: [
                     {
-                        ...OSAKA_ASSETS[7], // 千房大阪燒
+                        ...OSAKA_ASSETS[7], // åƒæˆ¿å¤§é˜ªç‡’
                         instanceId: 'osaka-4',
                         startTime: '19:00',
                         arrivalTransport: 'public'
@@ -628,7 +630,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 night: [
                     {
-                        ...OSAKA_ASSETS[4], // 爵士觀光船 (Premium)
+                        ...OSAKA_ASSETS[4], // çˆµå£«è§€å…‰èˆ¹ (Premium)
                         instanceId: 'osaka-5',
                         startTime: '21:00',
                         arrivalTransport: 'walk',
@@ -642,47 +644,47 @@ export const TEMPLATES: Template[] = [
         }
     },
     // ===== TAIWAN TEMPLATES =====
-    // ── 台北慢活散策 3 日 ── 
+    // â”€â”€ å°åŒ—æ…¢æ´»æ•£ç­– 3 æ—¥ â”€â”€ 
     {
         id: 'tw-taipei-slow',
-        name: '台北慢活散策 3 日',
+        name: 'å°åŒ—æ…¢æ´»æ•£ç­– 3 æ—¥',
         nameEn: 'Taipei Slow Travel 3-Day',
-        title: '用走路的速度，感受台北的呼吸',
+        title: 'ç”¨èµ°è·¯çš„é€Ÿåº¦ï¼Œæ„Ÿå—å°åŒ—çš„å‘¼å¸',
         titleEn: 'Feel Taipei at Walking Pace',
         coverImage: 'https://images.unsplash.com/photo-1601534622119-e9b3aa7c7bdf?auto=format&fit=crop&q=80&w=1000',
-        author: '台北文青散步',
+        author: 'å°åŒ—æ–‡é’æ•£æ­¥',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
         region: 'taipei',
-        tags: ['慢活', '文青', '咖啡'],
+        tags: ['æ…¢æ´»', 'æ–‡é’', 'å’–å•¡'],
         tagsEn: ['Slow Travel', 'Culture', 'Coffee'],
-        travelStyle: ['慢活', '文青'],
+        travelStyle: ['æ…¢æ´»', 'æ–‡é’'],
         targetAudience: {
-            personas: ['慢活族', '文青', '咖啡控'],
+            personas: ['æ…¢æ´»æ—', 'æ–‡é’', 'å’–å•¡æŽ§'],
             personasEn: ['Slow Traveler', 'Culture Lover', 'Coffee Nerd'],
-            description: '適合想遠離觀光客路線、用自己的節奏探索台北巷弄的人',
+            description: 'é©åˆæƒ³é é›¢è§€å…‰å®¢è·¯ç·šã€ç”¨è‡ªå·±çš„ç¯€å¥æŽ¢ç´¢å°åŒ—å··å¼„çš„äºº',
             descriptionEn: 'For those who want to escape tourist routes and explore Taipei alleys at their own pace.',
             paceLevel: 'slow'
         },
         vibes: [
-            { tag: '#巷弄探索', color: 'bg-teal-100 text-teal-800' },
-            { tag: '#老宅咖啡', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#秘境美術館', color: 'bg-purple-100 text-purple-800' }
+            { tag: '#å··å¼„æŽ¢ç´¢', color: 'bg-teal-100 text-teal-800' },
+            { tag: '#è€å®…å’–å•¡', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#ç§˜å¢ƒç¾Žè¡“é¤¨', color: 'bg-purple-100 text-purple-800' }
         ],
         coverStory: {
-            quote: '台北最美的風景，都藏在觀光客懶得走的巷弄裡。',
+            quote: 'å°åŒ—æœ€ç¾Žçš„é¢¨æ™¯ï¼Œéƒ½è—åœ¨è§€å…‰å®¢æ‡¶å¾—èµ°çš„å··å¼„è£¡ã€‚',
             quoteEn: 'Taipei\'s most beautiful scenery hides in alleys tourists are too lazy to walk.',
-            description: '從文學基地的日式宿舍群開始，穿過赤峰街的獨立書店，在寶藏巖的山城藝術村發呆。',
-            authorLabel: '台北在地文青推薦'
+            description: 'å¾žæ–‡å­¸åŸºåœ°çš„æ—¥å¼å®¿èˆç¾¤é–‹å§‹ï¼Œç©¿éŽèµ¤å³°è¡—çš„ç¨ç«‹æ›¸åº—ï¼Œåœ¨å¯¶è—å·–çš„å±±åŸŽè—è¡“æ‘ç™¼å‘†ã€‚',
+            authorLabel: 'å°åŒ—åœ¨åœ°æ–‡é’æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我是在台北長大的文青部落客，專門寫巷弄探索與獨立書店。這份路線是我花了 5 年走遍台北大街小巷後，精選出最能代表「台北文化靈魂」的地點 — 每一站都有我自己的故事。',
-            en: 'I\'m a Taipei-born blogger who writes about alley exploration and indie bookstores. This route took 5 years of wandering every corner of Taipei to curate — each stop represents the cultural soul of this city and holds a personal story of mine.'
+            zh: 'æˆ‘æ˜¯åœ¨å°åŒ—é•·å¤§çš„æ–‡é’éƒ¨è½å®¢ï¼Œå°ˆé–€å¯«å··å¼„æŽ¢ç´¢èˆ‡ç¨ç«‹æ›¸åº—ã€‚é€™ä»½è·¯ç·šæ˜¯æˆ‘èŠ±äº† 5 å¹´èµ°éå°åŒ—å¤§è¡—å°å··å¾Œï¼Œç²¾é¸å‡ºæœ€èƒ½ä»£è¡¨ã€Œå°åŒ—æ–‡åŒ–éˆé­‚ã€çš„åœ°é»ž â€” æ¯ä¸€ç«™éƒ½æœ‰æˆ‘è‡ªå·±çš„æ•…äº‹ã€‚',
+            en: 'I\'m a Taipei-born blogger who writes about alley exploration and indie bookstores. This route took 5 years of wandering every corner of Taipei to curate â€” each stop represents the cultural soul of this city and holds a personal story of mine.'
         },
         travelTips: [
-            { tip: '台北捷運非常方便，但巷弄探索建議用走的', tipEn: 'MRT is convenient, but walk to discover alleys' },
-            { tip: '每間咖啡廳都有自己的個性，不要只去連鎖店', tipEn: 'Each caf\u00e9 has its own personality, skip chains' },
-            { tip: '帶折疊傘，台北的天氣隨時會變', tipEn: 'Carry a folding umbrella, Taipei weather is unpredictable' }
+            { tip: 'å°åŒ—æ·é‹éžå¸¸æ–¹ä¾¿ï¼Œä½†å··å¼„æŽ¢ç´¢å»ºè­°ç”¨èµ°çš„', tipEn: 'MRT is convenient, but walk to discover alleys' },
+            { tip: 'æ¯é–“å’–å•¡å»³éƒ½æœ‰è‡ªå·±çš„å€‹æ€§ï¼Œä¸è¦åªåŽ»é€£éŽ–åº—', tipEn: 'Each caf\u00e9 has its own personality, skip chains' },
+            { tip: 'å¸¶æŠ˜ç–Šå‚˜ï¼Œå°åŒ—çš„å¤©æ°£éš¨æ™‚æœƒè®Š', tipEn: 'Carry a folding umbrella, Taipei weather is unpredictable' }
         ],
         duration: 3,
         rating: 4.8,
@@ -691,15 +693,15 @@ export const TEMPLATES: Template[] = [
         price: 0.99,
         highlights: { days: 3, spots: 9, tips: 6, rating: 4.8, usageCount: 324 },
         dayPreviews: [
-            { day: 1, summary: '文學基地 → 赤峰街 → 大稻埕咖啡廳' },
-            { day: 2, summary: '心中山線形公園 → 鼎元豆漿 → 寶藏巖' },
-            { day: 3, summary: '九份 → 金瓜石 → 足米飯糰' }
+            { day: 1, summary: 'æ–‡å­¸åŸºåœ° â†’ èµ¤å³°è¡— â†’ å¤§ç¨»åŸ•å’–å•¡å»³' },
+            { day: 2, summary: 'å¿ƒä¸­å±±ç·šå½¢å…¬åœ’ â†’ é¼Žå…ƒè±†æ¼¿ â†’ å¯¶è—å·–' },
+            { day: 3, summary: 'ä¹ä»½ â†’ é‡‘ç“œçŸ³ â†’ è¶³ç±³é£¯ç³°' }
         ],
         schedule: {
             'Day 1': {
-                theme: '文學散步 & 老宅咖啡',
+                theme: 'æ–‡å­¸æ•£æ­¥ & è€å®…å’–å•¡',
                 themeEn: 'Literature Walk & Old House Coffee',
-                themeEmoji: '📚',
+                themeEmoji: 'ðŸ“š',
                 morning: [
                     { ...TAIPEI_ASSETS[0], instanceId: 'tw1-1', startTime: '09:00', arrivalTransport: 'public' },
                 ],
@@ -715,9 +717,9 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             },
             'Day 2': {
-                theme: '巷弄探索 & 藝術村',
+                theme: 'å··å¼„æŽ¢ç´¢ & è—è¡“æ‘',
                 themeEn: 'Alley Exploration & Artist Village',
-                themeEmoji: '🎨',
+                themeEmoji: 'ðŸŽ¨',
                 morning: [
                     { ...TAIPEI_ASSETS[4], instanceId: 'tw1-5', startTime: '07:00', arrivalTransport: 'walk' },
                 ],
@@ -730,45 +732,45 @@ export const TEMPLATES: Template[] = [
             }
         }
     },
-    // ── 台南美食散步 2 日 ──
+    // â”€â”€ å°å—ç¾Žé£Ÿæ•£æ­¥ 2 æ—¥ â”€â”€
     {
         id: 'tw-tainan-food',
-        name: '台南美食散步 2 日',
+        name: 'å°å—ç¾Žé£Ÿæ•£æ­¥ 2 æ—¥',
         nameEn: 'Tainan Food Walk 2-Day',
-        title: '跟著阿孆的口袋名單，吃遍台南',
+        title: 'è·Ÿè‘—é˜¿å­†çš„å£è¢‹åå–®ï¼Œåƒéå°å—',
         titleEn: 'Follow Grandma\'s Secret Food List Through Tainan',
         coverImage: 'https://images.unsplash.com/photo-1633228491597-b39f823e0541?auto=format&fit=crop&q=80&w=1000',
-        author: '台南吃貨阿孆',
+        author: 'å°å—åƒè²¨é˜¿å­†',
         authorEn: 'Tainan Foodie Grandma',
         authorId: 'c-tw2',
         region: 'tainan',
-        tags: ['美食', '小吃', '在地'],
+        tags: ['ç¾Žé£Ÿ', 'å°åƒ', 'åœ¨åœ°'],
         tagsEn: ['Food', 'Street Food', 'Local'],
-        travelStyle: ['美食', '在地'],
+        travelStyle: ['ç¾Žé£Ÿ', 'åœ¨åœ°'],
         targetAudience: {
-            personas: ['吃貨', '美食探險家'],
+            personas: ['åƒè²¨', 'ç¾Žé£ŸæŽ¢éšªå®¶'],
             personasEn: ['Foodie', 'Food Adventurer'],
-            description: '適合想用胃感受台南的旅人，每頓都有驚喜',
+            description: 'é©åˆæƒ³ç”¨èƒƒæ„Ÿå—å°å—çš„æ—…äººï¼Œæ¯é “éƒ½æœ‰é©šå–œ',
             paceLevel: 'moderate'
         },
         vibes: [
-            { tag: '#小吃天堂', color: 'bg-orange-100 text-orange-800' },
-            { tag: '#🏆世界得獎', color: 'bg-yellow-100 text-yellow-800' },
-            { tag: '#在地人帶路', color: 'bg-teal-50 text-teal-700' }
+            { tag: '#å°åƒå¤©å ‚', color: 'bg-orange-100 text-orange-800' },
+            { tag: '#ðŸ†ä¸–ç•Œå¾—çŽ', color: 'bg-yellow-100 text-yellow-800' },
+            { tag: '#åœ¨åœ°äººå¸¶è·¯', color: 'bg-teal-50 text-teal-700' }
         ],
         coverStory: {
-            quote: '台南人不是在吃，就是在去吃的路上。',
+            quote: 'å°å—äººä¸æ˜¯åœ¨åƒï¼Œå°±æ˜¯åœ¨åŽ»åƒçš„è·¯ä¸Šã€‚',
             quoteEn: 'Tainan people are either eating, or on their way to eat.',
-            description: '從早上 6 點的虔肉米糕開始，到神農街的隱藏酒吧結束。中間穿插世界得獎冰淇淋。',
-            authorLabel: '台南 60 年在地人推薦'
+            description: 'å¾žæ—©ä¸Š 6 é»žçš„è™”è‚‰ç±³ç³•é–‹å§‹ï¼Œåˆ°ç¥žè¾²è¡—çš„éš±è—é…’å§çµæŸã€‚ä¸­é–“ç©¿æ’ä¸–ç•Œå¾—çŽå†°æ·‡æ·‹ã€‚',
+            authorLabel: 'å°å— 60 å¹´åœ¨åœ°äººæŽ¨è–¦'
         },
         authorStory: {
-            zh: '我家在台南住了三代，阿嬬從小帶我吃的店，很多都開了 50 年以上。這份行程是我小時候的味道 — 早上排隊的虐肉飯、下午的古早味紅茶、晚上神農街的安靜。希望你也能吃到我的童年。',
-            en: 'My family has lived in Tainan for three generations. The shops my grandma took me to as a kid have been open for 50+ years. This itinerary is my childhood flavor — morning queues for braised rice, afternoon vintage black tea, and peaceful evenings on Shennong Street.'
+            zh: 'æˆ‘å®¶åœ¨å°å—ä½äº†ä¸‰ä»£ï¼Œé˜¿å¬¬å¾žå°å¸¶æˆ‘åƒçš„åº—ï¼Œå¾ˆå¤šéƒ½é–‹äº† 50 å¹´ä»¥ä¸Šã€‚é€™ä»½è¡Œç¨‹æ˜¯æˆ‘å°æ™‚å€™çš„å‘³é“ â€” æ—©ä¸ŠæŽ’éšŠçš„è™è‚‰é£¯ã€ä¸‹åˆçš„å¤æ—©å‘³ç´…èŒ¶ã€æ™šä¸Šç¥žè¾²è¡—çš„å®‰éœã€‚å¸Œæœ›ä½ ä¹Ÿèƒ½åƒåˆ°æˆ‘çš„ç«¥å¹´ã€‚',
+            en: 'My family has lived in Tainan for three generations. The shops my grandma took me to as a kid have been open for 50+ years. This itinerary is my childhood flavor â€” morning queues for braised rice, afternoon vintage black tea, and peaceful evenings on Shennong Street.'
         },
         travelTips: [
-            { tip: '台南小吃通常下午才開，早上去市場吃', tipEn: 'Most street food opens in afternoon, eat at markets in the morning' },
-            { tip: '蛋山派吃完不妨走過去神農街散步', tipEn: 'After eating, walk to Shennong St. to digest' }
+            { tip: 'å°å—å°åƒé€šå¸¸ä¸‹åˆæ‰é–‹ï¼Œæ—©ä¸ŠåŽ»å¸‚å ´åƒ', tipEn: 'Most street food opens in afternoon, eat at markets in the morning' },
+            { tip: 'è›‹å±±æ´¾åƒå®Œä¸å¦¨èµ°éŽåŽ»ç¥žè¾²è¡—æ•£æ­¥', tipEn: 'After eating, walk to Shennong St. to digest' }
         ],
         duration: 2,
         rating: 4.7,
@@ -776,14 +778,14 @@ export const TEMPLATES: Template[] = [
         copiedCount: 215,
         highlights: { days: 2, spots: 6, tips: 4, rating: 4.7, usageCount: 215 },
         dayPreviews: [
-            { day: 1, summary: '神農街 → 蚷尾家冰淇淋🏆 → 虔農水煎包' },
-            { day: 2, summary: '孔廟商圈早餐 → 黃金海岸線 → 花園夜市' }
+            { day: 1, summary: 'ç¥žè¾²è¡— â†’ èš·å°¾å®¶å†°æ·‡æ·‹ðŸ† â†’ è™”è¾²æ°´ç…ŽåŒ…' },
+            { day: 2, summary: 'å­”å»Ÿå•†åœˆæ—©é¤ â†’ é»ƒé‡‘æµ·å²¸ç·š â†’ èŠ±åœ’å¤œå¸‚' }
         ],
         schedule: {
             'Day 1': {
-                theme: '老街散步 & 世界得獎冰淇淋',
+                theme: 'è€è¡—æ•£æ­¥ & ä¸–ç•Œå¾—çŽå†°æ·‡æ·‹',
                 themeEn: 'Old Streets & World-Medal Gelato',
-                themeEmoji: '🏮',
+                themeEmoji: 'ðŸ®',
                 morning: [],
                 afternoon: [
                     { ...TAINAN_ASSETS[0], instanceId: 'tn1-1', startTime: '13:00', arrivalTransport: 'walk' },
@@ -797,45 +799,45 @@ export const TEMPLATES: Template[] = [
             }
         }
     },
-    // ── 花蓮療癒 3 日 ──
+    // â”€â”€ èŠ±è“®ç™‚ç™’ 3 æ—¥ â”€â”€
     {
         id: 'tw-hualien-nature',
-        name: '花蓮療癒自然 3 日',
+        name: 'èŠ±è“®ç™‚ç™’è‡ªç„¶ 3 æ—¥',
         nameEn: 'Hualien Nature Healing 3-Day',
-        title: '山海之間，找回呼吸的節奏',
+        title: 'å±±æµ·ä¹‹é–“ï¼Œæ‰¾å›žå‘¼å¸çš„ç¯€å¥',
         titleEn: 'Between Mountains & Sea, Find Your Rhythm',
         coverImage: 'https://images.unsplash.com/photo-1592833905014-498499c6381c?auto=format&fit=crop&q=80&w=1000',
-        author: '台北文青散步',
+        author: 'å°åŒ—æ–‡é’æ•£æ­¥',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
         region: 'hualien',
-        tags: ['自然', '療癒', '秘境'],
+        tags: ['è‡ªç„¶', 'ç™‚ç™’', 'ç§˜å¢ƒ'],
         tagsEn: ['Nature', 'Healing', 'Secret Spots'],
-        travelStyle: ['療癒', '自然'],
+        travelStyle: ['ç™‚ç™’', 'è‡ªç„¶'],
         targetAudience: {
-            personas: ['自然控', '放空族'],
+            personas: ['è‡ªç„¶æŽ§', 'æ”¾ç©ºæ—'],
             personasEn: ['Nature Lover', 'Recharger'],
-            description: '適合想遠離城市喇叭、在山海之間重新充電的人',
+            description: 'é©åˆæƒ³é é›¢åŸŽå¸‚å–‡å­ã€åœ¨å±±æµ·ä¹‹é–“é‡æ–°å……é›»çš„äºº',
             paceLevel: 'slow'
         },
         vibes: [
-            { tag: '#山海秘境', color: 'bg-cyan-100 text-cyan-800' },
-            { tag: '#原住民文化', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#海景咖啡', color: 'bg-blue-100 text-blue-800' }
+            { tag: '#å±±æµ·ç§˜å¢ƒ', color: 'bg-cyan-100 text-cyan-800' },
+            { tag: '#åŽŸä½æ°‘æ–‡åŒ–', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#æµ·æ™¯å’–å•¡', color: 'bg-blue-100 text-blue-800' }
         ],
         coverStory: {
-            quote: '花蓮的美，是那種讓你忘記時間的安靜。',
+            quote: 'èŠ±è“®çš„ç¾Žï¼Œæ˜¯é‚£ç¨®è®“ä½ å¿˜è¨˜æ™‚é–“çš„å®‰éœã€‚',
             quoteEn: 'Hualien\'s beauty is the kind of silence that makes you forget time.',
-            description: '從吉利潭的絕美倒影，到四八高地的月牙灣全景，再到出海口的隱密咖啡基地。',
-            authorLabel: '花蓮在地探索者推薦'
+            description: 'å¾žå‰åˆ©æ½­çš„çµ•ç¾Žå€’å½±ï¼Œåˆ°å››å…«é«˜åœ°çš„æœˆç‰™ç£å…¨æ™¯ï¼Œå†åˆ°å‡ºæµ·å£çš„éš±å¯†å’–å•¡åŸºåœ°ã€‚',
+            authorLabel: 'èŠ±è“®åœ¨åœ°æŽ¢ç´¢è€…æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我從台北搬到花蓮已經 4 年，從都市人變成山海人。這份行程是我每個週末在花蓮探索的精華 — 不只是太魯閣，而是當地人才知道的秘境海灘、山中咖啡廳和部落文化體驗。',
-            en: 'I moved from Taipei to Hualien 4 years ago, transforming from a city person to a mountain-and-sea person. This route is the essence of my weekend explorations — not just Taroko, but secret beaches, mountain cafés, and indigenous cultural experiences that only locals know.'
+            zh: 'æˆ‘å¾žå°åŒ—æ¬åˆ°èŠ±è“®å·²ç¶“ 4 å¹´ï¼Œå¾žéƒ½å¸‚äººè®Šæˆå±±æµ·äººã€‚é€™ä»½è¡Œç¨‹æ˜¯æˆ‘æ¯å€‹é€±æœ«åœ¨èŠ±è“®æŽ¢ç´¢çš„ç²¾è¯ â€” ä¸åªæ˜¯å¤ªé­¯é–£ï¼Œè€Œæ˜¯ç•¶åœ°äººæ‰çŸ¥é“çš„ç§˜å¢ƒæµ·ç˜ã€å±±ä¸­å’–å•¡å»³å’Œéƒ¨è½æ–‡åŒ–é«”é©—ã€‚',
+            en: 'I moved from Taipei to Hualien 4 years ago, transforming from a city person to a mountain-and-sea person. This route is the essence of my weekend explorations â€” not just Taroko, but secret beaches, mountain cafÃ©s, and indigenous cultural experiences that only locals know.'
         },
         travelTips: [
-            { tip: '花蓮必須自駕或包車，大眾交通不方便', tipEn: 'Driving or chartering a car is essential in Hualien' },
-            { tip: '太魯閣往天祥方向下午較沒人', tipEn: 'Taroko towards Tianxiang is less crowded in the afternoon' }
+            { tip: 'èŠ±è“®å¿…é ˆè‡ªé§•æˆ–åŒ…è»Šï¼Œå¤§çœ¾äº¤é€šä¸æ–¹ä¾¿', tipEn: 'Driving or chartering a car is essential in Hualien' },
+            { tip: 'å¤ªé­¯é–£å¾€å¤©ç¥¥æ–¹å‘ä¸‹åˆè¼ƒæ²’äºº', tipEn: 'Taroko towards Tianxiang is less crowded in the afternoon' }
         ],
         duration: 3,
         rating: 4.9,
@@ -843,15 +845,15 @@ export const TEMPLATES: Template[] = [
         copiedCount: 189,
         highlights: { days: 3, spots: 6, tips: 4, rating: 4.9, usageCount: 189 },
         dayPreviews: [
-            { day: 1, summary: '吉利潭 → 光復糖廰 → 説給燒烤' },
-            { day: 2, summary: '四八高地 → 七星潭 → 海碑堡咖啡' },
-            { day: 3, summary: '太魯閣 → 清水斷崖 → 東大門夜市' }
+            { day: 1, summary: 'å‰åˆ©æ½­ â†’ å…‰å¾©ç³–å»° â†’ èª¬çµ¦ç‡’çƒ¤' },
+            { day: 2, summary: 'å››å…«é«˜åœ° â†’ ä¸ƒæ˜Ÿæ½­ â†’ æµ·ç¢‘å ¡å’–å•¡' },
+            { day: 3, summary: 'å¤ªé­¯é–£ â†’ æ¸…æ°´æ–·å´– â†’ æ±å¤§é–€å¤œå¸‚' }
         ],
         schedule: {
             'Day 1': {
-                theme: '秘境湖泊 & 原住民文化',
+                theme: 'ç§˜å¢ƒæ¹–æ³Š & åŽŸä½æ°‘æ–‡åŒ–',
                 themeEn: 'Secret Lakes & Indigenous Culture',
-                themeEmoji: '🌊',
+                themeEmoji: 'ðŸŒŠ',
                 morning: [
                     { ...HUALIEN_ASSETS[0], instanceId: 'hl1-1', startTime: '08:00', arrivalTransport: 'car' },
                 ],
@@ -861,9 +863,9 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             },
             'Day 2': {
-                theme: '海岸制高點 & 海景咖啡',
+                theme: 'æµ·å²¸åˆ¶é«˜é»ž & æµ·æ™¯å’–å•¡',
                 themeEn: 'Coastal Heights & Ocean Coffee',
-                themeEmoji: '☕',
+                themeEmoji: 'â˜•',
                 morning: [
                     { ...HUALIEN_ASSETS[1], instanceId: 'hl1-2', startTime: '05:30', arrivalTransport: 'car' },
                 ],
@@ -876,46 +878,46 @@ export const TEMPLATES: Template[] = [
             }
         }
     },
-    // ── 台中老宅咖啡 & 巷弄探索 3 日 ──
+    // â”€â”€ å°ä¸­è€å®…å’–å•¡ & å··å¼„æŽ¢ç´¢ 3 æ—¥ â”€â”€
     {
         id: 'tw-taichung-oldhouse',
-        name: '台中老宅咖啡 & 巷弄探索 3 日',
+        name: 'å°ä¸­è€å®…å’–å•¡ & å··å¼„æŽ¢ç´¢ 3 æ—¥',
         nameEn: 'Taichung Old House Caf\u00e9 & Alley Tour 3-Day',
-        title: '推開木門，走進台中的時光膠囊',
+        title: 'æŽ¨é–‹æœ¨é–€ï¼Œèµ°é€²å°ä¸­çš„æ™‚å…‰è† å›Š',
         titleEn: 'Push Open the Wooden Door, Step Into Taichung\'s Time Capsule',
         coverImage: 'https://images.unsplash.com/photo-1583654979589-aa7a6053a0d6?auto=format&fit=crop&q=80&w=1000',
-        author: '台中巷弄探索家',
+        author: 'å°ä¸­å··å¼„æŽ¢ç´¢å®¶',
         authorEn: 'Taichung Alley Explorer',
         authorId: 'c-tw3',
         region: 'taichung',
-        tags: ['老宅', '咖啡', '文青'],
+        tags: ['è€å®…', 'å’–å•¡', 'æ–‡é’'],
         tagsEn: ['Old House', 'Coffee', 'Culture'],
-        travelStyle: ['慢活', '文青', '咖啡'],
+        travelStyle: ['æ…¢æ´»', 'æ–‡é’', 'å’–å•¡'],
         targetAudience: {
-            personas: ['咖啡控', '老宅控', '文青'],
+            personas: ['å’–å•¡æŽ§', 'è€å®…æŽ§', 'æ–‡é’'],
             personasEn: ['Coffee Nerd', 'Old House Lover', 'Culture Enthusiast'],
-            description: '適合喜歡在老房子裡喝咖啡、拍照、發呆的人',
+            description: 'é©åˆå–œæ­¡åœ¨è€æˆ¿å­è£¡å–å’–å•¡ã€æ‹ç…§ã€ç™¼å‘†çš„äºº',
             paceLevel: 'slow'
         },
         vibes: [
-            { tag: '#日式老宅', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#自家烘焙', color: 'bg-stone-100 text-stone-800' },
-            { tag: '#時光膠囊', color: 'bg-rose-100 text-rose-800' }
+            { tag: '#æ—¥å¼è€å®…', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#è‡ªå®¶çƒ˜ç„™', color: 'bg-stone-100 text-stone-800' },
+            { tag: '#æ™‚å…‰è† å›Š', color: 'bg-rose-100 text-rose-800' }
         ],
         coverStory: {
-            quote: '台中最迷人的，是那些推開門才知道存在的地方。',
+            quote: 'å°ä¸­æœ€è¿·äººçš„ï¼Œæ˜¯é‚£äº›æŽ¨é–‹é–€æ‰çŸ¥é“å­˜åœ¨çš„åœ°æ–¹ã€‚',
             quoteEn: 'Taichung\'s charm lies in places you only discover when you push open the door.',
-            description: '從勤美商圈的眾小樓開始，穿過國美館旁的自家烘焙咖啡廳，最後在五權車站旁的日式老宅裡發呆一個下午。',
-            authorLabel: '台中在地老宅控推薦'
+            description: 'å¾žå‹¤ç¾Žå•†åœˆçš„çœ¾å°æ¨“é–‹å§‹ï¼Œç©¿éŽåœ‹ç¾Žé¤¨æ—çš„è‡ªå®¶çƒ˜ç„™å’–å•¡å»³ï¼Œæœ€å¾Œåœ¨äº”æ¬Šè»Šç«™æ—çš„æ—¥å¼è€å®…è£¡ç™¼å‘†ä¸€å€‹ä¸‹åˆã€‚',
+            authorLabel: 'å°ä¸­åœ¨åœ°è€å®…æŽ§æŽ¨è–¦'
         },
         authorStory: {
-            zh: '我是台中土生土長的老宅控，5 年來探訪了 100+ 間台中老房子改建的咖啡廳。這份路線是我的「台中老宅地圖」精選版 — 推開每一扉門，都是一段時光旅行。',
-            en: 'I\'m a Taichung-born old house fanatic who\'s explored 100+ renovated heritage cafés over 5 years. This route is the curated edition of my "Taichung Old House Map" — behind every door is a journey through time.'
+            zh: 'æˆ‘æ˜¯å°ä¸­åœŸç”ŸåœŸé•·çš„è€å®…æŽ§ï¼Œ5 å¹´ä¾†æŽ¢è¨ªäº† 100+ é–“å°ä¸­è€æˆ¿å­æ”¹å»ºçš„å’–å•¡å»³ã€‚é€™ä»½è·¯ç·šæ˜¯æˆ‘çš„ã€Œå°ä¸­è€å®…åœ°åœ–ã€ç²¾é¸ç‰ˆ â€” æŽ¨é–‹æ¯ä¸€æ‰‰é–€ï¼Œéƒ½æ˜¯ä¸€æ®µæ™‚å…‰æ—…è¡Œã€‚',
+            en: 'I\'m a Taichung-born old house fanatic who\'s explored 100+ renovated heritage cafÃ©s over 5 years. This route is the curated edition of my "Taichung Old House Map" â€” behind every door is a journey through time.'
         },
         travelTips: [
-            { tip: '台中咖啡廳通常中午才開，不要太早去', tipEn: 'Taichung caf\u00e9s usually open at noon, don\'t go too early' },
-            { tip: '勤美商圈和國美館附近的巷弄密度最高', tipEn: 'Highest caf\u00e9 density around CMP Block and NTMoFA' },
-            { tip: '帶相機，每間老宅都值得拍半小時', tipEn: 'Bring a camera, each old house is worth 30 min of shooting' }
+            { tip: 'å°ä¸­å’–å•¡å»³é€šå¸¸ä¸­åˆæ‰é–‹ï¼Œä¸è¦å¤ªæ—©åŽ»', tipEn: 'Taichung caf\u00e9s usually open at noon, don\'t go too early' },
+            { tip: 'å‹¤ç¾Žå•†åœˆå’Œåœ‹ç¾Žé¤¨é™„è¿‘çš„å··å¼„å¯†åº¦æœ€é«˜', tipEn: 'Highest caf\u00e9 density around CMP Block and NTMoFA' },
+            { tip: 'å¸¶ç›¸æ©Ÿï¼Œæ¯é–“è€å®…éƒ½å€¼å¾—æ‹åŠå°æ™‚', tipEn: 'Bring a camera, each old house is worth 30 min of shooting' }
         ],
         duration: 3,
         rating: 4.8,
@@ -924,15 +926,15 @@ export const TEMPLATES: Template[] = [
         price: 0.99,
         highlights: { days: 3, spots: 9, tips: 6, rating: 4.8, usageCount: 156 },
         dayPreviews: [
-            { day: 1, summary: '裡小樓 → 5春咖啡 → 勤美術館' },
-            { day: 2, summary: '如常。所在 → 柯亞果醬🏆 → 審計新村' },
-            { day: 3, summary: '電火圳步道 → 石岡老街 → 高美濕地' }
+            { day: 1, summary: 'è£¡å°æ¨“ â†’ 5æ˜¥å’–å•¡ â†’ å‹¤ç¾Žè¡“é¤¨' },
+            { day: 2, summary: 'å¦‚å¸¸ã€‚æ‰€åœ¨ â†’ æŸ¯äºžæžœé†¬ðŸ† â†’ å¯©è¨ˆæ–°æ‘' },
+            { day: 3, summary: 'é›»ç«åœ³æ­¥é“ â†’ çŸ³å²¡è€è¡— â†’ é«˜ç¾Žæ¿•åœ°' }
         ],
         schedule: {
             'Day 1': {
-                theme: '巷弄美食 & 自家烘焙咖啡',
+                theme: 'å··å¼„ç¾Žé£Ÿ & è‡ªå®¶çƒ˜ç„™å’–å•¡',
                 themeEn: 'Alley Food & Self-Roasted Coffee',
-                themeEmoji: '☕',
+                themeEmoji: 'â˜•',
                 morning: [],
                 afternoon: [
                     { ...TAICHUNG_ASSETS[1], instanceId: 'tc1-1', startTime: '11:30', arrivalTransport: 'car' },
@@ -945,9 +947,9 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             },
             'Day 2': {
-                theme: '老宅探索 & 世界金獎果醬',
+                theme: 'è€å®…æŽ¢ç´¢ & ä¸–ç•Œé‡‘çŽæžœé†¬',
                 themeEn: 'Old House Tour & World-Gold Jam',
-                themeEmoji: '🏡',
+                themeEmoji: 'ðŸ¡',
                 morning: [],
                 afternoon: [
                     { ...TAICHUNG_ASSETS[4], instanceId: 'tc1-4', startTime: '10:00', arrivalTransport: 'car' },
@@ -958,9 +960,9 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             },
             'Day 3': {
-                theme: '森林步道 & 小鎮散步',
+                theme: 'æ£®æž—æ­¥é“ & å°éŽ®æ•£æ­¥',
                 themeEn: 'Forest Trail & Small Town Walk',
-                themeEmoji: '🌲',
+                themeEmoji: 'ðŸŒ²',
                 morning: [
                     { ...TAICHUNG_ASSETS[6], instanceId: 'tc1-6', startTime: '07:00', arrivalTransport: 'car' },
                 ],
@@ -971,43 +973,43 @@ export const TEMPLATES: Template[] = [
             }
         }
     },
-    // ── 🌟 台中米其林巷弄美食 2 日 (米其林系列) ──
+    // â”€â”€ ðŸŒŸ å°ä¸­ç±³å…¶æž—å··å¼„ç¾Žé£Ÿ 2 æ—¥ (ç±³å…¶æž—ç³»åˆ—) â”€â”€
     {
         id: 'tw-taichung-michelin',
-        name: '🌟 台中米其林巷弄美食 2 日',
-        nameEn: '🌟 Taichung Michelin Alley Food 2-Day',
-        title: '從全球唯一米其林冰淇淋開始，吃遍台中巷弄',
+        name: 'ðŸŒŸ å°ä¸­ç±³å…¶æž—å··å¼„ç¾Žé£Ÿ 2 æ—¥',
+        nameEn: 'ðŸŒŸ Taichung Michelin Alley Food 2-Day',
+        title: 'å¾žå…¨çƒå”¯ä¸€ç±³å…¶æž—å†°æ·‡æ·‹é–‹å§‹ï¼Œåƒéå°ä¸­å··å¼„',
         titleEn: 'Start from the World\'s Only Michelin Ice Cream, Eat Through Taichung Alleys',
         coverImage: 'https://images.unsplash.com/photo-1647685103344-d593814c00c3?auto=format&fit=crop&q=80&w=1000',
-        author: '台中巷弄探索家',
+        author: 'å°ä¸­å··å¼„æŽ¢ç´¢å®¶',
         authorEn: 'Taichung Alley Explorer',
         authorId: 'c-tw3',
         region: 'taichung',
-        tags: ['🌟米其林', '美食', '巷弄'],
-        tagsEn: ['🌟 Michelin', 'Food', 'Alleys'],
-        travelStyle: ['michelin', '美食'],
+        tags: ['ðŸŒŸç±³å…¶æž—', 'ç¾Žé£Ÿ', 'å··å¼„'],
+        tagsEn: ['ðŸŒŸ Michelin', 'Food', 'Alleys'],
+        travelStyle: ['michelin', 'ç¾Žé£Ÿ'],
         targetAudience: {
-            personas: ['美食探險家', '米其林控'],
+            personas: ['ç¾Žé£ŸæŽ¢éšªå®¶', 'ç±³å…¶æž—æŽ§'],
             personasEn: ['Food Adventurer', 'Michelin Enthusiast'],
-            description: '適合想收集米其林星級餐廳、熊大推薦美食的講究吃貨',
+            description: 'é©åˆæƒ³æ”¶é›†ç±³å…¶æž—æ˜Ÿç´šé¤å»³ã€ç†Šå¤§æŽ¨è–¦ç¾Žé£Ÿçš„è¬›ç©¶åƒè²¨',
             descriptionEn: 'For foodies who collect Michelin stars and Bib Gourmand gems.',
             paceLevel: 'moderate'
         },
         vibes: [
-            { tag: '#米其林一星', color: 'bg-yellow-100 text-yellow-800' },
-            { tag: '#必比登推介', color: 'bg-red-100 text-red-800' },
-            { tag: '#全球唯一', color: 'bg-indigo-100 text-indigo-800' }
+            { tag: '#ç±³å…¶æž—ä¸€æ˜Ÿ', color: 'bg-yellow-100 text-yellow-800' },
+            { tag: '#å¿…æ¯”ç™»æŽ¨ä»‹', color: 'bg-red-100 text-red-800' },
+            { tag: '#å…¨çƒå”¯ä¸€', color: 'bg-indigo-100 text-indigo-800' }
         ],
         coverStory: {
-            quote: '台中的米其林不在高樓裡，在你找不到的巷子裡。',
-            quoteEn: 'Taichung\'s Michelin isn\'t in skyscrapers — it\'s in alleys you can\'t find.',
-            description: '全球唯一米其林星級冰淇淋 MINIMAL，藏在巷子裡的必比登台菜，週只開三天的眷村麵。餐與餐之間穿穿咖啡廳和藝術館。',
-            authorLabel: '台中米其林探索者'
+            quote: 'å°ä¸­çš„ç±³å…¶æž—ä¸åœ¨é«˜æ¨“è£¡ï¼Œåœ¨ä½ æ‰¾ä¸åˆ°çš„å··å­è£¡ã€‚',
+            quoteEn: 'Taichung\'s Michelin isn\'t in skyscrapers â€” it\'s in alleys you can\'t find.',
+            description: 'å…¨çƒå”¯ä¸€ç±³å…¶æž—æ˜Ÿç´šå†°æ·‡æ·‹ MINIMALï¼Œè—åœ¨å··å­è£¡çš„å¿…æ¯”ç™»å°èœï¼Œé€±åªé–‹ä¸‰å¤©çš„çœ·æ‘éºµã€‚é¤èˆ‡é¤ä¹‹é–“ç©¿ç©¿å’–å•¡å»³å’Œè—è¡“é¤¨ã€‚',
+            authorLabel: 'å°ä¸­ç±³å…¶æž—æŽ¢ç´¢è€…'
         },
         travelTips: [
-            { tip: 'MINIMAL 需提前 2 週線上預約，100% 預約制', tipEn: 'MINIMAL requires online booking 2 weeks ahead, 100% reservation only' },
-            { tip: '繡球麵店只有週三/五/日開，要注意日期', tipEn: 'Xiuqiu Noodle Shop only opens Wed/Fri/Sun, check your dates' },
-            { tip: '裡小樓不要看菜單，跟老闆說「今天有什麼」', tipEn: 'At Li Xiao Lou, don\'t read the menu, ask the boss \'what\'s good today\'' }
+            { tip: 'MINIMAL éœ€æå‰ 2 é€±ç·šä¸Šé ç´„ï¼Œ100% é ç´„åˆ¶', tipEn: 'MINIMAL requires online booking 2 weeks ahead, 100% reservation only' },
+            { tip: 'ç¹¡çƒéºµåº—åªæœ‰é€±ä¸‰/äº”/æ—¥é–‹ï¼Œè¦æ³¨æ„æ—¥æœŸ', tipEn: 'Xiuqiu Noodle Shop only opens Wed/Fri/Sun, check your dates' },
+            { tip: 'è£¡å°æ¨“ä¸è¦çœ‹èœå–®ï¼Œè·Ÿè€é—†èªªã€Œä»Šå¤©æœ‰ä»€éº¼ã€', tipEn: 'At Li Xiao Lou, don\'t read the menu, ask the boss \'what\'s good today\'' }
         ],
         duration: 2,
         rating: 4.9,
@@ -1019,15 +1021,15 @@ export const TEMPLATES: Template[] = [
         hiddenCount: 3,
         highlights: { days: 2, spots: 8, tips: 6, rating: 4.9, usageCount: 89 },
         dayPreviews: [
-            { day: 1, summary: '裡小樓🏆 → 5春咖啡 → MINIMAL⚭ → 勤美線形公園' },
-            { day: 2, summary: '縡球麵店 → 如常。所在 → 柯亞果醬🏆 → 審計新村' }
+            { day: 1, summary: 'è£¡å°æ¨“ðŸ† â†’ 5æ˜¥å’–å•¡ â†’ MINIMALâš­ â†’ å‹¤ç¾Žç·šå½¢å…¬åœ’' },
+            { day: 2, summary: 'ç¸¡çƒéºµåº— â†’ å¦‚å¸¸ã€‚æ‰€åœ¨ â†’ æŸ¯äºžæžœé†¬ðŸ† â†’ å¯©è¨ˆæ–°æ‘' }
         ],
         schedule: {
             'Day 1': {
-                theme: '必比登台菜 + 米其林一星冰淇淋',
+                theme: 'å¿…æ¯”ç™»å°èœ + ç±³å…¶æž—ä¸€æ˜Ÿå†°æ·‡æ·‹',
                 themeEn: 'Bib Gourmand Taiwanese + Michelin 1-Star Ice Cream',
-                themeEmoji: '⭐',
-                swapSuggestion: 'MINIMAL 預約不到的話，可改去「春丸」經典日式冰淇淋',
+                themeEmoji: 'â­',
+                swapSuggestion: 'MINIMAL é ç´„ä¸åˆ°çš„è©±ï¼Œå¯æ”¹åŽ»ã€Œæ˜¥ä¸¸ã€ç¶“å…¸æ—¥å¼å†°æ·‡æ·‹',
                 swapSuggestionEn: 'If MINIMAL is fully booked, try "Haru Maru" classic Japanese gelato instead',
                 morning: [
                     { ...TAICHUNG_ASSETS[1], instanceId: 'tcm-1', startTime: '11:30', arrivalTransport: 'car' },
@@ -1037,14 +1039,14 @@ export const TEMPLATES: Template[] = [
                     {
                         ...TAICHUNG_ASSETS[0], instanceId: 'tcm-3', startTime: '16:00', arrivalTransport: 'car',
                         insiderTip: {
-                            teaser: '🌟 全球唯一米其林星級冰淇淋，需提前 2 週預約',
-                            teaserEn: '🌟 World\'s only Michelin-starred ice cream, book 2 weeks ahead',
+                            teaser: 'ðŸŒŸ å…¨çƒå”¯ä¸€ç±³å…¶æž—æ˜Ÿç´šå†°æ·‡æ·‹ï¼Œéœ€æå‰ 2 é€±é ç´„',
+                            teaserEn: 'ðŸŒŸ World\'s only Michelin-starred ice cream, book 2 weeks ahead',
                             full: {
-                                story: '2023 年必比登，2024 年直接跳升米其林一星。七道冰品 tasting menu 每一道都是藝術品。吧台座位可以近距離看主廚現場製作。',
-                                exactLocation: '台中西區（確認預約後提供地址）',
-                                mustTry: '吧台座位 + 七道套餐 NT$1,800',
-                                avoid: '不要臨時去，100% 預約制',
-                                bestTime: '提前 2 週線上預約'
+                                story: '2023 å¹´å¿…æ¯”ç™»ï¼Œ2024 å¹´ç›´æŽ¥è·³å‡ç±³å…¶æž—ä¸€æ˜Ÿã€‚ä¸ƒé“å†°å“ tasting menu æ¯ä¸€é“éƒ½æ˜¯è—è¡“å“ã€‚å§å°åº§ä½å¯ä»¥è¿‘è·é›¢çœ‹ä¸»å»šç¾å ´è£½ä½œã€‚',
+                                exactLocation: 'å°ä¸­è¥¿å€ï¼ˆç¢ºèªé ç´„å¾Œæä¾›åœ°å€ï¼‰',
+                                mustTry: 'å§å°åº§ä½ + ä¸ƒé“å¥—é¤ NT$1,800',
+                                avoid: 'ä¸è¦è‡¨æ™‚åŽ»ï¼Œ100% é ç´„åˆ¶',
+                                bestTime: 'æå‰ 2 é€±ç·šä¸Šé ç´„'
                             }
                         }
                     },
@@ -1054,10 +1056,10 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             },
             'Day 2': {
-                theme: '眷村美食 + 老宅咖啡 + 世界金獎果醬',
+                theme: 'çœ·æ‘ç¾Žé£Ÿ + è€å®…å’–å•¡ + ä¸–ç•Œé‡‘çŽæžœé†¬',
                 themeEn: 'Military Village Food + Old House Caf\u00e9 + World-Gold Jam',
-                themeEmoji: '🏆',
-                swapSuggestion: '繡球麵店只有週三/五/日，其他天可改去「上海未名」牵牛花麵',
+                themeEmoji: 'ðŸ†',
+                swapSuggestion: 'ç¹¡çƒéºµåº—åªæœ‰é€±ä¸‰/äº”/æ—¥ï¼Œå…¶ä»–å¤©å¯æ”¹åŽ»ã€Œä¸Šæµ·æœªåã€ç‰µç‰›èŠ±éºµ',
                 swapSuggestionEn: 'Xiuqiu only open Wed/Fri/Sun. On other days, try "Shanghai Unnamed" beef noodles',
                 morning: [
                     { ...TAICHUNG_ASSETS[2], instanceId: 'tcm-4', startTime: '11:00', arrivalTransport: 'car' },
@@ -1071,38 +1073,38 @@ export const TEMPLATES: Template[] = [
             }
         }
     },
-    // ── 台北夜市文青 2 日 ──
+    // â”€â”€ å°åŒ—å¤œå¸‚æ–‡é’ 2 æ—¥ â”€â”€
     {
         id: 'tw-taipei-night',
         isHidden: true,
-        name: '台北夜市文青 2 日',
+        name: 'å°åŒ—å¤œå¸‚æ–‡é’ 2 æ—¥',
         nameEn: 'Taipei Night Markets & Culture 2-Day',
-        title: '白天文青、晚上夜市，台北的雙面魅力',
+        title: 'ç™½å¤©æ–‡é’ã€æ™šä¸Šå¤œå¸‚ï¼Œå°åŒ—çš„é›™é¢é­…åŠ›',
         titleEn: 'Culture by Day, Night Markets by Night: Taipei\'s Dual Charm',
         coverImage: 'https://images.unsplash.com/photo-1572715381359-002b1eabd56b?auto=format&fit=crop&q=80&w=1000',
-        author: '台北文青散步',
+        author: 'å°åŒ—æ–‡é’æ•£æ­¥',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
         region: 'taipei',
-        tags: ['夜市', '文青', '在地'],
+        tags: ['å¤œå¸‚', 'æ–‡é’', 'åœ¨åœ°'],
         tagsEn: ['Night Market', 'Culture', 'Local'],
-        travelStyle: ['文青', '在地'],
+        travelStyle: ['æ–‡é’', 'åœ¨åœ°'],
         targetAudience: {
-            personas: ['夜貓族', '文青'],
+            personas: ['å¤œè²“æ—', 'æ–‡é’'],
             personasEn: ['Night Owl', 'Culture Lover'],
-            description: '適合晚以後才有精神、喜歡夜市能量的人',
+            description: 'é©åˆæ™šä»¥å¾Œæ‰æœ‰ç²¾ç¥žã€å–œæ­¡å¤œå¸‚èƒ½é‡çš„äºº',
             paceLevel: 'moderate'
         },
         vibes: [
-            { tag: '#夜市攻略', color: 'bg-orange-100 text-orange-800' },
-            { tag: '#文創市集', color: 'bg-purple-100 text-purple-800' },
-            { tag: '#在地味', color: 'bg-teal-50 text-teal-700' }
+            { tag: '#å¤œå¸‚æ”»ç•¥', color: 'bg-orange-100 text-orange-800' },
+            { tag: '#æ–‡å‰µå¸‚é›†', color: 'bg-purple-100 text-purple-800' },
+            { tag: '#åœ¨åœ°å‘³', color: 'bg-teal-50 text-teal-700' }
         ],
         coverStory: {
-            quote: '台北的夜晚，才是真正的開始。',
+            quote: 'å°åŒ—çš„å¤œæ™šï¼Œæ‰æ˜¯çœŸæ­£çš„é–‹å§‹ã€‚',
             quoteEn: 'In Taipei, the real magic begins after dark.',
-            description: '白天在文創園區探索獨立書店和咖啡廳，晚上到夜市感受在地人的能量。',
-            authorLabel: '台北夜貓族推薦'
+            description: 'ç™½å¤©åœ¨æ–‡å‰µåœ’å€æŽ¢ç´¢ç¨ç«‹æ›¸åº—å’Œå’–å•¡å»³ï¼Œæ™šä¸Šåˆ°å¤œå¸‚æ„Ÿå—åœ¨åœ°äººçš„èƒ½é‡ã€‚',
+            authorLabel: 'å°åŒ—å¤œè²“æ—æŽ¨è–¦'
         },
         duration: 2,
         rating: 4.6,
@@ -1110,14 +1112,14 @@ export const TEMPLATES: Template[] = [
         copiedCount: 287,
         highlights: { days: 2, spots: 8, tips: 4, rating: 4.6, usageCount: 287 },
         dayPreviews: [
-            { day: 1, summary: '心中山公園 → 赤峰街 → 寧夏夜市' },
-            { day: 2, summary: '大稻埕 → 学庞作工 → 饒河夜市' }
+            { day: 1, summary: 'å¿ƒä¸­å±±å…¬åœ’ â†’ èµ¤å³°è¡— â†’ å¯§å¤å¤œå¸‚' },
+            { day: 2, summary: 'å¤§ç¨»åŸ• â†’ å­¦åºžä½œå·¥ â†’ é¥’æ²³å¤œå¸‚' }
         ],
         schedule: {
             'Day 1': {
-                theme: '文創園區 & 夜市探險',
+                theme: 'æ–‡å‰µåœ’å€ & å¤œå¸‚æŽ¢éšª',
                 themeEn: 'Creative Park & Night Market Adventure',
-                themeEmoji: '🌙',
+                themeEmoji: 'ðŸŒ™',
                 morning: [],
                 afternoon: [
                     { ...TAIPEI_ASSETS[1], instanceId: 'twn-1', startTime: '14:00', arrivalTransport: 'public' },
@@ -1129,9 +1131,9 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             },
             'Day 2': {
-                theme: '雙連散步 & 101 秘境',
+                theme: 'é›™é€£æ•£æ­¥ & 101 ç§˜å¢ƒ',
                 themeEn: 'Shuanglian Walk & 101 Secret',
-                themeEmoji: '🗼',
+                themeEmoji: 'ðŸ—¼',
                 morning: [],
                 afternoon: [
                     { ...TAIPEI_ASSETS[7], instanceId: 'twn-3', startTime: '14:00', arrivalTransport: 'public' },
@@ -1145,3 +1147,5 @@ export const TEMPLATES: Template[] = [
         }
     }
 ];
+
+

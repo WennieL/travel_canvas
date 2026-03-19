@@ -74,8 +74,8 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '45min',
         image: '🎨',
-        description: '墨爾本最著名的街頭藝術巷弄，塗鴉每天都在變化',
-        descriptionEn: 'Melbourne\'s most famous street art laneway, art changes daily',
+        description: '「我來過這裡超過30次，沒有兩次看到一樣的牆——上週還在的塗鴉，今天可能已經被新的蓋掉了。這裡沒有『最好的時候去』，只有『現在去』。」',
+        descriptionEn: "I've been here over 30 times, and no two visits are ever the same. The art from last week is already gone today. There is no 'best time'—there is only 'now.'",
         price: 0,
         address: 'Hosier Lane, Melbourne CBD',
         rating: 4.6,
@@ -684,6 +684,38 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 mustTry: '日落前 30 分鐘去卡位，佔據靠近岩石縫隙側邊第一排。企鵝常常從你腳邊不到 50 公分的地方走過去！',
                 avoid: '⚠️ 絕對不能開閃光燈或白光手機（會導致企鵝失明）。海風極度刺骨，即便是 30 度的盛夏白天，晚上在這裡也會冷到大發抖，記得帶厚外套。',
                 bestTime: '日落後 30 分鐘 (每天歸巢時間不同，夏天約 20:30，冬天約 18:00)'
+            }
+        }
+    },
+    {
+        id: 'mel-22',
+        title: 'Monforte Viennoiserie',
+        titleEn: 'Monforte Viennoiserie',
+        type: 'food',
+        duration: '1小時',
+        image: '🥐',
+        description: '「別再排隊去 Lune 了！如果你想要真正的手工感和純粹的奶油香，這間位於北卡爾頓綠意巷弄裡的小店才是墨爾本人心中的隱藏冠軍。」',
+        descriptionEn: "Skip the Lune queue! If you want true artisanal flair and pure buttery goodness, this tiny shop tucked in the leafy streets of Carlton North is the local champion.",
+        price: 15,
+        address: '585 Canning St, Carlton North',
+        addressEn: '585 Canning St, Carlton North VIC 3054',
+        rating: 4.9,
+        lat: -37.7858,
+        lng: 144.9701,
+        region: 'melbourne',
+        authorId: 'c-mel-brunch',
+        tags: ['精品可頌', '在地私藏', '手作感'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '週六早上 9 點後通常就剩不到一半品項了，建議 8:30 前到。',
+            teaserEn: 'Sold out by 9 AM on weekends. Arrive before 8:30 AM to get the best seasonal picks.',
+            full: {
+                story: '這家店沒有 Lune 那種無菌室玻璃窗，也沒拿過世界第一的頭銜。但你推開門，滿屋的奶油香和正在揉麵團的師傅，會讓你覺得這才是有溫度的可頌。老闆 Giorgia 對麵粉和季節性食材的堅持，讓每個禮拜的期間限定款都像藝術品。',
+                storyEn: "This isn't a factory; it's a micro-bakery with soul. Push open the door to find Giorgia hand-rolling dough in a space filled with the scent of high-quality butter. Unlike the 'clean room' vibe of bigger names, Monforte feels like a warm, artisanal laboratory where every croissant is a seasonal masterpiece.",
+                exactLocation: 'Carlton North 的 Canning St 住宅區，低調的門口通常排著幾位懂吃的當地鄰居。',
+                mustTry: '傳統的原味可頌 (Classic Croissant) 能吃出多層次的空氣感。如果看到「橄欖鹽可頌 (Olive Salt)」或是任何當季水果口味，請務必帶走一個。',
+                avoid: '⚠️ 週一到週三沒開。另外這裡沒有座位，建議拿著可頌去隔壁的公園散步享用。',
+                bestTime: '08:15 (品項最齊全，空氣中還飄著第一爐出爐的香氣)'
             }
         }
     }

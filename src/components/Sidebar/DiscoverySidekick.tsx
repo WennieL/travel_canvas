@@ -1,6 +1,6 @@
 import React from 'react';
 import { TravelItem, ScheduleItem, Region, LangType } from '../../types';
-import { SAMPLE_CREATORS, SAMPLE_ASSETS, MELBOURNE_ASSETS } from '../../data';
+import { SAMPLE_CREATORS, SAMPLE_ASSETS } from '../../data';
 import { AssetItemCard } from './AssetItemCard';
 import { SpotDetailsPanel } from './SpotDetailsPanel';
 
@@ -100,7 +100,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
             // If they don't, this focus is likely stale from a previous region interaction.
             // 2b. If we have a discoveryCreatorId, verify it has content in this region
             if (activeRegion !== 'all') {
-                const hasRegionalContent = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS].some((a: any) =>
+                const hasRegionalContent = SAMPLE_ASSETS.some((a: any) =>
                     a.authorId === discoveryCreatorId && a.region === activeRegion
                 );
                 if (hasRegionalContent) return focusedAuth;
@@ -111,7 +111,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
 
         // 3. Fallback: First author who has content in this active region
         if (activeRegion !== 'all') {
-            const regionalAuthorId = [...SAMPLE_ASSETS, ...MELBOURNE_ASSETS].find((a: any) =>
+            const regionalAuthorId = SAMPLE_ASSETS.find((a: any) =>
                 a.region === activeRegion && a.authorId
             )?.authorId;
             if (regionalAuthorId) return SAMPLE_CREATORS.find(c => c.id === regionalAuthorId);
@@ -315,7 +315,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                             authors.map((authId: string) => {
                                 const author = SAMPLE_CREATORS.find(c => c.id === authId);
                                 // Find the specific asset for this author at this spot
-                                const asset = ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS] as TravelItem[]).find(a =>
+                                const asset = (SAMPLE_ASSETS as TravelItem[]).find(a =>
                                     a.authorId === authId &&
                                     (((a as any).title === (selectedItem as any).title) || ((a as any).titleEn === (selectedItem as any).titleEn))
                                 );
@@ -365,7 +365,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                         ) : (
                             // STANDARD CREATOR ASSETS VIEW
                             (discoveryCreatorId === 'all'
-                                ? ([...SAMPLE_ASSETS, ...MELBOURNE_ASSETS]
+                                ? (SAMPLE_ASSETS
                                     .filter(a => a.authorId && (activeRegion === 'all' || a.region === activeRegion))
                                     .slice(0, 8))
                                 : filteredAssets.slice(0, 6)).map((item) => (
