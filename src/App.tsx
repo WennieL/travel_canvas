@@ -30,6 +30,7 @@ import LandingPage from './components/LandingPage';
 import WelcomeSlides from './components/WelcomeSlides';
 import { Toast } from './components/Toast';
 import { usePlans, useBudget, useUIState, useConfirm, useItinerary, useAppActions, useAppHandlers } from './hooks';
+import { useIsMobile } from './hooks/useIsMobile';
 
 // Layout Component
 import AppLayout from './components/AppLayout';
@@ -79,7 +80,7 @@ export function App() {
     const t = TRANSLATIONS[lang];
 
     // Business Logic Hooks
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const isMobile = useIsMobile();
 
     const [pendingWizardData, setPendingWizardData] = useState<any>(null);
 

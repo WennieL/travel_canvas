@@ -5,3 +5,4 @@ export { useConfirm } from './useConfirm.ts';
 export { useItinerary } from './useItinerary.ts';
 export { useAppActions } from './useAppActions.ts';
 export { useAppHandlers } from './useAppHandlers.ts';
+export { useIsMobile } from './useIsMobile.ts';

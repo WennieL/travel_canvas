@@ -1,0 +1,9 @@
+# Force UTF-8 encoding for all TypeScript and TSX files
+*.ts text eol=lf working-tree-encoding=UTF-8
+*.tsx text eol=lf working-tree-encoding=UTF-8
+
+# Standard text files
+*.json text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.svg text eol=lf
