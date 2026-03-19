@@ -256,6 +256,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                             onSetSettings={onSetSettings || (() => { })}
                             t={t}
                             hideTitle={true}
+                            planRegion={activePlan.region}
                         />
                     </div>
                 )}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Lock, Star } from 'lucide-react';
 import { TravelItem, LangType } from '../../types';
 import { getFallbackImage } from '../../utils';
+import { getCurrencySymbol } from '../../data/regions';
 
 interface AssetItemCardProps {
     item: TravelItem;
@@ -103,8 +104,8 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                     ) : (
                         <span className="text-[10px] font-bold text-teal-600">
                             {item.recommendations && item.recommendations.length > 0 
-                                ? `¥${item.recommendations[0].pricing?.toLocaleString()}`
-                                : `¥${item.price?.toLocaleString() || 0}`
+                                ? `${getCurrencySymbol(item.region)}${item.recommendations[0].pricing?.toLocaleString()}`
+                                : `${getCurrencySymbol(item.region)}${item.price?.toLocaleString() || 0}`
                             }
                         </span>
                     )}

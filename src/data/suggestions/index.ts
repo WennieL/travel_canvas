@@ -56,7 +56,7 @@ const regionIds = [...new Set(ALL_REGIONAL_ASSETS.map(a => a.region).filter(Bool
 export const ALL_SUGGESTIONS: Record<string, any> = { ...STATIC_SUGGESTIONS };
 
 for (const regionId of regionIds) {
-    if (!ALL_SUGGESTIONS[regionId]) {
+    if (!ALL_SUGGESTIONS[regionId] || regionId === 'melbourne') { // Force dynamic for melbourne
         const regionAssets = ALL_REGIONAL_ASSETS.filter(a => a.region === regionId);
         if (regionAssets.length > 0) {
             ALL_SUGGESTIONS[regionId] = buildSuggestionsFromAssets(regionAssets);

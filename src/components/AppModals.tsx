@@ -367,6 +367,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     lang={lang}
                     customAssets={customAssets}
                     subscribedCreators={subscribedCreators}
+                    onToggleSubscribe={props.toggleSubscription}
                     onCreatorClick={(id) => {
                         setSelectedCreatorId(id);
                         setShowMobileLibrary(false);
@@ -445,6 +446,12 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     lang={lang}
                     onUpdateScheduleItem={onUpdateScheduleItem}
                     setViewMode={setViewMode}
+                    isUnlocked={!selectedItem.isLocked}
+                    onUnlockRequest={() => {
+                        setUnlockTarget(selectedItem);
+                        // Trigger batch unlock for the whole plan
+                        setBatchUnlockCount(1);
+                    }}
                     onUpdateCustomAsset={(id, updates) => {
                         props.setCustomAssets((prev: TravelItem[]) => prev.map((asset: TravelItem) =>
                             asset.id === id ? { ...asset, ...updates } : asset

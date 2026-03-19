@@ -6,22 +6,22 @@ export const MELBOURNE_SUGGESTIONS = {
             titleEn: 'Patricia Coffee Brewers',
             type: 'food',
             duration: '45min',
-            price: 7,
+            price: 5,
             region: 'melbourne',
-            description: '墨爾本最具代表性的站立式咖啡店。',
-            descriptionEn: 'Iconic standing-room-only coffee bar.',
+            description: '墨爾本最具代表性的站立式咖啡店。找這間店本身就是一場城市探險。',
+            descriptionEn: 'Iconic standing-room-only coffee bar. Finding it is half the adventure.',
             lat: -37.8136,
             lng: 144.9631,
             rating: 4.8,
-            tags: ['咖啡', '必訪'],
+            tags: ['咖啡', '巷弄'],
             insiderTip: {
-                teaser: '體驗在地站立咖啡文化',
+                teaser: '不要找招牌，找「味道」跟「人群」',
                 full: {
-                    story: '這裡是墨爾本人心中第一名的咖啡店，沒有座位。大家都在巷弄中站著聊天。記得跟 Barista 聊聊天，他們非常友善。',
-                    exactLocation: 'Little Bourke St 轉接處的小巷',
-                    mustTry: 'White Coffee + 巧克力曲奇餅',
-                    avoid: '週末沒開，請安排在平日',
-                    bestTime: '08:00-09:30'
+                    story: '這間店沒有招牌。你必須走到暗巷，看到有人坐在牛奶箱上喝咖啡，那就對了。',
+                    exactLocation: 'Little William St 旁的小巷',
+                    mustTry: 'Flat White + 可麗露',
+                    avoid: '週末沒開！平日早晨通勤會擠爆',
+                    bestTime: '10:30-11:30'
                 }
             }
         },
@@ -29,24 +29,24 @@ export const MELBOURNE_SUGGESTIONS = {
             id: 'qf-m2',
             title: '維多利亞市場',
             titleEn: 'Queen Vic Market',
-            type: 'attraction',
+            type: 'food',
             duration: '2小時',
-            price: 0,
+            price: 25,
             region: 'melbourne',
-            description: '南半球最大的露天市場。',
+            description: '南半球最大的露天市場，墨爾本人的美食廚房。',
             descriptionEn: 'The largest open-air market in the Southern Hemisphere.',
-            lat: -37.8067,
-            lng: 144.9567,
-            rating: 4.4,
+            lat: -37.8076,
+            lng: 144.9568,
+            rating: 4.6,
             tags: ['市場', '美食'],
             insiderTip: {
-                teaser: '熱果醬甜甜圈的傳說',
+                teaser: '別在外面買紀念品，直接衝 Dairy Hall',
                 full: {
-                    story: '一定要找市場外圍那台紅色餐車「American Doughnut Kitchen」，他們賣了幾十年的熱果醬甜甜圈是所有墨爾本人的兒時回憶。',
-                    exactLocation: '市場周邊的紅色快餐車',
-                    mustTry: 'Hot Jam Doughnuts',
+                    story: '維媽精華全部都在室內的 Dairy Produce Hall（熟食館）。外面很多攤位都是給觀光客的。',
+                    exactLocation: 'Dairy Produce Hall 室內區',
+                    mustTry: 'Bratwurst 香腸堡 + Borek 起司捲',
                     avoid: '週一與週三市場不開門',
-                    bestTime: '10:00 前'
+                    bestTime: '09:00 - 11:30'
                 }
             }
         }
@@ -60,20 +60,20 @@ export const MELBOURNE_SUGGESTIONS = {
             duration: '45min',
             price: 0,
             region: 'melbourne',
-            description: '世界級的街頭藝術畫廊。',
-            descriptionEn: 'World-famous street art laneway.',
+            description: '每日變化的世界級街頭藝術畫廊。',
+            descriptionEn: 'World-famous street art laneway that changes daily.',
             lat: -37.8168,
             lng: 144.9691,
             rating: 4.6,
-            tags: ['街頭藝術', '拍照'],
+            tags: ['攝影', '打卡'],
             insiderTip: {
-                teaser: '巷尾的隱藏視角',
+                teaser: '不要從正門進去，走後巷！',
                 full: {
-                    story: '除了主巷子，記得往旁邊的 AC/DC Lane 走，那邊的塗鴉更大規模且更少人。如果幸運，你還能看到藝術家現場作畫。',
-                    exactLocation: 'Hosier Lane 底部轉角處',
-                    mustTry: '錄一段縮時攝影看變化的速度',
-                    avoid: '地上可能有油漆或雜物，走路要小心',
-                    bestTime: '15:00-16:00 陽光灑入時'
+                    story: '一般觀光客都會從高處的 Flinders Lane 往下走，永遠擠滿人頭。記得從 Flinders St 車站那端往上走。',
+                    exactLocation: 'Rutledge Lane 的狹窄轉角處',
+                    mustTry: '帶上廣角鏡頭 (16mm-24mm)',
+                    avoid: '避開正中午 12:00，光線會在你臉上打出可怕的陰影。',
+                    bestTime: '16:00-17:00'
                 }
             }
         },

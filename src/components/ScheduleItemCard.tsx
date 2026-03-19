@@ -15,6 +15,7 @@ import {
 } from '../utils';
 import SmartTimeInput from './SmartTimeInput.tsx';
 import { useConfirm } from '../hooks';
+import { getCurrencySymbol } from '../data/regions';
 
 interface ScheduleItemCardProps {
     item: ScheduleItem;
@@ -301,7 +302,7 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                             ) : (
                                 editingPriceId === item.instanceId ? (
                                     <div className="flex items-center gap-1 bg-white border border-teal-300 rounded px-1 py-0.5 shadow-sm">
-                                        <span className="text-[10px] text-gray-400">¥</span>
+                                        <span className="text-[10px] text-gray-400">{getCurrencySymbol(item.region || planRegion)}</span>
                                         <input
                                             type="number"
                                             autoFocus
@@ -325,7 +326,7 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                                         title={t.setBudget}
                                         className="text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap border border-gray-200 cursor-pointer hover:border-teal-300 hover:text-teal-600 transition-colors"
                                     >
-                                        ¥{item.price?.toLocaleString()}
+                                        {getCurrencySymbol(item.region || planRegion)}{item.price?.toLocaleString()}
                                     </span>
                                 )
                             )

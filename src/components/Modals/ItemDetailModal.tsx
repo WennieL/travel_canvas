@@ -1,8 +1,9 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { X, MapPin, Clock, Star, Tag, MousePointerClick, Navigation, Edit2, Save, Undo2, Share2, MoreHorizontal, Check, Plus, Heart, Users } from 'lucide-react';
+import { X, MapPin, Clock, Star, Tag, MousePointerClick, Navigation, Edit2, Save, Undo2, Share2, MoreHorizontal, Check, Plus, Heart, Users, Lock } from 'lucide-react';
 import { ScheduleItem, TravelItem, ViewMode } from '../../types';
+import { getRegion, getGradient, getRegionEmoji, getRegionName, getCurrencySymbol } from '../../data/regions';
 import { SAMPLE_CREATORS } from '../../data';
 import { ALL_REGIONAL_ASSETS } from '../../data/assets';
 import L from 'leaflet';
@@ -24,16 +25,22 @@ interface ItemDetailModalProps {
     onUpdateScheduleItem?: (instanceId: string, updates: Partial<ScheduleItem>) => void;
     onUpdateCustomAsset?: (id: string, updates: Partial<TravelItem>) => void;
     setViewMode?: (mode: ViewMode) => void;
+    isUnlocked?: boolean;
+    onUnlockRequest?: () => void;
 }
 
-const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item, t, lang = 'zh', onUpdateScheduleItem, onUpdateCustomAsset, setViewMode }) => {
+const ItemDetailModal: React.FC<ItemDetailModalProps> = ({
+    isOpen, onClose, item, t, lang = 'zh',
+    onUpdateScheduleItem, onUpdateCustomAsset, setViewMode,
+    isUnlocked = true, onUnlockRequest
+}) => {
     const [isEditing, setIsEditing] = React.useState(false);
     const [editedTitle, setEditedTitle] = React.useState('');
     const [editedAddress, setEditedAddress] = React.useState('');
     const [editedDescription, setEditedDescription] = React.useState('');
     const [editedPrice, setEditedPrice] = React.useState<number>(0);
     const [syncToLibrary, setSyncToLibrary] = React.useState(false);
-    
+
     // viewedRecId tracks which recommendation is currently being looked at in the modal
     const [viewedRecId, setViewedRecId] = React.useState<string | null>(null);
 
@@ -45,7 +52,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
             setEditedDescription(item.description || '');
             setEditedPrice(item.price || 0);
             setIsEditing(false);
-            
+
             // Default to the item's selected recommendation or its primary author
             const initialRecId = (item as ScheduleItem).selectedRecommendationId || item.authorId || null;
             setViewedRecId(initialRecId);
@@ -88,27 +95,27 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
     // Get the recommendation currently being viewed
     const recommendations = (item as TravelItem).recommendations || [];
     const viewedRec = viewedRecId ? recommendations.find(r => r.id === viewedRecId) : null;
-    
+
     // If we're looking at a specific recommendation, override default values
     const authorId = viewedRecId || item.authorId;
     const author = authorId ? SAMPLE_CREATORS.find(c => c.id === authorId) : null;
-    
+
     // Unified Official Naming
     const getOfficialName = (l: string) => l === 'zh' ? 'Travel Canvas 官方指南' : 'Travel Canvas Official Guide';
 
     const displayAuthorName = viewedRec?.author || (author ? (lang === 'en' && author.nameEn ? author.nameEn : author.name) : getOfficialName(lang));
-    
+
     const displayName = lang === 'en' && (item as any).titleEn ? (item as any).titleEn : item.title;
     const displayAddress = lang === 'en' && (item as any).addressEn ? (item as any).addressEn : (item.address || '');
-    
+
     // Description can be recommendation-specific or general
     const rawDescription = viewedRec?.description || item.description || '';
     const rawDescriptionEn = viewedRec?.descriptionEn || (item as any).descriptionEn || '';
     const displayDescription = lang === 'en' && rawDescriptionEn ? rawDescriptionEn : rawDescription;
-    
+
     const displayDuration = viewedRec?.duration || item.duration;
     const displayDurationFormatted = lang === 'en' && displayDuration ? displayDuration.replace('小時', 'h').replace('分鐘', 'm').replace(/分$/, 'm') : displayDuration;
-    
+
     const displayImage = viewedRec?.coverImage || item.coverImage || (item as any).image;
     const displayPrice = viewedRec?.pricing !== undefined ? viewedRec.pricing : (item.price || 0);
 
@@ -118,7 +125,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
 
     const handleApplyTip = () => {
         if (!onUpdateScheduleItem || !(item as ScheduleItem).instanceId || !viewedRec) return;
-        
+
         onUpdateScheduleItem((item as ScheduleItem).instanceId, {
             selectedRecommendationId: viewedRec.id,
             activeRecommendation: viewedRec,
@@ -127,10 +134,40 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
             duration: viewedRec.duration,
             insiderTip: viewedRec.insiderTip
         });
-        
+
         if (setViewMode) setViewMode('canvas');
         onClose();
     };
+
+    // Helper to render formatted text (handles \n and numbered lists)
+    const renderFormattedText = (text: string | undefined, className?: string) => {
+        if (!text) return null;
+        
+        // Check if the text contains numbered list patterns like "1. ", "2. "
+        const hasNumberedList = /^\s*1\.\s+|[\n\r]\s*[12]\.\s+/.test(text);
+        
+        if (hasNumberedList || text.includes('\n')) {
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            return (
+                <div className={`space-y-3 ${className}`}>
+                    {lines.map((line, idx) => {
+                        // Clean up numbering if present for a cleaner look
+                        const cleanLine = line.replace(/^\s*\d+\.\s*/, '').trim();
+                        return (
+                            <div key={idx} className="flex gap-3 group/tip transition-all">
+                                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0 group-hover/tip:scale-150 transition-transform" />
+                                <span className="leading-relaxed">{cleanLine}</span>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        }
+        
+        return <span className={className}>{text}</span>;
+    };
+
+    const bookingUrl = (item as TravelItem).bookingUrl || viewedRecId && (item as TravelItem).recommendations?.find(r => r.id === viewedRecId)?.insiderTip?.full?.reservation;
 
     return (
         <div
@@ -283,19 +320,30 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                     </div>
 
                     {/* D. FAST STATS GRID */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 px-8 mb-10">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 px-8 mb-10">
                         <div className="glass-card p-4 rounded-3xl border-slate-100 shadow-sm flex flex-col items-center">
                             <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Cost</span>
-                            <span className="text-lg font-black text-slate-900">¥{displayPrice.toLocaleString()}</span>
+                            <span className="text-lg font-black text-slate-900">{getCurrencySymbol(item.region)}{displayPrice.toLocaleString()}</span>
                         </div>
                         <div className="glass-card p-4 rounded-3xl border-slate-100 shadow-sm flex flex-col items-center">
-                            <h4 className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">{lang === 'zh' ? '推薦達人' : 'RECOMMENDED BY'}</h4>
-                            <div className="text-sm font-black text-slate-900 tracking-tight">{displayAuthorName}</div>
+                            <h4 className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">{lang === 'zh' ? '建議時長' : 'Duration'}</h4>
+                            <div className="text-sm font-black text-slate-900 tracking-tight">{displayDurationFormatted || '1h'}</div>
                         </div>
-                        <div className="hidden md:flex glass-card p-4 rounded-3xl border-slate-100 shadow-sm flex flex-col items-center">
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{lang === 'zh' ? '建議時長' : 'Duration'}</span>
-                            <span className="text-lg font-black text-slate-900">{displayDurationFormatted || '1h'}</span>
+                        <div className="glass-card p-4 rounded-3xl border-slate-100 shadow-sm flex flex-col items-center">
+                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Region</span>
+                            <span className="text-sm font-black text-slate-900 tracking-tight">{(item.region || 'Melbourne').toUpperCase()}</span>
                         </div>
+                        {bookingUrl && (
+                            <div 
+                                onClick={() => window.open(bookingUrl, '_blank')}
+                                className="glass-card p-4 rounded-3xl border-amber-100 bg-amber-50/50 shadow-sm flex flex-col items-center cursor-pointer hover:bg-amber-100 transition-colors group"
+                            >
+                                <span className="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-1 flex items-center gap-1">
+                                    Booking <MousePointerClick size={10} />
+                                </span>
+                                <span className="text-xs font-black text-amber-900 tracking-tight underline group-hover:text-amber-700">Official Site</span>
+                            </div>
+                        )}
                     </div>
 
                     {/* E. DESCRIPTION (A: EDITORIAL TYPOGRAPHY) */}
@@ -314,9 +362,9 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                         ) : (
                             <div className="relative">
                                 <span className="absolute -top-10 -left-4 text-[80px] text-slate-100 font-serif leading-none select-none z-0">“</span>
-                                <p className="text-lg text-slate-700 leading-relaxed font-medium italic relative z-10 pl-2 border-l-4 border-slate-100 py-1">
-                                    {displayDescription || 'No description available for this spot yet.'}
-                                </p>
+                                <div className="text-lg text-slate-700 leading-relaxed font-medium italic relative z-10 pl-2 border-l-4 border-slate-100 py-1">
+                                    {renderFormattedText(displayDescription || 'No description available for this spot yet.')}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -349,21 +397,21 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
 
                                         <div className="space-y-6">
                                             {(viewedRec?.insiderTip?.teaser || viewedRec?.insiderTip?.teaserEn || item.insiderTip?.teaser || item.insiderTip?.teaserEn) && (
-                                                <h4 className="text-2xl font-black text-slate-900 leading-snug tracking-tighter">
-                                                    {lang === 'zh'
+                                                <div className="text-2xl font-black text-slate-900 leading-snug tracking-tighter">
+                                                    {renderFormattedText(lang === 'zh'
                                                         ? (viewedRec?.insiderTip?.teaser || item.insiderTip?.teaser)
-                                                        : (viewedRec?.insiderTip?.teaserEn || item.insiderTip?.teaserEn || viewedRec?.insiderTip?.teaser || item.insiderTip?.teaser)}
-                                                </h4>
+                                                        : (viewedRec?.insiderTip?.teaserEn || item.insiderTip?.teaserEn || viewedRec?.insiderTip?.teaser || item.insiderTip?.teaser))}
+                                                </div>
                                             )}
 
                                             <div className="space-y-4">
                                                 <div className="relative">
                                                     <span className="text-6xl text-slate-100 absolute -top-8 -left-4 font-serif select-none z-0">“</span>
-                                                    <p className="text-sm text-slate-600 leading-relaxed font-bold italic relative z-10 pl-6 mb-6">
-                                                        {lang === 'zh'
+                                                    <div className="text-sm text-slate-600 leading-relaxed font-bold italic relative z-10 pl-6 mb-6">
+                                                        {renderFormattedText(lang === 'zh'
                                                             ? (viewedRec?.insiderTip?.full?.story || item.insiderTip?.full?.story)
-                                                            : (viewedRec?.insiderTip?.full?.storyEn || item.insiderTip?.full?.storyEn || viewedRec?.insiderTip?.full?.story || item.insiderTip?.full?.story)}
-                                                    </p>
+                                                            : (viewedRec?.insiderTip?.full?.storyEn || item.insiderTip?.full?.storyEn || viewedRec?.insiderTip?.full?.story || item.insiderTip?.full?.story))}
+                                                    </div>
 
                                                     <div className="flex justify-end pr-4 mb-4">
                                                         <div className="flex items-center gap-2 text-[10px] font-black text-slate-300 italic">
@@ -377,68 +425,108 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
 
                                         {/* Meta-Info Tiles (Airbnb Style Cleanup) */}
                                         {(viewedRec?.insiderTip?.full || item.insiderTip?.full) && (
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-6 border-t border-slate-50">
-                                                {(viewedRec?.insiderTip?.full?.exactLocation || item.insiderTip?.full?.exactLocation) && (
-                                                    <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
-                                                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-pink-500 shrink-0 shadow-sm border border-slate-100">
-                                                            <MapPin size={18} />
+                                            !isUnlocked ? (
+                                                <div className="relative mt-4">
+                                                    <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/40 backdrop-blur-[4px] rounded-2xl border border-slate-100 p-6 text-center">
+                                                        <div className="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white shadow-xl mb-4">
+                                                            <Lock size={24} />
                                                         </div>
-                                                        <div>
-                                                            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '精確位置' : 'Exact Location'}</div>
-                                                            <div className="text-xs font-black text-slate-800 leading-snug">
-                                                                {lang === 'zh' 
-                                                                    ? (viewedRec?.insiderTip?.full?.exactLocation || item.insiderTip?.full?.exactLocation) 
-                                                                    : (viewedRec?.insiderTip?.full?.exactLocationEn || item.insiderTip?.full?.exactLocationEn || viewedRec?.insiderTip?.full?.exactLocation || item.insiderTip?.full?.exactLocation)}
-                                                            </div>
+                                                        <h4 className="text-base font-black text-slate-800 mb-2">{lang === 'zh' ? '達人隱藏心得' : 'Expert Hidden Insights'}</h4>
+                                                        <p className="text-xs text-slate-600 mb-6 font-medium max-w-[250px] leading-relaxed">
+                                                            {lang === 'zh' ? '解鎖專家才知道的必點隱藏版、避坑指南與精準時段' : 'Unlock secret menus, crowd-avoidance times & exact locations'}
+                                                        </p>
+                                                        <button
+                                                            onClick={onUnlockRequest}
+                                                            className="bg-gradient-to-r from-slate-900 to-slate-800 text-white px-8 py-3.5 rounded-full text-[11px] font-black uppercase tracking-widest shadow-2xl hover:scale-105 hover:shadow-slate-900/30 transition-all"
+                                                        >
+                                                            {lang === 'zh' ? '解鎖整封攻略 ($0.99) - 限時免費' : 'Unlock All Tips ($0.99) - Demo Free'}
+                                                        </button>
+                                                    </div>
+
+                                                    {/* Fake blurred background tiles */}
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-6 border-t border-slate-50 opacity-40 select-none pointer-events-none filter blur-[3px]">
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-pink-500 shrink-0"><MapPin size={18} /></div>
+                                                            <div><div className="h-2 w-16 bg-slate-200 rounded mb-2"></div><div className="h-3 w-32 bg-slate-300 rounded"></div></div>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-600 shrink-0"><Navigation size={18} /></div>
+                                                            <div><div className="h-2 w-16 bg-slate-200 rounded mb-2"></div><div className="h-3 w-40 bg-slate-300 rounded"></div></div>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-amber-500 shrink-0"><Clock size={18} /></div>
+                                                            <div><div className="h-2 w-16 bg-slate-200 rounded mb-2"></div><div className="h-3 w-28 bg-slate-300 rounded"></div></div>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-red-500 shrink-0"><X size={18} /></div>
+                                                            <div><div className="h-2 w-16 bg-slate-200 rounded mb-2"></div><div className="h-3 w-36 bg-slate-300 rounded"></div></div>
                                                         </div>
                                                     </div>
-                                                )}
-                                                {(viewedRec?.insiderTip?.full?.mustTry || item.insiderTip?.full?.mustTry) && (
-                                                    <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
-                                                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-600 shrink-0 shadow-sm border border-slate-100">
-                                                            <Navigation size={18} />
-                                                        </div>
-                                                        <div>
-                                                            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '必推項目' : 'Must Try'}</div>
-                                                            <div className="text-xs font-black text-slate-800 leading-snug">
-                                                                {lang === 'zh' 
-                                                                    ? (viewedRec?.insiderTip?.full?.mustTry || item.insiderTip?.full?.mustTry) 
-                                                                    : (viewedRec?.insiderTip?.full?.mustTryEn || item.insiderTip?.full?.mustTryEn || viewedRec?.insiderTip?.full?.mustTry || item.insiderTip?.full?.mustTry)}
+                                                </div>
+                                            ) : (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-6 border-t border-slate-50">
+                                                    {(viewedRec?.insiderTip?.full?.exactLocation || item.insiderTip?.full?.exactLocation) && (
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-pink-500 shrink-0 shadow-sm border border-slate-100">
+                                                                <MapPin size={18} />
+                                                            </div>
+                                                            <div>
+                                                                <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '精確位置' : 'Exact Location'}</div>
+                                                                <div className="text-xs font-black text-slate-800 leading-snug">
+                                                                    {renderFormattedText(lang === 'zh'
+                                                                        ? (viewedRec?.insiderTip?.full?.exactLocation || item.insiderTip?.full?.exactLocation)
+                                                                        : (viewedRec?.insiderTip?.full?.exactLocationEn || item.insiderTip?.full?.exactLocationEn || viewedRec?.insiderTip?.full?.exactLocation || item.insiderTip?.full?.exactLocation))}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                                {(viewedRec?.insiderTip?.full?.bestTime || item.insiderTip?.full?.bestTime) && (
-                                                    <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
-                                                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-amber-500 shrink-0 shadow-sm border border-slate-100">
-                                                            <Clock size={18} />
-                                                        </div>
-                                                        <div>
-                                                            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '最佳時段' : 'Best Time'}</div>
-                                                            <div className="text-xs font-black text-slate-800 leading-snug">
-                                                                {lang === 'zh' 
-                                                                    ? (viewedRec?.insiderTip?.full?.bestTime || item.insiderTip?.full?.bestTime) 
-                                                                    : (viewedRec?.insiderTip?.full?.bestTimeEn || item.insiderTip?.full?.bestTimeEn || viewedRec?.insiderTip?.full?.bestTime || item.insiderTip?.full?.bestTime)}
+                                                    )}
+                                                    {(viewedRec?.insiderTip?.full?.mustTry || item.insiderTip?.full?.mustTry) && (
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-600 shrink-0 shadow-sm border border-slate-100">
+                                                                <Navigation size={18} />
+                                                            </div>
+                                                            <div>
+                                                                <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '必吃 / 必拍項目' : 'Must Try'}</div>
+                                                                <div className="text-xs font-black text-slate-800 leading-snug">
+                                                                    {renderFormattedText(lang === 'zh'
+                                                                        ? (viewedRec?.insiderTip?.full?.mustTry || item.insiderTip?.full?.mustTry)
+                                                                        : (viewedRec?.insiderTip?.full?.mustTryEn || item.insiderTip?.full?.mustTryEn || viewedRec?.insiderTip?.full?.mustTry || item.insiderTip?.full?.mustTry))}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                                {(viewedRec?.insiderTip?.full?.avoid || item.insiderTip?.full?.avoid) && (
-                                                    <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
-                                                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-red-500 shrink-0 shadow-sm border border-slate-100">
-                                                            <X size={18} />
-                                                        </div>
-                                                        <div>
-                                                            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '避雷提醒' : 'Avoid'}</div>
-                                                            <div className="text-xs font-black text-slate-800 leading-snug">
-                                                                {lang === 'zh' 
-                                                                    ? (viewedRec?.insiderTip?.full?.avoid || item.insiderTip?.full?.avoid) 
-                                                                    : (viewedRec?.insiderTip?.full?.avoidEn || item.insiderTip?.full?.avoidEn || viewedRec?.insiderTip?.full?.avoid || item.insiderTip?.full?.avoid)}
+                                                    )}
+                                                    {(viewedRec?.insiderTip?.full?.bestTime || item.insiderTip?.full?.bestTime) && (
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-amber-500 shrink-0 shadow-sm border border-slate-100">
+                                                                <Clock size={18} />
+                                                            </div>
+                                                            <div>
+                                                                <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '無痛入場時段' : 'Best Time'}</div>
+                                                                <div className="text-xs font-black text-slate-800 leading-snug">
+                                                                    {renderFormattedText(lang === 'zh'
+                                                                        ? (viewedRec?.insiderTip?.full?.bestTime || item.insiderTip?.full?.bestTime)
+                                                                        : (viewedRec?.insiderTip?.full?.bestTimeEn || item.insiderTip?.full?.bestTimeEn || viewedRec?.insiderTip?.full?.bestTime || item.insiderTip?.full?.bestTime))}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                )}
-                                            </div>
+                                                    )}
+                                                    {(viewedRec?.insiderTip?.full?.avoid || item.insiderTip?.full?.avoid) && (
+                                                        <div className="flex items-center gap-3 p-4 bg-slate-50/80 rounded-2xl border border-slate-100/50 hover:bg-slate-50 transition-colors">
+                                                            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-red-500 shrink-0 shadow-sm border border-slate-100">
+                                                                <X size={18} />
+                                                            </div>
+                                                            <div>
+                                                                <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-0.5">{lang === 'zh' ? '避雷 / 防坑指南' : 'Avoid'}</div>
+                                                                <div className="text-xs font-black text-slate-800 leading-snug">
+                                                                    {renderFormattedText(lang === 'zh'
+                                                                        ? (viewedRec?.insiderTip?.full?.avoid || item.insiderTip?.full?.avoid)
+                                                                        : (viewedRec?.insiderTip?.full?.avoidEn || item.insiderTip?.full?.avoidEn || viewedRec?.insiderTip?.full?.avoid || item.insiderTip?.full?.avoid))}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )
                                         )}
                                     </div>
                                 </div>
@@ -499,16 +587,15 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                     {recommendations.map((rec, idx) => {
                                         const isActive = rec.id === viewedRecId;
                                         const isApplied = rec.id === currentAppliedRecId;
-                                        
+
                                         return (rec.insiderTip?.teaser || rec.insiderTip?.teaserEn) ? (
-                                            <div 
-                                                key={idx} 
+                                            <div
+                                                key={idx}
                                                 onClick={() => setViewedRecId(rec.id)}
-                                                className={`flex gap-4 p-5 rounded-3xl transition-all cursor-pointer group relative ${
-                                                    isActive 
-                                                        ? 'bg-white border-teal-200 shadow-xl shadow-teal-500/10 border-2' 
+                                                className={`flex gap-4 p-5 rounded-3xl transition-all cursor-pointer group relative ${isActive
+                                                        ? 'bg-white border-teal-200 shadow-xl shadow-teal-500/10 border-2'
                                                         : 'bg-slate-50 border-slate-100 border hover:bg-white hover:shadow-xl hover:shadow-slate-200/50'
-                                                }`}
+                                                    }`}
                                             >
                                                 <div className="relative shrink-0">
                                                     <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-md group-hover:scale-110 transition-transform">
@@ -532,7 +619,7 @@ const ItemDetailModal: React.FC<ItemDetailModalProps> = ({ isOpen, onClose, item
                                                         {lang === 'zh' ? rec.insiderTip?.teaser : (rec.insiderTip?.teaserEn || rec.insiderTip?.teaser)}
                                                     </div>
                                                 </div>
-                                                
+
                                                 {isActive && (
                                                     <div className="absolute right-6 top-1/2 -translate-y-1/2 text-teal-500 animate-in fade-in slide-in-from-right-2">
                                                         <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center">

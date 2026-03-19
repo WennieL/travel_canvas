@@ -8,8 +8,8 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '30min',
         image: '☕',
-        description: '墨爾本最具代表性的站立式咖啡店，沒有座位是它的特色',
-        descriptionEn: 'Iconic standing-room-only coffee bar, a true Melbourne ritual',
+        description: '墨爾本最具代表性的站立式咖啡店。找這間店本身就是一場城市探險。',
+        descriptionEn: 'Iconic standing-room-only coffee bar. Finding it is half the adventure.',
         price: 5,
         address: 'Little Bourke St, Melbourne CBD',
         rating: 4.8,
@@ -17,20 +17,20 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         lng: 144.9631,
         region: 'melbourne',
         authorId: 'c-mel',
-        tags: ['咖啡', '在地體驗', '必訪'],
+        tags: ['咖啡', '在地體驗', '巷弄'],
+        marketingTitle: '墨爾本街頭的防空洞',
+        marketingTitleEn: 'The Laneway Bunker',
         tier: 'premium',
-        marketingTitle: '站著喝咖啡的儀式感',
-        marketingTitleEn: 'The Standing Coffee Ritual',
         insiderTip: {
-            teaser: '站著喝咖啡的儀式感咖啡店',
-            teaserEn: 'The iconic standing coffee ritual spot',
+            teaser: '不要找招牌，每天賣出上千杯的無 Wifi 巷弄傳奇',
+            teaserEn: 'No signs, no Wifi. Just thousands of cups sold daily in an alley.',
             full: {
-                story: '這裡沒有座位，站著喝咖啡是墨爾本在地人的儀式感。但如果你 8:30 以前到，吧台最左邊有個小角落可以靠著放包包。',
-                storyEn: 'No seats here - standing while drinking is the local ritual. But arrive before 8:30am and there\'s a small corner on the left side of the bar where you can rest your bag.',
-                exactLocation: '從 Little Bourke St 進入，不是 Little Collins 那邊的入口',
-                mustTry: 'Batch Brew ($4.50) - 不要點 Latte，這裡的精品豆用手沖才對味',
-                avoid: '週末人超多，平日早上最佳。沒有 WiFi，也沒有座位，純粹體驗咖啡',
-                bestTime: '08:00-09:00'
+                story: '觀光客總是在街上找它的招牌，但這間店根本沒有。你必須走進無名暗巷，看到一群穿著西裝的上班族坐在牛奶箱上喝咖啡就對了。',
+                storyEn: 'Tourists look for a sign, but there is none. Walk into an unnamed alley and look for suits sitting on milk crates.',
+                exactLocation: '從 Little Bourke St 轉進「Little William St」旁的小巷。認明地上的「Standing Room Only」字樣。',
+                mustTry: '不要點常見的咖啡。直接跟店員點一杯隱藏版的「Single Origin Batch Brew」，並指定加上一塊每日限量的 Canelé (可麗露)。',
+                avoid: '⚠️ 絕對不要在早上 8:00 - 9:00 來擠。通勤族會把你淹沒。另外店內完全禁止筆電，這裡是為了讓你「跟陌生人聊天」經營的。',
+                bestTime: '10:30 (剛度過早晨地獄人潮，享受安靜的 15 分鐘站立咖啡)'
             }
         }
     },
@@ -51,19 +51,19 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         region: 'melbourne',
         authorId: 'c-mel',
         tags: ['咖啡', '網紅店', '特色裝潢'],
+        marketingTitle: '墨爾本最強單品豆',
+        marketingTitleEn: 'The Best Single Origin',
         tier: 'premium',
-        marketingTitle: '天花板的秘密',
-        marketingTitleEn: 'Secrets from the Ceiling',
         insiderTip: {
-            teaser: '天花板掛滿椅子的網紅咖啡店',
-            teaserEn: 'The famous cafe with chairs on the ceiling',
+            teaser: '大家都拍天花板的椅子，但老饕是來喝極淺焙日曬豆',
+            teaserEn: 'Tourists photograph chairs. Locals come for the ultra-light roast natural beans.',
             full: {
-                story: '這是 Seven Seeds 的姐妹店，天花板掛滿椅子是它的標誌。比起拍照打卡，在地人更在意的是他們的 Single Origin Filter。',
-                storyEn: 'Sister cafe of Seven Seeds. Locals care more about their Single Origin Filter than the Instagram-famous ceiling.',
-                exactLocation: '往巷子裡走，不是路邊那家',
-                mustTry: '問 barista "What\'s the guest roaster today?" 他們每週換 different 烘豆師',
-                avoid: '座位超少，外帶比較實際',
-                bestTime: '09:30-10:30'
+                story: '觀光客擠在這裡是為了拍天花板上掛滿的椅子。但在地吧台手下班後會來這裡，是因為它是傳奇烘豆廠 Seven Seeds 的直營店，永遠能喝到墨爾本最尖端的單品豆。',
+                storyEn: 'Tourists jam this place for the chairs on the ceiling. Local baristas come because it\'s Seven Seeds flagship, serving the sharpest single origins.',
+                exactLocation: 'Little Bourke St 上，夾在五金行跟戶外用品店中間的小矮房。',
+                mustTry: '千萬不要點加奶的咖啡！直接走到吧台問："What\'s the craziest filter coffee you have today?" (今天最瘋狂的濾掛是什麼？)',
+                avoid: '⚠️ 這裡只有一條長凳，企圖在店內找位子坐下聊天是新手最大的錯誤。點完請直接拿到巷子口站著喝。',
+                bestTime: '09:30 (避開 8 點鐘買拿鐵的上班族)'
             }
         }
     },
@@ -82,21 +82,21 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         lat: -37.8168,
         lng: 144.9691,
         region: 'melbourne',
-        authorId: 'c6',
-        tags: ['街頭藝術', '拍照', '免費'],
+        authorId: 'c-mel-photo',
+        tags: ['攝影', '打卡', '免費'],
+        marketingTitle: '墨爾本的流動盛宴',
+        marketingTitleEn: 'The Moving Feast',
         tier: 'premium',
-        marketingTitle: '會呼吸的藝術廊',
-        marketingTitleEn: 'The Living Art Gallery',
         insiderTip: {
-            teaser: '墨爾本最著名的塗鴉巷',
-            teaserEn: 'Melbourne\'s most famous graffiti lane',
+            teaser: '下午去只會拍到人頭。早上 8 點鑽進後巷才能拍出廢墟感大片',
+            teaserEn: 'Don\'t go PM. Back alley at 8AM gives you the perfect cyberpunk shot.',
             full: {
-                story: '觀光客都從 Flinders Lane 入口進去，人擠人很難拍照。從 Flinders St 那端進去人少很多，而且光線更好。',
-                storyEn: 'Tourists enter from Flinders Lane and it\'s crowded. Enter from Flinders St instead - fewer people and better lighting.',
-                exactLocation: '從 Flinders St 入口，往上走',
-                mustTry: '早上 10 點前光線最柔和，下午 4 點後有金色陽光灑進巷子',
-                avoid: '避開中午 12-2 點，旅行團最多',
-                bestTime: '10:00-11:00 或 16:00-17:00'
+                story: '一般觀光客都在正中午從主入口擠進去打卡。但在地攝影師絕對不會這麼做，頂光會把立體的塗鴉拍成平面的紙板，而且你只會拍到無盡的觀光客後腦勺。',
+                storyEn: 'Tourists squeeze in at noon from the main entrance. Photographers never do this—harsh top lighting flattens the art, and you only get photos of tourists\' heads.',
+                exactLocation: '導航到 Forum Melbourne 旁邊，找到一條沒有標示、全黑塗鴉的幽暗小巷 (Rutledge Lane) 走進去。',
+                mustTry: '早上 8 點帶杯咖啡來。除了完美斜射光，你有極大機率看到塗鴉藝術家正在進行隔夜的暗場創作，這才是 Hosier Lane 的靈魂。',
+                avoid: '⚠️ 千萬不要帶長焦鏡頭。這條巷子極度狹窄，只有 16-24mm 的超廣角能拍出那種被狂野色彩包圍的壓迫感。',
+                bestTime: '08:00 (光線最立體，無觀光客，有機會遇到藝術家)'
             }
         }
     },
@@ -115,21 +115,21 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         lat: -37.8167,
         lng: 144.9655,
         region: 'melbourne',
-        authorId: 'c1',
-        tags: ['美食', '咖啡', '巷弄'],
+        authorId: 'c-mel-brunch',
+        tags: ['早午餐', '咖啡', '巷弄'],
+        marketingTitle: '墨爾本早午餐的靈魂發源地',
+        marketingTitleEn: 'The Soul of Melb Brunch',
         tier: 'premium',
-        marketingTitle: '巴黎小巷的錯覺',
-        marketingTitleEn: 'A Parisian Illusion',
         insiderTip: {
-            teaser: '歐式風情的美食街道',
-            teaserEn: 'European-style food street',
+            teaser: '別去排網紅點！走到 1999 年開到現在的對角紅雨棚，才懂墨爾本早午餐',
+            teaserEn: 'Skip the internet-famous line. Find the red awning open since 1999.',
             full: {
-                story: '遊客都去排隊的網紅店，但在地人都去 Degraves Espresso Bar — 1999 年開的老店，咖啡比隔壁便宜又好喝。',
-                storyEn: 'Tourists queue at trendy spots, but locals go to Degraves Espresso Bar - open since 1999, cheaper and better coffee.',
-                exactLocation: '從 Flinders St Station 對面進入',
-                mustTry: 'Degraves Espresso 的 Toastie（烤起司三明治）只要 $8，完勝網紅店',
-                avoid: '不要去店門口有排隊的那幾家，通常是觀光客陷阱',
-                bestTime: '12:00-13:00'
+                story: 'Degraves 街頭有一家永遠大排長龍的網紅網美店。但真正懂吃的老派墨爾本人，會直接穿過排隊人潮，走進 1999 年開到現在的 Degraves Espresso Bar。',
+                storyEn: 'There is a famous cafe with massive queues here. But old-school Melburnians walk right past it into Degraves Espresso Bar, serving since 1999.',
+                exactLocation: '從 Flinders St 車站地道出來後第一條巷子。找隱藏在角落的深紅色遮雨棚。',
+                mustTry: '直接點爆大份量的 Smashed Avo (酪梨土司) 配水波蛋，再加點一杯墨爾本特有的「Magic (魔術咖啡)」，比例比 Flat White 更濃郁。',
+                avoid: '⚠️ 不要坐在走道正中間的網美打卡位。墨爾本風大又陰晴不定，不到十分鐘你的咖啡跟土司就會冷掉。請要求坐在「靠牆壁且有 overhead heater (頂部暖爐)」的位置。',
+                bestTime: '09:00 (感受巷弄甦醒的歐洲早晨氛圍)'
             }
         }
     },
@@ -152,18 +152,18 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         tags: ['隱藏酒吧', '調酒', '氣氛'],
         tier: 'premium',
         isLocked: true,
-        marketingTitle: '書架後的秘密',
-        marketingTitleEn: 'Secret Behind the Bookshelf',
+        marketingTitle: '墨爾本禁酒令時代',
+        marketingTitleEn: 'The Prohibition Era',
         insiderTip: {
-            teaser: '書架後的 1920 年代禁酒時期酒吧',
-            teaserEn: 'A 1920s speakeasy hidden behind a bookshelf',
+            teaser: '找到假書架後的那扇門',
+            teaserEn: 'Find the door behind the fake bookshelf',
             full: {
-                story: '這間隱藏酒吧入口是一扇沒有標示的門，進去後會看到一個假書架 — 推開它就是酒吧。但真正的秘密是：書架後面還有另一個房間，叫 Whisky Room，只有熟客才知道。',
-                storyEn: 'Enter through an unmarked door, find a fake bookshelf - push it to enter. But the real secret: there\'s another room behind called the Whisky Room, known only to regulars.',
-                exactLocation: 'Malthouse Lane，找有門鈴的無標示黑門，按鈴等人開門',
-                mustTry: '問 bartender "本週的 hidden menu"，他們 have 不在菜單上的實驗調酒',
-                avoid: '週五晚上 8 點後要排隊，平日 7 點到最佳',
-                bestTime: '19:00-20:00'
+                story: '墨爾本隱藏酒吧 (Speakeasy) 的天花板。入口是一扇連門牌都沒有的厚重木門，推進去後你會看到一個大型假書架，用力推開書架，1920年代的爵士樂、雪茄味和穿著吊帶褲的酒保會瞬間將你包圍。真正的秘密是：書架後面還有一個隱藏的 Whisky Room，只開放給識途老馬。',
+                storyEn: 'The pinnacle of Melbourne\'s speakeasy scene. The entrance is a heavy wooden door with no sign. Push it open to find a large fake bookshelf—push that, and 1920s jazz, cigar notes, and suspender-wearing bartenders instantly surround you. The real secret: there\'s a hidden Whisky Room behind the bookshelf, open only to regulars.',
+                exactLocation: 'Malthouse Lane 走到底，找一扇旁邊只有一個小小金色壁燈的黑色木門。',
+                mustTry: '點一杯「Espresso Martini」。他們會推著一台中世紀的餐車到你桌邊，用液態氮為你現場調製。',
+                avoid: '週五晚上 8 點後絕對進不去。週二到週四的晚上 7 點是完美時段。',
+                bestTime: '19:00-20:00 (平日)'
             }
         }
     },
@@ -182,22 +182,22 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         lat: -37.8115,
         lng: 144.9631,
         region: 'melbourne',
-        authorId: 'c1',
-        tags: ['隱藏酒吧', '主題酒吧', '體驗'],
+        authorId: 'c-mel',
+        tags: ['隱藏酒吧', '主題酒吧', '東西柏林'],
         tier: 'premium',
         isLocked: true,
-        marketingTitle: '柏林圍牆的另一邊',
-        marketingTitleEn: 'The Other Side of the Wall',
+        marketingTitle: '穿越柏林圍牆',
+        marketingTitleEn: 'Crossing the Berlin Wall',
         insiderTip: {
-            teaser: '东西柏林主題酒吧',
-            teaserEn: 'East vs West Berlin themed bar',
+            teaser: '東柏林還是西柏林？取決於你今晚的心情',
+            teaserEn: 'East or West Berlin? Depends on your mood',
             full: {
-                story: '找到發光的熊標誌就對了。按門鈴後會有人來開門，進去後你會被帶到「東柏林」或「西柏林」— 兩邊氛圍完全不同。',
-                storyEn: 'Look for the glowing bear sign. Ring the doorbell and someone will escort you to either "East Berlin" or "West Berlin" - completely different vibes.',
-                exactLocation: 'Corrs Lane，找發光的熊招牌',
-                mustTry: '跟工作人員說你想體驗「另一邊」，他們會帶你穿過牆壁的秘密門',
-                avoid: '別太早到，9 點以後氣氛最好',
-                bestTime: '21:00-23:00'
+                story: '這間酒吧把冷戰時期的柏林搬到了墨爾本二樓。找到路邊那個不起眼的發光小熊標誌，按門鈴上樓。這裡分成破敗、隨性、充滿塗鴉的「東柏林」區，以及奢華、皮沙發、吊燈的「西柏林」區。',
+                storyEn: 'This bar brings Cold War Berlin to an upstairs Melbourne venue. Find the inconspicuous glowing bear sign in the alley, ring the bell, and head up. The space is divided into two distinct zones: the grungy, graffiti-filled "East Berlin" and the opulent, leather-couch "West Berlin".',
+                exactLocation: 'Corrs Lane 裡，抬頭看二樓窗戶，找到發光的燈箱。',
+                mustTry: '如果帶朋友來想要安靜聊天，請服務生帶你到西柏林區。如果想體驗墨爾本式的隨性與熱鬧，東柏林區的木箱子座位才是王道。',
+                avoid: '不要穿得太正式，這裡的門禁 (Bouncer) 有時會覺得西裝筆挺的人不符合他們的地下文化氛圍。',
+                bestTime: '21:30-23:30 (感受兩個世界的氛圍切換)'
             }
         }
     },
@@ -216,22 +216,22 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         lat: -37.8577,
         lng: 144.9937,
         region: 'melbourne',
-        authorId: 'c1',
-        tags: ['隱藏酒吧', 'Tiki', '調酒'],
+        authorId: 'c-mel-brunch',
+        tags: ['隱藏酒吧', 'Tiki', '南半球風情'],
         tier: 'premium',
         isLocked: true,
-        marketingTitle: '冷藏庫後的熱帶天堂',
-        marketingTitleEn: 'Tropical Paradise Behind the Coolroom',
+        marketingTitle: '冷藏庫裡的熱帶島嶼',
+        marketingTitleEn: 'Tropical Island in a Fridge',
         insiderTip: {
-            teaser: '三明治店冷藏庫後的熱帶 Tiki 酒吧',
-            teaserEn: 'Tiki bar hidden behind a sandwich shop cooler',
+            teaser: '走到三明治店盡頭，打開那扇不鏽鋼冷藏庫大門',
+            teaserEn: 'Walk to the back of the sandwich shop and open the heavy freezer door',
             full: {
-                story: '這家店的入口是一間紐約風格的三明治店。走到最後面你會看到一個巨大的冷藏庫門 — 拉開它，裡面是完全另一個世界：熱帶植物、Tiki 調酒、和好聽的音樂。',
-                storyEn: 'The entrance is through a NY-style sandwich shop. Walk to the back and pull open the massive coolroom door - inside is a tropical paradise with tiki cocktails and great music.',
-                exactLocation: 'Chapel St Windsor，找 Bowery to Williamsburg 三明治店',
-                mustTry: 'Zombie 調酒，但一人限點兩杯（太烈了）',
-                avoid: '週末超級滿，建議週四晚上去',
-                bestTime: '20:00-22:00'
+                story: 'Chapel St 是墨爾本南邊最熱鬧的街。這間酒吧隱藏得極好：你得先走進一間名為 "Boston Sub" 的美式三明治店，無顧店員的眼光，筆直走到店鋪最深處，拉開那個看起來絕對會把你凍僵的不鏽鋼冷藏庫大門。門後迎接你的不是凍肉，而是充滿熱帶植物、Tiki 杯、和夏威夷襯衫的瘋狂世界。',
+                storyEn: 'Chapel St in South Yarra is packed with nightlife. This bar is perfectly hidden: walk into a sub shop called "Boston Sub", ignore the staff, head straight to the back, and pull open the massive, heavy metal coolroom door. Behind it isn\'t frozen meat, but a crazy world of tropical plants, Tiki mugs, and Hawaiian shirts.',
+                exactLocation: 'Chapel St 上，認明 "Boston Sub" 三明治店的招牌。',
+                mustTry: '來一杯裝在骷髏頭杯子裡、會噴火的 Zombie 調酒。',
+                avoid: '週五和週六晚上 9 點後通常進不去，因為「冷藏庫」裡的空間極其狹小。',
+                bestTime: '19:30-20:30 (趁還沒客滿前卡個好位置)'
             }
         }
     },
@@ -251,21 +251,21 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         lng: 144.9680,
         region: 'melbourne',
         authorId: 'c-mel',
-        tags: ['隱藏酒吧', '唐人街', '氛圍'],
+        tags: ['隱藏酒吧', '唐人街', '淘金歷史'],
         tier: 'premium',
         isLocked: true,
-        marketingTitle: '新金山的秘密',
-        marketingTitleEn: 'Secrets of the New Gold Mountain',
+        marketingTitle: '尋找紅色腳踏車與金門',
+        marketingTitleEn: 'Find the Red Bike and Gold Door',
         insiderTip: {
-            teaser: '唐人街的秘密樓上酒吧',
-            teaserEn: 'Secret upstairs bar in Chinatown',
+            teaser: '唐人街裡沒有招牌的二樓秘境',
+            teaserEn: 'A secret upstairs haven in Chinatown with no sign',
             full: {
-                story: '在唐人街找一輛停著的腳踏車和門口的「21」號牌。推開金色的門往上走，你會進入一個兩層樓的 lounge，氛圍從 1850 淘金熱時代穿越而來。',
-                storyEn: 'In Chinatown, look for a parked bicycle and the number "21" above a gold door. Push through and walk up to a two-level lounge with vibes from the 1850s gold rush era.',
-                exactLocation: 'Little Bourke St，找腳踏車和金色門上的「21」',
-                mustTry: '二樓的沙發區比較私密，適合約會',
-                avoid: '一樓有時候會辦活動，建議直接上二樓',
-                bestTime: '20:00-22:00'
+                story: '它向 1850 年代維多利亞時代淘金熱（華人稱墨爾本為「新金山」）致敬。在唐人街的小巷裡，尋找一輛停在路邊的紅色腳踏車，腳踏車後方有一扇嵌著數字「21」的金色小門。推開門走上陡峭的樓梯，這是一個充滿東方鴉片館神秘氛圍的地方。',
+                storyEn: 'Paying homage to the 1850s Victorian gold rush (when Chinese immigrants called Melbourne "New Gold Mountain"). In a Chinatown alley, look for a red bicycle parked by the wall. Behind it is a small gold door with the number "21". Push it open and climb the steep stairs into a space exuding the mysterious vibe of an oriental opium den.',
+                exactLocation: 'Little Bourke St，在龍舫副牌餐廳附近找紅腳踏車。',
+                mustTry: '他們以中國茶和亞洲香料入酒。試試看帶有四川花椒或茉莉花茶風味的特調。',
+                avoid: '不要帶大群朋友來，這裡非常適合兩三人的私密對話。',
+                bestTime: '20:00-22:00 (唐人街吃完晚餐後直接過來)'
             }
         }
     },
@@ -325,9 +325,365 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 story: '沒有屋頂、沒有牆壁，只有兩個貨櫃和一堆木棧板。這裡代表了墨爾本最隨性、最狂放的一面。你會看到西裝筆挺的上班族跟刺青藝術家坐在一起喝啤酒。音響設備卻是頂級的，常有厲害的 DJ 駐場。',
                 storyEn: 'No roof, no walls—just two containers and pallets. This is Melb\'s rawest side. You\'ll see suits sitting with tattoo artists. Despite the look, the sound system is top-tier with world-class DJs.',
                 exactLocation: 'Tattersalls Lane 中段，看到畫滿塗鴉的門口就是了',
-                mustTry: '當地精釀啤酒 (Craft Beer on Tap) + 體驗坐在木棧板上的氛圍',
-                avoid: '下大雨時體驗會打折，雖然有遮雨棚但還是會濕',
                 bestTime: '週五下午 17:00 (Happy Hour)'
+            }
+        }
+    },
+    {
+        id: 'mel-11',
+        title: 'Puffing Billy 普芬比利蒸汽火車',
+        titleEn: 'Puffing Billy Railway',
+        type: 'attraction',
+        duration: '2.5小時',
+        image: '🚂',
+        description: '穿越百年森林的蒸氣火車，是可以把腳伸出窗外的奇妙體驗。',
+        descriptionEn: 'A century-old steam train through the forest where you can dangle your legs out the window.',
+        price: 65,
+        address: '1 Old Monbulk Rd, Belgrave',
+        addressEn: '1 Old Monbulk Rd, Belgrave VIC 3160',
+        rating: 4.8,
+        lat: -37.9084,
+        lng: 145.3551,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['親子', '火車', '森林', '必去'],
+        bookingUrl: 'https://puffingbilly.com.au',
+        tier: 'premium',
+        insiderTip: {
+            teaser: '1. 週末幾乎每班都爆滿，現場買不到票 \n 2. 不要坐第一節車廂，會吃煤灰！',
+            teaserEn: '1. Weekend trains are always sold out, you can\'t buy tickets on-site \n 2. Don\'t sit in the first carriage, you\'ll get covered in coal soot!',
+            full: {
+                story: '這是全澳洲最受歡迎的親子行程，體驗百年蒸汽火車並把腳跨在窗外。但我看過太多家長為了拍照搶坐最前面，結果一趟下來小孩滿臉黑炭（真的是燒煤炭的！）。',
+                storyEn: 'The most popular family activity in Australia. Dangle your legs out of a century-old steam train. But I\'ve seen too many parents rush for the front carriage, ending up with kids covered in coal soot.',
+                exactLocation: 'Belgrave 車站。建議從市區搭火車直達，比開車好停車。',
+                exactLocationEn: 'Belgrave Station. Consider taking the train from CBD for easier parking.',
+                mustTry: '1. 坐右邊靠窗，過 Monbulk Creek 高架橋（約 40 分鐘後）時景色最好，火車弧度最漂亮。 \n 2. 上車時直接往「車尾」走。拍照時從車尾往前拍整列火車過木橋（Trestle Bridge）的弧度最漂亮。',
+                mustTryEn: 'Sit on the right window side; the view over Monbulk Creek Trestle Bridge (approx 40 mins in) is the best for photos.',
+                avoid: '⚠️ 建議出發前 2 週訂票，尤其假日。不要穿白衣服去或穿舊衣服，因為煤煙會沾到衣服上! 另外，如果是冬天去，一定要給小孩帶一條毯子，因為窗戶是沒有玻璃的。',
+                avoidEn: '⚠️ Recommend booking 2 weeks in advance, especially for holidays. Wear old clothes - soot will stain!',
+                bestTime: '週二早上 10:30 (平日人少一半)',
+                bestTimeEn: 'Tuesday 10:30 AM (Half the usual weekday crowd)'
+            }
+        }
+    },
+    {
+        id: 'mel-12',
+        title: 'Twelve Apostles',
+        titleEn: 'Twelve Apostles',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🌊',
+        description: '大洋路最壯麗的海岸奇景，見證被海浪雕刻的石灰岩柱。',
+        descriptionEn: 'The most magnificent coastal spectacle on the Great Ocean Road.',
+        price: 0,
+        address: 'Great Ocean Rd, Princetown',
+        addressEn: 'Great Ocean Rd, Princetown VIC 3269',
+        rating: 4.9,
+        lat: -38.6655,
+        lng: 143.1046,
+        region: 'melbourne',
+        marketingTitle: '十二門徒的魔幻時刻',
+        marketingTitleEn: 'The Magic Hour of the 12 Apostles',
+        tier: 'premium',
+        insiderTip: {
+            teaser: '90%的旅行團下午 2 點到，拍出來的石頭像平面紙板',
+            teaserEn: '90% of tours arrive at 2PM. The flat lighting ruins the photos.',
+            full: {
+                story: '十二門徒岩是大洋路的終極地標。90% 的一日遊旅行團都會在下午 1 點到 3 點抵達，那時候不僅人山人海，萬惡的「正午頂光」會讓這些巨石失去立體感。',
+                storyEn: 'The ultimate landmark of the Great Ocean Road. 90% of tours arrive between 1-3 PM. Not only is it packed, but the harsh overhead lighting makes these giant rocks look completely flat.',
+                exactLocation: '從停車場走地下通道過去，找最靠近懸崖邊緣的末端觀景台。',
+                mustTry: '如果想拍出史詩級大片，你只有兩個選擇：早上 7 點的日出（石頭會呈現金黃色），或是下午 6 點的日落（逆光剪影極度震撼，剛好也是企鵝歸巢時間）。',
+                avoid: '⚠️ 千萬不要妄想在中午 12 點拿手機拍出立體感。另外海風極強，腳架一定要掛重物，否則會被直接吹下懸崖。',
+                bestTime: '18:00 (日落時分的完美魔幻時刻)'
+            }
+        }
+    },
+    {
+        id: 'mel-13',
+        title: 'Queen Victoria Market',
+        titleEn: 'Queen Victoria Market',
+        type: 'food',
+        duration: '2小時',
+        image: '🧀',
+        description: '南半球最大的露天市場，墨爾本人的美食廚房。',
+        descriptionEn: 'The largest open-air market in the Southern Hemisphere.',
+        price: 25,
+        address: 'Queen St, Melbourne CBD',
+        addressEn: 'Queen St, Melbourne VIC 3000',
+        rating: 4.6,
+        lat: -37.8076,
+        lng: 144.9568,
+        region: 'melbourne',
+        authorId: 'c-mel-brunch',
+        tags: ['市集', '早午餐', '美食'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '週一三吃閉門羹！別逛外面的玩具攤，直衝百年起司熟食館',
+            teaserEn: 'Closed Mon/Wed! Skip the cheap toys outside, head straight to the indoor Dairy Hall.',
+            full: {
+                story: '維多利亞市場極度龐大，最外圍賣廉價無尾熊娃娃的區域完完全全是給觀光客的浪費時間陷阱。真正的「維媽」精華，全部集中在室內的歷史建築 Dairy Produce Hall（熟食館）。',
+                storyEn: 'Queen Vic Market is massive. The outer stalls selling cheap koala toys are tourist traps. The true essence of the market is entirely inside the historic Dairy Produce Hall.',
+                exactLocation: '不要在一樓戶外區逗留，抬頭找寫著 "Dairy Produce Hall" 的巨大紅磚建築直接進去。',
+                mustTry: 'Bratwurst Shop 的辣味德式香腸堡加酸菜、Borek Bakehouse 的起司波菜土耳其捲。這兩家是當地人從學生時代吃到老的信仰。',
+                avoid: '⚠️ 週一和週三絕對沒開，不要白跑！另外下午 2 點後熱門攤位全部收攤，這裡是「早市」不是夜市。',
+                bestTime: '09:00 (食材最新鮮，且不用排隊超過 10 分鐘)'
+            }
+        }
+    },
+    {
+        id: 'mel-14',
+        title: 'Lune Croissanterie',
+        titleEn: 'Lune Croissanterie',
+        type: 'food',
+        duration: '1小時',
+        image: '🥐',
+        description: '曾被譽為「世界第一可頌」的排隊名店。',
+        descriptionEn: 'Once hailed as the "best croissant in the world".',
+        price: 15,
+        address: '119 Rose St, Fitzroy',
+        addressEn: '119 Rose St, Fitzroy VIC 3065',
+        rating: 4.8,
+        lat: -37.7958,
+        lng: 144.9798,
+        region: 'melbourne',
+        authorId: 'c-mel-brunch',
+        tags: ['早午餐', '網紅店', '甜點'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '週末早上必排一小時，平日 7:30 去直接包場看無菌室',
+            teaserEn: '1-hour queue on weekends. Go at 7:30 AM weekdays to get the climate-controlled box to yourself.',
+            full: {
+                story: '雖然他們在市區開了分店，但市區店沒有標誌性的「溫控玻璃工坊」！Fitzroy 總店最迷人的地方，就是能隔著巨大玻璃，看師傅像在無菌室裡做實驗一樣精準測量每一層奶油。',
+                storyEn: 'They have a CBD branch now, but only Fitzroy has the climate-controlled glass cube! The magic is watching the bakers work like scientists in a clean room, precisely measuring layers of butter.',
+                exactLocation: 'Fitzroy 區的 Rose St，遠遠看到無止盡的人龍跟聞到極致奶油香就是了。',
+                mustTry: '除了招牌 Almond Croissant，如果運氣好碰到週末限定的 Cruffin（可頌馬芬），請毫不猶豫立刻結帳。',
+                avoid: '⚠️ 週末早上 9 點去保證你的行程會大 delay。內行人都知道，平日早上 7:30 開門時去，你甚至可以霸佔最佳拍攝位置。',
+                bestTime: '07:30 (平日搶頭香，拍到玻璃房與第一爐出爐的瞬間)'
+            }
+        }
+    },
+    {
+        id: 'mel-15',
+        title: 'Melbourne Museum (Children\'s Gallery)',
+        titleEn: 'Melbourne Museum (Children\'s Gallery)',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🦕',
+        description: '南半球最大博物館，內有專為 0-5 歲設計的超狂兒童專區。',
+        descriptionEn: 'The largest museum in the Southern Hemisphere, featuring an insane Children\'s Gallery for 0-5 year olds.',
+        price: 15,
+        address: '11 Nicholson St, Carlton',
+        addressEn: '11 Nicholson St, Carlton VIC 3053',
+        rating: 4.8,
+        lat: -37.8033,
+        lng: 144.9717,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['親子', '博物館', '恐龍'],
+        bookingUrl: 'https://museumsvictoria.com.au/melbournemuseum/',
+        tier: 'premium',
+        insiderTip: {
+            teaser: '一樓恐龍只是晃子，0-5歲直衝專屬「化石沙坑」',
+            teaserEn: 'Dinosaurs are a distraction. Kids 0-5 head straight to the custom sandpit.',
+            full: {
+                story: '一樓巨大的恐龍骨架很帥，但對五歲以下的小孩來說太靜態了。真正會讓小孩陷入瘋狂的，是專門圍起來的 Children\'s Gallery！小孩可以穿上探險背心，在超大室內沙坑裡「挖掘化石」。',
+                storyEn: 'Dinosaurs are cool but too static for toddlers. The real insanity happens inside the gated Children\'s Gallery. Kids wear explorer vests and legitimately dig for fossils in a massive indoor sandpit.',
+                exactLocation: '進大廳後不要被恐龍騙走，直接右轉到底，看到巨大網狀攀爬球的地方就是了。',
+                mustTry: '室內沙坑挖掘體驗，以及戶外非常有設計感的玩水區。',
+                avoid: '⚠️ 週末一定要先上網買票，現場排隊的超長人龍會讓小孩在進場前就爆發。另外，強烈建議幫小孩帶一套全身替換衣物，他們絕對會玩到全身泥沙。',
+                bestTime: '10:00 (平日剛開門時，小孩可以把整個沙坑當自己的)'
+            }
+        }
+    },
+    {
+        id: 'mel-16',
+        title: 'Collingwood Children\'s Farm',
+        titleEn: 'Collingwood Children\'s Farm',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🐑',
+        description: '隱藏在市區邊緣的真實農場，可以近距離接觸各種小動物。',
+        descriptionEn: 'A real working farm hidden on the edge of the city, interact closely with farm animals.',
+        price: 16,
+        address: '18 St Heliers St, Abbotsford',
+        addressEn: '18 St Heliers St, Abbotsford VIC 3067',
+        rating: 4.7,
+        lat: -37.8029,
+        lng: 145.0033,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['親子', '農場', '自然'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '別管看牛羊了，每天兩次能把天竺鼠抱在腿上的隱藏時段',
+            teaserEn: 'Skip the cows. Hit the twice-daily Guinea Pig Cuddle session.',
+            full: {
+                story: '明明離市中心只有 15 分鐘車程，卻像來到了鄉下。這裡最大的亮點不是看牛羊，而是專門給小孩的「Guinea Pig Cuddle (抱天竺鼠)」時間。所有小孩排排坐好，毛茸茸的天竺鼠會被放在你的大腿上！',
+                storyEn: 'A magical rural farm just 15 mins from the CBD. The massive highlight isn\'t the cows, but the daily "Guinea Pig Cuddle" sessions. Kids sit in a row and get a fluffy guinea pig placed right on their laps!',
+                exactLocation: '沿著 Yarra River 旁的林蔭小徑走進去，在 Abbotsford Convent 旁邊。',
+                mustTry: '每天早上 10:15 和 下午 3:15 的抱天竺鼠時間。結束後，爸媽可以去旁邊的 The Farm Cafe 買杯極品咖啡。',
+                avoid: '⚠️ 千萬不要穿新鞋或白鞋來！這是真正的農場，地上滿是泥濘和動物大便。想維持乾淨的家長請繞道。',
+                bestTime: '09:30 (趕上早上的抱天竺鼠時段)'
+            }
+        }
+    },
+    {
+        id: 'mel-17',
+        title: 'Royal Park Nature Play',
+        titleEn: 'Royal Park Nature Play Playground',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🛝',
+        description: '全澳最佳遊樂場之一，沒有塑膠設施，全是原木與水壩地形。',
+        descriptionEn: 'One of Australia\'s best playgrounds: no plastic, just logs, rocks, and water dams.',
+        price: 0,
+        address: 'Gatehouse St, Parkville',
+        addressEn: 'Gatehouse St, Parkville VIC 3052',
+        rating: 4.9,
+        lat: -37.7941,
+        lng: 144.9515,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['親子', '公園', '免費'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '放生小孩的最佳地點，但記得帶「全套裝備」',
+            teaserEn: 'Best place to unleash kids, but bring the "full kit"',
+            full: {
+                story: '如果你受夠了無聊的塑膠溜滑梯，這裡會是天堂。整個遊樂場建在山丘上，利用巨石、原木、繩網打造。最受歡迎的是底部的「水壩區」，小孩可以自己操控水閘門改變水流。這是澳洲人「Nurture in Nature (在自然中成長)」理念的完美具現化。',
+                storyEn: 'If you are sick of boring plastic slides, this is heaven. Built into a hill using boulders, ropes, and logs. The most popular spot is the "Water Dam" area where kids pump water and control gates manually. This perfectly embodies the Aussie "Nurture in Nature" philosophy.',
+                exactLocation: '就在 Royal Children\'s Hospital 兒童醫院旁邊。搭 58 號電車直接抵達門口。',
+                mustTry: '善用旁邊免費的公共 BBQ 烤肉台，去對面的超市買點香腸麵包，就可以解決完美的一餐。',
+                avoid: '不要妄想小孩會乾淨的離開這裡。帶上大毛巾、換洗衣服、甚至溯溪鞋，讓他們在泥巴水裡玩瘋吧。',
+                bestTime: '15:00 - 17:00 (消耗小孩最後的體力)'
+            }
+        }
+    },
+    {
+        id: 'mel-18',
+        title: 'Market Lane Coffee (QVM)',
+        titleEn: 'Market Lane Coffee at QVM',
+        type: 'food',
+        duration: '30分鐘',
+        image: '☕',
+        description: '在市場買完早餐後，來這裡配上一杯墨爾本頂級咖啡。',
+        descriptionEn: 'Pair your market breakfast with top-tier Melbourne coffee here.',
+        price: 6,
+        address: 'Dairy Produce Hall, Queen Victoria Market',
+        addressEn: 'Dairy Produce Hall, QVM VIC 3000',
+        rating: 4.8,
+        lat: -37.8070,
+        lng: 144.9560,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['咖啡', '早餐', '市場'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '別在這裡買早餐！去買對面的熱騰騰起司捲，再來點拿鐵',
+            teaserEn: 'Don\'t buy food here! Get the hot cheese scrolls opposite and pair them with a latte.',
+            full: {
+                story: 'Market Lane 是墨爾本精品咖啡的代名詞。為什麼特別排在市場第一站？因為這裡是少數「極度歡迎你帶外食」的頂級咖啡店。',
+                storyEn: 'Market Lane is synonymous with Melb specialty coffee. Pacing it first in the market is crucial because they actively encourage you to bring outside food.',
+                exactLocation: '就在 Dairy Hall 裡面，找那間最明亮、只賣咖啡不賣食物的店面。',
+                mustTry: '爸爸先把位子佔好並點 Flat White，媽媽去對面 Borek Bakehouse 買剛出爐的起司菠菜捲、再幫小孩買現烤甜甜圈，一家人的完美早餐就搞定了。',
+                avoid: '⚠️ 店內空間極小，大型嬰兒推車絕對進不去。推車請放在外圍，派一人進去點單。',
+                bestTime: '09:00 (拿著神級咖啡邊走邊逛市場)'
+            }
+        }
+    },
+    {
+        id: 'mel-19',
+        title: '400 Gradi (Brunswick)',
+        titleEn: '400 Gradi Brunswick',
+        type: 'food',
+        duration: '1.5小時',
+        image: '🍕',
+        description: '拿過「世界冠軍瑪格麗特披薩」，小孩最愛的晚餐保證。',
+        descriptionEn: 'Winner of "World\'s Best Margherita", guaranteed dinner success with kids.',
+        price: 35,
+        address: '99 Lygon St, Brunswick East',
+        addressEn: '99 Lygon St, Brunswick East VIC 3057',
+        rating: 4.6,
+        lat: -37.7761,
+        lng: 144.9712,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['晚餐', '披薩', '家庭友善'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '連挑食怪小孩都能吃光一整片的魔法披薩',
+            teaserEn: 'Magic pizza that even picky Kids will devour',
+            full: {
+                story: '如果你在墨爾本只能選一餐當作全家人的靈魂撫慰，絕對是 Lygon St 上的義大利菜。400 Gradi 老闆拿過拿坡里披薩世界冠軍，餅皮的焦香和番茄醬的酸甜取得極致平衡。',
+                storyEn: 'If you need ultimate soul comfort for the family, Lygon St Italian is it. The owner won the World Championship for Neapolitan pizza. The crust is perfectly blistered.',
+                exactLocation: 'Lygon St 義大利街的北段。路邊停車位通常要繞一下。',
+                mustTry: 'Margherita Verace (世界冠軍款) 點下去就對了，再幫小孩加點一份起司薯條。',
+                avoid: '星期五跟週末晚上沒有訂位絕對吃不到。就算有訂位也常常要等。',
+                bestTime: '17:30 (第一批入座，上菜最快，小孩不崩潰)'
+            }
+        }
+    },
+    {
+        id: 'mel-20',
+        title: 'Grants on Sherbrooke (Feed the Cockatoos)',
+        titleEn: 'Grants on Sherbrooke Cafe',
+        type: 'food',
+        duration: '1小時',
+        image: '🦜',
+        description: '搭火車前後的午餐首選，還能跟野生巨型鸚鵡近距離接觸。',
+        descriptionEn: 'Best lunch near the train, plus close encounters with wild cockatoos.',
+        price: 20,
+        address: '70 Monbulk Rd, Kallista',
+        addressEn: '70 Monbulk Rd, Kallista VIC 3791',
+        rating: 4.1,
+        lat: -37.8864,
+        lng: 145.3614,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['午餐', '自然', '鳥類'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '吃飯是其次，重點是被野生大鸚鵡包圍！',
+            teaserEn: 'Food is second, getting swarmed by huge parrots is first!',
+            full: {
+                story: '搭完 Puffing Billy 蒸汽火車後，千萬不要在車站隨便買熱狗吃。開車五分鐘到這個森林深處的咖啡廳。食物雖然中規中矩（澳洲經典的 Pie 跟 Fish & Chips），但賣點是旁邊的森林空地！',
+                storyEn: 'Don\'t eat hotdogs at the station. Drive 5 mins to this cafe deep in the forest. Food is standard Aussie fare, but the highlight is the clearing outside!',
+                exactLocation: '離 Puffing Billy 的 Belgrave 車站約 5 分鐘車程。',
+                mustTry: '買了代幣後去換「鳥食」，你跟小孩會瞬間被幾十隻半個手臂大的野生白色葵花鳳頭鸚鵡包圍。',
+                avoid: '不要自己帶食物餵鳥！抓鳥時請讓小孩戴上手套（鳥爪很利），膽子不夠大的小孩可能會被成群盤旋的巨鳥嚇哭。',
+                bestTime: '13:30 (搭完火車後的完美中繼站)'
+            }
+        }
+    },
+    {
+        id: 'mel-21',
+        title: 'St Kilda Breakwater (看野生小企鵝)',
+        titleEn: 'St Kilda Breakwater Penguins',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🐧',
+        description: '不用跑企鵝島，市區海灘就能免費看野生神仙小企鵝歸巢。',
+        descriptionEn: 'Free wild fairy penguin viewing right in the city beach, no need for Phillip Island.',
+        price: 0,
+        address: 'Pier Rd, St Kilda',
+        addressEn: 'Pier Rd, St Kilda VIC 3182',
+        rating: 4.7,
+        lat: -37.8643,
+        lng: 144.9654,
+        region: 'melbourne',
+        authorId: 'c-mel-family',
+        tags: ['親子', '自然', '免費', '野生動物'],
+        tier: 'premium',
+        insiderTip: {
+            teaser: '入夜後就算夏天也會冷到發抖！帶上最厚的防風外套',
+            teaserEn: 'Don\'t flash! And bring your thickest winter jackets, even in summer.',
+            full: {
+                story: '不想拉車 3 小時去 Phillip Island？St Kilda 防波堤是完美的平替方案。每天日落後，野生神仙小企鵝會從海裡捕魚回來，穿過岩石縫隙爬回巢穴。',
+                storyEn: 'Don\'t want a 3-hour drive to Phillip Island? St Kilda Breakwater is the perfect alternative. After sunset, wild fairy penguins return from fishing.',
+                exactLocation: '走到 St Kilda Pier 的最盡頭，穿過亭子後走到岩石防波堤區。',
+                mustTry: '日落前 30 分鐘去卡位，佔據靠近岩石縫隙側邊第一排。企鵝常常從你腳邊不到 50 公分的地方走過去！',
+                avoid: '⚠️ 絕對不能開閃光燈或白光手機（會導致企鵝失明）。海風極度刺骨，即便是 30 度的盛夏白天，晚上在這裡也會冷到大發抖，記得帶厚外套。',
+                bestTime: '日落後 30 分鐘 (每天歸巢時間不同，夏天約 20:30，冬天約 18:00)'
             }
         }
     }

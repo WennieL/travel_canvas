@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Wallet, X, PieChart, TrendingUp } from 'lucide-react';
+import { getCurrencySymbol } from '../data/regions';
 
 interface CategoryBreakdown {
     type: string;
@@ -22,6 +23,7 @@ interface BudgetWidgetProps {
     showToastMessage?: (message: string, type: 'success' | 'error') => void;
     disableHover?: boolean;
     onClick?: () => void;
+    planRegion?: string;
 }
 
 export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
@@ -36,7 +38,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     compact = false,
     showToastMessage,
     disableHover = false,
-    onClick
+    onClick,
+    planRegion
 }) => {
     const [showModal, setShowModal] = useState(false);
     // Initialize tempLimit in Home Currency (approx)
@@ -103,11 +106,11 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
     const handleSave = (isEmbeddedCall: boolean = false) => {
         const rate = parseFloat(tempRate) || 1;
         const limitInCurrency = parseInt(tempLimit) || 0;
-        // Convert Home Currency back to JPY
-        // Amount(JPY) = Amount(Home) / Rate
-        const newLimitJPY = Math.round(limitInCurrency / rate);
+        // Convert Home Currency back to Base
+        // Amount(Base) = Amount(Home) / Rate
+        const newLimitBase = Math.round(limitInCurrency / rate);
 
-        onSetLimit(newLimitJPY);
+        onSetLimit(newLimitBase);
         if (onSetSettings) {
             onSetSettings(tempCurrency, rate);
         }
@@ -127,8 +130,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
 
     // ... (Compact/Regular render)
 
-    // Helper to calculate JPY from input
-    const calculatedJPY = Math.round((parseInt(tempLimit) || 0) / (parseFloat(tempRate) || 1));
+    // Helper to calculate Base from input
+    const calculatedBase = Math.round((parseInt(tempLimit) || 0) / (parseFloat(tempRate) || 1));
 
     if (compact) {
         // ... (compact code same as before, no changes needed inside compact block mostly)
@@ -173,7 +176,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                         <div className="flex justify-between items-start mb-2">
                             <div>
                                 <div className="text-xs text-gray-500">{t.totalSpent || '總花費'}</div>
-                                <div className="text-xl font-bold text-gray-800">¥{spent.toLocaleString()}</div>
+                                <div className="text-xl font-bold text-gray-800">{getCurrencySymbol(planRegion)}{spent.toLocaleString()}</div>
                                 {currency && exchangeRate && (
                                     <div className="text-xs text-gray-400">≈ {currency} {(spent * exchangeRate).toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
                                 )}
@@ -181,7 +184,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                             <div className="text-right">
                                 <div className="text-xs text-gray-500">{t.remaining || '剩餘'}</div>
                                 <div className={`font-bold ${remaining < 0 ? 'text-red-500' : 'text-teal-600'}`}>
-                                    {remaining < 0 ? '-' : ''}¥{Math.abs(remaining).toLocaleString()}
+                                    {remaining < 0 ? '-' : ''}{getCurrencySymbol(planRegion)}{Math.abs(remaining).toLocaleString()}
                                 </div>
                             </div>
                         </div>
@@ -217,7 +220,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                         handleSave={handleSave}
                         t={t}
                         generatePieGradient={generatePieGradient}
-                        calculatedJPY={calculatedJPY} // Pass this
+                        calculatedBase={calculatedBase} // Pass this
+                        planRegion={planRegion}
                     />,
                     document.body
                 )}
@@ -248,8 +252,8 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                 {isHovered && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-2 bg-gray-900 text-white rounded-xl text-xs font-bold whitespace-nowrap z-50 animate-in fade-in zoom-in-95 duration-200 shadow-xl">
                         <div className="flex items-center gap-2">
-                            <span>¥{spent.toLocaleString()}</span>
-                            {limit > 0 && <span className="opacity-50">/ ¥{limit.toLocaleString()}</span>}
+                            <span>{getCurrencySymbol(planRegion)}{spent.toLocaleString()}</span>
+                            {limit > 0 && <span className="opacity-50">/ {getCurrencySymbol(planRegion)}{limit.toLocaleString()}</span>}
                         </div>
                         <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
                     </div>
@@ -277,8 +281,9 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
                     handleSave={handleSave}
                     t={t}
                     generatePieGradient={generatePieGradient}
-                    calculatedJPY={calculatedJPY} // Pass this
+                    calculatedBase={calculatedBase} // Pass this
                     isSuccess={isSuccess}
+                    planRegion={planRegion}
                 />,
                 document.body
             )}
@@ -287,7 +292,7 @@ export const BudgetWidget: React.FC<BudgetWidgetProps> = ({
 };
 
 // Extracted and Exported BudgetOverview (formerly ModalContent)
-export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remaining, isOverBudget, percentage, breakdown, tempLimit, setTempLimit, tempCurrency, setTempCurrency, tempRate, setTempRate, currency, exchangeRate, handleSave, t, generatePieGradient, calculatedJPY, embed = false, isSuccess = false }: any) => (
+export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remaining, isOverBudget, percentage, breakdown, tempLimit, setTempLimit, tempCurrency, setTempCurrency, tempRate, setTempRate, currency, exchangeRate, handleSave, t, generatePieGradient, calculatedBase, embed = false, isSuccess = false, planRegion }: any) => (
     <div className={embed ? "w-full h-full bg-white" : "fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm"}>
         <div className={embed ? "w-full" : "bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden"}>
             {/* Header */}
@@ -306,7 +311,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                 {/* Large Budget Display */}
                 <div className="mt-4">
                     <div className="text-sm text-teal-100 opacity-80 mb-1">{t.totalSpent || '已花費'}</div>
-                    <div className="text-3xl font-bold">¥{spent.toLocaleString()}</div>
+                    <div className="text-3xl font-bold">{getCurrencySymbol(planRegion)}{spent.toLocaleString()}</div>
                     {currency && exchangeRate && (
                         <div className="text-sm text-teal-100 opacity-90">
                             ≈ {currency} {(spent * exchangeRate).toLocaleString(undefined, { maximumFractionDigits: 0 })}
@@ -315,8 +320,8 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                     {limit > 0 && (
                         <div className="text-teal-100 text-sm mt-1">
                             {isOverBudget
-                                ? `${t.overBudget || '超出預算'} ¥${Math.abs(remaining).toLocaleString()}`
-                                : `${t.budgetRemaining || '剩餘'} ¥${remaining.toLocaleString()}`
+                                ? `${t.overBudget || '超出預算'} ${getCurrencySymbol(planRegion)}${Math.abs(remaining).toLocaleString()}`
+                                : `${t.budgetRemaining || '剩餘'} ${getCurrencySymbol(planRegion)}${remaining.toLocaleString()}`
                             }
                         </div>
                     )}
@@ -328,7 +333,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                         </div>
                         <div className="flex justify-between text-xs text-teal-100 mt-1">
                             <span>{percentage.toFixed(0)}%</span>
-                            <span>¥{limit.toLocaleString()}</span>
+                            <span>{getCurrencySymbol(planRegion)}{limit.toLocaleString()}</span>
                         </div>
                     </div>
                 )}
@@ -349,7 +354,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                             placeholder="30000"
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
-                            ≈ ¥{calculatedJPY.toLocaleString()}
+                            ≈ {getCurrencySymbol(planRegion)}{calculatedBase.toLocaleString()}
                         </div>
                     </div>
                 </div>
@@ -378,7 +383,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                             {['TWD', 'USD', 'AUD'].map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
                         <div className="relative flex-1">
-                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">1 JPY = </span>
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">1 {getCurrencySymbol(planRegion)} = </span>
                             <input
                                 type="number"
                                 step="0.0001"
@@ -429,7 +434,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                                             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: cat.color }} />
                                             <span className="text-gray-600">{cat.label}</span>
                                         </div>
-                                        <span className="font-medium text-gray-800">¥{cat.amount.toLocaleString()}</span>
+                                        <span className="font-medium text-gray-800">{getCurrencySymbol(planRegion)}{cat.amount.toLocaleString()}</span>
                                     </div>
                                 ))}
                             </div>
@@ -439,7 +444,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
 
                 {/* Quick Budget Presets */}
                 <div>
-                    <label className="text-xs text-gray-500 block mb-2">{t.quickPresets || '快速設定 (JPY)'}</label>
+                    <label className="text-xs text-gray-500 block mb-2">{t.quickPresets || '快速設定'} ({getCurrencySymbol(planRegion)})</label>
                     <div className="flex flex-wrap gap-2">
                         {[30000, 50000, 80000, 100000, 150000].map((preset: number) => {
                             // Display preset in Target Currency
@@ -454,7 +459,7 @@ export const BudgetOverview = ({ showModal, setShowModal, spent, limit, remainin
                                         : 'border-gray-200 text-gray-500 hover:border-teal-300'
                                         }`}
                                 >
-                                    ¥{preset.toLocaleString()} <span className="opacity-70">({tempCurrency}{approxTarget.toLocaleString()})</span>
+                                    {getCurrencySymbol(planRegion)}{preset.toLocaleString()} <span className="opacity-70">({tempCurrency}{approxTarget.toLocaleString()})</span>
                                 </button>
                             )
                         })}

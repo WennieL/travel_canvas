@@ -359,6 +359,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         showContextMap={showContextMap} setShowContextMap={setShowContextMap}
                         viewMode={viewMode} setViewMode={setViewMode}
                         showToastMessage={showToastMessage}
+                        planRegion={activePlan.region}
                     />
                 )}
 
@@ -452,6 +453,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                     onSetLimit={setBudgetLimit}
                                     onSetSettings={updateBudgetSettings}
                                     t={t}
+                                    planRegion={activePlan.region}
                                 />
                             </div>
                         ) : (

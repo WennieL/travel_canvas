@@ -284,7 +284,7 @@ export function App() {
             addToSlotTarget={addToSlotTarget} setAddToSlotTarget={setAddToSlotTarget}
             discoveryCreatorId={discoveryCreatorId}
             sidebarMode={sidebarMode} setSidebarMode={setSidebarMode}
-            selectionSource={ui.selectionSource}
+            selectionSource={ui.selectionSource} setSelectionSource={ui.setSelectionSource}
             // Handlers
             showContextMap={showContextMap} setShowContextMap={setShowContextMap}
             selectedCreatorId={selectedCreatorId} setSelectedCreatorId={setSelectedCreatorId}

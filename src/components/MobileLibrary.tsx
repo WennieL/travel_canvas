@@ -24,6 +24,7 @@ interface MobileLibraryProps {
     customAssets: TravelItem[];
     subscribedCreators: string[];
     onCreatorClick: (id: string) => void;
+    onToggleSubscribe: (creatorId: string) => void;
     onPreviewTemplate: (template: Template) => void;
 
     // Tools props

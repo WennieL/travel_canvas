@@ -11,6 +11,7 @@ interface BudgetViewProps {
     onSetSettings: (currency: string, rate: number) => void;
     t: any;
     hideTitle?: boolean;
+    planRegion?: string;
 }
 
 const BudgetView: React.FC<BudgetViewProps> = ({
@@ -22,7 +23,8 @@ const BudgetView: React.FC<BudgetViewProps> = ({
     onSetLimit,
     onSetSettings,
     t,
-    hideTitle = false
+    hideTitle = false,
+    planRegion
 }) => {
     const [showModal, setShowModal] = useState(true);
     const initialRate = exchangeRate || 0.21;
@@ -98,9 +100,10 @@ const BudgetView: React.FC<BudgetViewProps> = ({
                 handleSave={handleSave}
                 t={t}
                 generatePieGradient={generatePieGradient}
-                calculatedJPY={calculatedJPY}
+                calculatedBase={calculatedJPY} // Keep calculateJPY as it's from local calc
                 embed={true}
                 isSuccess={isSuccess}
+                planRegion={planRegion}
             />
         </div>
     );

@@ -5,7 +5,8 @@ export { TRANSLATIONS } from './translations';
 export { ALL_REGIONAL_ASSETS as SAMPLE_ASSETS, TOKYO_ASSETS, OSAKA_ASSETS, KYOTO_ASSETS, MELBOURNE_ASSETS, TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS } from './assets';
 export { ALL_SUGGESTIONS } from './suggestions';
 export { SAMPLE_CREATORS } from './creators';
-export { TEMPLATES } from './templates';
+import { TEMPLATES as ALL_TEMPLATES } from './templates';
+export const TEMPLATES = ALL_TEMPLATES.filter(t => !t.isHidden);
 export { REGIONS, getRegion, getGradient, getRegionEmoji, getRegionName, getRegionCurrency, getRegionExchangeRate, getRegionsByCountry } from './regions';
 export {
     REGION_DEFAULT_CHECKLISTS,

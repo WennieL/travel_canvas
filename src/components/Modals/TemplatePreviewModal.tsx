@@ -114,7 +114,7 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
         melbourne: {
             time: { zh: '墨爾本天氣多變「一天四季」，洋蔥式穿法是不二法門，隨身帶薄外套。', en: "Melbourne's weather is famously unpredictable — layer up and always carry a light jacket." },
             transport: { zh: 'Myki 卡搭大眾交通，CBD 免費電車圈範圍廣，機場建議搭 SkyBus 較划算。', en: 'Myki card covers all public transport. Free tram zone covers the CBD. SkyBus is the best-value airport transfer.' },
-            advice: { zh: '別點美式咖啡，試試 Flat White！Queen Victoria Market 週二/三公休，出發前確認。', en: 'Order a Flat White like a local! Queen Victoria Market is closed Tue/Wed — check before visiting.' },
+            advice: { zh: '別點美式咖啡，試試 Flat White！Queen Victoria Market 週一/三公休，出發前確認。', en: 'Order a Flat White like a local! Queen Victoria Market is closed Mon/Wed — check before visiting.' },
         },
     };
     const regionFaq = regionFaqMap[template.region] || {
@@ -338,14 +338,19 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                                 )}
                                             </div>
                                             <p className="text-sm text-gray-600 flex items-center flex-wrap gap-1">
-                                                {dayItems.slice(0, 3).map((item: ScheduleItem, i, arr) => (
+                                                {dayItems.slice(0, 4).map((item: ScheduleItem, i, arr) => (
                                                     <React.Fragment key={i}>
                                                         <span className="font-medium text-gray-700">{item.title}</span>
-                                                        {i < arr.length - 1 && (
+                                                        {(i < arr.length - 1 || dayItems.length > 4) && (
                                                             <ArrowRight size={10} className="text-gray-300" />
                                                         )}
                                                     </React.Fragment>
                                                 ))}
+                                                {dayItems.length > 4 && (
+                                                    <span className="font-medium text-teal-600">
+                                                        +{dayItems.length - 4} {lang === 'zh' ? '景點' : 'spots'}
+                                                    </span>
+                                                )}
                                                 {dayItems.length === 0 && (
                                                     <span className="text-gray-400 italic text-xs">
                                                         {lang === 'zh' ? '自由探索' : 'Free exploration'}
@@ -492,14 +497,14 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
                                 className="px-4 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-2xl font-bold text-sm shadow-lg shadow-amber-200/50 hover:shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                             >
                                 <Lock size={16} />
-                                {t.unlockLabel || (lang === 'zh' ? '解鎖' : 'Unlock')}
+                                {t.unlockLabel || (lang === 'zh' ? '解鎖專家心得 ($0.99)' : 'Unlock Expert Tips ($0.99)')}
                             </button>
                         )}
                     </div>
 
                     {/* Beta Badge */}
                     <p className="text-center text-[10px] text-gray-400 mt-2">
-                        🎁 {t.betaFreeNotice || (lang === 'zh' ? 'Beta 期間所有內容免費解鎖' : 'All content unlocked free during Beta')}
+                        🎁 {t.betaFreeNotice || (lang === 'zh' ? '目前 Demo 階段限時免費' : 'Currently free during Demo phase')}
                     </p>
                 </div>
             </div>

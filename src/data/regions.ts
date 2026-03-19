@@ -133,6 +133,19 @@ export const getRegionName = (id: string, lang: 'zh' | 'en' = 'zh'): string => {
 export const getRegionCurrency = (id: string): string =>
     getRegion(id)?.currency || 'TWD';
 
+/** Get currency symbol for a region */
+export const getCurrencySymbol = (regionId?: string): string => {
+    if (!regionId) return '¥'; // Default fallback
+    const currency = getRegionCurrency(regionId);
+    switch (currency) {
+        case 'AUD': return '$';
+        case 'JPY': return '¥';
+        case 'TWD': return 'NT$';
+        case 'USD': return '$';
+        default: return '$';
+    }
+};
+
 /** Get exchange rate for a region */
 export const getRegionExchangeRate = (id: string): number =>
     getRegion(id)?.exchangeRate || 1;

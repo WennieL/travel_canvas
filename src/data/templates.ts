@@ -7,6 +7,7 @@ export const TEMPLATES: Template[] = [
     // ===== MELBOURNE TEMPLATES (Featured) =====
     {
         id: 'mel-coffee',
+        isHidden: true,
         name: '墨爾本咖啡 & 巷弄文化 1 日',
         nameEn: 'Melbourne Coffee & Laneways 1-Day',
         title: '在地人帶你喝咖啡、遍巷弄',
@@ -77,6 +78,7 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'mel-bars',
+        isHidden: true,
         name: '墨爾本隱藏酒吧巡禮',
         nameEn: 'Melbourne Hidden Bars Tour',
         title: '穿過書架、冷藏庫，探索墨爾本地下酒吧',
@@ -1059,11 +1061,10 @@ export const TEMPLATES: Template[] = [
                 swapSuggestionEn: 'Xiuqiu only open Wed/Fri/Sun. On other days, try "Shanghai Unnamed" beef noodles',
                 morning: [
                     { ...TAICHUNG_ASSETS[2], instanceId: 'tcm-4', startTime: '11:00', arrivalTransport: 'car' },
-                ],
-                afternoon: [
                     { ...TAICHUNG_ASSETS[4], instanceId: 'tcm-5', startTime: '13:30', arrivalTransport: 'car' },
                     { ...TAICHUNG_ASSETS[5], instanceId: 'tcm-6', startTime: '15:30', arrivalTransport: 'car' },
                 ],
+                afternoon: [],
                 evening: [],
                 night: [],
                 accommodation: []
@@ -1073,6 +1074,7 @@ export const TEMPLATES: Template[] = [
     // ── 台北夜市文青 2 日 ──
     {
         id: 'tw-taipei-night',
+        isHidden: true,
         name: '台北夜市文青 2 日',
         nameEn: 'Taipei Night Markets & Culture 2-Day',
         title: '白天文青、晚上夜市，台北的雙面魅力',

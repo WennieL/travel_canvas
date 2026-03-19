@@ -57,6 +57,7 @@ export interface TravelItem {
 
     // [NEW] Premium Content Strategy Fields
     tier?: 'standard' | 'premium';
+    bookingUrl?: string;     // Outbound link for ticket/reservation
     marketingTitle?: string; // e.g. "Hidden Jazz Bar" (Shown when locked)
     marketingTitleEn?: string;
     marketingImage?: string; // Vibe photo (Shown when locked)
@@ -211,6 +212,7 @@ export interface Template {
     region: Region;
     tags: string[];
     tagsEn?: string[];
+    isHidden?: boolean; // Hides template from public discovery
     // Visual Vibe Tags
     vibes?: Array<{
         tag: string;

@@ -26,8 +26,8 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 description: '台北地標，雲端觀景台俯瞰全城。這裡不僅是建築奇蹟，更是俯瞰台北盆地的絕佳制高點。',
                 descriptionEn: 'Taipei skyscraper landmarks with city views from the clouds. An architectural marvel and the ultimate vantage point.',
                 insiderTip: {
-                    teaser: '地標觀景台的秘密咖啡廳',
-                    teaserEn: 'The Landmark Observatory\'s Secret Cafe',
+                    teaser: '觀景台門票 $600，但老台北人都花 $150 預約 35 樓喝咖啡',
+                    teaserEn: '$150 coffee on 35F beats a $600 observatory ticket',
                     full: {
                         story: '雖然大家都去觀景台，但我更推薦預約 35 樓的星巴克，用一杯咖啡的錢就能享受差不多高度的台北美景。這裡的人流相對較少，環境也更放鬆。',
                         storyEn: 'While everyone goes to the observatory, I recommend booking the Starbucks on the 35th floor for the same view with a relaxed vibe.',
@@ -68,8 +68,8 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 description: '台北深夜的地標之美，從高空酒吧俯瞰信義區。享受美食的同時，也能沉浸在閃爍的夜色中。',
                 descriptionEn: 'The beauty of Taipei at night, overlooking Xinyi from a high-altitude bar. Dine amidst twinkling city lights.',
                 insiderTip: {
-                    teaser: '101 的高空微醺時刻',
-                    teaserEn: 'A Sky-High Tipsy Moment at 101',
+                    teaser: '別去 89 樓人擠人！晚上 9 點去 85 樓點杯調酒獨享台北夜色',
+                    teaserEn: 'Skip the 89F crowds! Enjoy Taipei night with a cocktail on 85F at 9PM.',
                     full: {
                         story: '與其白天去觀景台人擠人，我更推薦晚上去 85 樓的隨意鳥地方。點一杯調酒，看著底下的車水馬龍，這才是台北夜貓子的正確打開方式。',
                         storyEn: 'Instead of daylight crowds, I recommend the 85F bar at night for a cocktail and the city pulse.',
@@ -849,15 +849,17 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '11:30-14:00, 17:30-21:00',
         tags: ['🌟米其林', '台菜'],
+        tier: 'premium',
         insiderTip: {
-            teaser: '逢甲無尾巷底的米其林秘密台菜',
-            teaserEn: 'Michelin-secret Taiwanese cuisine at the end of a Feng Chia dead-end alley',
+            teaser: '不要看菜單！平日 11:20 排隊，專點隱藏版黑板菜',
+            teaserEn: 'Ignore the menu! Queue at 11:20 AM and ask for the secret blackboard dishes.',
             full: {
-                story: '走到巷子最底端，以為沒路了才會看到的台菜小館。不要看菜單點，直接跟老闆說「今天有什麼推薦的」才是內行吃法。每天的食材不同，老闆會根據當天市場的狀況調整菜色。',
-                exactLocation: '逢甲附近某無尾巷底端',
-                mustTry: '跟老闆說「看今天有什麼」',
-                avoid: '不要假日去，排隊很長',
-                bestTime: '平日 11:30 開門就到'
+                story: '走到逢甲無尾巷底端才會看到的米其林必比登台菜小館。最內行的吃法不是看那本紙本菜單，而是直接看老闆隨機手寫的推薦。',
+                storyEn: 'A Michelin Bib Gourmand Taiwanese spot hidden at the end of a dead-end alley. The pro move isn\'t the paper menu, but the secret handwritten ones.',
+                exactLocation: '逢甲商圈外圍，走到一條看起來沒路的無尾巷底端。',
+                mustTry: '直接問老闆：「今天市場有帶什麼隱藏版的漁獲或青菜？」',
+                avoid: '⚠️ 假日絕對排到崩潰，而且不接受當天訂位。請務必在平日 11:20 (開門前 10 分鐘) 在門口等候第一輪入座。',
+                bestTime: '11:20 (搶平日午餐第一輪)'
             }
         }
     },
@@ -879,15 +881,17 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '週三、五、日 11:00-14:00',
         tags: ['麵食', '限時營業'],
+        tier: 'premium',
         insiderTip: {
-            teaser: '一週只開 3 天的眷村秘密麵店',
-            teaserEn: 'Military village noodle shop open only 3 days a week',
+            teaser: '沒開的日子比營業多！10:50 排隊搶菜單外的「冰花煎餃」',
+            teaserEn: 'Closed more often than open! Queue at 10:50 AM for off-menu lattice dumplings.',
             full: {
-                story: '老闆堅持一週只做三天，其他時間去市場挑菜和準備。麵條是手工現做，牛肉湯頭要熬 8 小時。坐在充滿舊時光的店裡吃麵，彷彿回到 1970 年代的台灣。',
-                exactLocation: '勤美誠品商圈巷弄內',
-                mustTry: '手工牛肉麵 + 滷味拼盤',
-                avoid: '只有週三、五、日才開！',
-                bestTime: '11:00 開門就進去'
+                story: '老闆極度任性，一週只營業三天，其餘時間都在市場挑菜和熬那鍋要煮 8 小時的牛肉湯頭。坐在滿滿 1970 年代舊物的老宅裡吃麵，是極致的復古體驗。',
+                storyEn: 'The owner is highly eccentric, opening only 3 days a week. Eating here surrounded by 1970s antiques is a peak retro experience.',
+                exactLocation: '勤美誠品商圈的隱密靜巷內。',
+                mustTry: '除了招牌牛肉麵，內行人都知道要直接點菜單上沒寫的隱藏版「限量冰花煎餃」。',
+                avoid: '⚠️ 只有週三、五、日營業，錯過直接撲空。麵條賣完就拉下鐵門，千萬不要下午 1 點才去。',
+                bestTime: '10:50 (開門前排隊，確保能點到限量餃子)'
             }
         }
     },
@@ -910,15 +914,17 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '12:00-18:00',
         tags: ['咖啡', '甜點'],
+        tier: 'premium',
         insiderTip: {
-            teaser: '用武陵農場蘋果做蛋糕的咖啡職人',
-            teaserEn: 'A coffee artisan who makes cake with Wuling Farm apples',
+            teaser: '無候位系統的老宅，平日 12 點來點「巫婆豆」配乳酪',
+            teaserEn: 'No waitlist system. Come at 12PM weekdays, order the secret "Witch Blend" coffee.',
             full: {
-                story: '老闆自己烘焙咖啡豆，會根據你的喜好推薦不同的單品。招牌「蘋果乳酪蛋糕」用的是武陵農場直送的蘋果，口感輕盈不甜膩。店內只有幾張桌子，非常私密。',
-                exactLocation: '國美館附近巷弄內',
-                mustTry: '單品手沖 + 蘋果乳酪蛋糕',
-                avoid: '座位很少，可能要等',
-                bestTime: '平日 13:00-15:00'
+                story: '隱身國美館旁小巷的究極職人店。老闆自己烘豆，店內只有幾張極度私密的桌子。招牌蛋糕是用武陵農場直送的特級蘋果做的。',
+                storyEn: 'Ultimate artisan shop in an alley near NTMoFA. Tables are extremely limited, and they use premium apples from Wuling Farm for their cakes.',
+                exactLocation: '國美館附近巷弄內，外觀非常低調。',
+                mustTry: '熟客隱藏版點法：請老闆用帶有獨特花香的「巫婆配方豆 (Witch Blend)」做手沖，搭配蘋果乳酪蛋糕。',
+                avoid: '⚠️ 這裡沒有候位系統或登記表！週末客滿時你只能在門口乾等。絕對要避開週末下午。',
+                bestTime: '12:00 (平日剛開門時，直接霸佔最舒服的角落)'
             }
         }
     },
@@ -940,15 +946,17 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '10:00-18:00 (週一休)',
         tags: ['老宅', '咖啡'],
+        tier: 'premium',
         insiderTip: {
-            teaser: '藏在大馬路旁的時光膠囊',
-            teaserEn: 'A time capsule hidden off a busy road',
+            teaser: '指定「後院紅磚牆」王座，入座請秒點隱藏版昭和布丁',
+            teaserEn: 'Request the "Brick Wall" courtyard seat, and immediately order the secret Showa Pudding.',
             full: {
-                story: '明明在喧囂大街上，推開木門卻像穿越到另一個時空。日式木質調空間溫暖寧靜，後方有陽光灑落的紅磚牆庭院。點一杯手沖坐在庭院裡，可以待一整個下午。',
-                exactLocation: '五權火車站步行 5 分鐘',
-                mustTry: '坐庭院座位 + 手沖咖啡',
-                avoid: '週一公休',
-                bestTime: '14:00-16:00 午後光影'
+                story: '明明在喧囂大街上，推開木門卻像穿越到另一個時空。後方有一個陽光灑落的極美紅磚牆庭院。',
+                storyEn: 'Right on a busy street, but opening the wooden door teleports you to a serene space with a gorgeous sunlit brick courtyard.',
+                exactLocation: '五權火車站步行 5 分鐘。',
+                mustTry: '入座第一件事：直接問老闆還有沒有菜單外的隱藏甜點「大人味昭和布丁」，通常下午 3 點前就會秒殺完售。',
+                avoid: '⚠️ 週末庭院的位子絕對被網美佔滿。平日下午去，且務必要主動說「我想坐後院紅磚牆邊的位子」。',
+                bestTime: '14:00 (平日午後，陽光斜射在紅磚牆上的角度最完美)'
             }
         }
     },
@@ -970,16 +978,17 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '11:00-17:00',
         tags: ['🏆國際得獎', '伴手禮'],
+        tier: 'premium',
         insiderTip: {
-            teaser: '🏆 世界果醬大賽 8 金的台灣之光',
-            teaserEn: '🏆 Taiwan\'s pride: 8 golds at World Marmalade Awards',
+            teaser: '工作室營業時間極迷離！私訊預約帶走隱藏版果醬氣泡飲',
+            teaserEn: 'Studio hours are erratic! DM to book and grab the secret jam sparkling drink.',
             full: {
-                story: '被譽為「果醬女王」的柯亞，用茂谷柑、蜜柑等台灣在地水果做出征服英國評審的果醬。小罐裝非常適合當伴手禮。不只是甜的，有些口味配鹹食（起司、麵包）更好吃。',
-                storyEn: 'Known as the "Jam Queen", Keya uses Taiwanese fruits to create jams that impressed British judges. Small jars make great souvenirs.',
-                exactLocation: '台中市（可線上訂購）',
-                mustTry: '「蜜柑友達」+ 原味吐司',
-                avoid: '不是每天都有現場販售，建議先查詢',
-                bestTime: '搭配早餐的吐司一起享用'
+                story: '被譽為「果醬女王」的柯亞，用茂谷柑、蜜柑等台灣在地水果做出征服英國評審、狂拿 8 面金牌的世界第一果醬。',
+                storyEn: 'Known as the "Jam Queen," Keya uses Taiwan local fruits to win 8 gold medals in the UK, creating the world\'s best marmalade.',
+                exactLocation: '台中市工作室（去之前務必線上確認營業狀況）。',
+                mustTry: '很多人只買果醬，但內行人會點一杯用冠軍果醬調製的隱藏版「果醬氣泡飲」外帶，沁涼解暑。',
+                avoid: '⚠️ 千萬不要沒確認就直接殺過去！實體工作室對外開放時間極度不固定，去之前一定要先私訊粉專確認。',
+                bestTime: '買完果醬後直接外帶氣泡飲'
             }
         }
     },
@@ -1002,15 +1011,17 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '全天',
         tags: ['步道', '秘境'],
+        tier: 'premium',
         insiderTip: {
-            teaser: '台中在地人私藏的森林秘境步道',
-            teaserEn: 'A secret forest trail kept by Taichung locals',
+            teaser: '大坑步道人擠人，這裡走 5 公里找無名阿嬤買隱藏粉粿冰',
+            teaserEn: 'Avoid the crowded Dakeng trails. Walk 5km here and find the nameless grandma\'s secret jelly ice.',
             full: {
-                story: '沿著日治時期建造的八寶圳延伸，全程平坦（非常適合帶小孩或長輩）。兩側樹木茂密，夏天走完全不曬。沿途有豐富的生態，運氣好可以看到翠鳥。終點有在地阿嬤賣的手工粉圓冰。',
-                exactLocation: '石岡區萬仙街入口',
-                mustTry: '終點的手工粉圓冰',
-                avoid: '雨天步道濕滑',
-                bestTime: '清晨或傍晚'
+                story: '週末的大坑步道像菜市場一樣擠，而這條沿著日治時期八寶圳延伸的 5 公里步道才是真秘境。全程平坦且樹木極度茂密，夏天走完全不曬。',
+                storyEn: 'Dakeng trails are packed on weekends. This 5km flat trail along the Japanese-era Babao Canal is the true secret spot. Fully shaded by trees.',
+                exactLocation: '從石岡區萬仙街入口進去。',
+                mustTry: '走到步道終點，如果運氣好會遇到一個沒有招牌的在地阿嬤，一定要跟她買一杯菜單上沒有的「純手工粉粿冰」。',
+                avoid: '⚠️ 森林生態極好，意味著小黑蚊極其兇猛！切記穿長褲並帶上當地最強效的防蚊液，否則會被咬成紅豆冰。',
+                bestTime: '07:00 (清晨的微光穿過森林最美，且不會熱)'
             }
         }
     },

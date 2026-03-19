@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Map as MapIcon, Share2, Check, Calendar, Pencil, Wallet } from 'lucide-react';
 import { LangType, Plan, Region, ViewMode } from '../types';
 import { CITY_FILTERS } from '../data/index';
@@ -39,6 +39,7 @@ interface AppHeaderProps {
     viewMode: ViewMode;
     setViewMode: (mode: ViewMode) => void;
     showToastMessage: (message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number) => void;
+    planRegion?: string;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -49,7 +50,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     isSidebarOpen, budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
     showContextMap, setShowContextMap, toolbar,
     viewMode, setViewMode,
-    showToastMessage
+    showToastMessage,
+    planRegion
 }) => {
     const MAX_NAME_LENGTH = 25;
 
