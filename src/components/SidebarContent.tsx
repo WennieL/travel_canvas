@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Search, Map } from 'lucide-react';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { ItemType, TravelItem, Region, LangType, Plan, ChecklistItem, TimeSlot, ScheduleItem } from '../types';
 import BudgetView from './BudgetView';
 import ChecklistView from './ChecklistView';
@@ -125,9 +126,10 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
     const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
     // Check if mobile/tablet (updated to match LG breakpoint)
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const isMobile = useIsMobile();
 
     // Combine Sample Assets with Custom Assets
+
     const allAssets = [...SAMPLE_ASSETS, ...customAssets];
 
     // Filter assets by region, category, search query, and tag

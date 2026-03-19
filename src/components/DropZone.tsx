@@ -20,7 +20,7 @@ import {
 import SmartTimeInput from './SmartTimeInput.tsx';
 import ScheduleItemCard from './ScheduleItemCard.tsx';
 import TransportSelector from './TransportSelector.tsx';
-import { useConfirm } from '../hooks';
+import { useConfirm, useIsMobile } from '../hooks';
 
 interface DropZoneProps {
     slot: TimeSlot;
@@ -118,7 +118,7 @@ const DropZone: React.FC<DropZoneProps> = ({
         return null;
     };
     const capacityStatus = getCapacityStatus();
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const isMobile = useIsMobile();
 
     return (
         <div className={`relative transition-all duration-300 overflow-hidden ${isAccommodation ? 'mt-4' : showTimeline ? 'pl-16 lg:pl-24' : 'lg:pl-8'}`}>

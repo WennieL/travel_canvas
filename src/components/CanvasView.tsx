@@ -5,6 +5,7 @@ import MapView from './MapView';
 import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle } from 'lucide-react';
 import { getSlotLabel, parseDuration } from '../utils';
 import { TimelineSlotHeader } from './Canvas/TimelineSlotHeader';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 // Slot visual configuration
 // Redundant slot visual configuration removed
@@ -71,6 +72,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     onSelectItem,
 }) => {
     const isTimeline = !showContextMap;
+    const isMobile = useIsMobile();
 
     return (
         <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
@@ -122,7 +124,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                         onAddItem={() => {
                                             setActiveTab('assets');
                                             setSidebarMode?.('list');
-                                            if (window.innerWidth < 1024) {
+                                            if (isMobile) {
                                                 setAddToSlotTarget(slot);
                                                 setShowMobileLibrary(true);
                                             } else {
@@ -168,7 +170,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         onAddItem={() => {
                             setActiveTab('assets');
                             setSidebarMode?.('list');
-                            if (window.innerWidth < 1024) {
+                            if (isMobile) {
                                 setAddToSlotTarget('accommodation');
                                 setShowMobileLibrary(true);
                             } else {
