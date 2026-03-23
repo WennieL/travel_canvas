@@ -1,23 +1,46 @@
 import { Plan, ScheduleItem, TimeSlot, TransportMode, LangType } from '../types';
 import { getCurrencySymbol } from '../data/regions';
+import { TRANSLATIONS } from '../data/translations';
 
-const SLOT_LABELS: Record<string, Record<TimeSlot, string>> = {
-    zh: { morning: '🌅 上午', afternoon: '☀️ 下午', evening: '🌙 晚上', night: '🌃 深夜', accommodation: '🏨 住宿' },
-    en: { morning: '🌅 Morning', afternoon: '☀️ Afternoon', evening: '🌙 Evening', night: '🌃 Night', accommodation: '🏨 Accommodation' },
-};
+function getT(lang: LangType) {
+    return TRANSLATIONS[lang] || TRANSLATIONS.zh;
+}
 
-const TRANSPORT_LABELS: Record<string, Record<TransportMode, string>> = {
-    zh: { walk: '🚶 步行', public: '🚇 大眾運輸', car: '🚗 開車' },
-    en: { walk: '🚶 Walk', public: '🚇 Transit', car: '🚗 Drive' },
-};
+function getSlotLabel(slot: TimeSlot, lang: LangType): string {
+    const t = getT(lang);
+    const keyMap: Record<TimeSlot, string> = {
+        morning: 'slotMorning',
+        afternoon: 'slotAfternoon',
+        evening: 'slotEvening',
+        night: 'slotNight',
+        accommodation: 'slotAccommodation'
+    };
+    return t[keyMap[slot]] || slot;
+}
 
-const WEEKDAYS: Record<string, string[]> = {
-    zh: ['週日', '週一', '週二', '週三', '週四', '週五', '週六'],
-    en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-};
+function getTransportLabel(transport: TransportMode, lang: LangType): string {
+    const t = getT(lang);
+    const keyMap: Record<TransportMode, string> = {
+        walk: 'transportWalk',
+        public: 'transportPublic',
+        car: 'transportCar'
+    };
+    return t[keyMap[transport]] || transport;
+}
+
+function getWeekday(date: Date, lang: LangType): string {
+    const t = getT(lang);
+    const day = date.getDay();
+    const keys = [
+        'weekdaySun', 'weekdayMon', 'weekdayTue', 'weekdayWed', 
+        'weekdayThu', 'weekdayFri', 'weekdaySat'
+    ];
+    return t[keys[day]] || '';
+}
 
 function getItemTitle(item: ScheduleItem, lang: LangType): string {
-    if (item.isLocked) return lang === 'zh' ? '🔒 秘境地點' : '🔒 Secret Spot';
+    const t = getT(lang);
+    if (item.isLocked) return t.secretSpotLabel;
     return (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
 }
 
@@ -26,13 +49,9 @@ function formatPrice(price: number | undefined, region?: string): string {
     return `${getCurrencySymbol(region)}${price.toLocaleString()}`;
 }
 
-function calculateTravelTime(transport: TransportMode | undefined): string {
-    // Simple estimate, could be improved
-    return '';
-}
-
 export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string {
     const lines: string[] = [];
+    const t = getT(lang);
     const isZh = lang === 'zh';
 
     // Header
@@ -69,7 +88,7 @@ export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string
             const startDate = new Date(plan.startDate);
             const dayDate = new Date(startDate);
             dayDate.setDate(startDate.getDate() + idx);
-            weekday = WEEKDAYS[lang]?.[dayDate.getDay()] || '';
+            weekday = getWeekday(dayDate, lang);
             dateStr = `${dayDate.getMonth() + 1}/${dayDate.getDate()}`;
         } catch { }
 
@@ -84,7 +103,7 @@ export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string
             if (items.length === 0) continue;
 
             hasItems = true;
-            const slotLabel = SLOT_LABELS[lang]?.[slot] || slot;
+            const slotLabel = getSlotLabel(slot, lang);
             lines.push(`  ${slotLabel}`);
 
             items.forEach((item, idx) => {
@@ -105,7 +124,7 @@ export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string
                 if (idx < items.length - 1) {
                     const nextItem = items[idx + 1];
                     const transport = nextItem.arrivalTransport || 'walk';
-                    const transportLabel = TRANSPORT_LABELS[lang]?.[transport] || '';
+                    const transportLabel = getTransportLabel(transport, lang);
                     if (transportLabel) {
                         lines.push(`           ${transportLabel}`);
                     }
@@ -116,12 +135,12 @@ export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string
         }
 
         if (!hasItems) {
-            lines.push(`  ${isZh ? '(尚未規劃)' : '(Not planned yet)'}`);
+            lines.push(`  ${t.exportNotPlanned}`);
             lines.push('');
         }
 
         if (dayTotal > 0) {
-            lines.push(`  💰 ${isZh ? '預估花費' : 'Est. cost'}: ${getCurrencySymbol(plan.region)}${dayTotal.toLocaleString()}`);
+            lines.push(`  💰 ${t.exportEstCost}: ${getCurrencySymbol(plan.region)}${dayTotal.toLocaleString()}`);
             lines.push('');
         }
     });
@@ -129,9 +148,9 @@ export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string
     // Footer
     lines.push(`${'━'.repeat(30)}`);
     if (grandTotal > 0) {
-        lines.push(`💰 ${isZh ? '全程預估總花費' : 'Total estimated cost'}: ${getCurrencySymbol(plan.region)}${grandTotal.toLocaleString()}`);
+        lines.push(`💰 ${t.exportTotalCost}: ${getCurrencySymbol(plan.region)}${grandTotal.toLocaleString()}`);
     }
-    lines.push(`${isZh ? '由 TravelCanvas 產生' : 'Generated by TravelCanvas'} ✨`);
+    lines.push(`${t.exportGeneratedBy} ✨`);
     lines.push(`${'━'.repeat(30)}`);
 
     return lines.join('\n');
@@ -142,7 +161,7 @@ export function generateTextItinerary(plan: Plan, lang: LangType = 'zh'): string
  * Uses the plan data to generate a beautifully styled HTML document.
  */
 export function downloadPdf(plan: Plan, lang: LangType = 'zh'): void {
-    const isZh = lang === 'zh';
+    const t = getT(lang);
     const slots: TimeSlot[] = ['morning', 'afternoon', 'evening', 'night', 'accommodation'];
 
     const dayKeys = Object.keys(plan.schedule).sort((a, b) => {
@@ -164,7 +183,7 @@ export function downloadPdf(plan: Plan, lang: LangType = 'zh'): void {
             const startDate = new Date(plan.startDate);
             const dayDate = new Date(startDate);
             dayDate.setDate(startDate.getDate() + idx);
-            weekday = WEEKDAYS[lang]?.[dayDate.getDay()] || '';
+            weekday = getWeekday(dayDate, lang);
             dateStr = `${dayDate.getMonth() + 1}/${dayDate.getDate()}`;
         } catch { }
 
@@ -175,14 +194,14 @@ export function downloadPdf(plan: Plan, lang: LangType = 'zh'): void {
             const items: ScheduleItem[] = daySchedule[slot] || [];
             if (items.length === 0) continue;
 
-            const slotLabel = SLOT_LABELS[lang]?.[slot] || slot;
+            const slotLabel = getSlotLabel(slot, lang);
             let itemsHtml = '';
 
             items.forEach((item, i) => {
                 const title = getItemTitle(item, lang);
                 const time = item.startTime || '';
                 const duration = item.duration ? `(${item.duration})` : '';
-                const price = item.price ? `${getCurrencySymbol(plan.region)}${item.price.toLocaleString()}` : '';
+                const priceLabel = formatPrice(item.price, plan.region);
 
                 if (item.price) {
                     dayTotal += item.price;
@@ -193,14 +212,14 @@ export function downloadPdf(plan: Plan, lang: LangType = 'zh'): void {
                     <div style="display:flex;align-items:baseline;gap:12px;padding:6px 0;${i > 0 ? 'border-top:1px dotted #e5e7eb;' : ''}">
                         <span style="font-family:monospace;color:#6b7280;min-width:50px;font-size:13px">${time}</span>
                         <span style="flex:1;font-weight:600;font-size:14px;color:#1f2937">${title} <span style="font-weight:400;color:#9ca3af;font-size:12px">${duration}</span></span>
-                        ${price ? `<span style="color:#0d9488;font-weight:700;font-size:13px">${price}</span>` : ''}
+                        ${priceLabel ? `<span style="color:#0d9488;font-weight:700;font-size:13px">${priceLabel}</span>` : ''}
                     </div>
                 `;
 
                 if (i < items.length - 1) {
                     const nextItem = items[i + 1];
                     const transport = nextItem.arrivalTransport || 'walk';
-                    const tLabel = TRANSPORT_LABELS[lang]?.[transport] || '';
+                    const tLabel = getTransportLabel(transport, lang);
                     if (tLabel) {
                         itemsHtml += `<div style="padding:2px 0 2px 62px;color:#9ca3af;font-size:11px">${tLabel}</div>`;
                     }
@@ -215,7 +234,7 @@ export function downloadPdf(plan: Plan, lang: LangType = 'zh'): void {
             `;
         }
 
-        const dayTotalHtml = dayTotal > 0 ? `<div style="text-align:right;color:#0d9488;font-weight:700;font-size:13px;padding-top:8px;border-top:1px solid #e5e7eb">💰 ${isZh ? '預估花費' : 'Est.'}: ${getCurrencySymbol(plan.region)}${dayTotal.toLocaleString()}</div>` : '';
+        const dayTotalHtml = dayTotal > 0 ? `<div style="text-align:right;color:#0d9488;font-weight:700;font-size:13px;padding-top:8px;border-top:1px solid #e5e7eb">💰 ${t.exportEstCost}: ${getCurrencySymbol(plan.region)}${dayTotal.toLocaleString()}</div>` : '';
 
         daysHtml += `
             <div style="page-break-inside:avoid;margin-bottom:32px;${idx > 0 ? 'page-break-before:auto;' : ''}">
@@ -230,7 +249,8 @@ export function downloadPdf(plan: Plan, lang: LangType = 'zh'): void {
         `;
     });
 
-    const grandTotalHtml = grandTotal > 0 ? `<div style="text-align:center;font-size:16px;font-weight:800;color:#0d9488;padding:16px;background:#f0fdfa;border-radius:12px;margin-top:24px">💰 ${isZh ? '全程預估總花費' : 'Total'}: ${getCurrencySymbol(plan.region)}${grandTotal.toLocaleString()}</div>` : '';
+    const isZh = lang === 'zh';
+    const grandTotalHtml = grandTotal > 0 ? `<div style="text-align:center;font-size:16px;font-weight:800;color:#0d9488;padding:16px;background:#f0fdfa;border-radius:12px;margin-top:24px">💰 ${t.exportTotalCost}: ${getCurrencySymbol(plan.region)}${grandTotal.toLocaleString()}</div>` : '';
 
     const html = `<!DOCTYPE html>
 <html><head>
@@ -256,11 +276,11 @@ body {
 ${daysHtml}
 ${grandTotalHtml}
 <div style="text-align:center;margin-top:32px;padding-top:16px;border-top:1px solid #e5e7eb;color:#9ca3af;font-size:11px">
-    ${isZh ? '由 TravelCanvas 產生' : 'Generated by TravelCanvas'} ✨
+    ${t.exportGeneratedBy} ✨
 </div>
 <div class="no-print" style="text-align:center;margin-top:24px">
     <button onclick="window.print()" style="padding:12px 32px;background:#0d9488;color:white;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">
-        ${isZh ? '📄 儲存為 PDF' : '📄 Save as PDF'}
+        ${t.exportSavePdf}
     </button>
 </div>
 </body></html>`;

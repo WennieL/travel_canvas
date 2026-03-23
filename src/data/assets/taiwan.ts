@@ -30,11 +30,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                     teaserEn: '$150 coffee on 35F beats a $600 observatory ticket',
                     full: {
                         story: '雖然大家都去觀景台，但我更推薦預約 35 樓的星巴克，用一杯咖啡的錢就能享受差不多高度的台北美景。這裡的人流相對較少，環境也更放鬆。',
-                        storyEn: 'While everyone goes to the observatory, I recommend booking the Starbucks on the 35th floor for the same view with a relaxed vibe.',
+                        storyEn: 'While everyone goes to the observatory, I recommend booking the Starbucks on the 35th floor for the same view with a relaxed vibe. The traffic is lighter and the atmosphere is more chilled.',
                         exactLocation: '台北101辦公大樓35樓',
+                        exactLocationEn: '35F, Taipei 101 Office Building',
                         mustTry: '預約窗邊座位喝拿鐵',
+                        mustTryEn: 'Book a window seat and enjoy a latte',
                         avoid: '週末一定要提前一週預約',
-                        bestTime: '16:30 銜接日落'
+                        avoidEn: 'Weekend visits require booking 1 week in advance',
+                        bestTime: '16:30 銜接日落',
+                        bestTimeEn: '16:30 to catch the golden hour and sunset'
                     }
                 }
             },
@@ -51,11 +55,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                     teaserEn: 'Not in 101, but the perfect spot to capture it.',
                     full: {
                         story: '我最喜歡從四四南村看 101，老眷村建築與現代摩天大樓的強烈對比極具美感。特別是在夏天的傍晚，天空的漸層色非常迷人。',
-                        storyEn: 'I love viewing 101 from 44 South Village. The contrast between old and modern is stunning, especially on summer evenings.',
+                        storyEn: 'I love viewing 101 from 44 South Village. The contrast between old and modern is stunning, especially on summer evenings as the sky colors fade.',
                         exactLocation: '四四南村草原區',
+                        exactLocationEn: '44 South Village Grass Area',
                         mustTry: '拍下眷村瓦片與 101 的合照',
+                        mustTryEn: 'Photograph the old village tiles against the backdrop of 101',
                         avoid: '假日會有市集，人非常多',
-                        bestTime: '17:00 暖黃光影最舒服'
+                        avoidEn: 'Very crowded during weekend markets',
+                        bestTime: '17:00 暖黃光影最舒服',
+                        bestTimeEn: '17:00 for the most beautiful golden light'
                     }
                 }
             },
@@ -72,11 +80,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                     teaserEn: 'Skip the 89F crowds! Enjoy Taipei night with a cocktail on 85F at 9PM.',
                     full: {
                         story: '與其白天去觀景台人擠人，我更推薦晚上去 85 樓的隨意鳥地方。點一杯調酒，看著底下的車水馬龍，這才是台北夜貓子的正確打開方式。',
-                        storyEn: 'Instead of daylight crowds, I recommend the 85F bar at night for a cocktail and the city pulse.',
+                        storyEn: 'Instead of daylight crowds, I recommend the 85F bar at night. Sip a cocktail and watch the city pulse — it\'s the proper way for a Taipei night owl to open the night.',
                         exactLocation: '台北101辦公大樓85樓',
+                        exactLocationEn: '85F, Taipei 101 Office Building',
                         mustTry: '點一杯「台北之星」特調調酒',
+                        mustTryEn: 'Order the signature "Star of Taipei" cocktail',
                         avoid: '週末晚上一定要預約，否則一位難求',
-                        bestTime: '21:00 以後，現場還有音樂演奏'
+                        avoidEn: 'Weekend nights are usually fully booked, so reserve early',
+                        bestTime: '21:00 以後，現場還有音樂演奏',
+                        bestTimeEn: 'After 21:00 for the live music'
                     }
                 }
             }
@@ -106,11 +118,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'A Kyoto-like secret space right off Zhongxiao E. Rd.',
             full: {
                 story: '從忠孝東路轉進齊東街，3 分鐘內就能從車水馬龍進入一整排修復的日式木造宿舍。不定期有文學展覽和朗讀會，院子裡的老樹下還有免費書架可以借閱。',
-                storyEn: 'Turn from Zhongxiao E. Rd. into Qidong St., and in 3 minutes you\'ll enter a row of restored Japanese wooden dormitories.',
+                storyEn: 'Turn from Zhongxiao E. Rd. into Qidong St., and in 3 minutes you\'ll enter a row of restored Japanese wooden dormitories. There are frequent literature exhibitions and book readings, and a free "tree-side" bookshelf in the yard.',
                 exactLocation: '齊東街53巷，從忠孝新生站5號出口步行5分鐘',
+                exactLocationEn: 'Lane 53, Qidong St. 5-min walk from Zhongxiao Xinsheng Stn Exit 5',
                 mustTry: '坐在院子裡老樹下的長椅讀書',
+                mustTryEn: 'Read a book on the bench under the old tree in the courtyard',
                 avoid: '週一公休，不要白跑一趟',
-                bestTime: '14:00-16:00 午後光影最美'
+                avoidEn: 'Closed on Mondays',
+                bestTime: '14:00-16:00 午後光影最美',
+                bestTimeEn: '14:00-16:00 for the most beautiful afternoon shadows'
             }
         }
     },
@@ -137,10 +153,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'A secret garden between MRT stations',
             full: {
                 story: '這不只是公園，兩旁的巷弄裡躲著無數間獨立書店和自家烘焙咖啡廳。週末下午會有在地創作者擺攤的市集。沿著步道走到底，會發現一個被植物包圍的小座位區，很適合發呆放空。',
+                storyEn: 'This isn\'t just a park; the alleys flanking it are home to countless independent bookstores and roasteries. On weekend afternoons, there\'s a market featuring local creators. Walk to the end of the path to find a lush seating area perfect for daydreaming.',
                 exactLocation: '中山站1號出口出來往右走就到',
+                exactLocationEn: 'Exit Zhongshan Stn Exit 1 and turn right',
                 mustTry: '逛完公園鑽進赤峰街的「浮光書店」喝杯咖啡',
+                mustTryEn: 'Grab a coffee at "Illumination Books" in Chifeng St. after the walk',
                 avoid: '下雨天市集會取消',
-                bestTime: '週六日 14:00-17:00 有市集'
+                avoidEn: 'The market will be cancelled on rainy days',
+                bestTime: '週六日 14:00-17:00 有市集',
+                bestTimeEn: 'Sat-Sun 14:00-17:00 for the market'
             }
         }
     },
@@ -167,10 +188,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'Taipei\'s least commercialized art community',
             full: {
                 story: '這裡原本是眷村，後來變成國際藝術家的駐村基地。沿著蜿蜒的小路往上爬，每個轉角都有不同的裝置藝術。頂端有一個可以俯瞰新店溪的平台，黃昏時超美。',
+                storyEn: 'This was originally a military dependents\' village, now transformed into an international artist-in-residence base. Climb the winding paths to find different installations at every corner. The platform at the top offers a stunning view of Xindian River, especially at dusk.',
                 exactLocation: '從公館站1號出口過河堤，步行10分鐘',
+                exactLocationEn: '10-min walk from Gongguan Stn Exit 1 across the river bank',
                 mustTry: '找到藏在最高處的「尖蚪咖啡」，在河景露台喝一杯',
+                mustTryEn: 'Find " Tadpole Coffee" at the peak and have a drink on the river-view terrace',
                 avoid: '不要穿高跟鞋，路很陡',
-                bestTime: '16:00-17:30 黃昏時分'
+                avoidEn: 'Don\'t wear high heels; the paths are steep',
+                bestTime: '16:00-17:30 黃昏時分',
+                bestTimeEn: '16:00-17:30 during sunset'
             }
         }
     },
@@ -198,10 +224,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'The hidden breakfast spot loved by Japanese tourists',
             full: {
                 story: '這家店在日本美食節目被介紹過，但台灣人知道的反而不多。小籠包皮薄餡多，是台北最被低估的小籠包。必點「鹹豆漿」加辣油，配燒餅油條是正統吃法。',
+                storyEn: 'This shop was featured on Japanese food shows, but it\'s surprisingly less known by local youngsters. The xiaolongbao are thin-skinned and juicy — truly some of the most underrated in Taipei. The savory soy milk with chili oil is a must-try.',
                 exactLocation: '金華街和永康街交叉口附近',
+                exactLocationEn: 'Near the intersection of Jinhua St. and Yongkang St.',
                 mustTry: '鹹豆漿 + 燒餅夾油條 + 小籠包',
+                mustTryEn: 'Savory Soy Milk + Shao Bing with Youtiao + Xiaolongbao',
                 avoid: '10 點以後去小籠包容易賣完',
-                bestTime: '06:00-08:00'
+                avoidEn: 'Xiaolongbao often sells out after 10:00 AM',
+                bestTime: '06:00-08:00',
+                bestTimeEn: '06:00-08:00 for the freshest prep'
             }
         }
     },
@@ -228,10 +259,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'No sign, word-of-mouth only rice ball secret shop',
             full: {
                 story: '純靠口耳相傳的巷弄飯糰店。「剝皮辣椒飯糰」辣甜交織，配上油條和肉鬆，口感層次超豐富。老闆很友善但不太會英文，建議用手指比菜單。每天限量，中午前必到。',
+                storyEn: 'A hidden alley gem that relies purely on word-of-mouth. The "Peeled Chili Pepper Rice Ball" blends spice and sweetness perfectly, layered with crispy Youtiao and pork floss. The owner is friendly but speaks little English — pointing at the menu works best. Limited stock daily!',
                 exactLocation: '萬華區（解鎖完整地址）',
+                exactLocationEn: 'Wanhua District (Unlock for full address)',
                 mustTry: '剝皮辣椒飯糰 NT$60',
+                mustTryEn: 'Peeled Chili Pepper Rice Ball (NT$60)',
                 avoid: '太晚去就只剩基本款',
-                bestTime: '07:00-09:00'
+                avoidEn: 'Only basic flavors left if you arrive too late',
+                bestTime: '07:00-09:00',
+                bestTimeEn: '07:00-09:00 before the daily sell-out'
             }
         }
     },
@@ -259,10 +295,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'The newest century-old house café in Dadaocheng',
             full: {
                 story: '新開幕的獨棟老宅咖啡廳，三層樓每層風格不同。頂樓有露台可以遠眺淡水河。推薦坐二樓靠窗位，午後陽光灑進來配上手沖單品，是最完美的大稻埕下午。',
+                storyEn: 'Newly opened standalone old house café with unique vibes on all 3 floors. The rooftop terrace overlooks the Tamsui River. I recommend the 2nd-floor window seat for the perfect sunlit Dadaocheng afternoon.',
                 exactLocation: '迪化街一段，霞海城隍廟附近',
+                exactLocationEn: 'Sec. 1, Dihua St., near Xiahai City God Temple',
                 mustTry: '單品手沖 + 台式鳳梨酥',
+                mustTryEn: 'Single-origin hand-drip + Taiwanese pineapple cake',
                 avoid: '週末人多，建議平日去',
-                bestTime: '14:00-16:00'
+                avoidEn: 'Very busy on weekends; try visiting on weekdays',
+                bestTime: '14:00-16:00',
+                bestTimeEn: '14:00-16:00'
             }
         }
     },
@@ -317,10 +358,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'Skip the crowds, go where locals eat',
             full: {
                 story: '不要只在基河路上的觀光區買東西！往「大東路」和「慈諴宮」方向走，那裡的店才是士林在地人會吃的。尤其是廟口的麵線和甜不辣。',
+                storyEn: 'Don\'t just buy in the tourist zones on Jihe Rd! Head towards Dadong Rd and Cixian Temple — that\'s where the locals eat. The vermicelli and tempura at the temple entrance are legendary.',
                 exactLocation: '慈諴宮前的小攤販區域',
+                exactLocationEn: 'The small stall area in front of Cixian Temple',
                 mustTry: '炸鮮奶、阿輝麵線、豪大大雞排',
+                mustTryEn: 'Deep-fried milk, Ah-Hui vermicelli, Hot Star large fried chicken',
                 avoid: '不要買現切水果攤，價格通常標示不清',
-                bestTime: '17:30 剛開門時人最少'
+                avoidEn: 'Avoid pre-cut fruit stalls; pricing is often unclear',
+                bestTime: '17:30 剛開門時人最少',
+                bestTimeEn: '17:30 when it just opens for fewer crowds'
             }
         }
     },
@@ -346,10 +392,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'Hidden 101 photo spot! Feel like a J-drama',
             full: {
                 story: '這裡就是李大仁跟程又青喝酒的地方。站在居酒屋前的巷子，可以拍到遠處的台北 101 矗立在兩排矮房中間，視覺對比非常強烈。是 IG 上拍 101 最推薦的私藏機位。',
+                storyEn: 'This is where Li Da-ren and Cheng You-qing from the popular drama had their drinks. From the alley in front of the izakaya, you can capture 101 framed by two rows of low houses. It\'s the ultimate "Instagrammable" spot for 101.',
                 exactLocation: '竹村居酒屋門口的電線桿旁',
+                exactLocationEn: 'Next to the utility pole at the entrance of Takemura Izakaya',
                 mustTry: '在這裡拍一張 101 合照，晚上燈光更有氛圍',
+                mustTryEn: 'Take a photo with 101 here — the night lighting is much better',
                 avoid: '這裡是狹窄巷弄，拍照時要注意路過的機車，不要影響居酒屋做生意',
-                bestTime: '18:00 藍調時刻，101 剛亮燈時'
+                avoidEn: 'Narrow alley — watch for scooters and don\'t block the business',
+                bestTime: '18:00 藍調時刻，101 剛亮燈時',
+                bestTimeEn: '18:00 during the blue hour just as 101 lights up'
             }
         }
     },
@@ -440,11 +491,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
             teaserEn: 'Skip the Six Rocks crowd! The best 101 angle on Elephant Mt.',
             full: {
                 story: '大部分遊客爬到六巨石就停了，但再往上走 5 分鐘到「攝手平台」，這裡不僅有更好的 101 正面視角，還有木頭平台可以架腳架。這裡是拍台北跨年煙火的頂級戰區，但平常晚上非常安靜。',
-                storyEn: 'Most tourists stop at Six Giant Rocks. Climb 5 more mins to "The Photographer Platform." You get a better frontal view of 101 and a proper wooden deck for tripods. It\'s the best spot for tranquility.',
+                storyEn: 'Most tourists stop at Six Giant Rocks. Climb 5 more mins to "The Photographer Platform." You get a better frontal view of 101 and a proper wooden deck for tripods. It\'s a prime spot for NYE fireworks, but usually very quiet.',
                 exactLocation: '象山步道過六巨石後，再步行約 150 公尺',
+                exactLocationEn: 'Continuing ~150m past the Six Giant Rocks on the Elephant Mt. Trail',
                 mustTry: '在這裡等 101 亮燈的瞬間',
+                mustTryEn: 'Wait for the moment 101 lights up',
                 avoid: '不要穿拖鞋爬山，階梯非常陡且可能濕滑',
-                bestTime: '黃昏日落前 1 小時到達'
+                avoidEn: 'Don\'t wear flip-flops; the stairs are steep and can be slippery',
+                bestTime: '黃昏日落前 1 小時到達',
+                bestTimeEn: '1 hour before sunset'
             }
         }
     },
@@ -508,10 +563,15 @@ export const TAINAN_ASSETS: TravelItem[] = [
             teaserEn: 'The real magic happens at night',
             full: {
                 story: '白天是觀光客拍照的老街，但晚上 7 點以後才是真正的台南味。紅燈籠亮起來，文創小店變成小酒吧，在地人會出來散步。巷弄深處有一間沒招牌的老屋酒吧，只有在地人知道。',
+                storyEn: 'By day it\'s a tourist street, but after 7 PM the real Tainan vibe emerges. Red lanterns glow, boutiques turn into bars, and locals come out for a stroll. There\'s an unsigned old house bar deep in the alleys.',
                 exactLocation: '從海安路轉入神農街',
+                exactLocationEn: 'Turn into Shennong St. from Haian Rd.',
                 mustTry: '找到巷底的隱藏酒吧（門口有一盞紅燈）',
+                mustTryEn: 'Find the hidden bar at the end of the alley (marked by a single red light)',
                 avoid: '中午太熱不適合逛',
-                bestTime: '19:00-21:00'
+                avoidEn: 'Too hot to visit around noon',
+                bestTime: '19:00-21:00',
+                bestTimeEn: '19:00-21:00'
             }
         }
     },
@@ -540,9 +600,13 @@ export const TAINAN_ASSETS: TravelItem[] = [
                 story: '得獎口味「爆米香荔枝蜜紅茶」用的是阿里山蜜香紅茶 + 台灣荔枝蜂蜜 + 屏東爆米香。但在地人的秘密是：不要只點招牌，問店員「今天的隱藏口味是什麼」，每天都不一樣，而且限量。',
                 storyEn: 'The award-winning flavor uses Alishan honey black tea + Taiwanese lychee honey. But locals ask for the "hidden flavor of the day" - limited and different daily.',
                 exactLocation: '正興街92號，認明排隊人龍',
+                exactLocationEn: 'No. 92, Zhengxing St. (Look for the queue)',
                 mustTry: '當日限定口味 + 經典茶味冰淇淋',
+                mustTryEn: 'Daily special + classic tea flavors',
                 avoid: '假日排隊 30 分鐘起，建議平日下午 2 點去',
-                bestTime: '平日 14:00'
+                avoidEn: '30+ min queue on weekends; try 2 PM on weekdays',
+                bestTime: '平日 14:00',
+                bestTimeEn: '14:00 weekdays'
             }
         }
     },
@@ -569,10 +633,15 @@ export const TAINAN_ASSETS: TravelItem[] = [
             teaserEn: 'Only 5 hours a day. Sold out = gone.',
             full: {
                 story: '下午 2 點才開始賣，通常 5 點就賣完了。皮酥底脆，肉餡鮮甜多汁。在地人會一次買 10 個以上帶回家。記得要加辣醬，是老闆自己調的。',
+                storyEn: 'Sales start at 2 PM and usually sell out by 5 PM. Crispy bottom, juicy filling. Locals often buy 10+ at a time. Be sure to add the signature house-made spicy sauce.',
                 exactLocation: '裕農路上，認明排隊人龍',
+                exactLocationEn: 'On Yunong Rd (Look for the queue)',
                 mustTry: '水煎包 + 自製辣醬',
+                mustTryEn: 'Pan-fried buns + house-made spicy sauce',
                 avoid: '太早去還沒開、太晚去沒得買',
-                bestTime: '14:30'
+                avoidEn: 'Don\'t go too early (not open) or too late (sold out)',
+                bestTime: '14:30',
+                bestTimeEn: '14:30'
             }
         }
     },
@@ -599,10 +668,15 @@ export const TAINAN_ASSETS: TravelItem[] = [
             teaserEn: 'Walking distance to Guohua St. and Shennong St.',
             full: {
                 story: '位置極佳，步行就能到台南最精華的美食區。房間設計融入台南老宅元素，早餐自助吧有在地美食。建議住高樓層可以看到台南老城區夜景。',
+                storyEn: 'Prime location within walking distance of Tainan\'s best eats. Room designs incorporate local heritage elements. The breakfast buffet features Tainan specialties. Higher floors offer great old-city night views.',
                 exactLocation: '中西區市中心',
+                exactLocationEn: 'West Central District center',
                 mustTry: '早餐自助吧的台南在地小吃',
+                mustTryEn: 'The Tainan specialties at the breakfast buffet',
                 avoid: '假日價格較高',
-                bestTime: '入住後散步到神農街看夜景'
+                avoidEn: 'Prices are significantly higher on weekends',
+                bestTime: '入住後散步到神農街看夜景',
+                bestTimeEn: 'A night walk to Shennong St after check-in'
             }
         }
     },
@@ -634,11 +708,15 @@ export const HUALIEN_ASSETS: TravelItem[] = [
             teaserEn: 'The most beautiful mirror lake in the valley.',
             full: {
                 story: '這裡曾經是儲木池，現在是當地的秘密公園。午後的雲霧壓低在山巒間，湖面的倒影會讓你忘記時間。建議沿著環潭步道走一圈。',
-                storyEn: 'Formerly a log pond, now a secret park. The mirror reflection here is breathtaking.',
+                storyEn: 'Formerly a log pond, now a secret park. The mirror reflection here is breathtaking as mist clings to the mountains. A walk around the lake is highly recommended.',
                 exactLocation: '光復糖廠往南走5分鐘車程',
+                exactLocationEn: '5-min drive south from Guangfu Sugar Factory',
                 mustTry: '在拱橋前等夕陽倒影',
+                mustTryEn: 'Waiting for the sunset reflection by the bridge',
                 avoid: '小黑蚊很多，請做足防護',
-                bestTime: '15:30 - 17:00'
+                avoidEn: 'Beware of midges; use strong insect repellent',
+                bestTime: '15:30 - 17:00',
+                bestTimeEn: '15:30 - 17:00'
             }
         }
     },
@@ -665,11 +743,15 @@ export const HUALIEN_ASSETS: TravelItem[] = [
             teaserEn: 'Perfect composition of Chinese bridge and mountains.',
             full: {
                 story: '從台北下來，這裡的安靜程度讓人驚艷。紅瓦拱橋與後方的深綠山色，非常有經典電影的畫面感。',
-                storyEn: 'The silence here is stunning. The red bridge with dark green mountains feels like a movie scene.',
+                storyEn: 'The silence here is stunning, a world away from Taipei. The red bridge with dark green mountains feels like a scene from a classic movie.',
                 exactLocation: '光復鄉吉利路',
+                exactLocationEn: 'Jili Rd, Guangfu Township',
                 mustTry: '帶本喜歡的書，在木棧道上坐一會',
+                mustTryEn: 'Bring a book and sit on the wooden boardwalk for a while',
                 avoid: '中午太曬，遮蔽物較少',
-                bestTime: '08:00 晨霧尚未散去時'
+                avoidEn: 'Avoid noon; there\'s little shade',
+                bestTime: '08:00 晨霧尚未散去時',
+                bestTimeEn: '08:00 when the morning mist still lingers'
             }
         }
     },
@@ -696,11 +778,15 @@ export const HUALIEN_ASSETS: TravelItem[] = [
             teaserEn: 'Must-buy local snacks after the walk.',
             full: {
                 story: '來吉利潭除了看風景，一定要順道回家附近的「光復糖廠」吃支冰淇淋，或是找找附近只有在地人才知道的炸雞攤。',
-                storyEn: 'After Jili Lake, visit Guangfu Sugar Factory for ice cream or find local fried chicken stalls.',
+                storyEn: 'Besides the lake views, visit the nearby "Guangfu Sugar Factory" for ice cream or hunt for the local secret fried chicken stalls.',
                 exactLocation: '光復鄉中山路二段',
+                exactLocationEn: 'Sec. 2, Zhongshan Rd, Guangfu Township',
                 mustTry: '糖廠紅豆冰棒',
+                mustTryEn: 'Red bean ice pops at the Sugar Factory',
                 avoid: '太晚來攤販都收光了',
-                bestTime: '15:30 點心時間'
+                avoidEn: 'Arriving too late—vendors close early',
+                bestTime: '15:30 點心時間',
+                bestTimeEn: '15:30 snack time'
             }
         }
     },
@@ -727,10 +813,15 @@ export const HUALIEN_ASSETS: TravelItem[] = [
             teaserEn: 'Higher, more beautiful, and less crowded than Qixingtan',
             full: {
                 story: '大家都擠在七星潭海灘上，但往上走 10 分鐘就到四八高地，可以把整個月牙灣盡收眼底。附近還有曾經的軍事戰備坑道可以探險（免費），裡面有冷戰時期的遺跡。',
+                storyEn: 'While everyone crowds the beach, a 10-min walk to Siba Heights offers a panoramic view of the crescent bay. Nearby Cold War era military tunnels are also open for free exploration.',
                 exactLocation: '七星潭往花蓮機場方向，路邊有小路上去',
+                exactLocationEn: 'Path uphill from Qixingtan towards Hualien Airport',
                 mustTry: '在制高點拍月牙灣全景照',
+                mustTryEn: 'Take a panoramic shot of the crescent bay from the peak',
                 avoid: '風大記得帶外套',
-                bestTime: '日出時分最壯觀'
+                avoidEn: 'Bring a jacket; it gets very windy',
+                bestTime: '日出時分最壯觀',
+                bestTimeEn: 'Sunrise for the most magnificent view'
             }
         }
     },
@@ -757,10 +848,15 @@ export const HUALIEN_ASSETS: TravelItem[] = [
             teaserEn: 'A secret café base at the river mouth',
             full: {
                 story: '白牆配原木色的溫暖基調，露天座位能邊吹海風邊看花蓮市景。非常隱密，連導航都不一定找得到，要沿著堤防走才會發現入口。',
+                storyEn: 'Warm tones with white walls and raw wood. The outdoor seating offers sea breezes and Hualien city views. It\'s so hidden that GPS often fails; follow the embankment to find the entrance.',
                 exactLocation: '花蓮出海口附近，沿堤防步行',
+                exactLocationEn: 'River mouth area, walk along the embankment',
                 mustTry: '坐露天座位點一杯手沖',
+                mustTryEn: 'Order a hand-drip coffee and sit outdoors',
                 avoid: '下雨天露天區關閉',
-                bestTime: '下午 15:00-17:00'
+                avoidEn: 'Outdoor area closes on rainy days',
+                bestTime: '下午 15:00-17:00',
+                bestTimeEn: '15:00 - 17:00'
             }
         }
     },
@@ -787,10 +883,15 @@ export const HUALIEN_ASSETS: TravelItem[] = [
             teaserEn: 'Most beautiful infinity pool hotel in Hualien',
             full: {
                 story: '泳池直接面向中央山脈，日出時的景色令人屏息。房間寬敞，每間都有陽台。建議傍晚到頂樓酒吧看夕陽。',
+                storyEn: 'The pool faces the Central Mountain Range directly, with breathtaking sunrise views. Spacious rooms with private balconies. The rooftop bar is perfect for sunset drinks.',
                 exactLocation: '太魯閣國家公園入口處',
+                exactLocationEn: 'Entrance to Taroko National Park',
                 mustTry: '頂樓酒吧看夕陽 + 無邊際泳池',
+                mustTryEn: 'Rooftop bar at sunset + infinity pool',
                 avoid: '旺季需提前一個月訂房',
-                bestTime: '清晨泳池看日出'
+                avoidEn: 'Book 1 month ahead during peak seasons',
+                bestTime: '清晨泳池看日出',
+                bestTimeEn: 'Sunrise at the pool'
             }
         }
     },
@@ -823,11 +924,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: '🌟 World\'s only Michelin-starred ice cream, book 2 weeks ahead',
             full: {
                 story: '2023 年入選必比登，2024 年直接跳升米其林一星，震驚全球美食界。主廚將冰淇淋當料理主角，用七道冰品闡述當季主題。每一道都是藝術品。坐吧台位可以近距離看主廚現場製作，是最佳座位。',
-                storyEn: 'From Bib Gourmand 2023 to 1 Michelin star 2024, shocking the food world. 7-course ice cream tasting with seasonal themes.',
+                storyEn: 'From Bib Gourmand 2023 to 1 Michelin star in 2024, shocking the culinary world. The chef treats ice cream as the main course, with a 7-dish tasting menu explaining seasonal themes. Each dish is a work of art. The counter is the best seat to watch the chef work.',
                 exactLocation: '台中西區（需預約，確認後提供地址）',
+                exactLocationEn: 'West District, Taichung (Address provided after reservation)',
                 mustTry: '吧台座位 + 七道套餐 NT$1,800',
+                mustTryEn: 'Counter seating + 7-course set (NT$1,800)',
                 avoid: '不要臨時去，100% 預約制',
-                bestTime: '提前 2 週線上預約'
+                avoidEn: 'Don\'t walk in; strictly reservation only',
+                bestTime: '提前 2 週線上預約',
+                bestTimeEn: 'Book online 2 weeks in advance'
             }
         }
     },
@@ -855,11 +960,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'Ignore the menu! Queue at 11:20 AM and ask for the secret blackboard dishes.',
             full: {
                 story: '走到逢甲無尾巷底端才會看到的米其林必比登台菜小館。最內行的吃法不是看那本紙本菜單，而是直接看老闆隨機手寫的推薦。',
-                storyEn: 'A Michelin Bib Gourmand Taiwanese spot hidden at the end of a dead-end alley. The pro move isn\'t the paper menu, but the secret handwritten ones.',
+                storyEn: 'A Michelin Bib Gourmand Taiwanese spot hidden at the end of a dead-end alley near Feng Chia. The pro move isn\'t the paper menu, but the secret handwritten chalkboard specials.',
                 exactLocation: '逢甲商圈外圍，走到一條看起來沒路的無尾巷底端。',
+                exactLocationEn: 'Edge of Feng Chia market, at the end of a hidden dead-end alley.',
                 mustTry: '直接問老闆：「今天市場有帶什麼隱藏版的漁獲或青菜？」',
+                mustTryEn: 'Ask the boss: "Any off-menu fresh catches or seasonal greens from the market today?"',
                 avoid: '⚠️ 假日絕對排到崩潰，而且不接受當天訂位。請務必在平日 11:20 (開門前 10 分鐘) 在門口等候第一輪入座。',
-                bestTime: '11:20 (搶平日午餐第一輪)'
+                avoidEn: 'Weekends are chaotic; no same-day bookings. Be there at 11:20 AM (10 mins before opening) on weekdays for the first round of seating.',
+                bestTime: '11:20 (搶平日午餐第一輪)',
+                bestTimeEn: '11:20 AM (for the first lunch round on weekdays)'
             }
         }
     },
@@ -887,11 +996,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'Closed more often than open! Queue at 10:50 AM for off-menu lattice dumplings.',
             full: {
                 story: '老闆極度任性，一週只營業三天，其餘時間都在市場挑菜和熬那鍋要煮 8 小時的牛肉湯頭。坐在滿滿 1970 年代舊物的老宅裡吃麵，是極致的復古體驗。',
-                storyEn: 'The owner is highly eccentric, opening only 3 days a week. Eating here surrounded by 1970s antiques is a peak retro experience.',
+                storyEn: 'The eccentric owner opens only 3 days a week, spending the rest of the time sourcing ingredients and simmering the 8-hour beef broth. Dining in this 1970s antique-filled house is a peak retro experience.',
                 exactLocation: '勤美誠品商圈的隱密靜巷內。',
+                exactLocationEn: 'In a quiet hidden lane near CMP Park Lane.',
                 mustTry: '除了招牌牛肉麵，內行人都知道要直接點菜單上沒寫的隱藏版「限量冰花煎餃」。',
+                mustTryEn: 'Beyond the signature beef noodles, locals always order the off-menu limited "Lattice Dumplings."',
                 avoid: '⚠️ 只有週三、五、日營業，錯過直接撲空。麵條賣完就拉下鐵門，千萬不要下午 1 點才去。',
-                bestTime: '10:50 (開門前排隊，確保能點到限量餃子)'
+                avoidEn: 'Only open Wed, Fri, Sun. They close as soon as noodles sell out, so don\'t arrive after 1 PM.',
+                bestTime: '10:50 (開門前排隊，確保能點到限量餃子)',
+                bestTimeEn: '10:50 AM (Queue before opening to secure the dumplings)'
             }
         }
     },
@@ -920,11 +1033,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'No waitlist system. Come at 12PM weekdays, order the secret "Witch Blend" coffee.',
             full: {
                 story: '隱身國美館旁小巷的究極職人店。老闆自己烘豆，店內只有幾張極度私密的桌子。招牌蛋糕是用武陵農場直送的特級蘋果做的。',
-                storyEn: 'Ultimate artisan shop in an alley near NTMoFA. Tables are extremely limited, and they use premium apples from Wuling Farm for their cakes.',
+                storyEn: 'The ultimate artisan shop hidden in an alley near the museum. The owner roasts his own beans, and seating is extremely limited and intimate. The signature cake uses premium apples delivered directly from Wuling Farm.',
                 exactLocation: '國美館附近巷弄內，外觀非常低調。',
+                exactLocationEn: 'Alleys near NTMoFA; the exterior is very discreet.',
                 mustTry: '熟客隱藏版點法：請老闆用帶有獨特花香的「巫婆配方豆 (Witch Blend)」做手沖，搭配蘋果乳酪蛋糕。',
+                mustTryEn: 'Pro tip: Ask for a hand-drip using the floral "Witch Blend" beans, paired with the apple cheesecake.',
                 avoid: '⚠️ 這裡沒有候位系統或登記表！週末客滿時你只能在門口乾等。絕對要避開週末下午。',
-                bestTime: '12:00 (平日剛開門時，直接霸佔最舒服的角落)'
+                avoidEn: 'No waitlist system! You\'ll just have to wait outside if it\'s full. Strictly avoid weekend afternoons.',
+                bestTime: '12:00 (平日剛開門時，直接霸佔最舒服的角落)',
+                bestTimeEn: '12:00 PM (Weekdays right at opening to snag the best corner)'
             }
         }
     },
@@ -952,11 +1069,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'Request the "Brick Wall" courtyard seat, and immediately order the secret Showa Pudding.',
             full: {
                 story: '明明在喧囂大街上，推開木門卻像穿越到另一個時空。後方有一個陽光灑落的極美紅磚牆庭院。',
-                storyEn: 'Right on a busy street, but opening the wooden door teleports you to a serene space with a gorgeous sunlit brick courtyard.',
+                storyEn: 'Despite being on a busy street, opening the wooden door feels like stepping into another dimension. There\'s a stunning sunlit brick-walled courtyard in the back.',
                 exactLocation: '五權火車站步行 5 分鐘。',
+                exactLocationEn: '5-min walk from Wuquan Railway Station.',
                 mustTry: '入座第一件事：直接問老闆還有沒有菜單外的隱藏甜點「大人味昭和布丁」，通常下午 3 點前就會秒殺完售。',
+                mustTryEn: 'First thing: Ask for the off-menu "Adult Showa Pudding." It usually sells out by 3 PM.',
                 avoid: '⚠️ 週末庭院的位子絕對被網美佔滿。平日下午去，且務必要主動說「我想坐後院紅磚牆邊的位子」。',
-                bestTime: '14:00 (平日午後，陽光斜射在紅磚牆上的角度最完美)'
+                avoidEn: 'Weekends are packed with influencers. Go on a weekday and explicitly ask for the courtyard brick wall seating.',
+                bestTime: '14:00 (平日午後，陽光斜射在紅磚牆上的角度最完美)',
+                bestTimeEn: '14:00 (Weekdays when the sunlight hits the brick wall at the perfect angle)'
             }
         }
     },
@@ -984,11 +1105,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'Studio hours are erratic! DM to book and grab the secret jam sparkling drink.',
             full: {
                 story: '被譽為「果醬女王」的柯亞，用茂谷柑、蜜柑等台灣在地水果做出征服英國評審、狂拿 8 面金牌的世界第一果醬。',
-                storyEn: 'Known as the "Jam Queen," Keya uses Taiwan local fruits to win 8 gold medals in the UK, creating the world\'s best marmalade.',
+                storyEn: 'Known as the "Jam Queen," Keya uses local Murcott and Honey mandarins to conquer British judges, winning 8 golds for the world\'s best marmalade.',
                 exactLocation: '台中市工作室（去之前務必線上確認營業狀況）。',
+                exactLocationEn: 'Taichung Studio (Check business status online before visiting).',
                 mustTry: '很多人只買果醬，但內行人會點一杯用冠軍果醬調製的隱藏版「果醬氣泡飲」外帶，沁涼解暑。',
+                mustTryEn: 'Most just buy jam, but pros order the off-menu "Jam Sparkling Drink" made with championship marmalade.',
                 avoid: '⚠️ 千萬不要沒確認就直接殺過去！實體工作室對外開放時間極度不固定，去之前一定要先私訊粉專確認。',
-                bestTime: '買完果醬後直接外帶氣泡飲'
+                avoidEn: 'Do NOT just drop by! The studio hours are highly irregular; message their social media first to confirm.',
+                bestTime: '買完果醬後直接外帶氣泡飲',
+                bestTimeEn: 'Grab the sparkling drink after buying your jams'
             }
         }
     },
@@ -1017,11 +1142,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'Avoid the crowded Dakeng trails. Walk 5km here and find the nameless grandma\'s secret jelly ice.',
             full: {
                 story: '週末的大坑步道像菜市場一樣擠，而這條沿著日治時期八寶圳延伸的 5 公里步道才是真秘境。全程平坦且樹木極度茂密，夏天走完全不曬。',
-                storyEn: 'Dakeng trails are packed on weekends. This 5km flat trail along the Japanese-era Babao Canal is the true secret spot. Fully shaded by trees.',
+                storyEn: 'While Dakeng trails feel like crowded markets on weekends, Boasting 5km along the Japanese-era Babao Canal, this trail is a true hidden gem. It\'s flat and densely shaded—perfect for summer walks.',
                 exactLocation: '從石岡區萬仙街入口進去。',
+                exactLocationEn: 'Enter from Wanxian St in Shigang District.',
                 mustTry: '走到步道終點，如果運氣好會遇到一個沒有招牌的在地阿嬤，一定要跟她買一杯菜單上沒有的「純手工粉粿冰」。',
+                mustTryEn: 'At the end of the trail, if you\'re lucky, find the nameless local grandma and buy her off-menu "Handmade Jelly Ice."',
                 avoid: '⚠️ 森林生態極好，意味著小黑蚊極其兇猛！切記穿長褲並帶上當地最強效的防蚊液，否則會被咬成紅豆冰。',
-                bestTime: '07:00 (清晨的微光穿過森林最美，且不會熱)'
+                avoidEn: 'Beware of vicious midges! Wear long pants and bring the strongest repellent, or you\'ll be covered in bites.',
+                bestTime: '07:00 (清晨的微光穿過森林最美，且不會熱)',
+                bestTimeEn: '07:00 AM (Early light through the trees is magical and it\'s cool)'
             }
         }
     },
@@ -1048,10 +1177,15 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             teaserEn: 'Taichung\'s trendiest hotel, reborn from ruins',
             full: {
                 story: '原本是一棟即將拆除的老建築，被設計師改造成充滿植物的工業風酒店。大廳挑高三層，陽光從天井灑下來。每間房間風格不同，推薦「森林房」。',
+                storyEn: 'Originally a building slated for demolition, designers transformed it into a plant-filled industrial-chic hotel. The lobby boasts triple-height ceilings with light streaming from the skylights.',
                 exactLocation: '台中火車站步行 5 分鐘',
+                exactLocationEn: '5-min walk from Taichung Railway Station',
                 mustTry: '在大廳的植物叢林裡喝一杯咖啡',
+                mustTryEn: 'Have a coffee in the lobby\'s plant jungle',
                 avoid: '隔音普通，怕吵的選高樓層',
-                bestTime: '下午 check-in 後到大廳拍照'
+                avoidEn: 'Soundproofing is average; light sleepers should book higher floors',
+                bestTime: '下午 check-in 後到大廳拍照',
+                bestTimeEn: 'After check-in for photos in the lobby'
             }
         }
     },

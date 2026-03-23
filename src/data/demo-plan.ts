@@ -152,11 +152,11 @@ export const TOKYO_DEMO_PLAN: Plan = {
     endDate: new Date(Date.now() + 3 * 86400000).toISOString().split('T')[0],
     totalDays: 4,
     checklist: [
-        { id: 'c1', text: '確認護照效期 (至少6個月)', checked: false },
-        { id: 'c2', text: '購買東京迪士尼門票', checked: true },
-        { id: 'c3', text: '辦理 Suica/Pasmo 卡', checked: false },
-        { id: 'c4', text: '預訂 eSIM / Pocket WiFi', checked: true },
-        { id: 'c5', text: '確認機票與住宿', checked: true }
+        { id: 'c1', text: '確認護照效期 (至少6個月)', textEn: 'Check passport validity (at least 6 months)', checked: false },
+        { id: 'c2', text: '購買東京迪士尼門票', textEn: 'Buy Tokyo Disney tickets', checked: true },
+        { id: 'c3', text: '辦理 Suica/Pasmo 卡', textEn: 'Get Suica/Pasmo card', checked: false },
+        { id: 'c4', text: '預訂 eSIM / Pocket WiFi', textEn: 'Book eSIM / Pocket WiFi', checked: true },
+        { id: 'c5', text: '確認機票與住宿', textEn: 'Confirm flight & hotel', checked: true }
     ],
     createdAt: Date.now(),
     region: 'tokyo',
@@ -463,7 +463,7 @@ export const CATEGORY_FILTERS: { id: 'all' | ItemType; label: string; labelEn: s
 export const COUNTRY_FILTERS = [
     { id: 'all', label: '全部', labelEn: 'All', icon: '🌏' },
     { id: 'taiwan', label: '台灣', labelEn: 'Taiwan', icon: '🇹🇼' },
-    { id: 'japan', label: '日本', labelEn: 'Japan', icon: '🇯🇵' },
+    // { id: 'japan', label: '日本', labelEn: 'Japan', icon: '🇯🇵' },
     { id: 'australia', label: '澳洲', labelEn: 'Australia', icon: '🇦🇺' },
 ];
 
@@ -474,11 +474,13 @@ export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: 
         { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
         { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
     ],
+    /*
     japan: [
         { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
         { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
         { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
     ],
+    */
     australia: [
         { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
     ],
@@ -491,9 +493,9 @@ export const REGION_FILTERS: { id: Region; label: string; labelEn: string; icon:
     { id: 'tainan', label: '台南', labelEn: 'Tainan', icon: '🏮' },
     { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
     { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
-    { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
-    { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
-    { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
+    // { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
+    // { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
+    // { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
     { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
 ];
 

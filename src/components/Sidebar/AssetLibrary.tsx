@@ -56,7 +56,7 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
                         <button
                             onClick={() => setShowCustomItemModal(true)}
                             className="h-9 px-3 bg-white border border-dashed border-teal-200 text-teal-600 rounded-lg flex items-center justify-center hover:bg-teal-50"
-                            title={t.createCustom || 'Create Custom'}
+                            title={t.createCustom}
                         >
                             <Plus size={16} />
                         </button>
@@ -67,7 +67,7 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
                         onClick={() => setShowCustomItemModal(true)}
                         className="w-full py-2 border border-dashed border-teal-200 text-teal-600 rounded-lg text-sm font-medium hover:bg-teal-50 transition-all flex items-center justify-center gap-1"
                     >
-                        <Plus size={14} /> {t.createCustom || (lang === 'zh' ? '建立自訂景點' : 'Create Custom')}
+                        <Plus size={14} /> {t.createCustom}
                     </button>
                 )}
 
@@ -112,7 +112,7 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
                     ))}
                     {filteredAssets.length === 0 && (
                         <div className="col-span-2 text-center text-gray-400 text-sm py-8">
-                            {t.noResults || (lang === 'zh' ? '找不到結果' : 'No results found')}
+                            {t.noResults}
                         </div>
                     )}
                 </div>

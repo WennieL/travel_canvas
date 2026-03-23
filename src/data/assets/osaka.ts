@@ -21,10 +21,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '幸運神 Billiken 的正確摸法',
             full: {
                 story: '塔頂有「幸運神 Billiken」像，記得摸他的腳底板，據說會帶來好運。附近的「新世界」區域是大阪最復古的區域，串炸一條街必逛。推薦「だるま」串炸店，創業超過 90 年。',
+                storyEn: 'Rub the soles of the Billiken statue at the top for good luck. The surrounding Shinsekai area is Osaka\'s most retro district. Don\'t miss the kushikatsu (deep-fried skewers) street, especially the 90-year-old "Daruma".',
                 exactLocation: '展望台 5F 的 Billiken 神像旁',
+                exactLocationEn: 'Beside the Billiken statue on the 5F Observatory',
                 mustTry: '在新世界吃「元祖串カツ だるま」',
+                mustTryEn: 'Kushikatsu Daruma in Shinsekai',
                 avoid: '週末下午人最多，避開 14:00-17:00',
-                bestTime: '17:00 後看夜景'
+                avoidEn: 'Avoid 14:00 - 17:00 on weekends; the queues are longest',
+                bestTime: '17:00 後看夜景',
+                bestTimeEn: 'After 17:00 for the evening city lights'
             }
         }
     },
@@ -48,10 +53,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '免費進城拍攝的秘密時段',
             full: {
                 story: '天守閣 17:00 關門，但外圍的「西之丸庭園」一直開放到日落。傍晚時分配合夕陽，是拍攝大阪城最美的時刻。春天櫻花季時，這裡有超過 600 棵櫻花樹。',
+                storyEn: 'The Main Tower closes at 17:00, but the Nishinomaru Garden remains open until sunset. Golden Hour is the best time for photos, especially during spring when 600 cherry trees bloom here.',
                 exactLocation: '西之丸庭園的銀杏林旁',
+                exactLocationEn: 'Near the ginkgo trees in Nishinomaru Garden',
                 mustTry: '登上天守閣頂樓 8F，可 360 度俯瞰大阪',
+                mustTryEn: 'Climb to the 8F observation deck for a 360-degree city view',
                 avoid: '不要買天守閣前的「忍者冰淇淋」，太貴又普通',
-                bestTime: '日落前 1 小時'
+                avoidEn: 'Skip the "Ninja Ice Cream" in front of the tower; it\'s overpriced and average',
+                bestTime: '日落前 1 小時',
+                bestTimeEn: 'One hour before sunset'
             }
         }
     },
@@ -75,10 +85,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '避開觀光客陷阱的美食地圖',
             full: {
                 story: '正對運河的店都是觀光客陷阱，貴又普通。往「法善寺橫丁」方向走，「たこ家道頓堀くくる」才是真正好吃的章魚燒。「明石燒」比章魚燒更好吃，要配高湯吃。',
+                storyEn: 'Riverside shops are often tourist traps. Head toward Hozenji Yokocho for "Takoya Dotonbori Kukuru"—the real deal. Try "Akashi-yaki"; it\'s softer than takoyaki and served with a savory dashi broth.',
                 exactLocation: '法善寺橫丁入口處的「くくる」章魚燒',
+                exactLocationEn: 'The "Kukuru" stand at the entrance of Hozenji Yokocho',
                 mustTry: '明石燒 + 大阪燒 + 串炸的組合',
+                mustTryEn: 'The ultimate trio: Akashi-yaki + Okonomiyaki + Kushikatsu',
                 avoid: '不要吃「金龍拉麵」，只是便宜不是最好吃',
-                bestTime: '19:00-22:00 霓虹燈最美'
+                avoidEn: 'Skip "Kinryu Ramen"; it\'s cheap but definitely not the best in town',
+                bestTime: '19:00-22:00 霓虹燈最美',
+                bestTimeEn: '19:00 - 22:00 when the neon signs are most vibrant'
             }
         }
     },
@@ -102,10 +117,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '快速通關的聰明購買策略',
             full: {
                 story: '快速通關分「4項」和「7項」，只有超級任天堂世界值得買。其他設施用「Single Rider」排隊，通常只要 10-15 分鐘。開園前 30 分鐘到門口，一開門先衝「超級任天堂世界」拿整理券。',
+                storyEn: 'Only the Nintendo World Express Pass is truly worth it. For other rides, use the "Single Rider" lane to wait just 10-15 mins. Arrive 30 mins before opening and head straight for Nintendo World timed-entry tickets.',
                 exactLocation: 'Super Nintendo World 入口左邊的整理券機',
+                exactLocationEn: 'Timed-entry ticket machines to the left of Nintendo World entrance',
                 mustTry: '奇諾比奧咖啡廳的「蘑菇濃湯」',
+                mustTryEn: 'The "Mushroom Soup" at Kinopio\'s Cafe',
                 avoid: '不要一開門就去哈利波特，先衝任天堂',
-                bestTime: '平日開園前 30 分鐘到達'
+                avoidEn: 'Don\'t go to Harry Potter first; prioritize Nintendo World',
+                bestTime: '平日開園前 30 分鐘到達',
+                bestTimeEn: 'Arrive 30 minutes before opening on weekdays'
             }
         }
     },
@@ -131,10 +151,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaserEn: 'Retro Shōwa vibes! Osaka\'s best creative walk',
             full: {
                 story: '這裡是二次大戰中少數躲過轟炸的區域，保留了大量昭和初期的長屋建築。IG 上最紅的就是那些藏在防火巷裡的咖啡廳。這裡的節奏跟道頓堀完全不同，適合慢慢逛、慢慢拍。',
+                storyEn: 'This area miraculously survived WWII bombings, preserving its early Shōwa-era charm. It\'s Kyoto\'s counterpart in Osaka—full of alleyway cafes and boutiques. The pace is slow and perfect for photography.',
                 exactLocation: '中崎町車站周邊，巷弄深處',
+                exactLocationEn: 'Deep in the alleys around Nakazakicho Station',
                 mustTry: '找一家老宅咖啡廳喝下午茶',
+                mustTryEn: 'Afternoon tea in a restored Shōwa-era wood house',
                 avoid: '這裡是住宅區，很多屋主不希望對著私宅拍照，請遵守禮儀',
-                bestTime: '15:00 陽光穿透巷弄的時刻'
+                avoidEn: 'Respect private residences; many locals don\'t want their homes photographed',
+                bestTime: '15:00 陽光穿透巷弄的時刻',
+                bestTimeEn: '15:00 when the light hits the narrow lanes perfectly'
             }
         }
     },
@@ -160,10 +185,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaserEn: 'Lion head swallowing bad luck! Most striking shrine',
             full: {
                 story: '這個巨大的獅子頭高 12 公尺，寬 11 公尺，大嘴裡就是一個舞台。傳說這口大嘴可以把你的厄運通通吞掉，並帶來事業與學業上的勝利。是個不僅視覺震撼，感覺也非常有力量的地方。',
+                storyEn: 'The massive lion head stands 12m tall and 11m wide, with a stage inside its mouth. Legend says it swallows your bad luck and brings victory in business and studies. It\'s a visually striking and powerful site.',
                 exactLocation: '入口進去正前方的「獅子殿」',
+                exactLocationEn: 'The "Ema-den" (Lion Stage) directly in front of the entrance',
                 mustTry: '站在獅子嘴巴正前方拍一張合照',
+                mustTryEn: 'Take a photo directly in front of the lion\'s gaping mouth',
                 avoid: '不要擋到正在參拜的人',
-                bestTime: '10:00-11:00 光線均勻灑在獅子臉上時'
+                avoidEn: 'Don\'t block the path of locals who are there for worship',
+                bestTime: '10:00-11:00 光線均員灑在獅子臉上時',
+                bestTimeEn: '10:00 - 11:00 AM for the best lighting on the lion\'s face'
             }
         }
     },
@@ -191,10 +221,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '只有 2 班的隱藏版觀光船',
             full: {
                 story: '每天只有兩班（19:00, 20:30），船長是退役薩克斯風手。記得提前在官網預約，現場買不到票。可以自帶啤酒上船！',
+                storyEn: 'Only two trips a day (19:00, 20:30). The captain is a retired saxophonist. Book online in advance; it\'s impossible to get tickets on-site. You can even bring your own beer!',
                 exactLocation: '解鎖後查看登船碼頭位置',
+                exactLocationEn: 'View boarding dock location after unlocking',
                 mustTry: '帶一罐 Asahi 啤酒上船',
+                mustTryEn: 'Bring a cold can of Asahi on board',
                 avoid: '解鎖後查看',
-                bestTime: '20:30 配合夜景最美'
+                avoidEn: 'Unlock to view',
+                bestTime: '20:30 配合夜景最美',
+                bestTimeEn: '20:30 for the best evening neon views'
             }
         }
     },
@@ -218,10 +253,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '便宜但不是最好吃的選擇',
             full: {
                 story: '金龍是觀光客常去的店，便宜（¥700）但味道普通。如果想吃真正好吃的拉麵，推薦走遠一點去「神座」（かむくら），湯頭有白菜甜味，是大阪人的最愛。',
+                storyEn: 'Kinryu is a tourist legend because of its dragon, but the taste is average. For real Osaka flavor, head to "Kamukura" nearby—its cabbage-based sweet broth is a local favorite.',
                 exactLocation: '道頓堀主街上，認明金龍招牌',
+                exactLocationEn: 'On the main Dotonbori street; look for the dragon sign',
                 mustTry: '如果要吃，加顆「溫泉蛋」¥100',
+                mustTryEn: 'Add a "Soft-boiled Egg" for ¥100 if you eat here',
                 avoid: '不要期待太高，吃個體驗就好',
-                bestTime: '凌晨 2-4 點宵夜時段'
+                avoidEn: 'Manage your expectations; it\'s more about the experience than the food',
+                bestTime: '凌晨 2-4 點宵夜時段',
+                bestTimeEn: '02:00 - 04:00 AM for the classic late-night vibe'
             }
         }
     },
@@ -245,10 +285,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '「明石燒」才是在地人的最愛',
             full: {
                 story: '除了章魚燒，一定要試「明石燒」（明石焼き）！這是章魚燒的原型，外皮更軟嫩，要沾高湯吃。店內最人氣的是「大たこ入りたこ焼き」，章魚大到快爆出來。',
+                storyEn: 'Beyond takoyaki, try the "Akashi-yaki"—the fluffier ancestor of takoyaki served with dashi. Their "Giant Octopus Takoyaki" is legendary for the huge chunks of meat.',
                 exactLocation: '道頓堀本店，認明巨大章魚招牌',
+                exactLocationEn: 'Dotonbori Main Shop; look for the massive octopus sign',
                 mustTry: '明石燒 (6顆 ¥580) + たこ焼き (8顆 ¥680)',
+                mustTryEn: 'Akashi-yaki (6pcs ¥580) + Takoyaki (8pcs ¥680)',
                 avoid: '不要外帶，現吃熱騰騰的最好吃',
-                bestTime: '11:00 或 17:00 人較少'
+                avoidEn: 'Don\'t take it to-go; it\'s infinitely better when eaten fresh and hot',
+                bestTime: '11:00 或 17:00 人較少',
+                bestTimeEn: '11:00 or 17:00 to beat the biggest rush'
             }
         }
     },
@@ -272,10 +317,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '自己煎才是道地大阪流',
             full: {
                 story: '點「海鮮デラックス」（海鮮豪華版），會給你一大碗生麵糊和配料，自己在鐵板上煎。不會煎沒關係，按桌上的服務鈴，店員會來幫你。最後撒上大量的柴魚片和美乃滋，看柴魚片跳舞超療癒！',
+                storyEn: 'Order the "Seafood Deluxe" and cook it yourself on the tabletop grill. If you\'re unsure, the staff will gladly help. Watching the bonito flakes "dance" on top is part of the magic.',
                 exactLocation: '道頓堀本店 2F，可以看到運河',
+                exactLocationEn: '2F of the Dotonbori Main Shop; try to get a window seat',
                 mustTry: '海鮮デラックス + モダン焼き',
+                mustTryEn: 'Seafood Deluxe + Modan-yaki (with noodles)',
                 avoid: '不要點太多，一份就很飽',
-                bestTime: '11:30-13:00 有划算的套餐'
+                avoidEn: 'Don\'t over-order; one portion is surprisingly filling',
+                bestTime: '11:30-13:00 有划算的套餐',
+                bestTimeEn: '11:30 - 13:00 for the value lunch sets'
             }
         }
     },
@@ -298,10 +348,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '指定高樓層看大阪夜景',
             full: {
                 story: '訂房時備註「高層部屋希望」，可以俯瞰整個梅田和遠處的大阪城。20F 的大廳有免費茶水和餅乾，黃昏時來這裡放空超棒。',
+                storyEn: 'Request a "High floor" to see the Umeda skyline and Osaka Castle. The 20F lobby offers complimentary tea and snacks—perfect for watching the sunset.',
                 exactLocation: 'Grand Front 大樓內',
+                exactLocationEn: 'Located within the Grand Front Osaka complex',
                 mustTry: '20F Lobby Lounge 的下午茶',
+                mustTryEn: 'Afternoon high tea at the 20F Lobby Lounge',
                 avoid: '不要訂低樓層，景觀差很多',
-                bestTime: '提前 2 週訂房'
+                avoidEn: 'Don\'t book low-floor rooms; you\'ll lose the panoramic city views',
+                bestTime: '提前 2 週訂房',
+                bestTimeEn: 'Book at least 2 weeks in advance'
             }
         }
     },
@@ -324,10 +379,15 @@ export const OSAKA_ASSETS: TravelItem[] = [
             teaser: '有溫泉大浴場的平價商旅',
             full: {
                 story: '頂樓有免費溫泉大浴場，在大阪這種價位很少見！早餐的大阪燒和章魚燒是現做的，超讚。房間雖小但五臟俱全。',
+                storyEn: 'A free rooftop onsen is a rare luxury at this price point! The breakfast features freshly made takoyaki and okonomiyaki. Rooms are small but perfectly equipped.',
                 exactLocation: '心齋橋商店街旁',
+                exactLocationEn: 'Right beside the Shinsaibashi Shopping Arcade',
                 mustTry: '早餐的現做章魚燒',
+                mustTryEn: 'The freshly made takoyaki at breakfast',
                 avoid: '不要訂最便宜的房型，太小幾乎沒法打開行李箱',
-                bestTime: '泡湯避開 21:00-22:00'
+                avoidEn: 'Avoid the budget singles; they\'re too small to fully open a suitcase',
+                bestTime: '泡湯避開 21:00-22:00',
+                bestTimeEn: 'Avoid 21:00 - 22:00 for the baths to bypass the crowds'
             }
         }
     }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Compass, GripVertical, Sparkles, ChevronRight, X } from 'lucide-react';
+import { TRANSLATIONS } from '../data/translations';
 
 interface WelcomeSlidesProps {
     onComplete: () => void;
@@ -7,7 +8,7 @@ interface WelcomeSlidesProps {
 }
 
 /* ─── Slide 1 Animation: Browse & Apply Template ─── */
-const DiscoverAnimation = () => (
+const DiscoverAnimation = ({ t }: { t: any }) => (
     <div className="relative w-64 h-28 mx-auto mb-4">
         <style>{`
             @keyframes card-glow { 0%,60% { box-shadow: 0 0 0 rgba(20,184,166,0); transform: scale(1); } 65% { box-shadow: 0 0 12px rgba(20,184,166,0.4); transform: scale(1.05); } 100% { box-shadow: 0 0 0 rgba(20,184,166,0); transform: scale(1); } }
@@ -18,16 +19,16 @@ const DiscoverAnimation = () => (
         <div className="flex gap-3 justify-center">
             <div className="w-20 h-16 rounded-lg bg-white/70 border border-gray-200 flex flex-col items-center justify-center shadow-sm">
                 <span className="text-lg">🗼</span>
-                <span className="text-[8px] text-gray-500 font-medium mt-0.5">東京 4 日</span>
+                <span className="text-[8px] text-gray-500 font-medium mt-0.5">{t.welcomeTokyo4Days}</span>
             </div>
             <div className="w-20 h-16 rounded-lg bg-white/70 border border-teal-200 flex flex-col items-center justify-center shadow-sm"
                 style={{ animation: 'card-glow 4s ease-in-out infinite' }}>
                 <span className="text-lg">⛩️</span>
-                <span className="text-[8px] text-gray-500 font-medium mt-0.5">京都 3 日</span>
+                <span className="text-[8px] text-gray-500 font-medium mt-0.5">{t.welcomeKyoto3Days}</span>
             </div>
             <div className="w-20 h-16 rounded-lg bg-white/70 border border-gray-200 flex flex-col items-center justify-center shadow-sm">
                 <span className="text-lg">🏯</span>
-                <span className="text-[8px] text-gray-500 font-medium mt-0.5">大阪 2 日</span>
+                <span className="text-[8px] text-gray-500 font-medium mt-0.5">{t.welcomeOsaka2Days}</span>
             </div>
         </div>
         {/* Cursor */}
@@ -39,13 +40,13 @@ const DiscoverAnimation = () => (
         {/* Apply button popup */}
         <div className="absolute bottom-0 left-1/2 bg-gradient-to-r from-teal-400 to-emerald-500 text-white text-[9px] font-bold px-4 py-1.5 rounded-full shadow-lg"
             style={{ animation: 'apply-pop 4s ease-in-out infinite' }}>
-            ✅ 一鍵套用
+            {t.welcomeOneClickApply}
         </div>
     </div>
 );
 
 /* ─── Slide 2 Animation: Drag & Drop ─── */
-const DragDropAnimation = () => (
+const DragDropAnimation = ({ t }: { t: any }) => (
     <div className="relative w-64 h-28 mx-auto mb-4">
         <style>{`
             @keyframes item-fly { 0% { left: 12px; top: 6px; opacity: 1; } 45% { left: 12px; top: 6px; opacity: 1; } 70% { left: 148px; top: 32px; opacity: 1; } 75% { left: 148px; top: 32px; opacity: 0; } 100% { left: 148px; top: 32px; opacity: 0; } }
@@ -56,19 +57,19 @@ const DragDropAnimation = () => (
         <div className="flex items-start gap-4">
             {/* Left: Asset Library mini */}
             <div className="w-20 shrink-0">
-                <div className="text-[8px] text-gray-400 font-bold mb-1.5 text-center">素材庫</div>
+                <div className="text-[8px] text-gray-400 font-bold mb-1.5 text-center">{t.visualsAssets}</div>
                 <div className="space-y-1.5">
                     <div className="relative">
                         <div className="w-full h-8 rounded-md bg-white/80 border border-purple-200 flex items-center gap-1 px-1.5 shadow-sm"
                             style={{ animation: 'item-fly 4.5s ease-in-out infinite', position: 'absolute', zIndex: 5 }}>
                             <span className="text-xs">🏯</span>
-                            <span className="text-[7px] text-gray-700 font-medium">金閣寺</span>
+                            <span className="text-[7px] text-gray-700 font-medium">{t.visualsKinkakuji}</span>
                         </div>
                         <div className="w-full h-8 rounded-md bg-white/40 border border-dashed border-gray-200"></div>
                     </div>
                     <div className="w-full h-8 rounded-md bg-white/60 border border-gray-200 flex items-center gap-1 px-1.5">
                         <span className="text-xs">🍜</span>
-                        <span className="text-[7px] text-gray-500 font-medium">一蘭拉麵</span>
+                        <span className="text-[7px] text-gray-500 font-medium">{t.ichiran}</span>
                     </div>
                 </div>
             </div>
@@ -79,16 +80,16 @@ const DragDropAnimation = () => (
 
             {/* Right: Timeline slots */}
             <div className="flex-1">
-                <div className="text-[8px] text-gray-400 font-bold mb-1.5 text-center">行程</div>
+                <div className="text-[8px] text-gray-400 font-bold mb-1.5 text-center">{t.schedule}</div>
                 <div className="space-y-1.5">
                     <div className="w-full h-8 rounded-md border border-dashed flex items-center justify-center"
                         style={{ animation: 'slot-fill 4.5s ease-in-out infinite' }}>
                         <span className="text-[7px] text-gray-400" style={{ animation: 'check-pop 4.5s ease-in-out infinite' }}>
-                            ✅ 已加入
+                            {t.welcomeApplied}
                         </span>
                     </div>
                     <div className="w-full h-8 rounded-md bg-white/40 border border-dashed border-gray-200 flex items-center justify-center">
-                        <span className="text-[8px] text-gray-300">下午</span>
+                        <span className="text-[8px] text-gray-300">{t.afternoon}</span>
                     </div>
                 </div>
             </div>
@@ -97,7 +98,7 @@ const DragDropAnimation = () => (
 );
 
 /* ─── Slide 3 Animation: Quick Fill ─── */
-const QuickFillAnimation = () => (
+const QuickFillAnimation = ({ t }: { t: any }) => (
     <div className="relative w-64 h-28 mx-auto mb-4">
         <style>{`
             @keyframes btn-press { 0%,40% { transform: scale(1); box-shadow: 0 2px 8px rgba(245,158,11,0.3); } 45% { transform: scale(0.92); box-shadow: 0 1px 4px rgba(245,158,11,0.2); } 50% { transform: scale(1.05); box-shadow: 0 4px 12px rgba(245,158,11,0.4); } 55%,100% { transform: scale(1); box-shadow: 0 2px 8px rgba(245,158,11,0.3); } }
@@ -110,16 +111,16 @@ const QuickFillAnimation = () => (
         <div className="flex justify-center mb-3">
             <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[9px] font-bold px-4 py-1.5 rounded-full"
                 style={{ animation: 'btn-press 5s ease-in-out infinite' }}>
-                ✨ 一鍵填入
+                {t.quickFill}
             </div>
         </div>
         {/* Slots grid */}
         <div className="grid grid-cols-4 gap-2 px-2">
             {[
-                { emoji: '🏯', label: '金閣寺', anim: 'slot-pop-1' },
-                { emoji: '🍜', label: '一蘭拉麵', anim: 'slot-pop-2' },
-                { emoji: '🌸', label: '花見小路', anim: 'slot-pop-3' },
-                { emoji: '🏨', label: '京都旅館', anim: 'slot-pop-4' },
+                { emoji: '🏯', label: t.visualsKinkakuji, anim: 'slot-pop-1' },
+                { emoji: '🍜', label: t.ichiran, anim: 'slot-pop-2' },
+                { emoji: '🌸', label: t.visualsFushimiInari, anim: 'slot-pop-3' },
+                { emoji: '🏨', label: t.hotel, anim: 'slot-pop-4' },
             ].map((item, i) => (
                 <div key={i} className="h-14 rounded-lg bg-white/70 border border-orange-200 flex flex-col items-center justify-center shadow-sm"
                     style={{ animation: `${item.anim} 5s ease-in-out infinite` }}>
@@ -133,69 +134,42 @@ const QuickFillAnimation = () => (
 
 const ANIMATION_COMPONENTS = [DiscoverAnimation, DragDropAnimation, QuickFillAnimation];
 
-const SLIDES_ZH = [
+const SLIDE_CONFIGS = [
     {
         emoji: '🧭',
         icon: Compass,
         color: 'from-teal-400 to-emerald-500',
         bg: 'bg-gradient-to-br from-teal-50 to-emerald-50',
-        title: '從達人模板開始',
-        subtitle: '不知道去哪？沒關係！',
-        description: '探索頁有上百個在地達人精心設計的行程模板，一鍵套用就能開始你的旅程。',
-        tip: '點左側「發現」開始探索 →',
+        keys: {
+            title: 'welcomeStep1Title',
+            subtitle: 'welcomeStep1Subtitle',
+            description: 'welcomeStep1Desc',
+            tip: 'welcomeStep1Tip'
+        }
     },
     {
         emoji: '🎨',
         icon: GripVertical,
         color: 'from-violet-400 to-purple-500',
         bg: 'bg-gradient-to-br from-violet-50 to-purple-50',
-        title: '拖拽你的行程',
-        subtitle: '像畫布一樣自由編排',
-        description: '從素材庫將景點、美食、住宿直接拖到行程時間軸上，輕鬆規劃每日行程。',
-        tip: '點左側「素材資料庫」瀏覽景點 →',
+        keys: {
+            title: 'welcomeStep2Title',
+            subtitle: 'welcomeStep2Subtitle',
+            description: 'welcomeStep2Desc',
+            tip: 'welcomeStep2Tip'
+        }
     },
     {
         emoji: '✨',
         icon: Sparkles,
         color: 'from-amber-400 to-orange-500',
         bg: 'bg-gradient-to-br from-amber-50 to-orange-50',
-        title: '一鍵填入',
-        subtitle: '懶人規劃神器',
-        description: '看到空白時段？點「一鍵填入」，系統自動幫你填滿當地最推薦的景點！',
-        tip: '在行程空白處找到 ✨ 按鈕',
-    },
-];
-
-const SLIDES_EN = [
-    {
-        emoji: '🧭',
-        icon: Compass,
-        color: 'from-teal-400 to-emerald-500',
-        bg: 'bg-gradient-to-br from-teal-50 to-emerald-50',
-        title: 'Start with Expert Templates',
-        subtitle: "Don't know where to go? No worries!",
-        description: 'Browse hundreds of curated travel templates by local experts. Apply one to start your trip instantly.',
-        tip: 'Click "Discovery" in the sidebar →',
-    },
-    {
-        emoji: '🎨',
-        icon: GripVertical,
-        color: 'from-violet-400 to-purple-500',
-        bg: 'bg-gradient-to-br from-violet-50 to-purple-50',
-        title: 'Drag & Drop Your Itinerary',
-        subtitle: 'Plan like a canvas',
-        description: 'Drag attractions, food spots, and hotels from the asset library directly onto your timeline.',
-        tip: 'Click "Asset Library" in the sidebar →',
-    },
-    {
-        emoji: '✨',
-        icon: Sparkles,
-        color: 'from-amber-400 to-orange-500',
-        bg: 'bg-gradient-to-br from-amber-50 to-orange-50',
-        title: 'Quick Fill',
-        subtitle: 'Lazy planning magic',
-        description: 'See an empty slot? Hit "Quick Fill" and we\'ll auto-suggest the best local spots for you!',
-        tip: 'Look for the ✨ button in empty slots',
+        keys: {
+            title: 'welcomeStep3Title',
+            subtitle: 'welcomeStep3Subtitle',
+            description: 'welcomeStep3Desc',
+            tip: 'welcomeStep3Tip'
+        }
     },
 ];
 
@@ -203,9 +177,9 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isExiting, setIsExiting] = useState(false);
 
-    const slides = lang === 'zh' ? SLIDES_ZH : SLIDES_EN;
-    const slide = slides[currentSlide];
-    const isLast = currentSlide === slides.length - 1;
+    const t = TRANSLATIONS[lang] || TRANSLATIONS.zh;
+    const slideConfig = SLIDE_CONFIGS[currentSlide];
+    const isLast = currentSlide === SLIDE_CONFIGS.length - 1;
     const AnimComponent = ANIMATION_COMPONENTS[currentSlide];
 
     const handleNext = () => {
@@ -230,7 +204,7 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
 
             {/* Card */}
-            <div className={`relative w-[90vw] max-w-md mx-auto rounded-3xl shadow-2xl overflow-hidden ${slide.bg} border border-white/60`}>
+            <div className={`relative w-[90vw] max-w-md mx-auto rounded-3xl shadow-2xl overflow-hidden ${slideConfig.bg} border border-white/60`}>
                 {/* Skip button */}
                 <button
                     onClick={handleClose}
@@ -243,23 +217,23 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
                 {/* Content */}
                 <div className="px-8 pt-8 pb-4 text-center">
                     {/* Micro Animation */}
-                    <AnimComponent />
+                    <AnimComponent t={t} />
 
                     {/* Text */}
                     <h2 className="text-2xl font-black text-gray-900 mb-2 tracking-tight">
-                        {slide.title}
+                        {t[slideConfig.keys.title]}
                     </h2>
                     <p className="text-sm font-medium text-gray-500 mb-3">
-                        {slide.subtitle}
+                        {t[slideConfig.keys.subtitle]}
                     </p>
                     <p className="text-xs text-gray-600 leading-relaxed mb-4 max-w-xs mx-auto">
-                        {slide.description}
+                        {t[slideConfig.keys.description]}
                     </p>
 
                     {/* Tip badge */}
                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-gray-200/60 text-xs font-medium text-gray-600 shadow-sm">
-                        <slide.icon size={12} className="text-gray-400" />
-                        {slide.tip}
+                        <slideConfig.icon size={12} className="text-gray-400" />
+                        {t[slideConfig.keys.tip]}
                     </div>
                 </div>
 
@@ -267,12 +241,12 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
                 <div className="px-8 pb-7 pt-2">
                     {/* Dots */}
                     <div className="flex justify-center gap-2 mb-4">
-                        {slides.map((_, idx) => (
+                        {SLIDE_CONFIGS.map((_, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => setCurrentSlide(idx)}
                                 className={`h-2 rounded-full transition-all duration-300 ${idx === currentSlide
-                                        ? `w-6 bg-gradient-to-r ${slide.color}`
+                                        ? `w-6 bg-gradient-to-r ${slideConfig.color}`
                                         : 'w-2 bg-gray-300 hover:bg-gray-400'
                                     }`}
                             />
@@ -282,12 +256,9 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
                     {/* CTA Button */}
                     <button
                         onClick={handleNext}
-                        className={`w-full py-3.5 rounded-2xl font-bold text-white bg-gradient-to-r ${slide.color} shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-sm`}
+                        className={`w-full py-3.5 rounded-2xl font-bold text-white bg-gradient-to-r ${slideConfig.color} shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-sm`}
                     >
-                        {isLast
-                            ? (lang === 'zh' ? '開始探索！' : "Let's Go!")
-                            : (lang === 'zh' ? '下一步' : 'Next')
-                        }
+                        {isLast ? t.welcomeStart : t.welcomeNext}
                         {!isLast && <ChevronRight size={16} />}
                     </button>
                 </div>

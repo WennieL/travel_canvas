@@ -153,10 +153,10 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                 {/* Header Context for Map Discovery */}
                 <div className="p-6 border-b border-gray-100 bg-gradient-to-br from-teal-50/30 to-white">
                     <h3 className="font-black text-gray-800 text-xl mb-1">
-                        {lang === 'zh' ? '地圖引導模式' : 'Map-Guided Mode'}
+                        {t.mapGuidedMode}
                     </h3>
                     <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">
-                        {activeRegion === 'all' ? (lang === 'zh' ? '全區熱門' : 'Global Picks') : `${activeRegion} Area`}
+                        {activeRegion === 'all' ? t.globalPicks : `${activeRegion} Area`}
                     </p>
                 </div>
 
@@ -168,10 +168,10 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                         </svg>
                     </div>
                     <h4 className="font-black text-gray-900 mb-2">
-                        {lang === 'zh' ? '準備開始探索' : 'Ready to Explore'}
+                        {t.readyToExplore}
                     </h4>
                     <p className="text-sm text-gray-500 leading-relaxed italic max-w-[200px]">
-                        {lang === 'zh' ? '請從右側地圖點選感興趣的標記，查看達人私房推薦...' : 'Tap any pin on the map to see insider tips and detail...'}
+                        {t.discoveryGuideDesc}
                     </p>
                 </div>
 
@@ -182,7 +182,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                     }}
                     className="m-6 py-3 border border-gray-100 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-teal-600 hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
                 >
-                    {lang === 'zh' ? '結束探索模式' : 'Exit Discovery Mode'}
+                    {t.exitDiscoveryMode}
                 </button>
             </div>
         );
@@ -212,7 +212,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 </h3>
                                 <div className="flex items-center gap-1.5 px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-black rounded-lg uppercase w-fit">
                                     <span className="animate-pulse">✨</span>
-                                    {authors.length} {lang === 'zh' ? '位達人推薦' : 'Experts Recommended'}
+                                    {authors.length}{t.expertsRecommended}
                                 </div>
                             </div>
                         </div>
@@ -256,17 +256,17 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                     {lang === 'en' && primaryCreator?.nameEn ? primaryCreator.nameEn : (primaryCreator?.name || 'Travel Expert')}
                                 </h3>
                                 <p className="text-xs text-teal-600 font-bold uppercase tracking-wider">
-                                    {(primaryCreator as any)?.role || (lang === 'zh' ? '旅遊達人' : 'Expert')}
+                                    {(primaryCreator as any)?.role || t.travelExpert}
                                 </p>
                             </div>
                         </div>
                         <p className="text-sm text-gray-600 leading-relaxed italic mb-4">
                             "{lang === 'zh'
-                                ? (primaryCreator?.description || '這些是我私心收藏的隱藏景點，希望妳也喜歡！')
-                                : (primaryCreator?.descriptionEn || primaryCreator?.description || 'These are my personal hidden gems. Hope you enjoy them!')}"
+                                ? (primaryCreator?.description || t.creatorDefaultDesc)
+                                : (primaryCreator?.descriptionEn || primaryCreator?.description || t.creatorDefaultDesc)}"
                         </p>
                     </>
-                ) : (
+                 ) : (
                     // EMPTY STATE: BE THE FIRST
                     <div className="animate-in fade-in zoom-in-95 duration-500">
                         <div className="flex items-center gap-4 mb-4">
@@ -277,10 +277,10 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                             </div>
                             <div>
                                 <h3 className="font-black text-gray-800 text-lg">
-                                    {lang === 'zh' ? '這區還沒人帶路' : 'Nobody here yet'}
+                                    {t.nobodyHereYet}
                                 </h3>
                                 <p className="text-xs text-teal-600 font-bold uppercase tracking-wider">
-                                    {lang === 'zh' ? '等你來發掘' : 'Discovery needed'}
+                                    {t.exploreCity}
                                 </p>
                             </div>
                         </div>
@@ -290,21 +290,21 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 : "No experts have recommended this area yet... want to be the first to share your hidden gems?"}
                         </p>
                         <button className="w-fit px-4 py-2 bg-gradient-to-r from-teal-500 to-indigo-500 text-white text-xs font-black rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 uppercase">
-                            {lang === 'zh' ? '我也要成為達人' : 'Become an Expert'}
+                            {t.becomeExpert}
                         </button>
                     </div>
                 )}
             </div>
 
             {/* [PHASE 24] Curated List - Suppressed in Map mode to focus on Hero Spot / Map interactions */}
-            {sidebarMode !== (('map' as any)) && (
+            {sidebarMode !== 'map' && (
                 <div className="p-4">
                     <div className="flex items-center justify-between mb-4 px-1">
                         <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">
-                            {selectedItem ? (lang === 'zh' ? '景點詳情' : 'Spot Details') : (lang === 'zh' ? '達人私藏清單' : 'Expert Picks')}
+                            {selectedItem ? t.viewDetailsLabel : t.expertTemplates}
                         </h4>
                         <div className="px-2 py-0.5 bg-teal-100 text-teal-700 text-[10px] font-bold rounded-lg capitalize">
-                            {activeRegion !== 'all' ? activeRegion : 'Global'}
+                            {activeRegion !== 'all' ? activeRegion : t.allRegion}
                         </div>
                     </div>
 
@@ -332,7 +332,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                                 <span className="text-xs font-black text-gray-800 lowercase tracking-tighter">
                                                     @{((lang === 'en' && author?.nameEn ? author.nameEn : (author?.name || 'Expert'))).replace(/\s/g, '').toLowerCase()}
                                                 </span>
-                                                <span className="text-[10px] text-amber-600 font-bold uppercase tracking-widest">{lang === 'zh' ? '達人私藏' : 'Expert Tip'}</span>
+                                                <span className="text-[10px] text-amber-600 font-bold uppercase tracking-widest">{t.insiderTipLabel}</span>
                                             </div>
                                         </div>
 
@@ -350,13 +350,13 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                                 onClick={() => onSelectItem?.(asset)}
                                                 className="text-[11px] font-black text-amber-600 uppercase hover:text-amber-700 underline underline-offset-4"
                                             >
-                                                {lang === 'zh' ? '查看更多' : 'Read Full Story'}
+                                                {t.viewDetailsLabel}
                                             </button>
                                             <button
                                                 onClick={() => onExploreCreatorMap?.(authId, author?.name || 'Expert')}
                                                 className="px-3 py-1.5 bg-gray-900 text-white text-[10px] font-black rounded-lg uppercase hover:bg-black transition-all"
                                             >
-                                                {lang === 'zh' ? '看他其他推薦' : 'View Profile'}
+                                                {t.viewExpertPicks}
                                             </button>
                                         </div>
                                     </div>
@@ -366,7 +366,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                             // STANDARD CREATOR ASSETS VIEW
                             (discoveryCreatorId === 'all'
                                 ? (SAMPLE_ASSETS
-                                    .filter(a => a.authorId && (activeRegion === 'all' || a.region === activeRegion))
+                                    .filter(item => item.authorId && (activeRegion === 'all' || item.region === activeRegion))
                                     .slice(0, 8))
                                 : filteredAssets.slice(0, 6)).map((item) => (
                                     <AssetItemCard
@@ -394,7 +394,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                         }}
                         className="w-full mt-6 py-3 border border-gray-100 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-teal-600 hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
                     >
-                        {lang === 'zh' ? '結束探索模式' : 'Exit Discovery Mode'}
+                        {t.exitDiscoveryMode}
                     </button>
                 </div>
             )}

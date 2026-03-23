@@ -122,11 +122,18 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
         transport: { zh: '大部分景點可透過大眾交通抵達，偏遠地點建議搭計程車或共享單車。', en: 'Most spots are reachable by public transit. For remote areas, taxis or bike-sharing are recommended.' },
         advice: { zh: '攜帶行動電源與舒適步鞋，部分傳統店家僅收現金。', en: 'Bring a power bank and comfortable shoes. Some traditional shops only accept cash.' },
     };
-    const faqItems = [
-        { id: 'time', title: t.bestTimeToVisit || (lang === 'zh' ? '最佳旅遊時間' : 'Best Time to Visit'), icon: '⏰', text: lang === 'zh' ? regionFaq.time.zh : regionFaq.time.en },
-        { id: 'transport', title: t.gettingAround || (lang === 'zh' ? '交通攻略' : 'Getting Around'), icon: '🚌', text: lang === 'zh' ? regionFaq.transport.zh : regionFaq.transport.en },
-        { id: 'advice', title: t.expertAdvice || (lang === 'zh' ? '達人私房建議' : 'Expert Advice'), icon: '💡', text: lang === 'zh' ? regionFaq.advice.zh : regionFaq.advice.en },
-    ];
+    const faqItems = template.faq && template.faq.length > 0
+        ? template.faq.map((item, idx) => ({
+            id: `template-faq-${idx}`,
+            title: lang === 'zh' ? item.title : (item.titleEn || item.title),
+            icon: '💡',
+            text: lang === 'zh' ? item.text : (item.textEn || item.text)
+        }))
+        : [
+            { id: 'time', title: t.bestTimeToVisit || (lang === 'zh' ? '最佳旅遊時間' : 'Best Time to Visit'), icon: '⏰', text: lang === 'zh' ? regionFaq.time.zh : regionFaq.time.en },
+            { id: 'transport', title: t.gettingAround || (lang === 'zh' ? '交通攻略' : 'Getting Around'), icon: '🚌', text: lang === 'zh' ? regionFaq.transport.zh : regionFaq.transport.en },
+            { id: 'advice', title: t.expertAdvice || (lang === 'zh' ? '達人私房建議' : 'Expert Advice'), icon: '💡', text: lang === 'zh' ? regionFaq.advice.zh : regionFaq.advice.en },
+        ];
 
     return (
         <div className="fixed inset-0 z-[3000] flex justify-center items-center pointer-events-none p-4">

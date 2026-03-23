@@ -6,9 +6,10 @@ interface LandingNavProps {
     lang: LangType;
     toggleLang: () => void;
     onStart: (templateId?: string) => void;
+    t: any;
 }
 
-const LandingNav: React.FC<LandingNavProps> = ({ lang, toggleLang, onStart }) => {
+const LandingNav: React.FC<LandingNavProps> = ({ lang, toggleLang, onStart, t }) => {
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
             <div className="flex justify-between items-center px-6 py-3 max-w-6xl mx-auto w-full">
@@ -28,13 +29,13 @@ const LandingNav: React.FC<LandingNavProps> = ({ lang, toggleLang, onStart }) =>
                         href="#features"
                         className="text-slate-600 font-medium text-sm hover:text-slate-800 transition-colors"
                     >
-                        {lang === 'zh' ? '功能' : 'Features'}
+                        {t.features}
                     </a>
                     <a
                         href="#pricing"
                         className="text-slate-600 font-medium text-sm hover:text-slate-800 transition-colors"
                     >
-                        {lang === 'zh' ? '定價' : 'Pricing'}
+                        {t.pricing}
                     </a>
                 </div>
 
@@ -51,7 +52,7 @@ const LandingNav: React.FC<LandingNavProps> = ({ lang, toggleLang, onStart }) =>
                         onClick={() => onStart()}
                         className="px-5 py-2 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white font-bold text-sm rounded-full hover:opacity-90 transition-all shadow-sm"
                     >
-                        {lang === 'zh' ? '試用 Demo' : 'Try Demo'}
+                        {t.tryDemo}
                     </button>
                 </div>
             </div>

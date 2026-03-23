@@ -27,9 +27,13 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 story: '清晨 7 點前抵達，仲見世通的鐵捲門彩繪還沒拉上去，是只有早鳥才能看見的浮世繪卷。店家會在繪有江戶時代街景的鐵門上作畫，每間店都不同。另外，這時候可以獨佔雷門前的拍照位置，不用人擠人。',
                 storyEn: 'Arrive before 7 AM and you\'ll see the painted shutters of Nakamise-dori before they roll up - a ukiyo-e scene only early birds witness.',
                 exactLocation: '從雷門進去左手邊第三家店前，鐵捲門彩繪最精緻',
+                exactLocationEn: 'In front of the 3rd shop on the left after entering Kaminarimon',
                 mustTry: '仲見世通上的「仲見世 杵屋」的現烤人形燒',
+                mustTryEn: 'Freshly baked Ningyo-yaki from "Nakamise Kineya"',
                 avoid: '不要在雷門附近買人力車行程，價格灌水嚴重',
-                bestTime: '06:00-07:30'
+                avoidEn: 'Avoid rickshaw tours near Kaminarimon; prices are often inflated',
+                bestTime: '06:00-07:30',
+                bestTimeEn: '06:00 - 07:30'
             }
         }
     },
@@ -58,9 +62,13 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 story: '與其白天人擠人，我更推薦晚上 9 點以後來。主殿雖然關門，但燈光會一直亮到 11 點。晚上的雷門和五重塔在燈光映襯下視覺衝擊力極強，是攝影師最愛的取景時刻。',
                 storyEn: 'Skip the crowds and come after 9 PM. The lighting stays on until 11 PM, making the Kaminarimon and Pagoda look stunningly cinematic.',
                 exactLocation: '五重塔前的空地',
+                exactLocationEn: 'The open space in front of the Five-story Pagoda',
                 mustTry: '晚上在雷門前拍一張空無一人的大景照',
+                mustTryEn: 'Taking a shot of Kaminarimon without the crowds at night',
                 avoid: '店家 7 點以後就收得差不多了，想逛街不要這時候來',
-                bestTime: '21:00 - 22:30'
+                avoidEn: 'Shops close around 7 PM; don\'t come late if you want to shop',
+                bestTime: '21:00 - 22:30',
+                bestTimeEn: '21:00 - 22:30'
             }
         }
     },
@@ -88,10 +96,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Save time and money tips',
             full: {
                 story: '網路預約比現場買便宜 ¥500，還可以跳過排隊。選擇 Tembo Deck (350m) 就夠了，450m 的 Tembo Galleria 多付 ¥1,000 但視野差不多。隱藏版拍照點：4F 的天望甲板有一小塊玻璃地板區，可以拍到腳下的城市街景。',
+                storyEn: 'Online booking is ¥500 cheaper and lets you skip the queue. Tembo Deck (350m) is sufficient; the Galleria (450m) costs ¥1,000 more for a similar view. Don\'t miss the glass floor on 4F for a vertical city view.',
                 exactLocation: '天望甲板 4F 東北角的玻璃地板區',
+                exactLocationEn: 'Glass floor area at the NE corner of the 4F Observatory Deck',
                 mustTry: '在 340F 的 Skytree Cafe 點「天空軟霜淇淋」，拍照打卡必備',
+                mustTryEn: 'The "Sky Soft Serve" at Skytree Cafe (340F)',
                 avoid: '週末下午 13:00-16:00 人潮最多，要排 1 小時以上',
-                bestTime: '10:00-11:00 或 17:00-18:00'
+                avoidEn: 'Avoid weekends 13:00-16:00; queues can exceed 1 hour',
+                bestTime: '10:00-11:00 或 17:00-18:00',
+                bestTimeEn: '10:00-11:00 or 17:00-18:00'
             }
         }
     },
@@ -119,10 +132,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Secret photo spots for the crossing',
             full: {
                 story: '忘掉星巴克二樓吧！Mag\'s Park 頂樓觀景台人少、角度更高、而且免費。從澀谷站西口出來，找到 MAGNET by SHIBUYA109 大樓，搭電梯直達頂樓。另一個隱藏機位是 L\'Occitane Cafe，靠窗座位可以一邊喝咖啡一邊拍攝。',
+                storyEn: 'Skip the crowded Starbucks! Mag\'s Park rooftop offers a higher, clearer view for free. Find the MAGNET by SHIBUYA109 building and take the elevator to the top. L\'Occitane Cafe is another great window spot.',
                 exactLocation: 'MAGNET by SHIBUYA109 頂樓「Mag\'s Park」',
+                exactLocationEn: 'Mag\'s Park on the rooftop of MAGNET by SHIBUYA109',
                 mustTry: '錄一段 15 秒的縮時攝影，記得帶手機腳架',
+                mustTryEn: 'Record a 15-second time-lapse; bring a mini tripod',
                 avoid: '不要在十字路口中間停下來拍照，會被撞到！',
-                bestTime: '17:00-18:30 黃昏時刻'
+                avoidEn: 'Don\'t stop in the middle of the crossing for photos; it\'s dangerous!',
+                bestTime: '17:00-18:30 黃昏時刻',
+                bestTimeEn: '17:00 - 18:30 during the Golden Hour'
             }
         }
     },
@@ -151,9 +169,13 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 story: '大家都在上面的星巴克，但我更喜歡去對面的「澀谷西村水果喫茶」。點一客當季的水果聖代，坐在靠窗位，可以非常安靜、無遮蔽地長時間觀察樓下的十字路口。這是我心目中最奢華的澀谷午後。',
                 storyEn: 'Most people are at Starbucks, but I prefer Shibuya Nishimura Fruit Parlor. Order a seasonal parfait and enjoy a quiet, unblocked view of the chaos below.',
                 exactLocation: '澀谷西村水果喫茶 2F 靠窗位',
+                exactLocationEn: 'Window seats on 2F of Shibuya Nishimura Fruit Parlor',
                 mustTry: '草莓聖代（冬季限定）或 水蜜桃聖代（夏季限定）',
+                mustTryEn: 'Strawberry parfait (winter) or Peach parfait (summer)',
                 avoid: '下午 3 點是下午茶高峰期，建議 2 點前去',
-                bestTime: '14:00 - 15:30'
+                avoidEn: '3 PM is peak tea time; try going before 2 PM',
+                bestTime: '14:00 - 15:30',
+                bestTimeEn: '14:00 - 15:30'
             }
         }
     },
@@ -180,10 +202,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'What to wear and time-saving tips',
             full: {
                 story: '穿短褲或容易捲到膝蓋以上的褲子，有些區域水深到小腿。不要穿白色衣服，燈光會穿透。館內有免費寄物櫃，只帶手機就好。手機防水袋很有用！「無限水晶宇宙」是最熱門區域，建議先衝這裡。',
+                storyEn: 'Wear shorts or pants that roll up easily; water reaches shin-deep. Avoid white clothing as lights can reflect through. Use the free lockers and only bring your phone. A dry bag for your phone is highly recommended.',
                 exactLocation: '入場後右轉直走，「無限水晶宇宙」在最深處',
+                exactLocationEn: 'Turn right after entry; "Infinite Crystal Universe" is at the end',
                 mustTry: '在「錦鯉與人共舞的水面」區域站著不動，看錦鯉圍繞你游泳',
+                mustTryEn: 'Stay still in the "Drawing on the Water Surface" area and watch koi swim around you',
                 avoid: '不要帶大包包 and 相機，寄物櫃很小放不下',
-                bestTime: '16:00-18:00'
+                avoidEn: 'Don\'t bring large bags or heavy cameras; lockers are small',
+                bestTime: '16:00-18:00',
+                bestTimeEn: '16:00 - 18:00'
             }
         }
     },
@@ -210,10 +237,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Proper worship etiquette + hidden sake wall',
             full: {
                 story: '進入鳥居前記得微微鞠躬，走在參道兩側（中間是給神走的）。本殿旁有一面「奉納酒」牆，是各地酒造捐贈的清酒桶，超好拍。另一側有「奉納葡萄酒」牆，很少人知道。御守推薦買「開運木鈴」，是神宮限定款。',
+                storyEn: 'Bow slightly at the Torii and walk on the sides of the path (the middle is for gods). The "Sake Barrel" wall is iconic for photos. Don\'t miss the rarer "Wine Barrel" wall on the opposite side.',
                 exactLocation: '參道走到底左轉，酒桶牆就在那裡',
+                exactLocationEn: 'Turn left at the end of the main path; the barrels are right there',
                 mustTry: '購買「夫婦楠」御守，據說可以招來好姻緣',
+                mustTryEn: 'Get the "Meoto Kusu" (Couples\' Camphor) charm for good relationships',
                 avoid: '不要在神社內大聲喧嘩或講電話',
-                bestTime: '08:00-09:00'
+                avoidEn: 'No loud shouting or phone calls inside the shrine grounds',
+                bestTime: '08:00-09:00',
+                bestTimeEn: '08:00 - 09:00'
             }
         }
     },
@@ -240,10 +272,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Transformation schedule + best photo spots',
             full: {
                 story: '獨角獸鋼彈每天三場變形秀（19:30、20:30、21:30），會從 Unicorn Mode 變成 Destroy Mode，角 and 盔甲會展開發光！最佳拍攝位置是正前方的台階區，提前 10 分鐘卡位。旁邊的 Diver City 商場 7F 有「THE GUNDAM BASE TOKYO」，鋼彈迷必逛。',
+                storyEn: 'Transformations happen at 19:30, 20:30, and 21:30. The Unicorn Mode shifts to Destroy Mode with glowing armor. The steps in front of the statue are the best vantage point. Visit THE GUNDAM BASE on 7F nearby.',
                 exactLocation: 'Diver City Tokyo Plaza 正前方台階區',
+                exactLocationEn: 'Steps right in front of Diver City Tokyo Plaza',
                 mustTry: '進入 Diver City 2F 的鋼彈咖啡廳，有限定拉花',
+                mustTryEn: 'Gundam latte art at the Gundam Cafe on 2F',
                 avoid: '週末晚上人太多，建議平日去',
-                bestTime: '20:30'
+                avoidEn: 'Weekends are extremely crowded; weekdays are better',
+                bestTime: '20:30',
+                bestTimeEn: '20:30'
             }
         }
     },
@@ -269,10 +306,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Thousands of cats! Tokyo\'s most healing forest',
             full: {
                 story: '豪德寺是招財貓的發源地。這裡的招財貓舉的是右手，而且不帶金幣。在「招福殿」旁邊，幾千隻招財貓擠在一起，那個畫面震撼又可愛，是 IG 上最紅的東京秘境之一。',
+                storyEn: 'Gotokuji is the birthplace of Maneki-neko. Unlike others, these cats raise their right paws and don\'t carry coins. Seeing thousands of them clustered together by the Shofuden is both overwhelming and adorable—a top IG spot.',
                 exactLocation: '本殿左後方的「招福殿」旁區域',
+                exactLocationEn: 'The area beside Shofuden, to the back-left of the main hall',
                 mustTry: '買一隻最小的招財貓御守 (¥300)，許願後帶回家',
+                mustTryEn: 'Buy the smallest Maneki-neko charm (¥300) to take home for luck',
                 avoid: '這裡是很莊嚴的寺廟，拍照時請保持安靜，不要移動貓咪雕像',
-                bestTime: '09:00 陽光斜射進森林時最美'
+                avoidEn: 'This is a sacred temple; remain quiet and do not move the statues',
+                bestTime: '09:00 陽光斜射進森林時最美',
+                bestTimeEn: '09:00 when the morning sun filters through the trees'
             }
         }
     },
@@ -298,10 +340,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'More authentic than Shinjuku, the real salaryman life',
             full: {
                 story: '忘掉遊客眾多的思出橫丁吧！新橋車站鐵道下的這些店，才是東京上班族每天打卡的地方。濃煙、啤酒、火烤雞肉串，這裡的氛圍非常「賽博龐克」，也是街頭攝影師的私藏地點。',
+                storyEn: 'Forget the touristy Omoide Yokocho! The stalls under the Shimbashi tracks are where real salarymen hang out. Smoke, beer, and yakitori—the vibe is pure Cyberpunk and a dream for street photographers.',
                 exactLocation: 'JR新橋站烏森口出來的鐵道兩側',
+                exactLocationEn: 'Both sides of the tracks out of JR Shimbashi Station (Karasumori Exit)',
                 mustTry: '隨便找一家看起來很舊的串燒店，點一份「燒鳥拼盤」',
+                mustTryEn: 'Pick any old-school stall and order the "Yakitori Platter"',
                 avoid: '不要在 18:00-19:00 去，那是剛下班最擠的時候',
-                bestTime: '21:00 後氣氛最 High'
+                avoidEn: 'Avoid 18:00-19:00; it\'s the peak rush of people leaving work',
+                bestTime: '21:00 後氣氛最 High',
+                bestTimeEn: 'After 21:00 for the liveliest atmosphere'
             }
         }
     },
@@ -328,10 +375,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Secret seasoning + local tips',
             full: {
                 story: '客製化單子上，麵的硬度選「超硬」（超カタ）才是內行人吃法。吃到一半記得按桌上的服務鈴，跟店員要「特製辣椒粉」，這是菜單上沒有的隱藏版調味料。最後把碗喝光，碗底有「この一滴が最高の喜びです」（這最後一滴就是最高的幸福）。',
+                storyEn: 'Pro tip: Choose "Extra Firm" (Chou-kata) for your noodles. Halfway through, ring the bell and ask for "Extra Spicy Powder"—an off-menu seasoning. Finish the soup to see the message at the bottom of the bowl.',
                 exactLocation: '澀谷店位於 Center 街附近，認明紅色招牌',
+                exactLocationEn: 'Shibuya branch near Center-gai; look for the iconic red sign',
                 mustTry: '加點「替玉」（追加麵）和「半熟煮蛋」',
+                mustTryEn: 'Order "Kae-dama" (noodle refill) and a "Soft-boiled Egg"',
                 avoid: '如果不吃辣，秘傳醬汁選「無」',
-                bestTime: '02:00-04:00 不用排隊'
+                avoidEn: 'If you can\'t handle heat, choose "None" for the secret sauce',
+                bestTime: '02:00-04:00 不用排隊',
+                bestTimeEn: '02:00 - 04:00 to avoid queues entirely'
             }
         }
     },
@@ -358,10 +410,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Skip the long queues smart tips',
             full: {
                 story: '不要排「壽司大」和「大和壽司」，動輒 2-3 小時。往市場深處走，找「鮨文」這間小店，老闆娘現切當天最新鮮的魚，價格只有名店一半。必吃：「玉子燒」要去「丸武」（綠色招牌），現煎的最軟嫩。',
+                storyEn: 'Skip the 3-hour waits for Sushi Dai. Walk deeper into the market for "Sushi Bun"—fresh daily cuts at half the price of famous spots. For tamagoyaki, go to "Marutake" (green sign) for the fluffiest bites.',
                 exactLocation: '場外市場 4 號街深處，藍色布簾「鮨文」',
+                exactLocationEn: 'Deep in Lane 4 of the Outer Market, look for the blue curtain of "Sushi Bun"',
                 mustTry: '厚切鮪魚生魚片 + 玉子燒 + 草莓大福的組合',
+                mustTryEn: 'Thick-cut tuna sashimi + Tamagoyaki + Strawberry Daifuku',
                 avoid: '不要點英文菜單上的「Tourist Set」，價格偏貴',
-                bestTime: '06:00-07:30'
+                avoidEn: 'Avoid the pricey "Tourist Sets" on the English menus',
+                bestTime: '06:00-07:30',
+                bestTimeEn: '06:00 - 07:30'
             }
         }
     },
@@ -388,10 +445,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Lunch set is the best value',
             full: {
                 story: '午餐的「特選和牛套餐」¥3,800 就能吃到晚餐要 ¥15,000 以上的 A5 和牛。六本木店有露天座位，景觀最好。記得點「特選ハラミ」（橫隔膜），這是行家私藏的部位。店員會幫你烤，不用擔心烤壞。',
+                storyEn: 'The lunch set (¥3,800) offers the same A5 Wagyu that costs ¥15,000+ at dinner. The Roppongi branch has the best outdoor views. Order the "Special Harami" (Skirt Steak)—it\'s the connoisseur\'s choice. Servers can help grill it perfectly.',
                 exactLocation: '六本木店：港区六本木6-1-20',
+                exactLocationEn: 'Roppongi Branch: 6-1-20 Roppongi, Minato-ku',
                 mustTry: '特選ハラミ + 特製醬油ダレ',
+                mustTryEn: 'Special Harami + signature soy dipping sauce',
                 avoid: '不要點「霜降り」，太肥吃不了多少',
-                bestTime: '11:15 開始排隊'
+                avoidEn: 'Avoid the "Shimofuri" (highly marbled) if you want to eat a lot; it\'s very rich',
+                bestTime: '11:15 開始排隊',
+                bestTimeEn: 'Start queuing at 11:15 AM'
             }
         }
     },
@@ -422,10 +484,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaserEn: 'Secret photo spot unknown to 99% tourists',
             full: {
                 story: '從 109 百貨旁的小巷進去，搭乘透明電梯直達 3 樓。這裡完全沒有觀光客，只有當地情侶。可以用高角度俯拍整個十字路口，背景還有 109 大樓的霓虹燈。',
+                storyEn: 'Enter through the alley beside Shibuya 109 and take the glass elevator to 3F. Zero tourists, mainly local couples. Catch a high-angle view of the crossing with the 109 neon signs in the background.',
                 exactLocation: '解鎖後查看完整地址',
+                exactLocationEn: 'View full address after unlocking',
                 mustTry: '用長焦鏡頭拍攝縮時攝影',
+                mustTryEn: 'Capture a time-lapse with a long lens',
                 avoid: '解鎖後查看',
-                bestTime: '傍晚日落時分'
+                avoidEn: 'Unlock to view',
+                bestTime: '傍晚日落時分',
+                bestTimeEn: 'During sunset'
             }
         }
     },
@@ -448,10 +515,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaser: '選對房型看澀谷十字路口夜景',
             full: {
                 story: '訂房時指定「高層部屋・スクランブル交差点側」（高樓層十字路口側），可以從房間直接看到澀谷十字路口的人潮。早餐在 4F 的餐廳，推薦坐窗邊。',
+                storyEn: 'Ask for a "High floor, Crossing side" room to watch the Shibuya crowds from your window. The 4F restaurant has great window seating for breakfast.',
                 exactLocation: '澀谷站直結，不用出室外',
+                exactLocationEn: 'Directly connected to Shibuya Station, no need to step outside',
                 mustTry: '1F 的 TORAYA CAFE 有限定紅豆甜點',
+                mustTryEn: 'Limited edition red bean desserts at TORAYA CAFE on 1F',
                 avoid: '不要訂低樓層，看不到景觀',
-                bestTime: '提前一個月訂房'
+                avoidEn: 'Don\'t book low floors; you\'ll lose the city view',
+                bestTime: '提前一個月訂房',
+                bestTimeEn: 'Book at least one month in advance'
             }
         }
     },
@@ -474,10 +546,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaser: '哥吉拉主題房 + 每小時吼叫表演',
             full: {
                 story: '每小時整點（12:00-20:00）哥吉拉會吼叫，嘴巴還會冒煙！8F 露台可以近距離拍攝。有「哥吉拉主題房」，房內有大爪子裝飾，粉絲必訂。',
+                storyEn: 'Godzilla roars and breathes smoke every hour on the hour (12:00-20:00)! The 8F terrace allows for close-up shots. Godzilla-themed rooms are a must for fans—they even have giant claw decor.',
                 exactLocation: '8F 露台「Godzilla Terrace」',
+                exactLocationEn: '8F "Godzilla Terrace"',
                 mustTry: '在 Cafe Terrace BonjuR 點「哥吉拉咖哩飯」',
+                mustTryEn: 'The "Godzilla Curry" at Cafe Terrace BonjuR',
                 avoid: '不要訂哥吉拉對面的房間，太近看不到全貌',
-                bestTime: '20:00'
+                avoidEn: 'Don\'t book rooms directly facing Godzilla; you\'re too close to see his full face',
+                bestTime: '20:00',
+                bestTimeEn: '20:00'
             }
         }
     },
@@ -500,10 +577,15 @@ export const TOKYO_ASSETS: TravelItem[] = [
             teaser: '頂樓露台是拍晴空塔的最佳位置',
             full: {
                 story: '13F 頂樓露台 24 小時開放，是拍攝晴空塔和淺草寺夜景的絕佳位置。早餐在 13F，窗外就是雷門，超震撼。附近「Pelican」麵包店的吐司是東京前三名，值得早起排隊。',
+                storyEn: 'The 24-hour rooftop terrace on 13F offers the best views of Tokyo Skytree and Senso-ji. Breakfast on 13F puts Kaminarimon right outside your window. Try the famous Pelican bread nearby—worth the wait.',
                 exactLocation: '13F Sky Lounge Terrace',
+                exactLocationEn: '13F Sky Lounge Terrace',
                 mustTry: '早餐的法式吐司',
+                mustTryEn: 'The French Toast at breakfast',
                 avoid: '不要在頂樓大聲喧嘩，其他房客會抗議',
-                bestTime: '日落時分'
+                avoidEn: 'Keep quiet on the rooftop to avoid disturbing other guests',
+                bestTime: '日落時分',
+                bestTimeEn: 'At sunset'
             }
         }
     },
@@ -534,9 +616,13 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 story: '比起豐洲，這裡的「光之雕刻」區更具透明感。記得找「泡泡宇宙」展間，光點隨人影晃動的瞬間美得令人窒息。建議穿著純白或淺色衣服，讓身體成為藝術品的一部分投影。',
                 storyEn: 'The "Light Sculpture" area here is more ethereal than Toyosu. Find the "Bubble Universe" room; the way lights sway with your movement is breathtaking. Wear white to become part of the projection.',
                 exactLocation: '麻布台之丘 Garden Plaza B B1F',
+                exactLocationEn: 'Azabudai Hills Garden Plaza B, B1F',
                 mustTry: 'EN TEA HOUSE 的「綻放在茶碗中的花朵」，茶喝完花就謝了',
+                mustTryEn: 'The "Tea Flowers" at EN TEA HOUSE—blooms fade as you drink',
                 avoid: '週末下午人潮擁擠，門票務必提前兩週預訂',
-                bestTime: '10:00 (首場進場)'
+                avoidEn: 'Weekends are packed; book tickets at least 2 weeks in advance',
+                bestTime: '10:00 (首場進場)',
+                bestTimeEn: '10:00 AM (The first time slot)'
             }
         }
     },
@@ -567,9 +653,13 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 story: '主理人鹿山博康會在自己的農場種植植物與香料。你會看到他在你面前搗碎自家種的大茴香或藥草，那種原始的草本香氣是市售基酒無法比擬的。這裡不只是喝酒，更是一場嗅覺與視覺的冒險。',
                 storyEn: 'Master Hiroyasu Kayama grows his own herbs. Watching him grind fresh star anise right in front of you is a ritual. It\'s not just drinking; it\'s an olfactory adventure.',
                 exactLocation: '西新宿大樓 9 樓，門口非常低調',
+                exactLocationEn: '9F of a West Shinjuku building; entrance is very discreet',
                 mustTry: '告訴酒師你喜歡的味道，讓他為你調製「當季草本特調」',
+                mustTryEn: 'Tell the bartender your preference and ask for a "Seasonal Herb Special"',
                 avoid: '不接受電話預約，建議開門前 15 分鐘去排隊',
-                bestTime: '18:00'
+                avoidEn: 'No phone reservations; queue 15 mins before opening',
+                bestTime: '18:00',
+                bestTimeEn: '18:00'
             }
         }
     },
@@ -600,9 +690,13 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 story: '比起連鎖的古著店，東洋百貨店更像是一個市集。我最推薦裡面的「下北三街」，常能找到 80 年代的 Levi\'s 或品牌刺繡外套。雖然是百貨店，但每間小店都可以小幅度議價，買多一點試試看。',
                 storyEn: 'Toyo feels more like a bazaar. I highly recommend "Shimokita 3rd Street" inside; you can often find 80s Levi\'s. Unlike chain stores, small stalls here might offer tiny discounts if you buy more.',
                 exactLocation: '下北澤站西口步行 3 分鐘',
+                exactLocationEn: '3-min walk from Shimokitazawa Station (West Exit)',
                 mustTry: '手工製作的古著改造相機帶或配件',
+                mustTryEn: 'Handmade upcycled vintage camera straps or accessories',
                 avoid: '週末走道非常狹窄，建議側背小包包前往',
-                bestTime: '13:00 - 15:00'
+                avoidEn: 'Aisles are narrow; carry a small cross-body bag on weekends',
+                bestTime: '13:00 - 15:00',
+                bestTimeEn: '13:00 - 15:00'
             }
         }
     }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Map, Calendar, Plus, Clock, ChevronRight, MousePointer2 } from 'lucide-react';
 import { LangType } from '../types';
-import { TRANSLATIONS } from '../data/index';
 
 interface ProductPreviewProps {
     lang?: 'zh' | 'en';
@@ -39,16 +38,16 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
     }, []);
 
     const sidebarItems = [
-        { icon: '⛩️', name: lang === 'zh' ? '清水寺' : 'Kiyomizu-dera' },
-        { icon: '🦊', name: lang === 'zh' ? '伏見稻荷' : 'Fushimi Inari' },
-        { icon: '🍜', name: lang === 'zh' ? '一蘭拉麵' : 'Ichiran Ramen' },
-        { icon: '🏯', name: lang === 'zh' ? '金閣寺' : 'Kinkaku-ji' },
+        { icon: '⛩️', name: t.previewKiyomizu },
+        { icon: '🦊', name: t.previewFushimiInari },
+        { icon: '🍜', name: t.previewIchiran },
+        { icon: '🏯', name: t.previewKinkakuji },
     ];
 
     const scheduleItems = [
-        { time: '09:00', icon: '⛩️', name: lang === 'zh' ? '清水寺' : 'Kiyomizu-dera', duration: '2h' },
-        { time: '12:00', icon: '🍜', name: lang === 'zh' ? '一蘭拉麵' : 'Ichiran Ramen', duration: '1h' },
-        { time: '14:00', icon: '🦊', name: lang === 'zh' ? '伏見稻荷' : 'Fushimi Inari', duration: '2h' },
+        { time: '09:00', icon: '⛩️', name: t.previewKiyomizu, duration: '2h' },
+        { time: '12:00', icon: '🍜', name: t.previewIchiran, duration: '1h' },
+        { time: '14:00', icon: '🦊', name: t.previewFushimiInari, duration: '2h' },
     ];
 
     return (
@@ -56,12 +55,10 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
             {/* Section Header */}
             <div className="text-center mb-10">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-3">
-                    {t.sneakPeek || (lang === 'zh' ? '先偷看一眼？' : 'Take a Sneak Peek')}
+                    {t.sneakPeekTitle}
                 </h2>
                 <p className="text-gray-500 max-w-xl mx-auto">
-                    {lang === 'zh'
-                        ? '這就是你即將體驗的行程規劃工具。拖曳、調整、一目瞭然。'
-                        : 'This is the trip planner you\'re about to experience. Drag, adjust, and visualize.'}
+                    {t.sneakPeekDesc}
                 </p>
             </div>
 
@@ -91,7 +88,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
                         className={`w-1/4 bg-slate-50 border-r border-gray-100 p-3 transition-all duration-300 ${showTooltip === 'sidebar' ? 'ring-2 ring-teal-400 ring-inset' : ''}`}
                     >
                         <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">
-                            {t.assets || (lang === 'zh' ? '素材庫' : 'Assets')}
+                            {t.assetsLabel}
                         </div>
                         <div className="space-y-2">
                             {sidebarItems.map((item, i) => (
@@ -107,7 +104,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
                         </div>
                         {showTooltip === 'sidebar' && (
                             <div className="absolute top-20 left-[26%] bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg shadow-lg z-30 whitespace-nowrap animate-fade-in">
-                                {t.dragSpotsFromHere || (lang === 'zh' ? '從這裡拖曳景點' : 'Drag spots from here')}
+                                {t.dragSpotsHint}
                                 <div className="absolute -left-2 top-1/2 -translate-y-1/2 border-8 border-transparent border-r-slate-800"></div>
                             </div>
                         )}
@@ -177,7 +174,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
                                         <div className="absolute -left-4 top-3 w-3 h-3 rounded-full border-2 border-dashed border-gray-300 z-10"></div>
                                         <div className="text-[10px] font-bold text-gray-300 w-10 pt-2 shrink-0">16:00</div>
                                         <div className="flex-1 p-3 rounded-xl border-2 border-dashed border-gray-200 text-center text-xs text-gray-400">
-                                            {t.dropToAddItem || (lang === 'zh' ? '拖曳新增' : 'Drop here')}
+                                            {t.dropToAddItemHint}
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +182,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
 
                             {showTooltip === 'timeline' && (
                                 <div className="absolute top-24 left-[45%] bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg shadow-lg z-30 whitespace-nowrap animate-fade-in">
-                                    {t.autoCalculatedTimeline || (lang === 'zh' ? '時間軸自動計算' : 'Auto-calculated timeline')}
+                                    {t.autoTimelineHint}
                                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-b-slate-800"></div>
                                 </div>
                             )}
@@ -231,13 +228,13 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
                         <div className="absolute bottom-3 left-3 right-3 bg-white/90 backdrop-blur rounded-lg p-2 shadow-sm">
                             <div className="flex items-center gap-2 text-xs">
                                 <Map size={14} className="text-teal-600" />
-                                <span className="text-gray-600 font-medium">{t.kyotoArea || (lang === 'zh' ? '京都區域' : 'Kyoto Area')}</span>
+                                <span className="text-gray-600 font-medium">{t.kyotoAreaLabel}</span>
                             </div>
                         </div>
 
                         {showTooltip === 'map' && (
                             <div className="absolute top-1/2 -left-4 -translate-y-1/2 bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg shadow-lg z-30 whitespace-nowrap animate-fade-in">
-                                {t.autoRoutePlanning || (lang === 'zh' ? '路線自動規劃' : 'Auto route planning')}
+                                {t.autoRouteHint}
                                 <div className="absolute -right-2 top-1/2 -translate-y-1/2 border-8 border-transparent border-l-slate-800"></div>
                             </div>
                         )}
@@ -261,7 +258,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
                     <button
                         className="bg-teal-500 hover:bg-teal-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl transform scale-90 group-hover:scale-100 transition-all duration-300 flex items-center gap-2"
                     >
-                        {t.startFullExperience || (lang === 'zh' ? '開始體驗完整版' : 'Try the Full Demo')}
+                        {t.startFullDemo}
                         <ChevronRight size={20} />
                     </button>
                 </div>
@@ -269,7 +266,7 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
 
             {/* Bottom hint */}
             <p className="text-center text-gray-400 text-sm mt-6">
-                {t.previewToDemo || (lang === 'zh' ? '點擊上方預覽進入 Demo 模式' : 'Click the preview above to enter Demo mode')}
+                {t.clickToPreviewHint}
             </p>
 
             <style>{`

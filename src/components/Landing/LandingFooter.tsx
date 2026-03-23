@@ -4,9 +4,10 @@ import { LangType } from '../../types';
 
 interface LandingFooterProps {
     lang: LangType;
+    t: any;
 }
 
-const LandingFooter: React.FC<LandingFooterProps> = ({ lang }) => {
+const LandingFooter: React.FC<LandingFooterProps> = ({ lang, t }) => {
     return (
         <footer className="w-full bg-white border-t border-slate-200 text-slate-600 py-12 px-6 z-10">
             <div className="max-w-4xl mx-auto">
@@ -18,7 +19,7 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ lang }) => {
                             <span className="font-bold text-lg text-slate-800">TravelCanvas</span>
                         </div>
                         <p className="text-sm text-slate-500">
-                            {lang === 'zh' ? '讓旅行規劃變得簡單有趣' : 'Making trip planning simple and fun'}
+                            {t.footerTagline}
                         </p>
                     </div>
 
@@ -26,24 +27,24 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ lang }) => {
                     <div className="flex gap-8 text-sm">
                         <div className="flex flex-col gap-2 text-center md:text-left">
                             <span className="font-semibold text-slate-800 uppercase text-xs tracking-wider mb-1">
-                                {lang === 'zh' ? '產品' : 'Product'}
+                                {t.product}
                             </span>
-                            <a href="#" className="text-slate-500 hover:text-[#FF6B6B] transition-colors">
-                                {lang === 'zh' ? '功能特色' : 'Features'}
+                            <a href="#features" className="text-slate-500 hover:text-[#FF6B6B] transition-colors">
+                                {t.featuresNav}
                             </a>
-                            <a href="#" className="text-slate-500 hover:text-[#FF6B6B] transition-colors">
-                                {lang === 'zh' ? '定價方案' : 'Pricing'}
+                            <a href="#pricing" className="text-slate-500 hover:text-[#FF6B6B] transition-colors">
+                                {t.pricingNav}
                             </a>
                         </div>
                         <div className="flex flex-col gap-2 text-center md:text-left">
                             <span className="font-semibold text-slate-800 uppercase text-xs tracking-wider mb-1">
-                                {lang === 'zh' ? '支援' : 'Support'}
+                                {t.support}
                             </span>
                             <a href="#" className="text-slate-500 hover:text-[#FF6B6B] transition-colors">
-                                {lang === 'zh' ? '常見問題' : 'FAQ'}
+                                {t.faqTitle}
                             </a>
                             <a href="#" className="text-slate-500 hover:text-[#FF6B6B] transition-colors">
-                                {lang === 'zh' ? '聯繫我們' : 'Contact'}
+                                {t.contactUs}
                             </a>
                         </div>
                     </div>
@@ -64,13 +65,13 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ lang }) => {
 
                 {/* Bottom Bar */}
                 <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
-                    <p>© 2026 TravelCanvas. {lang === 'zh' ? '保留所有權利。' : 'All rights reserved.'}</p>
+                    <p>© {new Date().getFullYear()} TravelCanvas. {t.allRightsReserved}</p>
                     <div className="flex gap-6">
                         <a href="#" className="hover:text-[#FF6B6B] transition-colors">
-                            {lang === 'zh' ? '隱私政策' : 'Privacy Policy'}
+                            {t.privacyPolicy}
                         </a>
                         <a href="#" className="hover:text-[#FF6B6B] transition-colors">
-                            {lang === 'zh' ? '使用條款' : 'Terms of Service'}
+                            {t.termsOfService}
                         </a>
                     </div>
                 </div>

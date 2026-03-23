@@ -135,8 +135,8 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
     },
     {
         id: 'mel-5',
-        title: 'Eau de Vie',
-        titleEn: 'Eau de Vie Speakeasy',
+        title: 'Eau de Vie｜書架後的隱藏酒吧',
+        titleEn: 'Eau de Vie | Hidden Bar behind Bookshelf',
         type: 'food',
         duration: '1.5hr',
         image: '🥃',
@@ -152,8 +152,8 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         tags: ['隱藏酒吧', '調酒', '氣氛'],
         tier: 'premium',
         isLocked: true,
-        marketingTitle: '墨爾本禁酒令時代',
-        marketingTitleEn: 'The Prohibition Era',
+        marketingTitle: 'Eau de Vie｜書架後的隱藏酒吧',
+        marketingTitleEn: 'Eau de Vie | Hidden Bar behind Bookshelf',
         insiderTip: {
             teaser: '找到假書架後的那扇門',
             teaserEn: 'Find the door behind the fake bookshelf',

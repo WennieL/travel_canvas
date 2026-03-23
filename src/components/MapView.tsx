@@ -374,8 +374,8 @@ const MapView: React.FC<MapViewProps> = ({
                     <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-[500] flex items-center justify-center">
                         <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm mx-4">
                             <MapIcon size={32} className="text-gray-400 mx-auto mb-4" />
-                            <h3 className="font-bold text-gray-800 mb-2">{t.noSpotsOnMap || '地圖上沒有行程點'}</h3>
-                            <p className="text-sm text-gray-500">{t.dragFromSidebarToMap || '請從側邊欄拖曳景點到行程中。'}</p>
+                            <h3 className="font-bold text-gray-800 mb-2">{t.noSpotsOnMap}</h3>
+                            <p className="text-sm text-gray-500">{t.dragFromSidebarToMap}</p>
                         </div>
                     </div>
                 )}
@@ -389,7 +389,7 @@ const MapView: React.FC<MapViewProps> = ({
                         className={`bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium shadow-md flex items-center gap-2 transition-colors hover:bg-white ${showList ? 'text-teal-600' : 'text-gray-500'}`}
                     >
                         <List size={14} />
-                        {showList ? (t.hideList || '隱藏列表') : (t.showList || '顯示列表')}
+                        {showList ? t.hideList : t.showList}
                     </button>
                 </div>
             )}

@@ -120,7 +120,7 @@ export interface AppLayoutProps {
     // Actions
     applyTemplate: (template: Template, skipConfirm?: boolean) => void;
     onDeleteDay: (day: number, e?: React.MouseEvent) => void;
-    handleUnlockConfirm: (unlockTarget: ScheduleItem | null, batchUnlockCount: number, setUnlockTarget: any, setBatchUnlockCount: any) => void;
+    handleUnlockConfirm: () => void;
     executeMoveItem: (targetDay: number, targetSlot?: any) => void;
     handleGateCheck: (action: () => void, setUnlockTarget: any, setBatchUnlockCount: any) => void;
 
@@ -586,7 +586,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 previewTemplate={previewTemplate} setPreviewTemplate={setPreviewTemplate}
                 unlockTarget={unlockTarget} setUnlockTarget={setUnlockTarget}
                 batchUnlockCount={batchUnlockCount} setBatchUnlockCount={setBatchUnlockCount}
-                confirmUnlock={() => handleUnlockConfirm(unlockTarget, batchUnlockCount, setUnlockTarget, setBatchUnlockCount)}
+                confirmUnlock={handleUnlockConfirm}
 
                 // Initialization & Misc
                 showStoryPreview={ui.showStoryPreview} setShowStoryPreview={ui.setShowStoryPreview}

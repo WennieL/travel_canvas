@@ -4,72 +4,110 @@ import { TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS } from '.
 
 // 達人模板 - Curated for MVP Launch
 export const TEMPLATES: Template[] = [
-    // ===== MELBOURNE TEMPLATES (Featured) =====
+    // ===== MELBOURNE TEMPLATES (Featured Core) =====
     {
-        id: 'mel-coffee',
-        isHidden: true,
-        name: '墨爾本咖啡 & 巷弄文化 1 日',
-        nameEn: 'Melbourne Coffee & Laneways 1-Day',
-        title: '在地人帶你喝咖啡、遍巷弄',
-        titleEn: 'A Local\'s Guide to Coffee & Laneways',
-        coverImage: '/images/covers/melbourne.png',
+        id: 'mel-classic-3d',
+        name: '墨爾本初體驗 3 天 (經典旗艦版)',
+        nameEn: 'Melbourne First Experience 3-Day (Classic)',
+        title: '不只是市區：穿梭市場、巷弄與大自然',
+        titleEn: 'Beyond the CBD: Markets, Laneways & Nature',
         author: 'Melbourne Local',
         authorEn: 'Melbourne Local',
         authorId: 'c-mel',
         region: 'melbourne',
-        tags: ['咖啡', '巷弄', '文化', '必訪'],
-        tagsEn: ['Coffee', 'Laneways', 'Culture', 'Must-Visit'],
-        vibes: [
-            { tag: '#咖啡文化', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#街頭藝術', color: 'bg-purple-100 text-purple-800' },
-            { tag: '#隱藏景點', color: 'bg-teal-50 text-teal-700' }
-        ],
-        coverStory: {
-            quote: '墨爾本的咖啡不只是飲料，是一種生活方式。',
-            quoteEn: 'In Melbourne, coffee isn\'t just a drink - it\'s a way of life.',
-            description: '跟著在地人的腳步，從站著喝咖啡的儀式感開始，穿越塗鴉巷弄，最後在隱藏酒吧結束完美的一天。',
-            authorLabel: '墨爾本在地人私房推薦'
-        },
-        authorStory: {
-            zh: '我在墨爾本住了 6 年，從一杯 Flat White 開始愛上這座城市。這份路線是我每次朋友來訪時帶他們走的私房行程，從站著喝咖啡的 Patricia 到塗鴉巷弄，每一站都是我的日常。',
-            en: 'I\'ve lived in Melbourne for 6 years. It all started with a Flat White. This route is the one I take every friend through — from standing-room-only Patricia to the graffiti laneways. Every stop is part of my daily life.'
-        },
-        travelStyle: ['咖啡', '文化'],
+        tags: ['經典', '初心者', '必看'],
+        tagsEn: ['Classic', 'Beginner', 'Must-See'],
+        duration: 3,
+        rating: 4.9,
+        price: 0,
+        tier: 'official',
+        copiedCount: 1540,
+        coverImage: '/images/covers/melbourne.png',
+        highlights: { days: 3, spots: 12, tips: 8, rating: 4.9, usageCount: 1540 },
+        travelStyle: ['經典', '深度'],
         targetAudience: {
-            personas: ['咖啡控', '文青'],
-            personasEn: ['Coffee Nerd', 'Culture Lover'],
-            description: '適合喜歡在地咖啡文化、街頭藝術和巷弄探索的旅人',
+            personas: ['第一次來墨爾本的小白', '情侶'],
+            personasEn: ['First-timer', 'Couples'],
+            description: '這份路線是為了讓你「徹底愛上墨爾本」而設計的。不只有必去的景點，更有在地人的私房時間表。',
             paceLevel: 'moderate'
         },
-        travelTips: [
-            { tip: '墨爾本咖啡店通常不提供外帶杯，自備杯子更環保', tipEn: 'Melbourne cafés often don\'t offer takeaway cups, bring your own' },
-            { tip: '巷弄塗鴉會定期更換，每次去都有新驚喜', tipEn: 'Laneway graffiti changes regularly, always something new' }
+        authorStory: {
+            zh: '我在墨爾本住了 6 年，這是我帶每個第一次來的朋友必走的行程。從清晨的市場起司，到夜晚聖基爾達的小企鵝，每一站都是我在這座城市的日常片段。',
+            en: 'I\'ve lived in Melbourne for 6 years. This is the exact itinerary I take every first-time visitor on. From morning market treats to the penguins at St Kilda beach, these are my favorite city moments.'
+        },
+        faq: [
+            {
+                title: '什麼時候看小企鵝最好？',
+                titleEn: 'When is best for penguins?',
+                text: '小企鵝只在「日落後」歸巢。夏季（12-2月）數量最多且日落較晚（約 8:30PM），冬季則較早（約 5:30PM）。請務必依日落時間提早 1 小時卡位。',
+                textEn: 'Penguins only appear after sunset. Summer (Dec-Feb) has the most but late sunsets (8:30PM). Winter is earlier (5:30PM). Arrive 1 hour before sunset.'
+            },
+            {
+                title: '墨爾本天氣真的「一天四季」嗎？',
+                titleEn: 'Is the weather "4 seasons in 1 day"?',
+                text: '是的。就算是夏天，太陽下山後也會驟降 10 度。強烈建議隨身攜帶輕便防風外套與折疊傘。',
+                textEn: 'Yes. Even in summer, temps drop 10°C after sunset. Always carry a light jacket and folding umbrella.'
+            },
+            {
+                title: '需要租車嗎？',
+                titleEn: 'Do I need a car?',
+                text: '這份 3 天行程完全不需要。CBD 內有免費電車區，郊區景點搭乘公車或火車非常方便。',
+                textEn: 'Not for this 3-day trip. The CBD has a Free Tram Zone, and suburban spots are easy to reach by train/bus.'
+            }
         ],
-        duration: 1,
-        rating: 4.9,
-        tier: 'official',
-        copiedCount: 284,
-        price: 0.99,
-        isLocked: false,
-        highlights: { days: 1, spots: 5, tips: 4, rating: 4.9, usageCount: 284 },
         dayPreviews: [
-            { day: 1, summary: 'Patricia Coffee → Hosier Lane → Queen Vic Market → Bar Americano' }
+            { day: 1, summary: 'Patricia Coffee → Degraves St → Hosier Lane → Fed Square' },
+            { day: 2, summary: 'Queen Vic Market → Market Lane → Melbourne Museum → 400 Gradi' },
+            { day: 3, summary: 'Royal Botanic Gardens → St Kilda Beach → Penguins' }
         ],
         schedule: {
             'Day 1': {
-                theme: '\u5496\u5561\u6587\u5316 & \u5df7\u5f04\u85dd\u8853',
-                themeEn: 'Coffee Culture & Laneway Art',
-                themeEmoji: '\u2615',
+                theme: '巷弄探險 & 咖啡靈魂',
+                themeEn: 'Laneway Exploration & Coffee Soul',
+                themeEmoji: '🚶',
                 morning: [
-                    { ...MELBOURNE_ASSETS[0], instanceId: 'mel-c-1', startTime: '08:00', arrivalTransport: 'public' },
-                    { ...MELBOURNE_ASSETS[1], instanceId: 'mel-c-2', startTime: '09:30', arrivalTransport: 'walk' }
+                    { ...MELBOURNE_ASSETS[0], instanceId: 'mel-cl-1', startTime: '08:30', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[3], instanceId: 'mel-cl-2', startTime: '10:00', arrivalTransport: 'walk' }
                 ],
                 afternoon: [
-                    { ...MELBOURNE_ASSETS[2], instanceId: 'mel-c-3', startTime: '11:00', arrivalTransport: 'walk' },
-                    { ...MELBOURNE_ASSETS[3], instanceId: 'mel-c-4', startTime: '12:30', arrivalTransport: 'walk' }
+                    { ...MELBOURNE_ASSETS[2], instanceId: 'mel-cl-3', startTime: '13:30', arrivalTransport: 'walk' },
+                    { id: 'fed-square', instanceId: 'mel-cl-fed', title: '聯邦廣場 Federal Square', titleEn: 'Federation Square', type: 'attraction', startTime: '15:30', duration: '1hr', image: '🏢', lat: -37.8174, lng: 144.9685, arrivalTransport: 'walk', region: 'melbourne' }
                 ],
                 evening: [
-                    { ...MELBOURNE_ASSETS[4], instanceId: 'mel-c-5', startTime: '19:00', arrivalTransport: 'public' }
+                    { ...MELBOURNE_ASSETS[4], instanceId: 'mel-cl-4', startTime: '19:00', arrivalTransport: 'public' }
+                ],
+                night: [],
+                accommodation: []
+            },
+            'Day 2': {
+                theme: '在地生活 & 視覺饗宴',
+                themeEn: 'Local Life & Visual Feast',
+                themeEmoji: '🧀',
+                morning: [
+                    { ...MELBOURNE_ASSETS[12], instanceId: 'mel-cl-5', startTime: '09:00', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[17], instanceId: 'mel-cl-6', startTime: '11:00', arrivalTransport: 'walk' }
+                ],
+                afternoon: [
+                    { ...MELBOURNE_ASSETS[14], instanceId: 'mel-cl-7', startTime: '14:00', arrivalTransport: 'public' }
+                ],
+                evening: [
+                    { ...MELBOURNE_ASSETS[18], instanceId: 'mel-cl-8', startTime: '18:30', arrivalTransport: 'public' }
+                ],
+                night: [],
+                accommodation: []
+            },
+            'Day 3': {
+                theme: '森林漫步 & 海邊企鵝',
+                themeEn: 'Forest Walk & Coastal Penguins',
+                themeEmoji: '🐧',
+                morning: [
+                    { id: 'rbg', instanceId: 'mel-cl-rbg', title: '皇家植物園 Royal Botanic Gardens', titleEn: 'Royal Botanic Gardens', type: 'attraction', startTime: '10:00', duration: '2hr', image: '🌳', lat: -37.8303, lng: 144.9796, arrivalTransport: 'public', region: 'melbourne' }
+                ],
+                afternoon: [
+                    { id: 'st-kilda', instanceId: 'mel-cl-stk', title: '聖基爾達海灘 St Kilda Beach', titleEn: 'St Kilda Beach', type: 'attraction', startTime: '15:00', duration: '2hr', image: '🏖️', lat: -37.8637, lng: 144.9734, arrivalTransport: 'public', region: 'melbourne' }
+                ],
+                evening: [
+                    { ...MELBOURNE_ASSETS[20], instanceId: 'mel-cl-9', startTime: '19:30', arrivalTransport: 'walk' }
                 ],
                 night: [],
                 accommodation: []
@@ -77,70 +115,155 @@ export const TEMPLATES: Template[] = [
         }
     },
     {
-        id: 'mel-bars',
-        isHidden: true,
-        name: '墨爾本隱藏酒吧巡禮',
-        nameEn: 'Melbourne Hidden Bars Tour',
-        title: '穿過書架、冷藏庫，探索墨爾本地下酒吧',
-        titleEn: 'Behind Bookshelves & Freezers: Melbourne\'s Secret Bars',
+        id: 'mel-family-2d',
+        name: '不崩潰的墨爾本親子 2 天',
+        nameEn: 'No-Stress Melbourne Family 2-Day',
+        title: '大人放鬆、小孩放電的完美平衡',
+        titleEn: 'Relax for Parents, Fun for Kids',
+        author: 'Melbourne Family Guru',
+        authorEn: 'Melbourne Family Guru',
+        authorId: 'c-mel-family',
+        region: 'melbourne',
+        tags: ['親子', '公園', '熱門'],
+        tagsEn: ['Family', 'Playground', 'Popular'],
+        duration: 2,
+        rating: 4.8,
+        price: 0.99,
+        tier: 'official',
+        copiedCount: 890,
         coverImage: '/images/covers/melbourne.png',
+        highlights: { days: 2, spots: 6, tips: 5, rating: 4.8, usageCount: 890 },
+        travelStyle: ['親子', '公園'],
+        targetAudience: {
+            personas: ['帶幼兒的父母', '三代同堂'],
+            personasEn: ['Parents with Toddlers', 'Multi-generational'],
+            description: '這不是趕路行程，是為了保住父母理智線設計的。景點之間大都有草地與咖啡，讓大人能喘氣。',
+            paceLevel: 'slow'
+        },
+        authorStory: {
+            zh: '身為兩個小孩的爸爸，我深知在墨爾本帶小孩最怕的就是「排隊」跟「找沒廁所的地方」。這份名單是我親自測試過交通最順、設施最全的親子聖地。',
+            en: 'As a father of two, I know the biggest fears are long queues and lack of toilets. I\'ve personally tested every spot here for accessibility and child-friendliness.'
+        },
+        faq: [
+            {
+                title: '蒸汽火車 (Puffing Billy) 需要預約嗎？',
+                titleEn: 'Do I need a book Puffing Billy?',
+                text: '強烈建議提前 2 週預訂。旺季現場絕對買不到票。若沒訂到票，行程會直接泡湯。',
+                textEn: 'Highly recommend booking 2 weeks in advance. Peak season walk-ins are impossible.'
+            },
+            {
+                title: '大眾設施對推車友善嗎？',
+                titleEn: 'Is it stroller-friendly?',
+                text: '非常友善。幾乎所有火車站、電車（低底盤車次）都有無障礙電梯。',
+                textEn: 'Very. Almost all trains and low-floor trams have elevator access.'
+            },
+            {
+                title: '需要為小孩準備防曬嗎？',
+                titleEn: 'Do I need sun protection?',
+                text: '絕對要。澳洲紫外線極強，即便陰天也可能曬傷。記得：Slip, Slop, Slap!',
+                textEn: 'Absolutely. UV is extreme here. Remember: Slip, Slop, Slap!'
+            }
+        ],
+        dayPreviews: [
+            { day: 1, summary: 'Puffing Billy (Train) → Grants on Sherbrooke (Parrots)' },
+            { day: 2, summary: 'Melbourne Museum → Nature Play → St Kilda Penguins' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '森林小火車 & 鳥類親近',
+                themeEn: 'Forest Train & Bird Encounter',
+                themeEmoji: '🚂',
+                morning: [
+                    { ...MELBOURNE_ASSETS[10], instanceId: 'mel-fa-1', startTime: '10:30', arrivalTransport: 'public' }
+                ],
+                afternoon: [
+                    { ...MELBOURNE_ASSETS[19], instanceId: 'mel-fa-2', startTime: '14:00', arrivalTransport: 'car' }
+                ],
+                evening: [],
+                night: [],
+                accommodation: []
+            },
+            'Day 2': {
+                theme: '恐龍世界 & 水壩遊樂場',
+                themeEn: 'Dino World & Water Playground',
+                themeEmoji: '🦖',
+                morning: [
+                    { ...MELBOURNE_ASSETS[14], instanceId: 'mel-fa-3', startTime: '10:00', arrivalTransport: 'public' }
+                ],
+                afternoon: [
+                    { ...MELBOURNE_ASSETS[16], instanceId: 'mel-fa-4', startTime: '15:00', arrivalTransport: 'public' }
+                ],
+                evening: [
+                    { ...MELBOURNE_ASSETS[20], instanceId: 'mel-fa-5', startTime: '19:30', arrivalTransport: 'public' }
+                ],
+                night: [],
+                accommodation: []
+            }
+        }
+    },
+    {
+        id: 'mel-coffee-nerd-1d',
+        name: '墨爾本咖啡控 1 天 (巷弄老饕版)',
+        nameEn: 'Melbourne Coffee Nerd 1-Day (Insider)',
+        title: '不只是喝拿鐵：走入咖啡烘焙與職人精神',
+        titleEn: 'Beyond Lattes: Roasting & Craftsmanship',
         author: 'Melbourne Local',
         authorEn: 'Melbourne Local',
         authorId: 'c-mel',
         region: 'melbourne',
-        tags: ['酒吧', '隱藏景點', '夜生活', 'Premium'],
-        tagsEn: ['Bars', 'Hidden Gems', 'Nightlife', 'Premium'],
-        vibes: [
-            { tag: '#禁酒時期', color: 'bg-stone-100 text-stone-800' },
-            { tag: '#秘密入口', color: 'bg-rose-100 text-rose-800' },
-            { tag: '#調酒藝術', color: 'bg-amber-50 text-amber-700' }
-        ],
-        coverStory: {
-            quote: '墨爾本最好的酒吧，都藏在你找不到的地方。',
-            quoteEn: 'Melbourne\'s best bars are hidden where you\'d never look.',
-            description: '從書架後的禁酒時期酒吧，到冷藏庫門後的熱帶天堂。這不是普通的酒吧巡禮，而是一場城市尋寶。',
-            authorLabel: '夜生活達人精選路線'
+        tags: ['咖啡', '深度', '私藏'],
+        tagsEn: ['Coffee', 'Deep Dive', 'Hidden Gem'],
+        duration: 1,
+        rating: 4.9,
+        price: 0.99,
+        tier: 'official',
+        copiedCount: 420,
+        coverImage: '/images/covers/melbourne.png',
+        highlights: { days: 1, spots: 5, tips: 6, rating: 4.9, usageCount: 420 },
+        travelStyle: ['咖啡', '慢活'],
+        targetAudience: {
+            personas: ['咖啡師', '早午餐愛好者', '文青'],
+            personasEn: ['Baristas', 'Brunch Lovers', 'Hipsters'],
+            description: '這份清單專為對咖啡有極致追求的人設計。不走大型觀光店，只拜訪墨爾本目前最尖端的烘焙坊。',
+            paceLevel: 'moderate'
         },
         authorStory: {
-            zh: '身為調酒師 4 年，我親自拜訪過墨爾本 200+ 間酒吧。這條路線精選了最難找到入口、但最值得一訪的 Speakeasy，每一間都有獨特的故事和招牌調酒。',
-            en: 'As a bartender for 4 years, I\'ve visited 200+ bars in Melbourne. This route features the hardest-to-find Speakeasies that are most worth visiting — each with its own story and signature cocktails.'
+            zh: '我曾經在墨爾本精品咖啡店工作過。這份行程避開了網美店，帶你拜訪那些吧台手下班後會聚集的地點。',
+            en: 'I worked in Melb specialty coffee. This itinerary skips traps and takes you to spots where local baristas actually head after shifts.'
         },
-        travelStyle: ['夜生活', '探險'],
-        targetAudience: {
-            personas: ['夜貓族', '調酒愛好者'],
-            personasEn: ['Night Owl', 'Cocktail Enthusiast'],
-            description: '適合喜歡探索隱藏酒吧、享受精緻調酒的夜生活玩家',
-            paceLevel: 'slow'
-        },
-        travelTips: [
-            { tip: '大部分隱藏酒吧不接受預約，直接去排隊', tipEn: 'Most hidden bars don\'t take reservations, just queue up' },
-            { tip: '穿著不要太休閒，部分酒吧有 dress code', tipEn: 'Don\'t dress too casually, some bars have dress codes' }
+        faq: [
+            {
+                title: '咖啡店幾點關門？',
+                titleEn: 'When do cafes close?',
+                text: '這點很重要！多數精品咖啡店 3:00 PM - 4:00 PM 就會收攤。請務必在 2:30 PM 前完成最後一站。',
+                textEn: 'Crucial! Most specialty cafes close by 3-4 PM. Reach your last stop by 2:30 PM.'
+            },
+            {
+                title: '什麼時候是去咖啡店最好的時段？',
+                titleEn: 'When is the best time?',
+                text: '早上 10-11 點。剛度過 8 點上班潮，吧台手比較有空跟你分享豆子資訊。',
+                textEn: '10-11 AM. The morning rush has faded; baristas have more time to chat.'
+            }
         ],
-        duration: 1,
-        rating: 4.8,
-        tier: 'creator',
-        copiedCount: 192,
-        price: 0.99,
-        originalPrice: 4.99,
-        isLocked: true,
-        highlights: { days: 1, spots: 3, tips: 4, rating: 4.8, usageCount: 192 },
         dayPreviews: [
-            { day: 1, summary: 'Bar Americano → Eau de Vie → Robot Bar' }
+            { day: 1, summary: 'Patricia (Standing) → Brother Baba Budan → Lune → Duke St' }
         ],
         schedule: {
             'Day 1': {
-                theme: '禁酒時期酒吧巡禮',
-                themeEn: 'Prohibition Era Bar Crawl',
-                themeEmoji: '🥃',
-                morning: [],
-                afternoon: [],
-                evening: [
-                    { ...MELBOURNE_ASSETS[4], instanceId: 'mel-b-1', startTime: '19:00', arrivalTransport: 'public' },
-                    { ...MELBOURNE_ASSETS[5], instanceId: 'mel-b-2', startTime: '21:00', arrivalTransport: 'walk' }
+                theme: '咖啡烘焙巡禮',
+                themeEn: 'Coffee Roastery Tour',
+                themeEmoji: '☕',
+                morning: [
+                    { ...MELBOURNE_ASSETS[0], instanceId: 'mel-co-1', startTime: '08:00', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[1], instanceId: 'mel-co-2', startTime: '09:30', arrivalTransport: 'walk' }
                 ],
-                night: [
-                    { ...MELBOURNE_ASSETS[6], instanceId: 'mel-b-3', startTime: '23:00', arrivalTransport: 'public' }
+                afternoon: [
+                    { ...MELBOURNE_ASSETS[13], instanceId: 'mel-co-3', startTime: '11:30', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[8], instanceId: 'mel-co-4', startTime: '14:00', arrivalTransport: 'public' },
+                    { ...MELBOURNE_ASSETS[21], instanceId: 'mel-co-5', startTime: '15:30', arrivalTransport: 'public' }
                 ],
+                evening: [],
+                night: [],
                 accommodation: []
             }
         }
@@ -148,6 +271,7 @@ export const TEMPLATES: Template[] = [
     // ===== JAPAN TEMPLATES =====
     {
         id: 't1',
+        isHidden: true,
         name: '東京經典初心者 4 日遊',
         nameEn: 'Tokyo Classic Beginner 4-Day Trip',
         title: '穿越昭和時代：東京 4 日文青散策',
@@ -275,6 +399,7 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 't2',
+        isHidden: true,
         name: '東京美食吃貨之旅',
         nameEn: 'Tokyo Foodie Tour',
         title: '從築地到六本木：東京胃袋征服計畫',
@@ -423,6 +548,7 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 't5',
+        isHidden: true,
         name: '京都古都靜心之旅 3 日',
         nameEn: 'Kyoto Ancient Capital 3-Day Retreat',
         title: '避開人潮的京都秘境探訪',
@@ -537,6 +663,7 @@ export const TEMPLATES: Template[] = [
     // ===== OSAKA TEMPLATE (NEW) =====
     {
         id: 'osaka-classic',
+        isHidden: true,
         name: '大阪 2 日玩樂攻略',
         nameEn: 'Osaka 2-Day Fun Guide',
         title: '吃倒在大阪：美食與樂園完美攻略',

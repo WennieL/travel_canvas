@@ -146,6 +146,7 @@ export interface ScheduleItem extends TravelItem {
 export interface ChecklistItem {
     id: string;
     text: string;
+    textEn?: string;
     checked: boolean;
 }
 
@@ -269,5 +270,12 @@ export interface Template {
         zh: string;
         en: string;
     };
+    // [PHASE 1] FAQ — "Know Before You Go" critical info
+    faq?: Array<{
+        title: string;
+        titleEn?: string;
+        text: string;
+        textEn?: string;
+    }>;
 }
 

@@ -207,7 +207,14 @@ export const useAppActions = (deps: AppActionsDeps) => {
         }
     }, [lang, confirm, plans, _handleDeletePlan]);
 
-    const handleUnlockConfirm = useCallback((unlockTarget: ScheduleItem | null, batchUnlockCount: number, setUnlockTarget: (item: any) => void, setBatchUnlockCount: (count: number) => void) => {
+    const handleUnlockConfirm = useCallback(() => {
+        // Clear modal state immediately to hide UI
+        ui.setUnlockTarget(null);
+        ui.setBatchUnlockCount(0);
+
+        const unlockTarget = ui.unlockTarget;
+        const batchUnlockCount = ui.batchUnlockCount;
+
         const newSchedule = { ...activePlan.schedule };
         Object.values(newSchedule).forEach(day => {
             Object.values(day).forEach(slotItems => {
@@ -218,10 +225,8 @@ export const useAppActions = (deps: AppActionsDeps) => {
             });
         });
         updateActivePlan({ schedule: newSchedule });
-        setUnlockTarget(null);
-        setBatchUnlockCount(0);
         showToastMessage("🎉 " + (t.unlocked || "Unlocked!"));
-    }, [activePlan, updateActivePlan, showToastMessage]);
+    }, [activePlan, updateActivePlan, showToastMessage, ui.unlockTarget, ui.batchUnlockCount, t, ui.setUnlockTarget, ui.setBatchUnlockCount]);
 
     const executeMoveItem = useCallback((targetDay: number, targetSlot?: TimeSlot) => {
         if (!ui.moveTarget) return;

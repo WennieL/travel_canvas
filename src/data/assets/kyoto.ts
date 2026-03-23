@@ -126,10 +126,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'A magical sunset hike through torii',
             full: {
                 story: '大多數人早上來，但傍晚 17:00 後遊客都下山了。往山頂走，你會獨佔整條千本鳥居。日落時分，陽光穿過鳥居的縫隙，美到不真實。上山路程約 2 小時，記得帶水和好走的鞋。',
+                storyEn: 'Most people come in the morning, but after 17:00 the crowds vanish. Hike toward the summit and you\'ll have the Torii gates all to yourself. The sunset light filtering through the orange gates is pure magic.',
                 exactLocation: '四ツ辻展望台（山腰處）是最佳觀景點',
+                exactLocationEn: 'Yotsutsuji Intersection (the midpoint) offers the best view of Kyoto',
                 mustTry: '在四ツ辻吃「いなり寿司」（狐狸壽司）',
+                mustTryEn: 'Eat "Inari Sushi" at Yotsutsuji',
                 avoid: '不要穿高跟鞋，石階路很滑',
-                bestTime: '17:00-19:00 夕陽時分'
+                avoidEn: 'Avoid high heels; the stone steps are slippery when damp',
+                bestTime: '17:00-19:00 夕陽時分',
+                bestTimeEn: '17:00 - 19:00 during sunset'
             }
         }
     },
@@ -154,10 +159,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'Secrets to an empty bamboo grove',
             full: {
                 story: '早上 7 點前抵達是拍到無人竹林的唯一方法。從京都車站搭第一班嵐電，6:30 就能到。往野宮神社方向走，那條小路比主道更清幽更好拍。順便繞去「常寂光寺」，楓葉季節美爆。',
+                storyEn: 'Arriving before 7 AM is the only way to get a shot without crowds. Take the first Randen train from Kyoto Station to arrive at 6:30. The path near Nonomiya Shrine is more photogenic than the main road.',
                 exactLocation: '野宮神社往北走的小徑最清幽',
+                exactLocationEn: 'The small path heading North from Nonomiya Shrine',
                 mustTry: '在渡月橋拍一張經典照',
+                mustTryEn: 'Take a classic photo at Togetsukyo Bridge',
                 avoid: '10:00 後會開始有團客',
-                bestTime: '06:00-07:00'
+                avoidEn: '10:00 AM onwards is peak time for large tour groups',
+                bestTime: '06:00-07:00',
+                bestTimeEn: '06:00 - 07:00'
             }
         }
     },
@@ -183,10 +193,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'Statues of rabbits everywhere! IG viral fertility shrine',
             full: {
                 story: '這裡又被稱為兔子神社，因為兔子多產所以是求子、安產跟求姻緣的神社。IG 上最紅的就是整排紅通通的兔子御守牆，買一個御守記得要在這排隊放上去拍照。',
+                storyEn: 'Known as the "Rabbit Shrine," it\'s a sacred spot for fertility and relationships due to rabbits\' prolific nature. The wall of red rabbit charms is a viral IG spot—buy one and place it there for a photo.',
                 exactLocation: '本殿正面右側的兔子御守牆',
+                exactLocationEn: 'The rabbit charm wall to the right of the main hall',
                 mustTry: '買一個兔子御守 (¥500)，許願後放在御守牆上',
+                mustTryEn: 'Buy a rabbit charm (¥500), make a wish, and place it on the wall',
                 avoid: '不要大聲喧嘩，這附近還是住宅區',
-                bestTime: '10:00 晨光灑在兔子雕像上最可愛'
+                avoidEn: 'Keep quiet; the shrine is surrounded by a residential area',
+                bestTime: '10:00 晨光灑在兔子雕像上最可愛',
+                bestTimeEn: '10:00 AM when the morning sun hits the statues'
             }
         }
     },
@@ -214,10 +229,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'The most beautiful street, escaping Gion crowds',
             full: {
                 story: '比起花見小路，我更喜歡這裡。這裡有巽橋、石板路還有伸向河面的垂柳。下雨的夜晚，石板路反射著紅燈籠的光芒，那個氛圍真的會起雞皮疙瘩。',
+                storyEn: 'I prefer this to Hanamikoji. It has the Tatsumi Bridge, stone paths, and willows leaning over the river. On rainy nights, the wet stones reflect the red lanterns beautifully—it\'s goosebump-inducing.',
                 exactLocation: '巽橋 (Tatsumi Bridge) 周邊',
+                exactLocationEn: 'The area around Tatsumi Bridge',
                 mustTry: '在辰巳大明神前雙手合十祈求平安',
+                mustTryEn: 'Bow and pray for safety at Tatsumi Daimyojin',
                 avoid: '不要對著藝妓拍照（這裡是禁止攝影區域的邊界，需注意告示）',
-                bestTime: '18:30 燈籠剛亮起時'
+                avoidEn: 'Do not photograph Geishas (this is near the boundary of restricted zones, check signs)',
+                bestTime: '18:30 燈籠剛亮起時',
+                bestTimeEn: '18:30 when the lanterns are first lit'
             }
         }
     },
@@ -244,10 +264,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'Private tea session trended on Threads',
             full: {
                 story: '這不是一般給觀光客看的表演，而是真正的茶道交流。老師會教你如何攪拌抹茶，以及不同和菓子的正確吃法。一定要穿襪子，這是對老宅的基本禮儀。',
+                storyEn: 'This isn\'t a tourist performance; it\'s a genuine tea exchange. The master teaches you how to whisk matcha and the etiquette of eating wagashi. Always wear socks—it\'s basic respect for the historic wooden floors.',
                 exactLocation: '捷運京都市役所前站 步行 10 分鐘',
+                exactLocationEn: '10-minute walk from Kyoto Shiyakusho-mae Station',
                 mustTry: '親手刷出一碗細膩泡沫的抹茶',
+                mustTryEn: 'Whisking your own bowl of matcha until it has fine foam',
                 avoid: '不要戴戒指或手鍊，會刮傷昂貴的茶具',
-                bestTime: '14:00'
+                avoidEn: 'Do not wear rings or bracelets; they can scratch the priceless tea ware',
+                bestTime: '14:00',
+                bestTimeEn: '14:00'
             }
         }
     },
@@ -272,10 +297,15 @@ export const KYOTO_ASSETS: TravelItem[] = [
             teaserEn: 'How to avoid the long queues',
             full: {
                 story: '不要去本店！宇治站旁的「平等院店」同樣品質但人少一半。必點「生茶ゼリイ」（生茶凍），這是本店沒有的限定品。抹茶濃度選「濃茶」，才能吃到真正的宇治抹茶味。',
+                storyEn: 'Skip the main shop! The Byodoin branch near Uji Station offers the same quality with half the queue. Order the "Namacha Jelly"—a location-exclusive. Choose the "Koicha" (thick) for the true Uji flavor.',
                 exactLocation: '平等院表參道店（宇治站歩行 3 分）',
+                exactLocationEn: 'Byodoin Omotesando Branch (3-min walk from Uji Station)',
                 mustTry: '生茶ゼリイ（生茶凍）¥1,000',
+                mustTryEn: 'Namacha Jelly (Uji Matcha Jelly) ¥1,000',
                 avoid: '不要點「抹茶霜淇淋」，其他店也有',
-                bestTime: '10:00 開店或 15:30 後'
+                avoidEn: 'Avoid the standard Matcha soft serve; you can get that anywhere',
+                bestTime: '10:00 開店或 15:30 後',
+                bestTimeEn: '10:00 at opening or after 15:30'
             }
         }
     },
@@ -303,9 +333,13 @@ export const KYOTO_ASSETS: TravelItem[] = [
                 story: '進店請保持安靜。老闆不喜歡人拍照，但如果你點一杯「挪威的森林」特調，他會跟你聊整晚。店內全是黑膠唱片，可以請老闆放你想聽的專輯。',
                 storyEn: 'The jazz bar where Haruki Murakami writes. Please keep quiet inside. The owner dislikes photos but loves a good chat if you order the "Norwegian Wood" special.',
                 exactLocation: '解鎖後查看完整地址',
+                exactLocationEn: 'View full address after unlocking',
                 mustTry: '「挪威的森林」特調威士忌',
+                mustTryEn: 'The "Norwegian Wood" Special Whisky',
                 avoid: '解鎖後查看',
-                bestTime: '20:00 後氣氛最棒'
+                avoidEn: 'Unlock to view',
+                bestTime: '20:00 後氣氛最棒',
+                bestTimeEn: 'After 20:00 for the best vibe'
             }
         }
     },
@@ -336,9 +370,13 @@ export const KYOTO_ASSETS: TravelItem[] = [
                 story: '爬上山頂需要大約 20 分鐘的健行，但絕對值得！你可以進到餵食屋裡，買一袋 100 日元的蘋果或花生，猴子會從鐵網外伸出小手跟你要食物，超療癒。而且這裡的京都景色比竹林小徑更開闊。',
                 storyEn: 'A 20-minute hike to the top, but totally worth it! Buy a 100-yen bag of apples inside the rest hut, and the monkeys will reach out their tiny hands. The view of Kyoto is unmatched here.',
                 exactLocation: '山頂休息室（餵食屋）',
+                exactLocationEn: 'Rest hut at the mountain summit',
                 mustTry: '在休息室買花生親自餵食猴子',
+                mustTryEn: 'Buying peanuts to hand-feed monkeys (through the wire)',
                 avoid: '不要盯著猴子的眼睛看，也不要在休息室以外的地方掏出食物',
-                bestTime: '10:00 (早晨光線好拍)'
+                avoidEn: 'Don\'t look monkeys in the eye or show food outside the designated hut',
+                bestTime: '10:00 (早晨光線好拍)',
+                bestTimeEn: '10:00 AM for soft morning light'
             }
         }
     },
@@ -369,9 +407,13 @@ export const KYOTO_ASSETS: TravelItem[] = [
                 story: '大家都在錦市場的主幹道吃烤鰻魚，但這家店藏在側邊的小巷。他們的「岩手縣產巨大生蠔」只要 800 日元一個，味道鮮甜多汁。店內位置很少，但氣氛非常在地，配上一杯冷清酒簡直絕配。',
                 storyEn: 'Everyone stays on the main path, but this spot is in a side alley. Their Iwate jumbo oysters are huge and sweet. Pair them with a cold sake for the ultimate local experience.',
                 exactLocation: '錦小路通與富小路通交叉口往南的一條小巷內',
+                exactLocationEn: 'In a side alley South of the intersection of Nishikikoji and Tominokoji',
                 mustTry: '岩手縣產生蠔 + 京都地酒「玉乃光」',
+                mustTryEn: 'Jumbo Iwate Oyster + "Tamano Hikari" local sake',
                 avoid: '下午 4 點後生蠔可能售罄，建議午餐時段前往',
-                bestTime: '11:30'
+                avoidEn: 'Oysters may sell out after 4 PM; go at lunch to be safe',
+                bestTime: '11:30',
+                bestTimeEn: '11:30'
             }
         }
     }

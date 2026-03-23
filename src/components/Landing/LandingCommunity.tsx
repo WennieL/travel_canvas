@@ -19,37 +19,37 @@ const LandingCommunity: React.FC<LandingCommunityProps> = ({ lang, t, onStart })
                 {/* Text Content */}
                 <div className="flex-1 text-center md:text-left">
                     <span className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 text-xs font-black uppercase tracking-wider mb-6 shadow-lg shadow-yellow-500/20">
-                        {lang === 'zh' ? '達人社群' : 'Expert Community'}
+                        {t.communityTierLabel}
                     </span>
                     <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                        {t.communityTitle || "Plan like a pro. Share like an influencer."}
+                        {t.communityTitle}
                     </h2>
                     <p className="text-lg text-gray-400 mb-6 leading-relaxed max-w-xl mx-auto md:mx-0">
-                        {t.communitySubtitle || "Join our community. Publish your trips, get featured, and inspire thousands of travelers."}
+                        {t.communitySubtitle}
                     </p>
 
                     {/* Expert Types Explanation */}
                     <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">
                         <span className="px-3 py-1.5 bg-white/10 rounded-full text-sm text-gray-300 border border-white/10">
-                            🏠 {lang === 'zh' ? '當地達人 — 住在那裡的人' : 'Local Expert — lives there'}
+                           {t.localExpertLabel}
                         </span>
                         <span className="px-3 py-1.5 bg-white/10 rounded-full text-sm text-gray-300 border border-white/10">
-                            ✈️ {lang === 'zh' ? '資深旅人 — 去過 5 次以上' : 'Veteran — visited 5+ times'}
+                           {t.veteranLabel}
                         </span>
                         <span className="px-3 py-1.5 bg-white/10 rounded-full text-sm text-gray-300 border border-white/10">
-                            ⭐ {lang === 'zh' ? '人氣規劃師 — 被引用 100+ 次' : 'Community Star — copied 100+ times'}
+                           {t.communityStarLabel}
                         </span>
                     </div>
 
                     <div className="flex flex-wrap gap-6 justify-center md:justify-start mb-10">
                         <div className="flex flex-col">
                             <span className="text-3xl font-bold text-white">500+</span>
-                            <span className="text-sm text-gray-500">{t.statCreators || "Verified Creators"}</span>
+                            <span className="text-sm text-gray-500">{t.statCreatorsLabel}</span>
                         </div>
                         <div className="w-px h-12 bg-gray-700/50"></div>
                         <div className="flex flex-col">
                             <span className="text-3xl font-bold text-white">10k+</span>
-                            <span className="text-sm text-gray-500">{t.statTemplates || "Quality Templates"}</span>
+                            <span className="text-sm text-gray-500">{t.statTemplatesLabel}</span>
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@ const LandingCommunity: React.FC<LandingCommunityProps> = ({ lang, t, onStart })
                         onClick={() => onStart()}
                         className="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-xl shadow-white/10 flex items-center gap-2 mx-auto md:mx-0"
                     >
-                        {t.joinCommunityBtn || "Become a Creator"}
+                        {t.joinCommunityBtn}
                         <ArrowRight size={18} />
                     </button>
                 </div>
@@ -80,7 +80,7 @@ const LandingCommunity: React.FC<LandingCommunityProps> = ({ lang, t, onStart })
                                     Alice.Travels
                                     <span className="bg-blue-500 text-white text-[10px] p-1 rounded-full"><Globe size={10} /></span>
                                 </h3>
-                                <p className="text-teal-400 text-sm font-medium">{lang === 'zh' ? '🏠 當地達人' : '🏠 Local Expert'}</p>
+                                <p className="text-teal-400 text-sm font-medium">{t.localExpertLabel?.split(' — ')[0] || '🏠 Local Expert'}</p>
                             </div>
                         </div>
 

@@ -51,12 +51,10 @@ const LandingHero: React.FC<LandingHeroProps> = ({ lang, t, onStart }) => {
                     <button
                         className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white border-2 border-white/50 text-lg font-bold rounded-full hover:bg-white hover:text-slate-800 hover:border-white transition-all"
                         onClick={() => confirm({
-                            title: lang === 'zh' ? '敬請期待' : 'Coming Soon',
-                            message: lang === 'zh'
-                                ? "感謝您的關注！搶先體驗版即將推出。"
-                                : "Thanks for your interest! Early access coming soon.",
+                            title: t.comingSoon,
+                            message: t.earlyAccessMsg,
                             type: 'info',
-                            confirmText: lang === 'zh' ? '知道了' : 'Got it'
+                            confirmText: t.gotIt
                         })}
                     >
                         {t.joinEarlyAccess}
@@ -64,7 +62,7 @@ const LandingHero: React.FC<LandingHeroProps> = ({ lang, t, onStart }) => {
                 </div>
                 {/* Trust hint */}
                 <p className="text-white/60 text-sm mt-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                    {lang === 'zh' ? '無需註冊 • 無需信用卡 • 立即試用' : 'No signup required • No credit card • Try instantly'}
+                    {t.tryInstantly}
                 </p>
             </div>
 

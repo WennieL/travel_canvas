@@ -27,6 +27,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                 lang={lang}
                 toggleLang={toggleLang}
                 onStart={onStart}
+                t={t}
             />
 
             <LandingHero
@@ -38,6 +39,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
             <LandingExplore
                 lang={lang}
                 onStart={onStart}
+                t={t}
             />
 
             {/* Background Decorations */}
@@ -64,10 +66,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
             <LandingPricing
                 lang={lang}
                 onStart={onStart}
+                t={t}
             />
 
             <LandingFooter
                 lang={lang}
+                t={t}
             />
 
             {/* Global Animations CSS */}

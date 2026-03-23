@@ -179,7 +179,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                             }`}
                     >
                         <Search size={14} />
-                        {t.findSpots || (lang === 'zh' ? '找景點' : 'Find Spots')}
+                        {t.findSpots}
                     </button>
                     <button
                         onClick={() => handleModeChange('map')}
@@ -189,7 +189,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                             }`}
                     >
                         <Map size={14} />
-                        {t.expertMap || (lang === 'zh' ? '地圖引導' : 'Expert Map')}
+                        {t.expertMap}
                     </button>
                 </div>
             )}
