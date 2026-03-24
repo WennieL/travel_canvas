@@ -19,6 +19,7 @@ import MobileNav from './MobileNav';
 import CanvasView from './CanvasView';
 import DesktopSidebar from './DesktopSidebar';
 import FavoritesView from './FavoritesView';
+import ItineraryHub from './ItineraryHub';
 import { MobileDiscoveryDrawer } from './Mobile/MobileDiscoveryDrawer';
 import { SAMPLE_ASSETS } from '../data';
 
@@ -132,7 +133,7 @@ export interface AppLayoutProps {
     _handleDeletePlan: (id: string, e: React.MouseEvent) => void;
     getShortDate: (dayNum: number) => string;
     handleTriggerStartPicker: () => void;
-    executeCreateBlankPlan: (data: any) => void;
+    executeCreateBlankPlan: (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number, name?: string }) => void;
     enterExpertCreationMode: () => void;
     setIsCreatingNewPlan: (val: boolean) => void;
 
@@ -226,7 +227,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
 
-    const handleSelectItem = (item: ScheduleItem | TravelItem | null, source: 'map' | 'sidebar' | 'canvas' | null) => {
+    const handleSelectItem = (item: ScheduleItem | TravelItem | null, source: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => {
         ui.setSelectedItem(item as any);
         ui.setSelectionSource(source);
 
@@ -400,8 +401,31 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     </div>
                 )}
 
+                {/* Itinerary Hub View */}
+                {showPlanManager && !showFavorites && (
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50 pb-20">
+                        <ItineraryHub
+                            plans={plans}
+                            activePlanId={activePlan.id}
+                            onSelectPlan={(id) => {
+                                handleSelectPlan(id);
+                                setShowPlanManager(false);
+                            }}
+                            onCreatePlan={() => {
+                                // Trigger Start Picker / Check In Wizard
+                                setShowPlanManager(false);
+                                ui.setShowStartPicker(false);
+                                ui.setShowCheckIn(true);
+                            }}
+                            onDeletePlan={_handleDeletePlan}
+                            lang={lang}
+                            t={t}
+                        />
+                    </div>
+                )}
+
                 {/* Canvas Area */}
-                {!showFavorites && (
+                {!showFavorites && !showPlanManager && (
                     <div
                         key={`${activePlan.id}-${viewMode}`}
                         onScroll={handleScroll}
@@ -434,6 +458,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                     }}
                                     onCreatorClick={setSelectedCreatorId}
                                     onExploreCreatorMap={handleExploreCreatorMap}
+                                    onSelectItem={handleSelectItem}
                                     setActiveTab={setActiveTab}
                                     activeRegion={activeRegion}
                                     setActiveRegion={setActiveRegion}
@@ -538,6 +563,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 onExpertMode={enterExpertCreationMode}
                 handleDeletePlan={_handleDeletePlan}
                 setPlans={setPlans}
+                executeCreateBlankPlan={props.executeCreateBlankPlan}
 
                 // Custom Items
                 showCustomItemModal={showCustomItemModal} setShowCustomItemModal={setShowCustomItemModal}

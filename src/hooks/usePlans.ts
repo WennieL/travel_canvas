@@ -25,6 +25,7 @@ export interface UsePlansReturn {
         startDate: string;
         endDate: string;
         totalDays: number;
+        name?: string;
     }) => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
     handleAddDay: () => void;
@@ -155,8 +156,9 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
         startDate: string;
         endDate: string;
         totalDays: number;
+        name?: string;
     }) => {
-        const { origin, destination, startDate, endDate, totalDays } = data;
+        const { origin, destination, startDate, endDate, totalDays, name } = data;
         const defaultChecklist = REGION_DEFAULT_CHECKLISTS[destination]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
 
         // Generate schedule skeleton based on totalDays
@@ -167,7 +169,7 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
 
         const newPlan: Plan = {
             id: `plan_${Date.now()}`,
-            name: `${destination.toUpperCase()} Trip`,
+            name: name || `${destination.toUpperCase()} Trip`,
             origin,
             destination: destination.toUpperCase(),
             startDate,

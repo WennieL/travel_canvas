@@ -210,7 +210,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             )}
 
             {/* Bottom Tab Bar */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-dashed border-gray-200 grid grid-cols-5 items-center pb-2 z-[2050] shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-dashed border-gray-200 grid grid-cols-4 items-center pb-2 z-[2050] shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
                 {/* Decorative notches for the bottom nav (Mirroring header ticket) */}
                 <div className="absolute -top-1 left-4 w-2 h-2 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
                 <div className="absolute -top-1 right-4 w-2 h-2 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />

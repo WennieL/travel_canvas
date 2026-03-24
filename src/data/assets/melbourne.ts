@@ -135,8 +135,8 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
     },
     {
         id: 'mel-5',
-        title: 'Eau de Vie｜書架後的隱藏酒吧',
-        titleEn: 'Eau de Vie | Hidden Bar behind Bookshelf',
+        title: 'Eau de Vie',
+        titleEn: 'Eau de Vie Speakeasy',
         type: 'food',
         duration: '1.5hr',
         image: '🥃',
@@ -152,8 +152,8 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         tags: ['隱藏酒吧', '調酒', '氣氛'],
         tier: 'premium',
         isLocked: true,
-        marketingTitle: 'Eau de Vie｜書架後的隱藏酒吧',
-        marketingTitleEn: 'Eau de Vie | Hidden Bar behind Bookshelf',
+        marketingTitle: '墨爾本禁酒令時代',
+        marketingTitleEn: 'The Prohibition Era',
         insiderTip: {
             teaser: '找到假書架後的那扇門',
             teaserEn: 'Find the door behind the fake bookshelf',
@@ -716,6 +716,89 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 mustTry: '傳統的原味可頌 (Classic Croissant) 能吃出多層次的空氣感。如果看到「橄欖鹽可頌 (Olive Salt)」或是任何當季水果口味，請務必帶走一個。',
                 avoid: '⚠️ 週一到週三沒開。另外這裡沒有座位，建議拿著可頌去隔壁的公園散步享用。',
                 bestTime: '08:15 (品項最齊全，空氣中還飄著第一爐出爐的香氣)'
+            }
+        }
+    },
+    {
+        id: 'mel-23',
+        title: 'Flagstaff Garden',
+        titleEn: 'Flagstaff Garden',
+        type: 'attraction',
+        duration: '1hr',
+        image: '🌳',
+        description: '墨爾本市區最古老的公園。下午 4-6 點是汪星人的社交主場，非常適合散步放鬆。',
+        descriptionEn: 'Melbourne\'s oldest park. 4-6 PM is the prime time for dog social gatherings, perfect for a relaxing stroll.',
+        price: 0,
+        address: '309-311 William St, West Melbourne VIC 3003',
+        rating: 4.7,
+        lat: -37.8107,
+        lng: 144.9544,
+        region: 'melbourne',
+        authorId: 'user-expert',
+        tags: ['公園', '寵物友善', '放鬆'],
+        insiderTip: {
+            teaser: '下午 4-6 點會有很多可愛狗狗聚會',
+            teaserEn: 'Massive dog gathering between 4-6 PM',
+            full: {
+                story: '這是墨爾本在地人放空的首選。特別是下午 4 點到 6 點之間，草地上會出現大量的「狗狗社會化聚會」。就算你沒有養狗，坐在草地上看著成群的狗狗奔跑也是極度療癒的體驗。',
+                storyEn: 'A local favorite for unwinding. Between 4-6 PM, the lawns become a hub for dog social gatherings. Even if you don\'t have a dog, watching them run around is incredibly therapeutic.',
+                bestTime: '16:00 - 18:00 (狗狗聚會尖峰時段)',
+                bestTimeEn: '4:00 PM - 6:00 PM (Peak dog social hour)'
+            }
+        }
+    },
+    {
+        id: 'mel-24',
+        title: 'North Melbourne Fish and Chips',
+        titleEn: 'North Melbourne Fish and Chips',
+        type: 'food',
+        duration: '45min',
+        image: '🐟',
+        description: '在地人私藏的傳統炸魚薯條店，以驚人的份量和新鮮度聞名。',
+        descriptionEn: 'An old-school local favorite known for its massive portions and freshness.',
+        price: 15,
+        address: '38 Haines St, North Melbourne VIC 3051',
+        rating: 4.5,
+        region: 'melbourne',
+        authorId: 'user-expert',
+        tags: ['炸魚薯條', '在地人推薦', '高CP值'],
+        insiderTip: {
+            teaser: '點一份 Lunch Special 就夠兩個人吃',
+            teaserEn: 'One Lunch Special is enough for two people',
+            full: {
+                story: '這間店沒有華麗的裝潢，但有最實惠的美味。他們的 Lunch Special 份量非常慷慨，兩個人點一份通常就能吃得很飽。在物價高漲的墨爾本，這裡是真正的小資聖地。',
+                storyEn: 'No fancy decor, just honest, affordable food. Their Lunch Special is so generous that one portion is usually enough for two. A true hidden gem for budget travelers in Melbourne.',
+                mustTry: 'Lunch Special (CP 值之王)',
+                mustTryEn: 'Lunch Special (Value King)'
+            }
+        }
+    },
+    {
+        id: 'mel-25',
+        title: "Maria's Trattoria",
+        titleEn: "Maria's Trattoria",
+        type: 'food',
+        duration: '2.5hr',
+        image: '🍝',
+        description: '位於 Peel St 的義大利麵傳奇，每週僅營業四天，提供最具溫度的手工風味。',
+        descriptionEn: 'A pasta legend on Peel St, open only four days a week, serving high-quality handmade Italian flavors.',
+        price: 30,
+        address: '122-124 Peel St, North Melbourne VIC 3051',
+        rating: 4.8,
+        region: 'melbourne',
+        authorId: 'user-expert',
+        tags: ['義大利麵', '手工', '海鮮愛好者'],
+        insiderTip: {
+            teaser: '每週僅開四天，海鮮迷必點 Pescatore',
+            teaserEn: 'Only open Tue-Fri. Pescatore is a must for seafood lovers.',
+            full: {
+                story: '物以稀為貴，這間店一週只開週二到週五。雖然每天都在排隊，但那盤鋪滿新鮮海鮮的 Pescatore 絕對值得等待。如果你不吃海鮮，經典的 Bolognese 也有著家常的極致美味。',
+                storyEn: 'Quality over quantity: open only Tue-Fri. Despite the queues, the Pescatore loaded with fresh seafood is worth the wait. For non-seafood fans, the classic Bolognese is an absolute comfort winner.',
+                mustTry: 'Pescatore (海鮮愛好者首選), Bolognese (不敗經典)',
+                mustTryEn: 'Pescatore (For seafood lovers), Bolognese (The classic)',
+                avoid: '⚠️ 週六至週一沒開，不要白跑一趟！',
+                avoidEn: '⚠️ Closed Sat-Mon. Don\'t make a wasted trip!',
+                bestTime: '11:30 (剛開門時，避免人潮)'
             }
         }
     }

@@ -49,14 +49,6 @@ const NAV_CONFIG: NavItem[] = [
         action: 'navigate',
     },
     {
-        id: 'plan',
-        icon: Calendar,
-        labelKey: 'plan',
-        alwaysShow: true,
-        isMobilePrimary: true,
-        action: 'navigate',
-    },
-    {
         id: 'new',
         icon: Plus,
         labelKey: 'newPlanLabel',
@@ -66,8 +58,8 @@ const NAV_CONFIG: NavItem[] = [
     },
     {
         id: 'projects',
-        icon: User,
-        labelKey: 'myPlans',
+        icon: Calendar, // Changed from User to Calendar (merged Itinerary concept)
+        labelKey: 'plan', // Changed from myPlans to plan ('行程')
         alwaysShow: true,
         isMobilePrimary: true,
         action: 'navigate',

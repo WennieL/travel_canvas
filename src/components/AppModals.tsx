@@ -13,7 +13,7 @@ import {
     MoveToDayModal,
     CreatorProfileModal,
     TemplateStoryPreview,
-    CheckInWizardModal,
+    CreateTripModal,
 } from './Modals';
 import { MobileLibrary } from './MobileLibrary';
 import { MobilePreview } from './MobilePreview';
@@ -54,6 +54,7 @@ interface AppModalsProps {
     onTriggerPicker: () => void;
     onExpertMode: () => void;
     handleDeletePlan: (id: string, e: React.MouseEvent) => void;
+    executeCreateBlankPlan?: (data: any) => void;
 
     // Custom Item
     showCustomItemModal: boolean;
@@ -233,28 +234,30 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 }}
                 pendingData={pendingWizardData}
             />
-            <CheckInWizardModal
+            <CreateTripModal
                 isOpen={showCheckIn}
                 onClose={() => setShowCheckIn(false)}
-                onComplete={(data) => {
-                    setPendingWizardData(data);
+                onComplete={(data: any) => {
+                    if (props.executeCreateBlankPlan) {
+                        props.executeCreateBlankPlan(data);
+                    } else {
+                        // Fallback
+                        setPendingWizardData(data);
+                        setShowCheckIn(false);
+                        setShowStartPicker(true);
+                    }
                     setShowCheckIn(false);
-                    setShowStartPicker(true);
+                }}
+                onSelectTemplate={(template, data) => {
+                    setPendingWizardData(data); // Gives the custom name and dates to applyTemplate
+                    applyTemplate(template);
+                    setShowCheckIn(false);
                 }}
                 lang={lang}
                 t={t}
             />
 
-            <PlanManagerModal
-                isOpen={showPlanManager}
-                onClose={() => setShowPlanManager(false)}
-                plans={plans}
-                activePlanId={activePlanId}
-                onSelectPlan={setActivePlanId}
-                onCreatePlan={onTriggerPicker}
-                onDeletePlan={handleDeletePlan}
-                t={t}
-            />
+            {/* PlanManagerModal replaced by full-page ItineraryHub */}
 
             <CustomItemModal
                 isOpen={props.showCustomItemModal}

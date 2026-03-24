@@ -91,10 +91,11 @@ export const useAppActions = (deps: AppActionsDeps) => {
         const finalDestination = pendingWizardData?.destination?.toUpperCase() || region.toUpperCase();
         const finalStart = pendingWizardData?.startDate || new Date().toISOString().split('T')[0];
         const finalEnd = pendingWizardData?.endDate || new Date(Date.now() + 86400000 * (template.duration - 1)).toISOString().split('T')[0];
+        const finalName = pendingWizardData?.name || templateName;
 
         const newPlan: Plan = {
             id,
-            name: templateName,
+            name: finalName,
             destination: finalDestination,
             startDate: finalStart,
             endDate: finalEnd,

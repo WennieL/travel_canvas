@@ -14,4 +14,4 @@ export { default as ItemDetailModal } from './ItemDetailModal';
 export { ConfirmDialog } from './ConfirmDialog';
 export { StartPickerModal } from './StartPickerModal';
 export { MoveToDayModal } from './MoveToDayModal';
-export { CheckInWizardModal } from './CheckInWizardModal';
+export { CreateTripModal } from './CreateTripModal';

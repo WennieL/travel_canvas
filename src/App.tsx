@@ -98,7 +98,7 @@ export function App() {
         ui.setShowCheckIn(true);
     };
 
-    const executeCreateBlankPlan = (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number }) => {
+    const executeCreateBlankPlan = (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number, name?: string }) => {
         _handleCreatePlan(data);
         setIsCreatingNewPlan(false);
 

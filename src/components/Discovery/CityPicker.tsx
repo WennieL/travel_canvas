@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Search, Compass, MapPin } from 'lucide-react';
-import { Template, LangType, Region } from '../../types';
-import { CITY_FILTERS, COUNTRY_FILTERS, TEMPLATES } from '../../data';
+import { Search, Compass, MapPin, Star, Heart, ShoppingBag, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Template, LangType, Region, TravelItem } from '../../types';
+import { CITY_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS } from '../../data';
 
 interface CityPickerProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     onSelectCity: (region: Region) => void;
     onPreviewTemplate: (tpl: Template) => void;
+    onSelectItem: (item: any, source: 'discovery') => void;
     lang: LangType;
     t: any;
+    isSelectionOnly?: boolean;
 }
 
 const CityPicker: React.FC<CityPickerProps> = ({
@@ -17,10 +20,13 @@ const CityPicker: React.FC<CityPickerProps> = ({
     setSearchQuery,
     onSelectCity,
     onPreviewTemplate,
+    onSelectItem,
     lang,
-    t
+    t,
+    isSelectionOnly
 }) => {
     const [showAllTemplates, setShowAllTemplates] = useState(false);
+    const [showAllTopSpots, setShowAllTopSpots] = useState(false);
     const [activeFilter, setActiveFilter] = useState('all');
 
     const filters = [
@@ -29,7 +35,7 @@ const CityPicker: React.FC<CityPickerProps> = ({
         { id: 'short', label: lang === 'zh' ? '2-3日' : '2-3 Days' },
         { id: 'long', label: lang === 'zh' ? '4日以上' : '4+ Days' },
         { id: 'budget', label: lang === 'zh' ? '小資旅行' : 'Budget' },
-        { id: 'premium', label: lang === 'zh' ? '奠華體驗' : 'Premium' },
+        { id: 'premium', label: lang === 'zh' ? '精華體驗' : 'Premium' },
     ];
 
     // Data-driven: collect all cities from all countries
@@ -43,6 +49,15 @@ const CityPicker: React.FC<CityPickerProps> = ({
             city.id.toLowerCase().includes(query)
         );
     });
+
+    // Top Spots for the "Canvas Top Picks" ranking
+    const topSpots = [
+        MELBOURNE_ASSETS.find(a => a.id === 'mel-25')!, // Maria's Pasta
+        MELBOURNE_ASSETS.find(a => a.id === 'mel-5')!,  // Eau de Vie
+        MELBOURNE_ASSETS.find(a => a.id === 'mel-23')!, // Flagstaff Garden
+        MELBOURNE_ASSETS.find(a => a.id === 'mel-1')!,  // Patricia Coffee
+        MELBOURNE_ASSETS.find(a => a.id === 'mel-7')!,  // Jungle Boy
+    ].filter(Boolean);
 
     return (
         <div className="min-h-full bg-white">
@@ -117,6 +132,100 @@ const CityPicker: React.FC<CityPickerProps> = ({
                 </div>
             </div>
 
+            {!isSelectionOnly && (
+                <>
+                    {/* Canvas Top Picks - Star Ranking */}
+                    <div className="px-6 mb-12">
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2">
+                        <Star size={20} className="text-amber-500 fill-amber-500" />
+                        <h3 className="text-lg font-black text-gray-900">{lang === 'zh' ? 'CANVAS 精選榜單' : 'Canvas Top Picks'}</h3>
+                    </div>
+                    <button
+                        onClick={() => setShowAllTopSpots(!showAllTopSpots)}
+                        className="flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-teal-600 transition-colors"
+                    >
+                        {showAllTopSpots ? (lang === 'zh' ? '收起' : 'Show Less') : (lang === 'zh' ? '更多' : 'More')} <ChevronRight size={14} className={showAllTopSpots ? 'rotate-90' : ''} />
+                    </button>
+                </div>
+                <motion.div
+                    layout
+                    className={showAllTopSpots
+                        ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-10 pb-4 px-1"
+                        : "flex gap-6 overflow-x-auto scrollbar-hide pb-4 px-1"
+                    }
+                >
+                    <AnimatePresence mode="popLayout">
+                        {topSpots.map((spot, idx) => {
+                            const creator = SAMPLE_CREATORS.find(c => c.id === spot.authorId);
+                            return (
+                                <motion.div
+                                    layout
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    key={spot.id}
+                                    onClick={() => onSelectItem(spot, 'discovery')}
+                                    className={`flex-shrink-0 group text-left cursor-pointer ${showAllTopSpots ? 'w-full' : 'w-48'}`}
+                                >
+                                <div className="relative aspect-square rounded-[2rem] overflow-hidden mb-4 shadow-xl border-4 border-white group-hover:shadow-2xl transition-all duration-500">
+                                    {spot.image ? (
+                                        <div className="w-full h-full bg-gray-50 flex items-center justify-center text-5xl">
+                                            {spot.image}
+                                        </div>
+                                    ) : (
+                                        <img
+                                            src={spot.coverImage || "https://images.unsplash.com/photo-1510525923053-53d712497645?q=80&w=400&auto=format&fit=crop"}
+                                            alt={spot.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        />
+                                    )}
+
+                                    {/* Ranking Badge - Yellow Tag Style */}
+                                    <div className="absolute top-0 left-4 px-3 py-2 bg-amber-400 rounded-b-xl text-[10px] font-black text-black shadow-lg z-10">
+                                        TOP <br /><span className="text-base leading-none">0{idx + 1}</span>
+                                    </div>
+
+                                    {/* Heart Icon - Top Right */}
+                                    <button className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-rose-500 transition-all z-10 border border-white/30">
+                                        <Heart size={16} />
+                                    </button>
+
+                                    {/* Premium Overlay */}
+                                    {spot.isLocked && (
+                                        <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px] flex items-center justify-center">
+                                            <div className="bg-amber-400 px-4 py-1.5 rounded-full text-[10px] font-black text-black shadow-2xl border-2 border-white/50 uppercase tracking-widest">
+                                                Locked 🔒
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="px-1">
+                                    {/* Metadata: Saves + Stars */}
+                                    <div className="flex items-center gap-3 text-[10px] font-black text-gray-400 mb-2 uppercase tracking-wider">
+                                        <div className="flex items-center gap-1">
+                                            <Heart size={12} className="text-gray-300" />
+                                            <span>{15 + TEMPLATES.length * (idx + 1)}.{(idx * 7) % 9}K</span>
+                                        </div>
+                                        <div className="w-1 h-1 bg-gray-200 rounded-full" />
+                                        <div className="flex items-center gap-1">
+                                            <Star size={12} className="text-amber-400" />
+                                            <span className="text-gray-600">4.{9 - idx}</span>
+                                        </div>
+                                    </div>
+
+                                    <h4 className="text-sm font-black text-gray-900 mb-2 line-clamp-1 group-hover:text-teal-600 transition-colors leading-tight">
+                                        {(lang === 'zh' ? spot.marketingTitle || spot.title : spot.marketingTitleEn || spot.titleEn) || spot.title}
+                                    </h4>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </AnimatePresence>
+            </motion.div>
+            </div>
+
             {/* Recommended Plans */}
             <div className="px-6 py-6 overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
@@ -132,8 +241,8 @@ const CityPicker: React.FC<CityPickerProps> = ({
                                     key={f.id}
                                     onClick={() => setActiveFilter(f.id)}
                                     className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${activeFilter === f.id
-                                            ? 'bg-teal-600 text-white shadow-sm'
-                                            : 'text-gray-400 hover:text-gray-600'
+                                        ? 'bg-teal-600 text-white shadow-sm'
+                                        : 'text-gray-400 hover:text-gray-600'
                                         }`}
                                 >
                                     {f.label}
@@ -156,8 +265,8 @@ const CityPicker: React.FC<CityPickerProps> = ({
                             key={f.id}
                             onClick={() => setActiveFilter(f.id)}
                             className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[10px] font-bold border transition-all ${activeFilter === f.id
-                                    ? 'bg-teal-600 border-teal-600 text-white shadow-md'
-                                    : 'bg-white border-gray-100 text-gray-400'
+                                ? 'bg-teal-600 border-teal-600 text-white shadow-md'
+                                : 'bg-white border-gray-100 text-gray-400'
                                 }`}
                         >
                             {f.label}
@@ -221,6 +330,8 @@ const CityPicker: React.FC<CityPickerProps> = ({
                     ))}
                 </div>
             </div>
+            </>
+            )}
         </div >
     );
 };
