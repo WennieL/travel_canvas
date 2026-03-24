@@ -53,7 +53,7 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
     };
 
     return (
-        <div className="flex-1 bg-white overflow-y-auto scrollbar-hide">
+        <div className="flex-1 bg-tc-bg overflow-y-auto scrollbar-hide">
             {discoveryCity ? (
                 <CityHub
                     regionId={discoveryCity}

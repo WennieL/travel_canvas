@@ -103,7 +103,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
     }, []);
 
     return (
-        <div className="hidden lg:flex flex-col w-20 bg-transparent items-center py-4 gap-2 z-[2000]">
+        <div className={`hidden lg:flex flex-col w-20 ${activeView === 'discovery' ? 'bg-tc-bg' : 'bg-transparent'} items-center py-4 gap-2 z-[2000]`}>
             {/* Logo area */}
             <div className="w-full px-2 mb-4 flex flex-col items-center gap-4">
                 <div

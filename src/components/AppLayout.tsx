@@ -227,7 +227,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
 
 
-    const handleSelectItem = (item: ScheduleItem | TravelItem | null, source: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => {
+    const handleSelectItem = (item: ItemType | TravelItem | any | null, source?: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => {
         ui.setSelectedItem(item as any);
         ui.setSelectionSource(source);
 
@@ -257,7 +257,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-[100dvh] bg-[#fafafa] text-slate-800 font-sans overflow-x-hidden max-w-[100vw]">
+        <div className={`flex flex-col md:flex-row h-[100dvh] ${viewMode === 'discovery' ? 'bg-tc-bg' : 'bg-[#fafafa]'} text-slate-800 font-sans overflow-x-hidden max-w-[100vw]`}>
             {/* Desktop Icon Sidebar (Canva Style) */}
             {!isFullscreen && (
                 <DesktopSidebar
@@ -355,7 +355,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             )}
 
             {/* Main Area */}
-            <div className="flex-1 flex flex-col min-w-0 bg-premium-paper relative overflow-x-hidden">
+            <div className={`flex-1 flex flex-col min-w-0 ${viewMode === 'discovery' ? 'bg-tc-bg' : 'bg-premium-paper'} relative overflow-x-hidden`}>
                 {viewMode !== 'discovery' && !showFavorites && (
                     <AppHeader
                         lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
@@ -429,7 +429,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     <div
                         key={`${activePlan.id}-${viewMode}`}
                         onScroll={handleScroll}
-                        className="flex-1 overflow-y-auto overflow-x-hidden bg-transparent p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4 no-scrollbar animate-canvas-reveal"
+                        className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : 'p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4'} no-scrollbar animate-canvas-reveal`}
                     >
                         {viewMode === 'map' ? (
                             <div className="h-full">
