@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-tc-primary: #2e7d32;
+  --color-tc-secondary: #ffb74d;
+  --color-tc-tertiary: #f48fb1;
+  --color-tc-neutral: #5c6e61;
+  --color-tc-bg: #F4F7F2;
+}
+
 /* Typography */
 [draggable],
 [draggable="true"] {
@@ -10,7 +18,7 @@
 }
 
 :root {
-  --font-heading: 'Poppins', system-ui, sans-serif;
+  --font-heading: 'Outfit', 'Poppins', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 }
 
@@ -24,7 +32,7 @@ body {
   min-height: 100%;
   touch-action: pan-y;
   overscroll-behavior-y: none;
-  /* Prevent pull-to-refresh interference */
+  background-color: #F4F7F2; /* tc-bg */
 }
 
 

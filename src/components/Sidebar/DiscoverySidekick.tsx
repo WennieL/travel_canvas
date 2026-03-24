@@ -297,9 +297,8 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
             </div>
 
             {/* [PHASE 24] Curated List - Suppressed in Map mode to focus on Hero Spot / Map interactions */}
-            {sidebarMode !== 'map' && (
-                <div className="p-4">
-                    <div className="flex items-center justify-between mb-4 px-1">
+            <div className="p-4">
+                <div className="flex items-center justify-between mb-4 px-1">
                         <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">
                             {selectedItem ? t.viewDetailsLabel : t.expertTemplates}
                         </h4>
@@ -397,7 +396,6 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                         {t.exitDiscoveryMode}
                     </button>
                 </div>
-            )}
         </div>
     );
 };

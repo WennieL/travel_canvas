@@ -8,7 +8,7 @@ interface DiscoveryViewProps {
     onStoryPreview: (tpl: Template) => void;
     onExploreCreatorMap: (authorId: string, authorName: string) => void;
     onCreatorClick: (creatorId: string) => void;
-    onSelectItem: (item: any, source: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => void;
+    onSelectItem: (item: any, source?: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => void;
     setActiveTab: (tab: 'assets' | 'templates') => void;
     activeRegion: Region;
     setActiveRegion: (region: Region) => void;

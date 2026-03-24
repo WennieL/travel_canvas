@@ -82,7 +82,7 @@ const CityHub: React.FC<CityHubProps> = ({
                             taipei: 'https://images.unsplash.com/photo-1598935898639-81586f7d2129?auto=format&fit=crop&q=80&w=2000',
                         }[regionId as string] || 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1974&auto=format&fit=crop'}
                         className="w-full h-full object-cover opacity-70 transition-transform duration-[12s] group-hover:scale-110 ease-out"
-                        alt={city.label}
+                        alt={city?.label || 'City'}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 

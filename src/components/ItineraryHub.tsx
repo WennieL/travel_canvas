@@ -82,7 +82,7 @@ const ItineraryHub: React.FC<ItineraryHubProps> = ({
                                 osaka: "from-rose-400 to-red-500",
                                 melbourne: "from-emerald-400 to-teal-600"
                             };
-                            const bgClass = regionGradients[plan.region] ? `bg-gradient-to-br ${regionGradients[plan.region]}` : defaultBg;
+                            const bgClass = plan.region && regionGradients[plan.region as string] ? `bg-gradient-to-br ${regionGradients[plan.region as string]}` : defaultBg;
 
                             return (
                                 <div

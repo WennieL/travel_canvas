@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { Search, Compass, MapPin, Star, Heart, ShoppingBag, ChevronRight } from 'lucide-react';
+import { Search, MapPin, Star, Heart, Zap, Sparkles, ChevronRight, Leaf } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Template, LangType, Region, TravelItem } from '../../types';
-import { CITY_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS } from '../../data';
+import { REGION_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS } from '../../data';
 
 interface CityPickerProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
     onSelectCity: (region: Region) => void;
-    onPreviewTemplate: (tpl: Template) => void;
-    onSelectItem: (item: any, source: 'discovery') => void;
+    onPreviewTemplate: (template: Template) => void;
+    onSelectItem: (item: TravelItem, source?: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => void;
     lang: LangType;
-    t: any;
+    t: Record<string, string>;
     isSelectionOnly?: boolean;
 }
 
-const CityPicker: React.FC<CityPickerProps> = ({
+export const CityPicker: React.FC<CityPickerProps> = ({
     searchQuery,
     setSearchQuery,
     onSelectCity,
@@ -23,32 +23,28 @@ const CityPicker: React.FC<CityPickerProps> = ({
     onSelectItem,
     lang,
     t,
-    isSelectionOnly
+    isSelectionOnly = false
 }) => {
-    const [showAllTemplates, setShowAllTemplates] = useState(false);
-    const [showAllTopSpots, setShowAllTopSpots] = useState(false);
     const [activeFilter, setActiveFilter] = useState('all');
+    const [showAllTopSpots, setShowAllTopSpots] = useState(false);
+    const [showAllTemplates, setShowAllTemplates] = useState(false);
+
+    const filteredCities = REGION_FILTERS.filter(city =>
+        city.id !== 'all' && (lang === 'zh' ? city.label : city.labelEn).toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const filteredCountries = COUNTRY_FILTERS.filter(country =>
+        (lang === 'zh' ? country.label : country.labelEn).toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const filters = [
-        { id: 'all', label: lang === 'zh' ? '全部' : 'All' },
-        { id: '1day', label: lang === 'zh' ? '1日快閃' : '1 Day' },
-        { id: 'short', label: lang === 'zh' ? '2-3日' : '2-3 Days' },
-        { id: 'long', label: lang === 'zh' ? '4日以上' : '4+ Days' },
-        { id: 'budget', label: lang === 'zh' ? '小資旅行' : 'Budget' },
-        { id: 'premium', label: lang === 'zh' ? '精華體驗' : 'Premium' },
+        { id: 'all', label: lang === 'zh' ? '所有行程' : 'ALL PLANS' },
+        { id: '1day', label: lang === 'zh' ? '一日遊' : '1 DAY' },
+        { id: 'short', label: lang === 'zh' ? '2-3天' : '2-3 DAYS' },
+        { id: 'long', label: lang === 'zh' ? '深度遊' : 'IN-DEPTH' },
+        { id: 'budget', label: lang === 'zh' ? '小資族' : 'BUDGET' },
+        { id: 'premium', label: lang === 'zh' ? '奢華' : 'PREMIUM' },
     ];
-
-    // Data-driven: collect all cities from all countries
-    const allCities = Object.keys(CITY_FILTERS).flatMap(countryId => CITY_FILTERS[countryId] || []);
-
-    const filteredCities = allCities.filter(city => {
-        const query = searchQuery.toLowerCase();
-        return (
-            city.label.toLowerCase().includes(query) ||
-            city.labelEn.toLowerCase().includes(query) ||
-            city.id.toLowerCase().includes(query)
-        );
-    });
 
     // Top Spots for the "Canvas Top Picks" ranking
     const topSpots = [
@@ -59,280 +55,229 @@ const CityPicker: React.FC<CityPickerProps> = ({
         MELBOURNE_ASSETS.find(a => a.id === 'mel-7')!,  // Jungle Boy
     ].filter(Boolean);
 
+    // City Avatar Fallbacks
+    const cityImages: Record<string, string> = {
+        taipei: 'https://images.unsplash.com/photo-1598935898639-81586f7d2129?auto=format&fit=crop&q=80&w=400',
+        tainan: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&q=80&w=400',
+        taichung: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=80&w=400',
+        hualien: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400',
+        tokyo: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?auto=format&fit=crop&q=80&w=400',
+        osaka: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=80&w=400',
+        kyoto: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400',
+        melbourne: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&q=80&w=400',
+    };
+
     return (
-        <div className="min-h-full bg-white">
-            {/* Hero Section - Canva Style */}
-            <div className="relative pt-16 pb-12 px-6 overflow-hidden">
-                {/* Background Soft Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-amber-50 opacity-70" />
-                <div className="absolute top-[-10%] right-[-10%] w-[40%] aspect-square bg-teal-200/20 blur-[100px] rounded-full" />
-                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] aspect-square bg-amber-200/20 blur-[100px] rounded-full" />
+        <div className="min-h-full bg-tc-bg pb-24">
+            {/* Header Section */}
+            <div className="pt-8 px-6">
+                {/* Brand Logo */}
+                <div className="flex items-center gap-2 mb-10">
+                    <Leaf className="text-tc-primary w-5 h-5 fill-tc-primary" />
+                    <span className="font-heading font-black text-gray-900 text-lg tracking-tight">Travel Canvas</span>
+                </div>
 
-                <div className="relative max-w-2xl mx-auto text-center">
-                    <div className="flex justify-center mb-4">
-                        <span className="px-3 py-1 bg-white/80 backdrop-blur-md border border-teal-100 rounded-full text-[10px] font-black text-teal-600 uppercase tracking-widest shadow-sm">
-                            Discovery
-                        </span>
+                <div className="flex justify-center mb-2">
+                    <span className="text-[10px] font-black text-tc-primary tracking-[0.2em] uppercase">
+                        Discovery
+                    </span>
+                </div>
+                <h1 className="text-[32px] md:text-5xl font-heading font-black text-gray-900 leading-[1.1] text-center tracking-tight">
+                    {lang === 'zh' ? '下一站，你想去哪？' : 'Where will you\ntravel next?'}
+                </h1>
+
+                {/* Sticky Search Bar */}
+                <div className="sticky top-4 z-40 mt-8 max-w-[360px] mx-auto">
+                    <div className="flex items-center bg-white rounded-[24px] shadow-[0_8px_30px_rgba(46,125,50,0.06)] p-2 pl-4 transition-all focus-within:ring-2 ring-tc-primary/20 hover:shadow-[0_12px_40px_rgba(46,125,50,0.1)]">
+                        <Search className="text-gray-400 w-5 h-5 flex-shrink-0" />
+                        <input
+                            type="text"
+                            placeholder={t.searchDiscoveryPlaceholder || "Search spots, cities..."}
+                            className="flex-1 bg-transparent border-none focus:ring-0 text-[15px] py-1.5 px-3 text-gray-700 placeholder:text-gray-400 font-medium outline-none min-w-0"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button className="bg-tc-primary text-white px-7 py-2.5 rounded-[20px] text-sm font-bold shadow-sm hover:bg-green-800 transition-colors flex-shrink-0">
+                            {t.searchGo || "Go"}
+                        </button>
                     </div>
-                    <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-8 leading-tight">
-                        {t.discoveryTitle}
-                    </h1>
+                </div>
 
-                    {/* Search Bar */}
-                    <div className="relative group max-w-lg mx-auto mb-4">
-                        <div className="absolute inset-0 bg-teal-500/10 blur-xl group-focus-within:bg-teal-500/20 transition-all rounded-full" />
-                        <div className="relative flex items-center bg-white rounded-2xl shadow-xl border border-white p-1 pr-2 transition-all group-focus-within:ring-2 ring-teal-500/20">
-                            <div className="pl-4 pr-2">
-                                <Search className="text-gray-400 w-5 h-5" />
+                {/* City Shortcuts (Avatars) */}
+                <div className="flex gap-4 overflow-x-auto no-scrollbar mt-10 pb-4 justify-between md:justify-center md:gap-8">
+                    {filteredCities.map((city) => (
+                        <button
+                            key={city.id}
+                            onClick={() => onSelectCity(city.id)}
+                            className="flex-shrink-0 flex flex-col items-center gap-2.5 group snap-start"
+                        >
+                            <div className="w-[72px] h-[72px] md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-transparent group-focus-within:border-tc-primary group-active:border-tc-primary transition-all shadow-md group-hover:shadow-lg relative">
+                                <img
+                                    src={cityImages[city.id] || "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=400"}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    alt={city.label}
+                                />
+                                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
                             </div>
-                            <input
-                                type="text"
-                                placeholder={t.searchDiscoveryPlaceholder}
-                                className="flex-1 bg-transparent border-none focus:ring-0 text-sm py-3 text-gray-700"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                            <button className="bg-teal-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-teal-700 transition-colors">
-                                {t.searchGo}
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Action Pills */}
-                    <div className="flex justify-center gap-2 overflow-x-auto scrollbar-hide pb-10 px-4">
-                        {(lang === 'zh'
-                            ? ['#台北老宅', '#台中米其林', '#拉麵特輯', '#免費景點', '#東京必去', '#夜市攻略']
-                            : ['#Taipei Alleys', '#Taichung Michelin', '#Ramen Guide', '#Free Spots', '#Tokyo Musts', '#Night Markets']
-                        ).map(tag => (
-                            <button key={tag} className="flex-shrink-0 px-3 py-1 bg-white/50 border border-gray-100 rounded-full text-[10px] font-bold text-gray-500 hover:bg-teal-50 hover:text-teal-600 transition-colors shadow-sm">
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* City Bubbles */}
-                    <div className="flex flex-wrap justify-center gap-8 md:gap-12 px-2">
-                        {filteredCities.map(city => (
-                            <button
-                                key={city.id}
-                                onClick={() => onSelectCity(city.id)}
-                                className="flex flex-col items-center group relative"
-                            >
-                                <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border-4 border-white flex items-center justify-center text-4xl md:text-5xl group-hover:scale-110 group-active:scale-95 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-500 overflow-hidden relative z-10">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-teal-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <span className="relative z-10">{city.icon}</span>
-                                </div>
-                                <span className="mt-4 text-xs md:text-sm font-black text-gray-700 tracking-wide uppercase group-hover:text-teal-600 transition-colors">
-                                    {lang === 'zh' ? city.label : city.labelEn}
-                                </span>
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-teal-100 scale-100 opacity-0 group-hover:scale-125 group-hover:opacity-100 transition-all duration-700 pointer-events-none" />
-                            </button>
-                        ))}
-                    </div>
+                            <span className="text-[10px] md:text-xs font-black text-tc-neutral uppercase tracking-widest group-hover:text-tc-primary transition-colors">
+                                {city.labelEn}
+                            </span>
+                        </button>
+                    ))}
                 </div>
             </div>
 
             {!isSelectionOnly && (
                 <>
-                    {/* Canvas Top Picks - Star Ranking */}
-                    <div className="px-6 mb-12">
-                <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-2">
-                        <Star size={20} className="text-amber-500 fill-amber-500" />
-                        <h3 className="text-lg font-black text-gray-900">{lang === 'zh' ? 'CANVAS 精選榜單' : 'Canvas Top Picks'}</h3>
-                    </div>
-                    <button
-                        onClick={() => setShowAllTopSpots(!showAllTopSpots)}
-                        className="flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-teal-600 transition-colors"
-                    >
-                        {showAllTopSpots ? (lang === 'zh' ? '收起' : 'Show Less') : (lang === 'zh' ? '更多' : 'More')} <ChevronRight size={14} className={showAllTopSpots ? 'rotate-90' : ''} />
-                    </button>
-                </div>
-                <motion.div
-                    layout
-                    className={showAllTopSpots
-                        ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-10 pb-4 px-1"
-                        : "flex gap-6 overflow-x-auto scrollbar-hide pb-4 px-1"
-                    }
-                >
-                    <AnimatePresence mode="popLayout">
-                        {topSpots.map((spot, idx) => {
-                            const creator = SAMPLE_CREATORS.find(c => c.id === spot.authorId);
-                            return (
-                                <motion.div
-                                    layout
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
+                    {/* Canvas Top Picks */}
+                    <div className="mt-8 px-5">
+                        <div className="flex items-end justify-between mb-5">
+                            <div className="flex items-center gap-2">
+                                <Sparkles className="text-tc-tertiary w-6 h-6 fill-tc-tertiary" />
+                                <h2 className="text-[26px] font-heading font-black text-gray-900 leading-none">
+                                    Canvas Top<br />Picks
+                                </h2>
+                            </div>
+                            <button
+                                onClick={() => setShowAllTopSpots(!showAllTopSpots)}
+                                className="flex items-center gap-1 text-[10px] font-bold text-tc-primary hover:text-green-800 transition-colors uppercase tracking-wider mb-1"
+                            >
+                                EXPLORE MORE <ChevronRight size={12} className={showAllTopSpots ? 'rotate-90' : ''} />
+                            </button>
+                        </div>
+
+                        <div className={showAllTopSpots
+                            ? "grid grid-cols-2 md:grid-cols-3 gap-4 pb-4 animate-in fade-in"
+                            : "flex gap-4 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory"
+                        }>
+                            {topSpots.map((spot, idx) => (
+                                <button
                                     key={spot.id}
                                     onClick={() => onSelectItem(spot, 'discovery')}
-                                    className={`flex-shrink-0 group text-left cursor-pointer ${showAllTopSpots ? 'w-full' : 'w-48'}`}
+                                    className={`text-left group flex-col snap-center ${showAllTopSpots ? 'w-full' : 'w-64 flex-shrink-0'}`}
                                 >
-                                <div className="relative aspect-square rounded-[2rem] overflow-hidden mb-4 shadow-xl border-4 border-white group-hover:shadow-2xl transition-all duration-500">
-                                    {spot.image ? (
-                                        <div className="w-full h-full bg-gray-50 flex items-center justify-center text-5xl">
-                                            {spot.image}
-                                        </div>
-                                    ) : (
+                                    <div className="relative aspect-[3/4] rounded-[32px] overflow-hidden bg-gray-100 shadow-sm group-hover:shadow-xl transition-shadow border border-gray-200/30">
                                         <img
-                                            src={spot.coverImage || "https://images.unsplash.com/photo-1510525923053-53d712497645?q=80&w=400&auto=format&fit=crop"}
+                                            src={(spot.image?.startsWith('http') ? spot.image : spot.coverImage) || "https://images.unsplash.com/photo-1540959733332-e9ab42be6125?auto=format&fit=crop&q=80&w=400"}
                                             alt={spot.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                                         />
-                                    )}
-
-                                    {/* Ranking Badge - Yellow Tag Style */}
-                                    <div className="absolute top-0 left-4 px-3 py-2 bg-amber-400 rounded-b-xl text-[10px] font-black text-black shadow-lg z-10">
-                                        TOP <br /><span className="text-base leading-none">0{idx + 1}</span>
+                                        <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+                                        
+                                        {/* Rank Badge */}
+                                        <div className="absolute top-4 left-4 px-3 py-1.5 bg-tc-tertiary rounded-xl text-[10px] font-black text-gray-900 shadow-sm leading-tight text-center tracking-wide">
+                                            TOP <br />0{idx + 1}
+                                        </div>
+                                        
+                                        {/* Heart Icon */}
+                                        <div className="absolute top-4 right-4 text-white hover:text-rose-500 drop-shadow-md transition-colors">
+                                            <Heart size={20} className="fill-current opacity-90" />
+                                        </div>
                                     </div>
 
-                                    {/* Heart Icon - Top Right */}
-                                    <button className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-rose-500 transition-all z-10 border border-white/30">
-                                        <Heart size={16} />
-                                    </button>
-
-                                    {/* Premium Overlay */}
-                                    {spot.isLocked && (
-                                        <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px] flex items-center justify-center">
-                                            <div className="bg-amber-400 px-4 py-1.5 rounded-full text-[10px] font-black text-black shadow-2xl border-2 border-white/50 uppercase tracking-widest">
-                                                Locked 🔒
+                                    <div className="mt-4 px-2">
+                                        <div className="flex items-center gap-3 text-[10px] font-bold text-tc-neutral mb-1.5 tracking-wide">
+                                            <div className="flex items-center gap-1">
+                                                <Heart size={12} className="fill-current text-tc-tertiary" />
+                                                <span>{23 + idx}.{(idx * 7) % 9}K</span>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <Star size={12} className="fill-current" />
+                                                <span>4.{9 - idx}</span>
                                             </div>
                                         </div>
-                                    )}
-                                </div>
-
-                                <div className="px-1">
-                                    {/* Metadata: Saves + Stars */}
-                                    <div className="flex items-center gap-3 text-[10px] font-black text-gray-400 mb-2 uppercase tracking-wider">
-                                        <div className="flex items-center gap-1">
-                                            <Heart size={12} className="text-gray-300" />
-                                            <span>{15 + TEMPLATES.length * (idx + 1)}.{(idx * 7) % 9}K</span>
-                                        </div>
-                                        <div className="w-1 h-1 bg-gray-200 rounded-full" />
-                                        <div className="flex items-center gap-1">
-                                            <Star size={12} className="text-amber-400" />
-                                            <span className="text-gray-600">4.{9 - idx}</span>
-                                        </div>
+                                        <h3 className="text-xl font-heading font-black text-gray-900 line-clamp-2 leading-tight group-hover:text-tc-primary transition-colors">
+                                            {(lang === 'zh' ? spot.marketingTitle || spot.title : spot.marketingTitleEn || spot.titleEn) || spot.title}
+                                        </h3>
                                     </div>
-
-                                    <h4 className="text-sm font-black text-gray-900 mb-2 line-clamp-1 group-hover:text-teal-600 transition-colors leading-tight">
-                                        {(lang === 'zh' ? spot.marketingTitle || spot.title : spot.marketingTitleEn || spot.titleEn) || spot.title}
-                                    </h4>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </AnimatePresence>
-            </motion.div>
-            </div>
-
-            {/* Recommended Plans */}
-            <div className="px-6 py-6 overflow-hidden">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                            <Compass size={16} className="text-teal-500" />
-                            <h3 className="text-xs font-black uppercase tracking-widest text-gray-400">{t.popularInspiration}</h3>
+                                </button>
+                            ))}
                         </div>
-                        {/* Filter Capsules - Desktop */}
-                        <div className="hidden md:flex items-center gap-1 bg-gray-50 p-1 rounded-full border border-gray-100">
+                    </div>
+
+                    {/* Curated For You (Templates) */}
+                    <div className="mt-8 px-5 pb-8">
+                        <div className="flex items-center justify-between mb-4 px-1">
+                            <div className="flex items-center gap-2">
+                                <Zap className="text-tc-primary w-4 h-4 fill-tc-primary" />
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-tc-neutral">
+                                    CURATED FOR YOU
+                                </h3>
+                            </div>
+                            <button
+                                onClick={() => setShowAllTemplates(!showAllTemplates)}
+                                className="text-[10px] font-bold text-tc-primary hover:underline transition-colors uppercase tracking-wider"
+                            >
+                                VIEW ALL
+                            </button>
+                        </div>
+
+                        {/* Filter Pills */}
+                        <div className="flex gap-2 mb-6 overflow-x-auto no-scrollbar px-1">
                             {filters.map(f => (
                                 <button
                                     key={f.id}
                                     onClick={() => setActiveFilter(f.id)}
-                                    className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${activeFilter === f.id
-                                        ? 'bg-teal-600 text-white shadow-sm'
-                                        : 'text-gray-400 hover:text-gray-600'
-                                        }`}
+                                    className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all border border-transparent ${
+                                        activeFilter === f.id
+                                            ? 'bg-tc-primary text-white shadow-md'
+                                            : 'bg-white text-tc-neutral shadow-sm hover:border-gray-200'
+                                    }`}
                                 >
                                     {f.label}
                                 </button>
                             ))}
                         </div>
-                    </div>
-                    <button
-                        onClick={() => setShowAllTemplates(!showAllTemplates)}
-                        className="text-[10px] font-bold text-teal-600 hover:underline transition-colors"
-                    >
-                        {showAllTemplates ? (lang === 'zh' ? '收起' : 'Show Less') : t.viewAll}
-                    </button>
-                </div>
 
-                {/* Filter Capsules - Mobile (scrollable) */}
-                <div className="md:hidden flex gap-2 overflow-x-auto scrollbar-hide mb-4">
-                    {filters.map(f => (
-                        <button
-                            key={f.id}
-                            onClick={() => setActiveFilter(f.id)}
-                            className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[10px] font-bold border transition-all ${activeFilter === f.id
-                                ? 'bg-teal-600 border-teal-600 text-white shadow-md'
-                                : 'bg-white border-gray-100 text-gray-400'
-                                }`}
-                        >
-                            {f.label}
-                        </button>
-                    ))}
-                </div>
+                        {/* Template Cards Horizontal Walkway */}
+                        <div className={showAllTemplates
+                            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 animate-in fade-in duration-300"
+                            : "flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory"
+                        }>
+                            {(() => {
+                                // Apply filter
+                                let filtered = TEMPLATES;
+                                if (activeFilter === '1day') filtered = TEMPLATES.filter(tpl => tpl.duration === 1);
+                                else if (activeFilter === 'short') filtered = TEMPLATES.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
+                                else if (activeFilter === 'long') filtered = TEMPLATES.filter(tpl => tpl.duration >= 4);
+                                else if (activeFilter === 'budget') filtered = TEMPLATES.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
+                                else if (activeFilter === 'premium') filtered = TEMPLATES.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
 
-                <div className={showAllTemplates
-                    ? "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4 px-1 animate-in fade-in duration-300"
-                    : "flex gap-4 overflow-x-auto scrollbar-hide pb-4 px-1"
-                }>
-                    {(() => {
-                        // Apply filter
-                        let filtered = TEMPLATES;
-                        if (activeFilter === '1day') filtered = TEMPLATES.filter(tpl => tpl.duration === 1);
-                        else if (activeFilter === 'short') filtered = TEMPLATES.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
-                        else if (activeFilter === 'long') filtered = TEMPLATES.filter(tpl => tpl.duration >= 4);
-                        else if (activeFilter === 'budget') filtered = TEMPLATES.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
-                        else if (activeFilter === 'premium') filtered = TEMPLATES.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
+                                if (showAllTemplates) return filtered;
 
-                        if (showAllTemplates) return filtered;
-
-                        // Pick diverse templates (1 per region) then fill to 6
-                        const seen = new Set<string>();
-                        const diverse: Template[] = [];
-                        for (const tpl of TEMPLATES) {
-                            if (!seen.has(tpl.region)) {
-                                seen.add(tpl.region);
-                                diverse.push(tpl);
-                            }
-                        }
-                        // Fill remaining slots if under 6
-                        for (const tpl of TEMPLATES) {
-                            if (diverse.length >= 6) break;
-                            if (!diverse.includes(tpl)) diverse.push(tpl);
-                        }
-                        return diverse.slice(0, 6);
-                    })().map(tpl => (
-                        <button
-                            key={tpl.id}
-                            onClick={() => onPreviewTemplate(tpl)}
-                            className={`text-left group ${showAllTemplates ? 'w-full' : 'flex-shrink-0 w-64'}`}
-                        >
-                            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-3 shadow-lg">
-                                <img
-                                    src={tpl.coverImage}
-                                    alt={lang === 'zh' ? tpl.name : tpl.nameEn}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                                <div className="absolute bottom-3 left-3 right-3">
-                                    <div className="flex items-center gap-2 text-[10px] text-white/80 font-bold mb-1 uppercase tracking-wider">
-                                        <MapPin size={10} /> {tpl.region}
+                                // Show diverse for short list
+                                return filtered.filter((tpl, index) => index % 2 === 0).slice(0, 5); // Just some subset
+                            })().map(tpl => (
+                                <button
+                                    key={tpl.id}
+                                    onClick={() => onPreviewTemplate(tpl)}
+                                    className={`text-left group snap-center ${showAllTemplates ? 'w-full' : 'flex-shrink-0 w-[280px] md:w-[320px]'}`}
+                                >
+                                    <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm border border-gray-100/50 group-hover:shadow-[0_12px_40px_rgba(46,125,50,0.15)] transition-all group-hover:-translate-y-1">
+                                        <img
+                                            src={tpl.coverImage}
+                                            alt={lang === 'zh' ? tpl.name : tpl.nameEn}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        {/* Gradient Scrim */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
+                                        
+                                        <div className="absolute bottom-6 left-6 right-6 z-10">
+                                            <div className="flex items-center gap-1.5 text-[10px] text-white/90 font-bold mb-1.5 uppercase tracking-widest leading-none drop-shadow-md">
+                                                <MapPin size={12} className="text-tc-tertiary" /> {tpl.region}
+                                            </div>
+                                            <h4 className="text-[22px] font-heading font-black text-white leading-[1.2] line-clamp-2 drop-shadow-lg">
+                                                {lang === 'zh' ? tpl.name : tpl.nameEn}
+                                            </h4>
+                                        </div>
                                     </div>
-                                    <h4 className="text-sm font-bold text-white line-clamp-1">
-                                        {lang === 'zh' ? tpl.name : tpl.nameEn}
-                                    </h4>
-                                </div>
-                            </div>
-                        </button>
-                    ))}
-                </div>
-            </div>
-            </>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </>
             )}
-        </div >
+        </div>
     );
 };
 
