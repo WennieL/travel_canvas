@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-tc-primary: #2e7d32;
+  --color-tc-primary: #0D631B;
   --color-tc-secondary: #ffb74d;
-  --color-tc-tertiary: #f48fb1;
+  --color-tc-accent: #A3F69C;
   --color-tc-neutral: #5c6e61;
-  --color-tc-bg: #F4F7F2;
+  --color-tc-border: #BFCABA;
+  --color-tc-bg: #F7FBF0;
+  --color-tc-text-main: #181D17;
+  --color-tc-text-sec: #44493F;
 }
 
 /* Typography */
@@ -18,7 +21,7 @@
 }
 
 :root {
-  --font-heading: 'Outfit', 'Poppins', system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 }
 
@@ -168,6 +171,7 @@ h6 {
 .text-gradient-teal {
   background: linear-gradient(135deg, #14b8a6, #0d9488);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -241,55 +245,55 @@ h6 {
   .itinerary-card {
     page-break-inside: avoid;
   }
+}
 
-  /* Spot-Centric Social Discovery Transitions */
-  .spot-panel-enter {
+/* Spot-Centric Social Discovery Transitions */
+.spot-panel-enter {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.spot-panel-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms ease-out;
+}
+
+/* Plan Switching Transitions */
+@keyframes canvas-reveal {
+  0% {
+    transform: scale(0.98);
     opacity: 0;
-    transform: translateX(20px);
+    filter: blur(4px);
   }
 
-  .spot-panel-enter-active {
+  100% {
+    transform: scale(1);
     opacity: 1;
-    transform: translateX(0);
-    transition: opacity 300ms, transform 300ms ease-out;
+    filter: blur(0);
+  }
+}
+
+.animate-canvas-reveal {
+  animation: canvas-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
   }
 
-  /* Plan Switching Transitions */
-  @keyframes canvas-reveal {
-    0% {
-      transform: scale(0.98);
-      opacity: 0;
-      filter: blur(4px);
-    }
-
-    100% {
-      transform: scale(1);
-      opacity: 1;
-      filter: blur(0);
-    }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
+}
 
-  .animate-canvas-reveal {
-    animation: canvas-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes slide-in-bottom {
-    from {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  .animate-slide-up {
-    animation: slide-in-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
+.animate-slide-up {
+  animation: slide-in-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
   .grayscale-50 {
     filter: grayscale(0.5);
-  }
-}
+  }

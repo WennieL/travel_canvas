@@ -18,7 +18,7 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         region: 'melbourne',
         authorId: 'c-mel',
         tags: ['酒吧', '特色入口', '巷弄'],
-        coverImage: 'https://images.unsplash.com/photo-1544145945-f904253db0ad?auto=format&fit=crop&q=80&w=800',
+        coverImage: '/images/discovery/laneway-bunker.png',
         marketingTitle: '墨爾本街頭的防空洞',
         marketingTitleEn: 'The Laneway Bunker',
         tier: 'premium',

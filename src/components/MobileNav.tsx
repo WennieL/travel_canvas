@@ -209,31 +209,30 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                 </div>
             )}
 
-            {/* Bottom Tab Bar */}
-            <div className={`lg:hidden fixed bottom-0 left-0 right-0 h-16 ${viewMode === 'discovery' ? 'bg-tc-bg border-none' : 'bg-white border-t border-dashed border-gray-200'} grid grid-cols-4 items-center pb-2 z-[2050] shadow-[0_-4px_10px_rgba(0,0,0,0.03)]`}>
-                {/* Decorative notches for the bottom nav (Mirroring header ticket) */}
-                <div className="absolute -top-1 left-4 w-2 h-2 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
-                <div className="absolute -top-1 right-4 w-2 h-2 bg-gray-50 rounded-full border border-gray-100 shadow-inner" />
-
+            {/* Bottom Tab Bar (Emerald Canopy Spec: 80px height, straight rectangle, no pill) */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-tc-border/20 grid grid-cols-4 items-center pb-2 z-[2050] shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
                 {mobilePrimary.map((tab: NavItem) => {
                     const Icon = tab.icon;
                     const label = getLabel(tab);
                     const isActive = tab.id === 'more' ? showMoreMenu : activeTab === (tab.id === 'projects' ? 'my' : tab.id);
+                    
+                    const activeColor = "text-tc-primary";
+                    const inactiveColor = "text-[#8E9285]";
 
                     if (tab.id === 'more') {
                         return (
                             <button
                                 key={tab.id}
                                 onClick={() => handleTabClick(tab.id)}
-                                className="flex flex-col items-center justify-center w-full transition-all active:scale-90"
+                                className="flex flex-col items-center justify-center w-full transition-all active:scale-95"
                             >
                                 <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black border-2 transition-all ${isActive
-                                    ? 'bg-teal-600 text-white border-teal-200 shadow-md ring-2 ring-teal-50'
-                                    : 'bg-gradient-to-br from-teal-400 to-teal-600 text-white border-white shadow-sm'
+                                    ? 'bg-tc-primary text-white border-tc-primary/20 shadow-sm'
+                                    : 'bg-white text-tc-primary border-tc-primary shadow-sm'
                                     }`}>
                                     W
                                 </div>
-                                <span className={`text-[10px] mt-1 font-bold whitespace-nowrap ${isActive ? 'text-teal-600' : 'text-gray-400'}`}>{label}</span>
+                                <span className={`text-[10px] mt-1.5 font-bold uppercase tracking-wider ${isActive ? activeColor : inactiveColor}`}>{label}</span>
                             </button>
                         );
                     }
@@ -242,11 +241,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                         <button
                             key={tab.id}
                             onClick={() => handleTabClick(tab.id)}
-                            className={`flex flex-col items-center justify-center w-full transition-colors ${isActive ? 'text-teal-600' : 'text-gray-400'
-                                }`}
+                            className={`flex flex-col items-center justify-center w-full transition-all active:scale-95 ${isActive ? activeColor : inactiveColor}`}
                         >
-                            <Icon size={20} fill={tab.id === 'favorites' && isActive ? 'currentColor' : 'none'} />
-                            <span className="text-[10px] mt-1 font-bold whitespace-nowrap">{label}</span>
+                            <Icon size={24} fill={tab.id === 'favorites' && isActive ? 'currentColor' : 'none'} className="transition-transform duration-300" />
+                            <span className="text-[10px] mt-1.5 font-bold uppercase tracking-wider">{label}</span>
                         </button>
                     );
                 })}
