@@ -11,6 +11,7 @@ export { REGIONS, getRegion, getGradient, getRegionEmoji, getRegionName, getRegi
 export {
     REGION_DEFAULT_CHECKLISTS,
     TOKYO_DEMO_PLAN,
+    MELBOURNE_PAST_PLAN,
     CATEGORY_FILTERS,
     REGION_FILTERS,
     COUNTRY_FILTERS,

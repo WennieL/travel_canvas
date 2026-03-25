@@ -210,7 +210,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             )}
 
             {/* Bottom Tab Bar (Emerald Canopy Spec: 80px height, straight rectangle, no pill) */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-tc-border/20 grid grid-cols-4 items-center pb-2 z-[2050] shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-[#E8EDE4] grid grid-cols-4 items-center pb-2 z-[2050] shadow-[0_-1px_10px_rgba(0,0,0,0.02)]">
                 {mobilePrimary.map((tab: NavItem) => {
                     const Icon = tab.icon;
                     const label = getLabel(tab);

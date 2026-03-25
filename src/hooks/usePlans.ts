@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule, TravelItem } from '../types';
-import { TOKYO_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
+import { TOKYO_DEMO_PLAN, MELBOURNE_PAST_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
 import { getRegionCurrency, getRegionExchangeRate } from '../data/regions';
 
 export interface UsePlansReturn {
@@ -36,7 +36,7 @@ export interface UsePlansReturn {
 
 export function usePlans(isInitialized: boolean, t: Record<string, string>, lang: LangType): UsePlansReturn {
     // Plans State - Default to TOKYO_DEMO_PLAN if empty
-    const [plans, setPlans] = useState<Plan[]>([TOKYO_DEMO_PLAN]);
+    const [plans, setPlans] = useState<Plan[]>([TOKYO_DEMO_PLAN, MELBOURNE_PAST_PLAN]);
     const [activePlanId, setActivePlanId] = useState<string>(TOKYO_DEMO_PLAN.id);
     const [currentDay, setCurrentDay] = useState(1);
 
@@ -50,7 +50,13 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
                 const parsedPlans = JSON.parse(savedPlans);
                 if (Array.isArray(parsedPlans) && parsedPlans.length > 0) {
                     // Hydrate plans with latest asset data if missing
-                    const hydratedPlans = hydratePlans(parsedPlans);
+                    let hydratedPlans = hydratePlans(parsedPlans);
+                    
+                    // [NEW] Ensure Melbourne Past Plan exists for demo purposes
+                    if (!hydratedPlans.some(p => p.id === 'melbourne-past')) {
+                        hydratedPlans.push(MELBOURNE_PAST_PLAN);
+                    }
+                    
                     setPlans(hydratedPlans);
                 }
             }

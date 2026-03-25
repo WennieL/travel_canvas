@@ -144,6 +144,32 @@ export const REGION_DEFAULT_CHECKLISTS: Record<Region, Record<string, ChecklistI
     all: { zh: DEFAULT_CHECKLIST.zh, en: DEFAULT_CHECKLIST.en }
 };
 
+// 墨爾本 Past Demo
+export const MELBOURNE_PAST_PLAN: Plan = {
+    id: 'melbourne-past',
+    name: '墨爾本咖啡與巷弄之旅',
+    startDate: '2024-02-14',
+    endDate: '2024-02-20',
+    totalDays: 7,
+    checklist: [
+        { id: 'm1', text: '申請電子簽證 (ETA)', checked: true },
+        { id: 'm2', text: '預訂大洋路一日游', checked: true }
+    ],
+    createdAt: Date.now() - 31536000000, 
+    region: 'melbourne',
+    destination: 'MELBOURNE',
+    origin: 'Taipei',
+    schedule: {
+        'Day 1': {
+            morning: [],
+            afternoon: [],
+            evening: [],
+            night: [],
+            accommodation: []
+        }
+    }
+};
+
 // 東京 Demo 計畫
 export const TOKYO_DEMO_PLAN: Plan = {
     id: 'tokyo-demo',

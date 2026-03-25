@@ -41,6 +41,7 @@ interface AppHeaderProps {
     showToastMessage: (message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number) => void;
     planRegion?: string;
     isShrunk?: boolean;
+    showPlanManager?: boolean;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
@@ -53,9 +54,21 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     viewMode, setViewMode,
     showToastMessage,
     planRegion,
-    isShrunk
+    isShrunk,
+    showPlanManager
 }) => {
     const MAX_NAME_LENGTH = 25;
+
+    // Plan Manager Branding (Emerald Canopy Spec)
+    if (showPlanManager) {
+        return (
+            <div className="sticky top-0 z-[100] w-full bg-[#F7FBF0] h-16 flex items-center justify-center border-b border-[#E8EDE4]">
+                <h1 className="font-heading text-[20px] font-extrabold text-[#0D631B] tracking-[-0.05em]">
+                    Travel Canvas
+                </h1>
+            </div>
+        );
+    }
 
     // Budget status for color indicator
     const budgetSpent = calculateTotalBudget();

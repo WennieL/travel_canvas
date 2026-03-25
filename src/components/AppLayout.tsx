@@ -355,8 +355,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             )}
 
             {/* Main Area */}
-            <div className={`flex-1 flex flex-col min-w-0 ${viewMode === 'discovery' ? 'bg-tc-bg' : 'bg-premium-paper'} relative overflow-x-hidden`}>
-                {viewMode !== 'discovery' && !showFavorites && (
+            <div className={`flex-1 flex flex-col min-w-0 ${viewMode === 'discovery' || showPlanManager ? 'bg-tc-bg' : 'bg-premium-paper'} relative overflow-x-hidden`}>
+                {(viewMode !== 'discovery' || showPlanManager) && !showFavorites && (
                     <AppHeader
                         lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
                         isEditingName={isEditingName} editingName={editingName} setEditingName={setEditingName}
@@ -373,10 +373,11 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         showToastMessage={showToastMessage}
                         planRegion={activePlan.region}
                         isShrunk={isHeaderShrunk}
+                        showPlanManager={showPlanManager}
                     />
                 )}
 
-                {viewMode !== 'discovery' && viewMode !== 'budget' && viewMode !== 'checklist' && !showFavorites && (
+                {viewMode !== 'discovery' && viewMode !== 'budget' && viewMode !== 'checklist' && !showFavorites && !showPlanManager && (
                     <DayTabs
                         activePlan={activePlan} currentDay={currentDay} setCurrentDay={setCurrentDay}
                         handleAddDay={handleAddDay} handleDeleteDay={onDeleteDay}
@@ -403,7 +404,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
 
                 {/* Itinerary Hub View */}
                 {showPlanManager && !showFavorites && (
-                    <div className="flex-1 overflow-y-auto overflow-x-hidden bg-gray-50 pb-20">
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden bg-[#F7FBF0] pb-20">
                         <ItineraryHub
                             plans={plans}
                             activePlanId={activePlan.id}

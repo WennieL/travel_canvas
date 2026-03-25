@@ -1,6 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, MapPin, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { Plan, LangType } from '../types';
+import { getRegionName } from '../data/regions';
 
 interface ItineraryHubProps {
     plans: Plan[];
@@ -21,127 +22,162 @@ const ItineraryHub: React.FC<ItineraryHubProps> = ({
     lang,
     t
 }) => {
+    // 1. Categorize plans: Active (Future/Ongoing) vs Past
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalized for comparison
+
+    const activePlans = plans.filter(p => new Date(p.endDate) >= today).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+    const pastPlans = plans.filter(p => new Date(p.endDate) < today).sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+
+    // Region to Cover Image Map
+    const regionCoverMap: Record<string, string> = {
+        tokyo: '/images/covers/tokyo.png',
+        kyoto: '/images/covers/kyoto.png',
+        osaka: '/images/covers/osaka.png',
+        melbourne: '/images/covers/melbourne.png',
+        taipei: '/images/covers/taipei.png',
+        tainan: '/images/covers/tainan.png',
+        hualien: '/images/covers/hualien.png',
+        taichung: '/images/covers/taichung.png'
+    };
+
+    const getCoverImage = (region?: string) => (region ? regionCoverMap[region] : null) || '/images/covers/fallback.png';
+
     return (
-        <div className="flex-1 bg-gray-50/50 min-h-full p-4 md:p-8 animate-in fade-in duration-300">
-            <div className="max-w-4xl mx-auto">
-                <div className="flex items-center justify-between mb-8">
-                    <div>
-                        <h2 className="text-2xl font-black text-gray-800">{t.myPlans || 'My Trips'}</h2>
-                        <p className="text-sm font-bold text-gray-400 mt-1">
-                            {plans.length} {lang === 'zh' ? '個行程' : 'trips'}
-                        </p>
+        <div className="flex-1 bg-[#F7FBF0] min-h-full p-6 pb-32 animate-in fade-in duration-500">
+            <div className="max-w-7xl mx-auto space-y-12">
+                
+                {/* Section: My Plans */}
+                <section>
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-[28px] font-heading font-bold text-[#181D17] flex items-center gap-2">
+                            {t.myPlans || 'My Plans'}
+                            <span className="text-[22px] font-medium text-[#8E9285] font-sans">({activePlans.length})</span>
+                        </h2>
                     </div>
-                    <button
-                        onClick={onCreatePlan}
-                        className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all shadow-lg hover:shadow-teal-600/20 active:scale-95"
-                    >
-                        <Plus size={18} />
-                        <span className="hidden sm:inline">{t.planCreated || 'Create Trip'}</span>
-                    </button>
-                </div>
 
-                {plans.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm border-dashed">
-                        <div className="w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center mb-4">
-                            <MapPin size={32} className="text-teal-600" />
+                    {activePlans.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-16 bg-white rounded-[32px] border border-[#E8EDE4] shadow-sm">
+                            <MapPin size={32} className="text-tc-primary/40 mb-3" />
+                            <p className="text-[#8E9285] font-bold text-sm">{lang === 'zh' ? '尚未建立行程' : 'No plans yet'}</p>
                         </div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">{lang === 'zh' ? '還沒有任何行程' : 'No trips yet'}</h3>
-                        <p className="text-gray-400 text-sm mb-6 text-center max-w-xs">
-                            {lang === 'zh' ? '點擊下方按鈕開始規劃你的下一趟旅程吧！' : 'Click the button below to start planning your next adventure!'}
-                        </p>
-                        <button
-                            onClick={onCreatePlan}
-                            className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-md active:scale-95"
-                        >
-                            <Plus size={18} />
-                            {t.planCreated || 'Create Trip'}
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                            {activePlans.map(plan => {
+                                const isActive = plan.id === activePlanId;
+                                return (
+                                    <div
+                                        key={plan.id}
+                                        onClick={() => onSelectPlan(plan.id)}
+                                        className={`group relative bg-white rounded-[28px] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.05)] transition-all duration-300 active:scale-[0.98] ${
+                                            isActive ? 'ring-2 ring-tc-primary/20' : ''
+                                        }`}
+                                    >
+                                        {/* Cover Image (21:9 Panoramic) */}
+                                        <div className="aspect-[21/9] relative w-full overflow-hidden">
+                                            <img
+                                                src={getCoverImage(plan.region)}
+                                                alt={plan.name}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                            />
+                                            {isActive && (
+                                                <div className="absolute top-4 left-4 bg-tc-primary text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow-lg z-10">
+                                                    {t.current || 'CURRENT'}
+                                                </div>
+                                            )}
+                                            <button
+                                                onClick={(e) => onDeletePlan(plan.id, e)}
+                                                className="absolute bottom-4 right-4 p-2.5 bg-white/80 hover:bg-white text-tc-primary rounded-full transition-all shadow-sm z-10 sm:opacity-0 sm:group-hover:opacity-100 opacity-100"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </div>
+
+                                        {/* Card Info (Compact) */}
+                                        <div className="p-5">
+                                            <h3 className="text-[20px] font-heading font-bold text-[#181D17] leading-tight mb-1 cursor-pointer truncate">
+                                                {plan.name}
+                                            </h3>
+                                            
+                                            <div className="text-[16px] font-heading font-bold text-tc-primary mb-3 flex items-center gap-1.5">
+                                                {getRegionName(plan.region || '', lang)}
+                                                <span className="text-[#8E9285]/40 font-black text-[12px]">•</span>
+                                                {lang === 'zh' ? '台灣' : 'Taiwan'}
+                                            </div>
+
+                                            <div className="flex items-center gap-1.5 text-[12px] font-medium text-[#8E9285]">
+                                                <Calendar size={13} />
+                                                <span>{plan.startDate} - {plan.endDate}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </section>
+
+                {/* Section: Past Trips */}
+                <section>
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-[28px] font-heading font-bold text-[#181D17]">
+                            {t.pastTrips || 'Past Trips'}
+                            <span className="text-[22px] font-medium text-[#8E9285] ml-2 font-sans">({pastPlans.length})</span>
+                        </h2>
+                        <button className="text-[12px] font-bold text-[#44493F] uppercase tracking-wider flex items-center gap-1 hover:text-tc-primary transition-colors">
+                            {t.seeAll || 'SEE ALL'} <ChevronRight size={14} />
                         </button>
                     </div>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {/* New Trip Card */}
-                        <button
-                            onClick={onCreatePlan}
-                            className="flex flex-col items-center justify-center p-6 h-48 bg-white border-2 border-dashed border-gray-200 rounded-2xl hover:border-teal-400 hover:bg-teal-50/50 transition-all group active:scale-95"
-                        >
-                            <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center mb-3 group-hover:bg-teal-100 group-hover:scale-110 transition-all">
-                                <Plus size={24} className="text-gray-400 group-hover:text-teal-600" />
-                            </div>
-                            <span className="font-bold text-gray-500 group-hover:text-teal-700">{t.planCreated || 'Create Trip'}</span>
-                        </button>
 
-                        {/* Existing Trips */}
-                        {plans.map(plan => {
-                            const isActive = plan.id === activePlanId;
-                            
-                            // Mocking cover image based on region for visual appeal
-                            const defaultBg = "bg-gradient-to-br from-gray-100 to-gray-200";
-                            const regionGradients: Record<string, string> = {
-                                tokyo: "from-blue-400 to-indigo-600",
-                                kyoto: "from-amber-500 to-orange-600",
-                                osaka: "from-rose-400 to-red-500",
-                                melbourne: "from-emerald-400 to-teal-600"
-                            };
-                            const bgClass = plan.region && regionGradients[plan.region as string] ? `bg-gradient-to-br ${regionGradients[plan.region as string]}` : defaultBg;
-
-                            return (
-                                <div
-                                    key={plan.id}
-                                    onClick={() => onSelectPlan(plan.id)}
-                                    className={`relative group bg-white rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
-                                        isActive ? 'ring-2 ring-teal-500 shadow-lg' : 'border border-gray-100 shadow-sm hover:shadow-xl'
-                                    }`}
-                                >
-                                    {isActive && (
-                                        <div className="absolute top-3 left-3 bg-teal-500 text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-md z-10 shadow-sm">
-                                            {t.current || 'Current'}
-                                        </div>
-                                    )}
-                                    
-                                    <button
-                                        onClick={(e) => onDeletePlan(plan.id, e)}
-                                        className="absolute top-3 right-3 p-2 bg-black/20 hover:bg-red-500 text-white rounded-full z-10 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm"
-                                        title={t.removePlan || 'Delete'}
-                                    >
-                                        <Trash2 size={14} />
-                                    </button>
-
-                                    {/* Cover Image Placeholder */}
-                                    <div className={`h-24 w-full ${bgClass} relative object-cover`}>
-                                        <div className="absolute inset-0 bg-black/10" />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                        {pastPlans.slice(0, 6).map(plan => (
+                            <div
+                                key={plan.id}
+                                onClick={() => onSelectPlan(plan.id)}
+                                className="flex items-center gap-4 bg-white p-3 rounded-[24px] shadow-sm border border-[#E8EDE4] active:scale-[0.98] transition-all cursor-pointer group"
+                            >
+                                <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0">
+                                    <img
+                                        src={getCoverImage(plan.region)}
+                                        alt={plan.name}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="text-[16px] font-heading font-bold text-[#181D17] leading-tight truncate">
+                                        {plan.name}
                                     </div>
-
-                                    <div className="p-4">
-                                        <div className="flex items-start justify-between">
-                                            <h3 className="font-black text-gray-800 text-lg leading-tight mb-2 line-clamp-1">{plan.name}</h3>
-                                        </div>
-                                        
-                                        <div className="flex flex-col gap-1.5 mt-2">
-                                            <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500">
-                                                <Calendar size={14} className="text-gray-400" />
-                                                <span>{plan.startDate}</span>
-                                            </div>
-                                            <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500">
-                                                <Clock size={14} className="text-gray-400" />
-                                                <span>{plan.totalDays} {t.daysUnit || 'Days'}</span>
-                                            </div>
-                                            <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 mt-1">
-                                                <MapPin size={14} className="text-gray-400" />
-                                                <span className="uppercase tracking-wider">{plan.region}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Bottom indicator */}
-                                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-100">
-                                        {isActive && <div className="h-full bg-teal-500 w-full" />}
+                                    <h4 className="text-[14px] font-medium text-tc-primary truncate mb-1 mt-0.5">
+                                        {getRegionName(plan.region || '', lang)} • {lang === 'zh' ? '澳洲' : 'Australia'}
+                                    </h4>
+                                    <div className="text-[12px] font-medium text-[#8E9285] flex items-center gap-3">
+                                        <span>{plan.startDate.split('-')[1]} {plan.startDate.split('-')[2]} - {plan.endDate.split('-')[2]}</span>
+                                        <span className="text-gray-200">•</span>
+                                        <span>{plan.totalDays} {t.daysUnit || (lang === 'zh' ? '天' : 'Days')}</span>
                                     </div>
                                 </div>
-                            );
-                        })}
+                                <div className="flex items-center gap-1 mr-1">
+                                    <button 
+                                        onClick={(e) => onDeletePlan(plan.id, e)}
+                                        className="p-2 text-[#8E9285] hover:text-red-500 transition-colors"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                    <ChevronRight className="text-[#8E9285]" size={18} />
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                )}
+                </section>
             </div>
+
+            {/* Floating Action Button (FAB) */}
+            <button
+                onClick={onCreatePlan}
+                className="fixed bottom-24 right-6 w-16 h-16 bg-tc-primary text-white rounded-full shadow-[0_8px_25px_rgba(13,99,27,0.3)] flex items-center justify-center transition-all hover:scale-110 active:scale-90 z-[2060]"
+            >
+                <Plus size={32} />
+            </button>
         </div>
     );
 };
