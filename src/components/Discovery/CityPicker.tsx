@@ -28,6 +28,17 @@ export const CityPicker: React.FC<CityPickerProps> = ({
     const [activeFilter, setActiveFilter] = useState('all');
     const [showAllTopSpots, setShowAllTopSpots] = useState(false);
     const [showAllTemplates, setShowAllTemplates] = useState(false);
+    const [likedSpots, setLikedSpots] = useState<Set<string>>(new Set());
+
+    const toggleLike = (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setLikedSpots(prev => {
+            const next = new Set(prev);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            return next;
+        });
+    };
 
     const filteredCities = REGION_FILTERS.filter(city =>
         city.id !== 'all' && (lang === 'zh' ? city.label : city.labelEn).toLowerCase().includes(searchQuery.toLowerCase())
@@ -131,62 +142,70 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                 <>
                     {/* Canvas Top Picks */}
                     <div className="mt-8 px-5">
-                        <div className="flex items-end justify-between mb-5">
+                        <div className="flex items-center justify-between mb-5 px-1">
                             <div className="flex items-center gap-2">
-                                <Sparkles className="text-tc-tertiary w-6 h-6 fill-tc-tertiary" />
-                                <h2 className="text-[26px] font-heading font-black text-gray-900 leading-none">
-                                    Canvas Top<br />Picks
+                                <Sparkles className="text-amber-400 w-6 h-6 fill-amber-400" />
+                                <h2 className="text-3xl md:text-4xl font-heading font-black text-gray-900 tracking-tight">
+                                    Canvas Top Picks
                                 </h2>
                             </div>
                             <button
                                 onClick={() => setShowAllTopSpots(!showAllTopSpots)}
-                                className="flex items-center gap-1 text-[10px] font-bold text-tc-primary hover:text-green-800 transition-colors uppercase tracking-wider mb-1"
+                                className="flex items-center gap-1 text-[10px] font-black text-[#A0AFA0] hover:text-tc-primary transition-colors uppercase tracking-[0.25em] mb-2"
                             >
-                                EXPLORE MORE <ChevronRight size={12} className={showAllTopSpots ? 'rotate-90' : ''} />
+                                EXPLORE MORE
+                                <ChevronRight size={16} className="mt-0.5 text-tc-primary" />
                             </button>
                         </div>
 
                         <div className={showAllTopSpots
-                            ? "grid grid-cols-2 md:grid-cols-3 gap-4 pb-4 animate-in fade-in"
-                            : "flex gap-4 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory"
+                            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 animate-in fade-in duration-300"
+                            : "flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory"
                         }>
                             {topSpots.map((spot, idx) => (
                                 <button
                                     key={spot.id}
                                     onClick={() => onSelectItem(spot, 'discovery')}
-                                    className={`text-left group flex-col snap-center ${showAllTopSpots ? 'w-full' : 'w-64 flex-shrink-0'}`}
+                                    className={`text-left group flex-col snap-center ${showAllTopSpots ? 'w-full' : 'w-[142px] md:w-[189.33px] flex-shrink-0'}`}
                                 >
-                                    <div className="relative aspect-[3/4] rounded-[32px] overflow-hidden bg-gray-100 shadow-sm group-hover:shadow-xl transition-shadow border border-gray-200/30">
+                                    <div className="relative aspect-[3/4] rounded-[28px] overflow-hidden bg-gray-100 shadow-sm group-hover:shadow-[0_20px_40px_rgba(46,125,50,0.12)] transition-all duration-500 group-hover:-translate-y-1 border border-gray-200/30">
                                         <img
-                                            src={(spot.image?.startsWith('http') ? spot.image : spot.coverImage) || "https://images.unsplash.com/photo-1540959733332-e9ab42be6125?auto=format&fit=crop&q=80&w=400"}
+                                            src={spot.coverImage || (spot.image?.startsWith('http') ? spot.image : "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800")}
                                             alt={spot.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
-                                        <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
-                                        
-                                        {/* Rank Badge */}
-                                        <div className="absolute top-4 left-4 px-3 py-1.5 bg-tc-tertiary rounded-xl text-[10px] font-black text-gray-900 shadow-sm leading-tight text-center tracking-wide">
-                                            TOP <br />0{idx + 1}
+                                        {/* Glassy TOP Badge */}
+                                        <div className="absolute top-5 left-5 z-20">
+                                            <div className="px-2.5 py-1 bg-amber-400 rounded-xl shadow-lg border border-white/20 flex flex-col items-center">
+                                                <span className="text-[8px] font-black leading-tight text-black uppercase tracking-tighter opacity-80">TOP</span>
+                                                <span className="text-lg font-black text-black leading-none -mt-0.5">{String(idx + 1).padStart(2, '0')}</span>
+                                            </div>
                                         </div>
-                                        
-                                        {/* Heart Icon */}
-                                        <div className="absolute top-4 right-4 text-white hover:text-rose-500 drop-shadow-md transition-colors">
-                                            <Heart size={20} className="fill-current opacity-90" />
-                                        </div>
+
+                                        {/* Minimalist Heart Icon */}
+                                        <button
+                                            onClick={(e) => toggleLike(spot.id, e)}
+                                            className="absolute top-5 right-6 z-20 transition-all hover:scale-110 active:scale-95 group/heart"
+                                        >
+                                            <Heart
+                                                size={22}
+                                                className={`transition-colors duration-300 ${likedSpots.has(spot.id) ? 'fill-tc-primary text-tc-primary' : 'fill-white text-white'}`}
+                                            />
+                                        </button>
                                     </div>
 
-                                    <div className="mt-4 px-2">
-                                        <div className="flex items-center gap-3 text-[10px] font-bold text-tc-neutral mb-1.5 tracking-wide">
+                                    <div className="mt-5 px-3">
+                                        <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400 mb-2 tracking-wide">
                                             <div className="flex items-center gap-1">
-                                                <Heart size={12} className="fill-current text-tc-tertiary" />
-                                                <span>{23 + idx}.{(idx * 7) % 9}K</span>
+                                                <Heart size={12} className={`transition-colors ${likedSpots.has(spot.id) ? 'fill-tc-primary text-tc-primary' : 'fill-tc-primary text-tc-primary opacity-60'}`} />
+                                                <span className="text-slate-500">{23 + idx}.{(idx * 7) % 9}K</span>
                                             </div>
                                             <div className="flex items-center gap-1">
-                                                <Star size={12} className="fill-current" />
-                                                <span>4.{9 - idx}</span>
+                                                <Star size={12} className="fill-amber-400 text-amber-400" />
+                                                <span className="text-slate-500">4.{9 - idx}</span>
                                             </div>
                                         </div>
-                                        <h3 className="text-xl font-heading font-black text-gray-900 line-clamp-2 leading-tight group-hover:text-tc-primary transition-colors">
+                                        <h3 className="text-[28px] font-heading font-black text-gray-900 line-clamp-2 leading-[1.0] group-hover:text-tc-primary transition-colors tracking-tighter">
                                             {(lang === 'zh' ? spot.marketingTitle || spot.title : spot.marketingTitleEn || spot.titleEn) || spot.title}
                                         </h3>
                                     </div>
@@ -218,11 +237,10 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                 <button
                                     key={f.id}
                                     onClick={() => setActiveFilter(f.id)}
-                                    className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all border border-transparent ${
-                                        activeFilter === f.id
-                                            ? 'bg-tc-primary text-white shadow-md'
-                                            : 'bg-white text-tc-neutral shadow-sm hover:border-gray-200'
-                                    }`}
+                                    className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all border border-transparent ${activeFilter === f.id
+                                        ? 'bg-tc-primary text-white shadow-md'
+                                        : 'bg-white text-tc-neutral shadow-sm hover:border-gray-200'
+                                        }`}
                                 >
                                     {f.label}
                                 </button>
@@ -253,7 +271,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                     onClick={() => onPreviewTemplate(tpl)}
                                     className={`text-left group snap-center ${showAllTemplates ? 'w-full' : 'flex-shrink-0 w-[280px] md:w-[320px]'}`}
                                 >
-                                    <div className="relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm border border-gray-100/50 group-hover:shadow-[0_12px_40px_rgba(46,125,50,0.15)] transition-all group-hover:-translate-y-1">
+                                    <div className="relative aspect-[4/3] rounded-[28px] overflow-hidden shadow-sm border border-gray-100/50 group-hover:shadow-[0_12px_40px_rgba(46,125,50,0.15)] transition-all group-hover:-translate-y-1">
                                         <img
                                             src={tpl.coverImage}
                                             alt={lang === 'zh' ? tpl.name : tpl.nameEn}
@@ -261,7 +279,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                         />
                                         {/* Gradient Scrim */}
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
-                                        
+
                                         <div className="absolute bottom-6 left-6 right-6 z-10">
                                             <div className="flex items-center gap-1.5 text-[10px] text-white/90 font-bold mb-1.5 uppercase tracking-widest leading-none drop-shadow-md">
                                                 <MapPin size={12} className="text-tc-tertiary" /> {tpl.region}
