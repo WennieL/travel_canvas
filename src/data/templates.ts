@@ -24,6 +24,11 @@ export const TEMPLATES: Template[] = [
         copiedCount: 1540,
         coverImage: '/images/covers/melbourne.png',
         highlights: { days: 3, spots: 12, tips: 8, rating: 4.9, usageCount: 1540 },
+        coverStory: {
+            quote: '墨爾本的靈魂，藏在清晨市場的叫賣聲與小巷的咖啡香裡。',
+            quoteEn: 'Melbourne\'s soul is hidden in the market calls and the aroma of laneway coffee.',
+            description: '這不是觀光客的打卡地圖，而是一系列關於墨爾本日常與驚喜的私密導覽。'
+        },
         travelStyle: ['經典', '深度'],
         targetAudience: {
             personas: ['第一次來墨爾本的小白', '情侶'],
@@ -133,6 +138,11 @@ export const TEMPLATES: Template[] = [
         copiedCount: 890,
         coverImage: '/images/covers/melbourne.png',
         highlights: { days: 2, spots: 6, tips: 5, rating: 4.8, usageCount: 890 },
+        coverStory: {
+            quote: '帶小孩出國不一定是戰爭，選對地方，大人也能擁有優雅的早安咖啡。',
+            quoteEn: 'Traveling with kids doesn\'t have to be a battle. Pick the right spot, and you can still have your morning peace.',
+            description: '專為親子旅遊設計，考量到推車、廁所與寬廣草地的完美平衡路線。'
+        },
         travelStyle: ['親子', '公園'],
         targetAudience: {
             personas: ['帶幼兒的父母', '三代同堂'],
@@ -220,6 +230,11 @@ export const TEMPLATES: Template[] = [
         copiedCount: 420,
         coverImage: '/images/covers/melbourne.png',
         highlights: { days: 1, spots: 5, tips: 6, rating: 4.9, usageCount: 420 },
+        coverStory: {
+            quote: '在墨爾本，咖啡不只是飲品，而是一場關於風味與溫度的朝聖。',
+            quoteEn: 'In Melbourne, coffee is not just a drink; it\'s a pilgrimage of flavor and temperature.',
+            description: '拜訪那些連吧台手下班後都會去朝聖的職人咖啡店。'
+        },
         travelStyle: ['咖啡', '慢活'],
         targetAudience: {
             personas: ['咖啡師', '早午餐愛好者', '文青'],

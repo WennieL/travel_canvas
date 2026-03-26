@@ -39,6 +39,9 @@ export const useUIState = () => {
     const [discoveryCreatorId, setDiscoveryCreatorId] = useState<string | null>(null);
     const [sidebarMode, setSidebarMode] = useState<'list' | 'map'>('list');
     const [selectionSource, setSelectionSource] = useState<'map' | 'sidebar' | 'canvas' | null>(null);
+    const [activeSpotId, setActiveSpotId] = useState<string | null>(null);
+    const [activeTemplateId, setActiveTemplateId] = useState<string | null>(null);
+    const [activeCreatorId, setActiveCreatorId] = useState<string | null>(null);
 
     // Sidebar States
     const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist' | 'projects'>('assets');
@@ -98,5 +101,8 @@ export const useUIState = () => {
         discoveryCreatorId, setDiscoveryCreatorId,
         sidebarMode, setSidebarMode,
         selectionSource, setSelectionSource,
+        activeSpotId, setActiveSpotId,
+        activeTemplateId, setActiveTemplateId,
+        activeCreatorId, setActiveCreatorId,
     };
 };

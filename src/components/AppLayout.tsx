@@ -231,6 +231,12 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         ui.setSelectedItem(item as any);
         ui.setSelectionSource(source);
 
+        // [PHASE B] If a spot is selected, trigger the full-page view
+        if (item && item.id) {
+            ui.setActiveSpotId(item.id);
+            return; // Intercept here to prevent sidebar/drawer behavior if preferred
+        }
+
         // [PHASE 40] Navigation logic refinement
         // 1. If source is sidebar/map, ALWAYS sync.
         // 2. If source is canvas, ONLY sync if we are already in Map Guide mode (to provide info complement).
@@ -452,7 +458,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         ) : viewMode === 'discovery' ? (
                             <div className="h-full">
                                 <DiscoveryView
-                                    onPreviewTemplate={setPreviewTemplate}
+                                    onPreviewTemplate={(tpl) => ui.setActiveTemplateId(tpl.id)}
                                     onStoryPreview={(tpl) => {
                                         setPreviewTemplate(tpl);
                                         ui.setShowStoryPreview(true);
@@ -637,11 +643,11 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 exchangeRate={budgetSettings.exchangeRate}
                 onSetSettings={updateBudgetSettings}
                 onCreatorClick={(id: string) => {
-                    setSelectedCreatorId(id);
-                    ui.setShowStoryPreview(false);
-                    setPreviewTemplate(null);
+                    ui.setActiveCreatorId(id);
                 }}
-                onPreviewTemplate={(tpl: Template) => setPreviewTemplate(tpl)}
+                onPreviewTemplate={(tpl: Template) => {
+                    ui.setActiveTemplateId(tpl.id);
+                }}
             />
 
             {/* Mobile Bottom Tab Navigation */}
@@ -670,7 +676,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
 
             {toast.show && <Toast message={toast.message} type={toast.type as any} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}
             <MobileDiscoveryDrawer
-                isOpen={isMobile && !!ui.selectedItem && ui.selectionSource !== 'canvas'}
+                isOpen={isMobile && !!ui.selectedItem && !ui.activeSpotId && ui.selectionSource !== 'canvas'}
                 onClose={() => handleSelectItem(null, null)}
                 item={ui.selectedItem}
                 subscribedCreators={subscribedCreators}
@@ -680,6 +686,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 showToastMessage={showToastMessage}
                 lang={lang}
                 preferredAuthorId={discoveryCreatorId}
+                onCreatorClick={ui.setActiveCreatorId}
             />
         </div>
     );

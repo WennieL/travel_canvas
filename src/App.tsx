@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 import {
     TRANSLATIONS,
     SAMPLE_ASSETS,
     TEMPLATES,
+    SAMPLE_CREATORS,
     TOKYO_DEMO_PLAN
 } from './data';
 import {
@@ -28,6 +30,10 @@ import {
 
 import LandingPage from './components/LandingPage';
 import WelcomeSlides from './components/WelcomeSlides';
+import { SpotDetailPage } from './components/Discovery/SpotDetailPage';
+import { ImmersivePage } from './components/Common/ImmersivePage';
+import { TemplateDetailsPanel } from './components/Discovery/TemplateDetailsPanel';
+import { CreatorProfilePanel } from './components/Discovery/CreatorProfilePanel';
 import { Toast } from './components/Toast';
 import { usePlans, useBudget, useUIState, useConfirm, useItinerary, useAppActions, useAppHandlers } from './hooks';
 import { useIsMobile } from './hooks/useIsMobile';
@@ -347,6 +353,87 @@ export function App() {
             pendingWizardData={pendingWizardData} setPendingWizardData={setPendingWizardData}
         />
         {welcomeOverlay}
+        
+        {/* Immersive Detail Pages (Phase C: Unified) */}
+        {ui.activeSpotId && (
+            <SpotDetailPage
+                spotId={ui.activeSpotId}
+                lang={lang}
+                onClose={() => {
+                    ui.setActiveSpotId(null);
+                    ui.setSelectedItem(null);
+                }}
+                onAddItem={handleTapToAdd}
+                subscribedCreators={subscribedCreators}
+                onToggleSubscribe={handleToggleSubscribe}
+                onCreatorClick={ui.setActiveCreatorId}
+            />
+        )}
+
+        {ui.activeTemplateId && (
+            <ImmersivePage
+                isOpen={!!ui.activeTemplateId}
+                onClose={() => ui.setActiveTemplateId(null)}
+                title={lang === 'zh' ? '行程預覽' : 'Template Preview'}
+                historyId={`tpl-${ui.activeTemplateId}`}
+                transparentHeader
+                hideTitle
+                {...(() => {
+                    const tpl = TEMPLATES.find(t => t.id === ui.activeTemplateId);
+                    const creator = SAMPLE_CREATORS.find(c => c.id === tpl?.authorId);
+                    return {
+                        creator,
+                        onFollow: handleToggleSubscribe,
+                        isFollowed: creator ? subscribedCreators.includes(creator.id) : false,
+                        lang
+                    };
+                })()}
+            >
+                {(() => {
+                    const tpl = TEMPLATES.find(t => t.id === ui.activeTemplateId);
+                    if (!tpl) return null;
+                    return (
+                        <TemplateDetailsPanel
+                            template={tpl}
+                            lang={lang}
+                            onApply={(selectedTpl) => {
+                                applyTemplate(selectedTpl);
+                                ui.setActiveTemplateId(null);
+                            }}
+                            onCreatorClick={ui.setActiveCreatorId}
+                        />
+                    );
+                })()}
+            </ImmersivePage>
+        )}
+
+        {ui.activeCreatorId && (
+            <ImmersivePage
+                isOpen={!!ui.activeCreatorId}
+                onClose={() => ui.setActiveCreatorId(null)}
+                title={lang === 'zh' ? '達人專頁' : 'Creator Profile'}
+                historyId={`creator-${ui.activeCreatorId}`}
+            >
+                {(() => {
+                    const creator = SAMPLE_CREATORS.find(c => c.id === ui.activeCreatorId);
+                    if (!creator) return null;
+                    return (
+                        <CreatorProfilePanel
+                            creator={creator}
+                            lang={lang}
+                            onFollow={handleToggleSubscribe}
+                            isFollowed={subscribedCreators.includes(creator.id)}
+                            onTemplateClick={(tpl) => {
+                                ui.setActiveTemplateId(tpl.id);
+                            }}
+                            onSpotClick={(spot) => {
+                                ui.setActiveSpotId(spot.id);
+                            }}
+                        />
+                    );
+                })()}
+            </ImmersivePage>
+        )}
     </>);
 }
 

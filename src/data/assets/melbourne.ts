@@ -302,7 +302,65 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 avoid: '位置非常少，適合快速享用或外帶豆子',
                 bestTime: '09:00 - 11:00'
             }
-        }
+        },
+        recommendations: [
+            {
+                id: 'c-mel',
+                author: '墨爾本巷弄老饕',
+                avatar: '☕',
+                pricing: 15,
+                duration: '1小時',
+                insiderTip: {
+                    teaser: '墨爾本真正的精品咖啡實力派',
+                    teaserEn: 'The real deal in Melbourne specialty coffee',
+                    full: {
+                        story: '如果你想喝到墨爾本最新鮮、最純粹的精品豆，來這裡就對了。這裡也是很多知名咖啡廳的豆源。環境非常工業風，極簡到只有長凳，讓人能完全專注在咖啡的果酸與香氣中。',
+                        storyEn: 'If you want the freshest beans in Melb, this is it. It\'s the source for many top cafes. The industrial space is minimal—just benches—allowing complete focus on the coffee\'s profile.',
+                        exactLocation: 'Abbotsford 住宅區的小巷，門口掛著低調的 DSR 招牌',
+                        mustTry: 'Seasonal Pour Over + 他們家自製的杏仁可頌',
+                        avoid: '位置非常少，適合快速享用或外帶豆子',
+                        bestTime: '09:00 - 11:00'
+                    }
+                }
+            },
+            {
+                id: 'c-mel-brunch',
+                author: '早午餐女王',
+                avatar: '🥞',
+                pricing: 18,
+                duration: '45分鐘',
+                insiderTip: {
+                    teaser: '除了咖啡，這裡的杏仁可頌才是靈魂',
+                    teaserEn: 'Beyond coffee, their almond croissants are the soul.',
+                    full: {
+                        story: '這家隱藏在工廠區的烘焙坊，每天早上出爐的酥脆香氣會讓你直接忘記熱量。這是我在墨爾本吃過層次感最分明的可頌。',
+                        storyEn: 'Hidden in a warehouse district, the crispy aroma from their morning bake will make you forget all about calories. Best layered croissant in Melb.',
+                        exactLocation: '工廠後方的黑色鐵門進入',
+                        mustTry: 'Almond Croissant + Batch Brew',
+                        avoid: '如果你下午兩點才來，通常可頌已經賣完了。',
+                        bestTime: '08:30 (第一波出爐時間)'
+                    }
+                }
+            }
+        ],
+        reviews: [
+            {
+                id: 'r1',
+                author: 'Marco Rossi',
+                avatar: 'https://i.pravatar.cc/100?u=marco',
+                rating: 5,
+                text: 'Absolutely breathtaking at sunset. The orange glow matches the tower itself. Pro tip: buy your tickets online!',
+                date: '2024-03-15'
+            },
+            {
+                id: 'r2',
+                author: 'Sara K.',
+                avatar: 'https://i.pravatar.cc/100?u=sara',
+                rating: 4.5,
+                text: 'The coffee is incredibly smooth. The industrial vibe is so Melbourne. A bit crowded but super worth it!',
+                date: '2024-03-10'
+            }
+        ]
     },
     {
         id: 'mel-10',

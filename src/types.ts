@@ -72,6 +72,7 @@ export interface TravelItem {
     author?: string;
     insiderTip?: InsiderTip;
     coverImage?: string;
+    reviews?: Review[];
 }
 
 // [NEW] Recommendation entity - represents a creator's perspective on a landmark
@@ -92,6 +93,7 @@ export interface Recommendation {
     tags?: string[];
     tier?: 'standard' | 'premium';
     isLocked?: boolean;
+    reviews?: Review[];
 }
 
 // [NEW] Enhanced Insider Tip Structure
@@ -141,6 +143,17 @@ export interface ScheduleItem extends TravelItem {
         description: string;
     };
     day?: number; // [NEW] Optional day context for move operations
+}
+
+export interface Review {
+    id: string;
+    author: string;
+    authorEn?: string;
+    avatar: string;
+    rating: number;
+    text: string;
+    textEn?: string;
+    date?: string;
 }
 
 export interface ChecklistItem {
@@ -198,6 +211,8 @@ export interface Creator {
     blogUrl?: string;
     tags: string[];
     tagsEn?: string[];
+    role?: string;     // e.g. "Adventure Archivist"
+    roleEn?: string;
 }
 
 export interface Template {

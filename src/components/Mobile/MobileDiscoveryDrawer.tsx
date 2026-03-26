@@ -15,6 +15,7 @@ interface MobileDiscoveryDrawerProps {
     showToastMessage?: (msg: string, type: 'success' | 'error') => void;
     lang: LangType;
     preferredAuthorId?: string | null;
+    onCreatorClick?: (creatorId: string) => void;
 }
 
 export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
@@ -28,7 +29,8 @@ export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
     onUpdateItem,
     showToastMessage,
     lang,
-    preferredAuthorId
+    preferredAuthorId,
+    onCreatorClick
 }) => {
     if (!isOpen || !item) return null;
 
@@ -45,11 +47,6 @@ export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
                 className={`absolute left-0 right-0 bottom-16 bg-white rounded-t-[2.5rem] shadow-2xl transition-transform duration-500 ease-out h-[calc(85vh-64px)] overflow-hidden flex flex-col pointer-events-auto ${isOpen ? 'translate-y-0' : 'translate-y-full'
                     }`}
             >
-                {/* Pull Handle */}
-                <div className="w-full flex justify-center py-3">
-                    <div className="w-10 h-1 bg-gray-200 rounded-full" />
-                </div>
-
                 <div className="h-full overflow-hidden relative">
                     <SpotDetailsPanel
                         item={item}
@@ -65,6 +62,7 @@ export const MobileDiscoveryDrawer: React.FC<MobileDiscoveryDrawerProps> = ({
                         onClose={onClose}
                         lang={lang}
                         preferredAuthorId={preferredAuthorId}
+                        onCreatorClick={onCreatorClick}
                     />
                 </div>
             </div>

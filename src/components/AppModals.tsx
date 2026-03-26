@@ -308,7 +308,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 isSubscribed={isSubscribed}
                 onToggleSubscribe={toggleSubscription}
                 onPreviewTemplate={(tpl: Template) => {
-                    setPreviewTemplate(tpl);
+                    props.onPreviewTemplate(tpl); // This now maps to ui.setActiveTemplateId in AppLayout
                     setSelectedCreatorId(null);
                 }}
                 lang={lang}
@@ -398,6 +398,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 />
             )}
 
+            {/* Legacy TemplatePreviewModal disabled in favor of ImmersivePage in App.tsx */}
+            {/* 
             {previewTemplate && (
                 <TemplatePreviewModal
                     isOpen={!!previewTemplate}
@@ -407,23 +409,10 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                         applyTemplate(tpl);
                         setPreviewTemplate(null);
                     }}
-                    onUnlock={(tpl) => {
-                        const schedule = tpl.schedule as any;
-                        const firstDayKey = Object.keys(schedule)[0];
-                        const firstDay = schedule[firstDayKey];
-                        const firstItem = firstDay?.morning?.[0] || null;
-
-                        setUnlockTarget(firstItem);
-                        setBatchUnlockCount(1);
-                    }}
-                    onViewCreator={(authorId) => {
-                        setPreviewTemplate(null);
-                        setSelectedCreatorId(authorId);
-                    }}
-                    t={t}
-                    lang={lang}
+                    ...
                 />
             )}
+            */}
 
             {unlockTarget && (
                 <UnlockModal

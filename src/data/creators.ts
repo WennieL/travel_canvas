@@ -96,7 +96,9 @@ export const SAMPLE_CREATORS: Creator[] = [
         followers: 12400,
         tags: ['墨爾本', '咖啡', '隱藏酒吧'],
         tagsEn: ['Melbourne', 'Coffee', 'Speakeasy'],
-        blogUrl: 'https://melbourne-laneway.com'
+        blogUrl: 'https://melbourne-laneway.com',
+        role: '巷弄探險家',
+        roleEn: 'Laneway Explorer'
     },
     {
         id: 'c-mel-brunch',
@@ -108,7 +110,9 @@ export const SAMPLE_CREATORS: Creator[] = [
         followers: 18500,
         tags: ['早午餐', '美食', '市集'],
         tagsEn: ['Brunch', 'Fine Dining', 'Market'],
-        blogUrl: 'https://melbourne-brunch.com'
+        blogUrl: 'https://melbourne-brunch.com',
+        role: '早午餐研究員',
+        roleEn: 'Brunch Specialist'
     },
     {
         id: 'c-mel-photo',
@@ -120,7 +124,9 @@ export const SAMPLE_CREATORS: Creator[] = [
         followers: 24000,
         tags: ['攝影', '打卡', '大洋路'],
         tagsEn: ['Photography', 'Spots', 'Roadtrip'],
-        blogUrl: 'https://melb-photo-hunter.com'
+        blogUrl: 'https://melb-photo-hunter.com',
+        role: '風景捕捉專家',
+        roleEn: 'PHOTO HUNTER'
     },
     {
         id: 'c-mel-family',
@@ -132,7 +138,9 @@ export const SAMPLE_CREATORS: Creator[] = [
         followers: 32000,
         tags: ['親子', '自駕', '生態'],
         tagsEn: ['Family', 'Roadtrip', 'Nature'],
-        blogUrl: 'https://melb-family-pro.com'
+        blogUrl: 'https://melb-family-pro.com',
+        role: '親子旅遊達人',
+        roleEn: 'FAMILY TRIP PRO'
     },
     {
         id: 'c-osaka',
