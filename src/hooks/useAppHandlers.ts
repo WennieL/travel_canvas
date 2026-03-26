@@ -147,6 +147,12 @@ export const useAppHandlers = (deps: AppHandlersDeps) => {
         setShowPlanManager(view === 'projects');
         ui.setShowStartPicker(false);
 
+        // [Phase O] Auto-close immersive panels when navigating via tabs
+        ui.setActiveSpotId(null);
+        ui.setActiveTemplateId(null);
+        ui.setActiveCreatorId(null);
+        ui.setSelectedItem(null);
+
         if (view !== 'discovery') {
             setIsCreatingNewPlan(false);
             setPendingWizardData(null);

@@ -656,12 +656,22 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 setViewMode={handleNavigate}
                 showPlanManager={showPlanManager}
                 setShowPlanManager={(show) => {
-                    if (show) setShowFavorites(false);
+                    if (show) {
+                        setShowFavorites(false);
+                        ui.setActiveSpotId(null);
+                        ui.setActiveTemplateId(null);
+                        ui.setActiveCreatorId(null);
+                    }
                     setShowPlanManager(show);
                 }}
                 showFavorites={showFavorites}
                 setShowFavorites={(show) => {
-                    if (show) setShowPlanManager(false);
+                    if (show) {
+                        setShowPlanManager(false);
+                        ui.setActiveSpotId(null);
+                        ui.setActiveTemplateId(null);
+                        ui.setActiveCreatorId(null);
+                    }
                     setShowFavorites(show);
                 }}
                 hasActivePlan={!!activePlan}

@@ -88,7 +88,10 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                         <div className="flex items-center gap-4 flex-1">
                             <button 
                                 onClick={() => {
-                                    window.history.back(); // Trigger popstate which calls onClose
+                                    onClose(); // Immediate close for UI responsiveness
+                                    if (window.history.state?.immersiveTarget === historyId) {
+                                        window.history.back(); // Sync history if we pushed it
+                                    }
                                 }}
                                 className={`w-10 h-10 -ml-2 rounded-full flex items-center justify-center transition-all ${
                                     (transparentHeader && !isScrolled) 
