@@ -818,7 +818,7 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '45min',
         image: '🐟',
-        description: '在地人私藏的傳統炸魚薯條店，以驚人的份量和新鮮度聞名。',
+        description: '在地人私藏的傳統炸魚薯條店，以驚人的份量 and 新鮮度聞名。',
         descriptionEn: 'An old-school local favorite known for its massive portions and freshness.',
         price: 15,
         address: '38 Haines St, North Melbourne VIC 3051',
@@ -868,5 +868,90 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 bestTime: '11:30 (剛開門時，避免人潮)'
             }
         }
+    },
+    {
+        id: 'mel-26',
+        title: '聯邦廣場',
+        titleEn: 'Federation Square',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🏛️',
+        description: '墨爾本的公共活動中心，充滿現代感的幾何建築，是城市的地標。',
+        descriptionEn: 'Melbourne\'s cultural and public hub, famous for its avant-garde geometric architecture.',
+        price: 0,
+        address: 'Swanston St & Flinders St, Melbourne VIC 3000',
+        rating: 4.4,
+        lat: -37.8179,
+        lng: 144.9688,
+        region: 'melbourne',
+        authorId: 'c-mel',
+        tags: ['地標', '建築', '文化'],
+        coverImage: 'https://images.unsplash.com/photo-1545044846-351ba102b6d5?auto=format&fit=crop&q=80&w=800',
+        insiderTip: {
+            teaser: '別只在廣場拍合照，地下室的 ACMI 才是影視迷的宇宙',
+            teaserEn: 'Don\'t just take a selfie on the bricks. Head down to ACMI for a film lover\'s dream.',
+            full: {
+                story: '觀光客通常只在廣場上拍完異形建築就走。但真正厲害的是藏在廣場下方的 ACMI (澳洲移動影像中心)，這裡有免費的常設展，展示了從電影膠卷到電玩的演進史，冷氣強、內容精采，是躲避墨爾本熱浪的絕佳去處。',
+                storyEn: 'Most tourists snap a photo of the abstract buildings and leave. But the real treasure is ACMI beneath the square. It hosts a free permanent exhibition of film, TV, and gaming history. It\'s the perfect air-conditioned escape from the Melbourne heat.',
+                bestTime: '11:00 (ACMI 開門時間)'
+            }
+        }
+    },
+    {
+        id: 'mel-27',
+        title: '皇家植物園',
+        titleEn: 'Royal Botanic Gardens',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🌳',
+        description: '墨爾本市中心最大的綠地，擁有豐富的植物種類與寧靜的湖泊。',
+        descriptionEn: 'A sprawling sanctuary in the city heart, featuring diverse flora and tranquil lakes.',
+        price: 0,
+        address: 'Melbourne VIC 3004',
+        rating: 4.8,
+        lat: -37.8304,
+        lng: 144.9796,
+        region: 'melbourne',
+        authorId: 'c-mel',
+        tags: ['自然', '散步', '免費'],
+        coverImage: 'https://images.unsplash.com/photo-1514565131-fce0801e5577?auto=format&fit=crop&q=80&w=1000',
+        insiderTip: {
+            teaser: '湖畔的「Ornamental Lake」是野餐的最佳機位',
+            teaserEn: 'Ornamental Lake is the gold standard for picnic views.',
+            full: {
+                story: '植物園很大，如果你時間有限，直接導航到 Ornamental Lake。那邊的垂柳倒影搭配遠處的城市天際線，是墨爾本最經典的明信片視角。',
+                storyEn: 'The gardens are vast. If short on time, head straight to Ornamental Lake. The weeping willows reflected in the water against the city skyline is the ultimate Melbourne photo op.',
+                bestTime: '15:00 (光線最柔和)'
+            }
+        }
+    },
+    {
+        id: 'mel-28',
+        title: '聖基爾達海灘',
+        titleEn: 'St Kilda Beach',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🏖️',
+        description: '墨爾本最著名的海濱區，以防波堤邊的小企鵝與夕陽美景聞名。',
+        descriptionEn: 'Melbourne\'s most famous seaside suburb, known for sunset views and fairy penguins at the pier.',
+        price: 0,
+        address: 'St Kilda, VIC 3182',
+        rating: 4.6,
+        lat: -37.8670,
+        lng: 144.9730,
+        region: 'melbourne',
+        authorId: 'c-mel',
+        tags: ['海灘', '夕陽', '野生動物'],
+        coverImage: 'https://images.unsplash.com/photo-1516685018646-5483c84386bd?auto=format&fit=crop&q=80&w=1000',
+        insiderTip: {
+            teaser: '防波堤盡頭藏著野生小企鵝歸巢',
+            teaserEn: 'Wild penguins return to the breakwater at dusk.',
+            full: {
+                story: '比起昂貴的小企鵝島行程，聖基爾達防波堤是免費的驚喜。每天日落後，野生神仙小企鵝會躲在岩石縫隙裡，你可以近距離觀察牠們（但絕對不能用閃光燈！）。',
+                storyEn: 'Forget the expensive Phillip Island tours; St Kilda Breakwater is free. After sunset, little penguins hide in the rocks. You can see them up close, but NO FLASH photography!',
+                bestTime: '日落時分'
+            }
+        }
     }
 ];
+

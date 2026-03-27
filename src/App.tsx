@@ -231,6 +231,49 @@ export function App() {
         handleNavigate, handleSelectPlan, generateExportText,
     } = handlers;
 
+    const handleAddItemToPlan = (item: TravelItem, planId: string) => {
+        if (planId === activePlanId) {
+            handleTapToAdd(item);
+        } else {
+            const planToUpdate = plans.find(p => p.id === planId);
+            if (!planToUpdate) return;
+            
+            const newPlans = [...plans];
+            const planIndex = newPlans.findIndex(p => p.id === planId);
+            const schedule = { ...planToUpdate.schedule };
+            const firstDay = Object.keys(schedule)[0] || 'Day 1';
+            
+            if (!schedule[firstDay]) {
+                schedule[firstDay] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+            }
+            
+            const targetSlot = item.type === 'hotel' ? 'accommodation' : 'morning';
+            schedule[firstDay] = { 
+                ...schedule[firstDay],
+                [targetSlot]: [
+                    ...(schedule[firstDay][targetSlot] || []),
+                    {
+                        ...item,
+                        instanceId: Math.random().toString(36).substr(2, 9),
+                        startTime: '',
+                        arrivalTransport: 'car'
+                    }
+                ]
+            };
+            
+            newPlans[planIndex] = { ...planToUpdate, schedule };
+            setPlans(newPlans);
+            
+            const itemName = (lang === 'en' && item.titleEn) ? item.titleEn : item.title;
+            showToastMessage(
+                lang === 'zh' 
+                    ? `✅ 「${itemName}」已加入計畫：${planToUpdate.name}` 
+                    : `✅ "${itemName}" added to plan: ${planToUpdate.name}`, 
+                'success'
+            );
+        }
+    };
+
     // Simplified Actions via Hook
     const actions = useAppActions({
         plans, setPlans, activePlan, updateActivePlan, activePlanId, setActivePlanId,
@@ -386,7 +429,10 @@ export function App() {
                                 ui.setActiveTemplateId(null);
                             }}
                             onCreatorClick={ui.setActiveCreatorId}
-                            onSpotClick={(spot) => ui.setActiveSpotId(spot.id)}
+                            onSpotClick={(spot) => {
+                                ui.setActiveSpotId(spot.id);
+                                ui.setSelectedItem(spot);
+                            }}
                         />
                     );
                 })()}
@@ -406,6 +452,13 @@ export function App() {
                 subscribedCreators={subscribedCreators}
                 onToggleSubscribe={handleToggleSubscribe}
                 onCreatorClick={ui.setActiveCreatorId}
+                fallbackItem={ui.selectedItem as TravelItem}
+                plans={plans}
+                onAddItemToPlan={handleAddItemToPlan}
+                onCreateNewPlan={() => {
+                    ui.setShowCheckIn(true);
+                    setIsCreatingNewPlan(true);
+                }}
             />
         )}
 

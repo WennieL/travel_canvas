@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Template, LangType, Creator } from '../../types';
+import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User } from 'lucide-react';
+import { Template, LangType } from '../../types';
 import { SAMPLE_CREATORS } from '../../data';
-import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, Heart, MessageCircle, Layers, Share2 } from 'lucide-react';
+import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
 
 interface TemplateDetailsPanelProps {
     template: Template;
@@ -54,8 +55,9 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
         likes: lang === 'zh' ? '收藏' : 'likes',
     };
 
+
     return (
-        <div className="flex flex-col bg-[#F7FBF0] pb-32 font-sans">
+        <div className="flex flex-col bg-[#F7FBF0] pb-20 font-sans">
             {/* 1. Hero Section (REFINED PROPORTIONS) */}
             <div className="relative w-full h-[36vh] md:aspect-video shrink-0 bg-gray-100 overflow-hidden">
                 <img
@@ -243,100 +245,14 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                             </div>
                         </div>
 
-                        {/* 3f. Social Engagement Area (SPLIT DESIGN: HIGH-CONTRAST + LIGHT) */}
-                        <div className="pt-4 pb-8">
-                            {/* BLOCK 1: Creator Spotlight (Soft Dark Glass) */}
-                            <div className="-mx-6 px-6 py-10 bg-[#3D443B]/90 backdrop-blur-2xl relative overflow-hidden group mb-8">
-                                {/* Subtle decorative gradient */}
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-bg-primary/20 rounded-full -mr-16 -mt-16 blur-3xl opacity-30 group-hover:opacity-50 transition-opacity" />
-
-                                {/* Creator Content */}
-                                <div className="relative z-10 space-y-4 mb-8">
-                                    {/* Top Row: Identity */}
-                                    <div className="flex items-center gap-4">
-                                        <div className="relative">
-                                            <img
-                                                src={creator?.avatar || `https://i.pravatar.cc/100?u=${template.authorId}`}
-                                                className="w-14 h-14 rounded-[20px] object-cover border-2 border-white/20 shadow-md"
-                                                alt="creator"
-                                            />
-                                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-amber-400 rounded-full border-4 border-[#181D17] flex items-center justify-center">
-                                                <Check size={10} className="text-black font-black" />
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <h4 className="text-[18px] font-black text-white leading-tight">
-                                                {lang === 'zh' ? (creator?.name || template.author) : (creator?.nameEn || creator?.name || template.authorEn || template.author)}
-                                            </h4>
-                                            <div className="text-[12px] font-bold text-white/40 uppercase tracking-widest mt-0.5">
-                                                By {creator?.nameEn || creator?.name || template.author}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Bottom: Bio */}
-                                    <p className="text-[15px] leading-[1.6] text-white/80 font-medium px-0.5">
-                                        {lang === 'zh' ? creator?.description : (creator?.descriptionEn || creator?.description)}
-                                    </p>
-                                </div>
-
-                                <button
-                                    onClick={() => onApply(template)}
-                                    className="w-full bg-[#00A699] hover:bg-[#008F83] text-white h-12 rounded-2xl font-black text-[16px] flex items-center justify-center gap-3 shadow-lg shadow-[#00A699]/20 active:scale-[0.98] transition-all relative z-10"
-                                >
-                                    <Sparkles size={18} />
-                                    {t.sharePost}
-                                </button>
-                            </div>
-
-                            {/* Divider (Grey Line) */}
-                            <div className="-mx-6 border-t border-[#E8EDE4] mb-4" />
-
-                            {/* BLOCK 2: Social Proof (Light Plane) */}
-                            <div className="space-y-8 px-2 relative z-10">
-                                {/* Statistics Bar */}
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex -space-x-2">
-                                            {[1, 2, 3, 4].map(i => (
-                                                <img
-                                                    key={i}
-                                                    src={`https://i.pravatar.cc/100?u=${i + 10}`}
-                                                    className="w-7 h-7 rounded-full border-2 border-[#F7FBF0] object-cover shadow-sm"
-                                                    alt="user"
-                                                />
-                                            ))}
-                                            <div className="w-7 h-7 rounded-full bg-[#E8EDE4] border-2 border-[#F7FBF0] flex items-center justify-center text-[8px] font-black text-[#8E9285]">
-                                                +9
-                                            </div>
-                                        </div>
-                                        <div className="text-[13px] font-bold text-[#181D17]/60">
-                                            15 {t.likes} <span className="mx-1.5 opacity-30">•</span> 128 {t.applied}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Interaction Pill Bar - FROSTED GLASS REFINEMENT */}
-                                <div className="flex items-center justify-center pt-2">
-                                    <div className="bg-white/40 backdrop-blur-3xl h-14 px-8 rounded-full flex items-center gap-10 shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-white/80 active:scale-95 transition-transform">
-                                        <button className="text-[#181D17]/30 hover:text-red-500 transition-all">
-                                            <Heart size={20} />
-                                        </button>
-                                        <button className="text-[#181D17]/30 hover:text-[#181D17] transition-all">
-                                            <MessageCircle size={20} />
-                                        </button>
-                                        <button className="text-[#00A699] hover:text-teal-600 transition-all flex items-center gap-2">
-                                            <Layers size={20} />
-                                            <span className="text-[14px] font-black">128</span>
-                                        </button>
-                                        <button className="text-[#181D17]/30 hover:text-[#181D17] transition-all">
-                                            <Share2 size={20} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <EngagementSocialBlock
+                            author={creator || null}
+                            primaryActionLabel={t.applyTemplate}
+                            onPrimaryAction={() => onApply(template)}
+                            onCreatorClick={onCreatorClick}
+                            lang={lang}
+                            variant="template"
+                        />
                     </div>
                 ) : (
                     /* 4. Day View */
@@ -411,7 +327,9 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                             <ChevronRight size={12} className="shrink-0 opacity-30 group-hover:opacity-70 group-hover:translate-x-0.5 transition-all text-[#8E9285]" />
                                                         </h5>
                                                         {(item.description || item.descriptionEn) && (
-                                                            <p className="text-[11.5px] text-[#4A5548] mt-0.5 line-clamp-2 leading-[1.4] opacity-60">{lang === 'zh' ? item.description : (item.descriptionEn || item.description)}</p>
+                                                            <p className="text-[11.5px] text-[#4A5548] mt-2 line-clamp-2 leading-[1.6] opacity-60">
+                                                                {lang === 'zh' ? item.description : (item.descriptionEn || item.description)}
+                                                            </p>
                                                         )}
                                                     </div>
                                                 </div>
@@ -420,12 +338,17 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                     </div>
 
                                     <div className="mt-8 mb-8">
-                                        <button onClick={() => onApply(template)} className="w-full bg-white hover:bg-[#F1F3EE] text-bg-primary h-16 rounded-[24px] font-black text-[16px] flex items-center justify-center gap-3 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-[#E8EDE4] active:scale-[0.98] transition-all">
-                                            <Sparkles size={20} />
-                                            {t.applyTemplate}
-                                        </button>
                                         <p className="text-center text-[10px] text-[#8E9285] font-black uppercase tracking-widest mt-6 opacity-40">End of Day {dayNum}</p>
                                     </div>
+
+                                    <EngagementSocialBlock
+                                        author={creator || null}
+                                        primaryActionLabel={t.applyTemplate}
+                                        onPrimaryAction={() => onApply(template)}
+                                        onCreatorClick={onCreatorClick}
+                                        lang={lang}
+                                        variant="template"
+                                    />
                                 </div>
                             );
                         })()}

@@ -15,6 +15,10 @@ interface ImmersivePageProps {
     onFollow?: (id: string) => void;
     isFollowed?: boolean;
     lang?: LangType;
+    rightAction?: React.ReactNode;
+    showTitleOnScroll?: boolean;
+    isScrolled?: boolean;
+    onScroll?: (scrollTop: number) => void;
 }
 
 export const ImmersivePage: React.FC<ImmersivePageProps> = ({
@@ -28,7 +32,11 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
     creator,
     onFollow,
     isFollowed,
-    lang = 'zh'
+    lang = 'zh',
+    rightAction,
+    showTitleOnScroll = false,
+    isScrolled: externalIsScrolled,
+    onScroll
 }) => {
     // Keep onClose in a ref so the popstate handler always calls the latest version
     // without being included in the effect deps (which would cause pushState to fire on every render)
@@ -37,8 +45,11 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
         onCloseRef.current = onClose;
     });
 
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [internalIsScrolled, setInternalIsScrolled] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    // Use external isScrolled if provided
+    const isScrolled = externalIsScrolled !== undefined ? externalIsScrolled : internalIsScrolled;
 
     // Handle Native Back Gesture & History
     useEffect(() => {
@@ -61,10 +72,12 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
     // Scroll Listener for Morphing Header
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const scrollTop = e.currentTarget.scrollTop;
-        if (scrollTop > 220 && !isScrolled) {
-            setIsScrolled(true);
-        } else if (scrollTop <= 220 && isScrolled) {
-            setIsScrolled(false);
+        if (onScroll) onScroll(scrollTop);
+
+        if (scrollTop > 100 && !internalIsScrolled) {
+            setInternalIsScrolled(true);
+        } else if (scrollTop <= 100 && internalIsScrolled) {
+            setInternalIsScrolled(false);
         }
     };
 
@@ -80,14 +93,14 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                         duration: 0.5, 
                         ease: [0.32, 0.72, 0, 1] 
                     }}
-                    className="fixed inset-0 z-[3000] bg-[#F7FBF0] flex flex-col shadow-[0_-8px_30px_rgb(0,0,0,0.12)] pb-20 lg:pb-0"
+                    className="fixed inset-0 z-[3000] bg-[#F7FBF0] flex flex-col shadow-[0_-8px_30px_rgb(0,0,0,0.12)] pb-20 lg:pb-0 font-sans"
                 >
                     {/* Standardized Sticky Header (NEW: Supports Morphing Mode) */}
                     <header 
                         className={`h-[68px] lg:h-[72px] transition-all duration-300 flex items-center justify-between px-6 shrink-0 z-[1100] ${
                             transparentHeader 
                                 ? isScrolled 
-                                    ? 'bg-white border-b border-[#E8EDE4] shadow-sm text-[#181D17]' 
+                                    ? 'bg-white/95 backdrop-blur-md border-b border-[#E8EDE4] shadow-sm text-[#181D17]' 
                                     : 'absolute top-0 inset-x-0 bg-transparent border-none pt-10 text-white' 
                                 : 'bg-white border-b border-[#E8EDE4] text-[#181D17]'
                         }`}
@@ -95,10 +108,6 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                         <div className="flex items-center gap-4 flex-1">
                             <button 
                                 onClick={() => {
-                                    // Only update React state. Do NOT call history.back() here —
-                                    // that would fire popstate while ALL nested ImmersivePage listeners
-                                    // are still registered, causing the wrong panel to close.
-                                    // The native back button is handled separately by the popstate listener below.
                                     onClose();
                                 }}
                                 className={`w-10 h-10 -ml-2 rounded-full flex items-center justify-center transition-all ${
@@ -146,6 +155,22 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                                     </motion.div>
                                 )}
                             </AnimatePresence>
+
+                            {/* Scrolled Title (Alternative to Creator) */}
+                            <AnimatePresence>
+                                {isScrolled && !creator && showTitleOnScroll && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 5 }}
+                                        className="flex-1 px-4 text-center pointer-events-none"
+                                    >
+                                        <span className="font-heading font-black text-[#181D17] text-[13.5px] uppercase tracking-[0.16em] block truncate">
+                                            {title}
+                                        </span>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                         
                         {!hideTitle && !isScrolled && (
@@ -154,7 +179,9 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                             </h2>
                         )}
 
-                        <div className="w-10" /> {/* Spacer for balance */}
+                        <div className="flex items-center justify-end w-10">
+                            {rightAction || <div className="w-10" />}
+                        </div>
                     </header>
 
                     <div 

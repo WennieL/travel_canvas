@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { TravelItem, ScheduleItem, Creator, LangType } from '../../types';
+import { TravelItem, ScheduleItem, LangType } from '../../types';
 import { SAMPLE_CREATORS } from '../../data';
-import { ChevronLeft, Share2, Heart, Plus, MapPin, Star, Check, Clock, DollarSign, Utensils, Navigation, Info } from 'lucide-react';
+import { Share2, Heart, Plus, MapPin, Star, Check, Clock, DollarSign, Utensils, Navigation, Info, ChevronLeft } from 'lucide-react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
+import { PlanSelectorDrawer } from '../Common/PlanSelectorDrawer';
 
 // Fix leaflet icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -28,6 +30,13 @@ interface SpotDetailsPanelProps {
     sidebarMode?: 'list' | 'map';
     hideHeader?: boolean;
     onCreatorClick?: (creatorId: string) => void;
+    plans?: any[];
+    onAddItemToPlan?: (item: TravelItem, planId: string) => void;
+    onCreateNewPlan?: () => void;
+    isExternalPlanSelectorOpen?: boolean;
+    onOpenPlanSelector?: () => void;
+    disableInternalScroll?: boolean;
+    isScrolled?: boolean;
 }
 
 export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
@@ -42,10 +51,54 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     preferredAuthorId,
     sidebarMode,
     hideHeader = false,
-    onCreatorClick
+    onCreatorClick,
+    plans = [],
+    onAddItemToPlan,
+    onCreateNewPlan,
+    isExternalPlanSelectorOpen,
+    onOpenPlanSelector,
+    disableInternalScroll = false,
+    isScrolled: externalIsScrolled
 }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+     const [isPlanSelectorOpen, setIsPlanSelectorOpen] = useState(false);
+    const [isAddedToPlan, setIsAddedToPlan] = useState(false);
+    const [internalIsScrolled, setInternalIsScrolled] = useState(false);
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    // Use external isScrolled if provided, otherwise use internal
+    const isScrolled = externalIsScrolled !== undefined ? externalIsScrolled : internalIsScrolled;
+
+    // Sync with external state if provided
+    useEffect(() => {
+        if (isExternalPlanSelectorOpen !== undefined) {
+            setIsPlanSelectorOpen(isExternalPlanSelectorOpen);
+        }
+    }, [isExternalPlanSelectorOpen]);
+
+    const handleOpenPlanSelector = () => {
+        if (onOpenPlanSelector) {
+            onOpenPlanSelector();
+        } else {
+            setIsPlanSelectorOpen(true);
+        }
+    };
+
+    useEffect(() => {
+        if (disableInternalScroll) return;
+        const handleScroll = () => {
+            if (scrollRef.current) {
+                // Trigger header appearance after 100px scroll for better responsiveness
+                setInternalIsScrolled(scrollRef.current.scrollTop > 100);
+            }
+        };
+        const el = scrollRef.current;
+        if (el) {
+            el.addEventListener('scroll', handleScroll, { passive: true });
+            return () => el.removeEventListener('scroll', handleScroll);
+        }
+    }, [item, disableInternalScroll]);
 
     useEffect(() => {
         const recs = (item as TravelItem).recommendations || [];
@@ -64,15 +117,6 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
         }
     }, [item, subscribedCreators, preferredAuthorId]);
 
-    const handleSwitchAuthor = (idx: number) => {
-        if (idx === activeIndex) return;
-        setIsAnimating(true);
-        setTimeout(() => {
-            setActiveIndex(idx);
-            setIsAnimating(false);
-        }, 300);
-    };
-
     const recommendations = (item as TravelItem).recommendations || [];
     const activeRec = recommendations.length > 0 ? recommendations[activeIndex] : (item as any);
     const authorId = activeRec.id || activeRec.authorId;
@@ -90,7 +134,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
         bestTime: lang === 'zh' ? '建議時段' : 'BEST TIME',
         avoid: lang === 'zh' ? '避雷指南' : 'AVOID',
         moreExperts: lang === 'zh' ? '達人看點' : "What Travelers Say",
-        addToPlan: lang === 'zh' ? '加到我的行程' : 'ADD TO MY ITINERARY',
+        addToPlan: lang === 'zh' ? '加入行程' : 'ADD TO PLAN',
         googleMaps: lang === 'zh' ? '地圖預覽' : 'GOOGLE MAPS',
     };
 
@@ -101,34 +145,29 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     const position: [number, number] = item.lat && item.lng ? [item.lat, item.lng] : [-37.8136, 144.9631];
 
     return (
-        <div className="flex flex-col h-full bg-[#F7FBF0] relative overflow-hidden font-sans">
-            {/* 1. Transparent Floating Header - Minimalist (Just Close) */}
-            {!hideHeader && (
-                <div className="absolute top-0 left-0 right-0 z-[100] px-6 py-10 flex items-center justify-between pointer-events-none">
-                    <button
-                        onClick={onClose}
-                        className="w-10 h-10 rounded-full bg-black/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-all pointer-events-auto"
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-                    {/* Secondary actions moved to bottom utility bar */}
-                </div>
-            )}
-
-            <div className="flex-1 overflow-y-auto no-scrollbar pb-40">
-                {/* 2. Hero Section - Flush with Top */}
-                <div className="relative w-full aspect-[4/5] md:aspect-video">
-                    {/* Pull Handle Overlay for Mobile - only show in drawer mode */}
-                    {!hideHeader && (
-                        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 bg-white/30 rounded-full z-[110]" />
+        <div className={`flex flex-col h-full bg-[#F7FBF0] relative font-sans ${disableInternalScroll ? '' : 'overflow-hidden'}`}>
+            <div 
+                ref={scrollRef}
+                className={`flex-1 no-scrollbar ${disableInternalScroll ? '' : 'overflow-y-auto'}`}
+            >
+                {/* 1. Hero Section */}
+                <div className="relative w-full h-[36vh] md:h-[40vh] overflow-hidden">
+                    {/* Glassmorphism float back button (Visible ONLY when NOT scrolled and NOT hidden) */}
+                    {!hideHeader && !isScrolled && (
+                        <button 
+                            onClick={onClose}
+                            className="absolute top-6 left-6 w-10 h-10 bg-black/30 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white z-50 hover:bg-black/40 transition-all"
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
                     )}
-                    
+
                     <img
                         src={activeRec.coverImage || item.image || item.coverImage}
                         className="w-full h-full object-cover"
                         alt={displayName}
                     />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#000000cc] via-transparent to-transparent flex flex-col justify-end p-8 pb-14">
+                    <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 pb-14">
                         <div className="flex items-center gap-2 mb-4">
                             <span className="px-2.5 py-0.5 bg-tc-primary text-white text-[10px] font-bold rounded-full uppercase">
                                 {item.type || 'COFFEE'}
@@ -138,7 +177,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                 <span>{item.rating || 4.9}</span>
                             </div>
                         </div>
-                        <h1 className="text-[32px] font-heading font-black text-white leading-[1.1] tracking-tight max-w-[90%] mb-2">
+                        <h1 className="text-[28px] md:text-[32px] font-heading font-black text-white leading-tight tracking-[0.05em] max-w-[95%] mb-2.5 drop-shadow-md">
                             {displayName}
                         </h1>
                         <p className="text-white/60 text-xs font-semibold tracking-wide">
@@ -147,30 +186,30 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     </div>
                 </div>
 
-                {/* 3. Expert Voice Card - Redesigned to be Center-aligned */}
-                <div className="px-6 -mt-10 relative z-10">
-                    <div className="bg-white px-8 py-10 rounded-[40px] shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#E8EDE4] flex flex-col items-center text-center">
-                        <div className="relative mb-6">
-                            <button 
+                {/* 2. Expert Voice Card */}
+                <div className="px-6 -mt-8 relative z-10">
+                    <div className="bg-white px-6 py-7 rounded-[32px] shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#E8EDE4] flex flex-col items-center text-center">
+                        <div className="relative mb-2">
+                            <button
                                 onClick={() => author && onCreatorClick?.(author.id)}
                                 className="group active:scale-95 transition-transform"
                             >
                                 <img
                                     src={author?.avatar || `https://i.pravatar.cc/100?u=${authorId}`}
-                                    className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg group-hover:border-tc-primary transition-colors"
+                                    className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg group-hover:border-tc-primary transition-colors"
                                     alt={author?.name}
                                 />
                             </button>
                             <button
                                 onClick={() => author && onToggleSubscribe(author.id)}
-                                className={`absolute -right-1 bottom-1 w-7 h-7 rounded-full flex items-center justify-center text-white border-4 border-white transition-all ${isSubscribed ? 'bg-tc-primary scale-110' : 'bg-[#0D631B]'}`}
+                                className={`absolute -right-0.5 bottom-0.5 w-6 h-6 rounded-full flex items-center justify-center text-white border-[3px] border-white transition-all ${isSubscribed ? 'bg-tc-primary scale-110' : 'bg-[#0D631B]'}`}
                             >
-                                {isSubscribed ? <Check size={14} /> : <Plus size={14} />}
+                                {isSubscribed ? <Check size={12} /> : <Plus size={12} />}
                             </button>
                         </div>
-                        
-                        <div className="mb-6 flex flex-col items-center">
-                            <button 
+
+                        <div className="mb-4 flex flex-col items-center">
+                            <button
                                 onClick={() => author && onCreatorClick?.(author.id)}
                                 className="hover:text-tc-primary transition-colors"
                             >
@@ -189,7 +228,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     </div>
                 </div>
 
-                {/* 4. Data Cards Grid - Icons on the Left */}
+                {/* 3. Data Cards Grid */}
                 <div className="grid grid-cols-2 gap-3 px-6 mt-10">
                     {[
                         { label: t.cost, value: `$${activeRec.pricing || item.price || 0}`, icon: <DollarSign size={20} /> },
@@ -209,7 +248,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     ))}
                 </div>
 
-                {/* 5. Insider Tips Section */}
+                {/* 4. Insider Tips Section */}
                 <div className="px-6 mt-12">
                     <h3 className="text-[20px] font-heading font-black text-[#181D17] mb-6 flex items-center gap-2">
                         {t.insiderTips}
@@ -234,7 +273,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     </div>
                 </div>
 
-                {/* 6. Map Preview */}
+                {/* 5. Map Preview */}
                 <div className="px-6 mt-12">
                     <div className="h-56 w-full rounded-[28px] overflow-hidden border border-[#E8EDE4] relative shadow-inner">
                         <MapContainer
@@ -248,7 +287,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                             <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
                             <Marker position={position} />
                         </MapContainer>
-                        <button 
+                        <button
                             onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${position[0]},${position[1]}`, '_blank')}
                             className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#0D631B] text-white px-8 py-3 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] shadow-xl flex items-center gap-2.5 z-[500] active:scale-95 transition-all"
                         >
@@ -256,31 +295,44 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                         </button>
                     </div>
                 </div>
-            </div>
 
-            {/* 8. Bottom Action Bar */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-2xl border-t border-[#E8EDE4] p-6 pb-12 z-[200] flex items-center gap-8">
-                <div className="flex items-center gap-8 text-[#181D17]">
-                    <button className="flex flex-col items-center gap-1.5 hover:text-tc-primary transition-colors group">
-                        <div className="w-10 h-10 rounded-full bg-[#F1F3EE] flex items-center justify-center group-active:scale-90 transition-transform">
-                            <Share2 size={24} strokeWidth={1.5} />
-                        </div>
-                    </button>
-                    <button className="flex flex-col items-center gap-1.5 hover:text-red-500 transition-colors group">
-                        <div className="w-10 h-10 rounded-full bg-[#F1F3EE] flex items-center justify-center group-active:scale-90 transition-transform">
-                            <Heart size={24} strokeWidth={1.5} />
-                        </div>
-                    </button>
+                {/* 6. Engagement Social Block (The Grand Finale) */}
+                <div className="pb-32 mt-12">
+                    <EngagementSocialBlock
+                        author={author || null}
+                        primaryActionLabel={t.addToPlan}
+                        onPrimaryAction={handleOpenPlanSelector}
+                        isApplied={isAddedToPlan}
+                        onCreatorClick={onCreatorClick}
+                        lang={lang}
+                        variant="spot"
+                        likes={92400}
+                        applied={128}
+                    />
                 </div>
-
-                <button
-                    onClick={() => onAddItem(item as TravelItem)}
-                    className="flex-1 h-[60px] bg-[#0D631B] text-white rounded-[12px] text-[16px] font-extra-bold flex items-center justify-center gap-3 shadow-lg shadow-[#0D631B]/20 active:scale-[0.98] transition-all"
-                >
-                    <Plus size={22} strokeWidth={2.5} />
-                    {t.addToPlan}
-                </button>
             </div>
+
+            {/* Plan Selector Drawer - Only show if NO external control is active */}
+            {onOpenPlanSelector === undefined && (
+                <PlanSelectorDrawer
+                    isOpen={isPlanSelectorOpen}
+                    onClose={() => setIsPlanSelectorOpen(false)}
+                    plans={plans}
+                    onSelectPlan={(planId) => {
+                        onAddItemToPlan?.(item as TravelItem, planId);
+                        setIsPlanSelectorOpen(false);
+                        setIsAddedToPlan(true);
+                        
+                        // Reset "Added" state after 3 seconds
+                        setTimeout(() => setIsAddedToPlan(false), 3000);
+                    }}
+                    onCreatePlan={() => {
+                        setIsPlanSelectorOpen(false);
+                        onCreateNewPlan?.();
+                    }}
+                    lang={lang}
+                />
+            )}
         </div>
     );
 };

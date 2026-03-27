@@ -699,5 +699,61 @@ export const TOKYO_ASSETS: TravelItem[] = [
                 bestTimeEn: '13:00 - 15:00'
             }
         }
+    },
+    {
+        id: 'a-secret-3',
+        title: '表參道下午茶散步',
+        titleEn: 'Omotesando Cafe Hopping',
+        type: 'food',
+        duration: '1.5小時',
+        image: '☕',
+        description: '東京最具氣質的時尚大道，隱藏在巷弄中的建築美學咖啡廳。',
+        descriptionEn: 'Tokyo\'s most stylish boulevard, featuring architecturally stunning cafes hidden in back alleys.',
+        price: 2500,
+        address: '東京都澀谷區神宮前',
+        rating: 4.8,
+        lat: 35.6672,
+        lng: 139.7065,
+        region: 'tokyo',
+        authorId: 'c-tw1',
+        tags: ['下午茶', '建築', '網美'],
+        coverImage: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=800',
+        insiderTip: {
+            teaser: '別只在那條大道逛，鑽進「裏參道」才有質感',
+            teaserEn: 'Skip the main road. The "Ura-Sando" alleys are where the real charm lies.',
+            full: {
+                story: '表參道的主幹道是給觀光客看的。但在地人會鑽進後方的「裏參道」。特別推薦「櫻花亭」或是「表參道之丘」後方的老建築改造咖啡廳，那裡的氛圍更安靜且充滿設計感。',
+                storyEn: 'The main Omotesando strip is for tourists. Locals head to "Ura-Sando" (back alleys). Check out the warehouse conversions behind Omotesando Hills for a quieter, more artistic vibe.',
+                bestTime: '14:00 (平日)'
+            }
+        }
+    },
+    {
+        id: 'a-secret-4',
+        title: '新宿黃金街',
+        titleEn: 'Shinjuku Golden Gai',
+        type: 'food',
+        duration: '2小時',
+        image: '🥃',
+        description: '東京僅存的昭和風情酒吧街，數百間迷你的特色小酒吧緊密相連。',
+        descriptionEn: 'A nostalgic Shinjuku enclave with hundreds of tiny, themed bars packed into narrow alleys.',
+        price: 3000,
+        address: '東京都新宿區歌舞伎町1-1-6',
+        rating: 4.7,
+        lat: 35.6946,
+        lng: 139.7051,
+        region: 'tokyo',
+        authorId: 'c-tw1',
+        tags: ['酒吧', '夜生活', '攝影'],
+        coverImage: 'https://images.unsplash.com/photo-1570191913384-6b9903960057?auto=format&fit=crop&q=80&w=1000',
+        insiderTip: {
+            teaser: '找門口寫著「No Cover Charge」的店省下入場費',
+            teaserEn: 'Look for bars labeled "No Cover Charge" to save a few thousand yen.',
+            full: {
+                story: '黃金街很多店會收取 500-1000 円的座位費 (Cover Charge)。如果你只是想體驗氣氛，找門口標記 No Cover 的店。另外，這裡的店非常小，通常只能容納 5-8 人。',
+                storyEn: 'Many Golden Gai bars charge a "seat fee" of 500-1000 yen. If you\'re on a budget, look for signs saying "No Cover Charge." Most bars here only seat 5-8 people, so be prepared for a tight fit!',
+                bestTime: '21:00 (氣氛最熱絡)'
+            }
+        }
     }
 ];

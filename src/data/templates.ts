@@ -76,7 +76,7 @@ export const TEMPLATES: Template[] = [
                 ],
                 afternoon: [
                     { ...MELBOURNE_ASSETS[2], instanceId: 'mel-cl-3', startTime: '13:30', arrivalTransport: 'walk' },
-                    { id: 'fed-square', instanceId: 'mel-cl-fed', title: '聯邦廣場 Federal Square', titleEn: 'Federation Square', type: 'attraction', startTime: '15:30', duration: '1hr', image: '🏢', lat: -37.8174, lng: 144.9685, arrivalTransport: 'walk', region: 'melbourne' }
+                    { ...MELBOURNE_ASSETS.find(a => a.id === 'mel-26')!, instanceId: 'mel-cl-fed', startTime: '15:30', arrivalTransport: 'walk' }
                 ],
                 evening: [
                     { ...MELBOURNE_ASSETS[4], instanceId: 'mel-cl-4', startTime: '19:00', arrivalTransport: 'public' }
@@ -106,10 +106,10 @@ export const TEMPLATES: Template[] = [
                 themeEn: 'Forest Walk & Coastal Penguins',
                 themeEmoji: '🐧',
                 morning: [
-                    { id: 'rbg', instanceId: 'mel-cl-rbg', title: '皇家植物園 Royal Botanic Gardens', titleEn: 'Royal Botanic Gardens', type: 'attraction', startTime: '10:00', duration: '2hr', image: '🌳', lat: -37.8303, lng: 144.9796, arrivalTransport: 'public', region: 'melbourne' }
+                    { ...MELBOURNE_ASSETS.find(a => a.id === 'mel-27')!, instanceId: 'mel-cl-rbg', startTime: '10:00', arrivalTransport: 'public' }
                 ],
                 afternoon: [
-                    { id: 'st-kilda', instanceId: 'mel-cl-stk', title: '聖基爾達海灘 St Kilda Beach', titleEn: 'St Kilda Beach', type: 'attraction', startTime: '15:00', duration: '2hr', image: '🏖️', lat: -37.8637, lng: 144.9734, arrivalTransport: 'public', region: 'melbourne' }
+                    { ...MELBOURNE_ASSETS.find(a => a.id === 'mel-28')!, instanceId: 'mel-cl-stk', startTime: '15:00', arrivalTransport: 'public' }
                 ],
                 evening: [
                     { ...MELBOURNE_ASSETS[20], instanceId: 'mel-cl-9', startTime: '19:30', arrivalTransport: 'walk' }
@@ -496,31 +496,7 @@ export const TEMPLATES: Template[] = [
                         }
                     },
                     { ...TOKYO_ASSETS[14], instanceId: 't2-2', startTime: '13:00', arrivalTransport: 'public' },
-                    {
-                        id: 'custom-cafe',
-                        title: '表參道下午茶散步',
-                        titleEn: 'Omotesando Cafe Hopping',
-                        type: 'attraction',
-                        duration: '2小時',
-                        image: '☕',
-                        description: '消化一下燒肉，在表參道逛逛設計師小店',
-                        price: 0,
-                        region: 'tokyo',
-                        instanceId: 't2-3',
-                        startTime: '14:30',
-                        arrivalTransport: 'walk',
-                        insiderTip: {
-                            teaser: '表參道後巷的隱藏選物店串連',
-                            teaserEn: 'Omotesando back alley boutique loop',
-                            full: {
-                                story: '不要只走表參道的大馬道。穿進「RALPH LAUREN」旁邊的小巷，那裡藏著超多獨立咖啡廳、古著店跟設計師工作室。推薦去「RATIO &C」或是「SHOZO COFFEE STORE」，氣氛超好。',
-                                exactLocation: '表參道與青山通之間的後巷',
-                                mustTry: '在巷弄間找一家有露天座位的咖啡廳',
-                                avoid: '週末下午人潮爆多，建議平日造訪',
-                                bestTime: '15:00'
-                            }
-                        }
-                    }
+                    { ...TOKYO_ASSETS.find(a => a.id === 'a-secret-3')!, instanceId: 't2-3', startTime: '14:30', arrivalTransport: 'walk' }
                 ],
                 evening: [
                     {
@@ -531,31 +507,7 @@ export const TEMPLATES: Template[] = [
                     }
                 ],
                 night: [
-                    {
-                        id: 'golden-gai',
-                        title: '新宿黃金街',
-                        titleEn: 'Shinjuku Golden Gai',
-                        type: 'attraction',
-                        duration: '2小時',
-                        image: '🥃',
-                        description: '200多家小酒吧擠在一起，展現最狂野的東京。',
-                        price: 3000,
-                        region: 'tokyo',
-                        instanceId: 't2-5',
-                        startTime: '21:00',
-                        arrivalTransport: 'public',
-                        insiderTip: {
-                            teaser: '新手的黃金街生存與點餐指南',
-                            teaserEn: 'Survival & ordering guide for newborns',
-                            full: {
-                                story: '黃金街由 6 條小巷組成。找門口有標示「No Cover Charge」的店可以省下 ¥500-¥1,000 的入場費。推薦去「Death Match in Hell」或是「Albatross」，對外國人非常友善。',
-                                exactLocation: '新宿歌舞伎町一丁目，花園神社旁',
-                                mustTry: '隨便點一杯 Highball，感受昭和風情',
-                                avoid: '不要在大街上大聲喧嘩，也不要拿著大相機到處拍，會被白眼',
-                                bestTime: '21:00 後各國酒客聚集最熱鬧'
-                            }
-                        }
-                    }
+                    { ...TOKYO_ASSETS.find(a => a.id === 'a-secret-4')!, instanceId: 't2-5', startTime: '21:00', arrivalTransport: 'public' }
                 ],
                 accommodation: []
             }
