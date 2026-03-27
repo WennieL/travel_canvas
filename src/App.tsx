@@ -355,21 +355,6 @@ export function App() {
         {welcomeOverlay}
         
         {/* Immersive Detail Pages (Phase C: Unified) */}
-        {ui.activeSpotId && (
-            <SpotDetailPage
-                spotId={ui.activeSpotId}
-                lang={lang}
-                onClose={() => {
-                    ui.setActiveSpotId(null);
-                    ui.setSelectedItem(null);
-                }}
-                onAddItem={handleTapToAdd}
-                subscribedCreators={subscribedCreators}
-                onToggleSubscribe={handleToggleSubscribe}
-                onCreatorClick={ui.setActiveCreatorId}
-            />
-        )}
-
         {ui.activeTemplateId && (
             <ImmersivePage
                 isOpen={!!ui.activeTemplateId}
@@ -401,10 +386,27 @@ export function App() {
                                 ui.setActiveTemplateId(null);
                             }}
                             onCreatorClick={ui.setActiveCreatorId}
+                            onSpotClick={(spot) => ui.setActiveSpotId(spot.id)}
                         />
                     );
                 })()}
             </ImmersivePage>
+        )}
+
+        {/* SpotDetailPage renders AFTER template panel to ensure z-order stacking */}
+        {ui.activeSpotId && (
+            <SpotDetailPage
+                spotId={ui.activeSpotId}
+                lang={lang}
+                onClose={() => {
+                    ui.setActiveSpotId(null);
+                    ui.setSelectedItem(null);
+                }}
+                onAddItem={handleTapToAdd}
+                subscribedCreators={subscribedCreators}
+                onToggleSubscribe={handleToggleSubscribe}
+                onCreatorClick={ui.setActiveCreatorId}
+            />
         )}
 
         {ui.activeCreatorId && (

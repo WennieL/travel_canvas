@@ -88,12 +88,12 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                 onDragStart={(e) => onDragStart(e, item, 'canvas', slot, index)}
                 onClick={() => onItemClick(item)}
                 id={`item-${item.instanceId}`}
-                className={`group relative border rounded-lg shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 overflow-hidden touch-none select-none
-                        ${isCompact ? 'p-3 gap-3 items-center' : 'p-4 items-center gap-2.5 md:gap-3'}
+                className={`group relative border rounded-[22px] shadow-sm hover:shadow-md cursor-grab active:cursor-grabbing w-full min-w-0 flex items-center transition-all hover:-translate-y-0.5 overflow-hidden touch-none select-none
+                        ${isCompact ? 'p-3 gap-3 items-center' : 'p-3.5 items-center gap-3.5 md:gap-4'}
                         ${hasConflict ? 'border-red-300 ring-1 ring-red-100' :
-                        (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-amber-50 border-amber-200' :
-                            item.isLocked ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:border-amber-300' :
-                                'bg-white border-gray-100 hover:border-teal-300'}
+                        (item.region && planRegion && item.region !== 'all' && planRegion !== 'all' && item.region !== planRegion) ? 'bg-[#FCFDFB] border-amber-200' :
+                            item.isLocked ? 'bg-gradient-to-r from-[#F7FBF0] to-[#F1F3EE] border-[#E8EDE4] hover:border-amber-300' :
+                                'bg-white border-[#E8EDE4] hover:border-tc-primary/40'}
                         ${openMenuId === item.instanceId ? 'z-50' : ''}
                     `}
             >

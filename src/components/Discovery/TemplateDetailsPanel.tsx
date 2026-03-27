@@ -8,13 +8,15 @@ interface TemplateDetailsPanelProps {
     lang: LangType;
     onApply: (tpl: Template) => void;
     onCreatorClick?: (creatorId: string) => void;
+    onSpotClick?: (spot: any) => void;
 }
 
 export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     template,
     lang,
     onApply,
-    onCreatorClick
+    onCreatorClick,
+    onSpotClick
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const creator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
@@ -339,40 +341,85 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                 ) : (
                     /* 4. Day View */
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {(() => {
+                         {(() => {
                             const dayNum = parseInt(activeTab.split('-')[1]);
                             const dayKey = `Day ${dayNum}`;
                             const dayData = (template.schedule as any)?.[dayKey];
                             if (!dayData) return <div className="text-center py-20 text-[#8E9285]">No data for this day.</div>;
 
                             return (
-                                <div className="relative pl-8 border-l-2 border-[#E8EDE4]">
-                                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border-4 border-bg-primary" />
-                                    <div className="mb-10">
-                                        <span className="text-[12px] font-black text-bg-primary uppercase tracking-[0.2em]">{lang === 'zh' ? `第 ${dayNum} 天` : `DAY ${dayNum}`}</span>
-                                        <h2 className="text-[28px] font-black text-[#181D17] leading-tight mt-1">{lang === 'zh' ? dayData.theme : (dayData.themeEn || dayData.theme)} {dayData.themeEmoji}</h2>
+                                <div className="relative">
+                                    {/* Centered Day Title */}
+                                    <div className="mb-8 text-center">
+                                        <h2 className="text-[22px] font-black text-[#181D17] leading-snug">{lang === 'zh' ? dayData.theme : (dayData.themeEn || dayData.theme)} {dayData.themeEmoji}</h2>
                                     </div>
-                                    <div className="space-y-12">
-                                        {[...(dayData.morning || []), ...(dayData.afternoon || []), ...(dayData.evening || [])].map((item, idx) => (
-                                            <div key={idx} className="relative group">
-                                                <div className="flex items-start gap-5">
-                                                    <div className="w-14 text-[13px] font-black text-[#8E9285] mt-1">{item.startTime || '09:00'}</div>
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center gap-3 mb-2">
+
+                                    {/* Timeline + Items */}
+                                    <div className="space-y-0">
+                                        {[...(dayData.morning || []), ...(dayData.afternoon || []), ...(dayData.evening || [])].map((item, idx, arr) => (
+                                            <div key={idx} className="relative group flex items-start gap-3 pb-8">
+                                                {/* LEFT COLUMN: Timeline (dot + line + time badge) */}
+                                                <div className="flex flex-col items-center shrink-0 w-16 pt-1">
+                                                    {/* Vertical line segment ABOVE dot */}
+                                                    {idx > 0 && (
+                                                        <div className="w-0.5 h-4 bg-[#E8EDE4] -mb-0.5" />
+                                                    )}
+                                                    {idx === 0 && <div className="h-4" />}
+
+                                                    {/* Time badge (replaces floating dot) */}
+                                                    <div className="relative z-10 px-2 py-0.5 bg-white border border-[#E8EDE4] rounded-full text-[11px] font-black text-[#6B7C6E] shadow-sm group-hover:border-bg-primary group-hover:text-bg-primary transition-all whitespace-nowrap">
+                                                        {item.startTime || '09:00'}
+                                                    </div>
+
+                                                    {/* Vertical line segment BELOW dot */}
+                                                    {idx < arr.length - 1 && (
+                                                        <div className="w-0.5 flex-1 min-h-[24px] bg-[#E8EDE4] -mt-0.5" />
+                                                    )}
+                                                </div>
+
+                                                {/* RIGHT COLUMN: Clickable Card */}
+                                                <div
+                                                    onClick={() => onSpotClick?.({ ...item, id: item.id || `spot-${idx}`, images: item.images || [`https://images.unsplash.com/photo-${1500000000000 + (item.title?.length || 0) * 1234567}?auto=format&fit=crop&w=800&q=80`] })}
+                                                    className="flex-1 flex items-center gap-3 bg-white border border-[#E8EDE4] rounded-2xl p-3 shadow-[0_1px_6px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_14px_rgba(0,0,0,0.08)] hover:border-[#C8D5C0] active:border-[#4A7C59] active:shadow-[0_2px_8px_rgba(0,0,0,0.12)] active:scale-[0.99] cursor-pointer transition-all duration-200"
+                                                >
+                                                    {/* Visual Thumbnail */}
+                                                    <div className="w-[68px] h-[68px] rounded-xl bg-[#F7FBF0] overflow-hidden shrink-0">
+                                                        <img
+                                                            src={item.coverImage || (item.image?.startsWith('http') ? item.image : `https://images.unsplash.com/photo-${[
+                                                                '1527633051730-adb4729c1b85',
+                                                                '1470252649358-96f3c802bca8',
+                                                                '1467269204594-9661b134dd2b',
+                                                                '1514362545857-3bc16c4c7d1b',
+                                                                '1533107862482-0e6974b068c7'
+                                                            ][idx % 5]}?auto=format&fit=crop&w=300&q=80`)}
+                                                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                                            alt={item.title}
+                                                            onError={(e) => {
+                                                                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=300&q=80';
+                                                            }}
+                                                        />
+                                                    </div>
+
+                                                    {/* Text Content */}
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className="flex items-center gap-2 mb-0.5">
                                                             <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest">{item.type}</span>
-                                                            {item.rating && <div className="flex items-center gap-1 text-[10px] font-bold text-amber-500"><Star size={10} fill="currentColor" /><span>{item.rating}</span></div>}
+                                                            {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
                                                         </div>
-                                                        <h5 className="text-[18px] font-black text-[#181D17] group-hover:text-bg-primary transition-colors cursor-pointer flex items-center gap-2">
-                                                            {lang === 'zh' ? item.title : (item.titleEn || item.title)}
-                                                            <ChevronRight size={16} />
+                                                        <h5 className="text-[15px] font-black text-[#181D17] leading-snug flex items-center gap-1">
+                                                            <span className="line-clamp-1">{lang === 'zh' ? item.title : (item.titleEn || item.title)}</span>
+                                                            <ChevronRight size={12} className="shrink-0 opacity-30 group-hover:opacity-70 group-hover:translate-x-0.5 transition-all text-[#8E9285]" />
                                                         </h5>
-                                                        <p className="text-[14px] text-[#4A5548] mt-2 line-clamp-2 leading-relaxed opacity-80">{lang === 'zh' ? item.description : (item.descriptionEn || item.description)}</p>
+                                                        {(item.description || item.descriptionEn) && (
+                                                            <p className="text-[11.5px] text-[#4A5548] mt-0.5 line-clamp-2 leading-[1.4] opacity-60">{lang === 'zh' ? item.description : (item.descriptionEn || item.description)}</p>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="mt-16 mb-8 pr-8">
+
+                                    <div className="mt-8 mb-8">
                                         <button onClick={() => onApply(template)} className="w-full bg-white hover:bg-[#F1F3EE] text-bg-primary h-16 rounded-[24px] font-black text-[16px] flex items-center justify-center gap-3 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-[#E8EDE4] active:scale-[0.98] transition-all">
                                             <Sparkles size={20} />
                                             {t.applyTemplate}

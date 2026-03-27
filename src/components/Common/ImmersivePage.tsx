@@ -30,6 +30,13 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
     isFollowed,
     lang = 'zh'
 }) => {
+    // Keep onClose in a ref so the popstate handler always calls the latest version
+    // without being included in the effect deps (which would cause pushState to fire on every render)
+    const onCloseRef = useRef(onClose);
+    useEffect(() => {
+        onCloseRef.current = onClose;
+    });
+
     const [isScrolled, setIsScrolled] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -37,19 +44,19 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
     useEffect(() => {
         if (!isOpen) return;
 
-        // Push state to history so back button works
+        // Push state to history so back button works — only fires when truly opening/changing
         window.history.pushState({ immersiveTarget: historyId }, '', `#${historyId}`);
         
         const handlePopstate = (event: PopStateEvent) => {
-            // If we're going back and there's no state for this immersive target, close
+            // If going back past this entry, close this panel
             if (!event.state || event.state.immersiveTarget !== historyId) {
-                onClose();
+                onCloseRef.current();
             }
         };
 
         window.addEventListener('popstate', handlePopstate);
         return () => window.removeEventListener('popstate', handlePopstate);
-    }, [isOpen, historyId, onClose]);
+    }, [isOpen, historyId]); // ← onClose intentionally excluded; using ref pattern instead
 
     // Scroll Listener for Morphing Header
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -88,10 +95,11 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                         <div className="flex items-center gap-4 flex-1">
                             <button 
                                 onClick={() => {
-                                    onClose(); // Immediate close for UI responsiveness
-                                    if (window.history.state?.immersiveTarget === historyId) {
-                                        window.history.back(); // Sync history if we pushed it
-                                    }
+                                    // Only update React state. Do NOT call history.back() here —
+                                    // that would fire popstate while ALL nested ImmersivePage listeners
+                                    // are still registered, causing the wrong panel to close.
+                                    // The native back button is handled separately by the popstate listener below.
+                                    onClose();
                                 }}
                                 className={`w-10 h-10 -ml-2 rounded-full flex items-center justify-center transition-all ${
                                     (transparentHeader && !isScrolled) 
