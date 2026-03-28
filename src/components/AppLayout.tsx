@@ -656,6 +656,15 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             <MobileNav
                 viewMode={viewMode}
                 setViewMode={(mode) => {
+                    // Clear search search result and details when switching major tabs
+                    // Optimization: Clear selection and details even if clicking the SAME tab to allow "close by tab" behavior
+                    ui.setActiveSpotId(null);
+                    ui.setActiveTemplateId(null);
+                    ui.setActiveCreatorId(null);
+                    ui.setSelectedItem(null);
+                    ui.setSelectionSource(null);
+                    ui.setSearchQuery('');
+
                     // Reset DiscoveryView state every time user taps the Discover tab
                     if (mode === 'discovery') {
                         setDiscoveryResetKey(k => k + 1);
@@ -672,6 +681,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         ui.setActiveSpotId(null);
                         ui.setActiveTemplateId(null);
                         ui.setActiveCreatorId(null);
+                        ui.setSelectedItem(null);
+                        ui.setSelectionSource(null);
                     }
                     setShowPlanManager(show);
                 }}
@@ -682,6 +693,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         ui.setActiveSpotId(null);
                         ui.setActiveTemplateId(null);
                         ui.setActiveCreatorId(null);
+                        ui.setSelectedItem(null);
+                        ui.setSelectionSource(null);
                     }
                     setShowFavorites(show);
                 }}

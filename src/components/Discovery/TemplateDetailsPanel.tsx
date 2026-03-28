@@ -57,7 +57,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
 
     return (
-        <div className="flex flex-col bg-[#F7FBF0] pb-20 font-sans">
+        <div className="flex flex-col bg-[#F7FBF0] pb-20 font-sans overflow-x-hidden">
             {/* 1. Hero Section (REFINED PROPORTIONS) */}
             <div className="relative w-full h-[36vh] md:aspect-video shrink-0 bg-gray-100 overflow-hidden">
                 <img
