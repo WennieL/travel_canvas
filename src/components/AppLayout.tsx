@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft } from 'lucide-react';
 
 import {
@@ -214,6 +214,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     } = props;
 
     const [isHeaderShrunk, setIsHeaderShrunk] = React.useState(false);
+    const [discoveryResetKey, setDiscoveryResetKey] = useState(0);
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const scrollTop = e.currentTarget.scrollTop;
@@ -458,6 +459,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         ) : viewMode === 'discovery' ? (
                             <div className="h-full">
                                 <DiscoveryView
+                                    key={discoveryResetKey}
                                     onPreviewTemplate={(tpl) => ui.setActiveTemplateId(tpl.id)}
                                     onStoryPreview={(tpl) => {
                                         setPreviewTemplate(tpl);
@@ -653,7 +655,16 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             {/* Mobile Bottom Tab Navigation */}
             <MobileNav
                 viewMode={viewMode}
-                setViewMode={handleNavigate}
+                setViewMode={(mode) => {
+                    // Reset DiscoveryView state every time user taps the Discover tab
+                    if (mode === 'discovery') {
+                        setDiscoveryResetKey(k => k + 1);
+                        // Also clear pendingWizardData so useEffect in DiscoveryView
+                        // doesn't immediately re-set discoveryCity back to the template destination
+                        setPendingWizardData(undefined);
+                    }
+                    handleNavigate(mode);
+                }}
                 showPlanManager={showPlanManager}
                 setShowPlanManager={(show) => {
                     if (show) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Template, LangType, Region } from '../types';
 import CityPicker from './Discovery/CityPicker';
 import CityHub from './Discovery/CityHub';
@@ -39,13 +39,16 @@ const DiscoveryView: React.FC<DiscoveryViewProps> = ({
     // Current view state: null = Picker, Region = Hub
     const [discoveryCity, setDiscoveryCity] = useState<Region | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    // Guard: only auto-navigate once per mount to prevent back-button loop
+    const hasAutoNavigated = useRef(false);
 
     useEffect(() => {
-        if (pendingWizardData?.destination && !discoveryCity) {
+        if (pendingWizardData?.destination && !hasAutoNavigated.current) {
+            hasAutoNavigated.current = true;
             setDiscoveryCity(pendingWizardData.destination);
             setActiveRegion(pendingWizardData.destination);
         }
-    }, [pendingWizardData, discoveryCity, setActiveRegion]);
+    }, [pendingWizardData, setActiveRegion]);
 
     const handleCitySelect = (region: Region) => {
         setDiscoveryCity(region);

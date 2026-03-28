@@ -250,7 +250,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 }}
                 onSelectTemplate={(template, data) => {
                     setPendingWizardData(data); // Gives the custom name and dates to applyTemplate
-                    applyTemplate(template);
+                    onPreviewTemplate(template); // Open preview first
                     setShowCheckIn(false);
                 }}
                 lang={lang}
