@@ -33,7 +33,53 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 avoid: '⚠️ 絕對不要在早上 8:00 - 9:00 來擠。通勤族會把你淹沒。另外店內完全禁止筆電，這裡是為了讓你「跟陌生人聊天」經營的。',
                 bestTime: '10:30 (剛度過早晨地獄人潮，享受安靜的 15 分鐘站立咖啡)'
             }
-        }
+        },
+        recommendations: [
+            {
+                id: 'c-mel-brunch',
+                author: '早午餐女王',
+                avatar: '🥞',
+                pricing: 5,
+                duration: '20min',
+                insiderTip: {
+                    teaser: '別在外面找招牌，看到人潮鑽進去就對了',
+                    teaserEn: 'Don\'t look for a sign. Just follow the crowd into the alley.'
+                }
+            },
+            {
+                id: 'c-mel-photo',
+                author: '街拍達人 Leo',
+                avatar: '📸',
+                pricing: 5,
+                duration: '30min',
+                insiderTip: {
+                    teaser: '早晨 10 點的斜射光拍拿鐵最美',
+                    teaserEn: 'Morning slanted light at 10 AM is perfect for latte shots.'
+                }
+            }
+        ],
+        reviews: [
+            {
+                id: 'r1-1',
+                author: 'Sophie L.',
+                authorEn: 'Sophie L.',
+                avatar: 'https://i.pravatar.cc/100?u=sophie',
+                rating: 5,
+                text: '這是我在墨爾本喝過最好喝的咖啡，沒有之一。站著喝很有歐洲的感覺。',
+                textEn: "Best coffee I've had in Melbourne, hands down. Standing while drinking gives it a very European vibe.",
+                date: '2024-03-12'
+            },
+            {
+                id: 'r1-2',
+                author: 'Kenji',
+                authorEn: 'Kenji',
+                avatar: 'https://i.pravatar.cc/100?u=kenji',
+                rating: 4,
+                text: '真的很難找，但進去後氛圍非常棒。豆子質量很高！',
+                textEn: 'Really hard to find, but the atmosphere inside is great. High-quality beans!',
+                date: '2024-02-28'
+            }
+        ]
     },
     {
         id: 'mel-2',
@@ -100,7 +146,53 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 avoid: '⚠️ 千萬不要帶長焦鏡頭。這條巷子極度狹窄，只有 16-24mm 的超廣角能拍出那種被狂野色彩包圍的壓迫感。',
                 bestTime: '08:00 (光線最立體，無觀光客，有機會遇到藝術家)'
             }
-        }
+        },
+        recommendations: [
+            {
+                id: 'c-mel-photo',
+                author: '街拍達人 Leo',
+                avatar: '📸',
+                pricing: 0,
+                duration: '1hr',
+                insiderTip: {
+                    teaser: 'Rutledge Lane 才是真正的核心，別只待在主線',
+                    teaserEn: 'Rutledge Lane is the true core, don\'t just stay on the main path.'
+                }
+            },
+            {
+                id: 'user-expert',
+                author: '城市探險家',
+                avatar: '🕵️',
+                pricing: 0,
+                duration: '45min',
+                insiderTip: {
+                    teaser: '如果你看到藝術家正在噴漆，保持距離靜靜觀察就好',
+                    teaserEn: 'If you see artists spraying, just watch quietly from a distance.'
+                }
+            }
+        ],
+        reviews: [
+            {
+                id: 'r3-1',
+                author: 'Elena',
+                authorEn: 'Elena',
+                avatar: 'https://i.pravatar.cc/100?u=elena',
+                rating: 5,
+                text: '色彩非常豐富！每次來都有新的塗鴉，非常適合帶相機來拍照。',
+                textEn: 'So colorful! New graffiti every time I visit. Perfect for taking photos.',
+                date: '2024-03-15'
+            },
+            {
+                id: 'r3-2',
+                author: 'Tom',
+                authorEn: 'Tom',
+                avatar: 'https://i.pravatar.cc/100?u=tom',
+                rating: 4,
+                text: '很有活力的巷弄，雖然有時候垃圾味有點重，但還是很值得一看。',
+                textEn: "Very vibrant laneway. Although it smells a bit like trash sometimes, it's still worth a look.",
+                date: '2024-03-01'
+            }
+        ]
     },
     {
         id: 'mel-4',
@@ -427,7 +519,32 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 bestTime: '週二早上 10:30 (平日人少一半)',
                 bestTimeEn: 'Tuesday 10:30 AM (Half the usual weekday crowd)'
             }
-        }
+        },
+        recommendations: [
+            {
+                id: 'c-mel-family',
+                author: '親子遊專家',
+                avatar: '👨‍👩‍👧',
+                pricing: 65,
+                duration: '3hr',
+                insiderTip: {
+                    teaser: '帶一捲濕紙巾，小孩玩完腳會很髒',
+                    teaserEn: 'Bring a pack of wet wipes, kids\' feet get dusty after the ride.'
+                }
+            }
+        ],
+        reviews: [
+            {
+                id: 'r11-1',
+                author: 'Grace',
+                authorEn: 'Grace',
+                avatar: 'https://i.pravatar.cc/100?u=grace',
+                rating: 5,
+                text: '坐在窗戶邊緣真的太酷了！雖然煤灰弄髒了我的衣服，但小孩子玩得超級開心。',
+                textEn: 'Dangling legs out the window is so cool! Even though the soot stained my clothes, the kids had a blast.',
+                date: '2024-03-18'
+            }
+        ]
     },
     {
         id: 'mel-12',
@@ -523,7 +640,51 @@ export const MELBOURNE_ASSETS: TravelItem[] = [
                 avoid: '⚠️ 週末早上 9 點去保證你的行程會大 delay。內行人都知道，平日早上 7:30 開門時去，你甚至可以霸佔最佳拍攝位置。',
                 bestTime: '07:30 (平日搶頭香，拍到玻璃房與第一爐出爐的瞬間)'
             }
-        }
+        },
+        recommendations: [
+            {
+                id: 'c-mel-brunch',
+                author: '早午餐女王',
+                avatar: '🥞',
+                pricing: 15,
+                duration: '1hr',
+                insiderTip: {
+                    teaser: '週末限定的口味絕對值得多排 20 分鐘',
+                    teaserEn: 'Weekend limited flavors are absolutely worth the extra 20-min wait.'
+                }
+            },
+            {
+                id: 'c-mel',
+                author: '墨爾本巷弄老饕',
+                avatar: '☕',
+                pricing: 15,
+                duration: '45min',
+                insiderTip: {
+                    teaser: 'Fitzroy 店的透明實驗室氣氛是 CBD 分店比不上的',
+                    teaserEn: 'The glass lab vibe at Fitzroy is unmatched by the CBD branch.'
+                }
+            }
+        ],
+        reviews: [
+            {
+                id: 'r3',
+                author: 'James W.',
+                avatar: 'https://i.pravatar.cc/100?u=james',
+                rating: 5,
+                text: 'Best croissant of my life. Period.',
+                date: '2024-03-20'
+            },
+            {
+                id: 'r14-2',
+                author: 'Nina',
+                authorEn: 'Nina',
+                avatar: 'https://i.pravatar.cc/100?u=nina',
+                rating: 4,
+                text: '可頌真的很有水準，層次分明。就是排隊真的要很有耐心。',
+                textEn: 'The croissants are top-notch, clearly layered. You just need a lot of patience for the queue.',
+                date: '2024-03-22'
+            }
+        ]
     },
     {
         id: 'mel-15',

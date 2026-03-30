@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
 import { PlanSelectorDrawer } from '../Common/PlanSelectorDrawer';
+import { ReviewJournalDrawer } from '../Common/ReviewJournalDrawer';
 
 // Fix leaflet icon issue
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -61,6 +62,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     isScrolled: externalIsScrolled
 }) => {
     const [isPlanSelectorOpen, setIsPlanSelectorOpen] = useState(false);
+    const [isReviewDrawerOpen, setIsReviewDrawerOpen] = useState(false);
     const [isAddedToPlan, setIsAddedToPlan] = useState(false);
     const [internalIsScrolled, setInternalIsScrolled] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -224,6 +226,43 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                     )}
                                 </div>
                             </div>
+
+                            {/* 3e. More Creators Say */}
+                            {(item as any).recommendations && (item as any).recommendations.length > 0 && (
+                                <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+                                    <div className="flex items-center justify-between mb-6">
+                                        <h4 className="text-[20px] font-heading font-black text-[#181D17]">
+                                            {lang === 'zh' ? '創作者也說' : 'Creators Say'}
+                                        </h4>
+                                        <button className="text-[11px] font-black text-tc-primary tracking-widest uppercase hover:underline">
+                                            {lang === 'zh' ? '查看全部' : 'VIEW ALL'}
+                                        </button>
+                                    </div>
+                                    <div className="flex overflow-x-auto no-scrollbar gap-5 -mx-6 px-6 pb-2">
+                                        {(item as any).recommendations.map((rec: any) => (
+                                            <div key={rec.id} className="min-w-[280px] bg-white rounded-[32px] p-6 border border-[#E8EDE4]/60 shadow-sm flex flex-col gap-5 hover:border-tc-primary/30 transition-colors cursor-pointer group/card">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-50 flex items-center justify-center text-xl shadow-inner border border-gray-100 group-hover/card:scale-110 transition-transform">
+                                                        {rec.avatar && (rec.avatar.startsWith('http') || rec.avatar.startsWith('/')) ? (
+                                                            <img src={rec.avatar} alt={rec.author} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <span>{rec.avatar || '👤'}</span>
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-[14px] font-black text-[#181D17]">{lang === 'zh' ? rec.author : (rec.authorEn || rec.author)}</div>
+                                                        <div className="text-[9px] font-bold text-[#8E9285] uppercase tracking-wider">{lang === 'zh' ? '專業旅遊達人' : 'EXPERT CREATOR'}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="h-[2px] w-8 bg-[#E8EDE4] group-hover/card:w-16 transition-all duration-500" />
+                                                <p className="text-[14px] leading-[1.6] text-[#4A5548] font-medium italic line-clamp-3">
+                                                    "{lang === 'zh' ? (rec.insiderTip?.teaser || rec.insiderTip?.full?.story) : (rec.insiderTip?.teaserEn || rec.insiderTip?.full?.storyEn || rec.insiderTip?.teaser || rec.insiderTip?.full?.story)}"
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                     <div className="mt-12">
@@ -232,6 +271,8 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                             primaryActionLabel={isAddedToPlan ? (lang === 'zh' ? '已加入！' : 'ADDED!') : (lang === 'zh' ? '加入計畫' : 'ADD TO PLAN')}
                             onPrimaryAction={handleOpenPlanSelector}
                             onCreatorClick={onCreatorClick}
+                            onCommentClick={() => setIsReviewDrawerOpen(true)}
+                            commentCount={(item as any).reviews?.length || 0}
                             lang={lang}
                             variant="spot"
                             isApplied={isAddedToPlan}
@@ -259,6 +300,15 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     lang={lang}
                 />
             )}
+
+            {/* Review Journal Drawer */}
+            <ReviewJournalDrawer 
+                isOpen={isReviewDrawerOpen}
+                onClose={() => setIsReviewDrawerOpen(false)}
+                reviews={(item as any).reviews || []}
+                lang={lang}
+                spotTitle={title}
+            />
         </div>
     );
 };

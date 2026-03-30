@@ -20,6 +20,8 @@ interface EngagementSocialBlockProps {
     isApplied?: boolean;
     variant?: 'template' | 'spot';
     onCreatorClick?: (id: string) => void;
+    onCommentClick?: () => void;
+    commentCount?: number;
     lang?: string;
 }
 
@@ -32,6 +34,8 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
     isApplied = false,
     variant = 'template',
     onCreatorClick,
+    onCommentClick,
+    commentCount = 0,
     lang = 'zh'
 }) => {
     const t = TRANSLATIONS[lang as any] || TRANSLATIONS.zh;
@@ -134,8 +138,12 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
                         <button className="text-[#181D17]/30 hover:text-red-500 transition-all">
                             <Heart size={22} />
                         </button>
-                        <button className="text-[#181D17]/30 hover:text-[#181D17] transition-all">
-                            <MessageCircle size={22} />
+                        <button 
+                            onClick={onCommentClick}
+                            className={`${commentCount > 0 ? 'text-[#00A699]' : 'text-[#181D17]/30'} hover:text-emerald-700 transition-all flex items-center gap-1.5`}
+                        >
+                            <MessageCircle size={22} fill={commentCount > 0 ? "rgba(0, 166, 153, 0.1)" : "none"} />
+                            {commentCount > 0 && <span className="text-[14px] font-black">{commentCount}</span>}
                         </button>
                         <button className="text-[#00A699] hover:text-emerald-600 transition-all flex items-center gap-2.5">
                             <Layers size={22} />
