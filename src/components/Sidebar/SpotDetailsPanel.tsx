@@ -60,7 +60,6 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     disableInternalScroll = false,
     isScrolled: externalIsScrolled
 }) => {
-    const [activeTab, setActiveTab] = useState('overview');
     const [isPlanSelectorOpen, setIsPlanSelectorOpen] = useState(false);
     const [isAddedToPlan, setIsAddedToPlan] = useState(false);
     const [internalIsScrolled, setInternalIsScrolled] = useState(false);
@@ -152,31 +151,10 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     </div>
                 </div>
 
-                {/* 2. Sticky Tab Bar */}
-                <div className="sticky top-0 z-[100] bg-white border-b border-[#E8EDE4] shadow-sm">
-                    <div className="flex overflow-x-auto no-scrollbar px-6 gap-10 py-5">
-                        {[
-                            { id: 'overview', label: lang === 'zh' ? '總覽' : 'Overview' },
-                            { id: 'tips', label: lang === 'zh' ? '達人撇步' : 'Insider Tips' }
-                        ].map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`text-[13px] font-black whitespace-nowrap relative transition-colors ${activeTab === tab.id ? 'text-tc-primary' : 'text-[#8E9285]'}`}
-                            >
-                                {tab.label}
-                                {activeTab === tab.id && (
-                                    <div className="absolute -bottom-[21px] left-0 right-0 h-1 bg-tc-primary rounded-t-full" />
-                                )}
-                            </button>
-                        ))}
-                    </div>
-                </div>
 
-                {/* 3. Dynamic Content Area */}
+
                 <div className="px-6 pt-10 pb-32 relative z-20">
-                    {activeTab === 'overview' ? (
-                        <div className="space-y-12">
+                    <div className="space-y-12">
                             {/* 3a. Stats Grid */}
                             <div className="grid grid-cols-2 gap-3">
                                 {[
@@ -218,43 +196,35 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                             <div>
                                 <h4 className="text-[20px] font-heading font-black text-[#181D17] mb-6">{lang === 'zh' ? '地理位置' : 'Location Info'}</h4>
                                 <div className="h-56 w-full rounded-[28px] overflow-hidden border border-[#E8EDE4] relative shadow-inner">
-                                    <MapContainer 
-                                        center={position} 
-                                        zoom={14} 
-                                        style={{ height: '100%', width: '100%', zIndex: 1 }}
-                                        zoomControl={false}
-                                        dragging={false}
-                                        scrollWheelZoom={false}
-                                    >
-                                        <TileLayer
-                                            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-                                            attribution='&copy; OpenStreetMap contributors'
-                                        />
-                                        <Marker position={position} />
-                                    </MapContainer>
-                                    <div className="absolute inset-0 bg-transparent flex items-center justify-center z-[10]">
-                                        <button 
-                                            onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.title)}`, '_blank')}
-                                            className="bg-white/80 backdrop-blur-md px-6 py-2.5 rounded-full text-[13px] font-black text-[#181D17] shadow-lg border border-white hover:bg-white active:scale-95 transition-all"
-                                        >
-                                            {lang === 'zh' ? '在 Google Maps 中查看' : 'OPEN IN GOOGLE MAPS'}
-                                        </button>
+...
+                                </div>
+                            </div>
+
+                            {/* 3d. Insider Tip (Moved from tab) */}
+                            <div className="bg-amber-50 rounded-[40px] p-8 border border-amber-100 flex flex-col gap-6 relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 p-8 text-amber-200/20">
+                                    <Sparkles size={80} />
+                                </div>
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center text-white shadow-sm font-black italic">!</div>
+                                        <span className="text-[12px] font-black text-amber-700 uppercase tracking-[0.2em]">{lang === 'zh' ? '達人撇步' : 'INSIDER TIP'}</span>
                                     </div>
+                                    <p className="text-[17px] leading-[1.8] text-amber-900/80 font-bold italic">
+                                        {(item as any).insiderTip?.teaser || (item as any).insiderTip?.full?.story || (lang === 'zh' 
+                                            ? "這裡的氛圍非常地道，建議下午晚些時候來，光線照射進來非常美。"
+                                            : "The atmosphere here is very authentic, recommend coming late afternoon when the light hits perfectly.")}
+                                    </p>
+                                    
+                                    {(item as any).insiderTip?.full?.bestTime && (
+                                        <div className="mt-6 flex items-center gap-3 text-[13px] font-black text-amber-700">
+                                            <div className="w-8 h-[2px] bg-amber-200" />
+                                            <span>{lang === 'zh' ? '最佳時機' : 'BEST TIME'}: {(item as any).insiderTip?.full?.bestTime}</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                    ) : (
-                        <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                             {/* Reviews/Tips Tab Content */}
-                             <div className="bg-amber-50 rounded-[40px] p-8 border border-amber-100">
-                                <p className="text-[15.5px] leading-[1.8] text-amber-900/80 font-medium italic">
-                                    {lang === 'zh' 
-                                        ? "這裡的氛圍非常地道，建議下午晚些時候來，光線照射進來非常美。"
-                                        : "The atmosphere here is very authentic, recommend coming late afternoon when the light hits perfectly."}
-                                </p>
-                            </div>
-                        </div>
-                    )}
 
                     <div className="mt-12">
                         <EngagementSocialBlock
