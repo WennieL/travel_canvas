@@ -85,15 +85,16 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    initial={{ y: '100%' }}
-                    animate={{ y: 0 }}
-                    exit={{ y: '100%' }}
+                    initial={{ x: '100%', scale: 0.98, opacity: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
+                    animate={{ x: 0, scale: 1, opacity: 1, boxShadow: '0 0 50px rgba(0,0,0,0.08)' }}
+                    exit={{ x: '100%', scale: 0.98, opacity: 0 }}
                     transition={{ 
-                        type: 'tween', 
-                        duration: 0.5, 
-                        ease: [0.32, 0.72, 0, 1] 
+                        type: 'spring', 
+                        damping: 28.5,
+                        stiffness: 160,
+                        mass: 0.8
                     }}
-                    className="fixed inset-0 z-[3000] bg-[#F7FBF0] flex flex-col shadow-[0_-8px_30px_rgb(0,0,0,0.12)] pb-20 lg:pb-0 font-sans"
+                    className="fixed inset-0 z-[3000] bg-[#F7FBF0] flex flex-col shadow-[-10px_0_30px_rgb(0,0,0,0.05)] pb-20 lg:pb-0 font-sans origin-right"
                 >
                     {/* Standardized Sticky Header (NEW: Supports Morphing Mode) */}
                     <header 

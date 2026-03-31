@@ -18,7 +18,7 @@ interface MobileNavProps {
     t: any;
 }
 
-type MobileTab = 'discovery' | 'favorites' | 'plan' | 'my' | 'more';
+type MobileTab = 'discovery' | 'favorites' | 'projects' | 'more';
 
 export const MobileNav: React.FC<MobileNavProps> = ({
     viewMode,
@@ -46,9 +46,9 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     // Determine active tab
     const getActiveTab = (): MobileTab => {
         if (showFavorites) return 'favorites';
-        if (showPlanManager) return 'my';
+        if (showPlanManager) return 'projects';
         if (viewMode === 'discovery') return 'discovery';
-        if (viewMode === 'canvas' || viewMode === 'map') return 'plan';
+        if (['canvas', 'map', 'overview', 'budget', 'checklist'].includes(viewMode)) return 'projects';
         return 'discovery';
     };
 
@@ -209,15 +209,25 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                 </div>
             )}
 
-            {/* Bottom Tab Bar (Emerald Canopy Spec: 80px height, straight rectangle, no pill) */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-[#E8EDE4] grid grid-cols-4 items-center pb-2 z-[4000] shadow-[0_-1px_10px_rgba(0,0,0,0.02)]">
-                {mobilePrimary.map((tab: NavItem) => {
-                    const Icon = tab.icon;
-                    const label = getLabel(tab);
-                    const isActive = tab.id === 'more' ? showMoreMenu : activeTab === (tab.id === 'projects' ? 'my' : tab.id);
-                    
-                    const activeColor = "text-tc-primary";
-                    const inactiveColor = "text-[#8E9285]";
+            {/* Bottom Tab Bar (Emerald Canopy Spec: handle safe area, absolute bottom fix) */}
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[4000] bg-white">
+                {/* Main Content Bar */}
+                <div className="relative bg-white border-t border-[#E8EDE4] grid grid-cols-4 items-center pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] shadow-[0_-1px_10px_rgba(0,0,0,0.02)] translate-y-[0.5px]">
+                    {mobilePrimary.map((tab: NavItem) => {
+                        const Icon = tab.icon;
+                        const label = getLabel(tab);
+                        
+                        // Hard-coded robust highlight logic
+                        const isPlanMode = ['canvas', 'map', 'overview', 'budget', 'checklist'].includes(viewMode) || showPlanManager;
+                        
+                        let isActive = false;
+                        if (tab.id === 'discovery') isActive = (viewMode === 'discovery' && !showPlanManager && !showFavorites);
+                        else if (tab.id === 'favorites') isActive = showFavorites;
+                        else if (tab.id === 'projects' || tab.id === 'plan') isActive = isPlanMode;
+                        else if (tab.id === 'more') isActive = showMoreMenu;
+                        
+                        const activeColor = "text-tc-primary";
+                        const inactiveColor = "text-[#8E9285]";
 
                     if (tab.id === 'more') {
                         return (
@@ -247,7 +257,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
                             <span className="text-[10px] mt-1.5 font-bold uppercase tracking-wider">{label}</span>
                         </button>
                     );
-                })}
+                    })}
+                </div>
+                {/* Bottom Extender: Absolute fix for the sliver - covers everything below the viewport */}
+                <div className="absolute top-[99%] left-0 right-0 h-[100px] bg-white border-t border-white" />
             </div>
         </>
     );

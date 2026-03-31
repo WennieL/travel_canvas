@@ -175,11 +175,11 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                             alt={spot.title}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
-                                        {/* TOP Badge (8px radius, FBC02D) */}
+                                        {/* TOP Badge (Refined: Image 2 Style - Green Pill) */}
                                         <div className="absolute top-3 left-3 z-20">
-                                            <div className="px-2 py-0.5 bg-[#FBC02D] rounded-md shadow-sm border border-white/30 flex flex-col items-center">
-                                                <span className="text-[7px] font-black leading-tight text-black/60 uppercase tracking-tighter">TOP</span>
-                                                <span className="text-[13px] font-black text-black leading-none">{String(idx + 1).padStart(2, '0')}</span>
+                                            <div className="px-3 py-0.5 bg-[#0D631B] rounded-full shadow-sm flex items-center gap-1 border border-white/20">
+                                                <span className="text-[9px] font-black text-white uppercase tracking-tighter">TOP</span>
+                                                <span className="text-[10px] font-black text-white leading-none">{String(idx + 1).padStart(2, '0')}</span>
                                             </div>
                                         </div>
 

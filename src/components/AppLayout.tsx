@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Triangle, Hotel, FileText, Map as MapIcon, List as ListIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import {
     Plan, ViewMode, Template, TravelItem, ItemType, Region, TimeSlot,
@@ -20,6 +21,8 @@ import CanvasView from './CanvasView';
 import DesktopSidebar from './DesktopSidebar';
 import FavoritesView from './FavoritesView';
 import ItineraryHub from './ItineraryHub';
+import OverviewView from './OverviewView';
+import { ImmersivePage } from './Common/ImmersivePage';
 import { MobileDiscoveryDrawer } from './Mobile/MobileDiscoveryDrawer';
 import { SAMPLE_ASSETS } from '../data';
 
@@ -232,6 +235,28 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     };
 
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+
+    // PAGE SWIPE LOGIC
+    const handlePageSwipe = (direction: 'left' | 'right') => {
+        if (viewMode !== 'overview' && viewMode !== 'canvas') return; // Only swipe on these modes
+        
+        if (direction === 'left') { // Next Page
+            if (viewMode === 'overview') {
+                setCurrentDay(1);
+                setViewMode('canvas');
+            } else if (currentDay < activePlan.totalDays) {
+                setCurrentDay(currentDay + 1);
+            }
+        } else { // Previous Page
+            if (viewMode === 'canvas') {
+                if (currentDay === 1) {
+                    setViewMode('overview');
+                } else {
+                    setCurrentDay(currentDay - 1);
+                }
+            }
+        }
+    };
 
 
     const handleSelectItem = (item: ItemType | TravelItem | any | null, source?: 'map' | 'sidebar' | 'canvas' | 'discovery' | null) => {
@@ -453,112 +478,139 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     </div>
                 )}
 
-                {/* Canvas Area */}
+                {/* Canvas Area with Swipe & Transitions */}
                 {!showFavorites && !showPlanManager && (
-                    <div
-                        key={`${activePlan.id}-${viewMode}`}
-                        onScroll={handleScroll}
-                        className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : 'p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4'} no-scrollbar animate-canvas-reveal`}
-                    >
-                        {viewMode === 'map' ? (
-                            <div className="h-full">
-                                <MapView
-                                    schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }}
-                                    lang={lang}
-                                    t={t}
-                                    onItemClick={(item) => handleSelectItem(item, 'map')}
-                                    onClose={() => setViewMode('canvas')}
-                                    discoveryCreatorId={discoveryCreatorId}
-                                    onAddItem={(item) => handleTapToAdd(item)}
-                                    currentDay={currentDay}
-                                    addToSlotTarget={addToSlotTarget}
-                                    onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
-                                    activeRegion={activePlan.region}
-                                    subscribedCreators={subscribedCreators}
-                                />
-                            </div>
-                        ) : viewMode === 'discovery' ? (
-                            <div className="h-full">
-                                <DiscoveryView
-                                    key={discoveryResetKey}
-                                    onPreviewTemplate={(tpl) => ui.setActiveTemplateId(tpl.id)}
-                                    onStoryPreview={(tpl) => {
-                                        setPreviewTemplate(tpl);
-                                        ui.setShowStoryPreview(true);
-                                    }}
-                                    onCreatorClick={setSelectedCreatorId}
-                                    onExploreCreatorMap={handleExploreCreatorMap}
-                                    onSelectItem={handleSelectItem}
-                                    setActiveTab={setActiveTab}
-                                    activeRegion={activeRegion}
-                                    setActiveRegion={setActiveRegion}
-                                    showToastMessage={showToastMessage}
-                                    toggleLang={toggleLang}
-                                    lang={lang}
-                                    t={t}
-                                    pendingWizardData={pendingWizardData}
-                                    setPendingWizardData={setPendingWizardData}
-                                />
-                            </div>
-                        ) : viewMode === 'checklist' ? (
-                            <div className="h-full pb-20 lg:pb-0">
-                                <ChecklistView
-                                    activePlan={activePlan}
-                                    lang={lang}
-                                    t={t}
-                                    showToastMessage={showToastMessage}
-                                    onUpdateChecklist={updateChecklist}
-                                />
-                            </div>
-                        ) : viewMode === 'budget' ? (
-                            <div className="h-full pb-20 lg:pb-0">
-                                <BudgetView
-                                    spent={calculateTotalBudget()}
-                                    limit={budgetLimit}
-                                    breakdown={calculateCategoryBreakdown()}
-                                    currency={budgetSettings.currency}
-                                    exchangeRate={budgetSettings.exchangeRate}
-                                    onSetLimit={setBudgetLimit}
-                                    onSetSettings={updateBudgetSettings}
-                                    t={t}
-                                    planRegion={activePlan.region}
-                                />
-                            </div>
-                        ) : (
-                            <CanvasView
-                                showContextMap={showContextMap}
-                                currentDaySchedule={currentDaySchedule}
-                                activePlan={activePlan}
-                                lang={lang}
-                                t={t}
-                                isSidebarOpen={isSidebarOpen}
-                                handleDrop={handleDrop}
-                                handleRemoveItem={handleRemoveItem}
-                                handleUpdateItem={handleUpdateItem}
-                                handleDragStart={handleDragStart}
-                                handleQuickFill={handleQuickFill}
-                                handleMapItemClick={handleMapItemClick}
-                                setAddToSlotTarget={setAddToSlotTarget}
-                                setShowMoveModal={setShowMoveModal}
-                                setMoveTarget={ui.setMoveTarget}
-                                setShowMobileLibrary={ui.setShowMobileLibrary}
-                                setSidebarHighlight={ui.setSidebarHighlight}
-                                setUnlockTarget={setUnlockTarget}
-                                setSelectedItem={ui.setSelectedItem}
-                                setIsSidebarOpen={setIsSidebarOpen}
-                                setActiveTab={setActiveTab}
-                                discoveryCreatorId={discoveryCreatorId}
-                                currentDay={currentDay}
-                                addToSlotTarget={addToSlotTarget}
-                                onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
-                                onAddItem={(item) => handleTapToAdd(item)}
-                                setSidebarMode={ui.setSidebarMode}
-                                onSelectItem={handleSelectItem}
-                            />
-                        )}
+                    <div className="flex-1 relative overflow-hidden flex flex-col">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={`${activePlan.id}-${viewMode}-${currentDay}`}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                                drag="x"
+                                dragConstraints={{ left: 0, right: 0 }}
+                                dragElastic={0.15}
+                                onDragEnd={(_, info) => {
+                                    const swipeThreshold = 50;
+                                    if (info.offset.x < -swipeThreshold) {
+                                        handlePageSwipe('left');
+                                    } else if (info.offset.x > swipeThreshold) {
+                                        handlePageSwipe('right');
+                                    }
+                                }}
+                                onScroll={handleScroll}
+                                className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : (viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files' ? 'p-0' : 'p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4')} no-scrollbar h-full`}
+                            >
+                                {(viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files') ? (
+                                    <OverviewView 
+                                        activePlan={activePlan}
+                                        lang={lang}
+                                        t={t}
+                                        setViewMode={setViewMode}
+                                        calculateTotalBudget={calculateTotalBudget}
+                                        budgetLimit={budgetLimit}
+                                        calculateCategoryBreakdown={calculateCategoryBreakdown}
+                                        updateActivePlan={updateActivePlan}
+                                    />
+                                ) : viewMode === 'map' ? (
+                                    <div className="h-full">
+                                        <MapView
+                                            schedule={activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] }}
+                                            lang={lang}
+                                            t={t}
+                                            onItemClick={(item) => handleSelectItem(item, 'map')}
+                                            onClose={() => setViewMode('canvas')}
+                                            discoveryCreatorId={discoveryCreatorId}
+                                            onAddItem={(item) => handleTapToAdd(item)}
+                                            currentDay={currentDay}
+                                            addToSlotTarget={addToSlotTarget}
+                                            onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                                            activeRegion={activePlan.region}
+                                            subscribedCreators={subscribedCreators}
+                                        />
+                                    </div>
+                                ) : viewMode === 'discovery' ? (
+                                    <div className="h-full">
+                                        <DiscoveryView
+                                            key={discoveryResetKey}
+                                            onPreviewTemplate={(tpl) => ui.setActiveTemplateId(tpl.id)}
+                                            onStoryPreview={(tpl) => {
+                                                setPreviewTemplate(tpl);
+                                                ui.setShowStoryPreview(true);
+                                            }}
+                                            onCreatorClick={setSelectedCreatorId}
+                                            onExploreCreatorMap={handleExploreCreatorMap}
+                                            onSelectItem={handleSelectItem}
+                                            setActiveTab={setActiveTab}
+                                            activeRegion={activeRegion}
+                                            setActiveRegion={setActiveRegion}
+                                            showToastMessage={showToastMessage}
+                                            toggleLang={toggleLang}
+                                            lang={lang}
+                                            t={t}
+                                            pendingWizardData={pendingWizardData}
+                                            setPendingWizardData={setPendingWizardData}
+                                        />
+                                    </div>
+                                ) : (
+                                    <CanvasView
+                                        showContextMap={showContextMap}
+                                        currentDaySchedule={currentDaySchedule}
+                                        activePlan={activePlan}
+                                        lang={lang}
+                                        t={t}
+                                        isSidebarOpen={isSidebarOpen}
+                                        handleDrop={handleDrop}
+                                        handleRemoveItem={handleRemoveItem}
+                                        handleUpdateItem={handleUpdateItem}
+                                        handleDragStart={handleDragStart}
+                                        handleQuickFill={handleQuickFill}
+                                        handleMapItemClick={handleMapItemClick}
+                                        setAddToSlotTarget={setAddToSlotTarget}
+                                        setShowMoveModal={setShowMoveModal}
+                                        setMoveTarget={ui.setMoveTarget}
+                                        setShowMobileLibrary={ui.setShowMobileLibrary}
+                                        setSidebarHighlight={ui.setSidebarHighlight}
+                                        setUnlockTarget={setUnlockTarget}
+                                        setSelectedItem={ui.setSelectedItem}
+                                        setIsSidebarOpen={setIsSidebarOpen}
+                                        setActiveTab={setActiveTab}
+                                        discoveryCreatorId={discoveryCreatorId}
+                                        currentDay={currentDay}
+                                        addToSlotTarget={addToSlotTarget}
+                                        onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
+                                        onAddItem={(item) => handleTapToAdd(item)}
+                                        setSidebarMode={ui.setSidebarMode}
+                                        onSelectItem={handleSelectItem}
+                                    />
+                                )}
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
                 )}
             </div>
+
+            {/* Floating Map Action Button (FAB) */}
+            <AnimatePresence mode="wait">
+                {(viewMode === 'overview' || viewMode === 'canvas' || viewMode === 'map') && (
+                    <motion.button
+                        key={viewMode === 'map' ? 'list' : 'map'}
+                        initial={{ opacity: 0, scale: 0.5, y: 50 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.5, y: 50 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                            const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
+                            setViewMode(targetMode);
+                        }}
+                        className={`fixed ${isMobile ? 'bottom-28' : 'bottom-8'} right-6 z-[120] w-14 h-14 bg-emerald-600 text-white rounded-full shadow-2xl flex items-center justify-center border-4 border-white active:bg-emerald-700 transition-colors pointer-events-auto`}
+                    >
+                        {viewMode === 'map' ? <ListIcon size={24} /> : <MapIcon size={24} />}
+                    </motion.button>
+                )}
+            </AnimatePresence>
 
             <AppModals
                 // Shared & Language
@@ -747,6 +799,104 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 preferredAuthorId={discoveryCreatorId}
                 onCreatorClick={ui.setActiveCreatorId}
             />
+
+            {/* IMMERSIVE TOOL OVERLAYS (Book-page style) */}
+            <AnimatePresence>
+                {viewMode === 'checklist' && (
+                    <ImmersivePage
+                        isOpen={true}
+                        onClose={() => setViewMode('overview')}
+                        title={lang === 'zh' ? '行李清單' : 'Packing List'}
+                        historyId="checklist"
+                        lang={lang}
+                    >
+                        <div className="max-w-2xl mx-auto px-6 py-10 pb-32">
+                            <ChecklistView
+                                activePlan={activePlan}
+                                lang={lang}
+                                t={t}
+                                showToastMessage={showToastMessage}
+                                onUpdateChecklist={updateChecklist}
+                            />
+                        </div>
+                    </ImmersivePage>
+                )}
+                {viewMode === 'budget' && (
+                    <ImmersivePage
+                        isOpen={true}
+                        onClose={() => setViewMode('overview')}
+                        title={lang === 'zh' ? '預算估計' : 'Budget'}
+                        historyId="budget"
+                        lang={lang}
+                    >
+                        <div className="max-w-3xl mx-auto px-6 py-10 pb-32">
+                            <BudgetView
+                                spent={calculateTotalBudget()}
+                                limit={budgetLimit}
+                                breakdown={calculateCategoryBreakdown()}
+                                currency={budgetSettings.currency}
+                                exchangeRate={budgetSettings.exchangeRate}
+                                onSetLimit={setBudgetLimit}
+                                onSetSettings={updateBudgetSettings}
+                                t={t}
+                                planRegion={activePlan.region}
+                            />
+                        </div>
+                    </ImmersivePage>
+                )}
+                {/* NEW IMMERSIVE PAGES FOR TOOLS */}
+                {viewMode === 'flights' && (
+                    <ImmersivePage
+                        isOpen={true}
+                        onClose={() => setViewMode('overview')}
+                        title={lang === 'zh' ? '機票資訊' : 'Flight Info'}
+                        historyId="flights"
+                        lang={lang}
+                    >
+                        <div className="max-w-2xl mx-auto px-6 py-20 flex flex-col items-center justify-center text-gray-400">
+                             <div className="p-8 bg-gray-50 rounded-full mb-6">
+                                <Triangle size={48} className="transform rotate-180" />
+                             </div>
+                             <p className="text-sm font-bold uppercase tracking-widest">{lang === 'zh' ? '暫無機票記錄' : 'No flight records'}</p>
+                             <button className="mt-8 px-8 py-3 bg-emerald-600 text-white rounded-full text-xs font-black shadow-lg">
+                                {lang === 'zh' ? '新增機票' : 'Add Flight'}
+                             </button>
+                        </div>
+                    </ImmersivePage>
+                )}
+                {viewMode === 'hotels' && (
+                    <ImmersivePage
+                        isOpen={true}
+                        onClose={() => setViewMode('overview')}
+                        title={lang === 'zh' ? '住宿管理' : 'Accommodation'}
+                        historyId="hotels"
+                        lang={lang}
+                    >
+                        <div className="max-w-2xl mx-auto px-6 py-20 flex flex-col items-center justify-center text-gray-400">
+                             <div className="p-8 bg-gray-50 rounded-full mb-6 text-gray-300">
+                                <Hotel size={48} />
+                             </div>
+                             <p className="text-sm font-bold uppercase tracking-widest">{lang === 'zh' ? '尚未連結住宿' : 'No hotels booked'}</p>
+                        </div>
+                    </ImmersivePage>
+                )}
+                {viewMode === 'files' && (
+                    <ImmersivePage
+                        isOpen={true}
+                        onClose={() => setViewMode('overview')}
+                        title={lang === 'zh' ? '電子票券與檔案' : 'Document Vault'}
+                        historyId="files"
+                        lang={lang}
+                    >
+                        <div className="max-w-2xl mx-auto px-6 py-20 flex flex-col items-center justify-center text-gray-400">
+                             <div className="p-8 bg-gray-50 rounded-full mb-6 text-gray-300">
+                                <FileText size={48} />
+                             </div>
+                             <p className="text-sm font-bold uppercase tracking-widest">{lang === 'zh' ? '檔案庫為空' : 'Vault is empty'}</p>
+                        </div>
+                    </ImmersivePage>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

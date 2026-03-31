@@ -221,9 +221,9 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                             <div className="relative w-[40vw] aspect-square md:w-48 rounded-[28px] overflow-hidden group shadow-lg">
                                                 <img src={spot.displayImage} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={spot.title} />
                                                 <div className="absolute top-4 inset-x-4 flex justify-between items-start">
-                                                    <div className="bg-amber-400 text-black px-2 py-1 rounded-lg flex flex-col items-center shadow-lg">
-                                                        <Star size={10} fill="currentColor" />
-                                                        <span className="text-[8px] font-black leading-none mt-0.5">TOP</span>
+                                                    <div className="bg-[#0D631B] text-white px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-md border border-white/20">
+                                                        <span className="text-[9px] font-black leading-none uppercase tracking-tighter">TOP</span>
+                                                        <span className="text-[10px] font-black leading-none">{String(i + 1).padStart(2, '0')}</span>
                                                     </div>
                                                     <button className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 hover:bg-white hover:text-red-500 transition-all">
                                                         <Star size={14} className={i % 2 === 0 ? "fill-white text-white" : ""} />

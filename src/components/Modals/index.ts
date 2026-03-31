@@ -10,7 +10,7 @@ export * from './UnlockModal';
 export * from './CreatorProfileModal';
 export { TemplateStoryPreview } from './TemplateStoryPreview';
 export { OnboardingModal } from './OnboardingModal';
-export { default as ItemDetailModal } from './ItemDetailModal';
+
 export { ConfirmDialog } from './ConfirmDialog';
 export { StartPickerModal } from './StartPickerModal';
 export { MoveToDayModal } from './MoveToDayModal';

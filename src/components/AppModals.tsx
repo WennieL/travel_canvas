@@ -8,7 +8,6 @@ import {
     SubmitModal,
     TemplatePreviewModal,
     UnlockModal,
-    ItemDetailModal,
     StartPickerModal,
     MoveToDayModal,
     CreatorProfileModal,
@@ -438,28 +437,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 />
             )}
 
-            {selectedItem && selectionSource === 'canvas' && (
-                <ItemDetailModal
-                    isOpen={!!selectedItem}
-                    onClose={() => setSelectedItem(null)}
-                    item={selectedItem}
-                    t={t}
-                    lang={lang}
-                    onUpdateScheduleItem={onUpdateScheduleItem}
-                    setViewMode={setViewMode}
-                    isUnlocked={!selectedItem.isLocked}
-                    onUnlockRequest={() => {
-                        setUnlockTarget(selectedItem);
-                        // Trigger batch unlock for the whole plan
-                        setBatchUnlockCount(1);
-                    }}
-                    onUpdateCustomAsset={(id, updates) => {
-                        props.setCustomAssets((prev: TravelItem[]) => prev.map((asset: TravelItem) =>
-                            asset.id === id ? { ...asset, ...updates } : asset
-                        ));
-                    }}
-                />
-            )}
+
 
             <TemplateStoryPreview
                 isOpen={showStoryPreview}
