@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, X, ChevronLeft, ChevronRight, Check, Map as MapIcon, Calendar, Minus } from 'lucide-react';
+import { Plus, X, ChevronLeft, ChevronRight, Check, Map as MapIcon, Calendar, Minus, Trash2 } from 'lucide-react';
 import { Plan, ViewMode, LangType } from '../types';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DayTabsProps {
     activePlan: Plan;
@@ -24,6 +24,8 @@ const DayTabs: React.FC<DayTabsProps> = ({
     dayTabsContainerRef: desktopScrollRef, mobileDayTabsRef,
     viewMode, setViewMode, lang = 'zh'
 }) => {
+    const [isDeleteDrawerOpen, setIsDeleteDrawerOpen] = useState(false);
+
     // Scroll handling for desktop
     const scroll = (direction: 'left' | 'right') => {
         if (desktopScrollRef?.current) {
@@ -111,9 +113,9 @@ const DayTabs: React.FC<DayTabsProps> = ({
                             </button>
                             {activePlan.totalDays > 1 && (
                             <button 
-                                onClick={(e) => handleDeleteDay(currentDay, e as any)} 
+                                onClick={() => setIsDeleteDrawerOpen(true)} 
                                 className="w-7 h-7 rounded-full bg-slate-50 text-slate-400 border border-slate-100 flex items-center justify-center active:scale-90 transition-transform shadow-sm"
-                                title={t.deleteDay || "Delete Current Day"}
+                                title={t.deleteDay || "Delete Day"}
                             >
                                 <Minus size={14} />
                             </button>
@@ -194,9 +196,9 @@ const DayTabs: React.FC<DayTabsProps> = ({
                              </button>
                              {activePlan.totalDays > 1 && (
                                 <button
-                                    onClick={(e) => handleDeleteDay(currentDay, e as any)}
+                                    onClick={() => setIsDeleteDrawerOpen(true)}
                                     className="w-7 h-7 rounded-full bg-slate-50 text-slate-400 border border-slate-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100 flex items-center justify-center transition-all"
-                                    title={t.deleteDay || "Delete Current Day"}
+                                    title={t.deleteDay || "Delete Day"}
                                 >
                                     <Minus size={14} />
                                 </button>
@@ -213,6 +215,73 @@ const DayTabs: React.FC<DayTabsProps> = ({
                     </button>
                 </div>
             </div>
+
+            {/* Delete Day Selector Drawer */}
+            <AnimatePresence>
+                {isDeleteDrawerOpen && (
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setIsDeleteDrawerOpen(false)}
+                            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[5000]"
+                        />
+
+                        {/* Drawer content */}
+                        <motion.div
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            className="fixed bottom-0 left-0 right-0 max-h-[70vh] bg-white rounded-t-[32px] z-[5001] flex flex-col overflow-hidden pb-[calc(20px+env(safe-area-inset-bottom))]"
+                        >
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-black text-gray-900">{lang === 'zh' ? '選擇要刪除的天數' : 'Delete Day'}</h3>
+                                    <button 
+                                        onClick={() => setIsDeleteDrawerOpen(false)}
+                                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500"
+                                    >
+                                        <X size={18} />
+                                    </button>
+                                </div>
+                                <p className="text-sm text-gray-400 font-bold mb-6">
+                                    {lang === 'zh' ? '請從下方清單選擇要移除的天數，一旦刪除將無法復原。' : 'Select a day to remove. This action cannot be undone.'}
+                                </p>
+                                
+                                <div className="space-y-3 overflow-y-auto max-h-[45vh] pr-1 no-scrollbar">
+                                    {Array.from({ length: activePlan.totalDays }).map((_, i) => {
+                                        const dayNum = i + 1;
+                                        return (
+                                            <div 
+                                                key={dayNum}
+                                                className="group flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:border-red-200 hover:bg-red-50/30 transition-all cursor-default"
+                                            >
+                                                <div className="flex flex-col">
+                                                    <span className="font-black text-gray-900">{lang === 'zh' ? '第 ' : 'Day '}{dayNum}{lang === 'zh' ? ' 天' : ''}</span>
+                                                    <span className="text-xs font-bold text-gray-400">{getShortDate(dayNum)}</span>
+                                                </div>
+                                                <button 
+                                                    onClick={(e) => {
+                                                        handleDeleteDay(dayNum, e as any);
+                                                        // We close the drawer so the user can see the confirm modal clearly
+                                                        setIsDeleteDrawerOpen(false);
+                                                    }}
+                                                    className="w-10 h-10 rounded-xl bg-white text-gray-400 hover:text-red-500 hover:bg-white shadow-sm flex items-center justify-center border border-gray-200 transition-all active:scale-95"
+                                                >
+                                                    <Trash2 size={18} />
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </>
     );
 };
