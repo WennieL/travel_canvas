@@ -158,44 +158,48 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/75 pointer-events-none" />
 
                     {/* Overlaid content */}
-                    <div className={`absolute inset-0 flex flex-col justify-center px-6 pt-2 pb-3`}>
-                        {/* Back button overlay */}
-                        <button 
-                            onClick={() => setShowPlanManager(true)}
-                            className="absolute top-4 left-4 w-8 h-8 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white border border-white/10"
-                        >
-                            <ChevronLeft size={18} />
-                        </button>
+                    <div className={`absolute inset-0 flex flex-col justify-between px-6 pt-5 pb-6`}>
+                        {/* Top Bar: Back & Share */}
+                        <div className="flex justify-between items-start">
+                            <button 
+                                onClick={() => setShowPlanManager(true)}
+                                className="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white border border-white/10 active:scale-95 transition-all"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
 
-                        {/* Plan name */}
-                        <h1 className="font-black text-white text-2xl leading-tight truncate drop-shadow-lg mb-1 mt-6">
-                            {activePlan.name}
-                        </h1>
-
-                        {/* Chips row */}
-                        <div className={`flex items-center gap-1.5 flex-wrap mb-4`}>
-                            <span className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-md rounded-full px-2.5 py-0.5 border border-white/20 shadow-sm">
-                                <Calendar size={9} />
-                                {activePlan.startDate} → {activePlan.endDate}
-                            </span>
-                            <span className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-md rounded-full px-2.5 py-0.5 border border-white/20 shadow-sm">
-                                {activePlan.totalDays}{lang === 'zh' ? ' 天' : 'D'}
-                            </span>
-                            {(activePlan.destination || activePlan.region) && (
-                                <span className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-md rounded-full px-2.5 py-0.5 border border-white/20 shadow-sm">
-                                    📍 {activePlan.destination || getRegionName(activePlan.region || '', lang)}
-                                </span>
-                            )}
+                            <button 
+                                onClick={() => setShowShareModal(true)}
+                                className="bg-white/15 backdrop-blur-xl hover:bg-white/25 text-white w-10 h-10 rounded-full border border-white/20 shadow-2xl active:scale-[0.98] transition-all flex items-center justify-center"
+                                title={t.shareHub}
+                            >
+                                <Share2 size={16} className="text-emerald-400" />
+                            </button>
                         </div>
 
-                        {/* Publish Button (Prominent in Overview) */}
-                        <button 
-                            onClick={() => setShowShareModal(true)}
-                            className="bg-emerald-500 hover:bg-emerald-600 text-white w-full py-2.5 rounded-full text-xs font-black shadow-xl shadow-emerald-900/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                        >
-                            <Share2 size={12} />
-                            <span>{lang === 'zh' ? '發布行程' : 'Publish Trip'}</span>
-                        </button>
+                        {/* Bottom Content: Title & Chips */}
+                        <div className="mt-auto">
+                            {/* Plan name */}
+                            <h1 className="font-black text-white text-3xl leading-tight truncate drop-shadow-2xl mb-2">
+                                {activePlan.name}
+                            </h1>
+
+                            {/* Chips row */}
+                            <div className={`flex items-center gap-1.5 flex-wrap`}>
+                                <span className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-md rounded-full px-2.5 py-1 border border-white/20 shadow-sm">
+                                    <Calendar size={9} />
+                                    {activePlan.startDate} → {activePlan.endDate}
+                                </span>
+                                <span className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-md rounded-full px-2.5 py-1 border border-white/20 shadow-sm">
+                                    {activePlan.totalDays}{lang === 'zh' ? ' 天' : 'D'}
+                                </span>
+                                {(activePlan.destination || activePlan.region) && (
+                                    <span className="flex items-center gap-1 text-[10px] font-bold text-white/90 bg-white/15 backdrop-blur-md rounded-full px-2.5 py-1 border border-white/20 shadow-sm">
+                                        📍 {activePlan.destination || getRegionName(activePlan.region || '', lang)}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,42 +216,41 @@ const AppHeader: React.FC<AppHeaderProps> = ({
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/10 pointer-events-none" />
                     <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
 
-                    <div className="absolute inset-0 flex flex-col justify-center px-12">
-                        {/* Back Link */}
-                        <button 
-                            onClick={() => setShowPlanManager(true)}
-                            className="flex items-center gap-1.5 text-white/60 hover:text-white transition-colors mb-4 group w-fit"
-                        >
-                            <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                            <span className="text-xs font-black uppercase tracking-widest">{lang === 'zh' ? '返回行程列表' : 'View All Trips'}</span>
-                        </button>
+                    <div className="absolute inset-0 flex flex-col justify-between px-12 py-10">
+                        {/* Top Bar: Back & Share */}
+                        <div className="flex justify-between items-start">
+                            <button 
+                                onClick={() => setShowPlanManager(true)}
+                                className="flex items-center gap-2 text-white/70 hover:text-white transition-all bg-black/20 hover:bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 group active:scale-95"
+                            >
+                                <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                                <span className="text-xs font-black uppercase tracking-widest">{lang === 'zh' ? '返回行程列表' : 'View All Trips'}</span>
+                            </button>
 
-                        <h1 className="font-black text-white text-5xl leading-tight drop-shadow-xl mb-4 max-w-2xl">
-                            {activePlan.name}
-                        </h1>
+                            <button 
+                                onClick={() => setShowShareModal(true)}
+                                className="bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-8 h-12 rounded-full text-xs font-black border border-white/20 shadow-2xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-3 tracking-widest uppercase"
+                            >
+                                <Share2 size={18} className="text-emerald-400" />
+                                {t.shareHub || '分享與匯出'}
+                            </button>
+                        </div>
 
-                        <div className="flex items-center gap-6">
-                            {/* Chips */}
-                            <div className="flex items-center gap-3">
-                                <span className="flex items-center gap-2 text-sm font-bold text-white/90 bg-white/10 backdrop-blur-md rounded-full px-5 py-2 border border-white/20 shadow-xl">
-                                    <Calendar size={14} />
+                        {/* Bottom Content: Title & Chips */}
+                        <div className="mt-auto">
+                            <h1 className="font-black text-white text-6xl leading-tight drop-shadow-2xl mb-6 max-w-3xl">
+                                {activePlan.name}
+                            </h1>
+
+                            <div className="flex items-center gap-4">
+                                <span className="flex items-center gap-2.5 text-base font-bold text-white/90 bg-white/10 backdrop-blur-md rounded-full px-6 py-2.5 border border-white/20 shadow-2xl">
+                                    <Calendar size={16} />
                                     {activePlan.startDate} → {activePlan.endDate}
                                 </span>
-                                <span className="flex items-center gap-1 text-sm font-bold text-white/90 bg-white/10 backdrop-blur-md rounded-full px-5 py-2 border border-white/20 shadow-xl">
+                                <span className="flex items-center gap-2 text-base font-bold text-white/90 bg-white/10 backdrop-blur-md rounded-full px-6 py-2.5 border border-white/20 shadow-2xl">
                                     {activePlan.totalDays}{lang === 'zh' ? ' 天' : ' Days'}
                                 </span>
                             </div>
-
-                            <div className="h-6 border-l border-white/20" />
-
-                            {/* Publish Action */}
-                            <button 
-                            onClick={() => setShowShareModal(true)}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 h-12 rounded-full text-sm font-black shadow-2xl shadow-emerald-900/40 transform hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-3"
-                            >
-                            <Share2 size={16} />
-                            {lang === 'zh' ? '立即發布這趟行程' : 'Publish This Trip'}
-                            </button>
                         </div>
                     </div>
                 </div>

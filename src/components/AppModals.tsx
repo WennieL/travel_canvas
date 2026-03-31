@@ -335,6 +335,10 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
             <SubmitModal
                 isOpen={showSubmitModal}
                 onClose={() => setShowSubmitModal(false)}
+                onBack={() => {
+                    setShowSubmitModal(false);
+                    setShowShareModal(true);
+                }}
                 plan={activePlan}
                 onSubmit={() => {
                     showToastMessage(t.submitSuccessToast);

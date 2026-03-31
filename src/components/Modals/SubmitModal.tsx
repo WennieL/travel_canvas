@@ -8,6 +8,7 @@ interface SubmitModalProps {
     plan: Plan;
     onSubmit: (description: string, tags: string[]) => void;
     t: Record<string, string>;
+    onBack?: () => void;
 }
 
 // Keys for translation lookup
@@ -21,7 +22,8 @@ export const SubmitModal: React.FC<SubmitModalProps> = ({
     onClose,
     plan,
     onSubmit,
-    t
+    t,
+    onBack
 }) => {
     const [name, setName] = useState(plan.name); // Initialize with plan name
     const [description, setDescription] = useState('');
@@ -58,6 +60,18 @@ export const SubmitModal: React.FC<SubmitModalProps> = ({
                 <div className="p-6 pb-4 border-b border-gray-100 bg-gradient-to-r from-teal-50 to-emerald-50">
                     <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
+                            {onBack && (
+                                <button 
+                                    onClick={onBack}
+                                    className="p-2 -ml-2 text-gray-400 hover:text-teal-600 hover:bg-teal-50 rounded-full transition-all active:scale-90"
+                                    aria-label="Back"
+                                >
+                                    <X className="rotate-45 hidden" /> {/* Hidden placeholder if needed, using ChevronLeft below */}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
+                                        <path d="m15 18-6-6 6-6"/>
+                                    </svg>
+                                </button>
+                            )}
                             <div className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-teal-100">
                                 <UploadCloud size={20} />
                             </div>
