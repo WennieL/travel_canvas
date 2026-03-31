@@ -10,6 +10,8 @@ interface TemplateDetailsPanelProps {
     onApply: (tpl: Template) => void;
     onCreatorClick?: (creatorId: string) => void;
     onSpotClick?: (spot: any) => void;
+    savedTemplates?: Template[];
+    handleToggleFavoriteTemplate?: (tpl: Template) => void;
 }
 
 export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
@@ -17,10 +19,13 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     lang,
     onApply,
     onCreatorClick,
-    onSpotClick
+    onSpotClick,
+    savedTemplates = [],
+    handleToggleFavoriteTemplate
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const creator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
+    const isFavorited = savedTemplates.some(t => t.id === template.id);
 
     // Day logic
     const totalDays = template.duration || 1;
@@ -250,6 +255,8 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                             primaryActionLabel={t.applyTemplate}
                             onPrimaryAction={() => onApply(template)}
                             onCreatorClick={onCreatorClick}
+                            isFavorited={isFavorited}
+                            onFavoriteClick={() => handleToggleFavoriteTemplate?.(template)}
                             lang={lang}
                             variant="template"
                         />

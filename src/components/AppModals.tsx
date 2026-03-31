@@ -158,6 +158,10 @@ interface AppModalsProps {
     // Phase 22 Extension
     sidebarMode: 'list' | 'map';
     setSidebarMode: (mode: 'list' | 'map') => void;
+    savedSpots: TravelItem[];
+    savedTemplates: Template[];
+    handleToggleFavoriteSpot: (item: TravelItem) => void;
+    handleToggleFavoriteTemplate: (tpl: Template) => void;
 }
 
 const AppModals: React.FC<AppModalsProps> = (props) => {
@@ -193,6 +197,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         onExploreCreatorMap,
         onModeChange,
         sidebarMode, setSidebarMode,
+        savedSpots, savedTemplates,
+        handleToggleFavoriteSpot, handleToggleFavoriteTemplate,
         pendingWizardData, setPendingWizardData,
         onUpdateScheduleItem
     } = props;
@@ -255,6 +261,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 }}
                 lang={lang}
                 t={t}
+                initialData={pendingWizardData}
             />
 
             {/* PlanManagerModal replaced by full-page ItineraryHub */}
@@ -395,6 +402,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                     sidebarMode={sidebarMode}
                     setSidebarMode={setSidebarMode}
                     showToastMessage={showToastMessage}
+                    savedSpots={savedSpots}
+                    handleToggleFavoriteSpot={handleToggleFavoriteSpot}
                 />
             )}
 

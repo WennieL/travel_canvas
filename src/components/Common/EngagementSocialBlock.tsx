@@ -22,6 +22,8 @@ interface EngagementSocialBlockProps {
     onCreatorClick?: (id: string) => void;
     onCommentClick?: () => void;
     commentCount?: number;
+    isFavorited?: boolean;
+    onFavoriteClick?: () => void;
     lang?: string;
 }
 
@@ -36,6 +38,8 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
     onCreatorClick,
     onCommentClick,
     commentCount = 0,
+    isFavorited = false,
+    onFavoriteClick,
     lang = 'zh'
 }) => {
     const t = TRANSLATIONS[lang as any] || TRANSLATIONS.zh;
@@ -135,8 +139,15 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
                 {/* Interaction Pill Bar */}
                 <div className="flex items-center justify-center">
                     <div className="bg-white h-16 px-10 rounded-full flex items-center gap-12 shadow-[0_12px_40px_rgba(0,0,0,0.06)] border border-[#E8EDE4] active:scale-95 transition-transform">
-                        <button className="text-[#181D17]/30 hover:text-red-500 transition-all">
-                            <Heart size={22} />
+                        <button 
+                            onClick={onFavoriteClick}
+                            className={`transition-all active:scale-125 ${isFavorited ? 'text-red-500' : 'text-[#181D17]/30 hover:text-red-500'}`}
+                        >
+                            <Heart 
+                                size={22} 
+                                fill={isFavorited ? "currentColor" : "none"} 
+                                strokeWidth={isFavorited ? 2.5 : 2}
+                            />
                         </button>
                         <button 
                             onClick={onCommentClick}

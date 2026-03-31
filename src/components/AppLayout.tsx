@@ -95,6 +95,8 @@ export interface AppLayoutProps {
     setCustomAssets: React.Dispatch<React.SetStateAction<TravelItem[]>>;
     showFavorites: boolean;
     setShowFavorites: (val: boolean) => void;
+    savedSpots: TravelItem[];
+    savedTemplates: Template[];
     activeCreator: any;
     creatorTemplates: Template[];
     handleMapItemClick: (item: any) => void;
@@ -108,6 +110,8 @@ export interface AppLayoutProps {
     openDatePicker: () => void;
     handleNavigate: (view: ViewMode) => void;
     handleSelectPlan: (id: string) => void;
+    handleToggleFavoriteSpot: (item: TravelItem) => void;
+    handleToggleFavoriteTemplate: (tpl: Template) => void;
 
     // Itinerary
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
@@ -187,11 +191,13 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         selectedCreatorId, setSelectedCreatorId,
         subscribedCreators, customAssets, setCustomAssets,
         showFavorites, setShowFavorites,
+        savedSpots, savedTemplates,
         activeCreator, creatorTemplates,
         handleMapItemClick, handleToggleSubscribe, toggleLang,
         handleExploreCreatorMap, handleSidebarModeChange,
         startEditingName, saveName, handleNameKeyDown, openDatePicker,
         handleNavigate, handleSelectPlan,
+        handleToggleFavoriteSpot, handleToggleFavoriteTemplate,
         // Itinerary
         handleDragStart, handleDrop, handleRemoveItem, handleUpdateItem,
         handleTapToAdd, handleQuickFill, handleUpdateScheduleItemByInstanceId,
@@ -355,6 +361,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                 subscribedCreators={subscribedCreators}
                                 onToggleSubscribe={handleToggleSubscribe}
                                 onUpdateItem={handleUpdateItem}
+                                savedSpots={savedSpots}
+                                handleToggleFavoriteSpot={handleToggleFavoriteSpot}
                             />
                         </div>
                     )}
@@ -402,7 +410,20 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                             t={t}
                             customAssets={customAssets}
                             subscribedCreators={subscribedCreators}
+                            savedTemplates={savedTemplates}
+                            savedSpots={savedSpots}
                             onCreatorClick={ui.setSelectedCreatorId}
+                            onSpotClick={(spot) => {
+                                ui.setActiveSpotId(spot.id);
+                                ui.setSelectedItem(spot);
+                                ui.setSelectionSource('sidebar');
+                            }}
+                            onTemplateClick={(tpl) => {
+                                ui.setActiveTemplateId(tpl.id);
+                            }}
+                            handleToggleFavoriteSpot={handleToggleFavoriteSpot}
+                            handleToggleFavoriteTemplate={handleToggleFavoriteTemplate}
+                            handleToggleSubscribe={handleToggleSubscribe}
                             onSetShowCustomItemModal={setShowCustomItemModal}
                             onNavigateToExplore={() => { setShowFavorites(false); setViewMode('discovery'); }}
                         />
@@ -634,6 +655,10 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 onUpdateScheduleItem={handleUpdateScheduleItemByInstanceId}
                 pendingWizardData={pendingWizardData}
                 setPendingWizardData={setPendingWizardData}
+                savedSpots={savedSpots}
+                savedTemplates={savedTemplates}
+                handleToggleFavoriteSpot={handleToggleFavoriteSpot}
+                handleToggleFavoriteTemplate={handleToggleFavoriteTemplate}
 
                 // Tools data
                 budgetLimit={budgetLimit}

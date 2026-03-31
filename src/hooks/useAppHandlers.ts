@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
     Plan, Template, TravelItem, ViewMode, Region,
     ScheduleItem, ChecklistItem
@@ -51,6 +51,50 @@ export const useAppHandlers = (deps: AppHandlersDeps) => {
     const [subscribedCreators, setSubscribedCreators] = useState<string[]>([]);
     const [customAssets, setCustomAssets] = useState<TravelItem[]>([]);
     const [showFavorites, setShowFavorites] = useState(false);
+    const [savedSpots, setSavedSpots] = useState<TravelItem[]>(() => {
+        const saved = typeof window !== 'undefined' ? localStorage.getItem('tc_saved_spots') : null;
+        return saved ? JSON.parse(saved) : [];
+    });
+    const [savedTemplates, setSavedTemplates] = useState<Template[]>(() => {
+        const saved = typeof window !== 'undefined' ? localStorage.getItem('tc_saved_templates') : null;
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    // --- Persistence ---
+    useEffect(() => {
+        localStorage.setItem('tc_saved_spots', JSON.stringify(savedSpots));
+        localStorage.setItem('tc_saved_templates', JSON.stringify(savedTemplates));
+    }, [savedSpots, savedTemplates]);
+
+    // --- Handlers ---
+
+    const handleToggleFavoriteSpot = useCallback((item: TravelItem) => {
+        setSavedSpots(prev => {
+            const isSaved = prev.some(s => s.id === item.id);
+            const next = isSaved ? prev.filter(s => s.id !== item.id) : [item, ...prev];
+            showToastMessage(
+                isSaved 
+                    ? (lang === 'zh' ? '已從收藏移除' : 'Removed from favorites') 
+                    : (lang === 'zh' ? '已加入我的收藏 ❤️' : 'Added to favorites ❤️'),
+                'success'
+            );
+            return next;
+        });
+    }, [lang, showToastMessage]);
+
+    const handleToggleFavoriteTemplate = useCallback((tpl: Template) => {
+        setSavedTemplates(prev => {
+            const isSaved = prev.some(t => t.id === tpl.id);
+            const next = isSaved ? prev.filter(t => t.id !== tpl.id) : [tpl, ...prev];
+            showToastMessage(
+                isSaved 
+                    ? (lang === 'zh' ? '已從收藏移除' : 'Removed from favorites') 
+                    : (lang === 'zh' ? '已收藏此模版 ❤️' : 'Added template to favorites ❤️'),
+                'success'
+            );
+            return next;
+        });
+    }, [lang, showToastMessage]);
 
     // --- Derived ---
     const activeCreator = SAMPLE_CREATORS.find(c => c.id === selectedCreatorId) || null;
@@ -189,11 +233,15 @@ export const useAppHandlers = (deps: AppHandlersDeps) => {
         subscribedCreators, setSubscribedCreators,
         customAssets, setCustomAssets,
         showFavorites, setShowFavorites,
+        savedSpots, setSavedSpots,
+        savedTemplates, setSavedTemplates,
         // Derived
         activeCreator, creatorTemplates,
         // Handlers
         handleMapItemClick,
         handleToggleSubscribe,
+        handleToggleFavoriteSpot,
+        handleToggleFavoriteTemplate,
         toggleLang,
         handleExploreCreatorMap,
         handleSidebarModeChange,

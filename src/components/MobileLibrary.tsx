@@ -52,6 +52,8 @@ interface MobileLibraryProps {
     onModeChange?: (mode: 'list' | 'map') => void;
     sidebarMode?: 'list' | 'map';
     setSidebarMode?: (mode: 'list' | 'map') => void;
+    savedSpots?: TravelItem[];
+    handleToggleFavoriteSpot?: (item: TravelItem) => void;
 }
 
 export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {
@@ -109,6 +111,8 @@ export const MobileLibrary: React.FC<MobileLibraryProps> = (props) => {
                         onModeChange={handleModeChange}
                         sidebarMode={props.sidebarMode}
                         setSidebarMode={props.setSidebarMode}
+                        savedSpots={props.savedSpots}
+                        handleToggleFavoriteSpot={props.handleToggleFavoriteSpot}
                     />
                 </div>
             </div>

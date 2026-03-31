@@ -18,6 +18,8 @@ interface SpotDetailPageProps {
     plans?: any[];
     onAddItemToPlan?: (item: TravelItem, planId: string) => void;
     onCreateNewPlan?: () => void;
+    savedSpots?: TravelItem[];
+    handleToggleFavoriteSpot?: (item: TravelItem) => void;
 }
 
 export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
@@ -31,7 +33,9 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
     fallbackItem,
     plans = [],
     onAddItemToPlan,
-    onCreateNewPlan
+    onCreateNewPlan,
+    savedSpots = [],
+    handleToggleFavoriteSpot
 }) => {
     const [isPlanSelectorOpen, setIsPlanSelectorOpen] = useState(false);
     const [isAddedToPlan, setIsAddedToPlan] = useState(false);
@@ -89,6 +93,8 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
                 onOpenPlanSelector={() => setIsPlanSelectorOpen(true)}
                 disableInternalScroll={true}
                 isScrolled={isScrolled}
+                savedSpots={savedSpots}
+                handleToggleFavoriteSpot={handleToggleFavoriteSpot}
             />
 
             <PlanSelectorDrawer

@@ -38,6 +38,8 @@ interface SpotDetailsPanelProps {
     onOpenPlanSelector?: () => void;
     disableInternalScroll?: boolean;
     isScrolled?: boolean;
+    savedSpots?: TravelItem[];
+    handleToggleFavoriteSpot?: (item: TravelItem) => void;
 }
 
 export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
@@ -59,7 +61,9 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     isExternalPlanSelectorOpen,
     onOpenPlanSelector,
     disableInternalScroll = false,
-    isScrolled: externalIsScrolled
+    isScrolled: externalIsScrolled,
+    savedSpots = [],
+    handleToggleFavoriteSpot
 }) => {
     const [isPlanSelectorOpen, setIsPlanSelectorOpen] = useState(false);
     const [isReviewDrawerOpen, setIsReviewDrawerOpen] = useState(false);
@@ -72,6 +76,8 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
     const title = lang === 'zh' ? item.title : ((item as any).titleEn || item.title);
     const imgUrl = (item as any).coverImage || item.image;
     const position: [number, number] = item.lat && item.lng ? [item.lat, item.lng] : [-37.8136, 144.9631];
+
+    const isFavorited = savedSpots.some(s => s.id === item.id);
 
     useEffect(() => {
         if (isExternalPlanSelectorOpen !== undefined) {
@@ -273,6 +279,8 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                             onCreatorClick={onCreatorClick}
                             onCommentClick={() => setIsReviewDrawerOpen(true)}
                             commentCount={(item as any).reviews?.length || 0}
+                            isFavorited={isFavorited}
+                            onFavoriteClick={() => handleToggleFavoriteSpot?.(item as TravelItem)}
                             lang={lang}
                             variant="spot"
                             isApplied={isAddedToPlan}

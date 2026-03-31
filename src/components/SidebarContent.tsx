@@ -72,6 +72,8 @@ interface SidebarContentProps {
     subscribedCreators: string[];
     onToggleSubscribe: (creatorId: string) => void;
     onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
+    savedSpots?: TravelItem[];
+    handleToggleFavoriteSpot?: (item: TravelItem) => void;
 }
 
 export const SidebarContent: React.FC<SidebarContentProps> = ({
@@ -87,7 +89,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
     sidebarMode = 'list', setSidebarMode, onSelectItem,
     selectedItem, selectionSource,
     subscribedCreators, onToggleSubscribe,
-    onUpdateItem
+    onUpdateItem,
+    savedSpots = [], handleToggleFavoriteSpot
 }) => {
     const { confirm } = useConfirm();
 
@@ -241,6 +244,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                                 showToastMessage={showToastMessage}
                                 customAssets={customAssets}
                                 sidebarMode={sidebarMode}
+                                savedSpots={savedSpots}
+                                handleToggleFavoriteSpot={handleToggleFavoriteSpot}
                             />
                         )}
                     </>

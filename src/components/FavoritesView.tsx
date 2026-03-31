@@ -8,20 +8,30 @@ interface FavoritesViewProps {
     customAssets: TravelItem[];
     subscribedCreators: string[];
     savedTemplates?: Template[];
+    savedSpots?: TravelItem[];
     onCreatorClick: (id: string) => void;
+    onSpotClick?: (spot: TravelItem) => void;
+    onTemplateClick?: (tpl: Template) => void;
+    handleToggleFavoriteSpot?: (item: TravelItem) => void;
+    handleToggleFavoriteTemplate?: (tpl: Template) => void;
+    handleToggleSubscribe?: (creatorId: string) => void;
     onSetShowCustomItemModal: (show: boolean) => void;
     onNavigateToExplore: () => void;
 }
 
-type FavSubTab = 'templates' | 'creators' | 'myAssets';
+type FavSubTab = 'spots' | 'templates' | 'creators' | 'myAssets';
 
 const FavoritesView: React.FC<FavoritesViewProps> = ({
-    lang, t, customAssets, subscribedCreators, savedTemplates = [],
-    onCreatorClick, onSetShowCustomItemModal, onNavigateToExplore
+    lang, t, customAssets, subscribedCreators, savedTemplates = [], savedSpots = [],
+    onCreatorClick, onSpotClick, onTemplateClick,
+    handleToggleFavoriteSpot, handleToggleFavoriteTemplate, handleToggleSubscribe,
+    onSetShowCustomItemModal, onNavigateToExplore
 }) => {
-    const [subTab, setSubTab] = useState<FavSubTab>('templates');
+    const [subTab, setSubTab] = useState<FavSubTab>('spots');
+    const [removedItemIds, setRemovedItemIds] = useState<string[]>([]);
 
     const subTabs: { id: FavSubTab; label: string; count: number }[] = [
+        { id: 'spots', label: lang === 'zh' ? '收藏景點' : 'Spots', count: savedSpots.length },
         { id: 'templates', label: lang === 'zh' ? '收藏模板' : 'Templates', count: savedTemplates.length },
         { id: 'creators', label: lang === 'zh' ? '關注創作者' : 'Creators', count: subscribedCreators.length },
         { id: 'myAssets', label: lang === 'zh' ? '我的素材' : 'My Assets', count: customAssets.length },
@@ -83,23 +93,112 @@ const FavoritesView: React.FC<FavoritesViewProps> = ({
 
             {/* Content */}
             <div className="flex-1 overflow-y-auto p-4">
+                {subTab === 'spots' && (
+                    savedSpots.length === 0 ? (
+                        <EmptyState
+                            icon={Heart}
+                            title={lang === 'zh' ? '還沒有收藏景點' : 'No saved spots'}
+                            subtitle={lang === 'zh' ? '在探索區域看到喜歡的景點，按 ❤️ 收藏' : 'Tap ❤️ on spots you like while exploring'}
+                            actionLabel={lang === 'zh' ? '去探索' : 'Explore'}
+                            onAction={onNavigateToExplore}
+                        />
+                    ) : (
+                        <div className="grid grid-cols-2 gap-4">
+                            {savedSpots.map(spot => {
+                                const isSoftRemoved = removedItemIds.includes(spot.id);
+                                return (
+                                    <div 
+                                        key={spot.id} 
+                                        className={`group relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer ${isSoftRemoved ? 'opacity-40 grayscale-[0.5]' : ''}`}
+                                        onClick={() => !isSoftRemoved && onSpotClick?.(spot)}
+                                    >
+                                        <div className="aspect-[4/3] overflow-hidden relative">
+                                            <img 
+                                                src={spot.coverImage || spot.image} 
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                alt={spot.title}
+                                            />
+                                            {/* Heart Toggle */}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleToggleFavoriteSpot?.(spot);
+                                                    if (!isSoftRemoved) {
+                                                        setRemovedItemIds(prev => [...prev, spot.id]);
+                                                    } else {
+                                                        setRemovedItemIds(prev => prev.filter(id => id !== spot.id));
+                                                    }
+                                                }}
+                                                className={`absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center transition-all active:scale-90 ${isSoftRemoved ? 'text-gray-300' : 'text-red-500'} lg:opacity-0 lg:group-hover:opacity-100`}
+                                            >
+                                                <Heart size={16} fill={isSoftRemoved ? "none" : "currentColor"} />
+                                            </button>
+                                        </div>
+                                        <div className="p-3">
+                                            <div className="text-[10px] font-black text-teal-600 uppercase tracking-widest mb-1">{spot.type}</div>
+                                            <h4 className="text-sm font-bold text-gray-800 line-clamp-1">{lang === 'zh' ? spot.title : (spot.titleEn || spot.title)}</h4>
+                                            <div className="mt-2 flex items-center gap-1 text-[10px] font-bold text-gray-400">
+                                                <span>{spot.region}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )
+                )}
+
                 {subTab === 'templates' && (
                     savedTemplates.length === 0 ? (
                         <EmptyState
-                            icon={Heart}
+                            icon={Compass}
                             title={lang === 'zh' ? '還沒有收藏模板' : 'No saved templates'}
                             subtitle={lang === 'zh' ? '在探索頁面按 ❤️ 收藏喜歡的旅行模板' : 'Tap ❤️ on templates you like in Explore'}
                             actionLabel={lang === 'zh' ? '去探索' : 'Explore'}
                             onAction={onNavigateToExplore}
                         />
                     ) : (
-                        <div className="grid grid-cols-2 gap-3">
-                            {savedTemplates.map(tpl => (
-                                <div key={tpl.id} className="border border-gray-100 rounded-xl p-3 hover:shadow-md transition-shadow">
-                                    <div className="text-sm font-bold text-gray-700 mb-1">{tpl.name}</div>
-                                    <div className="text-xs text-gray-400">{tpl.authorId}</div>
-                                </div>
-                            ))}
+                        <div className="space-y-4">
+                            {savedTemplates.map(tpl => {
+                                const isSoftRemoved = removedItemIds.includes(tpl.id);
+                                return (
+                                    <div 
+                                        key={tpl.id} 
+                                        className={`group relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all flex h-24 cursor-pointer ${isSoftRemoved ? 'opacity-40 grayscale-[0.5]' : ''}`}
+                                        onClick={() => !isSoftRemoved && onTemplateClick?.(tpl)}
+                                    >
+                                        <div className="w-24 shrink-0 overflow-hidden relative">
+                                            <img 
+                                                src={tpl.coverImage} 
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                alt={tpl.name}
+                                            />
+                                            {/* Heart Toggle */}
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleToggleFavoriteTemplate?.(tpl);
+                                                    if (!isSoftRemoved) {
+                                                        setRemovedItemIds(prev => [...prev, tpl.id]);
+                                                    } else {
+                                                        setRemovedItemIds(prev => prev.filter(id => id !== tpl.id));
+                                                    }
+                                                }}
+                                                className={`absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm shadow-sm flex items-center justify-center transition-all active:scale-90 ${isSoftRemoved ? 'text-gray-300' : 'text-red-500'} lg:opacity-0 lg:group-hover:opacity-100`}
+                                            >
+                                                <Heart size={14} fill={isSoftRemoved ? "none" : "currentColor"} />
+                                            </button>
+                                        </div>
+                                        <div className="flex-1 p-3 flex flex-col justify-center">
+                                            <div className="text-[9px] font-black text-teal-600 uppercase tracking-widest mb-1">{tpl.duration} {lang === 'zh' ? '天行程' : 'DAYS'}</div>
+                                            <h4 className="text-sm font-bold text-gray-800 line-clamp-1">{lang === 'zh' ? tpl.name : (tpl.nameEn || tpl.name)}</h4>
+                                            <div className="mt-1 flex items-center gap-2">
+                                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">BY {tpl.author}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     )
                 )}
@@ -115,21 +214,39 @@ const FavoritesView: React.FC<FavoritesViewProps> = ({
                         />
                     ) : (
                         <div className="space-y-3">
-                            {subscribedCreators.map(creatorId => (
-                                <button
-                                    key={creatorId}
-                                    onClick={() => onCreatorClick(creatorId)}
-                                    className="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors"
-                                >
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm">
-                                        {creatorId.slice(0, 1).toUpperCase()}
+                            {subscribedCreators.map(creatorId => {
+                                const isSoftRemoved = removedItemIds.includes(creatorId);
+                                return (
+                                    <div
+                                        key={creatorId}
+                                        className={`w-full flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors relative group cursor-pointer ${isSoftRemoved ? 'opacity-40 grayscale-[0.5]' : ''}`}
+                                        onClick={() => !isSoftRemoved && onCreatorClick(creatorId)}
+                                    >
+                                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-sm">
+                                            {creatorId.slice(0, 1).toUpperCase()}
+                                        </div>
+                                        <div className="text-left flex-1">
+                                            <div className="text-sm font-bold text-gray-700">{creatorId}</div>
+                                            <div className="text-xs text-gray-400">{lang === 'zh' ? '旅遊創作者' : 'Travel Creator'}</div>
+                                        </div>
+                                        {/* Unfollow Button */}
+                                        <button 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleToggleSubscribe?.(creatorId);
+                                                if (!isSoftRemoved) {
+                                                    setRemovedItemIds(prev => [...prev, creatorId]);
+                                                } else {
+                                                    setRemovedItemIds(prev => prev.filter(id => id !== creatorId));
+                                                }
+                                            }}
+                                            className={`px-3 py-1 rounded-full text-[10px] font-black border transition-all ${isSoftRemoved ? 'border-gray-200 text-gray-400' : 'border-teal-500 text-teal-600 hover:bg-teal-500 hover:text-white'}`}
+                                        >
+                                            {isSoftRemoved ? (lang === 'zh' ? '已取消關注' : 'Unfollowed') : (lang === 'zh' ? '關注中' : 'Following')}
+                                        </button>
                                     </div>
-                                    <div className="text-left">
-                                        <div className="text-sm font-bold text-gray-700">{creatorId}</div>
-                                        <div className="text-xs text-gray-400">{lang === 'zh' ? '旅遊創作者' : 'Travel Creator'}</div>
-                                    </div>
-                                </button>
-                            ))}
+                                );
+                            })}
                         </div>
                     )
                 )}

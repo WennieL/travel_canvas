@@ -26,6 +26,8 @@ interface DiscoverySidekickProps {
     customAssets: TravelItem[];
     selectionSource?: 'map' | 'sidebar' | 'canvas' | null;
     sidebarMode?: 'list' | 'map';
+    savedSpots?: TravelItem[];
+    handleToggleFavoriteSpot?: (item: TravelItem) => void;
 }
 
 export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
@@ -49,7 +51,9 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
     showToastMessage,
     customAssets = [],
     selectionSource,
-    sidebarMode
+    sidebarMode,
+    savedSpots = [],
+    handleToggleFavoriteSpot
 }) => {
     // [PHASE 24] Hero Spot Logic: Auto-select the first spot once when entering 'map' mode
     const hasAutoSelected = React.useRef(false);
@@ -142,6 +146,8 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                 showToastMessage={showToastMessage as any}
                 preferredAuthorId={discoveryCreatorId}
                 sidebarMode={sidebarMode}
+                savedSpots={savedSpots}
+                handleToggleFavoriteSpot={handleToggleFavoriteSpot}
             />
         );
     }

@@ -224,8 +224,11 @@ export function App() {
         selectedCreatorId, setSelectedCreatorId,
         subscribedCreators, customAssets, setCustomAssets,
         showFavorites, setShowFavorites,
+        savedSpots, savedTemplates,
         activeCreator, creatorTemplates,
-        handleMapItemClick, handleToggleSubscribe, toggleLang,
+        handleMapItemClick, handleToggleSubscribe, 
+        handleToggleFavoriteSpot, handleToggleFavoriteTemplate,
+        toggleLang,
         handleExploreCreatorMap, handleSidebarModeChange,
         startEditingName, saveName, handleNameKeyDown, openDatePicker,
         handleNavigate, handleSelectPlan, generateExportText,
@@ -356,8 +359,11 @@ export function App() {
             subscribedCreators={subscribedCreators}
             customAssets={customAssets} setCustomAssets={setCustomAssets}
             showFavorites={showFavorites} setShowFavorites={setShowFavorites}
+            savedSpots={savedSpots} savedTemplates={savedTemplates}
             activeCreator={activeCreator} creatorTemplates={creatorTemplates}
             handleMapItemClick={handleMapItemClick} handleToggleSubscribe={handleToggleSubscribe}
+            handleToggleFavoriteSpot={handleToggleFavoriteSpot}
+            handleToggleFavoriteTemplate={handleToggleFavoriteTemplate}
             toggleLang={toggleLang}
             handleExploreCreatorMap={handleExploreCreatorMap}
             handleSidebarModeChange={handleSidebarModeChange}
@@ -401,7 +407,13 @@ export function App() {
         {ui.activeTemplateId && (
             <ImmersivePage
                 isOpen={!!ui.activeTemplateId}
-                onClose={() => ui.setActiveTemplateId(null)}
+                onClose={() => {
+                    ui.setActiveTemplateId(null);
+                    // If we were in the middle of creating a trip, reopen the settings modal
+                    if (pendingWizardData) {
+                        ui.setShowCheckIn(true);
+                    }
+                }}
                 title={lang === 'zh' ? '行程預覽' : 'Template Preview'}
                 historyId={`tpl-${ui.activeTemplateId}`}
                 transparentHeader
@@ -433,6 +445,8 @@ export function App() {
                                 ui.setActiveSpotId(spot.id);
                                 ui.setSelectedItem(spot);
                             }}
+                            savedTemplates={savedTemplates}
+                            handleToggleFavoriteTemplate={handleToggleFavoriteTemplate}
                         />
                     );
                 })()}
@@ -459,6 +473,8 @@ export function App() {
                     ui.setShowCheckIn(true);
                     setIsCreatingNewPlan(true);
                 }}
+                savedSpots={savedSpots}
+                handleToggleFavoriteSpot={handleToggleFavoriteSpot}
             />
         )}
 
