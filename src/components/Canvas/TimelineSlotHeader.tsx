@@ -43,19 +43,19 @@ export const TimelineSlotHeader: React.FC<TimelineSlotHeaderProps> = ({
 
             {/* Slot label anchored to the line */}
             <div className="absolute left-0 right-0 flex items-center z-10">
-                {/* Icon centered on spine */}
-                <div className={`absolute left-[21px] lg:left-[25px] -translate-x-1/2 w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center border-2 border-white bg-white shadow-sm ring-4 ring-white ${config.color} ${config.color.replace('text-', 'bg-').replace('500', '50').replace('600', '50')} ${config.color.replace('text-', 'border-').replace('500', '200').replace('600', '200')}`}>
-                    <span className="text-xl">{config.icon || getSlotIcon(slot)}</span>
+                {/* Milestone Node: Integrated into the spine */}
+                <div className={`absolute left-[20px] lg:left-[24px] -translate-x-1/2 w-8 h-8 lg:w-10 lg:h-10 rounded-full flex items-center justify-center bg-white border border-gray-100 ring-2 ring-gray-50/50 ${config.color}`}>
+                    <span className="opacity-80 drop-shadow-sm">{config.icon || getSlotIcon(slot)}</span>
                 </div>
 
-                {/* Text labels shifted right of the icon */}
-                <div className="pl-12 lg:pl-14 flex flex-col justify-center">
-                    <div className="flex items-center gap-4">
-                        <h3 className={`text-base lg:text-lg font-black uppercase tracking-widest ${config.color}`}>
+                {/* Text labels shifted right of the milestone */}
+                <div className="pl-12 lg:pl-16 flex flex-col justify-center">
+                    <div className="flex items-center gap-3">
+                        <h3 className={`text-sm lg:text-base font-black uppercase tracking-[0.2em] opacity-80 ${config.color}`}>
                             {slot === 'accommodation' ? (t.accommodation || 'Accommodation') : getSlotLabel(slot, t)}
                         </h3>
                         {config.time && (
-                            <span className="text-xs lg:text-sm text-gray-400 font-bold tracking-tight bg-gray-50/50 px-2 py-0.5 rounded-full border border-gray-100">
+                            <span className="text-[10px] lg:text-xs text-gray-300 font-bold tracking-tight bg-gray-50/10 px-2.5 py-0.5 rounded-full border border-gray-100/50">
                                 {config.time}
                             </span>
                         )}

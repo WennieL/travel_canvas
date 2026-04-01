@@ -2,7 +2,7 @@ import React from 'react';
 import { TimeSlot, ScheduleItem, DaySchedule, Plan, LangType, TravelItem } from '../types';
 import DropZone from './DropZone';
 import MapView from './MapView';
-import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle } from 'lucide-react';
+import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle, Plus } from 'lucide-react';
 import { getSlotLabel, parseDuration } from '../utils';
 import { TimelineSlotHeader } from './Canvas/TimelineSlotHeader';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -21,7 +21,6 @@ interface CanvasViewProps {
     handleRemoveItem: (slot: TimeSlot, index: number) => void;
     handleUpdateItem: (slot: TimeSlot, index: number, updates: Partial<ScheduleItem>) => void;
     handleDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
-    handleQuickFill: (slot: TimeSlot) => void;
     handleMapItemClick: (item: any) => void;
     setAddToSlotTarget: (slot: TimeSlot) => void;
     setShowMoveModal: (show: boolean) => void;
@@ -52,7 +51,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     handleRemoveItem,
     handleUpdateItem,
     handleDragStart,
-    handleQuickFill,
     handleMapItemClick,
     setAddToSlotTarget,
     setShowMoveModal,
@@ -74,14 +72,18 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     const isTimeline = !showContextMap;
     const isMobile = useIsMobile();
 
+    // Define slots and calculation logic at the top to avoid scope issues
+    const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
+    const isDayEmpty = slots.every(s => (currentDaySchedule[s] || []).length === 0)
+        && (currentDaySchedule.accommodation || []).length === 0;
+
     return (
         <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
             {/* Schedule List Area */}
             <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
-                <div className={`schedule-content relative pb-24 lg:pb-12 lg:max-w-4xl mx-auto w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
+                <div className={`schedule-content relative pb-16 lg:pb-12 lg:max-w-4xl mx-auto w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
 
                     {(() => {
-                        const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
                         let cumulativeIndex = 0;
                         return slots.map((slot, slotIdx) => {
                             const startIdx = cumulativeIndex;
@@ -102,14 +104,14 @@ const CanvasView: React.FC<CanvasViewProps> = ({
 
                             return (
                                 <React.Fragment key={slot}>
-                                    {/* Timeline Slot Header */}
-                                    {isTimeline && (
+                                    {/* Timeline Slot Header (Hidden for Flowing Design) */}
+                                    {/* {isTimeline && (
                                         <TimelineSlotHeader
                                             slot={slot}
                                             t={t}
                                             capacityStatus={capacityStatus}
                                         />
-                                    )}
+                                    )} */}
 
                                     <DropZone
                                         key={slot} slot={slot} label={getSlotLabel(slot, t)}
@@ -138,24 +140,55 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                         planRegion={activePlan.region}
                                         isCompact={showContextMap}
                                         startIndex={startIdx}
-                                        onQuickFill={() => handleQuickFill(slot)}
                                         previousItem={previousSlotLastItem}
                                         showTimeline={isTimeline}
+                                        isDayEmpty={isDayEmpty}
                                     />
                                 </React.Fragment>
                             );
                         });
                     })()}
 
-                    {/* Accommodation Slot Header */}
-                    {isTimeline && (
-                        <div className="mt-10">
-                            <TimelineSlotHeader
-                                slot="accommodation"
-                                t={t}
-                            />
-                        </div>
-                    )}
+                    {/* EMPTY STATE GUIDE — Centered vertically, with FABs hidden when visible */}
+                    {(() => {
+                        if (!isDayEmpty || !isTimeline) return null;
+
+                        return (
+                            <div className="flex flex-col items-center justify-center px-10 text-center animate-in fade-in slide-in-from-bottom-10 duration-1000 relative">
+                                <h3 className="text-2xl font-bold text-slate-800 tracking-tight leading-tight max-w-[300px]">
+                                    {lang === 'zh' ? `開始為第 ${currentDay} 天加入景點吧` : `Start gathering for Day ${currentDay}`}
+                                </h3>
+                                <p className="text-sm text-slate-400 mt-6 max-w-[280px] leading-relaxed font-medium">
+                                    {lang === 'zh' ? '點擊下方按鈕展開靈感庫，開始打造你的第一個行程' : 'Tap the button below to explore inspirations'}
+                                </p>
+
+                                <button
+                                    onClick={() => {
+                                        if (isMobile) {
+                                            setShowMobileLibrary(true);
+                                        } else {
+                                            setIsSidebarOpen(true);
+                                            setActiveTab('assets');
+                                        }
+                                    }}
+                                    className="mt-12 px-10 py-4 rounded-full bg-teal-600 text-white font-bold shadow-[0_15px_35px_rgba(13,148,136,0.25)] hover:shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 group"
+                                >
+                                    <Plus size={20} strokeWidth={3} className="group-hover:rotate-90 transition-transform duration-300" />
+                                    {lang === 'zh' ? '查看推薦景點' : 'Explore Ideas'}
+                                </button>
+                            </div>
+                        );
+                    })()}
+
+                    {/* Accommodation Header (Hidden for Flowing Design) */}
+                    {/* {isTimeline && (
+                                         <div className="mt-10">
+                                             <TimelineSlotHeader
+                                                 slot="accommodation"
+                                                 t={t}
+                                             />
+                                         </div>
+                                     )} */}
 
                     <DropZone
                         key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
@@ -184,12 +217,12 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         planRegion={activePlan.region}
                         isCompact={showContextMap}
                         showTimeline={isTimeline}
-                        onQuickFill={() => handleQuickFill('accommodation')}
                         startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)}
+                        isDayEmpty={isDayEmpty}
                     />
 
                     {/* Bottom Padding for Mobile Nav */}
-                    <div className="h-24 lg:h-12" />
+                    <div className="h-16 lg:h-12" />
                 </div>
             </div>
 

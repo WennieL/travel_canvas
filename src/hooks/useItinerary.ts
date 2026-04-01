@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { TimeSlot, ScheduleItem, Plan, LangType, TravelItem } from '../types';
-import { ALL_SUGGESTIONS } from '../data';
 
 export function useItinerary(
     activePlan: Plan,
@@ -42,9 +41,9 @@ export function useItinerary(
             // Show added toast for sidebar items
             const itemName = (lang === 'en' && dragged.item.titleEn) ? dragged.item.titleEn : dragged.item.title;
             const slotLabel = t[targetSlot] || targetSlot;
-            const addedMsg = (t.itemAddedTo || (lang === 'en' ? `✅ "${itemName}" added to ${slotLabel}` : `✅ 「${itemName}」已加入${slotLabel}`))
+            const addedMsg = (t.itemAddedTo || (lang === 'en' ? `✅ "${itemName}" added to Day ${currentDay}` : `✅ 「${itemName}」已加入第 ${currentDay} 天！`))
                 .replace('{name}', itemName)
-                .replace('{slot}', slotLabel);
+                .replace('{day}', currentDay.toString());
             showToastMessage(addedMsg, 'success', 2500);
 
         } else if (dragged.source === 'canvas' && dragged.sourceSlot && dragged.index !== undefined) {
@@ -201,51 +200,13 @@ export function useItinerary(
                 3000
             );
         } else {
-            const addedMsg = (t.itemAddedTo || (lang === 'en' ? `✅ \"${itemName}\" added to ${slotLabel}` : `✅ 「${itemName}」已加入${slotLabel}`))
+            const addedMsg = (t.itemAddedTo || (lang === 'en' ? `✅ "${itemName}" added to Day ${currentDay}` : `✅ 「${itemName}」已加入第 ${currentDay} 天！`))
                 .replace('{name}', itemName)
-                .replace('{slot}', slotLabel);
+                .replace('{day}', currentDay.toString());
             showToastMessage(addedMsg, 'success', 2500);
         }
     };
 
-    const handleQuickFill = (slot: TimeSlot) => {
-        const region = activePlan.region || Object.keys(ALL_SUGGESTIONS)[0] || 'tokyo';
-        const regionData = ALL_SUGGESTIONS[region] || ALL_SUGGESTIONS[Object.keys(ALL_SUGGESTIONS)[0]];
-        const regionSuggestions = regionData?.[slot] || [];
-        if (regionSuggestions.length === 0) {
-            showToastMessage(
-                lang === 'zh' ? '此時段暫無建議項目' : 'No suggestions for this slot yet',
-                'info', 2500
-            );
-            return;
-        }
-
-        const itemData = regionSuggestions[Math.floor(Math.random() * regionSuggestions.length)];
-        if (itemData) {
-            const newItem: ScheduleItem = {
-                ...itemData,
-                instanceId: Date.now().toString(),
-                arrivalTransport: 'car',
-                startTime: slot === 'morning' ? '09:00' :
-                    slot === 'afternoon' ? '13:00' :
-                        slot === 'evening' ? '18:00' :
-                            slot === 'night' ? '22:00' : '15:00' // Accommodation default 15:00 check-in
-            };
-
-            const currentDayKey = `Day ${currentDay}`;
-            const newSchedule = { ...activePlan.schedule };
-            if (!newSchedule[currentDayKey]) {
-                newSchedule[currentDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
-            }
-            newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] };
-            newSchedule[currentDayKey][slot] = [...(newSchedule[currentDayKey][slot] || [])];
-            newSchedule[currentDayKey][slot].push(newItem);
-            newSchedule[currentDayKey][slot].sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
-
-            updateActivePlan({ schedule: newSchedule });
-            showToastMessage(t.quickFillAdded || "Suggestion added!", 'success');
-        }
-    };
 
     return {
         handleDragStart,
@@ -254,7 +215,6 @@ export function useItinerary(
         handleUpdateItem,
         handleUpdateScheduleItemByInstanceId,
         handleTapToAdd,
-        handleQuickFill,
         draggedItemRef
     };
 }

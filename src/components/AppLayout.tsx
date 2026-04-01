@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Triangle, Hotel, FileText, Map as MapIcon, List as ListIcon } from 'lucide-react';
+import { ChevronLeft, Triangle, Hotel, FileText, Map as MapIcon, List as ListIcon, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import {
@@ -122,7 +122,6 @@ export interface AppLayoutProps {
     handleRemoveItem: (slot: any, index: number) => void;
     handleUpdateItem: (slot: any, index: number, updates: Partial<ScheduleItem>) => void;
     handleTapToAdd: (item: any) => void;
-    handleQuickFill: (slot: any) => void;
     handleUpdateScheduleItemByInstanceId: (instanceId: string, updates: Partial<ScheduleItem>) => void;
 
     // Actions
@@ -203,7 +202,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         handleToggleFavoriteSpot, handleToggleFavoriteTemplate,
         // Itinerary
         handleDragStart, handleDrop, handleRemoveItem, handleUpdateItem,
-        handleTapToAdd, handleQuickFill, handleUpdateScheduleItemByInstanceId,
+        handleTapToAdd, handleUpdateScheduleItemByInstanceId,
         // Actions
         applyTemplate, onDeleteDay,
         handleUnlockConfirm, executeMoveItem, handleGateCheck,
@@ -235,6 +234,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
     };
 
     const currentDaySchedule = activePlan.schedule[`Day ${currentDay}`] || { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+    const isDayEmpty = (['morning', 'afternoon', 'evening', 'night'] as TimeSlot[]).every(s => (currentDaySchedule[s] || []).length === 0) 
+        && (currentDaySchedule.accommodation || []).length === 0;
 
     // PAGE SWIPE LOGIC
     const handlePageSwipe = (direction: 'left' | 'right') => {
@@ -500,7 +501,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                     }
                                 }}
                                 onScroll={handleScroll}
-                                className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : (viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files' ? 'p-0' : 'p-4 pb-24 lg:px-8 lg:pb-8 lg:pt-4')} no-scrollbar h-full`}
+                                className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : (viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files' ? 'p-0' : (isDayEmpty && viewMode === 'canvas' ? 'p-0 h-full overflow-hidden' : 'p-4 pb-20 lg:px-8 lg:pb-8 lg:pt-4'))} no-scrollbar h-full`}
                             >
                                 {(viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files') ? (
                                     <OverviewView 
@@ -565,7 +566,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                         handleRemoveItem={handleRemoveItem}
                                         handleUpdateItem={handleUpdateItem}
                                         handleDragStart={handleDragStart}
-                                        handleQuickFill={handleQuickFill}
                                         handleMapItemClick={handleMapItemClick}
                                         setAddToSlotTarget={setAddToSlotTarget}
                                         setShowMoveModal={setShowMoveModal}
@@ -591,26 +591,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 )}
             </div>
 
-            {/* Floating Map Action Button (FAB) */}
-            <AnimatePresence mode="wait">
-                {(viewMode === 'overview' || viewMode === 'canvas' || viewMode === 'map') && (
-                    <motion.button
-                        key={viewMode === 'map' ? 'list' : 'map'}
-                        initial={{ opacity: 0, scale: 0.5, y: 50 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.5, y: 50 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                            const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
-                            setViewMode(targetMode);
-                        }}
-                        className={`fixed ${isMobile ? 'bottom-28' : 'bottom-8'} right-6 z-[120] w-14 h-14 bg-emerald-600 text-white rounded-full shadow-2xl flex items-center justify-center border-4 border-white active:bg-emerald-700 transition-colors pointer-events-auto`}
-                    >
-                        {viewMode === 'map' ? <ListIcon size={24} /> : <MapIcon size={24} />}
-                    </motion.button>
-                )}
-            </AnimatePresence>
 
             <AppModals
                 // Shared & Language
@@ -784,6 +764,48 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 lang={lang}
                 t={t}
             />
+
+            {/* GLOBAL FAB GROUP — Coordinated Actions (Hidden on Empty Canvas Day) */}
+            <AnimatePresence>
+                {(viewMode === 'canvas' || viewMode === 'map') && !ui.showStartPicker && !ui.showCheckIn && (!isDayEmpty || viewMode !== 'canvas') && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        className={`fixed ${isMobile ? 'bottom-24' : 'bottom-8'} right-6 z-[120] flex flex-col items-center gap-4 pointer-events-none`}
+                    >
+
+                        {/* 2. Map Toggle (Medium, Utility) */}
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
+                                setViewMode(targetMode);
+                            }}
+                            className="w-13 h-13 rounded-full bg-white text-teal-700 shadow-xl border border-gray-100 flex items-center justify-center pointer-events-auto active:bg-gray-50 transition-colors"
+                        >
+                            {viewMode === 'map' ? <ListIcon size={22} /> : <MapIcon size={22} />}
+                        </motion.button>
+
+                        {/* 3. Primary Add Spot (Largest, Emerald) */}
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                if (isMobile) {
+                                    ui.setShowMobileLibrary(true);
+                                } else {
+                                    setIsSidebarOpen(true);
+                                }
+                            }}
+                            className="w-16 h-16 rounded-full bg-teal-600 text-white shadow-[0_12px_40px_rgba(13,148,136,0.5)] flex items-center justify-center pointer-events-auto active:bg-teal-700 transition-all border-2 border-white/30"
+                        >
+                            <Plus size={32} strokeWidth={2.5} />
+                        </motion.button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {toast.show && <Toast message={toast.message} type={toast.type as any} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}
             <MobileDiscoveryDrawer

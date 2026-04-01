@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, Sparkles, MoveLeft, MapPin, MoreVertical, Lock, Banknote, Sunset, AlertTriangle } from 'lucide-react';
+import { Trash2, Clock, StickyNote as NoteIcon, GripVertical, Coffee, Moon, Sun, BedDouble, Plus, Car, Bus, Train, PersonStanding as Walk, ChevronsUpDown, Star, Tag, MoveRight, MoveLeft, MapPin, MoreVertical, Lock, Banknote, Sunset, AlertTriangle } from 'lucide-react';
 import {
     TimeSlot,
     ScheduleItem,
@@ -40,12 +40,12 @@ interface DropZoneProps {
     planRegion?: Region;
     isCompact?: boolean;
     startIndex?: number;
-    onQuickFill?: (slot: TimeSlot) => void;
     showTimeline?: boolean;
+    isDayEmpty?: boolean;
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, onQuickFill, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0, showTimeline = false
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0, showTimeline = false, isDayEmpty = false
 }) => {
     const { confirm } = useConfirm();
     // const isCompact = false; // Removed hardcoded
@@ -123,7 +123,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     return (
         <div className={`relative transition-all duration-300 overflow-hidden ${isAccommodation ? 'mt-4' : showTimeline ? 'pl-16 lg:pl-24' : 'lg:pl-8'}`}>
             {/* Timeline line segment (only in timeline mode, non-accommodation) */}
-            {showTimeline && !isAccommodation && (
+            {showTimeline && !isAccommodation && !isDayEmpty && (
                 <div className="absolute left-[24px] lg:left-[36px] top-0 bottom-0 w-0.5 bg-gray-200 z-0" />
             )}
             {/* Old desktop-only timeline (non-timeline mode) */}
@@ -148,26 +148,10 @@ const DropZone: React.FC<DropZoneProps> = ({
                 </div>
             )}
 
-            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-3 flex flex-col space-y-2' : showTimeline ? 'min-h-[80px] border-2 border-dashed py-3 pr-3 flex flex-col space-y-2' : 'min-h-[80px] border-2 border-dashed px-0 md:p-3 flex flex-col space-y-2'} ${items.length === 0 && !isCompact ? (isAccommodation ? 'border-indigo-200 bg-indigo-50/20' : 'border-teal-200 bg-teal-50/20') : 'border-transparent'} ${isDraggingGlobal && items.length === 0 ? 'border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
+            <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-3 flex flex-col space-y-2' : showTimeline ? 'min-h-[12px] flex flex-col space-y-2' : 'min-h-[12px] px-0 md:p-3 flex flex-col space-y-2'} ${isDraggingGlobal && items.length === 0 ? 'border-2 border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && (
-                    <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors transition-all py-2 px-2 gap-2 ${isDraggingGlobal ? 'text-teal-600 font-bold' : 'text-gray-300'} ${isCompact ? 'min-h-[40px]' : 'py-4'}`}>
-                        {isDraggingGlobal ? t.dropToAdd : (isAccommodation ? t.dragAccommodation : (isMobile ? t.emptySlotMobile || t.tapToPlan : t.emptySlot))}
-                        {!isDraggingGlobal && (
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    console.log("Quick Fill Clicked", slot, !!onQuickFill);
-                                    if (onQuickFill) onQuickFill(slot);
-                                }}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-colors animate-in fade-in zoom-in duration-300
-                                    ${isAccommodation ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100' : 'bg-teal-50 text-teal-600 hover:bg-teal-100'}
-                                    ${isCompact ? 'scale-90' : ''}
-                                `}
-                            >
-                                <Sparkles size={12} />
-                                {t.quickFill}
-                            </button>
-                        )}
+                    <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors transition-all py-1 px-2 gap-2 opacity-0 ${isDraggingGlobal ? 'text-teal-600 font-bold opacity-100 min-h-[40px] border-2 border-dashed border-teal-200' : 'text-gray-300'}`}>
+                        {isDraggingGlobal ? t.dropToAdd : null}
                     </div>
                 )}
                 {previousItem && items.length > 0 && !isCompact && (() => {
@@ -228,49 +212,6 @@ const DropZone: React.FC<DropZoneProps> = ({
                         </React.Fragment>
                     );
                 })}
-                {items.length > 0 ? (
-                    /* Timeline Node Style (Subtle Add for Populated Lists) */
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onAddItem?.();
-                        }}
-                        className="w-full flex flex-col items-center justify-center group mt-0 relative py-1"
-                    >
-                        {/* Connecting Line */}
-                        <div className={`w-0.5 h-4 bg-gray-200 lg:hidden transition-colors group-hover:bg-teal-300`} />
-
-                        {/* Node Button with Text */}
-                        <div className={`
-                            flex items-center justify-center gap-1
-                            px-3 py-1.5 rounded-full 
-                            bg-white border text-gray-400 border-gray-200 
-                            shadow-sm transition-all 
-                            group-hover:scale-110 group-hover:border-teal-400 group-hover:text-teal-600 group-active:scale-95
-                            lg:w-auto lg:h-auto lg:px-4 lg:py-2 lg:rounded-lg lg:border-dashed lg:border-gray-300 lg:bg-transparent lg:shadow-none lg:text-sm lg:gap-2
-                        `}>
-                            <Plus size={12} className="lg:w-4 lg:h-4" />
-                            <span className="text-[10px] font-bold lg:text-sm">{t.addLabel}</span>
-                        </div>
-                    </button>
-                ) : (
-                    /* Large Placeholder Style (Empty State) */
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onAddItem?.();
-                        }}
-                        className={`w-full py-4 border-2 border-dashed rounded-xl transition-all flex flex-col items-center justify-center gap-2 text-sm mt-2 group 
-                            animate-pulse bg-gray-50 border-gray-300 text-gray-400 hover:text-teal-600 hover:border-teal-400 hover:bg-teal-50
-                        `}
-                    >
-                        <div className="flex items-center gap-2">
-                            <Plus size={20} className="group-hover:scale-110 transition-transform text-teal-500" />
-                            <span className="font-bold">{t.addItemsPlaceholder}</span>
-                        </div>
-                        <span className="text-xs font-normal opacity-70 hidden lg:inline">{t.dragFromSidebar}</span>
-                    </button>
-                )}
             </div>
         </div >
     );
