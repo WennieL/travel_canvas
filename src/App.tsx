@@ -249,7 +249,7 @@ export function App() {
                 schedule[firstDay] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
             }
             
-            const targetSlot = item.type === 'hotel' ? 'accommodation' : 'morning';
+            const targetSlot = item.type === 'hotel' ? 'accommodation' : 'unsorted';
             schedule[firstDay] = { 
                 ...schedule[firstDay],
                 [targetSlot]: [

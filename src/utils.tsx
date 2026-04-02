@@ -51,13 +51,14 @@ export const getSlotLabel = (slot: TimeSlot, t: any) => {
         case 'evening': return t.evening;
         case 'night': return t.night;
         case 'accommodation': return t.accommodation;
+        case 'unsorted': return t.unsorted || 'Unsorted';
     }
 };
 
 export const createEmptySchedule = (days: number): FullSchedule => {
     const schedule: FullSchedule = {};
     for (let i = 1; i <= days; i++) {
-        schedule[`Day ${i}`] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
+        schedule[`Day ${i}`] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [], unsorted: [] };
     }
     return schedule;
 };

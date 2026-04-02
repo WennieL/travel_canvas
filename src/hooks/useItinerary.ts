@@ -48,9 +48,9 @@ export function useItinerary(
 
         } else if (dragged.source === 'canvas' && dragged.sourceSlot && dragged.index !== undefined) {
             if (dragged.sourceSlot !== targetSlot) {
-                newSchedule[currentDayKey][dragged.sourceSlot] = [...newSchedule[currentDayKey][dragged.sourceSlot]];
+                newSchedule[currentDayKey][dragged.sourceSlot] = [...(newSchedule[currentDayKey][dragged.sourceSlot] || [])];
             }
-            const item = newSchedule[currentDayKey][dragged.sourceSlot].splice(dragged.index, 1)[0];
+            const item = newSchedule[currentDayKey][dragged.sourceSlot]!.splice(dragged.index, 1)[0];
 
             // Reset time if moving to a different slot type
             if (dragged.sourceSlot !== targetSlot) {
@@ -93,8 +93,8 @@ export function useItinerary(
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
         newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] };
-        newSchedule[currentDayKey][slot] = [...newSchedule[currentDayKey][slot]];
-        newSchedule[currentDayKey][slot].splice(index, 1);
+        newSchedule[currentDayKey][slot] = [...(newSchedule[currentDayKey][slot] || [])];
+        newSchedule[currentDayKey][slot]!.splice(index, 1);
         updateActivePlan({ schedule: newSchedule });
     };
 
@@ -102,8 +102,12 @@ export function useItinerary(
         const currentDayKey = `Day ${currentDay}`;
         const newSchedule = { ...activePlan.schedule };
 
-        const updatedItem = { ...newSchedule[currentDayKey][slot][index], ...updates };
-        newSchedule[currentDayKey][slot][index] = updatedItem;
+        if (!newSchedule[currentDayKey][slot]) {
+            newSchedule[currentDayKey][slot] = [];
+        }
+
+        const updatedItem = { ...newSchedule[currentDayKey][slot]![index], ...updates };
+        newSchedule[currentDayKey][slot]![index] = updatedItem;
 
         if (updates.startTime !== undefined) {
             let newSlot: TimeSlot = slot;
@@ -119,15 +123,15 @@ export function useItinerary(
             }
 
             if (newSlot !== slot) {
-                newSchedule[currentDayKey][slot].splice(index, 1);
+                newSchedule[currentDayKey][slot]!.splice(index, 1);
                 newSchedule[currentDayKey][newSlot] = [...(newSchedule[currentDayKey][newSlot] || [])];
-                newSchedule[currentDayKey][newSlot].push(updatedItem);
-                newSchedule[currentDayKey][newSlot].sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
+                newSchedule[currentDayKey][newSlot]!.push(updatedItem);
+                newSchedule[currentDayKey][newSlot]!.sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
             } else {
-                newSchedule[currentDayKey][slot].sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
+                newSchedule[currentDayKey][slot]!.sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
             }
         } else {
-            newSchedule[currentDayKey][slot].sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
+            newSchedule[currentDayKey][slot]!.sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
         }
 
         updateActivePlan({ schedule: newSchedule });
@@ -142,7 +146,7 @@ export function useItinerary(
         let foundSlot: TimeSlot | null = null;
         let foundIndex: number = -1;
 
-        const slots: TimeSlot[] = ['morning', 'afternoon', 'evening', 'night', 'accommodation'];
+        const slots: TimeSlot[] = ['morning', 'afternoon', 'evening', 'night', 'accommodation', 'unsorted'];
         for (const slot of slots) {
             const idx = newSchedule[currentDayKey][slot]?.findIndex(item => item.instanceId === instanceId);
             if (idx !== undefined && idx !== -1) {
@@ -162,7 +166,7 @@ export function useItinerary(
         const newSchedule = { ...activePlan.schedule };
         newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] };
 
-        let targetSlot: TimeSlot = addToSlotTarget || (item.type === 'hotel' ? 'accommodation' : 'morning');
+        let targetSlot: TimeSlot = addToSlotTarget || (item.type === 'hotel' ? 'accommodation' : 'unsorted');
         newSchedule[currentDayKey][targetSlot] = [...(newSchedule[currentDayKey][targetSlot] || [])];
 
         newSchedule[currentDayKey][targetSlot].push({

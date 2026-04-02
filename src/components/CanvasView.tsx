@@ -190,6 +190,52 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                          </div>
                                      )} */}
 
+                    {/* Unsorted Collection (待排區) */}
+                    {((currentDaySchedule.unsorted?.length || 0) > 0 || !isDayEmpty) && (
+                        <div className="mt-12 mb-8 relative">
+                            {/* Visual Separator */}
+                            <div className="absolute inset-x-0 top-0 flex items-center justify-center">
+                                <div className="w-full border-t-2 border-dashed border-gray-200/60" />
+                                <div className="absolute bg-[#FDFDFD] px-4 text-xs font-bold text-gray-400 tracking-widest uppercase rounded-full shadow-sm border border-gray-100 flex items-center gap-1.5 whitespace-nowrap">
+                                    <span className="text-sm">📝</span>
+                                    {lang === 'zh' ? '待排區' : 'Unsorted'}
+                                </div>
+                            </div>
+                            <div className="pt-10">
+                                <DropZone
+                                    key="unsorted" slot="unsorted" label={t.unsorted || 'Unsorted'}
+                                    items={currentDaySchedule.unsorted || []}
+                                    onDrop={(e) => handleDrop(e, 'unsorted')}
+                                    onRemoveItem={(idx: number) => handleRemoveItem('unsorted', idx)}
+                                    onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('unsorted', idx, upd)}
+                                    onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot: 'unsorted', index: idx }); }}
+                                    onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                    onItemClick={(item) => onSelectItem?.(item, 'canvas')}
+                                    onDragStart={handleDragStart}
+                                    onAddItem={() => {
+                                        setActiveTab('assets');
+                                        setSidebarMode?.('list');
+                                        if (isMobile) {
+                                            setAddToSlotTarget('unsorted');
+                                            setShowMobileLibrary(true);
+                                        } else {
+                                            if (!isSidebarOpen) setIsSidebarOpen(true);
+                                            setSidebarHighlight(true);
+                                            setTimeout(() => setSidebarHighlight(false), 2000);
+                                        }
+                                    }}
+                                    t={t}
+                                    lang={lang}
+                                    planRegion={activePlan.region}
+                                    isCompact={showContextMap}
+                                    showTimeline={isTimeline}
+                                    startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)}
+                                    isDayEmpty={isDayEmpty}
+                                />
+                            </div>
+                        </div>
+                    )}
+
                     <DropZone
                         key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
                         items={currentDaySchedule.accommodation}

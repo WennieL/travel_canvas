@@ -1,7 +1,7 @@
 export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom';
 export type TransportMode = 'car' | 'walk' | 'public';
 export type LangType = 'zh' | 'en';
-export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation';
+export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation' | 'unsorted';
 export type ViewMode = 'overview' | 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery' | 'favorites' | 'projects' | 'flights' | 'hotels' | 'files'; // Supports split view and mobile map
 export type Region = string; // Data-driven, managed by REGIONS config in regions.ts
 export type ConfirmType = 'info' | 'warning' | 'error' | 'success';
@@ -169,6 +169,7 @@ export interface DaySchedule {
     evening: ScheduleItem[];
     night: ScheduleItem[];
     accommodation: ScheduleItem[];
+    unsorted?: ScheduleItem[];
     // [NEW] Themed day enhancements
     theme?: string;               // "咖啡廳 & 文青小店"
     themeEn?: string;             // "Cafés & Indie Shops"
