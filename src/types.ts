@@ -1,4 +1,4 @@
-export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom';
+export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom' | 'vibe';
 export type TransportMode = 'car' | 'walk' | 'public';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation' | 'unsorted';

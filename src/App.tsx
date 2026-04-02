@@ -156,7 +156,8 @@ export function App() {
         handleRemoveItem,
         handleUpdateItem,
         handleUpdateScheduleItemByInstanceId,
-        handleTapToAdd
+        handleTapToAdd,
+        handleRepeatAccommodation
     } = useItinerary(
         activePlan,
         currentDay,
@@ -374,6 +375,7 @@ export function App() {
             handleRemoveItem={handleRemoveItem} handleUpdateItem={handleUpdateItem}
             handleTapToAdd={handleTapToAdd}
             handleUpdateScheduleItemByInstanceId={handleUpdateScheduleItemByInstanceId}
+            handleRepeatAccommodation={handleRepeatAccommodation}
             // Actions
             applyTemplate={applyTemplate} onDeleteDay={onDeleteDay}
             handleUnlockConfirm={handleUnlockConfirm} executeMoveItem={executeMoveItem}

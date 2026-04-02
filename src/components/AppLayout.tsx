@@ -142,6 +142,7 @@ export interface AppLayoutProps {
     executeCreateBlankPlan: (data: { origin: string, destination: Region, startDate: string, endDate: string, totalDays: number, name?: string }) => void;
     enterExpertCreationMode: () => void;
     setIsCreatingNewPlan: (val: boolean) => void;
+    handleRepeatAccommodation: () => void;
 
     // Budget
     budgetLimit: number;
@@ -202,7 +203,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
         handleToggleFavoriteSpot, handleToggleFavoriteTemplate,
         // Itinerary
         handleDragStart, handleDrop, handleRemoveItem, handleUpdateItem,
-        handleTapToAdd, handleUpdateScheduleItemByInstanceId,
+        handleTapToAdd, handleRepeatAccommodation, handleUpdateScheduleItemByInstanceId,
         // Actions
         applyTemplate, onDeleteDay,
         handleUnlockConfirm, executeMoveItem, handleGateCheck,
@@ -581,8 +582,10 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                         addToSlotTarget={addToSlotTarget}
                                         onExitDiscovery={() => ui.setDiscoveryCreatorId(null)}
                                         onAddItem={(item) => handleTapToAdd(item)}
+                                        onRepeatAccommodation={handleRepeatAccommodation}
                                         setSidebarMode={ui.setSidebarMode}
                                         onSelectItem={handleSelectItem}
+                                        setActiveCategory={ui.setActiveCategory}
                                     />
                                 )}
                             </motion.div>
@@ -766,44 +769,76 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             />
 
             {/* GLOBAL FAB GROUP — Coordinated Actions (Hidden on Empty Canvas Day) */}
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {(viewMode === 'canvas' || viewMode === 'map') && !ui.showStartPicker && !ui.showCheckIn && (!isDayEmpty || viewMode !== 'canvas') && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        className={`fixed ${isMobile ? 'bottom-24' : 'bottom-8'} right-6 z-[120] flex flex-col items-center gap-4 pointer-events-none`}
-                    >
+                    <>
+                        {isMobile ? (
+                            <div className="fixed bottom-22 left-0 right-0 z-[120] px-6 pointer-events-none">
+                                <div className="relative w-full h-full flex items-center justify-center">
+                                    {/* 1. Mobile Map Pill - Centered */}
+                                    <motion.button
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 20 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
+                                            setViewMode(targetMode);
+                                        }}
+                                        className="h-11 px-6 rounded-full bg-white text-teal-800 shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 flex items-center justify-center gap-2.5 pointer-events-auto active:bg-gray-50 transition-all font-bold text-[13px] tracking-wide"
+                                    >
+                                        {viewMode === 'map' ? <ListIcon size={18} /> : <MapIcon size={18} />}
+                                        <span>{viewMode === 'map' ? (lang === 'zh' ? '清單' : 'List') : (lang === 'zh' ? '地圖' : 'Map')}</span>
+                                    </motion.button>
 
-                        {/* 2. Map Toggle (Medium, Utility) */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => {
-                                const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
-                                setViewMode(targetMode);
-                            }}
-                            className="w-13 h-13 rounded-full bg-white text-teal-700 shadow-xl border border-gray-100 flex items-center justify-center pointer-events-auto active:bg-gray-50 transition-colors"
-                        >
-                            {viewMode === 'map' ? <ListIcon size={22} /> : <MapIcon size={22} />}
-                        </motion.button>
+                                    {/* 2. Mobile Primary Add - Smaller, bottom-right */}
+                                    <motion.button
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.8 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => ui.setShowMobileLibrary(true)}
+                                        className="absolute right-0 w-13 h-13 rounded-full bg-teal-600 text-white shadow-[0_10px_30px_rgba(13,148,136,0.4)] flex items-center justify-center pointer-events-auto active:bg-teal-700 transition-all border-2 border-white/20"
+                                    >
+                                        <Plus size={26} strokeWidth={3} />
+                                    </motion.button>
+                                </div>
+                            </div>
+                        ) : (
+                            /* Desktop Original Stack */
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+                                className="fixed bottom-8 right-6 z-[120] flex flex-col items-center gap-4 pointer-events-none"
+                            >
+                                {/* 2. Map Toggle (Medium, Utility) */}
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => {
+                                        const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
+                                        setViewMode(targetMode);
+                                    }}
+                                    className="w-13 h-13 rounded-full bg-white text-teal-700 shadow-xl border border-gray-100 flex items-center justify-center pointer-events-auto active:bg-gray-50 transition-colors"
+                                >
+                                    {viewMode === 'map' ? <ListIcon size={22} /> : <MapIcon size={22} />}
+                                </motion.button>
 
-                        {/* 3. Primary Add Spot (Largest, Emerald) */}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => {
-                                if (isMobile) {
-                                    ui.setShowMobileLibrary(true);
-                                } else {
-                                    setIsSidebarOpen(true);
-                                }
-                            }}
-                            className="w-16 h-16 rounded-full bg-teal-600 text-white shadow-[0_12px_40px_rgba(13,148,136,0.5)] flex items-center justify-center pointer-events-auto active:bg-teal-700 transition-all border-2 border-white/30"
-                        >
-                            <Plus size={32} strokeWidth={2.5} />
-                        </motion.button>
-                    </motion.div>
+                                {/* 3. Primary Add Spot (Largest, Emerald) */}
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => setIsSidebarOpen(true)}
+                                    className="w-16 h-16 rounded-full bg-teal-600 text-white shadow-[0_12px_40px_rgba(13,148,136,0.5)] flex items-center justify-center pointer-events-auto active:bg-teal-700 transition-all border-2 border-white/30"
+                                >
+                                    <Plus size={32} strokeWidth={2.5} />
+                                </motion.button>
+                            </motion.div>
+                        )}
+                    </>
                 )}
             </AnimatePresence>
 

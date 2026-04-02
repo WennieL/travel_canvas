@@ -212,6 +212,31 @@ export function useItinerary(
     };
 
 
+    const handleRepeatAccommodation = () => {
+        if (currentDay <= 1) return;
+        const prevDayKey = `Day ${currentDay - 1}`;
+        const currentDayKey = `Day ${currentDay}`;
+        const prevAccommodation = activePlan.schedule[prevDayKey]?.accommodation?.[0];
+
+        if (prevAccommodation) {
+            const newSchedule = { ...activePlan.schedule };
+            newSchedule[currentDayKey] = { ...newSchedule[currentDayKey] };
+            newSchedule[currentDayKey].accommodation = [
+                {
+                    ...prevAccommodation,
+                    instanceId: Math.random().toString(36).substr(2, 9),
+                }
+            ];
+            updateActivePlan({ schedule: newSchedule });
+            showToastMessage(
+                lang === 'zh' 
+                    ? `✅ 已續住「${prevAccommodation.title}」` 
+                    : `✅ Continued stay at "${prevAccommodation.titleEn || prevAccommodation.title}"`, 
+                'success'
+            );
+        }
+    };
+
     return {
         handleDragStart,
         handleDrop,
@@ -219,6 +244,7 @@ export function useItinerary(
         handleUpdateItem,
         handleUpdateScheduleItemByInstanceId,
         handleTapToAdd,
+        handleRepeatAccommodation,
         draggedItemRef
     };
 }

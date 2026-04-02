@@ -479,6 +479,7 @@ export const CATEGORY_FILTERS: { id: 'all' | ItemType; label: string; labelEn: s
     { id: 'attraction', label: 'attraction', labelEn: 'Attractions', icon: '📍', color: 'bg-blue-500' },
     { id: 'food', label: 'food', labelEn: 'Food', icon: '🍰', color: 'bg-pink-500' },
     { id: 'hotel', label: 'hotel', labelEn: 'Hotel', icon: '🏨', color: 'bg-purple-500' },
+    { id: 'vibe', label: 'vibe', labelEn: 'Vibes', icon: '🍃', color: 'bg-emerald-500' },
     { id: 'transport', label: 'transport', labelEn: 'Transport', icon: '🚆', color: 'bg-teal-500' },
     { id: 'shopping', label: 'shopping', labelEn: 'Shopping', icon: '🛍️', color: 'bg-yellow-500' },
     { id: 'nature', label: 'nature', labelEn: 'Nature', icon: '🌲', color: 'bg-green-500' },

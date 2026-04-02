@@ -24,7 +24,7 @@ const TransportSelector: React.FC<TransportSelectorProps> = ({
                     {getTransportIcon(mode)}
                 </span>
                 <span className="text-[10px] text-teal-700 font-medium">
-                    {label}
+                    {label} ▾
                 </span>
                 <ChevronsUpDown size={10} className="text-teal-300 group-hover/transport:text-teal-400" />
             </div>

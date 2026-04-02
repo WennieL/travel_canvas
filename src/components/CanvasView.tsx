@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimeSlot, ScheduleItem, DaySchedule, Plan, LangType, TravelItem } from '../types';
+import { TimeSlot, ScheduleItem, DaySchedule, Plan, LangType, TravelItem, ItemType } from '../types';
 import DropZone from './DropZone';
 import MapView from './MapView';
 import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle, Plus } from 'lucide-react';
@@ -36,8 +36,10 @@ interface CanvasViewProps {
     addToSlotTarget?: TimeSlot | null;
     onExitDiscovery?: () => void;
     onAddItem?: (item: TravelItem) => void;
+    onRepeatAccommodation?: () => void;
     setSidebarMode?: (mode: 'list' | 'map') => void;
     onSelectItem?: (item: TravelItem | ScheduleItem | null, source: 'map' | 'sidebar' | 'canvas' | null) => void;
+    setActiveCategory?: (category: 'all' | ItemType) => void;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -66,8 +68,10 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     addToSlotTarget,
     onExitDiscovery,
     onAddItem,
+    onRepeatAccommodation,
     setSidebarMode,
     onSelectItem,
+    setActiveCategory,
 }) => {
     const isTimeline = !showContextMap;
     const isMobile = useIsMobile();
@@ -77,11 +81,86 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     const isDayEmpty = slots.every(s => (currentDaySchedule[s] || []).length === 0)
         && (currentDaySchedule.accommodation || []).length === 0;
 
+    // [NEW] Logic for Hotel Continuity
+    const prevDayKey = `Day ${(currentDay || 1) - 1}`;
+    const prevHotel = (currentDay || 1) > 1 ? activePlan.schedule[prevDayKey]?.accommodation?.[0] : null;
+
     return (
         <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
             {/* Schedule List Area */}
             <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
                 <div className={`schedule-content relative pb-16 lg:pb-12 lg:max-w-4xl mx-auto w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
+
+                    {/* Day Anchor: Accommodation (Top-Level Sticky Feel) */}
+                    <div className="mb-8 relative z-20">
+                        {/* Custom Anchor Card styling around the DropZone */}
+                        <div className="bg-indigo-50/50 rounded-2xl p-1 md:p-2 border border-indigo-100/50">
+                            <div className="px-4 py-2 flex items-center justify-between">
+                                <span className="text-xs font-bold text-indigo-800 tracking-wider uppercase flex items-center gap-1.5 opacity-80">
+                                    <span className="text-sm">🏠</span>
+                                    {t.accommodation || 'Accommodation'}
+                                </span>
+                            </div>
+                            
+                            <div className="-mt-2">
+                                <DropZone
+                                    key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
+                                    items={currentDaySchedule.accommodation}
+                                    onDrop={(e) => handleDrop(e, 'accommodation')}
+                                    onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
+                                    onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
+                                    onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot: 'accommodation', index: idx }); }}
+                                    onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                    onItemClick={(item) => onSelectItem?.(item, 'canvas')}
+                                    onDragStart={handleDragStart}
+                                    onAddItem={() => {
+                                        setActiveTab('assets');
+                                        setActiveCategory?.('hotel');
+                                        setSidebarMode?.('list');
+                                        if (isMobile) {
+                                            setAddToSlotTarget('accommodation');
+                                            setShowMobileLibrary(true);
+                                        } else {
+                                            setAddToSlotTarget('accommodation');
+                                            if (!isSidebarOpen) setIsSidebarOpen(true);
+                                            setSidebarHighlight(true);
+                                            setTimeout(() => setSidebarHighlight(false), 2000);
+                                        }
+                                    }}
+                                    t={t}
+                                    lang={lang}
+                                    planRegion={activePlan.region}
+                                    isCompact={showContextMap}
+                                    showTimeline={isTimeline}
+                                    startIndex={0}
+                                    isDayEmpty={isDayEmpty}
+                                />
+                                
+                                {/* Continuation Button */}
+                                {(currentDaySchedule.accommodation || []).length === 0 && prevHotel && (
+                                    <div className="px-4 pb-4">
+                                        <button
+                                            onClick={onRepeatAccommodation}
+                                            className="w-full py-2 bg-indigo-50/50 hover:bg-indigo-100/50 border border-indigo-200/50 rounded-xl text-[11px] font-bold text-indigo-700 flex items-center justify-center gap-2 transition-all group/repeat"
+                                        >
+                                            <span className="text-sm opacity-70 group-hover/repeat:scale-110 transition-transform">🛏️</span>
+                                            {lang === 'zh' ? `續住：${prevHotel.title}` : `Continue stay at ${prevHotel.titleEn || prevHotel.title}`}
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Timeline start dot to visually separate timeline from anchor */}
+                    {isTimeline && !isDayEmpty && (
+                         <div className="relative h-10 flex justify-start items-center pl-[21px] lg:pl-[33px]">
+                             <div className="w-1.5 h-1.5 rounded-full bg-teal-400 z-10 shadow-[0_0_8px_rgba(45,212,191,0.5)]" />
+                             <span className="ml-4 text-[11px] font-bold text-teal-600/70 tracking-widest uppercase bg-teal-50/50 px-2.5 py-0.5 rounded-full border border-teal-100/50">
+                                {lang === 'zh' ? '旅程從這裡開始' : 'Journey starts here'}
+                             </span>
+                         </div>
+                    )}
 
                     {(() => {
                         let cumulativeIndex = 0;
@@ -130,6 +209,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                                 setAddToSlotTarget(slot);
                                                 setShowMobileLibrary(true);
                                             } else {
+                                                setAddToSlotTarget(slot);
                                                 if (!isSidebarOpen) setIsSidebarOpen(true);
                                                 setSidebarHighlight(true);
                                                 setTimeout(() => setSidebarHighlight(false), 2000);
@@ -180,16 +260,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                         );
                     })()}
 
-                    {/* Accommodation Header (Hidden for Flowing Design) */}
-                    {/* {isTimeline && (
-                                         <div className="mt-10">
-                                             <TimelineSlotHeader
-                                                 slot="accommodation"
-                                                 t={t}
-                                             />
-                                         </div>
-                                     )} */}
-
                     {/* Unsorted Collection (待排區) */}
                     {((currentDaySchedule.unsorted?.length || 0) > 0 || !isDayEmpty) && (
                         <div className="mt-12 mb-8 relative">
@@ -197,8 +267,8 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                             <div className="absolute inset-x-0 top-0 flex items-center justify-center">
                                 <div className="w-full border-t-2 border-dashed border-gray-200/60" />
                                 <div className="absolute bg-[#FDFDFD] px-4 text-xs font-bold text-gray-400 tracking-widest uppercase rounded-full shadow-sm border border-gray-100 flex items-center gap-1.5 whitespace-nowrap">
-                                    <span className="text-sm">📝</span>
-                                    {lang === 'zh' ? '待排區' : 'Unsorted'}
+                                    <span className="text-sm">🔖</span>
+                                    {lang === 'zh' ? '口袋清單' : 'Pocket List'}
                                 </div>
                             </div>
                             <div className="pt-10">
@@ -219,6 +289,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                             setAddToSlotTarget('unsorted');
                                             setShowMobileLibrary(true);
                                         } else {
+                                            setAddToSlotTarget('unsorted');
                                             if (!isSidebarOpen) setIsSidebarOpen(true);
                                             setSidebarHighlight(true);
                                             setTimeout(() => setSidebarHighlight(false), 2000);
@@ -228,47 +299,31 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                     lang={lang}
                                     planRegion={activePlan.region}
                                     isCompact={showContextMap}
-                                    showTimeline={isTimeline}
+                                    showTimeline={false}
                                     startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)}
                                     isDayEmpty={isDayEmpty}
                                 />
+
+                                {/* Continuation Button */}
+                                {(currentDaySchedule.accommodation || []).length === 0 && prevHotel && (
+                                    <div className="px-4 pb-4">
+                                        <button
+                                            onClick={onRepeatAccommodation}
+                                            className="w-full py-2 bg-indigo-50/50 hover:bg-indigo-100/50 border border-indigo-200/50 rounded-xl text-[11px] font-bold text-indigo-700 flex items-center justify-center gap-2 transition-all group/repeat"
+                                        >
+                                            <span className="text-sm opacity-70 group-hover/repeat:scale-110 transition-transform">🛏️</span>
+                                            {lang === 'zh' ? `續住：${prevHotel.title}` : `Continue stay at ${prevHotel.titleEn || prevHotel.title}`}
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
 
-                    <DropZone
-                        key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
-                        items={currentDaySchedule.accommodation}
-                        onDrop={(e) => handleDrop(e, 'accommodation')}
-                        onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
-                        onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
-                        onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot: 'accommodation', index: idx }); }}
-                        onUnlockItem={(item) => { setUnlockTarget(item); }}
-                        onItemClick={(item) => onSelectItem?.(item, 'canvas')}
-                        onDragStart={handleDragStart}
-                        onAddItem={() => {
-                            setActiveTab('assets');
-                            setSidebarMode?.('list');
-                            if (isMobile) {
-                                setAddToSlotTarget('accommodation');
-                                setShowMobileLibrary(true);
-                            } else {
-                                if (!isSidebarOpen) setIsSidebarOpen(true);
-                                setSidebarHighlight(true);
-                                setTimeout(() => setSidebarHighlight(false), 2000);
-                            }
-                        }}
-                        t={t}
-                        lang={lang}
-                        planRegion={activePlan.region}
-                        isCompact={showContextMap}
-                        showTimeline={isTimeline}
-                        startIndex={(currentDaySchedule.morning?.length || 0) + (currentDaySchedule.afternoon?.length || 0) + (currentDaySchedule.evening?.length || 0) + (currentDaySchedule.night?.length || 0)}
-                        isDayEmpty={isDayEmpty}
-                    />
 
-                    {/* Bottom Padding for Mobile Nav */}
-                    <div className="h-16 lg:h-12" />
+
+                    {/* Bottom Padding for Mobile Nav & Floating FABs */}
+                    <div className="h-40 lg:h-20" />
                 </div>
             </div>
 
