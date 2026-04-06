@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Compass, GripVertical, Sparkles, ChevronRight, X } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
+import type { Translation } from '../data/translations';
 
 interface WelcomeSlidesProps {
     onComplete: () => void;
@@ -221,19 +222,19 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
 
                     {/* Text */}
                     <h2 className="text-2xl font-black text-gray-900 mb-2 tracking-tight">
-                        {t[slideConfig.keys.title]}
+                        {(t as unknown as Translation)[slideConfig.keys.title as keyof Translation]}
                     </h2>
                     <p className="text-sm font-medium text-gray-500 mb-3">
-                        {t[slideConfig.keys.subtitle]}
+                        {(t as unknown as Translation)[slideConfig.keys.subtitle as keyof Translation]}
                     </p>
                     <p className="text-xs text-gray-600 leading-relaxed mb-4 max-w-xs mx-auto">
-                        {t[slideConfig.keys.description]}
+                        {(t as unknown as Translation)[slideConfig.keys.description as keyof Translation]}
                     </p>
 
                     {/* Tip badge */}
                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-gray-200/60 text-xs font-medium text-gray-600 shadow-sm">
                         <slideConfig.icon size={12} className="text-gray-400" />
-                        {t[slideConfig.keys.tip]}
+                        {(t as unknown as Translation)[slideConfig.keys.tip as keyof Translation]}
                     </div>
                 </div>
 

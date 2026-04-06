@@ -1,41 +1,43 @@
 import { Plan, ScheduleItem, TimeSlot, TransportMode, LangType } from '../types';
 import { getCurrencySymbol } from '../data/regions';
 import { TRANSLATIONS } from '../data/translations';
+import type { Translation } from '../data/translations';
 
 function getT(lang: LangType) {
     return TRANSLATIONS[lang] || TRANSLATIONS.zh;
 }
 
 function getSlotLabel(slot: TimeSlot, lang: LangType): string {
-    const t = getT(lang);
-    const keyMap: Record<TimeSlot, string> = {
+    const t = getT(lang) as Translation;
+    const keyMap: Record<TimeSlot, keyof Translation> = {
         morning: 'slotMorning',
         afternoon: 'slotAfternoon',
         evening: 'slotEvening',
         night: 'slotNight',
-        accommodation: 'slotAccommodation'
+        accommodation: 'slotAccommodation',
+        unsorted: 'slotMorning',
     };
-    return t[keyMap[slot]] || slot;
+    return (t[keyMap[slot]] as string) || slot;
 }
 
 function getTransportLabel(transport: TransportMode, lang: LangType): string {
-    const t = getT(lang);
-    const keyMap: Record<TransportMode, string> = {
+    const t = getT(lang) as Translation;
+    const keyMap: Record<TransportMode, keyof Translation> = {
         walk: 'transportWalk',
         public: 'transportPublic',
         car: 'transportCar'
     };
-    return t[keyMap[transport]] || transport;
+    return (t[keyMap[transport]] as string) || transport;
 }
 
 function getWeekday(date: Date, lang: LangType): string {
-    const t = getT(lang);
+    const t = getT(lang) as Translation;
     const day = date.getDay();
-    const keys = [
-        'weekdaySun', 'weekdayMon', 'weekdayTue', 'weekdayWed', 
+    const keys: (keyof Translation)[] = [
+        'weekdaySun', 'weekdayMon', 'weekdayTue', 'weekdayWed',
         'weekdayThu', 'weekdayFri', 'weekdaySat'
     ];
-    return t[keys[day]] || '';
+    return (t[keys[day]] as string) || '';
 }
 
 function getItemTitle(item: ScheduleItem, lang: LangType): string {

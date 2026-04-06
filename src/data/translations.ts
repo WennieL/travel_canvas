@@ -1,5 +1,5 @@
 // 翻譯資料 - 中英文
-export const TRANSLATIONS: any = {
+export const TRANSLATIONS = {
     zh: {
         appTitle: "TravelCanvas",
         myPlans: "我的計畫",
@@ -1148,3 +1148,7 @@ export const TRANSLATIONS: any = {
         weekdaySat: "Sat"
     }
 };
+
+// Inferred type from zh locale — use this instead of `t: any` in components
+export type Translation = typeof TRANSLATIONS['zh'];
+export type TranslationKey = keyof Translation;

@@ -26,7 +26,7 @@ export const PlanSelectorDrawer: React.FC<PlanSelectorDrawerProps> = ({
     onCreatePlan,
     lang = 'zh'
 }) => {
-    const t = TRANSLATIONS[lang as any] || TRANSLATIONS.zh;
+    const t = TRANSLATIONS[lang as 'zh' | 'en'] || TRANSLATIONS.zh;
 
     return (
         <AnimatePresence>

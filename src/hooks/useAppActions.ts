@@ -162,11 +162,11 @@ export const useAppActions = (deps: AppActionsDeps) => {
         if (!newSchedule[currentDayKey]) {
             newSchedule[currentDayKey] = { morning: [], afternoon: [], evening: [], night: [], accommodation: [] };
         }
-        newSchedule[currentDayKey][targetSlot].push(newItem);
+        newSchedule[currentDayKey]![targetSlot]!.push(newItem);
 
         // Sort slot if time exists
         if (data.time) {
-            newSchedule[currentDayKey][targetSlot].sort((a: ScheduleItem, b: ScheduleItem) =>
+            newSchedule[currentDayKey]![targetSlot]!.sort((a: ScheduleItem, b: ScheduleItem) =>
                 (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ')
             );
         }
@@ -244,16 +244,16 @@ export const useAppActions = (deps: AppActionsDeps) => {
         const sourceSlot = ui.moveTarget.slot as TimeSlot;
         const destSlot = targetSlot || sourceSlot;
 
-        const [item] = sourceDayRef[sourceSlot].splice(ui.moveTarget.index, 1);
+        const [item] = sourceDayRef[sourceSlot]!.splice(ui.moveTarget.index, 1);
 
         // Reset time if moving to a different slot type
         if (destSlot !== sourceSlot) {
             item.startTime = '';
         }
 
-        targetDayRef[destSlot].push(item);
+        targetDayRef[destSlot]!.push(item);
 
-        targetDayRef[destSlot].sort((a: ScheduleItem, b: ScheduleItem) => {
+        targetDayRef[destSlot]!.sort((a: ScheduleItem, b: ScheduleItem) => {
             const timeA = a.startTime || 'ZZZZ';
             const timeB = b.startTime || 'ZZZZ';
             return timeA.localeCompare(timeB);

@@ -24,6 +24,7 @@ function buildSuggestionsFromAssets(assets: TravelItem[]): Record<string, Travel
         evening: [],
         night: [],
         accommodation: [],
+        unsorted: [],
     };
 
     for (const item of assets) {

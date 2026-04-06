@@ -42,7 +42,7 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
     onFavoriteClick,
     lang = 'zh'
 }) => {
-    const t = TRANSLATIONS[lang as any] || TRANSLATIONS.zh;
+    const t = TRANSLATIONS[lang as 'zh' | 'en'] || TRANSLATIONS.zh;
 
     // Derived values
     const displayName = lang === 'zh' ? (author?.name) : (author?.nameEn || author?.name);
