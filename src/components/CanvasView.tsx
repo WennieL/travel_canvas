@@ -6,6 +6,7 @@ import { Sun, Coffee, Moon, Clock, BedDouble, Sunset, AlertTriangle, Plus } from
 import { getSlotLabel, parseDuration } from '../utils';
 import { TimelineSlotHeader } from './Canvas/TimelineSlotHeader';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useApp } from '../contexts/AppContext';
 
 // Slot visual configuration
 // Redundant slot visual configuration removed
@@ -14,8 +15,6 @@ interface CanvasViewProps {
     showContextMap: boolean;
     currentDaySchedule: DaySchedule;
     activePlan: Plan;
-    lang: LangType;
-    t: any;
     isSidebarOpen: boolean;
     handleDrop: (e: React.DragEvent, slot: TimeSlot) => void;
     handleRemoveItem: (slot: TimeSlot, index: number) => void;
@@ -46,8 +45,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     showContextMap,
     currentDaySchedule,
     activePlan,
-    lang,
-    t,
     isSidebarOpen,
     handleDrop,
     handleRemoveItem,
@@ -73,6 +70,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     onSelectItem,
     setActiveCategory,
 }) => {
+    const { lang, t } = useApp();
     const isTimeline = !showContextMap;
     const isMobile = useIsMobile();
 
@@ -127,8 +125,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                             setTimeout(() => setSidebarHighlight(false), 2000);
                                         }
                                     }}
-                                    t={t}
-                                    lang={lang}
                                     planRegion={activePlan.region}
                                     isCompact={showContextMap}
                                     showTimeline={isTimeline}
@@ -215,8 +211,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                                 setTimeout(() => setSidebarHighlight(false), 2000);
                                             }
                                         }}
-                                        t={t}
-                                        lang={lang}
                                         planRegion={activePlan.region}
                                         isCompact={showContextMap}
                                         startIndex={startIdx}
@@ -273,7 +267,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                             </div>
                             <div className="pt-10">
                                 <DropZone
-                                    key="unsorted" slot="unsorted" label={t.unsorted || 'Unsorted'}
+                                    key="unsorted" slot="unsorted" label={lang === 'zh' ? '口袋清單' : 'Pocket List'}
                                     items={currentDaySchedule.unsorted || []}
                                     onDrop={(e) => handleDrop(e, 'unsorted')}
                                     onRemoveItem={(idx: number) => handleRemoveItem('unsorted', idx)}
@@ -295,8 +289,6 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                                             setTimeout(() => setSidebarHighlight(false), 2000);
                                         }
                                     }}
-                                    t={t}
-                                    lang={lang}
                                     planRegion={activePlan.region}
                                     isCompact={showContextMap}
                                     showTimeline={false}

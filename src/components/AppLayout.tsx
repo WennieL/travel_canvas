@@ -401,7 +401,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
             <div className={`flex-1 flex flex-col min-w-0 ${viewMode === 'discovery' || showPlanManager ? 'bg-tc-bg' : 'bg-premium-paper'} relative overflow-x-hidden`}>
                 {(viewMode !== 'discovery' || showPlanManager) && !showFavorites && (
                     <AppHeader
-                        lang={lang} t={t} toggleLang={toggleLang} activePlan={activePlan}
+                        toggleLang={toggleLang} activePlan={activePlan}
                         isEditingName={isEditingName} editingName={editingName} setEditingName={setEditingName}
                         startEditingName={startEditingName} saveName={saveName} handleNameKeyDown={handleNameKeyDown}
                         nameInputRef={nameInputRef} openDatePicker={openDatePicker}
@@ -413,7 +413,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         calculateTotalBudget={calculateTotalBudget} calculateCategoryBreakdown={calculateCategoryBreakdown}
                         showContextMap={showContextMap} setShowContextMap={setShowContextMap}
                         viewMode={viewMode} setViewMode={setViewMode}
-                        showToastMessage={showToastMessage}
                         planRegion={activePlan.region}
                         isShrunk={isHeaderShrunk}
                         showPlanManager={showPlanManager}
@@ -561,8 +560,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                         showContextMap={showContextMap}
                                         currentDaySchedule={currentDaySchedule}
                                         activePlan={activePlan}
-                                        lang={lang}
-                                        t={t}
                                         isSidebarOpen={isSidebarOpen}
                                         handleDrop={handleDrop}
                                         handleRemoveItem={handleRemoveItem}
@@ -765,8 +762,6 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     handleNavigate('budget');
                 }}
                 onSetLang={toggleLang}
-                lang={lang}
-                t={t}
             />
 
             {/* GLOBAL FAB GROUP — extracted to FloatingActions component */}

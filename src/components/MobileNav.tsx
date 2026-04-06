@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Compass, Heart, Calendar, User, MoreHorizontal, DollarSign, ListTodo, Settings, Globe, Plus, ChevronRight } from 'lucide-react';
 import { useNavigation, NavItem } from '../hooks/useNavigation';
-import { LangType, ViewMode } from '../types';
+import { ViewMode } from '../types';
+import { useApp } from '../contexts/AppContext';
 
 interface MobileNavProps {
     viewMode: ViewMode;
@@ -14,8 +15,6 @@ interface MobileNavProps {
     onNewPlan: () => void;
     onShowBudget: () => void;
     onSetLang: () => void;
-    lang: LangType;
-    t: any;
 }
 
 type MobileTab = 'discovery' | 'favorites' | 'projects' | 'more';
@@ -31,9 +30,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     onNewPlan,
     onShowBudget,
     onSetLang,
-    lang,
-    t
 }) => {
+    const { lang, t } = useApp();
     const [showMoreMenu, setShowMoreMenu] = useState(false);
 
     const { mobilePrimary, mobileMore, getLabel } = useNavigation({

@@ -4,10 +4,9 @@ import { LangType, Plan, Region, ViewMode } from '../types';
 import { CITY_FILTERS } from '../data/index';
 import { getRegionName } from '../data/regions';
 import { BudgetWidget } from './BudgetWidget';
+import { useApp } from '../contexts/AppContext';
 
 interface AppHeaderProps {
-    lang: LangType;
-    t: any;
     toggleLang: () => void;
     activePlan: Plan;
     isEditingName: boolean;
@@ -38,25 +37,24 @@ interface AppHeaderProps {
     toolbar?: React.ReactNode;
     viewMode: ViewMode;
     setViewMode: (mode: ViewMode) => void;
-    showToastMessage: (message: string, type?: 'success' | 'warning' | 'error' | 'info', duration?: number) => void;
     planRegion?: string;
     isShrunk?: boolean;
     showPlanManager?: boolean;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({
-    lang, t, toggleLang, activePlan,
+    toggleLang, activePlan,
     isEditingName, editingName, setEditingName, startEditingName, saveName, handleNameKeyDown, nameInputRef,
     openDatePicker, showCitySelector, setShowCitySelector, activeRegion, setActiveRegion, updateActivePlan,
     setShowLanding, setShowPlanManager, setShowSubmitModal, setShowShareModal, handleGateCheck,
     isSidebarOpen, budgetLimit, setBudgetLimit, calculateTotalBudget, calculateCategoryBreakdown,
     showContextMap, setShowContextMap, toolbar,
     viewMode, setViewMode,
-    showToastMessage,
     planRegion,
     isShrunk,
     showPlanManager
 }) => {
+    const { lang, t, showToastMessage } = useApp();
     const MAX_NAME_LENGTH = 25;
 
     // Plan Manager Branding (Emerald Canopy Spec)

@@ -21,6 +21,7 @@ import SmartTimeInput from './SmartTimeInput.tsx';
 import ScheduleItemCard from './ScheduleItemCard.tsx';
 import TransportSelector from './TransportSelector.tsx';
 import { useConfirm, useIsMobile } from '../hooks';
+import { useApp } from '../contexts/AppContext';
 
 interface DropZoneProps {
     slot: TimeSlot;
@@ -33,9 +34,7 @@ interface DropZoneProps {
     onUnlockItem: (item: ScheduleItem) => void;
     onItemClick: (item: ScheduleItem) => void;
     onAddItem?: () => void;
-    t: any;
     previousItem?: ScheduleItem | null;
-    lang: string;
     onDragStart: (e: React.DragEvent, item: TravelItem, source: 'sidebar' | 'canvas', slot?: TimeSlot, index?: number) => void;
     planRegion?: Region;
     isCompact?: boolean;
@@ -45,8 +44,9 @@ interface DropZoneProps {
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
-    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, t, previousItem, lang, onDragStart, planRegion, isCompact = false, startIndex = 0, showTimeline = false, isDayEmpty = false
+    slot, items, label, onDrop, onRemoveItem, onUpdateItem, onMoveItem, onUnlockItem, onItemClick, onAddItem, previousItem, onDragStart, planRegion, isCompact = false, startIndex = 0, showTimeline = false, isDayEmpty = false
 }) => {
+    const { lang, t } = useApp();
     const { confirm } = useConfirm();
     // const isCompact = false; // Removed hardcoded
     const isDraggingGlobal = false; // Simplified
@@ -156,9 +156,9 @@ const DropZone: React.FC<DropZoneProps> = ({
                 )}
 
                 {slot === 'unsorted' ? (
-                    <div 
-                        className="grid grid-flow-col grid-rows-2 auto-cols-[minmax(160px,1fr)] gap-3 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:grid-flow-row md:grid-rows-none md:grid-cols-2 md:auto-cols-auto md:overflow-x-visible md:snap-none md:pb-0" 
-                        onDragOver={onDragOver} 
+                    <div
+                        className="grid grid-flow-col grid-rows-2 auto-cols-[minmax(160px,1fr)] gap-3 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:grid-flow-row md:grid-rows-none md:grid-cols-2 md:auto-cols-auto md:overflow-x-visible md:snap-none md:pb-0"
+                        onDragOver={onDragOver}
                         onDrop={(e) => onDrop(e)}
                     >
                         {items.map((item, idx) => (
