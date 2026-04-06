@@ -12,8 +12,8 @@ interface MobilePreviewProps {
 }
 
 const SLOT_LABELS: Record<LangType, Record<TimeSlot, string>> = {
-    zh: { morning: '🌅 早上', afternoon: '☀️ 下午', evening: '🌆 傍晚', night: '🌙 夜間', accommodation: '🏨 住宿' },
-    en: { morning: '🌅 Morning', afternoon: '☀️ Afternoon', evening: '🌆 Evening', night: '🌙 Night', accommodation: '🏨 Accommodation' }
+    zh: { morning: '🌅 早上', afternoon: '☀️ 下午', evening: '🌆 傍晚', night: '🌙 夜間', accommodation: '🏨 住宿', unsorted: '📌 未分類' },
+    en: { morning: '🌅 Morning', afternoon: '☀️ Afternoon', evening: '🌆 Evening', night: '🌙 Night', accommodation: '🏨 Accommodation', unsorted: '📌 Unsorted' }
 };
 
 export const MobilePreview: React.FC<MobilePreviewProps> = ({ plan, onClose, lang }) => {
@@ -137,7 +137,7 @@ export const MobilePreview: React.FC<MobilePreviewProps> = ({ plan, onClose, lan
                                                 {/* Open in Maps Button */}
                                                 <button className="w-full mt-2 py-2 bg-teal-50 text-teal-600 rounded-lg text-xs font-bold flex items-center justify-center gap-2 hover:bg-teal-100 transition-colors">
                                                     <Navigation size={12} />
-                                                    {t.openInMaps || '在地圖中查看'}
+                                                    {t.openMap || '在地圖中查看'}
                                                 </button>
                                             </div>
                                         </div>
@@ -151,7 +151,7 @@ export const MobilePreview: React.FC<MobilePreviewProps> = ({ plan, onClose, lan
                     {slots.every(slot => (daySchedule?.[slot] || []).length === 0) && (
                         <div className="flex flex-col items-center justify-center h-full text-gray-400 p-8">
                             <div className="text-4xl mb-3">📭</div>
-                            <p className="text-sm font-medium">{t.noItems || '這天還沒有安排'}</p>
+                            <p className="text-sm font-medium">{lang === 'zh' ? '這天還沒有安排' : 'No items for this day'}</p>
                         </div>
                     )}
                 </div>
@@ -177,7 +177,7 @@ export const MobilePreview: React.FC<MobilePreviewProps> = ({ plan, onClose, lan
 
             {/* Desktop: Preview label */}
             <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-sm font-medium">
-                📱 {t.mobilePreview || '手機版預覽'} — {t.pressEscToClose || '按 ESC 關閉'}
+                📱 {t.mobilePreview || '手機版預覽'} — {lang === 'zh' ? '按 ESC 關閉' : 'Press ESC to close'}
             </div>
         </div>
     );

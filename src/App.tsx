@@ -40,7 +40,8 @@ import { useIsMobile } from './hooks/useIsMobile';
 
 // Layout Component
 import AppLayout from './components/AppLayout';
-
+import { AppProvider } from './contexts/AppContext';
+import { UIProvider } from './contexts/UIContext';
 
 export function App() {
     const [lang, setLang] = useState<LangType>('zh');
@@ -324,8 +325,11 @@ export function App() {
         />
     ) : null;
 
-    return (<>
-        <AppLayout
+    return (
+        <AppProvider lang={lang} t={t} isMobile={isMobile} showToastMessage={showToastMessage}>
+            <UIProvider value={ui}>
+                <>
+                    <AppLayout
             lang={lang} t={t} activePlan={activePlan} plans={plans} activePlanId={activePlanId}
             currentDay={currentDay} setCurrentDay={setCurrentDay}
             viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile}
@@ -506,7 +510,10 @@ export function App() {
                 })()}
             </ImmersivePage>
         )}
-    </>);
+                </>
+            </UIProvider>
+        </AppProvider>
+    );
 }
 
 export default App;
