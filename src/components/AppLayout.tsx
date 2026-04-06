@@ -773,7 +773,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 {(viewMode === 'canvas' || viewMode === 'map') && !ui.showStartPicker && !ui.showCheckIn && (!isDayEmpty || viewMode !== 'canvas') && (
                     <>
                         {isMobile ? (
-                            <div className="fixed bottom-22 left-0 right-0 z-[120] px-6 pointer-events-none">
+                            <div className="fixed bottom-28 left-0 right-0 z-[120] px-6 pointer-events-none">
                                 <div className="relative w-full h-full flex items-center justify-center">
                                     {/* 1. Mobile Map Pill - Centered */}
                                     <motion.button
