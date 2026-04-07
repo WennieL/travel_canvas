@@ -391,5 +391,6 @@ export interface CulturalInsight {
     foreignerReaction: string;
     foreignerReactionEn?: string;
     backgroundColor?: string;
+    coverImage?: string;
 }
 

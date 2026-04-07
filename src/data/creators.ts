@@ -226,5 +226,19 @@ export const SAMPLE_CREATORS: Creator[] = [
         tags: ['花蓮', '美食', '老店'],
         tagsEn: ['Hualien', 'Food', 'Old House'],
         blogUrl: 'https://hualien-foodie.com'
+    },
+    {
+        id: 'c-tw-mountain',
+        name: '台北山系生活家',
+        nameEn: 'Taipei Mountain Guide',
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80',
+        description: '從高處看台北是我的日常，帶你走遍陽明山、象山等絕美景觀點。',
+        descriptionEn: 'Viewing Taipei from above is my routine. Let me lead you through Yangmingshan, Xiangshan, and other stunning viewpoints.',
+        followers: 8600,
+        tags: ['台北', '健行', '景觀'],
+        tagsEn: ['Taipei', 'Hiking', 'Views'],
+        blogUrl: 'https://taipei-mountain.tw',
+        role: '登山嚮導',
+        roleEn: 'MOUNTAIN GUIDE'
     }
 ];

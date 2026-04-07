@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign } from 'lucide-react';
-import { Template, LangType, TemplateStat, CulturalInsight } from '../../types';
+import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign, Bed, Moon, Home } from 'lucide-react';
+import { Template, LangType, TemplateStat, CulturalInsight, TemplateItem } from '../../types';
 import { SAMPLE_CREATORS, SAMPLE_ASSETS, CULTURAL_WONDERS } from '../../data';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // --- NEW COMPONENT: Timeline Insight Whisper ---
 const TimelineInsightWhisper: React.FC<{ insight: CulturalInsight, lang: LangType, onClick: () => void }> = ({ insight, lang, onClick }) => {
@@ -34,6 +34,101 @@ const TimelineInsightWhisper: React.FC<{ insight: CulturalInsight, lang: LangTyp
                 <ChevronRight size={14} className="text-[#5B4D7D]" />
             </div>
         </motion.div>
+    );
+};
+
+// --- NEW COMPONENT: Timeline Hotel Card (Collapsible) ---
+const TimelineHotelCard: React.FC<{ item: any, lang: LangType }> = ({ item, lang }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    
+    return (
+        <div className="my-4 ml-12 mr-2">
+            <motion.div 
+                layout
+                onClick={() => setIsExpanded(!isExpanded)}
+                className={`overflow-hidden border transition-all duration-300 cursor-pointer ${
+                    isExpanded 
+                    ? 'rounded-[24px] bg-white border-[#C8D5C0] shadow-[0_8px_30px_rgba(0,0,0,0.08)]' 
+                    : 'rounded-2xl bg-[#F7FBF0]/60 border-[#E8EDE4] hover:bg-[#F7FBF0] hover:border-[#C8D5C0]'
+                }`}
+            >
+                {/* Header / Collapsed View */}
+                <div className="p-3 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${isExpanded ? 'bg-bg-primary text-white' : 'bg-white text-[#8E9285]'}`}>
+                            <Bed size={18} />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] font-black text-[#8E9285] uppercase tracking-widest leading-none mb-1">
+                                {lang === 'zh' ? '建議住宿' : 'STAYING AT'}
+                            </span>
+                            <h4 className={`text-[15px] font-black truncate transition-colors ${isExpanded ? 'text-bg-primary' : 'text-[#181D17]'}`}>
+                                {lang === 'zh' ? item.title : (item.titleEn || item.title)}
+                            </h4>
+                        </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 shrink-0">
+                         {!isExpanded && item.rating && (
+                            <div className="flex items-center gap-0.5 text-[11px] font-black text-amber-500 bg-white px-2 py-0.5 rounded-full border border-[#E8EDE4]">
+                                <Star size={10} fill="currentColor" />
+                                <span>{item.rating}</span>
+                            </div>
+                        )}
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center border border-[#E8EDE4] bg-white text-[#8E9285] transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                            <ChevronRight size={16} className="rotate-90" />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Expanded Content */}
+                <AnimatePresence>
+                    {isExpanded && (
+                        <motion.div 
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="px-4 pb-4"
+                        >
+                            {item.coverImage && (
+                                <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 bg-gray-100">
+                                    <img src={item.coverImage} className="w-full h-full object-cover" alt={item.title} />
+                                </div>
+                            )}
+                            
+                            <div className="space-y-3">
+                                <p className="text-[13px] leading-relaxed text-[#4A5548] opacity-80">
+                                    {lang === 'zh' ? item.description : (item.descriptionEn || item.description)}
+                                </p>
+                                
+                                {item.insiderTip && (
+                                    <div className="p-3 bg-[#FFF9E6] rounded-xl border border-[#FFEBB3]/30">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <Lightbulb size={14} className="text-amber-600" />
+                                            <span className="text-[11px] font-black text-amber-700 uppercase tracking-widest">
+                                                {lang === 'zh' ? '住宿小撇步' : 'STAY TIP'}
+                                            </span>
+                                        </div>
+                                        <p className="text-[12px] font-bold text-[#6B5A2E]">
+                                            {lang === 'zh' ? item.insiderTip.teaser : (item.insiderTip.teaserEn || item.insiderTip.teaser)}
+                                        </p>
+                                    </div>
+                                )}
+
+                                <div className="flex items-center gap-2 pt-2">
+                                    <div 
+                                        className="flex-1 px-4 py-2.5 bg-bg-primary text-white rounded-xl text-center text-[12px] font-black uppercase tracking-widest hover:opacity-90 transition-opacity"
+                                    >
+                                        {lang === 'zh' ? '查看飯店詳情' : 'VIEW HOTEL DETAILS'}
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.div>
+        </div>
     );
 };
 
@@ -71,7 +166,18 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
-    const creator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
+    const resolvedCreator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
+    
+    // Virtual Creator Fallback (No Hardcode!)
+    const creator = resolvedCreator || {
+        id: template.authorId,
+        name: template.author,
+        nameEn: template.authorEn || template.author,
+        avatar: `https://i.pravatar.cc/100?u=${template.authorId}`,
+        description: template.targetAudience?.description || 'Recommend the most authentic experiences.',
+        descriptionEn: template.targetAudience?.descriptionEn || template.targetAudience?.description || 'Recommend the most authentic experiences.'
+    };
+
     const isFavorited = savedTemplates.some(t => t.id === template.id);
 
     // Day logic
@@ -240,14 +346,17 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                         <div className="space-y-8">
                             {/* Creator Identity */}
                             <div className="flex items-center justify-between px-2">
-                                <div className="flex items-center gap-4">
+                                <div 
+                                    className="flex items-center gap-4 cursor-pointer group/creator"
+                                    onClick={() => onCreatorClick?.(creator.id)}
+                                >
                                     <img
                                         src={creator?.avatar || `https://i.pravatar.cc/100?u=${template.authorId}`}
-                                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xl"
+                                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xl group-hover/creator:scale-105 transition-transform"
                                         alt="creator"
                                     />
                                     <div>
-                                        <div className="text-[17px] font-black text-[#181D17] leading-none mb-1">
+                                        <div className="text-[17px] font-black text-[#181D17] leading-none mb-1 group-hover/creator:text-bg-primary transition-colors">
                                             {lang === 'zh' ? (creator?.name || template.author) : (creator?.nameEn || creator?.name || template.authorEn || template.author)}
                                         </div>
                                         <div className="text-[11px] font-bold text-[#8E9285]">{lang === 'zh' ? '旅遊達人' : 'Travel Expert'}</div>
@@ -478,6 +587,18 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                             </div>
                                         );
                                     })}
+                                    
+                                    {/* 3. Accommodations section at the end of the day */}
+                                    {dayData.accommodation && dayData.accommodation.length > 0 && (
+                                        <div className="mt-2 pt-2 border-t border-dashed border-[#E8EDE4]">
+                                            {dayData.accommodation.map((item: TemplateItem, hIdx: number) => {
+                                                // Resolve asset if ID matches a sample asset
+                                                const asset = SAMPLE_ASSETS.find(a => a.id === item.id);
+                                                const hotel = asset ? { ...asset, ...item } : item;
+                                                return <TimelineHotelCard key={`hotel-${hIdx}`} item={hotel} lang={lang} />;
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="mt-8 mb-8">

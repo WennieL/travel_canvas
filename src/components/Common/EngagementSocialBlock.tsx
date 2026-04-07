@@ -47,7 +47,7 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
     // Derived values
     const displayName = lang === 'zh' ? (author?.name) : (author?.nameEn || author?.name);
     const displayBio = lang === 'zh' ? author?.description : (author?.descriptionEn || author?.description);
-    const displayBy = (author?.nameEn || author?.name || 'Creator').toUpperCase();
+    const displayBy = (author?.id ? (author.nameEn || author.name) : (lang === 'zh' ? '旅遊達人' : 'Travel Expert')).toUpperCase();
 
     return (
         <div className="mt-8">
@@ -75,7 +75,7 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
                                 className="text-[24px] font-black text-white leading-none cursor-pointer hover:text-emerald-400 transition-colors"
                                 onClick={() => author && onCreatorClick?.(author.id)}
                             >
-                                {displayName || 'Laneway Explorer'}
+                                {displayName || (lang === 'zh' ? '旅遊達人' : 'Travel Expert')}
                             </h4>
                             <div className="text-[11px] font-black text-white/40 uppercase tracking-[0.25em] mt-2 font-sans">
                                 BY {displayBy}
@@ -85,7 +85,7 @@ export const EngagementSocialBlock: React.FC<EngagementSocialBlockProps> = ({
 
                     {/* Bottom: Bio */}
                     <p className="text-[15.5px] leading-[1.8] text-white/90 font-medium px-0.5 max-w-[98%]">
-                        {displayBio || "Living in Melbourne for 5 years. Skip the lines; I'll show you the hidden laneway cafes and speakeasies locals love."}
+                        {displayBio || (lang === 'zh' ? '分享在地最地道的旅行視角。' : 'Sharing the most authentic local travel perspectives.')}
                     </p>
                 </div>
 

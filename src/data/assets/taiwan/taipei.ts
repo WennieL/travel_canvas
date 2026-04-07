@@ -100,7 +100,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#d64d4d',
         teaser: '百年老街與月老聖地，全台北最有層次的巷弄。',
         teaserEn: 'Old street & Cupid shrine, the most layered alley in Taipei.',
-        coverImage: 'https://images.unsplash.com/photo-1571473068212-076110f03120?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1620311210080-87425883a48e?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -176,7 +176,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#3a7aaa',
         teaser: '台北最美河岸夕陽，吹著海風迎接夜晚。',
         teaserEn: 'Taipei\'s most beautiful river sunset, ocean breeze included.',
-        coverImage: 'https://images.unsplash.com/photo-1583091176214-7221ee880bc8?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1644722849845-66858e384898?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -404,7 +404,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '萬華最美的紅磚牆，每一扇窗都是歷史。',
         teaserEn: 'Wanhua\'s most beautiful brick walls; every window has a story.',
-        coverImage: 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1584285437876-068340d867c2?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -480,7 +480,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c28a2d',
         teaser: '慈聖宮廟前大樹下的熱炒，台北最道地的吃法。',
         teaserEn: 'Dining under a temple tree: Taipei\'s most authentic experience.',
-        coverImage: 'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1562601579-599dec564e06?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -556,7 +556,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d2222',
         teaser: '米其林光環下的江湖夜市，必嚐傳說級魯肉飯。',
         teaserEn: 'Michelin-starred street food in a gritty, historic market.',
-        coverImage: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1570535316410-b9bbd6642d93?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -773,6 +773,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#8a5a3a',
         teaser: '不是景點，是台灣真實的日常切面。',
         teaserEn: 'Not a tourist spot, but a real slice of Taiwan life.',
+        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -842,6 +843,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#4a7c59',
         teaser: '城市的綠洲，觀察台北日常的最佳座位。',
         teaserEn: 'A city oasis, the best seat to watch daily life flow.',
+        coverImage: 'https://images.unsplash.com/photo-1590424600650-6ed6679b3cb0?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -981,6 +983,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#3a7aaa',
         teaser: '登上雲端俯瞰台北，見證工程奇蹟。',
         teaserEn: 'Climb above the clouds and witness an engineering marvel.',
+        coverImage: 'https://images.unsplash.com/photo-1538356111083-74819827bb68?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1050,6 +1053,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d2222',
         teaser: '燈火通明的台北深夜，米其林級的在地美味。',
         teaserEn: 'A lit Taipei night with Michelin-level local flavors.',
+        coverImage: 'https://images.unsplash.com/photo-1570535316410-b9bbd6642d93?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1096,6 +1100,38 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 storyEn: 'Pepper buns are the soul here. Watch the sugarcane pressing ritual while you wait in line.',
                 mustTry: '福州世祖胡椒餅 + 陳董藥燉排骨',
                 bestTime: '21:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-h1',
+        title: '大稻埕旗艦設計旅店',
+        titleEn: 'Dadaocheng Design Hotel',
+        type: 'hotel',
+        duration: '住宿',
+        image: '🏨',
+        description: '融合了大稻埕傳統紅磚與現代設計語彙，這層老宅改建的旅店正對著碼頭。清晨被河岸晨光喚醒，是老派台北最浪漫的住宿體驗。',
+        descriptionEn: 'Blending traditional red bricks with modern design, this heritage building faces the wharf. Waking up to the riverside morning light is the most romantic old-school Taipei stay.',
+        price: 3200,
+        address: '台北市大同區民樂街',
+        rating: 4.9,
+        lat: 25.0562,
+        lng: 121.5102,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['設計旅店', '老宅改連', '碼頭景觀'],
+        themeColor: '#7d3a22',
+        teaser: '在百年老宅中，與大稻埕的夕陽同眠。',
+        teaserEn: 'Sleep with the Dadaocheng sunset in a century-old heritage house.',
+        coverImage: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800',
+        insiderTip: {
+            teaser: '頂樓露台是看夕陽的私人秘境。',
+            teaserEn: 'The rooftop terrace is a private sunset viewing spot.',
+            full: {
+                story: '雖然是老建築改建，但隔音與舒適度都是頂級。頂樓露台不對外開放，只有房客能在那裡安靜喝杯茶，俯瞰大稻埕。',
+                storyEn: 'Despite being a heritage house, the soundproofing and comfort are top-tier. The rooftop terrace is exclusive to guests, perfect for a quiet tea session.',
+                mustTry: '頂樓露台的夕陽時光',
+                bestTime: '17:30'
             }
         }
     }

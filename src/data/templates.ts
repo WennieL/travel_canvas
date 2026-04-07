@@ -1,3 +1,7 @@
+/**
+ * Travel Templates Data
+ * Last Refresh: 2026-04-07 (Taipei Visual Enrichment Complete)
+ */
 import { Template } from '../types';
 import { TOKYO_ASSETS, OSAKA_ASSETS, KYOTO_ASSETS, MELBOURNE_ASSETS } from './assets';
 import { TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS } from './assets/taiwan';
@@ -804,21 +808,23 @@ export const TEMPLATES: Template[] = [
                 themeEn: 'Taipei Soul & Alley Eats',
                 themeEmoji: '🏮',
                 morning: [
-                    { ...TAIPEI_ASSETS[0], instanceId: 'tp-day-1', startTime: '08:30', arrivalTransport: 'public' },
-                    { ...TAIPEI_ASSETS[1], instanceId: 'tp-day-2', startTime: '10:30', arrivalTransport: 'walk' },
-                    { ...TAIPEI_ASSETS[2], instanceId: 'tp-day-3', startTime: '11:30', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f1')!, instanceId: 'tp-day-1', startTime: '08:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a1')!, instanceId: 'tp-day-2', startTime: '10:30', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a2')!, instanceId: 'tp-day-3', startTime: '11:30', arrivalTransport: 'walk' },
                 ],
                 afternoon: [
-                    { ...TAIPEI_ASSETS[3], instanceId: 'tp-day-4', startTime: '13:30', arrivalTransport: 'public' },
-                    { ...TAIPEI_ASSETS[6], instanceId: 'tp-day-5', startTime: '15:30', arrivalTransport: 'public' },
-                    { ...TAIPEI_ASSETS[4], instanceId: 'tp-day-6', startTime: '17:00', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f2')!, instanceId: 'tp-day-4', startTime: '13:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f3')!, instanceId: 'tp-day-5', startTime: '15:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a3')!, instanceId: 'tp-day-6', startTime: '17:00', arrivalTransport: 'walk' },
                 ],
                 evening: [
-                    { ...TAIPEI_ASSETS[5], instanceId: 'tp-day-7', startTime: '18:30', arrivalTransport: 'walk' },
-                    { ...TAIPEI_ASSETS[7], instanceId: 'tp-day-8', startTime: '20:00', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a4')!, instanceId: 'tp-day-7', startTime: '18:30', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f4')!, instanceId: 'tp-day-8', startTime: '20:00', arrivalTransport: 'walk' },
                 ],
                 night: [],
-                accommodation: []
+                accommodation: [
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-h1')!, instanceId: 'tp-h-1' }
+                ]
             }
         }
     },

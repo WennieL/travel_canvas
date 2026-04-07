@@ -7,6 +7,8 @@ import { getSlotLabel, parseDuration } from '../utils';
 import { TimelineSlotHeader } from './Canvas/TimelineSlotHeader';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useApp } from '../contexts/AppContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
 // Slot visual configuration
 // Redundant slot visual configuration removed
@@ -73,6 +75,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     const { lang, t } = useApp();
     const isTimeline = !showContextMap;
     const isMobile = useIsMobile();
+    const [isAccExpanded, setIsAccExpanded] = React.useState(true);
 
     // Define slots and calculation logic at the top to avoid scope issues
     const slots = ['morning', 'afternoon', 'evening', 'night'] as TimeSlot[];
@@ -92,59 +95,86 @@ const CanvasView: React.FC<CanvasViewProps> = ({
                     {/* Day Anchor: Accommodation (Top-Level Sticky Feel) */}
                     <div className="mb-8 relative z-20">
                         {/* Custom Anchor Card styling around the DropZone */}
-                        <div className="bg-indigo-50/50 rounded-2xl p-1 md:p-2 border border-indigo-100/50">
-                            <div className="px-4 py-2 flex items-center justify-between">
-                                <span className="text-xs font-bold text-indigo-800 tracking-wider uppercase flex items-center gap-1.5 opacity-80">
-                                    <span className="text-sm">🏠</span>
-                                    {t.accommodation || 'Accommodation'}
-                                </span>
-                            </div>
+                        <div className={`bg-indigo-50/50 rounded-2xl p-1 md:p-2 border border-indigo-100/50 transition-all duration-300 ${!isAccExpanded ? 'shadow-sm' : ''}`}>
+                            <button 
+                                onClick={() => setIsAccExpanded(!isAccExpanded)}
+                                className="w-full px-4 py-2 flex items-center justify-between group"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xs font-bold text-indigo-800 tracking-wider uppercase flex items-center gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
+                                        <span className="text-sm">🏠</span>
+                                        {t.accommodation || 'Accommodation'}
+                                    </span>
+                                    
+                                    {/* Compact Summary when collapsed */}
+                                    {!isAccExpanded && (currentDaySchedule.accommodation || []).length > 0 && (
+                                        <span className="text-[11px] font-bold text-indigo-600/60 transition-all animate-in fade-in slide-in-from-left-2 truncate max-w-[150px] md:max-w-xs">
+                                            • {currentDaySchedule.accommodation[0].title}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className={`text-indigo-400 group-hover:text-indigo-600 transition-all duration-300 ${isAccExpanded ? 'rotate-180' : ''}`}>
+                                    <ChevronDown size={16} strokeWidth={3} />
+                                </div>
+                            </button>
                             
-                            <div className="-mt-2">
-                                <DropZone
-                                    key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
-                                    items={currentDaySchedule.accommodation}
-                                    onDrop={(e) => handleDrop(e, 'accommodation')}
-                                    onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
-                                    onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
-                                    onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot: 'accommodation', index: idx }); }}
-                                    onUnlockItem={(item) => { setUnlockTarget(item); }}
-                                    onItemClick={(item) => onSelectItem?.(item, 'canvas')}
-                                    onDragStart={handleDragStart}
-                                    onAddItem={() => {
-                                        setActiveTab('assets');
-                                        setActiveCategory?.('hotel');
-                                        setSidebarMode?.('list');
-                                        if (isMobile) {
-                                            setAddToSlotTarget('accommodation');
-                                            setShowMobileLibrary(true);
-                                        } else {
-                                            setAddToSlotTarget('accommodation');
-                                            if (!isSidebarOpen) setIsSidebarOpen(true);
-                                            setSidebarHighlight(true);
-                                            setTimeout(() => setSidebarHighlight(false), 2000);
-                                        }
-                                    }}
-                                    planRegion={activePlan.region}
-                                    isCompact={showContextMap}
-                                    showTimeline={isTimeline}
-                                    startIndex={0}
-                                    isDayEmpty={isDayEmpty}
-                                />
-                                
-                                {/* Continuation Button */}
-                                {(currentDaySchedule.accommodation || []).length === 0 && prevHotel && (
-                                    <div className="px-4 pb-4">
-                                        <button
-                                            onClick={onRepeatAccommodation}
-                                            className="w-full py-2 bg-indigo-50/50 hover:bg-indigo-100/50 border border-indigo-200/50 rounded-xl text-[11px] font-bold text-indigo-700 flex items-center justify-center gap-2 transition-all group/repeat"
-                                        >
-                                            <span className="text-sm opacity-70 group-hover/repeat:scale-110 transition-transform">🛏️</span>
-                                            {lang === 'zh' ? `續住：${prevHotel.title}` : `Continue stay at ${prevHotel.titleEn || prevHotel.title}`}
-                                        </button>
-                                    </div>
+                            <AnimatePresence>
+                                {isAccExpanded && (
+                                    <motion.div 
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="-mt-2">
+                                            <DropZone
+                                                key="accommodation" slot="accommodation" label={t.accommodation || 'Accommodation'}
+                                                items={currentDaySchedule.accommodation}
+                                                onDrop={(e) => handleDrop(e, 'accommodation')}
+                                                onRemoveItem={(idx: number) => handleRemoveItem('accommodation', idx)}
+                                                onUpdateItem={(idx: number, upd: Partial<ScheduleItem>) => handleUpdateItem('accommodation', idx, upd)}
+                                                onMoveItem={(idx) => { setShowMoveModal(true); setMoveTarget({ slot: 'accommodation', index: idx }); }}
+                                                onUnlockItem={(item) => { setUnlockTarget(item); }}
+                                                onItemClick={(item) => onSelectItem?.(item, 'canvas')}
+                                                onDragStart={handleDragStart}
+                                                onAddItem={() => {
+                                                    setActiveTab('assets');
+                                                    setActiveCategory?.('hotel');
+                                                    setSidebarMode?.('list');
+                                                    if (isMobile) {
+                                                        setAddToSlotTarget('accommodation');
+                                                        setShowMobileLibrary(true);
+                                                    } else {
+                                                        setAddToSlotTarget('accommodation');
+                                                        if (!isSidebarOpen) setIsSidebarOpen(true);
+                                                        setSidebarHighlight(true);
+                                                        setTimeout(() => setSidebarHighlight(false), 2000);
+                                                    }
+                                                }}
+                                                planRegion={activePlan.region}
+                                                isCompact={showContextMap}
+                                                showTimeline={isTimeline}
+                                                startIndex={0}
+                                                isDayEmpty={isDayEmpty}
+                                            />
+                                            
+                                            {/* Continuation Button */}
+                                            {(currentDaySchedule.accommodation || []).length === 0 && prevHotel && (
+                                                <div className="px-4 pb-4">
+                                                    <button
+                                                        onClick={onRepeatAccommodation}
+                                                        className="w-full py-2 bg-indigo-50/50 hover:bg-indigo-100/50 border border-indigo-200/50 rounded-xl text-[11px] font-bold text-indigo-700 flex items-center justify-center gap-2 transition-all group/repeat"
+                                                    >
+                                                        <span className="text-sm opacity-70 group-hover/repeat:scale-110 transition-transform">🛏️</span>
+                                                        {lang === 'zh' ? `續住：${prevHotel.title}` : `Continue stay at ${prevHotel.titleEn || prevHotel.title}`}
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </motion.div>
                                 )}
-                            </div>
+                            </AnimatePresence>
                         </div>
                     </div>
 
