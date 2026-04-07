@@ -736,502 +736,83 @@ export const TEMPLATES: Template[] = [
         }
     },
     // ===== TAIWAN TEMPLATES =====
-    // ── 台北慢活散策 3 日 ── 
+    // ── 台北慢活老街日 ── 
     {
-        id: 'tw-taipei-slow',
-        name: '台北慢活散策 3 日',
-        nameEn: 'Taipei Slow Travel 3-Day',
-        title: '用走路的速度，感受台北的呼吸',
-        titleEn: 'Feel Taipei at Walking Pace',
-        coverImage: 'https://images.unsplash.com/photo-1601534622119-e9b3aa7c7bdf?auto=format&fit=crop&q=80&w=1000',
+        id: 'tw-taipei-oldstreet-day',
+        name: '台北慢活老街日',
+        nameEn: 'Taipei Slow Living Old Street',
+        title: '在大稻埕與萬華，遇見台北的舊時光',
+        titleEn: 'Old Souls of Taipei: From Dadaocheng to Wanhua',
+        coverImage: '/images/covers/taipei-old-street.png',
         author: '台北文青散步',
         authorEn: 'Taipei Culture Walk',
         authorId: 'c-tw1',
         region: 'taipei',
-        tags: ['慢活', '文青', '咖啡'],
-        tagsEn: ['Slow Travel', 'Culture', 'Coffee'],
-        travelStyle: ['慢活', '文青'],
+        tags: ['老街', '美食', '台北日常'],
+        tagsEn: ['Old Street', 'Food', 'Taipei Life'],
+        travelStyle: ['慢活', '文化'],
         targetAudience: {
-            personas: ['慢活族', '文青', '咖啡控'],
-            personasEn: ['Slow Traveler', 'Culture Lover', 'Coffee Nerd'],
-            description: '適合想遠離觀光客路線、用自己的節奏探索台北巷弄的人',
-            descriptionEn: 'For those who want to escape tourist routes and explore Taipei alleys at their own pace.',
+            personas: ['慢活族', '文化愛好者', '老屋迷'],
+            personasEn: ['Slow Traveler', 'Culture Lover', 'Old House Fan'],
+            description: '適合想深度感受台北歷史底蘊，不趕時間、喜歡在街頭觀察日常的旅人',
             paceLevel: 'slow'
         },
         vibes: [
-            { tag: '#巷弄探索', color: 'bg-teal-100 text-teal-800' },
-            { tag: '#老宅咖啡', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#秘境美術館', color: 'bg-purple-100 text-purple-800' }
+            { tag: '#迪化街私藏', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#艋舺風情', color: 'bg-red-100 text-red-800' },
+            { tag: '#達人帶路', color: 'bg-teal-50 text-teal-700' }
         ],
         coverStory: {
-            quote: '台北最美的風景，都藏在觀光客懶得走的巷弄裡。',
-            quoteEn: 'Taipei\'s most beautiful scenery hides in alleys tourists are too lazy to walk.',
-            description: '從文學基地的日式宿舍群開始，穿過赤峰街的獨立書店，在寶藏巖的山城藝術村發呆。',
-            authorLabel: '台北在地文青推薦'
+            quote: '台北最迷人的景致，是即便繁華落盡，街角依然飄散著藥材與古早味的香氣。',
+            quoteEn: 'Taipei\'s most charming sights reside in corners where the scent of herbs and vintage flavors remain.',
+            description: '這不是一般觀光客的走馬看花，而是穿越時空的台北日常。我們從大稻埕的清晨開始，一路漫步到萬華的燈火闌珊。',
+            authorLabel: '台北在地文化推廣者推薦'
         },
         authorStory: {
-            zh: '我是在台北長大的文青部落客，專門寫巷弄探索與獨立書店。這份路線是我花了 5 年走遍台北大街小巷後，精選出最能代表「台北文化靈魂」的地點 — 每一站都有我自己的故事。',
-            en: 'I\'m a Taipei-born blogger who writes about alley exploration and indie bookstores. This route took 5 years of wandering every corner of Taipei to curate — each stop represents the cultural soul of this city and holds a personal story of mine.'
+            zh: '我在台北長大，特別著迷於那些被時間遺忘的角落。這份行程是我無數次穿梭在萬華和大稻埕後，精選出最能代表「台北老靈魂」的地點。',
+            en: 'Grown up in Taipei, I\'m obsessed with corners forgotten by time. This itinerary is my "Soul of Taipei" collection, curated from endless walks in Wanhua and Dadaocheng.'
         },
-        travelTips: [
-            { tip: '台北捷運非常方便，但巷弄探索建議用走的', tipEn: 'MRT is convenient, but walk to discover alleys' },
-            { tip: '每間咖啡廳都有自己的個性，不要只去連鎖店', tipEn: 'Each caf\u00e9 has its own personality, skip chains' },
-            { tip: '帶折疊傘，台北的天氣隨時會變', tipEn: 'Carry a folding umbrella, Taipei weather is unpredictable' }
-        ],
-        duration: 3,
-        rating: 4.8,
-        tier: 'creator',
-        copiedCount: 324,
-        price: 0.99,
-        highlights: { days: 3, spots: 9, tips: 6, rating: 4.8, usageCount: 324 },
-        dayPreviews: [
-            { day: 1, summary: '文學基地 → 赤峰街 → 大稻埕咖啡廳' },
-            { day: 2, summary: '心中山線形公園 → 鼎元豆漿 → 寶藏巖' },
-            { day: 3, summary: '九份 → 金瓜石 → 足米飯糰' }
-        ],
-        schedule: {
-            'Day 1': {
-                theme: '文學散步 & 老宅咖啡',
-                themeEn: 'Literature Walk & Old House Coffee',
-                themeEmoji: '📚',
-                morning: [
-                    { ...TAIPEI_ASSETS[0], instanceId: 'tw1-1', startTime: '09:00', arrivalTransport: 'public' },
-                ],
-                afternoon: [
-                    { ...TAIPEI_ASSETS[1], instanceId: 'tw1-2', startTime: '13:00', arrivalTransport: 'walk' },
-                    { ...TAIPEI_ASSETS[5], instanceId: 'tw1-3', startTime: '15:00', arrivalTransport: 'walk' },
-                ],
-                evening: [
-                    { ...TAIPEI_ASSETS[6], instanceId: 'tw1-4-secret', startTime: '17:30', arrivalTransport: 'public' },
-                    { ...TAIPEI_ASSETS[3], instanceId: 'tw1-4', startTime: '19:00', arrivalTransport: 'public' },
-                ],
-                night: [],
-                accommodation: []
+        faq: [
+            {
+                title: '迪化街幾點去最好？',
+                titleEn: 'When to visit Dihua St.',
+                text: '建議早上 11:00 左右抵達。那時中藥行與乾貨店剛全開，街道能量最飽滿，但又不至於像下午那樣擁擠。',
+                textEn: 'Aim for 11:00 AM. Shops are fully open, and the energy is peak but not yet overcrowded.'
             },
-            'Day 2': {
-                theme: '巷弄探索 & 藝術村',
-                themeEn: 'Alley Exploration & Artist Village',
-                themeEmoji: '🎨',
-                morning: [
-                    { ...TAIPEI_ASSETS[4], instanceId: 'tw1-5', startTime: '07:00', arrivalTransport: 'walk' },
-                ],
-                afternoon: [
-                    { ...TAIPEI_ASSETS[2], instanceId: 'tw1-6', startTime: '14:00', arrivalTransport: 'public' },
-                ],
-                evening: [],
-                night: [],
-                accommodation: []
+            {
+                title: '萬華夜市這麼多，推薦哪一個？',
+                titleEn: 'Which Wanhua market?',
+                text: '雖然廣州街夜市很大，但我個人更推薦「華西街夜市」。除了經典美食，那裡的復古氛圍與建築結構是全台北最獨特的。',
+                textEn: 'Go for Huaxi St. Night Market. Beyond food, its retro architecture and unique atmosphere are unmatched in Taipei.'
             }
-        }
-    },
-    // ── 台南美食散步 2 日 ──
-    {
-        id: 'tw-tainan-food',
-        name: '台南美食散步 2 日',
-        nameEn: 'Tainan Food Walk 2-Day',
-        title: '跟著阿孆的口袋名單，吃遍台南',
-        titleEn: 'Follow Grandma\'s Secret Food List Through Tainan',
-        coverImage: 'https://images.unsplash.com/photo-1633228491597-b39f823e0541?auto=format&fit=crop&q=80&w=1000',
-        author: '台南吃貨阿孆',
-        authorEn: 'Tainan Foodie Grandma',
-        authorId: 'c-tw2',
-        region: 'tainan',
-        tags: ['美食', '小吃', '在地'],
-        tagsEn: ['Food', 'Street Food', 'Local'],
-        travelStyle: ['美食', '在地'],
-        targetAudience: {
-            personas: ['吃貨', '美食探險家'],
-            personasEn: ['Foodie', 'Food Adventurer'],
-            description: '適合想用胃感受台南的旅人，每頓都有驚喜',
-            paceLevel: 'moderate'
-        },
-        vibes: [
-            { tag: '#小吃天堂', color: 'bg-orange-100 text-orange-800' },
-            { tag: '#🏆世界得獎', color: 'bg-yellow-100 text-yellow-800' },
-            { tag: '#在地人帶路', color: 'bg-teal-50 text-teal-700' }
         ],
-        coverStory: {
-            quote: '台南人不是在吃，就是在去吃的路上。',
-            quoteEn: 'Tainan people are either eating, or on their way to eat.',
-            description: '從早上 6 點的虔肉米糕開始，到神農街的隱藏酒吧結束。中間穿插世界得獎冰淇淋。',
-            authorLabel: '台南 60 年在地人推薦'
-        },
-        authorStory: {
-            zh: '我家在台南住了三代，阿嬬從小帶我吃的店，很多都開了 50 年以上。這份行程是我小時候的味道 — 早上排隊的虐肉飯、下午的古早味紅茶、晚上神農街的安靜。希望你也能吃到我的童年。',
-            en: 'My family has lived in Tainan for three generations. The shops my grandma took me to as a kid have been open for 50+ years. This itinerary is my childhood flavor — morning queues for braised rice, afternoon vintage black tea, and peaceful evenings on Shennong Street.'
-        },
-        travelTips: [
-            { tip: '台南小吃通常下午才開，早上去市場吃', tipEn: 'Most street food opens in afternoon, eat at markets in the morning' },
-            { tip: '蛋山派吃完不妨走過去神農街散步', tipEn: 'After eating, walk to Shennong St. to digest' }
-        ],
-        duration: 2,
-        rating: 4.7,
+        duration: 1,
+        rating: 4.9,
         tier: 'creator',
-        copiedCount: 215,
-        highlights: { days: 2, spots: 6, tips: 4, rating: 4.7, usageCount: 215 },
+        copiedCount: 425,
+        price: 0,
+        highlights: { days: 1, spots: 8, tips: 6, rating: 4.9, usageCount: 425 },
         dayPreviews: [
-            { day: 1, summary: '神農街 → 蚷尾家冰淇淋🏆 → 虔農水煎包' },
-            { day: 2, summary: '孔廟商圈早餐 → 黃金海岸線 → 花園夜市' }
+            { day: 1, summary: '阜杭豆漿 → 迪化街散步 → 龍山寺祈福 → 華西街夜市' }
         ],
         schedule: {
             'Day 1': {
-                theme: '老街散步 & 世界得獎冰淇淋',
-                themeEn: 'Old Streets & World-Medal Gelato',
+                theme: '台北老魂與巷弄美食',
+                themeEn: 'Taipei Soul & Alley Eats',
                 themeEmoji: '🏮',
-                morning: [],
+                morning: [
+                    { ...TAIPEI_ASSETS[0], instanceId: 'tp-day-1', startTime: '08:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS[1], instanceId: 'tp-day-2', startTime: '10:30', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS[2], instanceId: 'tp-day-3', startTime: '11:30', arrivalTransport: 'walk' },
+                ],
                 afternoon: [
-                    { ...TAINAN_ASSETS[0], instanceId: 'tn1-1', startTime: '13:00', arrivalTransport: 'walk' },
-                    { ...TAINAN_ASSETS[1], instanceId: 'tn1-2', startTime: '14:30', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS[3], instanceId: 'tp-day-4', startTime: '13:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS[6], instanceId: 'tp-day-5', startTime: '15:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS[4], instanceId: 'tp-day-6', startTime: '17:00', arrivalTransport: 'walk' },
                 ],
                 evening: [
-                    { ...TAINAN_ASSETS[2], instanceId: 'tn1-3', startTime: '17:00', arrivalTransport: 'public' },
-                ],
-                night: [],
-                accommodation: []
-            }
-        }
-    },
-    // ── 花蓮療癒 3 日 ──
-    {
-        id: 'tw-hualien-nature',
-        name: '花蓮療癒自然 3 日',
-        nameEn: 'Hualien Nature Healing 3-Day',
-        title: '山海之間，找回呼吸的節奏',
-        titleEn: 'Between Mountains & Sea, Find Your Rhythm',
-        coverImage: 'https://images.unsplash.com/photo-1592833905014-498499c6381c?auto=format&fit=crop&q=80&w=1000',
-        author: '台北文青散步',
-        authorEn: 'Taipei Culture Walk',
-        authorId: 'c-tw1',
-        region: 'hualien',
-        tags: ['自然', '療癒', '秘境'],
-        tagsEn: ['Nature', 'Healing', 'Secret Spots'],
-        travelStyle: ['療癒', '自然'],
-        targetAudience: {
-            personas: ['自然控', '放空族'],
-            personasEn: ['Nature Lover', 'Recharger'],
-            description: '適合想遠離城市喇叭、在山海之間重新充電的人',
-            paceLevel: 'slow'
-        },
-        vibes: [
-            { tag: '#山海秘境', color: 'bg-cyan-100 text-cyan-800' },
-            { tag: '#原住民文化', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#海景咖啡', color: 'bg-blue-100 text-blue-800' }
-        ],
-        coverStory: {
-            quote: '花蓮的美，是那種讓你忘記時間的安靜。',
-            quoteEn: 'Hualien\'s beauty is the kind of silence that makes you forget time.',
-            description: '從吉利潭的絕美倒影，到四八高地的月牙灣全景，再到出海口的隱密咖啡基地。',
-            authorLabel: '花蓮在地探索者推薦'
-        },
-        authorStory: {
-            zh: '我從台北搬到花蓮已經 4 年，從都市人變成山海人。這份行程是我每個週末在花蓮探索的精華 — 不只是太魯閣，而是當地人才知道的秘境海灘、山中咖啡廳和部落文化體驗。',
-            en: 'I moved from Taipei to Hualien 4 years ago, transforming from a city person to a mountain-and-sea person. This route is the essence of my weekend explorations — not just Taroko, but secret beaches, mountain cafés, and indigenous cultural experiences that only locals know.'
-        },
-        travelTips: [
-            { tip: '花蓮必須自駕或包車，大眾交通不方便', tipEn: 'Driving or chartering a car is essential in Hualien' },
-            { tip: '太魯閣往天祥方向下午較沒人', tipEn: 'Taroko towards Tianxiang is less crowded in the afternoon' }
-        ],
-        duration: 3,
-        rating: 4.9,
-        tier: 'official',
-        copiedCount: 189,
-        highlights: { days: 3, spots: 6, tips: 4, rating: 4.9, usageCount: 189 },
-        dayPreviews: [
-            { day: 1, summary: '吉利潭 → 光復糖廰 → 説給燒烤' },
-            { day: 2, summary: '四八高地 → 七星潭 → 海碑堡咖啡' },
-            { day: 3, summary: '太魯閣 → 清水斷崖 → 東大門夜市' }
-        ],
-        schedule: {
-            'Day 1': {
-                theme: '秘境湖泊 & 原住民文化',
-                themeEn: 'Secret Lakes & Indigenous Culture',
-                themeEmoji: '🌊',
-                morning: [
-                    { ...HUALIEN_ASSETS[0], instanceId: 'hl1-1', startTime: '08:00', arrivalTransport: 'car' },
-                ],
-                afternoon: [],
-                evening: [],
-                night: [],
-                accommodation: []
-            },
-            'Day 2': {
-                theme: '海岸制高點 & 海景咖啡',
-                themeEn: 'Coastal Heights & Ocean Coffee',
-                themeEmoji: '☕',
-                morning: [
-                    { ...HUALIEN_ASSETS[1], instanceId: 'hl1-2', startTime: '05:30', arrivalTransport: 'car' },
-                ],
-                afternoon: [
-                    { ...HUALIEN_ASSETS[2], instanceId: 'hl1-3', startTime: '15:00', arrivalTransport: 'car' },
-                ],
-                evening: [],
-                night: [],
-                accommodation: []
-            }
-        }
-    },
-    // ── 台中老宅咖啡 & 巷弄探索 3 日 ──
-    {
-        id: 'tw-taichung-oldhouse',
-        name: '台中老宅咖啡 & 巷弄探索 3 日',
-        nameEn: 'Taichung Old House Caf\u00e9 & Alley Tour 3-Day',
-        title: '推開木門，走進台中的時光膠囊',
-        titleEn: 'Push Open the Wooden Door, Step Into Taichung\'s Time Capsule',
-        coverImage: 'https://images.unsplash.com/photo-1583654979589-aa7a6053a0d6?auto=format&fit=crop&q=80&w=1000',
-        author: '台中巷弄探索家',
-        authorEn: 'Taichung Alley Explorer',
-        authorId: 'c-tw3',
-        region: 'taichung',
-        tags: ['老宅', '咖啡', '文青'],
-        tagsEn: ['Old House', 'Coffee', 'Culture'],
-        travelStyle: ['慢活', '文青', '咖啡'],
-        targetAudience: {
-            personas: ['咖啡控', '老宅控', '文青'],
-            personasEn: ['Coffee Nerd', 'Old House Lover', 'Culture Enthusiast'],
-            description: '適合喜歡在老房子裡喝咖啡、拍照、發呆的人',
-            paceLevel: 'slow'
-        },
-        vibes: [
-            { tag: '#日式老宅', color: 'bg-amber-100 text-amber-800' },
-            { tag: '#自家烘焙', color: 'bg-stone-100 text-stone-800' },
-            { tag: '#時光膠囊', color: 'bg-rose-100 text-rose-800' }
-        ],
-        coverStory: {
-            quote: '台中最迷人的，是那些推開門才知道存在的地方。',
-            quoteEn: 'Taichung\'s charm lies in places you only discover when you push open the door.',
-            description: '從勤美商圈的眾小樓開始，穿過國美館旁的自家烘焙咖啡廳，最後在五權車站旁的日式老宅裡發呆一個下午。',
-            authorLabel: '台中在地老宅控推薦'
-        },
-        authorStory: {
-            zh: '我是台中土生土長的老宅控，5 年來探訪了 100+ 間台中老房子改建的咖啡廳。這份路線是我的「台中老宅地圖」精選版 — 推開每一扉門，都是一段時光旅行。',
-            en: 'I\'m a Taichung-born old house fanatic who\'s explored 100+ renovated heritage cafés over 5 years. This route is the curated edition of my "Taichung Old House Map" — behind every door is a journey through time.'
-        },
-        travelTips: [
-            { tip: '台中咖啡廳通常中午才開，不要太早去', tipEn: 'Taichung caf\u00e9s usually open at noon, don\'t go too early' },
-            { tip: '勤美商圈和國美館附近的巷弄密度最高', tipEn: 'Highest caf\u00e9 density around CMP Block and NTMoFA' },
-            { tip: '帶相機，每間老宅都值得拍半小時', tipEn: 'Bring a camera, each old house is worth 30 min of shooting' }
-        ],
-        duration: 3,
-        rating: 4.8,
-        tier: 'creator',
-        copiedCount: 156,
-        price: 0.99,
-        highlights: { days: 3, spots: 9, tips: 6, rating: 4.8, usageCount: 156 },
-        dayPreviews: [
-            { day: 1, summary: '裡小樓 → 5春咖啡 → 勤美術館' },
-            { day: 2, summary: '如常。所在 → 柯亞果醬🏆 → 審計新村' },
-            { day: 3, summary: '電火圳步道 → 石岡老街 → 高美濕地' }
-        ],
-        schedule: {
-            'Day 1': {
-                theme: '巷弄美食 & 自家烘焙咖啡',
-                themeEn: 'Alley Food & Self-Roasted Coffee',
-                themeEmoji: '☕',
-                morning: [],
-                afternoon: [
-                    { ...TAICHUNG_ASSETS[1], instanceId: 'tc1-1', startTime: '11:30', arrivalTransport: 'car' },
-                    { ...TAICHUNG_ASSETS[3], instanceId: 'tc1-2', startTime: '14:00', arrivalTransport: 'walk' },
-                ],
-                evening: [
-                    { ...TAICHUNG_ASSETS[2], instanceId: 'tc1-3', startTime: '17:30', arrivalTransport: 'walk' },
-                ],
-                night: [],
-                accommodation: []
-            },
-            'Day 2': {
-                theme: '老宅探索 & 世界金獎果醬',
-                themeEn: 'Old House Tour & World-Gold Jam',
-                themeEmoji: '🏡',
-                morning: [],
-                afternoon: [
-                    { ...TAICHUNG_ASSETS[4], instanceId: 'tc1-4', startTime: '10:00', arrivalTransport: 'car' },
-                    { ...TAICHUNG_ASSETS[5], instanceId: 'tc1-5', startTime: '14:00', arrivalTransport: 'car' },
-                ],
-                evening: [],
-                night: [],
-                accommodation: []
-            },
-            'Day 3': {
-                theme: '森林步道 & 小鎮散步',
-                themeEn: 'Forest Trail & Small Town Walk',
-                themeEmoji: '🌲',
-                morning: [
-                    { ...TAICHUNG_ASSETS[6], instanceId: 'tc1-6', startTime: '07:00', arrivalTransport: 'car' },
-                ],
-                afternoon: [],
-                evening: [],
-                night: [],
-                accommodation: []
-            }
-        }
-    },
-    // ── 🌟 台中米其林巷弄美食 2 日 (米其林系列) ──
-    {
-        id: 'tw-taichung-michelin',
-        name: '🌟 台中米其林巷弄美食 2 日',
-        nameEn: '🌟 Taichung Michelin Alley Food 2-Day',
-        title: '從全球唯一米其林冰淇淋開始，吃遍台中巷弄',
-        titleEn: 'Start from the World\'s Only Michelin Ice Cream, Eat Through Taichung Alleys',
-        coverImage: 'https://images.unsplash.com/photo-1647685103344-d593814c00c3?auto=format&fit=crop&q=80&w=1000',
-        author: '台中巷弄探索家',
-        authorEn: 'Taichung Alley Explorer',
-        authorId: 'c-tw3',
-        region: 'taichung',
-        tags: ['🌟米其林', '美食', '巷弄'],
-        tagsEn: ['🌟 Michelin', 'Food', 'Alleys'],
-        travelStyle: ['michelin', '美食'],
-        targetAudience: {
-            personas: ['美食探險家', '米其林控'],
-            personasEn: ['Food Adventurer', 'Michelin Enthusiast'],
-            description: '適合想收集米其林星級餐廳、熊大推薦美食的講究吃貨',
-            descriptionEn: 'For foodies who collect Michelin stars and Bib Gourmand gems.',
-            paceLevel: 'moderate'
-        },
-        vibes: [
-            { tag: '#米其林一星', color: 'bg-yellow-100 text-yellow-800' },
-            { tag: '#必比登推介', color: 'bg-red-100 text-red-800' },
-            { tag: '#全球唯一', color: 'bg-indigo-100 text-indigo-800' }
-        ],
-        coverStory: {
-            quote: '台中的米其林不在高樓裡，在你找不到的巷子裡。',
-            quoteEn: 'Taichung\'s Michelin isn\'t in skyscrapers — it\'s in alleys you can\'t find.',
-            description: '全球唯一米其林星級冰淇淋 MINIMAL，藏在巷子裡的必比登台菜，週只開三天的眷村麵。餐與餐之間穿穿咖啡廳和藝術館。',
-            authorLabel: '台中米其林探索者'
-        },
-        travelTips: [
-            { tip: 'MINIMAL 需提前 2 週線上預約，100% 預約制', tipEn: 'MINIMAL requires online booking 2 weeks ahead, 100% reservation only' },
-            { tip: '繡球麵店只有週三/五/日開，要注意日期', tipEn: 'Xiuqiu Noodle Shop only opens Wed/Fri/Sun, check your dates' },
-            { tip: '裡小樓不要看菜單，跟老闆說「今天有什麼」', tipEn: 'At Li Xiao Lou, don\'t read the menu, ask the boss \'what\'s good today\'' }
-        ],
-        duration: 2,
-        rating: 4.9,
-        tier: 'creator',
-        copiedCount: 89,
-        price: 0.99,
-        originalPrice: 4.99,
-        isLocked: true,
-        hiddenCount: 3,
-        highlights: { days: 2, spots: 8, tips: 6, rating: 4.9, usageCount: 89 },
-        dayPreviews: [
-            { day: 1, summary: '裡小樓🏆 → 5春咖啡 → MINIMAL⚭ → 勤美線形公園' },
-            { day: 2, summary: '縡球麵店 → 如常。所在 → 柯亞果醬🏆 → 審計新村' }
-        ],
-        schedule: {
-            'Day 1': {
-                theme: '必比登台菜 + 米其林一星冰淇淋',
-                themeEn: 'Bib Gourmand Taiwanese + Michelin 1-Star Ice Cream',
-                themeEmoji: '⭐',
-                swapSuggestion: 'MINIMAL 預約不到的話，可改去「春丸」經典日式冰淇淋',
-                swapSuggestionEn: 'If MINIMAL is fully booked, try "Haru Maru" classic Japanese gelato instead',
-                morning: [
-                    { ...TAICHUNG_ASSETS[1], instanceId: 'tcm-1', startTime: '11:30', arrivalTransport: 'car' },
-                ],
-                afternoon: [
-                    { ...TAICHUNG_ASSETS[3], instanceId: 'tcm-2', startTime: '14:00', arrivalTransport: 'walk' },
-                    {
-                        ...TAICHUNG_ASSETS[0], instanceId: 'tcm-3', startTime: '16:00', arrivalTransport: 'car',
-                        insiderTip: {
-                            teaser: '🌟 全球唯一米其林星級冰淇淋，需提前 2 週預約',
-                            teaserEn: '🌟 World\'s only Michelin-starred ice cream, book 2 weeks ahead',
-                            full: {
-                                story: '2023 年必比登，2024 年直接跳升米其林一星。七道冰品 tasting menu 每一道都是藝術品。吧台座位可以近距離看主廚現場製作。',
-                                exactLocation: '台中西區（確認預約後提供地址）',
-                                mustTry: '吧台座位 + 七道套餐 NT$1,800',
-                                avoid: '不要臨時去，100% 預約制',
-                                bestTime: '提前 2 週線上預約'
-                            }
-                        }
-                    },
-                ],
-                evening: [],
-                night: [],
-                accommodation: []
-            },
-            'Day 2': {
-                theme: '眷村美食 + 老宅咖啡 + 世界金獎果醬',
-                themeEn: 'Military Village Food + Old House Caf\u00e9 + World-Gold Jam',
-                themeEmoji: '🏆',
-                swapSuggestion: '繡球麵店只有週三/五/日，其他天可改去「上海未名」牵牛花麵',
-                swapSuggestionEn: 'Xiuqiu only open Wed/Fri/Sun. On other days, try "Shanghai Unnamed" beef noodles',
-                morning: [
-                    { ...TAICHUNG_ASSETS[2], instanceId: 'tcm-4', startTime: '11:00', arrivalTransport: 'car' },
-                    { ...TAICHUNG_ASSETS[4], instanceId: 'tcm-5', startTime: '13:30', arrivalTransport: 'car' },
-                    { ...TAICHUNG_ASSETS[5], instanceId: 'tcm-6', startTime: '15:30', arrivalTransport: 'car' },
-                ],
-                afternoon: [],
-                evening: [],
-                night: [],
-                accommodation: []
-            }
-        }
-    },
-    // ── 台北夜市文青 2 日 ──
-    {
-        id: 'tw-taipei-night',
-        isHidden: true,
-        name: '台北夜市文青 2 日',
-        nameEn: 'Taipei Night Markets & Culture 2-Day',
-        title: '白天文青、晚上夜市，台北的雙面魅力',
-        titleEn: 'Culture by Day, Night Markets by Night: Taipei\'s Dual Charm',
-        coverImage: 'https://images.unsplash.com/photo-1572715381359-002b1eabd56b?auto=format&fit=crop&q=80&w=1000',
-        author: '台北文青散步',
-        authorEn: 'Taipei Culture Walk',
-        authorId: 'c-tw1',
-        region: 'taipei',
-        tags: ['夜市', '文青', '在地'],
-        tagsEn: ['Night Market', 'Culture', 'Local'],
-        travelStyle: ['文青', '在地'],
-        targetAudience: {
-            personas: ['夜貓族', '文青'],
-            personasEn: ['Night Owl', 'Culture Lover'],
-            description: '適合晚以後才有精神、喜歡夜市能量的人',
-            paceLevel: 'moderate'
-        },
-        vibes: [
-            { tag: '#夜市攻略', color: 'bg-orange-100 text-orange-800' },
-            { tag: '#文創市集', color: 'bg-purple-100 text-purple-800' },
-            { tag: '#在地味', color: 'bg-teal-50 text-teal-700' }
-        ],
-        coverStory: {
-            quote: '台北的夜晚，才是真正的開始。',
-            quoteEn: 'In Taipei, the real magic begins after dark.',
-            description: '白天在文創園區探索獨立書店和咖啡廳，晚上到夜市感受在地人的能量。',
-            authorLabel: '台北夜貓族推薦'
-        },
-        duration: 2,
-        rating: 4.6,
-        tier: 'official',
-        copiedCount: 287,
-        highlights: { days: 2, spots: 8, tips: 4, rating: 4.6, usageCount: 287 },
-        dayPreviews: [
-            { day: 1, summary: '心中山公園 → 赤峰街 → 寧夏夜市' },
-            { day: 2, summary: '大稻埕 → 学庞作工 → 饒河夜市' }
-        ],
-        schedule: {
-            'Day 1': {
-                theme: '文創園區 & 夜市探險',
-                themeEn: 'Creative Park & Night Market Adventure',
-                themeEmoji: '🌙',
-                morning: [],
-                afternoon: [
-                    { ...TAIPEI_ASSETS[1], instanceId: 'twn-1', startTime: '14:00', arrivalTransport: 'public' },
-                ],
-                evening: [
-                    { ...TAIPEI_ASSETS[3], instanceId: 'twn-2', startTime: '18:00', arrivalTransport: 'public' },
-                ],
-                night: [],
-                accommodation: []
-            },
-            'Day 2': {
-                theme: '雙連散步 & 101 秘境',
-                themeEn: 'Shuanglian Walk & 101 Secret',
-                themeEmoji: '🗼',
-                morning: [],
-                afternoon: [
-                    { ...TAIPEI_ASSETS[7], instanceId: 'twn-3', startTime: '14:00', arrivalTransport: 'public' },
-                ],
-                evening: [
-                    { ...TAIPEI_ASSETS[6], instanceId: 'twn-4', startTime: '17:30', arrivalTransport: 'public' },
+                    { ...TAIPEI_ASSETS[5], instanceId: 'tp-day-7', startTime: '18:30', arrivalTransport: 'walk' },
+                    { ...TAIPEI_ASSETS[7], instanceId: 'tp-day-8', startTime: '20:00', arrivalTransport: 'walk' },
                 ],
                 night: [],
                 accommodation: []

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User } from 'lucide-react';
-import { Template, LangType } from '../../types';
-import { SAMPLE_CREATORS } from '../../data';
+import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign } from 'lucide-react';
+import { Template, LangType, TemplateStat } from '../../types';
+import { SAMPLE_CREATORS, SAMPLE_ASSETS } from '../../data';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
 
 interface TemplateDetailsPanelProps {
@@ -13,6 +13,19 @@ interface TemplateDetailsPanelProps {
     savedTemplates?: Template[];
     handleToggleFavoriteTemplate?: (tpl: Template) => void;
 }
+
+// Helper to render icon by name
+const IconComponent = ({ name, size = 18 }: { name?: string, size?: number }) => {
+    switch (name) {
+        case 'Star': return <Star size={size} />;
+        case 'Clock': return <Clock size={size} />;
+        case 'MapPin': return <MapPin size={size} />;
+        case 'Calendar': return <Calendar size={size} />;
+        case 'Sparkles': return <Sparkles size={size} />;
+        case 'DollarSign': return <DollarSign size={size} />;
+        default: return <MapPin size={size} />;
+    }
+};
 
 export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     template,
@@ -60,50 +73,55 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
         likes: lang === 'zh' ? '收藏' : 'likes',
     };
 
+    const displayBadges = lang === 'zh' ? template.badges : (template.badgesEn || template.badges);
+    const displaySubLocations = lang === 'zh' ? template.subLocations : (template.subLocationsEn || template.subLocations);
+
 
     return (
         <div className="flex flex-col bg-[#F7FBF0] pb-20 font-sans overflow-x-hidden">
-            {/* 1. Hero Section (REFINED PROPORTIONS) */}
-            <div className="relative w-full h-[36vh] md:aspect-video shrink-0 bg-gray-100 overflow-hidden">
+            {/* 1. Hero Section (PREMIUM EDITORIAL STYLE) */}
+            <div className="relative w-full h-[40vh] md:h-[45vh] shrink-0 bg-gray-100 overflow-hidden">
                 <img
                     src={template.coverImage}
                     className="w-full h-full object-cover"
                     alt={template.name}
                 />
 
-                {/* 1a. Navigation Overlay (Isolated) */}
+                {/* Navigation Overlay */}
                 <div className="absolute top-0 inset-x-0 p-6 flex justify-between items-center z-30">
-                    {/* Placeholder for Back button if handled separately, or just transparent bar */}
+                    {/* Placeholder for back button if needed */}
                 </div>
 
-                {/* 1b. Bottom Area (Social & Content) */}
-                <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/95 via-black/50 to-transparent flex flex-col justify-end p-8 pb-7">
-
-                    {/* Creator Identity (REFINED WEIGHT & SPACING) */}
-                    <button
-                        onClick={() => onCreatorClick?.(template.authorId)}
-                        className="flex items-center gap-3 mb-1.5 px-1 group active:opacity-70 transition-all"
-                    >
-                        <img
-                            src={creator?.avatar || `https://i.pravatar.cc/100?u=${template.authorId}`}
-                            className="w-8 h-8 rounded-full object-cover border-2 border-white/40 shadow-xl"
-                            alt="creator"
-                        />
-                        <div className="flex flex-col items-start leading-none">
-                            <span className="text-[15px] text-white/95 font-semibold tracking-[0.1em] drop-shadow-md">
-                                {lang === 'zh' ? (creator?.name || template.author) : (creator?.nameEn || creator?.name || template.authorEn || template.author)}
-                            </span>
+                {/* Bottom Content Area */}
+                <div className="absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 pb-7">
+                    {/* Badges Overlay */}
+                    {displayBadges && displayBadges.length > 0 && (
+                        <div className="flex gap-2 mb-4">
+                            {displayBadges.map((badge, idx) => (
+                                <span key={idx} className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-widest whitespace-nowrap">
+                                    {badge}
+                                </span>
+                            ))}
                         </div>
-                    </button>
+                    )}
 
-                    <h1 className="text-[20px] md:text-[32px] font-heading font-semibold text-white leading-tight tracking-[0.05em] max-w-[95%] mb-2.5 drop-shadow-md">
+                    <h1 className="text-[30px] md:text-[38px] font-heading font-bold text-white leading-tight tracking-[0.02em] max-w-[95%] mb-2 drop-shadow-md">
                         {lang === 'zh' ? template.name : (template.nameEn || template.name)}
                     </h1>
 
-                    <div className="flex items-center gap-4 text-white/50 text-[11px] font-bold tracking-[0.2em] uppercase">
-                        <span>2024/05/10 {lang === 'zh' ? '發佈' : 'Published'}</span>
+                    <div className="flex items-center gap-4 text-white/60 text-[11px] font-bold tracking-[0.15em] uppercase">
+                        <div className="flex items-center gap-1.5 text-amber-400">
+                            <Star size={12} fill="currentColor" />
+                            <span>{template.rating || 4.8}</span>
+                        </div>
                         <span className="w-1 h-1 rounded-full bg-white/20" />
-                        <span>{template.copiedCount || '1.2K'} {lang === 'zh' ? '人都在用' : 'people using'}</span>
+                        <span>
+                            {displaySubLocations && displaySubLocations.length > 0 
+                                ? displaySubLocations.join(' · ') 
+                                : (template.region || 'Taipei').toUpperCase()}
+                        </span>
+                        <span className="w-1 h-1 rounded-full bg-white/20" />
+                        <span>2024/05/10 {lang === 'zh' ? '發佈' : 'Published'}</span>
                     </div>
                 </div>
             </div>
@@ -129,52 +147,123 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
             {/* 3. Dynamic Content Area */}
             <div className="px-6 py-10 relative z-20">
                 {activeTab === 'overview' ? (
-                    <div className="space-y-12">
-                        {/* 3a. Editorial Quote (SIMPLIFIED for vertical flow) */}
-                        <div className="relative pl-6 py-2">
-                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400/30 rounded-full" />
-                            <p className="text-[18px] md:text-[20px] text-[#181D17] leading-[1.7] font-bold italic tracking-tight">
-                                "{displayQuote}"
-                            </p>
-                        </div>
-
-                        {/* 3b. Stats Grid */}
-                        <div className="grid grid-cols-2 gap-3">
-                            {[
-                                { label: lang === 'zh' ? '天數' : 'DAYS', value: `${template.duration} ${lang === 'zh' ? '天' : 'D'}`, icon: <Calendar size={18} /> },
-                                { label: lang === 'zh' ? '景點' : 'SPOTS', value: template.highlights?.spots || 12, icon: <MapPin size={18} /> },
-                                { label: lang === 'zh' ? '評分' : 'RATING', value: template.rating || 4.9, icon: <Star size={18} /> },
-                                { label: lang === 'zh' ? '熱度' : 'COPIED', value: template.copiedCount || 100, icon: <Sparkles size={18} /> },
-                            ].map((card, i) => (
-                                <div key={i} className="bg-white p-5 rounded-[24px] border border-[#E8EDE4]/60 flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-bg-primary/5 flex items-center justify-center text-bg-primary shrink-0">{card.icon}</div>
-                                    <div>
-                                        <div className="text-[9px] font-black text-[#8E9285] uppercase tracking-wider">{card.label}</div>
-                                        <div className="text-[16px] font-black text-[#181D17]">{card.value}</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* 3c. Know Before You Go */}
-                        <div>
-                            <h4 className="text-[20px] font-heading font-black text-[#181D17] mb-6">{t.knowBeforeYouGo}</h4>
-                            <div className="space-y-4">
-                                {[
-                                    { title: t.bestTime, text: lang === 'zh' ? template.faq?.[0]?.text : template.faq?.[0]?.textEn, icon: <Sun size={20} /> },
-                                    { title: t.gettingAround, text: lang === 'zh' ? template.faq?.[2]?.text : template.faq?.[2]?.textEn, icon: <Navigation size={20} /> },
-                                    { title: t.expertAdvice, text: lang === 'zh' ? template.faq?.[1]?.text : template.faq?.[1]?.textEn, icon: <Lightbulb size={20} /> },
-                                ].filter(card => card.text).map((card, i) => (
-                                    <div key={i} className="bg-[#F1F3EE] p-6 rounded-[28px] flex gap-5">
-                                        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-bg-primary shrink-0 shadow-sm">{card.icon}</div>
-                                        <div>
-                                            <div className="text-[11px] font-black text-[#8E9285] uppercase tracking-[0.15em] mb-1">{card.title}</div>
-                                            <p className="text-[15px] font-semibold text-[#181D17] leading-relaxed">{card.text}</p>
+                    <div className="space-y-14">
+                        {/* 3a. Smart Stats Strip (Horizontal Editorial Style) */}
+                        <div className="bg-white/40 backdrop-blur-sm rounded-[32px] p-1 border border-white/60 shadow-sm overflow-hidden">
+                            <div className="grid grid-cols-4 divide-x divide-tc-primary/5">
+                                {(template.customStats || [
+                                    { 
+                                        label: lang === 'zh' ? '天數' : 'DAYS', 
+                                        value: `${template.duration} ${lang === 'zh' ? '天' : 'D'}`, 
+                                        icon: 'Calendar',
+                                        color: '#eef5e3'
+                                    },
+                                    { 
+                                        label: lang === 'zh' ? '景點' : 'SPOTS', 
+                                        value: String(template.highlights?.spots || 12), 
+                                        icon: 'MapPin',
+                                        color: '#fef7e6'
+                                    },
+                                    { 
+                                        label: lang === 'zh' ? '評分' : 'RATING', 
+                                        value: String(template.rating || 4.9), 
+                                        icon: 'Star',
+                                        color: '#fff3e8'
+                                    },
+                                    { 
+                                        label: lang === 'zh' ? '熱度' : 'COPIED', 
+                                        value: String(template.copiedCount || 100), 
+                                        icon: 'Sparkles',
+                                        color: '#f3e8ff'
+                                    },
+                                ]).map((stat, i) => (
+                                    <div key={i} className="flex flex-col items-center py-4 px-1">
+                                        <div 
+                                            className="w-7 h-7 rounded-full flex items-center justify-center mb-2.5 text-bg-primary shadow-sm"
+                                            style={{ backgroundColor: stat.color }}
+                                        >
+                                            <IconComponent name={stat.icon} size={13} />
                                         </div>
+                                        <div className="text-[14px] font-black text-[#181D17] leading-none mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis max-w-full px-1">
+                                            {lang === 'zh' ? stat.value : (stat.valueEn || stat.value)}
+                                        </div>
+                                        <div className="text-[8px] font-black text-[#8E9285] uppercase tracking-widest mb-0.5">
+                                            {lang === 'zh' ? stat.label : (stat.labelEn || stat.label)}
+                                        </div>
+                                        {stat.subLabel && (
+                                            <div className="text-[7px] font-bold text-[#A5A99E] uppercase tracking-tighter opacity-80">
+                                                {lang === 'zh' ? stat.subLabel : (stat.subLabelEn || stat.subLabel)}
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
                         </div>
+
+
+                        {/* 3b. Creator & Fluid Narrative Block */}
+                        <div className="space-y-8">
+                            {/* Creator Identity */}
+                            <div className="flex items-center justify-between px-2">
+                                <div className="flex items-center gap-4">
+                                    <img
+                                        src={creator?.avatar || `https://i.pravatar.cc/100?u=${template.authorId}`}
+                                        className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xl"
+                                        alt="creator"
+                                    />
+                                    <div>
+                                        <div className="text-[17px] font-black text-[#181D17] leading-none mb-1">
+                                            {lang === 'zh' ? (creator?.name || template.author) : (creator?.nameEn || creator?.name || template.authorEn || template.author)}
+                                        </div>
+                                        <div className="text-[11px] font-bold text-[#8E9285]">{lang === 'zh' ? '旅遊達人' : 'Travel Expert'}</div>
+                                    </div>
+                                </div>
+                                <div className="px-3 py-1.5 rounded-full border border-bg-primary/30 text-bg-primary text-[10px] font-black uppercase tracking-widest">
+                                    {lang === 'zh' ? '達人規劃' : 'Expert Pick'}
+                                </div>
+                            </div>
+
+                            {/* Narrative Content */}
+                            <div className="border-l-4 border-bg-primary/40 pl-6 py-2">
+                                <h2 className="text-[22px] md:text-[24px] font-heading font-black text-[#181D17] leading-tight mb-4">
+                                    {displayQuote.replace(/"/g, '')}
+                                </h2>
+                                <p className="text-[15.5px] leading-[1.8] text-[#4A5548] font-medium">
+                                    {lang === 'zh' ? template.coverStory?.description : (template.coverStory?.description || template.coverStory?.description)}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* 3c. Know Before You Go (DYNAMIC EDITORIAL SECTION) */}
+                        {template.faq && template.faq.length > 0 && (
+                            <div>
+                                <h4 className="text-[20px] font-heading font-black text-[#181D17] mb-6">{t.knowBeforeYouGo}</h4>
+                                <div className="space-y-4">
+                                    {template.faq.map((item, i) => {
+                                        const title = lang === 'zh' ? item.title : (item.titleEn || item.title);
+                                        const text = lang === 'zh' ? item.text : (item.textEn || item.text);
+                                        
+                                        // Dynamic Icon Logic
+                                        let Icon = <Lightbulb size={20} />;
+                                        if (title.includes('交通') || title.includes('Transport')) Icon = <Navigation size={20} />;
+                                        if (title.includes('時節') || title.includes('Time')) Icon = <Sun size={20} />;
+                                        if (title.includes('激步') || title.includes('Timing') || title.includes('Moment')) Icon = <Sparkles size={20} className="text-amber-500" />;
+
+                                        return (
+                                            <div key={i} className="bg-[#F1F3EE] p-6 rounded-[28px] flex gap-5">
+                                                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-bg-primary shrink-0 shadow-sm">
+                                                    {Icon}
+                                                </div>
+                                                <div>
+                                                    <div className="text-[11px] font-black text-[#8E9285] uppercase tracking-[0.15em] mb-1">{title}</div>
+                                                    <p className="text-[15px] font-semibold text-[#181D17] leading-relaxed">{text}</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
 
                         {/* 3d. Author's Note */}
                         {template.authorStory && (
@@ -279,20 +368,24 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
                                     {/* Timeline + Items */}
                                     <div className="space-y-0">
-                                        {[...(dayData.morning || []), ...(dayData.afternoon || []), ...(dayData.evening || [])].map((item, idx, arr) => (
-                                            <div key={idx} className="relative group flex items-start gap-3 pb-8">
-                                                {/* LEFT COLUMN: Timeline (dot + line + time badge) */}
-                                                <div className="flex flex-col items-center shrink-0 w-16 pt-1">
-                                                    {/* Vertical line segment ABOVE dot */}
-                                                    {idx > 0 && (
-                                                        <div className="w-0.5 h-4 bg-[#E8EDE4] -mb-0.5" />
-                                                    )}
-                                                    {idx === 0 && <div className="h-4" />}
-
-                                                    {/* Time badge (replaces floating dot) */}
-                                                    <div className="relative z-10 px-2 py-0.5 bg-white border border-[#E8EDE4] rounded-full text-[11px] font-black text-[#6B7C6E] shadow-sm group-hover:border-bg-primary group-hover:text-bg-primary transition-all whitespace-nowrap">
-                                                        {item.startTime || '09:00'}
-                                                    </div>
+                                        {[...(dayData.morning || []), ...(dayData.afternoon || []), ...(dayData.evening || []), ...(dayData.night || [])].map((rawItem, idx, arr) => {
+                                            const asset = SAMPLE_ASSETS.find(a => a.id === rawItem.id);
+                                            const item = asset ? { ...asset, ...rawItem } : rawItem;
+                                            
+                                            return (
+                                                <div key={idx} className="relative group flex items-start gap-3 pb-8">
+                                                    {/* LEFT COLUMN: Timeline (dot + line + time badge) */}
+                                                    <div className="flex flex-col items-center shrink-0 w-16 pt-1">
+                                                        {/* Vertical line segment ABOVE dot */}
+                                                        {idx > 0 && (
+                                                            <div className="w-0.5 h-4 bg-[#E8EDE4] -mb-0.5" />
+                                                        )}
+                                                        {idx === 0 && <div className="h-4" />}
+    
+                                                        {/* Time badge (replaces floating dot) */}
+                                                        <div className="relative z-10 px-2 py-0.5 bg-white border border-[#E8EDE4] rounded-full text-[11px] font-black text-[#6B7C6E] shadow-sm group-hover:border-bg-primary group-hover:text-bg-primary transition-all whitespace-nowrap">
+                                                            {item.timeLabel || item.startTime || '09:00'}
+                                                        </div>
 
                                                     {/* Vertical line segment BELOW dot */}
                                                     {idx < arr.length - 1 && (
@@ -341,8 +434,9 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
+                                        );
+                                    })}
+                                </div>
 
                                     <div className="mt-8 mb-8">
                                         <p className="text-center text-[10px] text-[#8E9285] font-black uppercase tracking-widest mt-6 opacity-40">End of Day {dayNum}</p>

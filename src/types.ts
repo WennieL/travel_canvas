@@ -30,6 +30,21 @@ export interface RegionConfig {
 }
 
 
+// [NEW] Expert Story Structure for the Interactive Grid
+export type ExpertStoryCategory = 'must-do' | 'must-eat' | 'trap' | 'hidden';
+
+export interface ExpertStory {
+    id: ExpertStoryCategory;
+    icon?: string;       // Lucide icon name or Emoji
+    label: string;      // short label e.g. "Must Do"
+    labelEn?: string;   
+    summary: string;    // 1-sentence teaser
+    summaryEn?: string;
+    story: string;      // 3-5 sentence full narrative
+    storyEn?: string;
+    color?: string;     // custom accent color
+}
+
 export interface TravelItem {
     id: string;
     title: string;
@@ -67,6 +82,18 @@ export interface TravelItem {
     // [PHASE 36] Consolidated Recommendation Architecture
     recommendations?: Recommendation[];
     
+    // [PHASE 37] Interactive Story Grid
+    expertStories?: ExpertStory[];
+    teaser?: string;       // Expert quote/teaser for the card header
+    teaserEn?: string;
+    
+    // [PHASE 40] Dynamic Narrative Styles
+    themeColor?: string;   // e.g. "#8E9E82"
+    prepType?: 'transport' | 'booking' | 'requirement' | 'none';
+    prepValue?: string;    // e.g. "大橋頭站"
+    prepLabel?: string;    // e.g. "最近捷運"
+    priceRange?: string;   // e.g. "$500 - $800"
+
     // Legacy support (will be migrated to recommendations)
     authorId?: string;
     author?: string;
@@ -90,6 +117,7 @@ export interface Recommendation {
     duration?: string;
     coverImage?: string;
     insiderTip?: InsiderTip;
+    expertStories?: ExpertStory[]; // Each recommendation can have its own stories
     tags?: string[];
     tier?: 'standard' | 'premium';
     isLocked?: boolean;
@@ -129,6 +157,7 @@ export interface InsiderTip {
 export interface ScheduleItem extends TravelItem {
     instanceId: string;
     startTime?: string;
+    timeLabel?: string;
     notes?: string;
     arrivalTransport?: TransportMode;
     
@@ -161,6 +190,34 @@ export interface ChecklistItem {
     text: string;
     textEn?: string;
     checked: boolean;
+}
+
+export interface TemplateItem {
+    id: string;
+    instanceId?: string; // Support for legacy/existing templates that define it
+    timeLabel?: string;
+    startTime?: string;
+    notes?: string;
+    arrivalTransport?: TransportMode;
+    insiderTip?: InsiderTip; // Added for legacy templates
+    isLocked?: boolean;     // Added for legacy templates
+}
+
+export interface TemplateDaySchedule {
+    morning: TemplateItem[];
+    afternoon: TemplateItem[];
+    evening: TemplateItem[];
+    night: TemplateItem[];
+    accommodation: TemplateItem[];
+    theme?: string;
+    themeEn?: string;
+    themeEmoji?: string;
+    swapSuggestion?: string;
+    swapSuggestionEn?: string;
+}
+
+export interface TemplateFullSchedule {
+    [key: string]: TemplateDaySchedule;
 }
 
 export interface DaySchedule {
@@ -246,7 +303,7 @@ export interface Template {
     rating?: number;
     tier?: 'official' | 'creator' | 'community'; // Template tier level
     copiedCount?: number; // Number of times this template was copied/applied
-    schedule: DaySchedule | FullSchedule;
+    schedule: TemplateDaySchedule | TemplateFullSchedule;
     price?: number;        // Unlock price in USD
     originalPrice?: number; // Original price for anchor effect
     isLocked?: boolean;    // If true, requires purchase/unlock
@@ -293,5 +350,24 @@ export interface Template {
         text: string;
         textEn?: string;
     }>;
+
+    // [NEW] Advanced Editorial Fields (Fig. 3 & 7 style)
+    badges?: string[];        // e.g. ['一日遊', '含米其林推薦']
+    badgesEn?: string[];
+    subLocations?: string[];  // e.g. ['迪化街', '大稻埕']
+    subLocationsEn?: string[];
+    customStats?: TemplateStat[]; // 4 items for the premium horizontal bar (Fig. 7)
+}
+
+// [NEW] Interface for custom template statistics (Fig. 7)
+export interface TemplateStat {
+    icon?: string;          // Lucide icon name or Emoji
+    value: string;         // e.g. "全天" or "$800-1,500"
+    valueEn?: string;      
+    label: string;         // e.g. "行程時長" or "預估花費"
+    labelEn?: string;
+    subLabel?: string;     // e.g. "07:00-23:00" or "起點捷運"
+    subLabelEn?: string;
+    color?: string;        // custom icon background color
 }
 

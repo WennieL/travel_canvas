@@ -565,7 +565,16 @@ export const TRANSLATIONS = {
         weekdayWed: "週三",
         weekdayThu: "週四",
         weekdayFri: "週五",
-        weekdaySat: "週六"
+        weekdaySat: "週六",
+        expertStoriesTitle: "在地達人撇步",
+        expertWalkTitle: "達人激步",
+        insiderPick: "達人私藏",
+        category_mustDo: "必做",
+        category_mustEat: "必吃",
+        category_trap: "踩雷",
+        category_hidden: "隱藏版",
+        clickToExpandStories: "點擊展開達人故事",
+        noExpertStories: "目前尚無在地達人點評，歡迎預約此行程親自探索這座城市的魅力。"
     },
     en: {
         appTitle: "TravelCanvas",
@@ -1145,7 +1154,16 @@ export const TRANSLATIONS = {
         weekdayWed: "Wed",
         weekdayThu: "Thu",
         weekdayFri: "Fri",
-        weekdaySat: "Sat"
+        weekdaySat: "Sat",
+        expertStoriesTitle: "Expert Stories",
+        expertWalkTitle: "EXPERT WALK",
+        insiderPick: "INSIDER",
+        category_mustDo: "MUST DO",
+        category_mustEat: "MUST EAT",
+        category_trap: "TRAP",
+        category_hidden: "HIDDEN",
+        clickToExpandStories: "Tap to expand stories",
+        noExpertStories: "No expert stories yet. Book this spot to discover the city's charm yourself."
     }
 };
 
