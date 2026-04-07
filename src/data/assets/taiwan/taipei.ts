@@ -23,6 +23,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b86818',
         teaser: '台北早晨的靈魂，米其林級的厚燒餅。',
         teaserEn: 'Soul of Taipei mornings, Michelin-grade thick biscuits.',
+        coverImage: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -99,6 +100,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#d64d4d',
         teaser: '百年老街與月老聖地，全台北最有層次的巷弄。',
         teaserEn: 'Old street & Cupid shrine, the most layered alley in Taipei.',
+        coverImage: 'https://images.unsplash.com/photo-1571473068212-076110f03120?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -174,6 +176,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#3a7aaa',
         teaser: '台北最美河岸夕陽，吹著海風迎接夜晚。',
         teaserEn: 'Taipei\'s most beautiful river sunset, ocean breeze included.',
+        coverImage: 'https://images.unsplash.com/photo-1583091176214-7221ee880bc8?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -249,6 +252,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#8a5a3a',
         teaser: '市場裡的隱藏美味，在地人吃了三十年的乾麵。',
         teaserEn: 'Hidden market gem, dry noodles locals have loved for 30 years.',
+        coverImage: 'https://images.unsplash.com/photo-1563245372-f21724e3a404?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -324,6 +328,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c24a2d',
         teaser: '萬華的靈魂所在，全台最精緻的寺廟建築。',
         teaserEn: 'The soul of Wanhua, the most intricate temple architecture in Taiwan.',
+        coverImage: 'https://images.unsplash.com/photo-1582266255745-9e509426a5a3?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -399,6 +404,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '萬華最美的紅磚牆，每一扇窗都是歷史。',
         teaserEn: 'Wanhua\'s most beautiful brick walls; every window has a story.',
+        coverImage: 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -474,6 +480,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c28a2d',
         teaser: '慈聖宮廟前大樹下的熱炒，台北最道地的吃法。',
         teaserEn: 'Dining under a temple tree: Taipei\'s most authentic experience.',
+        coverImage: 'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -549,6 +556,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d2222',
         teaser: '米其林光環下的江湖夜市，必嚐傳說級魯肉飯。',
         teaserEn: 'Michelin-starred street food in a gritty, historic market.',
+        coverImage: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -624,6 +632,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#4a7c59',
         teaser: '台北 101 的最佳伸展台，流汗後的日出獎勵。',
         teaserEn: 'The best stage for Taipei 101, a sunrise reward for your sweat.',
+        coverImage: 'https://images.unsplash.com/photo-1528669830501-44754e9bc3cc?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -694,6 +703,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#d64d4d',
         teaser: '米其林級的工藝，全世界最好的小籠包。',
         teaserEn: 'Michelin-grade craft, the best soup dumplings in the world.',
+        coverImage: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -901,6 +911,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '眷村轉角遇見 101，感受歷史與現代的對話。',
         teaserEn: '101 meets historical cabins; a dialogue across time.',
+        coverImage: 'https://images.unsplash.com/photo-1470252649358-96f3c802bca8?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',

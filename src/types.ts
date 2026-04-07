@@ -299,7 +299,9 @@ export interface Template {
         quote: string;
         quoteEn?: string;
         description: string;
+        descriptionEn?: string;
         authorLabel?: string;
+        authorLabelEn?: string;
     };
     duration: number;
     rating?: number;

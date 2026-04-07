@@ -101,24 +101,6 @@ const CityHub: React.FC<CityHubProps> = ({
                                 ? (lang === 'zh' ? '隱藏在巷弄中的\n墨爾本靈魂' : 'Hidden Souls of\nMelbourne Laneways')
                                 : (lang === 'zh' ? `${city.label} 深度探索` : `${city.labelEn} Deep Dive`)}
                         </h3>
-
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full border-2 border-amber-400 bg-white overflow-hidden shadow-xl">
-                                    <img src="https://i.pravatar.cc/100?img=32" alt="Expert" />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-[11px] text-white font-black uppercase tracking-widest">Curated by Sarah J.</span>
-                                    <span className="text-[9px] text-white/60 font-medium">Local Coffee Enthusiast & Photographer</span>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => onStoryPreview(filteredTemplates[0] || TEMPLATES[0])}
-                                className="hidden md:flex px-6 py-2.5 bg-white text-black rounded-2xl text-xs font-black hover:bg-amber-400 transition-colors shadow-xl"
-                            >
-                                {lang === 'zh' ? '閱讀專題' : 'Read Story'}
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -141,45 +123,7 @@ const CityHub: React.FC<CityHubProps> = ({
                 </div>
             </div>
 
-            {/* IG Stories Style placeholder */}
-            <div className="px-6 mb-12">
-                <div className="flex items-center gap-2 mb-6 text-gray-400">
-                    <Sparkles size={16} className="text-amber-500 animate-pulse" />
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">{t.featuredExperts}</h3>
-                </div>
-                <div className="flex gap-8 overflow-x-auto scrollbar-hide pb-2 px-1">
-                    {[
-                        { tag: '美食家', tagEn: 'Foodie', icon: '🍜', img: 32 },
-                        { tag: '攝影師', tagEn: 'Visuals', icon: '📸', img: 45 },
-                        { tag: '古著派', tagEn: 'Vintage', icon: '👘', img: 12 },
-                        { tag: '建築控', tagEn: 'Arch-fan', icon: '🏛️', img: 28 },
-                        { tag: '親子遊', tagEn: 'Family', icon: '🎡', img: 19 },
-                        { tag: '背包客', tagEn: 'Backpack', icon: '🎒', img: 54 }
-                    ].map((item, idx) => {
-                        const templateForStory = filteredTemplates[idx % filteredTemplates.length] || filteredTemplates[0] || TEMPLATES[0];
-                        return (
-                            <button
-                                key={item.tag}
-                                className="flex flex-col items-center flex-shrink-0 group"
-                                onClick={() => onStoryPreview(templateForStory)}
-                            >
-                                <div className="relative mb-3">
-                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full p-1 bg-gradient-to-tr from-amber-400 via-teal-500 to-indigo-600 group-hover:rotate-[360deg] transition-all duration-700">
-                                        <div className="w-full h-full rounded-full border-2 border-white overflow-hidden bg-gray-100 flex items-center justify-center relative">
-                                            <img src={`https://i.pravatar.cc/100?img=${item.img}`} alt={item.tag} className="w-full h-full object-cover" />
-                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                                        </div>
-                                    </div>
-                                    <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-white rounded-full shadow-md border border-gray-50 flex items-center justify-center text-sm transform group-hover:scale-110 transition-transform">
-                                        {item.icon}
-                                    </div>
-                                </div>
-                                <span className="text-[10px] font-black text-gray-700 tracking-wide uppercase">{lang === 'zh' ? item.tag : item.tagEn}</span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
+
 
             {/* Template Grid */}
             <div className="px-6">

@@ -42,11 +42,13 @@ export const useAppActions = (deps: AppActionsDeps) => {
     const applyTemplate = useCallback(async (template: Template) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
 
-        const copy = (items: ScheduleItem[]) => (items || []).map(i => ({
-            ...i,
-            instanceId: Math.random().toString(36).substr(2, 9),
-            arrivalTransport: (i.arrivalTransport || 'car') as TransportMode
-        }));
+        const copy = (items: ScheduleItem[]) => (items || [])
+            .filter((i: any) => i.itemType !== 'insight')
+            .map(i => ({
+                ...i,
+                instanceId: Math.random().toString(36).substr(2, 9),
+                arrivalTransport: (i.arrivalTransport || 'car') as TransportMode
+            }));
 
         const newSchedule: Record<string, DaySchedule> = {};
         const isMultiDay = !('morning' in template.schedule);

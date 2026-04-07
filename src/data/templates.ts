@@ -767,7 +767,9 @@ export const TEMPLATES: Template[] = [
             quote: '台北最迷人的景致，是即便繁華落盡，街角依然飄散著藥材與古早味的香氣。',
             quoteEn: 'Taipei\'s most charming sights reside in corners where the scent of herbs and vintage flavors remain.',
             description: '這不是一般觀光客的走馬看花，而是穿越時空的台北日常。我們從大稻埕的清晨開始，一路漫步到萬華的燈火闌珊。',
-            authorLabel: '台北在地文化推廣者推薦'
+            descriptionEn: 'This isn\'t a typical tourist walkthrough; it\'s a journey through Taipei\'s daily life across time. We start from the early morning in Dadaocheng and wander all the way to the dim lights of Wanhua.',
+            authorLabel: '台北在地文化推廣者推薦',
+            authorLabelEn: 'Recommended by Taipei Local Culture Advocate'
         },
         authorStory: {
             zh: '我在台北長大，特別著迷於那些被時間遺忘的角落。這份行程是我無數次穿梭在萬華和大稻埕後，精選出最能代表「台北老靈魂」的地點。',
@@ -850,7 +852,9 @@ export const TEMPLATES: Template[] = [
             quote: '「台北101不是目的地，是你流汗之後的獎勵。」',
             quoteEn: '"Taipei 101 is not the destination; it\'s the reward for your sweat."',
             description: '這份行程的邏輯是由高到低，再由舊到新——早上在山頂俯瞰這座城市，中午走進公園感受台北人的日常，下午穿越眷村走進現代信義區，晚上在米其林餐廳收尾。',
-            authorLabel: '台北山系生活家推薦'
+            descriptionEn: 'This itinerary flows from top to bottom, old to new—gaze upon the city from a mountain peak in the morning, experience local life in the park at noon, traverse historical villages into modern Xinyi in the afternoon, and conclude with a Michelin-starred dinner.',
+            authorLabel: '台北山系生活家推薦',
+            authorLabelEn: 'Recommended by Taipei Mountain Guide'
         },
         authorStory: {
             zh: '每週跑遍台北大小步道，專門找那些觀光客不知道、本地人才去的登山路線。對我來說，這座城市最美的角度永遠是在努力向上爬之後看到的那個瞬間。',

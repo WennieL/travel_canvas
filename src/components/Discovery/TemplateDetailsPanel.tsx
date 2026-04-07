@@ -264,7 +264,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                     {displayQuote.replace(/"/g, '')}
                                 </h2>
                                 <p className="text-[15.5px] leading-[1.8] text-[#4A5548] font-medium">
-                                    {lang === 'zh' ? template.coverStory?.description : (template.coverStory?.description || template.coverStory?.description)}
+                                    {lang === 'zh' ? template.coverStory?.description : (template.coverStory?.descriptionEn || template.coverStory?.description)}
                                 </p>
                             </div>
                         </div>
