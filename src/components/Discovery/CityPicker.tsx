@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Star, Heart, Zap, Sparkles, ChevronRight, Leaf } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Template, LangType, Region, TravelItem } from '../../types';
-import { REGION_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS } from '../../data';
+import { Template, LangType, Region, TravelItem, CulturalInsight } from '../../types';
+import { REGION_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS, CULTURAL_WONDERS } from '../../data';
+import { CulturalInsightCard } from './CulturalInsightCard';
 
 interface CityPickerProps {
     searchQuery: string;
@@ -100,7 +101,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
 
                 {/* Sticky Search Bar (Emerald Canopy Spec: 56px height, rounded-2xl, light shadow) */}
                 <div className="mt-10 max-w-[400px] mx-auto relative px-1">
-                    <div className="h-[56px] flex items-center bg-white rounded-2xl shadow-[0_2px_15px_rgba(0,0,0,0.04)] p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/10">
+                    <div className="h-[56px] flex items-center bg-white rounded-2xl shadow-[0_2px_15_rgba(0,0,0,0.04)] p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/10">
                         <Search className="text-tc-text-sec w-5 h-5 flex-shrink-0" />
                         <input
                             type="text"
@@ -182,17 +183,6 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                                 <span className="text-[10px] font-black text-white leading-none">{String(idx + 1).padStart(2, '0')}</span>
                                             </div>
                                         </div>
-
-                                        {/* Heart Button (frosted white/20) */}
-                                        {/* <div
-                                            onClick={(e) => toggleLike(spot.id, e)}
-                                            className="absolute top-5 right-5 z-20 w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/20 shadow-sm cursor-pointer"
-                                        >
-                                            <Heart
-                                                size={20}
-                                                className={`transition-colors duration-300 ${likedSpots.has(spot.id) ? 'fill-tc-primary text-tc-primary' : 'text-white'}`}
-                                            />
-                                        </div> */}
                                     </div>
 
                                     <div className="mt-5 px-3">
@@ -292,6 +282,28 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                     </div>
                                 </button>
                             ))}
+                        </div>
+                    </div>
+
+                    {/* [NEW] Global Cultural Flashcards (文化閃卡) - Bottom of Page Version */}
+                    <div className="mt-8 px-5 pb-12 overflow-hidden">
+                        <div className="flex items-center justify-between mb-5 px-1 border-b border-tc-border/30 pb-3">
+                            <div className="flex items-center gap-2">
+                                <Sparkles className="text-tc-primary w-5 h-5" />
+                                <h2 className="text-lg font-bold text-tc-text-main tracking-tight uppercase">
+                                    {lang === 'zh' ? '在地奇景' : 'Local Wonders'}
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4 overflow-x-auto no-scrollbar px-1 pb-6 snap-x snap-mandatory">
+                            {CULTURAL_WONDERS.map((wonder: CulturalInsight) => (
+                                <div key={wonder.id} className="snap-center">
+                                    <CulturalInsightCard insight={wonder} lang={lang} />
+                                </div>
+                            ))}
+                            {/* Space for scrolling */}
+                            <div className="min-w-[20px] h-full shrink-0" />
                         </div>
                     </div>
                 </>

@@ -18,4 +18,4 @@ export {
     CITY_FILTERS,
     POPULAR_TAGS
 } from './demo-plan';
-
+export { CULTURAL_WONDERS } from './assets/taiwan/wonders';

@@ -371,3 +371,17 @@ export interface TemplateStat {
     color?: string;        // custom icon background color
 }
 
+// [NEW] Cultural Insight structure for "Cultural Flashcards" (文化閃卡)
+export interface CulturalInsight {
+    id: string;
+    regionId: string;      // 'taipei', 'taichung'
+    regionCode: string;    // 'TW'
+    regionName: string;    // 'Taipei', 'Taichung'
+    category: string;      // '台灣限定奇景' | '台灣最著名奇景'
+    title: string;
+    emoji: string;
+    content: string;
+    foreignerReaction: string;
+    backgroundColor?: string;
+}
+
