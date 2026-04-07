@@ -193,7 +193,9 @@ export interface ChecklistItem {
 }
 
 export interface TemplateItem {
-    id: string;
+    id: string; // References TravelItem.id for type 'spot'
+    itemType?: 'spot' | 'insight';
+    insightId?: string; // References CulturalInsight.id for type 'insight'
     instanceId?: string; // Support for legacy/existing templates that define it
     timeLabel?: string;
     startTime?: string;
@@ -378,10 +380,14 @@ export interface CulturalInsight {
     regionCode: string;    // 'TW'
     regionName: string;    // 'Taipei', 'Taichung'
     category: string;      // '台灣限定奇景' | '台灣最著名奇景'
+    categoryEn?: string;
     title: string;
+    titleEn?: string;
     emoji: string;
     content: string;
+    contentEn?: string;
     foreignerReaction: string;
+    foreignerReactionEn?: string;
     backgroundColor?: string;
 }
 

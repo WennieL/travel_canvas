@@ -602,5 +602,490 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 bestTime: '20:30'
             }
         }
+    },
+    {
+        id: 'tw-t-a5',
+        title: '象山親山步道',
+        titleEn: 'Elephant Mountain Trail',
+        type: 'nature',
+        duration: '2小時',
+        image: '⛰️',
+        description: '台北最受歡迎的登山步道，也是拍攝台北 101 的最佳視角。階梯雖多但難度適中。清晨五點半的象山只有跑者與追日的人，看著城市從黑色輪廓轉為金色，是台北最神聖的時刻。',
+        descriptionEn: 'The most popular trail for Taipei 101 views. Challenging but rewarding. At 5:30 AM, you share the sunrise only with joggers and the waking city.',
+        price: 0,
+        address: '台北市信義區信義路五段150巷',
+        rating: 4.9,
+        lat: 25.0272,
+        lng: 121.5707,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '24H',
+        tags: ['日出', '健身', '夜景'],
+        themeColor: '#4a7c59',
+        teaser: '台北 101 的最佳伸展台，流汗後的日出獎勵。',
+        teaserEn: 'The best stage for Taipei 101, a sunrise reward for your sweat.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '避開人潮',
+                labelEn: 'Crowd Hack',
+                summary: '六巨石不是終點',
+                summaryEn: 'Six Rocks is not the end',
+                story: '大多數遊客在六巨石（Six Giant Rocks）就停下排隊拍照了。如果你繼續往上爬 10 分鐘，會到達一個更寬敞的平台，那裡的視野更高，而且幾乎沒人跟你搶鏡頭。',
+                storyEn: 'Most tourists stop and queue at the Six Giant Rocks. If you climb 10 more minutes, you\'ll reach a wider platform with a higher view and fewer people.'
+            },
+            {
+                id: 'hidden',
+                label: '攝影機位',
+                labelEn: 'Photo Spot',
+                summary: '相機架在樹根旁',
+                summaryEn: 'Tripod by the roots',
+                story: '想拍出那種「人在樹叢中看 101」的氛圍嗎？在第二個觀景台，把相機放低，利用旁邊的老樹根當前景。',
+                storyEn: 'To get that "looking through nature at 101" vibe, go to the second deck and use the old tree roots as your foreground.'
+            },
+            {
+                id: 'trap',
+                label: '黃金時刻',
+                labelEn: 'Golden Hour',
+                summary: '提前 45 分鐘抵達',
+                summaryEn: 'Arrive 45m early',
+                story: '象山的夕陽非常短暫。建議在預測日落時間前 45 分鐘就抵達山上，因為最好的粉紅色晚霞通常出現在日落前的那一刻。',
+                storyEn: 'Elephant Mountain sunsets are brief. Arrive 45 mins before the scheduled sunset to catch the best pink sky.'
+            },
+            {
+                id: 'must-eat',
+                label: '補給建議',
+                labelEn: 'Supplies',
+                summary: '帶上一瓶水',
+                summaryEn: 'Bring water',
+                story: '這聽起來很簡單，但象山的階梯比你想像中更耗體力。在捷運站出口就買好水，山上沒有自動販賣機。',
+                storyEn: 'It sounds simple, but the steps are more draining than you think. Buy water at the MRT exit; there are no vending machines on the trail.'
+            }
+        ],
+        insiderTip: {
+            teaser: '從捷運站直接上山，避開遊客正門。',
+            teaserEn: 'Go straight from MRT to skip the main tourist entrance.',
+            full: {
+                story: '清晨五點半到，101 從黑色輪廓變成橘色再變金色的過程是無價的。帶瓶水，樓梯很多。',
+                storyEn: 'Arrive at 5:30 AM. Watching 101 turn from black to orange to gold is priceless. Bring water!',
+                exactLocation: '象山步道高處',
+                bestTime: '05:30'
+            }
+        }
+    },
+    {
+        id: 'tw-t-f5',
+        title: '鼎泰豐 (信義店)',
+        titleEn: 'Din Tai Fung (Xinyi)',
+        type: 'food',
+        duration: '1小時',
+        image: '🥟',
+        description: '米其林一星推薦，也是全世界最知名的小籠包。永康街本店早上開門人相對少，是一天裡最好入座的時間。皮薄透明、湯汁鮮濃，每一顆都是職人精神的展現。',
+        descriptionEn: 'Michelin-starred and world-famous for Xiao Long Bao. The Xinyi original store is best visited right at opening.',
+        price: 600,
+        address: '台北市大安區信義路二段194號',
+        rating: 4.8,
+        lat: 25.0334,
+        lng: 121.5301,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '10:00-21:00 (週末提前開門)',
+        tags: ['🌟米其林一星', '經典', '小籠包'],
+        themeColor: '#d64d4d',
+        teaser: '米其林級的工藝，全世界最好的小籠包。',
+        teaserEn: 'Michelin-grade craft, the best soup dumplings in the world.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '十八摺秘密',
+                labelEn: '18-Fold Rule',
+                summary: '每一顆都是數學',
+                summaryEn: 'Math in every bite',
+                story: '每一顆小籠包都精準維持 18 摺，這是口感最均勻的黃金比例。如果你仔細觀察主廚隔著玻璃施魔法，你會發現那種近乎偏執的工藝。',
+                storyEn: 'Every dumpling has exactly 18 folds for the perfect texture. Watch the chefs through the glass to see this bordering-on-obsessive craft.'
+            },
+            {
+                id: 'hidden',
+                label: '醬料黃金比',
+                labelEn: 'The Sauce',
+                summary: '3 醋 1 醬油',
+                summaryEn: '3 Vinegar, 1 Soy',
+                story: '最在地的吃法是：一份醬油配三份米醋。把薑絲浸泡在裡面，然後輕輕夾起小籠包，沾一點醬，破開一小口讓湯汁流進湯匙，這才是品味的正確開場。',
+                storyEn: 'The local way: 3 parts vinegar to 1 part soy sauce. Soak the ginger, dip the dumpling, and let the soup bleed onto your spoon first.'
+            },
+            {
+                id: 'trap',
+                label: '排隊攻略',
+                labelEn: 'Wait Hack',
+                summary: '10 點整是唯一解',
+                summaryEn: '10 AM sharp',
+                story: '信義店（或本店）最好在早上 10 點開門前就抵達。這時第一批入座的機率最高。只要晚 20 分鐘，你可能就要等 90 分鐘起跳。',
+                storyEn: 'Arrive before 10 AM opening at the Xinyi original store. Being in the first batch keeps you from 90-minute waits later.'
+            },
+            {
+                id: 'must-eat',
+                label: '隱藏主角',
+                labelEn: 'Hidden Star',
+                summary: '不要忘記小菜',
+                summaryEn: 'Order the Cucumber',
+                story: '雖然主角是小籠包，但熟客一定會點「小菜」（涼拌小黃瓜）。那種爽脆感是平衡熱騰騰包子的最佳解藥。',
+                storyEn: 'While the dumplings are the star, seasoned regulars always order the "Appetizer" (Spiced Cucumber) to balance the steam.'
+            }
+        ],
+        insiderTip: {
+            teaser: '薑絲配醋是靈魂，讓服務員示範吃法。',
+            teaserEn: 'Ginger and vinegar are key; let the staff show you how.',
+            full: {
+                story: '早上開門就去，排隊時間最短。不要假裝你很懂，讓服務生帶領你品味那十八摺的精準。',
+                storyEn: 'Go right at opening. Let the staff guide you through the 18-fold perfection of each dumpling.',
+                mustTry: '小籠包 + 蛋花湯',
+                bestTime: '10:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-f6',
+        title: '信義區巷弄便當',
+        titleEn: 'Xinyi Lane Bento',
+        type: 'food',
+        duration: '45分',
+        image: '🍱',
+        description: '離開豪華百貨，走進信義區的小巷。這裡的台式自助餐是上班族的靈魂加油站。四菜一主餐，不到 120 元，這是台北最真實、最有活力的生存日常。',
+        descriptionEn: 'Step away from malls into the back alleys. This is the authentic fuel for Xinyi office workers—affordable and soulful.',
+        price: 120,
+        address: '台北市信義區巷弄',
+        rating: 4.6,
+        lat: 25.0350,
+        lng: 121.5640,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['在地人', '平價', '日常'],
+        themeColor: '#8a5a3a',
+        teaser: '不是景點，是台灣真實的日常切面。',
+        teaserEn: 'Not a tourist spot, but a real slice of Taiwan life.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '點餐節奏',
+                labelEn: 'Ordering Flow',
+                summary: '比手畫腳也是藝術',
+                summaryEn: 'The art of pointing',
+                story: '自助餐的靈魂在於「快」。不要猶豫太久，看著阿姨的手勢，精準指點你想要的菜色。通常這排長龍是因為大家都知道這裡的菜最鮮。',
+                storyEn: 'Bento shops are all about speed. Don\'t hesitate; follow the "Auntie\'s" lead and point precisely. The long line is a sign of freshness.'
+            },
+            {
+                id: 'hidden',
+                label: '靈魂滷汁',
+                labelEn: 'The Gravy',
+                summary: '淋在白飯上的精華',
+                summaryEn: 'Essence on the rice',
+                story: '如果可以，請阿姨在你的白飯上「淋一點滷汁」。那是滷肉的精華，能讓一份平凡的便當瞬間升級。',
+                storyEn: 'If you can, ask the lady for a bit of "Lu-Zhi" (meat gravy) on your rice. It turns a standard bento into a masterpiece.'
+            },
+            {
+                id: 'must-eat',
+                label: '職人群像',
+                labelEn: 'Office Life',
+                summary: '信義區的Ｂ面',
+                summaryEn: 'Xinyi\'s B-Side',
+                story: '在這裡，你會看到穿著 10 萬西裝的經理和快遞員坐在同一個圓桌吃飯。這是台北信義區最真實、最平等的一個角落。',
+                storyEn: 'Here, managers in expensive suits and delivery guys sit at the same round table. It\'s Xinyi\'s most authentic and egalitarian corner.'
+            },
+            {
+                id: 'trap',
+                label: '外帶體驗',
+                labelEn: 'Takeout Hack',
+                summary: '去公園吃吧',
+                summaryEn: 'Eat at the park',
+                story: '如果店內太擠，裝在紙盒裡外帶去附近的公園椅子坐著吃。吹著風，看著城市轉動，這是非常有溫度的日常。',
+                storyEn: 'If it\'s too crowded, take your paper bento box to a nearby park bench. Watching the city move while you eat is a soulful ritual.'
+            }
+        ],
+        insiderTip: {
+            teaser: '看著菜色比手勢，阿姨會精準幫你夾。',
+            teaserEn: 'Just point at the dishes; the aunties will handle it.',
+            full: {
+                story: '中午 12 點旁邊全是穿西裝的上班族。觀察大家選菜的節奏，這是台灣人的日常選擇題。',
+                storyEn: 'At 12 PM, you\'ll be surrounded by office workers. Witness the rhythm of daily local choices.',
+                mustTry: '滷肉 + 炒青菜'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a6',
+        title: '大安森林公園 (健康步道)',
+        titleEn: 'Daan Forest Park',
+        type: 'nature',
+        duration: '1小時',
+        image: '🌳',
+        description: '台北的中央公園。這裡的鵝卵石健康步道是台灣長輩的修煉場。脫掉鞋子走上三分鐘，感受腳底傳來的痛與暢快，那是台北人最獨特的保健儀式。',
+        descriptionEn: 'Taipei\'s Central Park. The pebble "health paths" are a ritual for locals. Walk barefoot and feel the "painful" joy.',
+        price: 0,
+        address: '台北市大安區信義路三段100號',
+        rating: 4.7,
+        lat: 25.0315,
+        lng: 121.5350,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '24H',
+        tags: ['公園', '慢活', '免門票'],
+        themeColor: '#4a7c59',
+        teaser: '城市的綠洲，觀察台北日常的最佳座位。',
+        teaserEn: 'A city oasis, the best seat to watch daily life flow.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '腳底修煉',
+                labelEn: 'Pebble Path',
+                summary: '脫鞋感受台式痛感',
+                summaryEn: 'Feel the local pain',
+                story: '公園裡的鵝卵石步道是台灣人的「腳底按摩」。雖然走起來很痛，但這是在地長輩維持健康的秘密。勇敢脫下鞋子挑戰三分鐘，體驗那種痛並快樂著的感覺。',
+                storyEn: 'The pebble paths are a local "foot massage" ritual. It hurts, but it\'s the health secret of our elders. Take off your shoes and challenge yourself for 3 mins.'
+            },
+            {
+                id: 'must-eat',
+                label: '公園早餐',
+                labelEn: 'Park Breakfast',
+                summary: '配飯糰看鴿子',
+                summaryEn: 'Rice balls \u0026 pigeons',
+                story: '在公園入口處常有賣飯糰的小攤。買一份古早味飯糰，坐在露天音樂台的長椅上吃。這比在任何餐廳吃早餐都更像一個台北人。',
+                storyEn: 'Find a rice ball stall at the entrance. Eat it on a bench by the amphitheater; it\'s more "Taipei" than any brunch cafe.'
+            },
+            {
+                id: 'trap',
+                label: '防蚊叮嚀',
+                labelEn: 'Mosquito Alert',
+                summary: '小黑蚊出沒注意',
+                summaryEn: 'Watch for midges',
+                story: '大安森林公園的「小黑蚊」非常厲害，尤其是在樹蔭下。建議穿長褲或噴好防蚊液，否則你的腳踝會成為牠們的盛宴。',
+                storyEn: 'The "black midges" here are ferocious, especially in the shade. Wear long pants or use repellent, or your ankles will be their feast.'
+            },
+            {
+                id: 'hidden',
+                label: '賞鳥熱點',
+                labelEn: 'Bird Spot',
+                summary: '黑冠麻鷺的家',
+                summaryEn: 'Home of the Heron',
+                story: '這裡有非常多不怕人的「大笨鳥」（黑冠麻鷺）。它們常站在草地上一動也不動假裝自己是雕像。如果你很有耐心，可以觀察它們捕食蚯蚓的神技。',
+                storyEn: 'Look for the "Big Stupid Bird" (Malayan Night Heron). They stand as still as statues. If you have patience, watch their masterclass in worm hunting.'
+            }
+        ],
+        insiderTip: {
+            teaser: '脫鞋走鵝卵石步道，體驗台式的痛感保健。',
+            teaserEn: 'Try the pebble path barefoot for a local health ritual.',
+            full: {
+                story: '坐下來看著旁邊練太極、唱卡拉 OK 的大叔。這裡比任何景點都顯得真實而坦然。',
+                storyEn: 'Sit and watch locals practice Tai Chi or sing karaoke; it\'s more authentic than any landmark.',
+                bestTime: '12:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a7',
+        title: '四四南村',
+        titleEn: '44 South Village',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🏘️',
+        description: '台北最後一個眷村遺址。老舊的低矮平房與後方雄偉的台北 101 形成強烈對比。這裡現在是文創中心，也是見證台北「舊與新」交匯最美的角度。',
+        descriptionEn: 'Taipei\'s last military dependents\' village. Low cabins contrast with 101, showcasing the collision of old and new.',
+        price: 0,
+        address: '台北市信義區松勤街50號',
+        rating: 4.6,
+        lat: 25.0312,
+        lng: 121.5615,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '24H (室內展區至18:00)',
+        tags: ['眷村', '文青', '攝影'],
+        themeColor: '#7d3a22',
+        teaser: '眷村轉角遇見 101，感受歷史與現代的對話。',
+        teaserEn: '101 meets historical cabins; a dialogue across time.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '新舊交界',
+                labelEn: 'Contrast Shot',
+                summary: '捕捉 101 的最佳角度',
+                summaryEn: 'Best angle for 101',
+                story: '站在眷村的小坡上，背景是現代化的 101 大樓。這種歷史建築與摩天大樓的強烈對比，是四四南村最標誌性的視覺語言。',
+                storyEn: 'Standing on the village slopes with 101 behind creates a stunning contrast. It\'s the most iconic visual language of this spot.'
+            },
+            {
+                id: 'must-eat',
+                label: '貝果靈魂',
+                labelEn: 'Bagel Soul',
+                summary: '好丘的在地口味',
+                summaryEn: 'Good Cho\'s flavors',
+                story: '「好丘」不僅是間咖啡店，它把台灣在地食材填進了貝果裡。試試看剝皮辣椒或芋頭口味，那是你想像不到的驚喜組合。',
+                storyEn: 'Good Cho\'s infuses local ingredients into their bagels. Try the peeled chili or taro flavors for an unexpected surprise.'
+            },
+            {
+                id: 'trap',
+                label: '防曬叮嚀',
+                labelEn: 'Sun Protection',
+                summary: '午後無遮蔽',
+                summaryEn: 'No shade in PM',
+                story: '四四南村的草皮區非常美，但完全沒有遮蔽物。下午兩、三點來拍照時，務必戴上帽子或墨鏡，否則台北的烈日會讓你很快就想投降。',
+                storyEn: 'The lawn is beautiful but has zero shade. Bring a hat or shades in the mid-afternoon, or the Taipei sun will defeat you quickly.'
+            },
+            {
+                id: 'hidden',
+                label: '時光膠囊',
+                labelEn: 'Time Capsule',
+                summary: '室內展覽的溫度',
+                summaryEn: 'Interior warmth',
+                story: '除了外表的草地，記得走進室內的展示區。那裡保留了當年眷村家庭的客廳佈置，你能感受到那個年代特有的溫暖與堅韌。',
+                storyEn: 'Beyond the grass, visit the indoor exhibits. The preserved living rooms capture the warmth and resilience of the village era.'
+            }
+        ],
+        insiderTip: {
+            teaser: '「好丘」的貝果值得一試，配著 101 吃下午茶。',
+            teaserEn: 'Good Cho\'s bagels are great to pair with the 101 view.',
+            full: {
+                story: '坐在磚牆邊，背景是摩天大樓。這個畫面只有在台北的四四南村才拍得到。',
+                storyEn: 'Sit by the brick walls with skyscrapers behind; it\'s a unique Taipei photo op.',
+                bestTime: '13:30'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a8',
+        title: '台北 101 觀景台',
+        titleEn: 'Taipei 101 Observatory',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🏢',
+        description: '曾經的世界最高樓。搭乘超高速電梯 37 秒直達雲端，觀賞重達 660 噸的世界最大阻尼球。89 樓全景視角，讓您將整個台北盆地盡收眼底。',
+        descriptionEn: 'The former world\'s tallest building. 37-second elevators to the 89F panoramic views and a massive damper sphere.',
+        price: 600,
+        address: '台北市信義路五段7號',
+        rating: 4.8,
+        lat: 25.0337,
+        lng: 121.5648,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '10:00-21:00',
+        tags: ['地標', '必訪', '夜景'],
+        themeColor: '#3a7aaa',
+        teaser: '登上雲端俯瞰台北，見證工程奇蹟。',
+        teaserEn: 'Climb above the clouds and witness an engineering marvel.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '巨型阻尼球',
+                labelEn: 'The Damper',
+                summary: '看大樓如何呼吸',
+                summaryEn: 'How towers breathe',
+                story: '一定要去看那個金色的巨大圓球。它是世界上少數開放參觀的風阻尼器。在颱風或地震時，它就是讓 101 穩如泰山的守護神。',
+                storyEn: 'Don\'t miss the massive golden sphere. It\'s one of the few open-to-public wind dampers, keeping the tower steady during typhoons or quakes.'
+            },
+            {
+                id: 'hidden',
+                label: '91樓戶外',
+                labelEn: '91F Outdoor',
+                summary: '感受高空強風',
+                summaryEn: 'Feel the high wind',
+                story: '如果天氣好，戶外平台會開放。站在 91 樓感受高空的風速，那種臨場感跟隔著玻璃看的感覺完全不同。你會發現 101 真的很高。',
+                storyEn: 'When weather permits, the outdoor deck opens. Feeling the wind at 390m is completely different from looking through glass.'
+            },
+            {
+                id: 'trap',
+                label: '天氣陷阱',
+                labelEn: 'Weather Trap',
+                summary: '起霧就不要上去了',
+                summaryEn: 'Skip if foggy',
+                story: '上樓前先看螢幕的能見度百分比。如果台北起大霧，你上去看到的只會是一片白色牆壁。這時建議改去百貨區逛街，景色留給晴天。',
+                storyEn: 'Check visibility before buying tickets. If it\'s foggy, you\'ll see nothing but a white wall. Save the view for a clear day instead.'
+            },
+            {
+                id: 'must-eat',
+                label: '雲端咖啡',
+                labelEn: 'Sky Coffee',
+                summary: '最高空的純度',
+                summaryEn: 'Highest purity',
+                story: '這裡有幾間高空咖啡廳，雖然價格稍高，但配上那個俯瞰整個城市的視野，那杯拿鐵喝起來就是特別有質感。',
+                storyEn: 'The sky-high cafes might be pricey, but pairing a latte with a full city view makes the experience worth every penny.'
+            }
+        ],
+        insiderTip: {
+            teaser: '16:30 入場，同時卡位夕陽與百萬夜景。',
+            teaserEn: 'Arrive at 4:30 PM to catch sunset and city lights.',
+            full: {
+                story: '四點半到五點入場最完美。看著天色從金黃轉為深藍，光線的變化會讓您的照片更有感。',
+                storyEn: 'Early arrival lets you see the sky change from gold to deep blue, adding depth to your photos.',
+                bestTime: '16:30'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a9',
+        title: '饒河街觀光夜市',
+        titleEn: 'Raohe Night Market',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🌙',
+        description: '台北最具生活感的夜市。著名的胡椒餅、藥燉排骨與米其林必比登推薦名攤雲集。大牌樓下煙火繚繞，這是台北夜晚最熱騰騰、也最放鬆的時刻。',
+        descriptionEn: 'A market with life and soul. Home to Michelin-recommended pepper buns and herbal ribs. A steaming end to your night.',
+        price: 0,
+        address: '台北市松山區饒河街',
+        rating: 4.8,
+        lat: 25.0505,
+        lng: 121.5775,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '17:00-24:00',
+        tags: ['夜市', '必比登', '美食'],
+        themeColor: '#7d2222',
+        teaser: '燈火通明的台北深夜，米其林級的在地美味。',
+        teaserEn: 'A lit Taipei night with Michelin-level local flavors.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '胡椒餅儀式',
+                labelEn: 'Bun Ritual',
+                summary: '剛出爐的脆皮感',
+                summaryEn: 'Fresh baked crust',
+                story: '饒河街入口的胡椒餅是必跳的圓舞曲。看著老闆把餅貼在爐壁上，那種熱騰騰、咬開後噴汁的香甜，就是台北夜晚的味道。',
+                storyEn: 'The pepper buns at the entrance are a must. Watching them stick to the oven walls and then biting into the juicy meat is the taste of Taipei night.'
+            },
+            {
+                id: 'must-eat',
+                label: '藥燉補給',
+                labelEn: 'Herbal Ribs',
+                summary: '米其林的平價美味',
+                summaryEn: 'Pocket Michelin',
+                story: '陳董藥燉排骨是米其林必比登的常客。湯頭清甜不苦，排骨肉質鮮嫩。即便在夏天，坐在路邊喝一碗熱湯也是一種享受。',
+                storyEn: 'Chen Dong\'s herbal ribs is a Bib Gourmand regular. The soup is sweet, not bitter. Even in summer, it\'s a quintessential Taipei snack.'
+            },
+            {
+                id: 'trap',
+                label: '人流陷阱',
+                labelEn: 'Crowd Flow',
+                summary: '靠右走的隱形成規',
+                summaryEn: 'Walk to the right',
+                story: '饒河街是一個長條狀的夜市。人潮通常是非常擁擠且「靠右行駛」的。不要突然停在路中間拍照，會被後方的人潮「推進」，請找空檔靠邊。',
+                storyEn: 'Raohe is a long, narrow market. There\'s an unwritten "walk right" rule. Don\'t stop in the middle for photos; move to the side first.'
+            },
+            {
+                id: 'hidden',
+                label: '彩虹橋散策',
+                labelEn: 'Rainbow Bridge',
+                summary: '吃飽後的河岸漫步',
+                summaryEn: 'Riverside stroll',
+                story: '吃完夜市，記得從旁邊的小巷穿出去，就會看到彩虹橋。這裡的夜晚非常安靜，跟火熱的夜市形成對比，是台北最浪漫的收尾。',
+                storyEn: 'After the market, duck through a side alley to the Rainbow Bridge. The contrast between the quiet river and the rowdy market is lovely.'
+            }
+        ],
+        insiderTip: {
+            teaser: '胡椒餅人再多也要排，甘蔗汁是絕配。',
+            teaserEn: 'The pepper bun line is worth it; pair it with sugarcane juice.',
+            full: {
+                story: '門口的胡椒餅是靈魂。排隊時買杯甘蔗汁，看著老闆壓榨甘蔗，那個節奏就是饒河街的節味。',
+                storyEn: 'Pepper buns are the soul here. Watch the sugarcane pressing ritual while you wait in line.',
+                mustTry: '福州世祖胡椒餅 + 陳董藥燉排骨',
+                bestTime: '21:00'
+            }
+        }
     }
 ];

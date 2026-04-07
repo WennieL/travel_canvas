@@ -1,8 +1,41 @@
 import React, { useState } from 'react';
 import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign } from 'lucide-react';
-import { Template, LangType, TemplateStat } from '../../types';
-import { SAMPLE_CREATORS, SAMPLE_ASSETS } from '../../data';
+import { Template, LangType, TemplateStat, CulturalInsight } from '../../types';
+import { SAMPLE_CREATORS, SAMPLE_ASSETS, CULTURAL_WONDERS } from '../../data';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
+import { motion } from 'framer-motion';
+
+// --- NEW COMPONENT: Timeline Insight Whisper ---
+const TimelineInsightWhisper: React.FC<{ insight: CulturalInsight, lang: LangType, onClick: () => void }> = ({ insight, lang, onClick }) => {
+    return (
+        <motion.div 
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            onClick={onClick}
+            className="my-3 ml-12 mr-2 p-3 bg-[#F3E8FF]/40 rounded-xl border border-[#5B4D7D]/10 flex items-center justify-between group cursor-pointer hover:bg-[#F3E8FF]/60 transition-all active:scale-[0.98]"
+        >
+            <div className="flex items-center gap-3 overflow-hidden">
+                <span className="text-xl shrink-0">{insight.emoji}</span>
+                <div className="flex flex-col min-w-0">
+                    <span className="text-[10px] font-black text-[#5B4D7D]/40 uppercase tracking-widest">
+                        {lang === 'zh' ? '在地奇景' : 'LOCAL WONDER'}
+                    </span>
+                    <h4 className="text-[14px] font-bold text-[#1A1A1A] truncate">
+                        {lang === 'zh' ? insight.title : (insight.titleEn || insight.title)}
+                    </h4>
+                </div>
+            </div>
+            
+            <div className="shrink-0 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <span className="text-[11px] font-black text-[#5B4D7D]">
+                    {lang === 'zh' ? '查看故事' : 'VIEW STORY'}
+                </span>
+                <ChevronRight size={14} className="text-[#5B4D7D]" />
+            </div>
+        </motion.div>
+    );
+};
 
 interface TemplateDetailsPanelProps {
     template: Template;
@@ -37,6 +70,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     handleToggleFavoriteTemplate
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
+    const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
     const creator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
     const isFavorited = savedTemplates.some(t => t.id === template.id);
 
@@ -78,6 +112,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
 
     return (
+        <>
         <div className="flex flex-col bg-[#F7FBF0] pb-20 font-sans overflow-x-hidden">
             {/* 1. Hero Section (PREMIUM EDITORIAL STYLE) */}
             <div className="relative w-full h-[40vh] md:h-[45vh] shrink-0 bg-gray-100 overflow-hidden">
@@ -369,6 +404,13 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                     {/* Timeline + Items */}
                                     <div className="space-y-0">
                                         {[...(dayData.morning || []), ...(dayData.afternoon || []), ...(dayData.evening || []), ...(dayData.night || [])].map((rawItem, idx, arr) => {
+                                            // 1. Detection of Insight vs Spot
+                                            if (rawItem.itemType === 'insight') {
+                                                const wonder = CULTURAL_WONDERS.find(w => w.id === (rawItem as any).insightId);
+                                                if (!wonder) return null;
+                                                return <TimelineInsightWhisper key={idx} insight={wonder} lang={lang} onClick={() => setSelectedInsight(wonder)} />;
+                                            }
+
                                             const asset = SAMPLE_ASSETS.find(a => a.id === rawItem.id);
                                             const item = asset ? { ...asset, ...rawItem } : rawItem;
                                             
@@ -419,7 +461,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                     {/* Text Content */}
                                                     <div className="flex-1 min-w-0">
                                                         <div className="flex items-center gap-2 mb-0.5">
-                                                            <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest">{item.type}</span>
+                                                            <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest">{item.type || 'SPOT'}</span>
                                                             {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
                                                         </div>
                                                         <h5 className="text-[15px] font-black text-[#181D17] leading-snug flex items-center gap-1">
@@ -438,19 +480,19 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                     })}
                                 </div>
 
-                                    <div className="mt-8 mb-8">
-                                        <p className="text-center text-[10px] text-[#8E9285] font-black uppercase tracking-widest mt-6 opacity-40">End of Day {dayNum}</p>
-                                    </div>
-
-                                    <EngagementSocialBlock
-                                        author={creator || null}
-                                        primaryActionLabel={t.applyTemplate}
-                                        onPrimaryAction={() => onApply(template)}
-                                        onCreatorClick={onCreatorClick}
-                                        lang={lang}
-                                        variant="template"
-                                    />
+                                <div className="mt-8 mb-8">
+                                    <p className="text-center text-[10px] text-[#8E9285] font-black uppercase tracking-widest mt-6 opacity-40">End of Day {dayNum}</p>
                                 </div>
+
+                                <EngagementSocialBlock
+                                    author={creator || null}
+                                    primaryActionLabel={t.applyTemplate}
+                                    onPrimaryAction={() => onApply(template)}
+                                    onCreatorClick={onCreatorClick}
+                                    lang={lang}
+                                    variant="template"
+                                />
+                            </div>
                             );
                         })()}
                     </div>
@@ -458,5 +500,74 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
             </div>
             <div className="h-4 shrink-0" />
         </div>
+
+        {/* Insight Detail Drawer */}
+        {selectedInsight && (
+            <div className="fixed inset-0 z-[200] flex items-end justify-center px-4 pb-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
+                <div 
+                    className="fixed inset-0" 
+                    onClick={() => setSelectedInsight(null)} 
+                />
+                <motion.div 
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                    className="relative w-full max-w-lg bg-white rounded-t-[40px] shadow-2xl overflow-hidden pb-12"
+                >
+                    {/* Drag Handle */}
+                    <div className="flex justify-center p-4">
+                        <div className="w-12 h-1 bg-black/10 rounded-full" />
+                    </div>
+
+                    {/* Use the standalone card component for the full narrative */}
+                    <div className="px-6 py-2">
+                         <div 
+                            className="rounded-[32px] p-8 flex flex-col relative overflow-hidden shadow-sm border border-black/5"
+                            style={{ backgroundColor: selectedInsight.backgroundColor || '#F3E8FF' }}
+                        >
+                            {/* Region Pill */}
+                            <div className="absolute top-6 left-6 flex items-center gap-2">
+                                <div className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-full border border-black/5 shadow-sm">
+                                    <span className="text-[10px] font-black tracking-widest text-[#5B4D7D] uppercase">
+                                        {selectedInsight.regionCode} x {lang === 'zh' ? (selectedInsight.regionName === 'Taiwan' ? '台灣' : selectedInsight.regionName) : selectedInsight.regionName}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Type Label */}
+                            <div className="mt-8 mb-4">
+                                <span className="text-[11px] font-bold text-black/40 uppercase tracking-[0.2em]">
+                                    {lang === 'zh' ? selectedInsight.category : (selectedInsight.categoryEn || selectedInsight.category)}
+                                </span>
+                            </div>
+
+                            {/* Title & Emoji */}
+                            <div className="flex items-start justify-between mb-6">
+                                <h3 className="text-[24px] font-black text-[#1A1A1A] leading-tight flex-1">
+                                    {lang === 'zh' ? selectedInsight.title : (selectedInsight.titleEn || selectedInsight.title)}
+                                </h3>
+                                <span className="text-4xl filter drop-shadow-md ml-4">{selectedInsight.emoji}</span>
+                            </div>
+
+                            {/* Narrative Content */}
+                            <div className="flex-1 mb-8">
+                                <p className="text-[16px] leading-[1.7] text-[#333333] font-medium opacity-90">
+                                    {lang === 'zh' ? selectedInsight.content : (selectedInsight.contentEn || selectedInsight.content)}
+                                </p>
+                            </div>
+
+                            {/* Foreigner Reaction Box */}
+                            <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-5 border border-white/40">
+                                <p className="text-[14px] leading-relaxed text-[#5B4D7D] font-bold italic">
+                                    {lang === 'zh' ? selectedInsight.foreignerReaction : (selectedInsight.foreignerReactionEn || selectedInsight.foreignerReaction)}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        )}
+        </>
     );
 };

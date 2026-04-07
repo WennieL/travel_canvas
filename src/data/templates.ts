@@ -1,6 +1,7 @@
 import { Template } from '../types';
 import { TOKYO_ASSETS, OSAKA_ASSETS, KYOTO_ASSETS, MELBOURNE_ASSETS } from './assets';
 import { TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS } from './assets/taiwan';
+import { CULTURAL_WONDERS } from './assets/taiwan/wonders';
 
 // 達人模板 - Curated for MVP Launch
 export const TEMPLATES: Template[] = [
@@ -813,6 +814,141 @@ export const TEMPLATES: Template[] = [
                 evening: [
                     { ...TAIPEI_ASSETS[5], instanceId: 'tp-day-7', startTime: '18:30', arrivalTransport: 'walk' },
                     { ...TAIPEI_ASSETS[7], instanceId: 'tp-day-8', startTime: '20:00', arrivalTransport: 'walk' },
+                ],
+                night: [],
+                accommodation: []
+            }
+        }
+    },
+    // ── 台北山景與城市日 ──
+    {
+        id: 'tw-taipei-mountain-city-day',
+        name: '台北山景城景日',
+        nameEn: 'Taipei Mountain & City Views',
+        title: '由高到低，從日出到星辰的台北全景',
+        titleEn: 'From Sunrise to Starlight: The Vertical Soul of Taipei',
+        coverImage: '/images/covers/taipei-mountain.png',
+        author: '台北山系生活家',
+        authorEn: 'Taipei Mountain Guide',
+        authorId: 'c-tw-mountain',
+        region: 'taipei',
+        tags: ['🚶 一日遊', '🏃 健行', '⭐ 米其林推薦'],
+        tagsEn: ['One Day', 'Hiking', 'Michelin'],
+        travelStyle: ['經典', '健身'],
+        targetAudience: {
+            personas: ['體力充沛旅人', '攝影控', '在地生活家'],
+            personasEn: ['Active Travelers', 'Photo Nerds', 'Local Enthusiasts'],
+            description: '這份行程的邏輯是由高到低，再由舊到新——早上在山頂俯瞰這座城市，中午走進公園感受台北人的日常。',
+            paceLevel: 'moderate'
+        },
+        vibes: [
+            { tag: '#象山日出', color: 'bg-green-100 text-green-800' },
+            { tag: '#101全景', color: 'bg-blue-100 text-blue-800' },
+            { tag: '#達人帶路', color: 'bg-teal-50 text-teal-700' }
+        ],
+        coverStory: {
+            quote: '「台北101不是目的地，是你流汗之後的獎勵。」',
+            quoteEn: '"Taipei 101 is not the destination; it\'s the reward for your sweat."',
+            description: '這份行程的邏輯是由高到低，再由舊到新——早上在山頂俯瞰這座城市，中午走進公園感受台北人的日常，下午穿越眷村走進現代信義區，晚上在米其林餐廳收尾。',
+            authorLabel: '台北山系生活家推薦'
+        },
+        authorStory: {
+            zh: '每週跑遍台北大小步道，專門找那些觀光客不知道、本地人才去的登山路線。對我來說，這座城市最美的角度永遠是在努力向上爬之後看到的那個瞬間。',
+            en: 'Every week I run across various trails in Taipei, looking for those known only to locals. To me, the most beautiful angle of this city is always the moment after a hard climb.'
+        },
+        faq: [
+            {
+                title: '象山步道會不會很難？',
+                titleEn: 'Is Elephant Mountain hard?',
+                text: '雖然階梯不少，但慢慢走大約 20 分鐘就能到達第一個景觀台。建議清晨出發，避開最熱的太陽。',
+                textEn: 'Lots of stairs, but you can reach the first platform in 20 mins. Start early to avoid the heat.'
+            }
+        ],
+        duration: 1,
+        rating: 4.9,
+        tier: 'creator',
+        copiedCount: 520,
+        price: 0,
+        highlights: { days: 1, spots: 5, tips: 4, rating: 4.9, usageCount: 520 },
+        dayPreviews: [
+            { day: 1, summary: '象山步道日出 → 鼎泰豐早午餐 → 四四南村 → 101 觀景台 → 饒河街夜市' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '山城交錯的台北高度',
+                themeEn: 'Mountain & City Altitudes',
+                themeEmoji: '🌇',
+                morning: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a5')!, 
+                        instanceId: 'tm-1', 
+                        itemType: 'spot',
+                        startTime: '05:30', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        id: 'insight-1',
+                        itemType: 'insight',
+                        insightId: 'tw-morning-exercise',
+                        startTime: '06:30'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f5')!, 
+                        instanceId: 'tm-2', 
+                        itemType: 'spot',
+                        startTime: '10:00', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                afternoon: [
+                    { 
+                        id: 'insight-2',
+                        itemType: 'insight',
+                        insightId: 'tw-queue-culture',
+                        startTime: '11:00'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a6')!, 
+                        instanceId: 'tm-3', 
+                        itemType: 'spot',
+                        startTime: '12:00', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        id: 'insight-3',
+                        itemType: 'insight',
+                        insightId: 'tw-park-karaoke',
+                        startTime: '13:00'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a7')!, 
+                        instanceId: 'tm-4', 
+                        itemType: 'spot',
+                        startTime: '14:30', 
+                        arrivalTransport: 'walk' 
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a8')!, 
+                        instanceId: 'tm-5', 
+                        itemType: 'spot',
+                        startTime: '16:30', 
+                        arrivalTransport: 'walk' 
+                    },
+                    { 
+                        id: 'insight-4',
+                        itemType: 'insight',
+                        insightId: 'tw-dept-anniversary',
+                        startTime: '18:00'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a9')!, 
+                        instanceId: 'tm-6', 
+                        itemType: 'spot',
+                        startTime: '21:00', 
+                        arrivalTransport: 'public' 
+                    }
                 ],
                 night: [],
                 accommodation: []
