@@ -965,6 +965,130 @@ export const TEMPLATES: Template[] = [
             }
         }
     },
+    // ── 台北經典必訪：文化地標一日遊 ──
+    {
+        id: 'tpl-t-classic',
+        name: '台北經典必訪：文化地標一日遊',
+        nameEn: 'Classic Essential Taipei: Landmark Tour',
+        title: '第一次來台北？這是一份縮時攝影般的精華清單',
+        titleEn: 'First time in Taipei? A time-lapse of the city\'s best.',
+        author: 'TravelCanvas 編輯部',
+        authorEn: 'TravelCanvas Editors',
+        authorId: 'c0',
+        region: 'taipei',
+        tags: ['🥇 必訪地標', '🍜 在地美食', '🏛️ 文化瑰寶'],
+        tagsEn: ['Must-Visit', 'Local Food', 'Cultural'],
+        duration: 1,
+        rating: 4.9,
+        price: 0,
+        tier: 'official',
+        copiedCount: 3450,
+        coverImage: 'file:///C:/Users/jecxu/.gemini/antigravity/brain/ee581ff1-0d9b-40e4-aa7c-32f892d07f63/taipei_classic_heritage_cover_1775620859378.png',
+        highlights: { days: 1, spots: 7, tips: 5, rating: 4.9, usageCount: 3450 },
+        vibes: [
+            { tag: '#初音台北', color: 'bg-teal-100 text-teal-800' },
+            { tag: '#歷史厚度', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#美學建築', color: 'bg-sky-100 text-sky-800' }
+        ],
+        coverStory: {
+            quote: '「如果你只有一天的時間看台北，就要看它最靈魂的幾個面貌。」',
+            quoteEn: '"If you only have one day, see the parts that hold Taipei\'s soul."',
+            description: '從世界級的國寶收藏，到宮殿式的建築傳奇，最後在 101 的高空俯瞰這座城市的燈火。這是一份專為「台北初學者」準備的極致劇本。',
+            descriptionEn: 'From world-class treasures to palace-style architectural legends, ending with a 101 skyline view. The ultimate script for Taipei beginners.',
+            authorLabel: '官方認證經典路線',
+            authorLabelEn: 'Official Classic Route'
+        },
+        authorStory: {
+            zh: '我們彙整了數千位旅人的回饋，篩選出台北最不容錯過的七個瞬間。這份行程不只是景點的堆砌，我們更在其中加入了「在地人才知道」的觀賞視角與時間建議。',
+            en: 'We aggregated feedback from thousands of travelers to distill the seven must-see moments of Taipei. This is not just a list of spots; it\'s a curated guide with local "insider" timing and perspectives.'
+        },
+        faq: [
+            {
+                title: '悠遊卡在哪裡買？',
+                titleEn: 'Where to buy EasyCard?',
+                text: '捷運站（悠遊卡售卡/加值機）或是任何一家 7-11/全家便利商店都能買到，可以用於捷運、公車、部分小黃與小吃店。',
+                textEn: 'MRT stations or Any convenience store (7-11/FamilyMart). Use it for MRT, bus, and some shops.'
+            },
+            {
+                title: '機場到市區最快的方法？',
+                titleEn: 'Fastest way from Airport?',
+                text: '搭乘桃園機場捷運 (Airport MRT)，紫色的是直達車，只要 35 分鐘就能抵達台北車站。',
+                textEn: 'Take the Airport MRT Express (Purple train); it reaches Taipei Main Station in 35 minutes.'
+            }
+        ],
+        travelTips: [
+            { tip: '捷運車廂內「禁止飲食」（水與口香糖也不行）', tipEn: 'No eating or drinking in MRT (Water/Gum included)' },
+            { tip: '搭乘電扶梯時，通常習慣「靠右站立」', tipEn: 'Wait on the right when using escalators' },
+            { tip: '大部分店家不主動提供免費提袋，建議自備', tipEn: 'Bring your own shopping bag; most stores charge small fee' }
+        ],
+        dayPreviews: [
+            { day: 1, summary: '真芳早餐 → 故宮博物院 → 永康牛肉麵 → 圓山大飯店 → 中正紀念堂 → 台北 101 → 士林夜市' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '台北縮影：從古至今的精華巡禮',
+                themeEn: 'Taipei in Mini: Heritage to Modernity',
+                themeEmoji: '🌇',
+                morning: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f7')!, 
+                        instanceId: 'cl-1', 
+                        itemType: 'spot',
+                        startTime: '08:00', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a10')!, 
+                        instanceId: 'cl-2', 
+                        itemType: 'spot',
+                        startTime: '09:30', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                afternoon: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f8')!, 
+                        instanceId: 'cl-3', 
+                        itemType: 'spot',
+                        startTime: '12:30', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a12')!, 
+                        instanceId: 'cl-4', 
+                        itemType: 'spot',
+                        startTime: '14:30', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a11')!, 
+                        instanceId: 'cl-5', 
+                        itemType: 'spot',
+                        startTime: '16:00', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a8')!, 
+                        instanceId: 'cl-6', 
+                        itemType: 'spot',
+                        startTime: '17:30', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a13')!, 
+                        instanceId: 'cl-7', 
+                        itemType: 'spot',
+                        startTime: '19:30', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                night: [],
+                accommodation: []
+            }
+        }
+    },
     // ── 台北深夜生存指南 ──
     {
         id: 'tw-taipei-night-survival',

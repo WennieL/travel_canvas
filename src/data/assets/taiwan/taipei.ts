@@ -1013,22 +1013,22 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 storyEn: 'Check visibility before buying tickets. If it\'s foggy, you\'ll see nothing but a white wall. Save the view for a clear day instead.'
             },
             {
-                id: 'must-eat',
-                label: '雲端咖啡',
-                labelEn: 'Sky Coffee',
-                summary: '最高空的純度',
-                summaryEn: 'Highest purity',
-                story: '這裡有幾間高空咖啡廳，雖然價格稍高，但配上那個俯瞰整個城市的視野，那杯拿鐵喝起來就是特別有質感。',
-                storyEn: 'The sky-high cafes might be pricey, but pairing a latte with a full city view makes the experience worth every penny.'
+                id: 'hidden',
+                label: '巷弄中的101',
+                labelEn: 'Alley View',
+                summary: '竹村居酒屋巷弄',
+                summaryEn: 'Takemura Alley',
+                story: '離開 101 後，散步到松仁路 253 巷。站在竹村居酒屋門口，你會發現 101 剛好嵌在錯綜複雜的電線與窄巷中間，這是目前台北最紅的攝影點。',
+                storyEn: 'After 101, walk to Lane 253, Songren Rd. Stand by Takemura Izakaya and you\'ll see 101 perfectly framed by chaotic power lines and narrow alleys.'
             }
         ],
         insiderTip: {
-            teaser: '16:30 入場，同時卡位夕陽與百萬夜景。',
-            teaserEn: 'Arrive at 4:30 PM to catch sunset and city lights.',
+            teaser: '16:30 入場看夕陽，結束後散步去「竹村居酒屋」拍巷弄照。',
+            teaserEn: 'Arrive at 4:30 PM for sunset, then walk to Takemura Alley for the iconic photo.',
             full: {
-                story: '四點半到五點入場最完美。看著天色從金黃轉為深藍，光線的變化會讓您的照片更有感。',
-                storyEn: 'Early arrival lets you see the sky change from gold to deep blue, adding depth to your photos.',
-                bestTime: '16:30'
+                story: '四點半直達觀景台看落日。結束後步行約 10 分鐘到松仁路 253 巷，在居酒屋紅燈籠下與 101 合照，那才是最有台北味的畫面。',
+                storyEn: 'Observatory at 4:30 PM for the sun. Then a 10-min walk to Lane 253, Songren Rd for the perfect Taipei composition.',
+                bestTime: '16:30 (Observatory) / 19:30 (Alley)'
             }
         }
     },
@@ -1558,6 +1558,285 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 storyEn: 'Short street, but zero misses. Try the pork liver soup at "Pig Liver Rong"—it\'ll redefine how you feel about the dish.',
                 bestTime: '22:30',
                 mustTry: '圓環邊蚵仔煎 + 豬肝湯'
+            }
+        }
+    },
+    {
+        id: 'tw-t-f7',
+        title: '真芳碳烤吐司',
+        titleEn: 'Zhen Fang Toast',
+        type: 'food',
+        duration: '45分鐘',
+        image: '🥪',
+        description: '台北最具代表性的「台式早餐店」進化版。堅持炭火現烤，肉蛋吐司與古早味粉漿蛋餅是經典。這裡不只是填飽肚子，更是體驗台北早晨節奏的最佳起點。',
+        descriptionEn: 'The evolution of a classic Taipei breakfast joint. Charcoal-grilled sandwiches and traditional batter pancakes.',
+        price: 150,
+        address: '台北市信義區忠孝東路四段559巷16號',
+        rating: 4.7,
+        lat: 25.0425,
+        lng: 121.5645,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['早餐', '炭烤吐司', '在地'],
+        themeColor: '#eab308',
+        teaser: '台北早晨的香氣，從炭火吐司開始。',
+        teaserEn: 'The aroma of Taipei morning begins with charcoal toast.',
+        coverImage: 'https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '肉蛋吐司',
+                labelEn: 'Meat & Egg',
+                summary: '炭火的溫度',
+                summaryEn: 'Charcoal warmth',
+                story: '真芳的招牌。手打肉排與香嫩煎蛋鋪在炭火烤過的吐司，那種微微的炭香味與美乃滋的平衡感，是台北人百吃不厭的經典。',
+                storyEn: 'The flagship. Hand-made pork patties and tender eggs on charcoal-toasted bread—a timeless Taipei morning staple.'
+            },
+            {
+                id: 'hidden',
+                label: '古早味粉漿蛋餅',
+                labelEn: 'Batter Pancake',
+                summary: '消失中的傳統口感',
+                summaryEn: 'Disappearing legacy',
+                story: '比起一般的薄皮蛋餅，粉漿蛋餅更厚實Q彈。搭配甜辣醬，那是老台北人記憶中的味道。',
+                storyEn: 'Thicker and chewier than normal pancakes. Paired with sweet chili sauce, it\'s a nostalgia trip for locals.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-f8',
+        title: '永康牛肉麵',
+        titleEn: 'Yong Kang Beef Noodle',
+        type: 'food',
+        duration: '1小時',
+        image: '🍜',
+        description: '創立於1963年，台北最具傳奇色彩的牛肉麵店之一。濃郁的紅燒湯頭與大塊軟嫩的牛肉，讓這間小店成為無數旅人下機後的首選名單。',
+        descriptionEn: 'Legendary beef noodles since 1963. Rich broth and melt-in-your-mouth beef—a Taipei institution.',
+        price: 300,
+        address: '台北市大安區金山南路二段31巷17號',
+        rating: 4.6,
+        lat: 25.0321,
+        lng: 121.5284,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['經典', '牛肉麵', '必訪'],
+        themeColor: '#92400e',
+        teaser: '台北靈魂的滋味，一碗濃縮半世紀的精華。',
+        teaserEn: 'The taste of Taipei\'s soul, concentrated in a half-century-old recipe.',
+        coverImage: 'https://images.unsplash.com/photo-1624300629298-e9de39c13be5?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '紅燒半筋半肉',
+                labelEn: 'Spicy Tendon',
+                summary: '口感的極致層次',
+                summaryEn: 'Texture masterclass',
+                story: '建議點半筋半肉。筋煮得像果凍般滑嫩，肉卻依然保有纖維感。湯頭帶著微微的辛辣與豆瓣香，非常有層次。',
+                storyEn: 'Go for the mixed bowl. Jelly-like tendon meets textured meat in a broth rich with spicy bean paste.'
+            },
+            {
+                id: 'hidden',
+                label: '粉蒸排骨',
+                labelEn: 'Steamed Ribs',
+                summary: '隱藏的靈魂配角',
+                summaryEn: 'Hidden soulmate',
+                story: '很多人只點麵，但這裡的粉蒸系列（排骨或大腸）才是老饕心中真正的精華。地瓜墊底吸滿了油脂香，絕對要點。',
+                storyEn: 'Many skip order just the noodles, but the steamed ribs on a bed of sweet potato are the true insider choice.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a10',
+        title: '國立故宮博物院',
+        titleEn: 'National Palace Museum',
+        type: 'attraction',
+        duration: '3-4小時',
+        image: '🏛️',
+        description: '世界四大博物館之一，收藏近 70 萬件中華藝術瑰寶。從翠玉白菜到肉形石，這裡濃縮了數千年的文化精粹，是來到台北絶對不容錯過的文化殿堂。',
+        descriptionEn: 'One of the world\'s top museums, housing nearly 700,000 Chinese masterpieces including the Jadeite Cabbage.',
+        price: 350,
+        address: '台北市士林區至善路二段221號',
+        rating: 4.8,
+        lat: 25.1023,
+        lng: 121.5485,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['文化', '藝術', '歷史'],
+        themeColor: '#7c2d12',
+        teaser: '跨越千年的文化巡禮，近距離觀察歷史的重量。',
+        teaserEn: 'A millennial cultural journey, witnessing the weight of history up close.',
+        coverImage: 'https://images.unsplash.com/photo-1596434406196-857c0c6e0892?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '故宮三寶',
+                labelEn: 'The Big Three',
+                summary: '觀察工匠的極致巧思',
+                summaryEn: 'Artisan genius',
+                story: '翠玉白菜、肉形石與毛公鼎是必看清單。尤其是白菜上的螽斯與蝗蟲，細膩到令人屏息。建議早上 09:00 前入場避開人潮。',
+                storyEn: 'Jadeite Cabbage, Meat-shaped Stone, and Mao Gong Ding. Arrive before 9 AM to see them without the heavy crowds.'
+            },
+            {
+                id: 'hidden',
+                label: '至善園散策',
+                labelEn: 'Zhishan Garden',
+                summary: '博物館旁的宋代園林',
+                summaryEn: 'Song Dynasty Garden',
+                story: '參觀完本館，憑票根可以免費進入至善園。這裡仿宋代設計，有小橋流水與黑天鵝，是消化文化衝擊的最佳靜謐空間。',
+                storyEn: 'Use your ticket for free entry to Zhishan Garden. A Song-style retreat with black swans—perfect for post-museum reflection.'
+            }
+        ],
+        insiderTip: {
+            teaser: '09:00 前入場直接衝三樓，可以第一時間獨佔翠玉白菜。',
+            teaserEn: 'Arrive at 9 AM and head straight to 3F to see the Cabbage alone.',
+            full: {
+                story: '故宮很大，一天逛不完。如果時間有限，請依照「3F 陶瓷陶瓷 -> 2F 書畫 -> 1F 珍玩」的順序。',
+                storyEn: 'The museum is vast. If limited on time, follow: 3F (Jade/Ceramics) -> 2F -> 1F.',
+                bestTime: '09:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a11',
+        title: '中正紀念堂',
+        titleEn: 'CKS Memorial Hall',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🏛️',
+        description: '台北最宏偉的地標之一。藍瓦白牆的建築風格象徵著自由與平等。除了參觀莊嚴的大廳，這裡的自由廣場也是大型文化活動與台北市民生活的交會點。',
+        descriptionEn: 'A majestic landmark with blue tiles and white walls. The square is a hub for culture and public life.',
+        price: 0,
+        address: '台北市中正區中山南路21號',
+        rating: 4.7,
+        lat: 25.0359,
+        lng: 121.5197,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['地標', '儀隊', '建築'],
+        themeColor: '#1e40af',
+        teaser: '正午時分的儀隊交接，感受莊嚴肅穆的守護儀式。',
+        teaserEn: 'The midday guard changing ceremony—a display of solemnity and precision.',
+        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '儀隊交接',
+                labelEn: 'Guard Change',
+                summary: '每整點的精確律動',
+                summaryEn: 'Every hour on the hour',
+                story: '每小時整點在四樓大廳會有儀隊交接。動作整齊到連腳步聲都是同步的。建議提前 10 分鐘卡位，那種震撼力現場看完全不同。',
+                storyEn: 'The hourly ceremony on the 4th floor is a masterclass in precision. Arrive 10 mins early for a good vantage point.'
+            },
+            {
+                id: 'hidden',
+                label: '拱門對比照',
+                labelEn: 'The Archways',
+                summary: '框架建築之美',
+                summaryEn: 'Framing architecture',
+                story: '走到廣場兩旁的迴廊大拱門，用拱門當作框架拍攝主建築，可以拍出極具大氣與空間感的對稱構圖。',
+                storyEn: 'Use the massive corridor arches to frame the main hall for stunning, symmetrical compositions.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a12',
+        title: '圓山大飯店',
+        titleEn: 'The Grand Hotel',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🕌',
+        description: '台北最傳奇的宮殿式飯店。宏偉的十四層中國宮殿建築，曾用來招待多國元首。紅柱金瓦下的雕樑畫棟，隱藏著跨越半世紀的政治煙雲與神祕避難地道。',
+        descriptionEn: 'The legendary palace-style hotel, once a venue for world leaders. A masterpiece of traditional architecture.',
+        price: 0,
+        address: '台北市中山區中山北路四段1號',
+        rating: 4.7,
+        lat: 25.0792,
+        lng: 121.5265,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['建築', '歷史', '地標'],
+        themeColor: '#b91c1c',
+        teaser: '走進紅柱宮殿，探尋這座城市的祕密地道。',
+        teaserEn: 'Enter the red-pillared palace and discover the city\'s secret tunnels.',
+        coverImage: 'https://images.unsplash.com/photo-1596434406196-857c0c6e0892?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '紅柱大廳',
+                labelEn: 'The Lobby',
+                summary: '走進宮廷的視覺衝擊',
+                summaryEn: 'Royal visual impact',
+                story: '走進挑高大廳，數目眾多的紅大柱與天花板的梅花藻井會讓你瞬間以為回到古代皇宮。一定要去大樓梯拍照，那是最經典的角度。',
+                storyEn: 'The massive red pillars and ornate ceiling make you feel like royalty. Snap a photo on the grand staircase—it\'s iconic.'
+            },
+            {
+                id: 'hidden',
+                label: '祕密逃生滑梯',
+                labelEn: 'Secret Tunnels',
+                summary: '時代背景下的避難奇觀',
+                summaryEn: 'Historical escape',
+                story: '圓山隱藏著東、西兩條神祕地道。東側地道有長達 67 公尺的滑梯（現已收費預約參觀）。那是為了當年萬一發生戰爭，元首能快速撤離的特殊設計。',
+                storyEn: 'The hotel hides two secret tunnels. The west one features a 67m long escape slide—a remnant of the Cold War era (Reservation required).'
+            }
+        ],
+        insiderTip: {
+            teaser: '除了主樓，後山的小徑可以拍到圓山飯店氣勢磅礡的全景。',
+            teaserEn: 'Skip the crowd; follow the back trails for a panoramic view of the palace.',
+            full: {
+                story: '若不進入餐飲，大廳也是免票參觀的。建議參加「地道導覽行程」，那是台北最獨特的歷史解密。',
+                storyEn: 'Entry to the lobby is free. For the best experience, book a "Secret Tunnel Tour" in advance.',
+                bestTime: '15:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a13',
+        title: '士林夜市',
+        titleEn: 'Shilin Night Market',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🏮',
+        description: '台北規模最大、最國際化的夜市。從地下美食街到巷弄弄裡的隱藏小攤，這裡彙集了台灣所有的經典小吃。即便人潮洶湧，也是每位初抵台北旅人必備的朝聖儀式。',
+        descriptionEn: 'The largest and most famous night market in Taipei. An essential pilgrimage for every first-time visitor.',
+        price: 0,
+        address: '台北市士林區基河路101號',
+        rating: 4.5,
+        lat: 25.0879,
+        lng: 121.5241,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['夜市', '規模最大', '必訪'],
+        themeColor: '#c2410c',
+        teaser: '燈火輝煌的美食迷宮，挑戰味蕾的極限。',
+        teaserEn: 'A neon-lit food labyrinth challenging your taste buds.',
+        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '豪大大雞排',
+                labelEn: 'Hot-Star Chicken',
+                summary: '比臉還大的震撼感',
+                summaryEn: 'Larger-than-face fried chicken',
+                story: '士林的圖騰。現炸出來、撒上胡椒鹽的香氣，雖然熱量很高，但那種大口吃肉的爽感是來台北必拍的打卡儀式。',
+                storyEn: 'A Shilin icon. Crispy, salty, and huge. Biting into one under the neon lights is a classic Taipei experience.'
+            },
+            {
+                id: 'hidden',
+                label: '海友十全排骨',
+                labelEn: 'Herbal Ribs',
+                summary: '巷弄裡的米其林指南',
+                summaryEn: 'Michelin in the alley',
+                story: '很多人只去主幹道。但巷子裡的「海友」是連續幾年獲得米其林推薦的名店。在涼冷的夜晚來一碗黑澄澄的補湯，非常過癮。',
+                storyEn: 'Skip the main street traps. "Hai Yu" in the side alley is a multi-year Michelin mention with soul-warming herbal soup.'
+            }
+        ],
+        insiderTip: {
+            teaser: '假日建議 18:00 前抵達，否則人潮會讓您寸步難行。',
+            teaserEn: 'Arrive before 6 PM on weekends, or you\'ll be swept away by the human tide.',
+            full: {
+                story: '除了吃的，後段有很多衣服與小物市集。如果想買伴手禮，這裡的競爭激烈，價格通常也很漂亮。',
+                storyEn: 'Beyond food, the back alleys host vast markets for clothes and gadgets—great for cheap souvenirs.',
+                bestTime: '17:30'
             }
         }
     }
