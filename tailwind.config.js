@@ -11,7 +11,7 @@ export default {
                 'tc-secondary': '#507D8B',
                 'tc-tertiary': '#8BC34A',
                 'tc-neutral': '#7A7270',
-                'tc-bg': '#F4F7F2',
+                'tc-bg': '#FFFFFF',
             }
         },
     },

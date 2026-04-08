@@ -30,6 +30,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
     const [showAllTopSpots, setShowAllTopSpots] = useState(false);
     const [showAllTemplates, setShowAllTemplates] = useState(false);
     const [likedSpots, setLikedSpots] = useState<Set<string>>(new Set());
+    const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
 
     const toggleLike = (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
@@ -99,14 +100,14 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     {lang === 'zh' ? '下一站，你想去哪？' : 'Where will you travel next?'}
                 </h1>
 
-                {/* Sticky Search Bar (Emerald Canopy Spec: 56px height, rounded-2xl, light shadow) */}
+                {/* Sticky Search Bar (White Canopy Refined: bg-gray-50 base) */}
                 <div className="mt-10 max-w-[400px] mx-auto relative px-1">
-                    <div className="h-[56px] flex items-center bg-white rounded-2xl shadow-[0_2px_15_rgba(0,0,0,0.04)] p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/10">
-                        <Search className="text-tc-text-sec w-5 h-5 flex-shrink-0" />
+                    <div className="h-[56px] flex items-center bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/5 focus-within:bg-white">
+                        <Search className="text-tc-text-sec/60 w-5 h-5 flex-shrink-0" />
                         <input
                             type="text"
                             placeholder={t.searchDiscoveryPlaceholder || "Search spots, cities..."}
-                            className="flex-1 bg-transparent border-none focus:ring-0 text-[15px] py-1.5 px-3 text-tc-text-main placeholder:text-tc-text-sec/50 font-medium outline-none min-w-0"
+                            className="flex-1 bg-transparent border-none focus:ring-0 text-[15px] py-1.5 px-3 text-tc-text-main placeholder:text-tc-text-sec/40 font-medium outline-none min-w-0"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -117,20 +118,20 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                 </div>
 
                 {/* City Shortcuts (Emerald Canopy Spec: 64px, 10px Bold text) */}
-                <div className="flex gap-4 overflow-x-auto no-scrollbar mt-10 pb-4 justify-between md:justify-center md:gap-10">
+                <div className="flex gap-4 overflow-x-auto no-scrollbar mt-12 pb-4 justify-between md:justify-center md:gap-10">
                     {filteredCities.map((city) => (
                         <button
                             key={city.id}
                             onClick={() => onSelectCity(city.id)}
                             className="flex-shrink-0 flex flex-col items-center gap-3 group snap-start"
                         >
-                            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-transparent group-focus-within:border-tc-primary group-active:border-tc-primary transition-all shadow-sm group-hover:shadow-md relative">
+                            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-transparent group-focus-within:border-tc-primary group-active:border-tc-primary transition-all shadow-sm group-hover:shadow-md relative bg-gray-50">
                                 <img
                                     src={cityImages[city.id] || "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=400"}
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                     alt={city.label}
                                 />
-                                <div className="absolute inset-0 bg-tc-primary/5 group-hover:bg-transparent transition-colors" />
+                                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
                             </div>
                             <span className="text-[10px] font-bold text-tc-text-sec uppercase tracking-wider group-hover:text-tc-primary transition-colors">
                                 {city.labelEn}
@@ -143,20 +144,21 @@ export const CityPicker: React.FC<CityPickerProps> = ({
             {!isSelectionOnly && (
                 <>
                     {/* Canvas Top Picks */}
-                    <div className="mt-8 px-5">
-                        <div className="flex items-center justify-between mb-5 px-1 border-b border-tc-border/30 pb-3">
+                    <div className="mt-10 px-5">
+                        <div className="flex items-center justify-between mb-6 px-1 border-b border-gray-100 pb-4">
                             <div className="flex items-center gap-2">
-                                <Sparkles className="text-tc-primary w-5 h-5" />
-                                <h2 className="text-lg font-bold text-tc-text-main tracking-tight">
+                                <div className="w-8 h-8 rounded-full bg-tc-primary/5 flex items-center justify-center">
+                                    <Sparkles className="text-tc-primary w-4 h-4" />
+                                </div>
+                                <h2 className="text-lg font-black text-tc-text-main tracking-tight italic">
                                     Canvas Top Picks
                                 </h2>
                             </div>
                             <button
                                 onClick={() => setShowAllTopSpots(!showAllTopSpots)}
-                                className="flex items-center gap-1 text-[11px] font-semibold text-tc-text-sec hover:text-tc-primary transition-colors tracking-wider"
+                                className="flex items-center gap-1 text-[11px] font-black text-tc-text-sec uppercase tracking-widest"
                             >
                                 {showAllTopSpots ? 'LESS' : 'MORE'}
-                                <ChevronRight size={14} className={`ml-1 transition-transform ${showAllTopSpots ? 'rotate-90' : ''}`} />
                             </button>
                         </div>
 
@@ -170,33 +172,32 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                     onClick={() => onSelectItem(spot, 'discovery')}
                                     className={`text-left group flex flex-col snap-center ${showAllTopSpots ? 'w-full' : 'w-[142px] md:w-[189.33px] flex-shrink-0'}`}
                                 >
-                                    <div className="relative aspect-[3/4] rounded-[32px] overflow-hidden bg-white shadow-sm group-hover:shadow-[0_15px_30px_rgba(13,99,27,0.08)] transition-all duration-500 group-hover:-translate-y-1 border border-tc-border/20">
+                                    <div className="relative aspect-[3/4] rounded-[32px] overflow-hidden bg-gray-50 shadow-sm group-hover:shadow-[0_15px_45px_rgba(0,0,0,0.08)] transition-all duration-500 group-hover:-translate-y-1.5 border border-gray-100/50">
                                         <img
                                             src={spot.coverImage || (spot.image?.startsWith('http') ? spot.image : "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800")}
                                             alt={spot.title}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
                                         {/* TOP Badge (Refined: Image 2 Style - Green Pill) */}
-                                        <div className="absolute top-3 left-3 z-20">
-                                            <div className="px-3 py-0.5 bg-[#0D631B] rounded-full shadow-sm flex items-center gap-1 border border-white/20">
-                                                <span className="text-[9px] font-black text-white uppercase tracking-tighter">TOP</span>
-                                                <span className="text-[10px] font-black text-white leading-none">{String(idx + 1).padStart(2, '0')}</span>
+                                        <div className="absolute top-4 left-4 z-20">
+                                            <div className="px-3 py-1 bg-[#0D631B] rounded-full shadow-lg border border-white/20">
+                                                <span className="text-[10px] font-black text-white uppercase tracking-tighter"># {idx + 1}</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="mt-5 px-3">
-                                        <div className="flex items-center gap-3 text-[11px] font-bold text-tc-text-sec mb-2 tracking-wide">
-                                            <div className="flex items-center gap-1">
-                                                <Heart size={12} className={`transition-colors ${likedSpots.has(spot.id) ? 'fill-tc-primary text-tc-primary' : 'fill-tc-primary text-tc-primary opacity-60'}`} />
-                                                <span className="text-tc-text-sec">{23 + idx}.{(idx * 7) % 9}K</span>
+                                        <div className="flex items-center gap-3 text-[10px] font-black text-tc-text-sec/60 mb-2 tracking-widest uppercase">
+                                            <div className="flex items-center gap-1.5">
+                                                <Heart size={10} className={`transition-colors ${likedSpots.has(spot.id) ? 'fill-tc-primary text-tc-primary' : 'text-tc-primary/40'}`} />
+                                                <span>{23 + idx}.{(idx * 7) % 9}K</span>
                                             </div>
-                                            <div className="flex items-center gap-1">
-                                                <Star size={12} className="fill-amber-400 text-amber-400" />
-                                                <span className="text-tc-text-sec">4.{9 - idx}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <Star size={10} className="fill-amber-400 text-amber-400" />
+                                                <span>4.{9 - idx}</span>
                                             </div>
                                         </div>
-                                        <h3 className="text-[15px] font-heading text-tc-text-main line-clamp-2 leading-[1.1] group-hover:text-tc-primary transition-colors tracking-tight">
+                                        <h3 className="text-[16px] font-bold text-tc-text-main line-clamp-2 leading-[1.2] group-hover:text-tc-primary transition-colors tracking-tight">
                                             {(lang === 'zh' ? spot.marketingTitle || spot.title : spot.marketingTitleEn || spot.titleEn) || spot.title}
                                         </h3>
                                     </div>
@@ -206,31 +207,33 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     </div>
 
                     {/* Curated For You (Templates) */}
-                    <div className="mt-8 px-5 pb-8">
-                        <div className="flex items-center justify-between mb-4 px-1 border-b border-tc-border/30 pb-3">
+                    <div className="mt-10 px-5 pb-8">
+                        <div className="flex items-center justify-between mb-6 px-1 border-b border-gray-100 pb-4">
                             <div className="flex items-center gap-2">
-                                <Zap className="text-tc-primary w-4 h-4 fill-tc-primary" />
-                                <h3 className="text-lg font-bold tracking-tight text-tc-text-main">
+                                <div className="w-8 h-8 rounded-full bg-tc-primary/5 flex items-center justify-center">
+                                    <Zap className="text-tc-primary w-4 h-4 fill-tc-primary" />
+                                </div>
+                                <h3 className="text-lg font-black tracking-tight text-tc-text-main">
                                     Curated For You
                                 </h3>
                             </div>
                             <button
                                 onClick={() => setShowAllTemplates(!showAllTemplates)}
-                                className="text-[10px] font-bold text-tc-primary hover:underline transition-colors uppercase tracking-wider"
+                                className="text-[11px] font-black text-tc-primary hover:text-tc-primary/70 transition-colors uppercase tracking-widest"
                             >
-                                VIEW ALL
+                                ALL
                             </button>
                         </div>
 
-                        {/* Filter Pills */}
-                        <div className="flex gap-2 mb-6 overflow-x-auto no-scrollbar px-1">
+                        {/* Filter Pills (White Canopy Spec: bg-gray-50 for unselected) */}
+                        <div className="flex gap-2.5 mb-8 overflow-x-auto no-scrollbar px-1">
                             {filters.map(f => (
                                 <button
                                     key={f.id}
                                     onClick={() => setActiveFilter(f.id)}
-                                    className={`flex-shrink-0 px-5 py-2.5 rounded-full text-[10px] font-semibold uppercase tracking-wider transition-all border border-transparent ${activeFilter === f.id
-                                        ? 'bg-tc-primary text-white shadow-md'
-                                        : 'bg-white text-tc-neutral shadow-sm hover:border-gray-200'
+                                    className={`flex-shrink-0 px-6 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all border ${activeFilter === f.id
+                                        ? 'bg-tc-primary text-white shadow-lg border-tc-primary'
+                                        : 'bg-gray-50 text-tc-neutral/70 border-gray-100 hover:border-gray-200 shadow-sm'
                                         }`}
                                 >
                                     {f.label}
@@ -286,11 +289,11 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     </div>
 
                     {/* [NEW] Global Cultural Flashcards (文化閃卡) - Bottom of Page Version */}
-                    <div className="mt-8 px-5 pb-12 overflow-hidden">
-                        <div className="flex items-center justify-between mb-5 px-1 border-b border-tc-border/30 pb-3">
+                    <div className="mt-12 px-5 pb-12 overflow-hidden">
+                        <div className="flex items-center justify-between mb-8 px-1">
                             <div className="flex items-center gap-2">
                                 <Sparkles className="text-tc-primary w-5 h-5" />
-                                <h2 className="text-lg font-bold text-tc-text-main tracking-tight uppercase">
+                                <h2 className="text-xl font-black text-tc-text-main tracking-tight uppercase">
                                     {lang === 'zh' ? '在地奇景' : 'Local Wonders'}
                                 </h2>
                             </div>
@@ -299,15 +302,62 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         <div className="flex gap-4 overflow-x-auto no-scrollbar px-1 pb-6 snap-x snap-mandatory">
                             {CULTURAL_WONDERS.map((wonder: CulturalInsight) => (
                                 <div key={wonder.id} className="snap-center">
-                                    <CulturalInsightCard insight={wonder} lang={lang} />
+                                    <CulturalInsightCard 
+                                        insight={wonder} 
+                                        lang={lang} 
+                                        isCompact={true}
+                                        onClick={() => setSelectedInsight(wonder)}
+                                    />
                                 </div>
                             ))}
-                            {/* Space for scrolling */}
-                            <div className="min-w-[20px] h-full shrink-0" />
+                            <div className="min-w-[40px] h-full shrink-0" />
                         </div>
                     </div>
                 </>
             )}
+
+            {/* Cultural Insight Detail Drawer (iOS Safe Area Refined) */}
+            <AnimatePresence>
+                {selectedInsight && (
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setSelectedInsight(null)}
+                            className="fixed inset-0 bg-black/60 z-[200] backdrop-blur-sm"
+                        />
+                        {/* Drawer Content */}
+                        <motion.div
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                            className="fixed inset-x-0 bottom-0 z-[201] bg-tc-bg/95 backdrop-blur-xl rounded-t-[40px] shadow-2xl max-h-[85vh] overflow-hidden flex flex-col"
+                        >
+                            {/* Drawer Handle */}
+                            <div className="flex justify-center p-4" onClick={() => setSelectedInsight(null)}>
+                                <div className="w-12 h-1.5 bg-tc-primary/10 rounded-full" />
+                            </div>
+
+                            <div className="overflow-y-auto px-8 pb-16 flex-1">
+                                {/* Using the same card but in FULL mode inside the drawer */}
+                                <div className="max-w-md mx-auto py-4">
+                                    <CulturalInsightCard 
+                                        insight={selectedInsight} 
+                                        lang={lang} 
+                                        isCompact={false} 
+                                    />
+                                    
+                                    {/* Additional Spacer for IOS Safe Area Indicator - Increased for breathing room */}
+                                    <div className="h-[env(safe-area-inset-bottom,60px)] w-full mt-4" />
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
