@@ -334,24 +334,26 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                             animate={{ y: 0 }}
                             exit={{ y: "100%" }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="fixed inset-x-0 bottom-0 z-[201] bg-tc-bg/95 backdrop-blur-xl rounded-t-[40px] shadow-2xl max-h-[85vh] overflow-hidden flex flex-col"
+                            className="fixed inset-x-0 bottom-0 z-[201] rounded-t-[40px] shadow-2xl max-h-[85vh] overflow-hidden flex flex-col transition-colors duration-500"
+                            style={{ backgroundColor: selectedInsight.backgroundColor || '#F3E8FF' }}
                         >
                             {/* Drawer Handle */}
-                            <div className="flex justify-center p-4" onClick={() => setSelectedInsight(null)}>
-                                <div className="w-12 h-1.5 bg-tc-primary/10 rounded-full" />
+                            <div className="flex justify-center p-4 cursor-grab active:cursor-grabbing" onClick={() => setSelectedInsight(null)}>
+                                <div className="w-12 h-1.5 bg-black/10 rounded-full" />
                             </div>
 
-                            <div className="overflow-y-auto px-8 pb-16 flex-1">
-                                {/* Using the same card but in FULL mode inside the drawer */}
-                                <div className="max-w-md mx-auto py-4">
+                            <div className="overflow-y-auto px-8 md:px-12 pb-16 flex-1 no-scrollbar">
+                                {/* Immersive Full Bleed Card */}
+                                <div className="max-w-3xl mx-auto pt-4 pb-8">
                                     <CulturalInsightCard 
                                         insight={selectedInsight} 
                                         lang={lang} 
                                         isCompact={false} 
+                                        isFullBleed={true}
                                     />
                                     
-                                    {/* Additional Spacer for IOS Safe Area Indicator - Increased for breathing room */}
-                                    <div className="h-[env(safe-area-inset-bottom,60px)] w-full mt-4" />
+                                    {/* Additional Spacer for IOS Safe Area Indicator */}
+                                    <div className="h-[env(safe-area-inset-bottom,40px)] w-full mt-4" />
                                 </div>
                             </div>
                         </motion.div>
