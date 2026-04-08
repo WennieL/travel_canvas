@@ -1600,6 +1600,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Disappearing legacy',
                 story: '比起一般的薄皮蛋餅，粉漿蛋餅更厚實Q彈。搭配甜辣醬，那是老台北人記憶中的味道。',
                 storyEn: 'Thicker and chewier than normal pancakes. Paired with sweet chili sauce, it\'s a nostalgia trip for locals.'
+            },
+            {
+                id: 'must-do',
+                label: '真芳紅茶牛奶',
+                labelEn: 'Black Tea Milk',
+                summary: '牧場鮮乳與老店紅茶',
+                summaryEn: 'Farm milk & legacy tea',
+                story: '選用南部老字號紅茶與小農鮮乳，比例抓得極好，微甜不膩。這不只是一杯飲料，更是許多台北人開啟早晨的儀式感。',
+                storyEn: 'Expertly balanced southern legacy tea and small-farm milk. Smooth, slightly sweet, and a classic Taipei breakfast ritual.'
+            },
+            {
+                id: 'trap',
+                label: '售罄陷阱',
+                labelEn: 'Sold Out Trap',
+                summary: '十點後的空窗',
+                summaryEn: 'Gone after 10:30',
+                story: '真芳生意極好，尤其是週末。建議在 10:00 前抵達，否則招牌的肉蛋吐司或是熱門食材很可能已經售罄，空手而回的機率很高。',
+                storyEn: 'Zhen Fang is popular, especially on weekends. Arrive before 10 AM, or you might find the best sandwiches sold out.'
             }
         ]
     },
@@ -1642,6 +1660,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Hidden soulmate',
                 story: '很多人只點麵，但這裡的粉蒸系列（排骨或大腸）才是老饕心中真正的精華。地瓜墊底吸滿了油脂香，絕對要點。',
                 storyEn: 'Many skip order just the noodles, but the steamed ribs on a bed of sweet potato are the true insider choice.'
+            },
+            {
+                id: 'must-do',
+                label: '酸菜靈魂',
+                labelEn: 'Pickled Greens',
+                summary: '麵碗裡的驚喜',
+                summaryEn: 'The flavor booster',
+                story: '紅燒湯頭固然強，但桌上的免費酸菜才是老饕的關鍵。建議先喝原位湯頭，再加入大把酸菜，那種鹹香微辣的對比感會讓整碗麵提升一個層次。',
+                storyEn: 'The broth is great, but the free pickled greens are key. Try the broth original first, then add greens for a savory, spicy punch.'
+            },
+            {
+                id: 'trap',
+                label: '排隊熱度',
+                labelEn: 'Queue Trap',
+                summary: '週末的等待考驗',
+                summaryEn: 'Weekend wait',
+                story: '這家店是永康街的神級排隊名店。週末正餐時段排隊 45 分鐘是常態。建議提早在 11:30 前或下午 16:30 前抵達，能大幅縮短等待時間。',
+                storyEn: 'Wait times can hit 45 mins. Arrive before 11:30 AM or around 4:30 PM to bypass the peak weekend dinner rush.'
             }
         ]
     },
@@ -1684,6 +1720,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Song Dynasty Garden',
                 story: '參觀完本館，憑票根可以免費進入至善園。這裡仿宋代設計，有小橋流水與黑天鵝，是消化文化衝擊的最佳靜謐空間。',
                 storyEn: 'Use your ticket for free entry to Zhishan Garden. A Song-style retreat with black swans—perfect for post-museum reflection.'
+            },
+            {
+                id: 'must-do',
+                label: '朕知道了',
+                labelEn: 'Imperial Gifts',
+                summary: '最有趣的文創',
+                summaryEn: 'Witty souvenirs',
+                story: '逛完展覽一定要去禮品店。那款爆紅的「朕知道了」紙膠帶與各種仿古文具，把深奧的史籍轉化成趣味的日常用品。',
+                storyEn: 'Visit the gift shop for the viral "I know" (Imperial Edict) tape and other clever stationary that turns history into daily fun.'
+            },
+            {
+                id: 'trap',
+                label: '審美疲勞',
+                labelEn: 'Fatigue Trap',
+                summary: '不要試圖一日逛完',
+                summaryEn: 'Museum fatigue',
+                story: '故宮藏品多達 70 萬件，每三個月更換一次。不要試圖在一天內看完所有展廳，會造成極大的身體與美學疲勞。建議挑選 2-3 個重點展區深度參觀。',
+                storyEn: 'With 700k items, museum fatigue is real. Don\'t try to see everything at once. Pick 2-3 galleries and enjoy them deeply instead.'
             }
         ],
         insiderTip: {
@@ -1735,6 +1789,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Framing architecture',
                 story: '走到廣場兩旁的迴廊大拱門，用拱門當作框架拍攝主建築，可以拍出極具大氣與空間感的對稱構圖。',
                 storyEn: 'Use the massive corridor arches to frame the main hall for stunning, symmetrical compositions.'
+            },
+            {
+                id: 'must-do',
+                label: '階梯密碼',
+                labelEn: 'The Steps',
+                summary: '89 階的崇敬',
+                summaryEn: '89 years of life',
+                story: '通往主廳的高大大理石階梯共有 89 階，代表蔣公享壽 89 歲。每一段階梯的寬度與斜率都經過精確計算，步行其上更顯莊嚴。',
+                storyEn: 'There are exactly 89 steps leading to the main hall, representing the years of life. The incline is designed for solemnity.'
+            },
+            {
+                id: 'trap',
+                label: '高溫廣場',
+                labelEn: 'Heat Trap',
+                summary: '正午的太陽考驗',
+                summaryEn: '广场上的烈日',
+                story: '自由廣場非常空曠且缺乏遮蔭。夏季正午時分溫度極高，站在大理石板上會有明顯熱浪。建議午後 16:00 後前來，光線也較柔和。',
+                storyEn: 'Liberty Square is vast and shadeless. Summer midday heat is extreme. Visit after 4 PM for better comfort and softer photography lighting.'
             }
         ]
     },
@@ -1777,6 +1849,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Historical escape',
                 story: '圓山隱藏著東、西兩條神祕地道。東側地道有長達 67 公尺的滑梯（現已收費預約參觀）。那是為了當年萬一發生戰爭，元首能快速撤離的特殊設計。',
                 storyEn: 'The hotel hides two secret tunnels. The west one features a 67m long escape slide—a remnant of the Cold War era (Reservation required).'
+            },
+            {
+                id: 'must-do',
+                label: '龍的宮殿',
+                labelEn: 'Dragon Palace',
+                summary: '24K 金的金龍',
+                summaryEn: 'Golden Dragon',
+                story: '在金龍廳有一座曾躲過火災、全身貼滿 24K 純金箔的金龍噴泉。這條龍已經陪伴圓山超過半世紀，是飯店公認的財位守護神與參觀熱點。',
+                storyEn: 'In the Golden Dragon Hall sits a fountain covered in 24K gold leaf. It survived historical fires and remains the hotel\'s guardian.'
+            },
+            {
+                id: 'trap',
+                label: '滑梯預約',
+                labelEn: 'Slide Booking',
+                summary: '不要直接跑過來',
+                summaryEn: 'Booking required',
+                story: '西密道的「神祕逃生滑梯」非常熱門，且有嚴格的人口管制。如果沒有提前在官網預約導覽行程，現場幾乎不可能排到位置。',
+                storyEn: 'The secret escape slide is very popular. You must book the guided tour online in advance; walk-ins are rarely accommodated.'
             }
         ],
         insiderTip: {
@@ -1828,6 +1918,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Michelin in the alley',
                 story: '很多人只去主幹道。但巷子裡的「海友」是連續幾年獲得米其林推薦的名店。在涼冷的夜晚來一碗黑澄澄的補湯，非常過癮。',
                 storyEn: 'Skip the main street traps. "Hai Yu" in the side alley is a multi-year Michelin mention with soul-warming herbal soup.'
+            },
+            {
+                id: 'must-eat',
+                label: '地下美食街',
+                labelEn: 'Food Court',
+                summary: '夏天的避暑勝地',
+                summaryEn: 'A/C Comfort',
+                story: '如果怕熱，基河路上的地下美食街有強冷氣。那裡彙集了生炒花枝、大餅包小餅等經典老攤，休息一下吃點甜品最合適。',
+                storyEn: 'The underground floor on Jihe Rd offers strong A/C and gathers classics like squid soup and localized sweets in one spot.'
+            },
+            {
+                id: 'trap',
+                label: '人潮陷阱',
+                labelEn: 'Crowd Trap',
+                summary: '週末的神隱少女式人潮',
+                summaryEn: 'Peak crowd warning',
+                story: '週末 20:00 後的士林夜市人潮極度擁擠。請務必注意隨身財務。如果帶著小孩或長輩，建議改去附近的寧夏夜市，或是提早在 17:30 入場。',
+                storyEn: 'Peak weekend crowds are intense. Keep an eye on your belongings. If traveling with seniors or kids, consider earlier entry at 5:30 PM.'
             }
         ],
         insiderTip: {
