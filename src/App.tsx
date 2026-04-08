@@ -294,17 +294,17 @@ export function App() {
     } = actions;
 
     if (showLanding) return <LandingPage onStart={(templateId?: string) => {
+        setShowLanding(false);
         if (templateId) {
-            setShowLanding(false);
             const template = TEMPLATES.find(t => t.id === templateId);
             if (template) setTimeout(() => applyTemplate(template), 100);
         } else {
-            setShowLanding(false);
-            // Show onboarding for first-time users
+            // Landing on Discovery instead of showing the wizard/canvas immediately
+            setViewMode('discovery');
+            
+            // Still show onboarding slides if first-time user for context
             if (!localStorage.getItem('tc_onboarding_done')) {
                 setShowOnboarding(true);
-            } else if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
-                ui.setShowCheckIn(true);
             }
         }
     }} lang={lang} toggleLang={toggleLang} />;
