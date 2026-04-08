@@ -964,5 +964,115 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             }
         }
+    },
+    // ── 台北深夜生存指南 ──
+    {
+        id: 'tw-taipei-night-survival',
+        name: '台北深夜生存指南',
+        nameEn: 'Taipei Late Night Survival Guide',
+        title: '從最後一班捷運到清晨豆漿：台北最迷幻的深夜視角',
+        titleEn: 'From Last Train to Dawn Soy Milk: Taipei\'s Midnight Pulse',
+        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
+        author: '台北深夜攝影師',
+        authorEn: 'Taipei Night Photographer',
+        authorId: 'c-tw-night',
+        region: 'taipei',
+        tags: ['🌙 深夜限定', '🔥 入口即化', '💎 隱藏酒吧'],
+        tagsEn: ['Late Night', 'Foodie', 'Speakeasy'],
+        travelStyle: ['微醺', '攝影', '老派'],
+        tier: 'creator',
+        price: 0.99,
+        isLocked: true,
+        vibes: [
+            { tag: '#霓虹台北', color: 'bg-indigo-100 text-indigo-800' },
+            { tag: '#生存指南', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#微醺夜行', color: 'bg-purple-100 text-purple-800' }
+        ],
+        coverStory: {
+            quote: '「當捷運收班，才是這座城市靈魂跑出來玩的時候。」',
+            quoteEn: '"When the MRT stops, that\'s when the city\'s soul comes out to play."',
+            description: '這份清單不適合早睡的人。我們從寧夏夜市的老味道開始，穿過侯孝賢鏡頭下的藍色隧道，最後在清晨五點的豆漿店裡，看著城市的運轉重新啟動。',
+            descriptionEn: 'Not for early birds. We start with Ningxia\'s heritage flavors, traverse Hou Hsiao-hsien\'s cinematic blue tunnel, and end at a 5 AM soy milk stall, watching the city reboot.',
+            authorLabel: '深夜行程專家推薦',
+            authorLabelEn: 'Recommended by Nightlife Expert'
+        },
+        authorStory: {
+            zh: '我在台北拍了十年的深夜街頭。這座城市在凌晨兩點展現出的那種極度安全與迷幻的交織，是我在世界各地其他城市都找不到的。這份清單不只是行程，更是一場與台北靈魂的私密對話。',
+            en: 'Been shooting Taipei streets at night for 10 years. The mix of total safety and psychedelic vibe at 2 AM is unique to this city. This is more than a list; it\'s a private talk with Taipei\'s soul.'
+        },
+        faq: [
+            {
+                title: '深夜交通怎麼解決？',
+                titleEn: 'Midnight Transport?',
+                text: '捷運雖然收班了，但台北的計程車與多元計程車非常普及且安全。建議在 APP 上叫車，價格透明且有紀錄。',
+                textEn: 'MRT closes, but taxis and ride-sharing are everywhere and safe. Use apps for transparency.'
+            }
+        ],
+        duration: 1,
+        rating: 5.0,
+        copiedCount: 42,
+        highlights: { days: 1, spots: 6, tips: 5, rating: 5.0, usageCount: 42 },
+        dayPreviews: [
+            { day: 1, summary: '寧夏夜市 → 中山陸橋 → 誠品南西 → 菱玖洋服 → 林東芳牛肉麵 → 永和豆漿' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '台北深夜生存哲學',
+                themeEn: 'Taipei Midnight Philosophy',
+                themeEmoji: '🌃',
+                morning: [],
+                afternoon: [],
+                evening: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n6')!, 
+                        instanceId: 'ns-1', 
+                        itemType: 'spot',
+                        startTime: '20:30', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                night: [
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n1')!, 
+                        instanceId: 'ns-2', 
+                        itemType: 'spot',
+                        startTime: '22:30', 
+                        arrivalTransport: 'public',
+                        isLocked: true 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n4')!, 
+                        instanceId: 'ns-3', 
+                        itemType: 'spot',
+                        startTime: '23:30', 
+                        arrivalTransport: 'walk' 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n3')!, 
+                        instanceId: 'ns-4', 
+                        itemType: 'spot',
+                        startTime: '01:00', 
+                        arrivalTransport: 'public',
+                        isLocked: true 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n2')!, 
+                        instanceId: 'ns-5', 
+                        itemType: 'spot',
+                        startTime: '03:00', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n5')!, 
+                        instanceId: 'ns-6', 
+                        itemType: 'spot',
+                        startTime: '05:00', 
+                        arrivalTransport: 'public',
+                        isLocked: true 
+                    }
+                ],
+                accommodation: []
+            }
+        }
     }
 ];

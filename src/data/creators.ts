@@ -240,5 +240,19 @@ export const SAMPLE_CREATORS: Creator[] = [
         blogUrl: 'https://taipei-mountain.tw',
         role: '登山嚮導',
         roleEn: 'MOUNTAIN GUIDE'
+    },
+    {
+        id: 'c-tw-night',
+        name: '台北深夜攝影師',
+        nameEn: 'Taipei Night Photographer',
+        avatar: '🌃',
+        description: '專門捕捉台北凌晨兩點的迷幻與寂靜。對他來說，這座城市在捷運收班後才真正開始呼吸。',
+        descriptionEn: 'Capturing the psychedelic silence of Taipei at 2 AM. To him, the city starts breathing once the MRT closes.',
+        followers: 18600,
+        tags: ['攝影', '深夜', '微醺'],
+        tagsEn: ['Photography', 'Midnight', 'Vibe'],
+        blogUrl: 'https://taipei-night-photo.tw',
+        role: '城市夜行者',
+        roleEn: 'URBAN NIGHT WALKER'
     }
 ];

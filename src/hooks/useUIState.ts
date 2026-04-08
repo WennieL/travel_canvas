@@ -42,6 +42,11 @@ export const useUIState = () => {
     const [activeSpotId, setActiveSpotId] = useState<string | null>(null);
     const [activeTemplateId, setActiveTemplateId] = useState<string | null>(null);
     const [activeCreatorId, setActiveCreatorId] = useState<string | null>(null);
+    const [purchasedTemplateIds, setPurchasedTemplateIds] = useState<string[]>([]);
+
+    const unlockTemplate = useCallback((id: string) => {
+        setPurchasedTemplateIds(prev => prev.includes(id) ? prev : [...prev, id]);
+    }, []);
 
     // Sidebar States
     const [activeTab, setActiveTab] = useState<'assets' | 'templates' | 'budget' | 'checklist' | 'projects'>('assets');
@@ -104,5 +109,6 @@ export const useUIState = () => {
         activeSpotId, setActiveSpotId,
         activeTemplateId, setActiveTemplateId,
         activeCreatorId, setActiveCreatorId,
+        purchasedTemplateIds, unlockTemplate,
     };
 };

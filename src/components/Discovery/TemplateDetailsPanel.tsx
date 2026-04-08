@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign, Bed, Moon, Home } from 'lucide-react';
+import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign, Bed, Moon, Home, Lock } from 'lucide-react';
 import { Template, LangType, TemplateStat, CulturalInsight, TemplateItem } from '../../types';
 import { SAMPLE_CREATORS, SAMPLE_ASSETS, CULTURAL_WONDERS } from '../../data';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
 import { motion, AnimatePresence } from 'framer-motion';
+import { TemplateUnlockModal } from '../Modals';
+import { useUI } from '../../contexts/UIContext';
+import { useApp } from '../../contexts/AppContext';
 
 // --- NEW COMPONENT: Timeline Insight Whisper ---
 const TimelineInsightWhisper: React.FC<{ insight: CulturalInsight, lang: LangType, onClick: () => void }> = ({ insight, lang, onClick }) => {
@@ -166,6 +169,11 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
+    const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+    const { purchasedTemplateIds, unlockTemplate } = useUI();
+    const { showToastMessage } = useApp();
+    
+    const isPurchased = template.isLocked ? purchasedTemplateIds.includes(template.id) : true;
     const resolvedCreator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
     
     // Virtual Creator Fallback (No Hardcode!)
@@ -485,8 +493,14 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
                         <EngagementSocialBlock
                             author={creator || null}
-                            primaryActionLabel={t.applyTemplate}
-                            onPrimaryAction={() => onApply(template)}
+                            primaryActionLabel={!isPurchased ? (lang === 'zh' ? `解鎖完整行程 ($0.99)` : `UNLOCK FULL ITINERARY ($0.99)`) : t.applyTemplate}
+                            onPrimaryAction={() => {
+                                if (!isPurchased) {
+                                    setShowPurchaseModal(true);
+                                } else {
+                                    onApply(template);
+                                }
+                            }}
                             onCreatorClick={onCreatorClick}
                             isFavorited={isFavorited}
                             onFavoriteClick={() => handleToggleFavoriteTemplate?.(template)}
@@ -546,8 +560,18 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
                                                 {/* RIGHT COLUMN: Clickable Card */}
                                                 <div
-                                                    onClick={() => onSpotClick?.({ ...item, id: item.id || `spot-${idx}`, images: item.images || [`https://images.unsplash.com/photo-${1500000000000 + (item.title?.length || 0) * 1234567}?auto=format&fit=crop&w=800&q=80`] })}
-                                                    className="flex-1 flex items-center gap-3 bg-white border border-[#E8EDE4] rounded-2xl p-3 shadow-[0_1px_6px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_14px_rgba(0,0,0,0.08)] hover:border-[#C8D5C0] active:border-[#4A7C59] active:shadow-[0_2px_8px_rgba(0,0,0,0.12)] active:scale-[0.99] cursor-pointer transition-all duration-200"
+                                                    onClick={() => {
+                                                        if (item.isLocked && !isPurchased) {
+                                                            showToastMessage(lang === 'zh' ? '🔒 此為神祕地點，請先解鎖完整行程以查看詳情。' : '🔒 This is a Secret Location. Please unlock the full itinerary to view details.', 'info');
+                                                            return;
+                                                        }
+                                                        onSpotClick?.({ ...item, id: item.id || `spot-${idx}`, images: item.images || [`https://images.unsplash.com/photo-${1500000000000 + (item.title?.length || 0) * 1234567}?auto=format&fit=crop&w=800&q=80`] });
+                                                    }}
+                                                    className={`flex-1 flex items-center gap-3 bg-white border border-[#E8EDE4] rounded-2xl p-3 shadow-[0_1px_6px_rgba(0,0,0,0.05)] transition-all duration-200 ${
+                                                        item.isLocked && !isPurchased 
+                                                            ? 'cursor-default opacity-80' 
+                                                            : 'hover:shadow-[0_4px_14px_rgba(0,0,0,0.08)] hover:border-[#C8D5C0] active:border-[#4A7C59] active:shadow-[0_2px_8px_rgba(0,0,0,0.12)] active:scale-[0.99] cursor-pointer'
+                                                    }`}
                                                 >
                                                     {/* Visual Thumbnail */}
                                                     <div className="w-[68px] h-[68px] rounded-xl bg-[#F7FBF0] overflow-hidden shrink-0">
@@ -574,12 +598,21 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                             {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
                                                         </div>
                                                         <h5 className="text-[15px] font-black text-[#181D17] leading-snug flex items-center gap-1">
-                                                            <span className="line-clamp-1">{lang === 'zh' ? item.title : (item.titleEn || item.title)}</span>
+                                                            <span className={`line-clamp-1 transition-all ${item.isLocked && !isPurchased ? 'blur-[3px] opacity-70 select-none' : ''}`}>
+                                                                {item.isLocked && !isPurchased 
+                                                                    ? (lang === 'zh' ? (item.marketingTitle || '🔒 神祕地點') : (item.marketingTitleEn || '🔒 Secret Location'))
+                                                                    : (lang === 'zh' ? item.title : (item.titleEn || item.title))}
+                                                            </span>
+                                                            {!isPurchased && item.isLocked && (
+                                                                <Lock size={12} className="text-amber-500 shrink-0" />
+                                                            )}
                                                             <ChevronRight size={12} className="shrink-0 opacity-30 group-hover:opacity-70 group-hover:translate-x-0.5 transition-all text-[#8E9285]" />
                                                         </h5>
                                                         {(item.description || item.descriptionEn) && (
-                                                            <p className="text-[11.5px] text-[#4A5548] mt-2 line-clamp-2 leading-[1.6] opacity-60">
-                                                                {lang === 'zh' ? item.description : (item.descriptionEn || item.description)}
+                                                            <p className={`text-[11.5px] text-[#4A5548] mt-2 line-clamp-2 leading-[1.6] opacity-60 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-30 select-none' : ''}`}>
+                                                                {item.isLocked && !isPurchased
+                                                                    ? (lang === 'zh' ? '這是一個付費解鎖後才能查看的獨家在地推薦。' : 'This is an exclusive local recommendation available after unlocking.')
+                                                                    : (lang === 'zh' ? item.description : (item.descriptionEn || item.description))}
                                                             </p>
                                                         )}
                                                     </div>
@@ -607,8 +640,14 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
                                 <EngagementSocialBlock
                                     author={creator || null}
-                                    primaryActionLabel={t.applyTemplate}
-                                    onPrimaryAction={() => onApply(template)}
+                                    primaryActionLabel={!isPurchased ? (lang === 'zh' ? `解鎖完整行程 ($0.99)` : `UNLOCK FULL ITINERARY ($0.99)`) : t.applyTemplate}
+                                    onPrimaryAction={() => {
+                                        if (!isPurchased) {
+                                            setShowPurchaseModal(true);
+                                        } else {
+                                            onApply(template);
+                                        }
+                                    }}
                                     onCreatorClick={onCreatorClick}
                                     lang={lang}
                                     variant="template"
@@ -689,6 +728,19 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                 </motion.div>
             </div>
         )}
+            {/* Premium Unlock Modal */}
+            <TemplateUnlockModal 
+                isOpen={showPurchaseModal}
+                onClose={() => setShowPurchaseModal(false)}
+                template={template}
+                lang={lang}
+                onConfirm={() => {
+                    unlockTemplate(template.id);
+                    setShowPurchaseModal(false);
+                    showToastMessage(lang === 'zh' ? '🔓 成功購買！感謝您的支持' : '🔓 Purchased! Thank you for your support', 'success');
+                }}
+                creator={creator}
+            />
         </>
     );
 };

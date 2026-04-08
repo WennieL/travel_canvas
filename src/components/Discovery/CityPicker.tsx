@@ -150,8 +150,8 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                 <div className="w-8 h-8 rounded-full bg-tc-primary/5 flex items-center justify-center">
                                     <Sparkles className="text-tc-primary w-4 h-4" />
                                 </div>
-                                <h2 className="text-lg font-black text-tc-text-main tracking-tight italic">
-                                    Canvas Top Picks
+                                <h2 className="text-lg font-black text-tc-text-main tracking-tight">
+                                    {lang === 'zh' ? '精選景點' : 'Canvas Top Picks'}
                                 </h2>
                             </div>
                             <button
@@ -181,7 +181,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                         {/* TOP Badge (Refined: Image 2 Style - Green Pill) */}
                                         <div className="absolute top-4 left-4 z-20">
                                             <div className="px-3 py-1 bg-[#0D631B] rounded-full shadow-lg border border-white/20">
-                                                <span className="text-[10px] font-black text-white uppercase tracking-tighter"># {idx + 1}</span>
+                                                <span className="text-[10px] font-black text-white uppercase tracking-tighter">TOP {idx + 1}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -214,7 +214,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                     <Zap className="text-tc-primary w-4 h-4 fill-tc-primary" />
                                 </div>
                                 <h3 className="text-lg font-black tracking-tight text-tc-text-main">
-                                    Curated For You
+                                    {lang === 'zh' ? '精選模板' : 'Curated For You'}
                                 </h3>
                             </div>
                             <button
@@ -302,9 +302,9 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         <div className="flex gap-4 overflow-x-auto no-scrollbar px-1 pb-6 snap-x snap-mandatory">
                             {CULTURAL_WONDERS.map((wonder: CulturalInsight) => (
                                 <div key={wonder.id} className="snap-center">
-                                    <CulturalInsightCard 
-                                        insight={wonder} 
-                                        lang={lang} 
+                                    <CulturalInsightCard
+                                        insight={wonder}
+                                        lang={lang}
                                         isCompact={true}
                                         onClick={() => setSelectedInsight(wonder)}
                                     />
@@ -345,13 +345,13 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                             <div className="overflow-y-auto px-8 md:px-12 pb-16 flex-1 no-scrollbar">
                                 {/* Immersive Full Bleed Card */}
                                 <div className="max-w-3xl mx-auto pt-4 pb-8">
-                                    <CulturalInsightCard 
-                                        insight={selectedInsight} 
-                                        lang={lang} 
-                                        isCompact={false} 
+                                    <CulturalInsightCard
+                                        insight={selectedInsight}
+                                        lang={lang}
+                                        isCompact={false}
                                         isFullBleed={true}
                                     />
-                                    
+
                                     {/* Additional Spacer for IOS Safe Area Indicator */}
                                     <div className="h-[env(safe-area-inset-bottom,40px)] w-full mt-4" />
                                 </div>

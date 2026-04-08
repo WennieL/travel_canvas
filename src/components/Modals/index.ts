@@ -15,3 +15,4 @@ export { ConfirmDialog } from './ConfirmDialog';
 export { StartPickerModal } from './StartPickerModal';
 export { MoveToDayModal } from './MoveToDayModal';
 export { CreateTripModal } from './CreateTripModal';
+export { TemplateUnlockModal } from './TemplateUnlockModal';
