@@ -40,9 +40,29 @@ export const TAINAN_SURVIVAL: SurvivalGuide = {
     ]
 };
 
+// [NEW] Kaohsiung Placeholder Guide
+export const KAOHSIUNG_SURVIVAL: SurvivalGuide = {
+    regionId: 'kaohsiung',
+    topics: [
+        {
+            id: 'kaohsiung-light-rail',
+            icon: 'TramFront',
+            category: 'transport',
+            title: '高雄輕軌：最美的沿海風景',
+            titleEn: 'Kaohsiung Light Rail',
+            teaser: '港都最舒適的移動方式',
+            teaserEn: 'The most scenic way to move',
+            content: '高雄輕軌串聯了駁二、流行音樂中心與龍貓隧道。搭乘時記得進站與出站都要刷卡（悠遊卡、一卡通、icash 2.0 均可）。如果你是為了拍照，下午三點到五點的陽光最適合拍攝愛河灣的波光粼粼。',
+            contentEn: 'The Light Rail connects Pier-2, the Music Center, and the scenic Totoro Tunnel. Remember to tap in AND out at the platform (EasyCard, iPass, icash 2.0). For photographers, the 3-5 PM golden hour light is perfect for capturing Love River Bay.',
+            imageUrl: 'https://images.unsplash.com/photo-1596402184320-417d7178b2cd?auto=format&fit=crop&q=80&w=800'
+        }
+    ]
+};
+
 export const ALL_SURVIVAL_GUIDES: SurvivalGuide[] = [
     TAIWAN_SURVIVAL,
     TAIPEI_SURVIVAL,
     TAICHUNG_SURVIVAL,
-    TAINAN_SURVIVAL
+    TAINAN_SURVIVAL,
+    KAOHSIUNG_SURVIVAL
 ];

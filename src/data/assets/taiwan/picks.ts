@@ -28,7 +28,12 @@ export const TAIWAN_TOP_PICKS: Record<string, string[]> = {
         'tn-f1',   // Ninao Gelato
         'tn-f2',   // Yunong Pan-fried Buns
         'tn-h1',   // Lakeshore Hotel
-        'tn-a1',   // Duplicate for now to keep 5 spots if needed
+    ],
+    kaohsiung: [
+        'kh-a1',   // Pier-2 Art Center
+        'kh-a2',   // Cijin Rainbow Church
+        'kh-f1',   // Lao Jiang Milk Tea
+        'kh-h1',   // InterContinental Kaohsiung
     ]
 };
 

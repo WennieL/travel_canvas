@@ -92,6 +92,18 @@ export const REGIONS: RegionConfig[] = [
         currency: 'TWD',
         exchangeRate: 1,
     },
+    {
+        id: 'kaohsiung',
+        name: '高雄',
+        nameEn: 'Kaohsiung',
+        emoji: '🏗️',
+        continent: 'asia',
+        country: 'taiwan',
+        gradient: 'from-purple-500 via-indigo-500 to-blue-500',
+        heroEmoji: '🏙️',
+        currency: 'TWD',
+        exchangeRate: 1,
+    },
 
     // ── Oceania › Australia ────────────────────────────────
     {

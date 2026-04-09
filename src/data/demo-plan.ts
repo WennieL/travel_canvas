@@ -141,6 +141,20 @@ export const REGION_DEFAULT_CHECKLISTS: Record<Region, Record<string, ChecklistI
             { id: 'hl_3', text: 'Some Taroko trails need mountain entry permits', checked: false },
         ]
     },
+    kaohsiung: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'kh_1', text: '辦好一卡通或悠遊卡（輕軌必備）', checked: false },
+            { id: 'kh_2', text: '下載「高雄 iBus」APP', checked: false },
+            { id: 'kh_3', text: '準備墨鏡與遮陽帽（南台灣陽光強烈）', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'kh_1', text: 'Get an iPass or EasyCard (Essential for Light Rail)', checked: false },
+            { id: 'kh_2', text: 'Download "Kaohsiung iBus" app', checked: false },
+            { id: 'kh_3', text: 'Pack sunglasses and hat (Strong sun in Southern Taiwan)', checked: false },
+        ]
+    },
     all: { zh: DEFAULT_CHECKLIST.zh, en: DEFAULT_CHECKLIST.en }
 };
 
@@ -491,7 +505,7 @@ export const COUNTRY_FILTERS = [
     { id: 'all', label: '全部', labelEn: 'All', icon: '🌏' },
     { id: 'taiwan', label: '台灣', labelEn: 'Taiwan', icon: '🇹🇼' },
     // { id: 'japan', label: '日本', labelEn: 'Japan', icon: '🇯🇵' },
-    { id: 'australia', label: '澳洲', labelEn: 'Australia', icon: '🇦🇺' },
+    // { id: 'australia', label: '澳洲', labelEn: 'Australia', icon: '🇦🇺' },
 ];
 
 export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: string; icon: string }[]> = {
@@ -500,6 +514,7 @@ export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: 
         { id: 'tainan', label: '台南', labelEn: 'Tainan', icon: '🏮' },
         { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
         { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
+        { id: 'kaohsiung', label: '高雄', labelEn: 'Kaohsiung', icon: '🏗️' },
     ],
     /*
     japan: [
@@ -508,9 +523,11 @@ export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: 
         { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
     ],
     */
+    /*
     australia: [
         { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
     ],
+    */
 };
 
 // Legacy support - keep REGION_FILTERS for backwards compatibility
@@ -520,10 +537,11 @@ export const REGION_FILTERS: { id: Region; label: string; labelEn: string; icon:
     { id: 'tainan', label: '台南', labelEn: 'Tainan', icon: '🏮' },
     { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
     { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
+    { id: 'kaohsiung', label: '高雄', labelEn: 'Kaohsiung', icon: '🏙️' },
     // { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
     // { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
     // { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },
-    { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
+    // { id: 'melbourne', label: '墨爾本', labelEn: 'Melbourne', icon: '☕' },
 ];
 
 // 熱門標籤

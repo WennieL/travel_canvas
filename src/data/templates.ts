@@ -12,6 +12,7 @@ export const TEMPLATES: Template[] = [
     // ===== MELBOURNE TEMPLATES (Featured Core) =====
     {
         id: 'mel-classic-3d',
+        isHidden: true,
         name: '墨爾本初體驗 3 天 (經典旗艦版)',
         nameEn: 'Melbourne First Experience 3-Day (Classic)',
         title: '不只是市區：穿梭市場、巷弄與大自然',
@@ -126,6 +127,7 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'mel-family-2d',
+        isHidden: true,
         name: '不崩潰的墨爾本親子 2 天',
         nameEn: 'No-Stress Melbourne Family 2-Day',
         title: '大人放鬆、小孩放電的完美平衡',
@@ -218,6 +220,7 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'mel-coffee-nerd-1d',
+        isHidden: true,
         name: '墨爾本咖啡控 1 天 (巷弄老饕版)',
         nameEn: 'Melbourne Coffee Nerd 1-Day (Insider)',
         title: '不只是喝拿鐵：走入咖啡烘焙與職人精神',
@@ -983,7 +986,7 @@ export const TEMPLATES: Template[] = [
         price: 0,
         tier: 'official',
         copiedCount: 3450,
-        coverImage: 'file:///C:/Users/jecxu/.gemini/antigravity/brain/ee581ff1-0d9b-40e4-aa7c-32f892d07f63/taipei_classic_heritage_cover_1775620859378.png',
+        coverImage: 'https://images.unsplash.com/photo-1596402184320-417d7178b2cd?auto=format&fit=crop&q=80&w=1200',
         highlights: { days: 1, spots: 7, tips: 5, rating: 4.9, usageCount: 3450 },
         vibes: [
             { tag: '#初音台北', color: 'bg-teal-100 text-teal-800' },

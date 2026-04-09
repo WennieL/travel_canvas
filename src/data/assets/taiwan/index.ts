@@ -2,6 +2,7 @@ import { TAIPEI_ASSETS } from './taipei';
 import { TAINAN_ASSETS } from './tainan';
 import { HUALIEN_ASSETS } from './hualien';
 import { TAICHUNG_ASSETS } from './taichung';
+import { KAOHSIUNG_ASSETS } from './kaohsiung';
 import { TravelItem } from '../../types';
 
 export const TAIWAN_ASSETS: TravelItem[] = [
@@ -9,6 +10,7 @@ export const TAIWAN_ASSETS: TravelItem[] = [
     ...TAINAN_ASSETS,
     ...HUALIEN_ASSETS,
     ...TAICHUNG_ASSETS,
+    ...KAOHSIUNG_ASSETS,
 ];
 
-export { TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS };
+export { TAIPEI_ASSETS, TAINAN_ASSETS, HUALIEN_ASSETS, TAICHUNG_ASSETS, KAOHSIUNG_ASSETS };

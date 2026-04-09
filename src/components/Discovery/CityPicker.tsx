@@ -78,14 +78,14 @@ export const CityPicker: React.FC<CityPickerProps> = ({
 
     // City Avatar Fallbacks
     const cityImages: Record<string, string> = {
-        taipei: 'https://images.unsplash.com/photo-1598935898639-81586f7d2129?auto=format&fit=crop&q=80&w=400',
-        tainan: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&q=80&w=400',
+        taipei: 'https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&q=80&w=400',
+        tainan: 'https://images.unsplash.com/photo-1596402184320-417d7178b2cd?auto=format&fit=crop&q=80&w=400',
         taichung: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=80&w=400',
-        hualien: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400',
+        hualien: 'https://images.unsplash.com/photo-1517400508447-f8dd518b86db?auto=format&fit=crop&q=80&w=400',
         tokyo: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?auto=format&fit=crop&q=80&w=400',
         osaka: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=80&w=400',
         kyoto: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400',
-        melbourne: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&q=80&w=400',
+        kaohsiung: 'https://images.unsplash.com/photo-1571242352227-21397b203c62?auto=format&fit=crop&q=80&w=400',
     };
 
     return (
@@ -207,7 +207,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         }>
                             {topSpots.map((spot, idx) => (
                                 <button
-                                    key={spot.id}
+                                    key={`${spot.id}-${idx}`}
                                     onClick={() => onSelectItem(spot, 'discovery')}
                                     className={`text-left group flex flex-col snap-center ${showAllTopSpots ? 'w-full' : 'w-[142px] md:w-[189.33px] flex-shrink-0'}`}
                                 >
