@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { ChevronLeft, Sparkles, Compass, Star, Users } from 'lucide-react';
 import { Template, LangType, Region } from '../../types';
 import { TEMPLATES, CITY_FILTERS } from '../../data';
+import { TAIPEI_SURVIVAL } from '../../data/guides';
+import { SurvivalKit } from './SurvivalKit';
 
 interface CityHubProps {
     regionId: Region;
@@ -104,6 +106,18 @@ const CityHub: React.FC<CityHubProps> = ({
                     </div>
                 </div>
             </div>
+
+            {/* Survival Guide - For Taipei only for now */}
+            {regionId === 'taipei' && (
+                <SurvivalKit 
+                    guide={TAIPEI_SURVIVAL} 
+                    lang={lang} 
+                    title="TAIPEI INSIDER GUIDE"
+                    titleEn="TAIPEI INSIDER GUIDE"
+                    subtitle="台北內行指南"
+                    subtitleEn="Taipei Expert Nuances"
+                />
+            )}
 
             {/* Style Filters */}
             <div className="px-6 mb-10 overflow-x-auto scrollbar-hide">

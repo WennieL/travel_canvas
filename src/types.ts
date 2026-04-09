@@ -45,6 +45,25 @@ export interface ExpertStory {
     color?: string;     // custom accent color
 }
 
+// [NEW] Survival Guide Structure (Boutique Magazine Style)
+export interface SurvivalTopic {
+    id: string;
+    icon: string;       // Lucide icon name
+    title: string;
+    titleEn: string;
+    teaser: string;
+    teaserEn: string;
+    content: string;    // Full markdown content or structured text
+    contentEn: string;
+    category: 'transport' | 'finance' | 'connectivity' | 'culture';
+    imageUrl?: string;  // Magazine-style visual
+}
+
+export interface SurvivalGuide {
+    regionId: string;
+    topics: SurvivalTopic[];
+}
+
 export interface TravelItem {
     id: string;
     title: string;

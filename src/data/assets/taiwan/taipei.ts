@@ -987,39 +987,39 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         expertStories: [
             {
                 id: 'must-do',
-                label: '巨型阻尼球',
-                labelEn: 'The Damper',
-                summary: '看大樓如何呼吸',
-                summaryEn: 'How towers breathe',
-                story: '一定要去看那個金色的巨大圓球。它是世界上少數開放參觀的風阻尼器。在颱風或地震時，它就是讓 101 穩如泰山的守護神。',
-                storyEn: 'Don\'t miss the massive golden sphere. It\'s one of the few open-to-public wind dampers, keeping the tower steady during typhoons or quakes.'
+                label: '垂直旅行',
+                labelEn: 'Vertical Trip',
+                summary: '秒速 1014 公尺的脈動',
+                summaryEn: '1,014m per minute',
+                story: '這是全球最快的電梯之一。我的建議：進入電梯後別只顧著錄影，閉上眼感受那輕微的耳鳴與壓力的變化。當門打開，那一瞬間的台北全景會因為你的「盲測」而變得更加震撼。',
+                storyEn: 'One of the world\'s fastest elevators. My advice: Close your eyes and feel the G-force and ear pressure change. When the doors open, the Taipei panorama will hit you much harder after the sensory deprivation.'
+            },
+            {
+                id: 'must-eat',
+                label: '鼎泰豐小籠包',
+                labelEn: 'Din Tai Fung',
+                summary: '18 摺的工業奇蹟',
+                summaryEn: '18-fold miracle',
+                story: '就在 101 B1。大家都知道要排隊，但我的內行撇步是：先去取號碼牌，然後上去逛 101 或去 4 樓買精品，等到號碼快到時再回來。別在那裡傻站著浪費你寶貴的旅遊時間。',
+                storyEn: 'Located at B1. Everyone knows the queue is long. Insider tip: Get your number first, then go browse the mall or head to the 4F luxury floor. Don\'t waste your travel time standing in a hungry huddle.'
             },
             {
                 id: 'hidden',
-                label: '91樓戶外',
-                labelEn: '91F Outdoor',
-                summary: '感受高空強風',
-                summaryEn: 'Feel the high wind',
-                story: '如果天氣好，戶外平台會開放。站在 91 樓感受高空的風速，那種臨場感跟隔著玻璃看的感覺完全不同。你會發現 101 真的很高。',
-                storyEn: 'When weather permits, the outdoor deck opens. Feeling the wind at 390m is completely different from looking through glass.'
+                label: '巷弄攝影位',
+                labelEn: 'Secret Photo Alley',
+                summary: '市景與摩天的對比',
+                summaryEn: 'Urban Contrast',
+                story: '別只在門口自拍，那樣很像觀光客。導航到「松仁路 253 巷」。在那條平凡的巷弄中間，你會看到 101 巨大地聳立在傳統公寓之間。那是「老台北與新世界」交錯的最強構圖。',
+                storyEn: 'Don\'t take selfies at the base; it looks generic. Navigate to "Lane 253, Songren Rd." Looking through that humble alley, 101 towers over old apartments—the ultimate "Old vs. New" Taipei shot.'
             },
             {
                 id: 'trap',
-                label: '天氣陷阱',
-                labelEn: 'Weather Trap',
-                summary: '起霧就不要上去了',
-                summaryEn: 'Skip if foggy',
-                story: '上樓前先看螢幕的能見度百分比。如果台北起大霧，你上去看到的只會是一片白色牆壁。這時建議改去百貨區逛街，景色留給晴天。',
-                storyEn: 'Check visibility before buying tickets. If it\'s foggy, you\'ll see nothing but a white wall. Save the view for a clear day instead.'
-            },
-            {
-                id: 'hidden',
-                label: '巷弄中的101',
-                labelEn: 'Alley View',
-                summary: '竹村居酒屋巷弄',
-                summaryEn: 'Takemura Alley',
-                story: '離開 101 後，散步到松仁路 253 巷。站在竹村居酒屋門口，你會發現 101 剛好嵌在錯綜複雜的電線與窄巷中間，這是目前台北最紅的攝影點。',
-                storyEn: 'After 101, walk to Lane 253, Songren Rd. Stand by Takemura Izakaya and you\'ll see 101 perfectly framed by chaotic power lines and narrow alleys.'
+                label: '觀景台雲霧',
+                labelEn: 'Mist Trap',
+                summary: '白茫茫的 600 元',
+                summaryEn: 'The White-out',
+                story: '如果今天是陰雨天，千萬別上去觀景台。你會花 600 元台幣買票，然後上去看滿屋子的白霧。我的雷區標準：如果在平地看不到 101 的塔尖，那就果斷放棄觀景台，改去樓下的超市採買更有意義。',
+                storyEn: 'If it\'s rainy or foggy, stay floor-side. You\'ll pay $20 USD just to see white mist. My rule: If you can\'t see the spire from the ground, skip the observatory and spend that money on the gourmet supermarket at B1.'
             }
         ],
         insiderTip: {
@@ -1587,37 +1587,37 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 id: 'must-eat',
                 label: '肉蛋吐司',
                 labelEn: 'Meat & Egg',
-                summary: '炭火的溫度',
-                summaryEn: 'Charcoal warmth',
-                story: '真芳的招牌。手打肉排與香嫩煎蛋鋪在炭火烤過的吐司，那種微微的炭香味與美乃滋的平衡感，是台北人百吃不厭的經典。',
-                storyEn: 'The flagship. Hand-made pork patties and tender eggs on charcoal-toasted bread—a timeless Taipei morning staple.'
+                summary: '炭火出的焦香靈魂',
+                summaryEn: 'Charcoal-fired soul',
+                story: '這是真芳的鎮店之寶。手打肉排不是隨便說說，那種扎實感配上微焦的炭火吐司，才是真正的老台北厚實早餐。別被它簡單的外表騙了，那種美乃滋的黃金比例是別處學不來的。',
+                storyEn: 'The flagship. Hand-made pork patties meet perfectly charred toast. It looks simple, but that secret mayo-to-charcoal ratio is a Taipei morning legend.'
             },
             {
                 id: 'hidden',
-                label: '古早味粉漿蛋餅',
+                label: '粉漿蛋餅',
                 labelEn: 'Batter Pancake',
-                summary: '消失中的傳統口感',
-                summaryEn: 'Disappearing legacy',
-                story: '比起一般的薄皮蛋餅，粉漿蛋餅更厚實Q彈。搭配甜辣醬，那是老台北人記憶中的味道。',
-                storyEn: 'Thicker and chewier than normal pancakes. Paired with sweet chili sauce, it\'s a nostalgia trip for locals.'
+                summary: '老派的正宗Q彈',
+                summaryEn: 'Old-school chew',
+                story: '如果你習慣了超市那種薄脆蛋餅，真芳會顛覆你。這裡堅持古早味粉漿，口感極其Q彈且帶有飽足感。記得，一定要沾他們的甜辣醬，那才是老派靈魂。',
+                storyEn: 'Forget crispy thin wraps; this is the chewy, thick batter of old Taipei. Pair it with the sweet chili sauce for the authentic nostalgia trip.'
             },
             {
                 id: 'must-do',
                 label: '真芳紅茶牛奶',
                 labelEn: 'Black Tea Milk',
-                summary: '牧場鮮乳與老店紅茶',
-                summaryEn: 'Farm milk & legacy tea',
-                story: '選用南部老字號紅茶與小農鮮乳，比例抓得極好，微甜不膩。這不只是一杯飲料，更是許多台北人開啟早晨的儀式感。',
-                storyEn: 'Expertly balanced southern legacy tea and small-farm milk. Smooth, slightly sweet, and a classic Taipei breakfast ritual.'
+                summary: '南部混血的絕佳比例',
+                summaryEn: 'The Southern Blend',
+                story: '比起咖啡，我更推薦這杯。選用南部老牌紅茶茶葉，茶氣十足，加入小農鮮乳後依然能喝到茶香。這是極少數我願意在早餐店買第二次的奶茶。',
+                storyEn: 'Superior to their coffee. It uses a strong southern legacy tea that doesn\'t get drowned out by the farm milk. A rare 5-star breakfast milk tea.'
             },
             {
                 id: 'trap',
                 label: '售罄陷阱',
                 labelEn: 'Sold Out Trap',
-                summary: '十點後的空窗',
-                summaryEn: 'Gone after 10:30',
-                story: '真芳生意極好，尤其是週末。建議在 10:00 前抵達，否則招牌的肉蛋吐司或是熱門食材很可能已經售罄，空手而回的機率很高。',
-                storyEn: 'Zhen Fang is popular, especially on weekends. Arrive before 10 AM, or you might find the best sandwiches sold out.'
+                summary: '睡過頭就別來了',
+                summaryEn: 'The early bird rule',
+                story: '真芳不是那種可以讓你睡到十點再晃過來的店。尤其是週末，十點後熱門款通常已售罄。如果你想吃得優雅，九點前是最後底線，否則你只能在路邊看著賣完的牌子發愁。',
+                storyEn: 'Zhen Fang won\'t wait for late risers. Popular items often sell out by 10 AM. Arrive by 9 AM or risk staring at a "Sold Out" sign while hungry.'
             }
         ]
     },
@@ -1647,37 +1647,37 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 id: 'must-eat',
                 label: '紅燒半筋半肉',
                 labelEn: 'Spicy Tendon',
-                summary: '口感的極致層次',
-                summaryEn: 'Texture masterclass',
-                story: '建議點半筋半肉。筋煮得像果凍般滑嫩，肉卻依然保有纖維感。湯頭帶著微微的辛辣與豆瓣香，非常有層次。',
-                storyEn: 'Go for the mixed bowl. Jelly-like tendon meets textured meat in a broth rich with spicy bean paste.'
+                summary: '膠質與纖維的博弈',
+                summaryEn: 'Texture Masterclass',
+                story: '別點純肉，半筋半肉才是這間店的「靈魂」。这里的筋燉得接近果凍，肉卻依然保有大口吃肉的爽快感。湯頭後勁帶著豆瓣的辛香，那是半世紀的功力。',
+                storyEn: 'Skip the plain meat; half-tendon is the soul here. The tendon is jelly-soft while the beef stays bold. The spicy bean-paste finish is legendary.'
             },
             {
                 id: 'hidden',
                 label: '粉蒸排骨',
                 labelEn: 'Steamed Ribs',
-                summary: '隱藏的靈魂配角',
-                summaryEn: 'Hidden soulmate',
-                story: '很多人只點麵，但這裡的粉蒸系列（排骨或大腸）才是老饕心中真正的精華。地瓜墊底吸滿了油脂香，絕對要點。',
-                storyEn: 'Many skip order just the noodles, but the steamed ribs on a bed of sweet potato are the true insider choice.'
+                summary: '隱藏在麵碗後的殺手',
+                summaryEn: 'The Hidden Killer',
+                story: '說真的，很多人只吃麵。但我心中的「永康三寶」肯定有這籠粉蒸排骨。地瓜墊底吸飽排骨油脂，甜糯與肉香交織，這幾乎是每個在地熟客必點的小點。',
+                storyEn: 'Many only eat the noodles, but the steamed ribs on sweet potato are the true local treasure. Sweet, savory, and rich—an absolute must-order.'
             },
             {
                 id: 'must-do',
                 label: '酸菜靈魂',
                 labelEn: 'Pickled Greens',
-                summary: '麵碗裡的驚喜',
-                summaryEn: 'The flavor booster',
-                story: '紅燒湯頭固然強，但桌上的免費酸菜才是老饕的關鍵。建議先喝原位湯頭，再加入大把酸菜，那種鹹香微辣的對比感會讓整碗麵提升一個層次。',
-                storyEn: 'The broth is great, but the free pickled greens are key. Try the broth original first, then add greens for a savory, spicy punch.'
+                summary: '這不是裝飾品',
+                summaryEn: 'Not a Garnish',
+                story: '桌上的酸菜是整碗麵的「變頻器」。聽我的，先喝三口原湯，再加入一整勺酸菜。你會發現原本濃郁的肉香瞬間被提鮮，層次感直接翻倍。',
+                storyEn: 'The pickled greens are the "equalizer." Sip the original broth first, then add a huge scoop. It elevates the richness into a multi-layered feast.'
             },
             {
                 id: 'trap',
                 label: '排隊熱度',
                 labelEn: 'Queue Trap',
-                summary: '週末的等待考驗',
-                summaryEn: 'Weekend wait',
-                story: '這家店是永康街的神級排隊名店。週末正餐時段排隊 45 分鐘是常態。建議提早在 11:30 前或下午 16:30 前抵達，能大幅縮短等待時間。',
-                storyEn: 'Wait times can hit 45 mins. Arrive before 11:30 AM or around 4:30 PM to bypass the peak weekend dinner rush.'
+                summary: '觀光客的午餐馬拉松',
+                summaryEn: 'The Tourist Marathon',
+                story: '週末正中午來這裡简直是自討苦吃。排隊 45 分鐘是基本。如果你不想曬太陽，建議下午 16:30 這種尷尬時間來，或是平日提早抵達，用餐體驗會好很多。',
+                storyEn: 'Noon on weekends is a nightmare—expect 45+ min waits. Come at 4:30 PM or early on weekdays to save your sanity and your meal.'
             }
         ]
     },
@@ -1707,37 +1707,37 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 id: 'must-do',
                 label: '故宮三寶',
                 labelEn: 'The Big Three',
-                summary: '觀察工匠的極致巧思',
-                summaryEn: 'Artisan genius',
-                story: '翠玉白菜、肉形石與毛公鼎是必看清單。尤其是白菜上的螽斯與蝗蟲，細膩到令人屏息。建議早上 09:00 前入場避開人潮。',
-                storyEn: 'Jadeite Cabbage, Meat-shaped Stone, and Mao Gong Ding. Arrive before 9 AM to see them without the heavy crowds.'
+                summary: '與 70 萬件寶藏的博弈',
+                summaryEn: 'Outsmarting 700k treasures',
+                story: '翠玉白菜與肉形石是絕對的頂流。我的觀點：別跟在大團客後面慢慢擠。一開門就直衝三樓，在人潮湧入前獨佔那顆白菜。如果你看到人超過三排，請果斷轉向隔壁的毛公鼎，它的歷史價值其實更高。',
+                storyEn: 'The Jadeite Cabbage is the superstar. Insider tip: Head to 3F the moment doors open. If the queue is 3 rows deep, pivots to the Mao Gong Ding nearby—it’s historically more significant anyway.'
             },
             {
                 id: 'hidden',
                 label: '至善園散策',
                 labelEn: 'Zhishan Garden',
-                summary: '博物館旁的宋代園林',
-                summaryEn: 'Song Dynasty Garden',
-                story: '參觀完本館，憑票根可以免費進入至善園。這裡仿宋代設計，有小橋流水與黑天鵝，是消化文化衝擊的最佳靜謐空間。',
-                storyEn: 'Use your ticket for free entry to Zhishan Garden. A Song-style retreat with black swans—perfect for post-museum reflection.'
+                summary: '躲避人群的宋代時空',
+                summaryEn: 'Escape the crowd',
+                story: '很多人看完展覽就累得想上車，大錯特錯。憑票根免費進去的至善園，才是消化文化衝擊的最佳地點。在小橋流水間餵餵黑天鵝，你會發現台北的喧囂在這裡瞬間消失。',
+                storyEn: 'Most leave after the museum—their loss. Use your ticket for free entry to Zhishan Garden. Feed the black swans among Song-style pavilions to truly decompress after the cultural overload.'
             },
             {
                 id: 'must-do',
                 label: '朕知道了',
                 labelEn: 'Imperial Gifts',
-                summary: '最有趣的文創',
-                summaryEn: 'Witty souvenirs',
-                story: '逛完展覽一定要去禮品店。那款爆紅的「朕知道了」紙膠帶與各種仿古文具，把深奧的史籍轉化成趣味的日常用品。',
-                storyEn: 'Visit the gift shop for the viral "I know" (Imperial Edict) tape and other clever stationary that turns history into daily fun.'
+                summary: '被低估的文創靈魂',
+                summaryEn: 'Witty Imperial Gifts',
+                story: '這裡的禮品店是我見過全世界最有幽默感的博物館商店。別只買明信片，去看那些「朕知道了」的創意周邊。那是把深厚史籍轉化成現代廢萌美學的極致，買回去當伴手禮絕對不會被打槍。',
+                storyEn: 'This shop has the best sense of humor. Skip generic postcards; get the "Imperial Edict" (I know) stationery. It’s the perfect blend of high history and modern wit—an elite souvenir.'
             },
             {
                 id: 'trap',
                 label: '審美疲勞',
                 labelEn: 'Fatigue Trap',
-                summary: '不要試圖一日逛完',
-                summaryEn: 'Museum fatigue',
-                story: '故宮藏品多達 70 萬件，每三個月更換一次。不要試圖在一天內看完所有展廳，會造成極大的身體與美學疲勞。建議挑選 2-3 個重點展區深度參觀。',
-                storyEn: 'With 700k items, museum fatigue is real. Don\'t try to see everything at once. Pick 2-3 galleries and enjoy them deeply instead.'
+                summary: '貪心的懲罰',
+                summaryEn: 'Greed is exhaustion',
+                story: '故宮每三個月換一次展，你不可能一天看完。我的核心建議：挑選兩個你最有感覺的展區（例如玉器或書畫）深度看，剩下的隨緣。試圖「看完所有樓層」只會讓你後半天都在腳痛與腦袋空白中度過。',
+                storyEn: 'With 700k items, seeing it all in one day is impossible. Pick two galleries (e.g., Jade or Calligraphy) for a deep dive. "Seeing it all" only leads to sore feet and a blank mind.'
             }
         ],
         insiderTip: {
@@ -1776,37 +1776,37 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 id: 'must-do',
                 label: '儀隊交接',
                 labelEn: 'Guard Change',
-                summary: '每整點的精確律動',
-                summaryEn: 'Every hour on the hour',
-                story: '每小時整點在四樓大廳會有儀隊交接。動作整齊到連腳步聲都是同步的。建議提前 10 分鐘卡位，那種震撼力現場看完全不同。',
-                storyEn: 'The hourly ceremony on the 4th floor is a masterclass in precision. Arrive 10 mins early for a good vantage point.'
+                summary: '整點的鋼鐵意志',
+                summaryEn: 'Clockwork Steel',
+                story: '這絕對是台北最具儀式感的時刻。儀隊在大理石地板上的踏步聲非常震撼。專業建議：提早 10 分鐘站在側邊，你能更近距離看到他們眼神中的堅定。如果你已經看過一次，那就別再執著，去樓下看展更有趣。',
+                storyEn: 'The most rhythmic moment in Taipei. The stomps on marble are spine-tingling. Pro tip: Stand near the side 10 mins early for a close-up of their stoic focus. Seen it once? Head downstairs for the history museum.'
             },
             {
                 id: 'hidden',
                 label: '拱門對比照',
                 labelEn: 'The Archways',
-                summary: '框架建築之美',
-                summaryEn: 'Framing architecture',
-                story: '走到廣場兩旁的迴廊大拱門，用拱門當作框架拍攝主建築，可以拍出極具大氣與空間感的對稱構圖。',
-                storyEn: 'Use the massive corridor arches to frame the main hall for stunning, symmetrical compositions.'
+                summary: '大器晚成的攝影視角',
+                summaryEn: 'The Framing Epic',
+                story: '別只拍白牆藍瓦的正面。走到兩側長長的迴廊，用那巨大的拱門作為框架。當你把相機壓低，拱門的透視線會讓中正紀念堂看起來像一座莊嚴的宮殿遺址，氣勢瞬間提升三倍。',
+                storyEn: 'Skip the generic front shot. Use the massive corridor arches to frame the main hall. Get low with your camera—the perspective makes it look like a grand, timeless palace ruin.'
             },
             {
                 id: 'must-do',
                 label: '階梯密碼',
                 labelEn: 'The Steps',
-                summary: '89 階的崇敬',
-                summaryEn: '89 years of life',
-                story: '通往主廳的高大大理石階梯共有 89 階，代表蔣公享壽 89 歲。每一段階梯的寬度與斜率都經過精確計算，步行其上更顯莊嚴。',
-                storyEn: 'There are exactly 89 steps leading to the main hall, representing the years of life. The incline is designed for solemnity.'
+                summary: '每一步都是歷史',
+                summaryEn: 'Ancient Numerology',
+                story: '爬階梯時別忘了數數。89 階象徵著 89 年的人生。這不是體力考驗，而是一場緩慢的朝聖。如果體力不好的人，旁邊其實有隱藏的電梯，別在那裡死撐，把體力留給接下來的自由廣場漫步。',
+                storyEn: 'Count the steps—89 in total, representing a lifetime. It\'s a slow pilgrimage on marble. Not feeling it? There\'s a "secret" elevator inside. Save your legs for the stroll across Freedom Square.'
             },
             {
                 id: 'trap',
                 label: '高溫廣場',
                 labelEn: 'Heat Trap',
-                summary: '正午的太陽考驗',
-                summaryEn: '广场上的烈日',
-                story: '自由廣場非常空曠且缺乏遮蔭。夏季正午時分溫度極高，站在大理石板上會有明顯熱浪。建議午後 16:00 後前來，光線也較柔和。',
-                storyEn: 'Liberty Square is vast and shadeless. Summer midday heat is extreme. Visit after 4 PM for better comfort and softer photography lighting.'
+                summary: '白色大理石的火爐',
+                summaryEn: 'The White Oven',
+                story: '自由廣場的白色石板會反射 200% 的紫外線。如果你在夏天正午來，這裡就是一個露天烤箱。除非你想在 10 分鐘內曬傷，否則強烈建議下午 16:30 後再來，那時的夕陽餘暉灑在藍瓦上，才是最美的時刻。',
+                storyEn: 'Those white stones reflect 200% of UV rays—it’s an outdoor oven at noon. Unless you want a 10-minute sunburn, visit after 4:30 PM. The golden hour glow on the blue tiles is the real prize.'
             }
         ]
     },
@@ -1834,39 +1834,39 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         expertStories: [
             {
                 id: 'must-do',
-                label: '紅柱大廳',
-                labelEn: 'The Lobby',
-                summary: '走進宮廷的視覺衝擊',
-                summaryEn: 'Royal visual impact',
-                story: '走進挑高大廳，數目眾多的紅大柱與天花板的梅花藻井會讓你瞬間以為回到古代皇宮。一定要去大樓梯拍照，那是最經典的角度。',
-                storyEn: 'The massive red pillars and ornate ceiling make you feel like royalty. Snap a photo on the grand staircase—it\'s iconic.'
+                label: '秘密逃生滑梯',
+                labelEn: 'Secret Slide',
+                summary: '元首級的逃生浪漫',
+                summaryEn: 'The Presidential Escape',
+                story: '圓山之所以神祕，就在這條地道。我的觀點：雖然溜滑梯現在不能真的「溜」下去（安全考量），但站在頂端看那陡峭的坡度，想像當年的緊迫感，依然很有震撼力。記得要提前兩週在官網預約，現場買票通常只能看大廳。',
+                storyEn: 'The secret slide is the heart of Grand Hotel history. You can\'t actually "slide" down (Safety rules), but standing at the top imagining a presidential escape is worth the price. Book 2 weeks early online; walk-ins rarely get to see the tunnels.'
+            },
+            {
+                id: 'must-eat',
+                label: '圓山紅豆鬆糕',
+                labelEn: 'Red Bean Cake',
+                summary: '蔣夫人的私人味蕾',
+                summaryEn: 'Madam Chiang\'s Palate',
+                story: '如果你來圓山只拍照不吃鬆糕，那等於沒來。這是當年宋美齡女士最愛的甜點，口感綿密且不甜膩。別在自助餐浪費肚子，去圓苑餐廳點一份熱騰騰的鬆糕，配上一壺烏龍茶，才是真正的宮廷享受。',
+                storyEn: 'Madam Chiang’s favorite. If you take photos but skip this cake, you\'ve missed the soul of the place. Skip the buffet; order fresh cake at Yuan Yuan restaurant with Oolong tea for the authentic royal experience.'
             },
             {
                 id: 'hidden',
-                label: '祕密逃生滑梯',
-                labelEn: 'Secret Tunnels',
-                summary: '時代背景下的避難奇觀',
-                summaryEn: 'Historical escape',
-                story: '圓山隱藏著東、西兩條神祕地道。東側地道有長達 67 公尺的滑梯（現已收費預約參觀）。那是為了當年萬一發生戰爭，元首能快速撤離的特殊設計。',
-                storyEn: 'The hotel hides two secret tunnels. The west one features a 67m long escape slide—a remnant of the Cold War era (Reservation required).'
-            },
-            {
-                id: 'must-do',
-                label: '龍的宮殿',
-                labelEn: 'Dragon Palace',
-                summary: '24K 金的金龍',
-                summaryEn: 'Golden Dragon',
-                story: '在金龍廳有一座曾躲過火災、全身貼滿 24K 純金箔的金龍噴泉。這條龍已經陪伴圓山超過半世紀，是飯店公認的財位守護神與參觀熱點。',
-                storyEn: 'In the Golden Dragon Hall sits a fountain covered in 24K gold leaf. It survived historical fires and remains the hotel\'s guardian.'
+                label: '貨布鑰匙牆',
+                labelEn: 'Huo Bu Keys',
+                summary: '銅幣上的開運守護',
+                summaryEn: 'The Coin Wall',
+                story: '在大廳一角有一面由「貨布」鑰匙組成的牆，這在開幕當初是客房鑰匙。貨布造型像大鐘，象徵財源滾滾。現在這面牆是攝影聖地，找找看有沒有你的生日房號，這比在大門口自拍要內行得多。',
+                storyEn: 'Look for the "Huo Bu" key wall—these were the original room keys shaped like ancient coins for prosperity. It’s a much cooler photo op than the main gate. Find your "birthday" room number for a lucky shot.'
             },
             {
                 id: 'trap',
-                label: '滑梯預約',
-                labelEn: 'Slide Booking',
-                summary: '不要直接跑過來',
-                summaryEn: 'Booking required',
-                story: '西密道的「神祕逃生滑梯」非常熱門，且有嚴格的人口管制。如果沒有提前在官網預約導覽行程，現場幾乎不可能排到位置。',
-                storyEn: 'The secret escape slide is very popular. You must book the guided tour online in advance; walk-ins are rarely accommodated.'
+                label: '服裝與禮儀',
+                labelEn: 'Dress Code',
+                summary: '服裝與自信的博弈',
+                summaryEn: 'Dress code confidence',
+                story: '圓山的大廳非常宏偉，但也非常「莊重」。如果你穿著拖鞋或背心進去，雖然不會被趕出來，但你會感受到空氣中微弱的排外感。稍微整理一下儀容，你會更有自信地穿梭在那些紅色圓柱之間。',
+                storyEn: 'The lobby is grand but "formal." You won\'t be kicked out for flip-flops, but you\'ll feel the slight gaze of exclusion. Dress sharp to match the red pillars; your photos and your self-confidence will thank you.'
             }
         ],
         insiderTip: {
@@ -1903,39 +1903,39 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         expertStories: [
             {
                 id: 'must-eat',
-                label: '豪大大雞排',
-                labelEn: 'Hot-Star Chicken',
-                summary: '比臉還大的震撼感',
-                summaryEn: 'Larger-than-face fried chicken',
-                story: '士林的圖騰。現炸出來、撒上胡椒鹽的香氣，雖然熱量很高，但那種大口吃肉的爽感是來台北必拍的打卡儀式。',
-                storyEn: 'A Shilin icon. Crispy, salty, and huge. Biting into one under the neon lights is a classic Taipei experience.'
+                label: '生炒花枝',
+                labelEn: 'Stir-fried Squid',
+                summary: '大火淬煉的鑊氣',
+                summaryEn: 'The Wok Breath',
+                story: '士林的靈魂不在大馬路，在廟口。這碗花枝羹的湯頭酸甜適中，花枝厚度和彈性都是台北巔峰。我的評價：別管那些網紅大雞排了，這碗花枝羹才是你該排隊的地方。',
+                storyEn: 'The soul of Shilin isn\'t on the main road; it\'s at the temple area. Thick, snappy squid in a tangy broth. My verdict: Skip the viral big chicken; this is what actually deserves the queue.'
             },
             {
                 id: 'hidden',
-                label: '海友十全排骨',
-                labelEn: 'Herbal Ribs',
-                summary: '巷弄裡的米其林指南',
-                summaryEn: 'Michelin in the alley',
-                story: '很多人只去主幹道。但巷子裡的「海友」是連續幾年獲得米其林推薦的名店。在涼冷的夜晚來一碗黑澄澄的補湯，非常過癮。',
-                storyEn: 'Skip the main street traps. "Hai Yu" in the side alley is a multi-year Michelin mention with soul-warming herbal soup.'
+                label: '廟口涼麵',
+                labelEn: 'Temple Noodles',
+                summary: '深夜的麻醬救贖',
+                summaryEn: 'Midnight Sesame',
+                story: '隱藏在慈諴宮旁的涼麵店。它的麻醬濃到化不開，蒜味重得驚人。這是在地人逛完夜市後的「收尾儀式」。如果在路邊看到很多人坐在小板凳上吃麵，別懷疑，坐下來就對了。',
+                storyEn: 'Tucked away by Cixian Temple. The sesame sauce is impossibly rich, and the garlic kick is fierce. This is the local "closer" after a night of grazing. If you see locals on low stools, join them.'
             },
             {
-                id: 'must-eat',
-                label: '地下美食街',
-                labelEn: 'Food Court',
-                summary: '夏天的避暑勝地',
-                summaryEn: 'A/C Comfort',
-                story: '如果怕熱，基河路上的地下美食街有強冷氣。那裡彙集了生炒花枝、大餅包小餅等經典老攤，休息一下吃點甜品最合適。',
-                storyEn: 'The underground floor on Jihe Rd offers strong A/C and gathers classics like squid soup and localized sweets in one spot.'
+                id: 'must-do',
+                label: '撈金魚與童玩',
+                labelEn: 'Vintage Games',
+                summary: '最後的昭和遺風',
+                summaryEn: 'Retro Playground',
+                story: '士林是少數保留大量傳統遊戲攤的地方。雖然現在有環保爭議，但看著老師傅修補魚網，那種台式復古氛圍非常強。建議去玩一下射飛鏢或彈珠台，那種獎品換來的廉價飲料，是台灣小孩童年的共同味道。',
+                storyEn: 'One of the last places with serious vintage game stalls. Try the balloon darts or pinball. The cheap drinks won as prizes are the literal taste of a Taiwanese childhood.'
             },
             {
                 id: 'trap',
-                label: '人潮陷阱',
-                labelEn: 'Crowd Trap',
-                summary: '週末的神隱少女式人潮',
-                summaryEn: 'Peak crowd warning',
-                story: '週末 20:00 後的士林夜市人潮極度擁擠。請務必注意隨身財務。如果帶著小孩或長輩，建議改去附近的寧夏夜市，或是提早在 17:30 入場。',
-                storyEn: 'Peak weekend crowds are intense. Keep an eye on your belongings. If traveling with seniors or kids, consider earlier entry at 5:30 PM.'
+                label: '水果攤陷阱',
+                labelEn: 'Fruit Stall Trap',
+                summary: '天價現切的眼淚',
+                summaryEn: 'Pricey Sliced Fruit',
+                story: '這是最重要的雷區！絕對、絕對不要在夜市路邊買「現切水果盤」。那是專門給觀光客的天價坑，一份可能要好幾百台幣。如果你想吃水果，去便利商店買，或是找有標價的果汁攤比較保險。',
+                storyEn: 'CRITICAL WARNING: Never buy pre-sliced fruit from unidentified street stalls. They charge astronomical prices for tourists. Get your fruit from a 7-11 or a juice stand with clear pricing instead.'
             }
         ],
         insiderTip: {

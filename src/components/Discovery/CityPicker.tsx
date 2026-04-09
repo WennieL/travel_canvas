@@ -16,6 +16,9 @@ interface CityPickerProps {
     isSelectionOnly?: boolean;
 }
 
+import { ALL_SURVIVAL_GUIDES } from '../../data/guides/compass';
+import { SurvivalKit } from './SurvivalKit';
+
 export const CityPicker: React.FC<CityPickerProps> = ({
     searchQuery,
     setSearchQuery,
@@ -143,6 +146,18 @@ export const CityPicker: React.FC<CityPickerProps> = ({
 
             {!isSelectionOnly && (
                 <>
+                    {/* [NEW] Taiwan Compass Dynamic Section */}
+                    <div className="mt-8">
+                        <SurvivalKit 
+                            guides={ALL_SURVIVAL_GUIDES} 
+                            lang={lang} 
+                            title="TAIWAN COMPASS"
+                            titleEn="TAIWAN COMPASS"
+                            subtitle="台灣指南針：全台必備生存錦囊"
+                            subtitleEn="The Essential Taiwan Survival Guide"
+                        />
+                    </div>
+
                     {/* Canvas Top Picks */}
                     <div className="mt-10 px-5">
                         <div className="flex items-center justify-between mb-6 px-1 border-b border-gray-100 pb-4">
