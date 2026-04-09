@@ -18,6 +18,8 @@ interface CityPickerProps {
 
 import { ALL_SURVIVAL_GUIDES } from '../../data/guides/compass';
 import { SurvivalKit } from './SurvivalKit';
+import { TAIWAN_TOP_PICKS, resolvePicks } from '../../data/assets/taiwan/picks';
+import { getRegionName } from '../../data/regions';
 
 export const CityPicker: React.FC<CityPickerProps> = ({
     searchQuery,
@@ -30,6 +32,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
     isSelectionOnly = false
 }) => {
     const [activeFilter, setActiveFilter] = useState('all');
+    const [activePicksFilter, setActivePicksFilter] = useState<string>('taiwan');
     const [showAllTopSpots, setShowAllTopSpots] = useState(false);
     const [showAllTemplates, setShowAllTemplates] = useState(false);
     const [likedSpots, setLikedSpots] = useState<Set<string>>(new Set());
@@ -62,14 +65,16 @@ export const CityPicker: React.FC<CityPickerProps> = ({
         { id: 'premium', label: lang === 'zh' ? '奢華' : 'PREMIUM' },
     ];
 
-    // Top Spots for the "Canvas Top Picks" ranking
-    const topSpots = [
-        MELBOURNE_ASSETS.find(a => a.id === 'mel-25')!, // Maria's Pasta
-        MELBOURNE_ASSETS.find(a => a.id === 'mel-5')!,  // Eau de Vie
-        MELBOURNE_ASSETS.find(a => a.id === 'mel-23')!, // Flagstaff Garden
-        MELBOURNE_ASSETS.find(a => a.id === 'mel-1')!,  // Patricia Coffee
-        MELBOURNE_ASSETS.find(a => a.id === 'mel-7')!,  // Jungle Boy
-    ].filter(Boolean);
+    // Dynamic Top Picks Resolution
+    const topSpots = resolvePicks(activePicksFilter);
+
+    // Dynamic Filter Pills for Top Picks ranking
+    const picksRegions = Object.keys(TAIWAN_TOP_PICKS).map(key => ({
+        id: key,
+        label: key === 'taiwan' 
+            ? (lang === 'zh' ? '全台灣' : 'TAIWAN')
+            : (lang === 'zh' ? getRegionName(key as Region, lang) : key.toUpperCase())
+    }));
 
     // City Avatar Fallbacks
     const cityImages: Record<string, string> = {
@@ -158,23 +163,42 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         />
                     </div>
 
-                    {/* Canvas Top Picks */}
-                    <div className="mt-10 px-5">
-                        <div className="flex items-center justify-between mb-6 px-1 border-b border-gray-100 pb-4">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-tc-primary/5 flex items-center justify-center">
-                                    <Sparkles className="text-tc-primary w-4 h-4" />
+                    {/* Canvas Top Picks Section */}
+                    <div className="mt-12 px-6">
+                        <div className="flex flex-col gap-6 mb-8">
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col gap-1">
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-600">
+                                        Editor's Choice
+                                    </h3>
+                                    <p className="text-[20px] font-serif font-black text-gray-900 leading-tight">
+                                        {lang === 'zh' ? '萬中選一的台灣味' : 'Handpicked Taiwan Gems'}
+                                    </p>
                                 </div>
-                                <h2 className="text-lg font-black text-tc-text-main tracking-tight">
-                                    {lang === 'zh' ? '精選景點' : 'Canvas Top Picks'}
-                                </h2>
+                                <button
+                                    onClick={() => setShowAllTopSpots(!showAllTopSpots)}
+                                    className="flex items-center gap-1 text-[11px] font-black text-tc-text-sec uppercase tracking-widest"
+                                >
+                                    {showAllTopSpots ? 'LESS' : 'MORE'}
+                                </button>
                             </div>
-                            <button
-                                onClick={() => setShowAllTopSpots(!showAllTopSpots)}
-                                className="flex items-center gap-1 text-[11px] font-black text-tc-text-sec uppercase tracking-widest"
-                            >
-                                {showAllTopSpots ? 'LESS' : 'MORE'}
-                            </button>
+
+                            {/* Top Picks Region Filter Bar */}
+                            <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-1">
+                                {picksRegions.map(opt => (
+                                    <button
+                                        key={opt.id}
+                                        onClick={() => setActivePicksFilter(opt.id)}
+                                        className={`flex-shrink-0 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                                            activePicksFilter === opt.id
+                                                ? 'bg-gray-900 text-white shadow-md'
+                                                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                        }`}
+                                    >
+                                        {opt.label}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className={showAllTopSpots
