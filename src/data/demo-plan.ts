@@ -155,6 +155,34 @@ export const REGION_DEFAULT_CHECKLISTS: Record<Region, Record<string, ChecklistI
             { id: 'kh_3', text: 'Pack sunglasses and hat (Strong sun in Southern Taiwan)', checked: false },
         ]
     },
+    chiayi: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'cy_1', text: '預訂阿里山小火車票（祝山線必備）', checked: false },
+            { id: 'cy_2', text: '準備保暖衣物（阿里山清晨極冷）', checked: false },
+            { id: 'cy_3', text: '確認嘉義市區火雞肉飯營業時間', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'cy_1', text: 'Book Alishan Forest Railway tickets (Zhushan line)', checked: false },
+            { id: 'cy_2', text: 'Pack warm clothes (Alishan is cold at dawn)', checked: false },
+            { id: 'cy_3', text: 'Check turkey rice opening hours in Chiayi city', checked: false },
+        ]
+    },
+    nantou: {
+        zh: [
+            ...DEFAULT_CHECKLIST.zh,
+            { id: 'nt_1', text: '預訂日月潭遊湖船票或租借單車', checked: false },
+            { id: 'nt_2', text: '確認清境農場綿羊秀時間', checked: false },
+            { id: 'nt_3', text: '準備暈車藥（南投山路蜿蜒）', checked: false },
+        ],
+        en: [
+            ...DEFAULT_CHECKLIST.en,
+            { id: 'nt_1', text: 'Book Sun Moon Lake boat tickets or rent a bike', checked: false },
+            { id: 'nt_2', text: 'Check Cingjing Farm sheep show schedule', checked: false },
+            { id: 'nt_3', text: 'Pack motion sickness medicine (winding mountain roads)', checked: false },
+        ]
+    },
     all: { zh: DEFAULT_CHECKLIST.zh, en: DEFAULT_CHECKLIST.en }
 };
 
@@ -515,6 +543,8 @@ export const CITY_FILTERS: Record<string, { id: Region; label: string; labelEn: 
         { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
         { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
         { id: 'kaohsiung', label: '高雄', labelEn: 'Kaohsiung', icon: '🏗️' },
+        { id: 'chiayi', label: '嘉義', labelEn: 'Chiayi', icon: '🌲' },
+        { id: 'nantou', label: '南投', labelEn: 'Nantou', icon: '🏞️' },
     ],
     /*
     japan: [
@@ -538,6 +568,8 @@ export const REGION_FILTERS: { id: Region; label: string; labelEn: string; icon:
     { id: 'taichung', label: '台中', labelEn: 'Taichung', icon: '☕' },
     { id: 'hualien', label: '花蓮', labelEn: 'Hualien', icon: '🌊' },
     { id: 'kaohsiung', label: '高雄', labelEn: 'Kaohsiung', icon: '🏙️' },
+    { id: 'chiayi', label: '嘉義', labelEn: 'Chiayi', icon: '🌲' },
+    { id: 'nantou', label: '南投', labelEn: 'Nantou', icon: '🏞️' },
     // { id: 'tokyo', label: '東京', labelEn: 'Tokyo', icon: '🗼' },
     // { id: 'osaka', label: '大阪', labelEn: 'Osaka', icon: '🏯' },
     // { id: 'kyoto', label: '京都', labelEn: 'Kyoto', icon: '⛩️' },

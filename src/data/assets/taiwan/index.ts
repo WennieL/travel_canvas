@@ -3,6 +3,8 @@ import { TAINAN_ASSETS } from './tainan';
 import { HUALIEN_ASSETS } from './hualien';
 import { TAICHUNG_ASSETS } from './taichung';
 import { KAOHSIUNG_ASSETS } from './kaohsiung';
+import { CHIAYI_ASSETS } from './chiayi';
+import { NANTOU_ASSETS } from './nantou';
 import { TAIWAN_GIFTS } from './gifts';
 import { TAIWAN_TOP_PICKS, resolvePicks } from './picks';
 import { TravelItem } from '../../types';
@@ -13,6 +15,8 @@ export const TAIWAN_ASSETS: TravelItem[] = [
     ...HUALIEN_ASSETS,
     ...TAICHUNG_ASSETS,
     ...KAOHSIUNG_ASSETS,
+    ...CHIAYI_ASSETS,
+    ...NANTOU_ASSETS,
     ...TAIWAN_GIFTS,
 ];
 
@@ -22,6 +26,8 @@ export {
     HUALIEN_ASSETS, 
     TAICHUNG_ASSETS, 
     KAOHSIUNG_ASSETS, 
+    CHIAYI_ASSETS,
+    NANTOU_ASSETS,
     TAIWAN_GIFTS,
     TAIWAN_TOP_PICKS,
     resolvePicks

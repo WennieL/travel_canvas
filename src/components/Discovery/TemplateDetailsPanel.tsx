@@ -549,7 +549,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     
                                                         {/* Time badge (replaces floating dot) */}
                                                         <div className="relative z-10 px-2 py-0.5 bg-white border border-[#E8EDE4] rounded-full text-[11px] font-black text-[#6B7C6E] shadow-sm group-hover:border-bg-primary group-hover:text-bg-primary transition-all whitespace-nowrap">
-                                                            {item.timeLabel || item.startTime || '09:00'}
+                                                            {item.startTime || item.timeLabel || '09:00'}
                                                         </div>
 
                                                     {/* Vertical line segment BELOW dot */}
@@ -593,9 +593,14 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
                                                     {/* Text Content */}
                                                     <div className="flex-1 min-w-0">
-                                                        <div className="flex items-center gap-2 mb-0.5">
-                                                            <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest">{item.type || 'SPOT'}</span>
-                                                            {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
+                                                        <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
+                                                            <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest shrink-0">{item.type || 'SPOT'}</span>
+                                                            {item.timeLabel && (
+                                                                <span className="text-[9px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md uppercase tracking-tight shrink-0">
+                                                                    {item.timeLabel}
+                                                                </span>
+                                                            )}
+                                                            {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500 shrink-0"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
                                                         </div>
                                                         <h5 className="text-[15px] font-black text-[#181D17] leading-snug flex items-center gap-1">
                                                             <span className={`line-clamp-1 transition-all ${item.isLocked && !isPurchased ? 'blur-[3px] opacity-70 select-none' : ''}`}>
