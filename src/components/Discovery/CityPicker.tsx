@@ -416,8 +416,8 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                 else if (activeFilter === 'budget') filtered = filtered.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
                                 else if (activeFilter === 'premium') filtered = filtered.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
 
-                                // Show diverse for short list
-                                return filtered.filter((tpl, index) => index % 2 === 0).slice(0, 5); // Just some subset
+                                // Show all matching filtered templates
+                                return filtered.slice(0, 8); 
                             })().map(tpl => (
                                 <button
                                     key={tpl.id}
@@ -541,6 +541,8 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         onSelectItem={(item) => {
                             if (activeArchive.type === 'wonders') {
                                 setSelectedInsight(item as CulturalInsight);
+                            } else if (activeArchive.type === 'templates') {
+                                onPreviewTemplate(item as Template);
                             } else {
                                 onSelectItem(item as TravelItem, 'discovery');
                             }

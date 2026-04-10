@@ -1201,5 +1201,229 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             }
         }
+    },
+    // ===== TAICHUNG TEMPLATES (New Curated) =====
+    {
+        id: 'tc-quirky-1d',
+        name: '台中奇趣潮流選 (1日深度)',
+        nameEn: 'Quirky & Hip Taichung (1-Day)',
+        title: '不只是打卡：在台中發掘日常裡的驚喜奇觀',
+        titleEn: 'Beyond the Gram: Discovering Urban Wonders',
+        author: '台中巷弄探索家',
+        authorEn: 'Taichung Alley Explorer',
+        authorId: 'c-tw3',
+        region: 'taichung',
+        tags: ['奇趣', '潮流', '美食'],
+        tagsEn: ['Quirky', 'Hip', 'Food'],
+        duration: 1,
+        rating: 4.9,
+        price: 0,
+        tier: 'creator',
+        copiedCount: 850,
+        coverImage: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800',
+        coverStory: {
+            quote: '「台中最美的地方，往往藏在那些讓人意想不到的轉角。」',
+            quoteEn: '"The beauty of Taichung lies in the most unexpected corners."',
+            description: '這份路線專為喜歡新鮮感的你設計。我們不走傳統景點，而是去拍會跑步的恐龍、去百貨公司參觀各國主題廁所，最後在米其林星級冰淇淋中結束完美的一天。'
+        },
+        travelStyle: ['時尚', '奇趣', '美食'],
+        authorStory: {
+            zh: '我在台中住了十年，最喜歡帶朋友去看那些「只有台中才有的創意」。這份行程是我壓箱寶的私房名單，保證讓你的相機快門停不下來。',
+            en: 'Living in Taichung for 10 years, I love showing friends the unique creativity here. This itinerary is my private "hidden gem" list, guaranteed to keep your camera busy.'
+        },
+        faq: [
+            {
+                title: '哪層樓的廁所最厲害？',
+                titleEn: 'Which toilet is best?',
+                text: '中友百貨的 C 棟絕對是首選！7 樓的可口可樂和 6 樓的秘密花園是必拍重點。',
+                textEn: 'Building C at Chungyo! 7F Coca-Cola and 6F Secret Garden are the highlights.'
+            },
+            {
+                title: '恐龍什麼時候會動？',
+                titleEn: 'When do dinos move?',
+                text: '科博館內的機械暴龍每 15 分鐘會有一場吼叫表演，建議進館後先看場次。',
+                textEn: 'The T-Rex inside roars every 15 mins. Check the schedule upon entry.'
+            },
+            {
+                title: 'MINIMAL 沒預約吃得到嗎？',
+                titleEn: 'Minimal without booking?',
+                text: '非常困難！2024 拿到米其林一星後爆紅，務必兩週前在線上預約，否則只能在外帶區碰運氣。',
+                textEn: 'Very hard after the Michelin win. Book online 2 weeks ahead or try the take-out window.'
+            },
+            {
+                title: '一中街必吃三寶是哪些？',
+                titleEn: 'Yizhong Top 3?',
+                text: '一中大雞排、豐仁冰、半月燒。這三樣是台中學生時代的集體回憶。',
+                textEn: 'Fried Chicken, Fengren Ice, and Half-Moon Pancake. The local student staples.'
+            }
+        ],
+        dayPreviews: [
+            { day: 1, summary: '第二市場早餐 → 科博館恐龍 → 中友百貨主題廁所 → MINIMAL 冰淇淋 → 一中夜市' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '台中驚喜探索：藝術與趣味的交織',
+                themeEn: 'Taichung Surprises: Art & Whimsy',
+                themeEmoji: '🦕',
+                morning: [
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f8')!, 
+                        instanceId: 'tc-q1', 
+                        startTime: '08:30', 
+                        timeLabel: '早餐 Breakfast',
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a2')!, 
+                        instanceId: 'tc-q2', 
+                        startTime: '10:00', 
+                        arrivalTransport: 'walk' 
+                    }
+                ],
+                afternoon: [
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f3')!, 
+                        instanceId: 'tc-q3', 
+                        startTime: '12:30', 
+                        timeLabel: '午餐 Lunch',
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a3')!, 
+                        instanceId: 'tc-q4', 
+                        startTime: '14:30', 
+                        arrivalTransport: 'walk' 
+                    },
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f1')!, 
+                        instanceId: 'tc-q5', 
+                        startTime: '16:00', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f4')!, 
+                        instanceId: 'tc-q6', 
+                        startTime: '18:30', 
+                        timeLabel: '晚餐 Dinner',
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                night: [],
+                accommodation: []
+            }
+        }
+    },
+    {
+        id: 'tc-heritage-1d',
+        name: '經典手作與文化體驗 (1日)',
+        nameEn: 'Hands-on Heritage Taichung (1-Day)',
+        title: '感官台中：親手搖珍奶、捏太陽餅的文化之旅',
+        titleEn: 'Crafting Memories: Boba, Sun Cakes & Architecture',
+        author: 'TravelCanvas 編輯部',
+        authorEn: 'TravelCanvas Editors',
+        authorId: 'c0',
+        region: 'taichung',
+        tags: ['文化', '手作', '體驗'],
+        tagsEn: ['Culture', 'Craft', 'DIY'],
+        duration: 1,
+        rating: 4.8,
+        price: 0,
+        tier: 'official',
+        copiedCount: 520,
+        coverImage: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800',
+        coverStory: {
+            quote: '「用雙手感受這座城市的溫度，是最好懂台中的方式。」',
+            quoteEn: '"The best way to understand Taichung is through your hands."',
+            description: '不只是走馬看花，我們將珍珠奶茶、太陽餅這些台中驕傲，轉化為親手參與的樂趣。從老建築底下的手作區，到世界級的劇場美學。'
+        },
+        travelStyle: ['手作', '文藝', '在地'],
+        authorStory: {
+            zh: '為了讓外國旅客能更深度的認識台中，編輯部特別走訪了發源地，並將最值得花時間停留的手作課程串連起來。這是一個關於台中驕傲的體驗套餐。',
+            en: 'To help travelers go deeper, our team visited the original birthplaces of local specialties and curated the best hands-on sessions into one proud Taichung package.'
+        },
+        faq: [
+            {
+                title: '珍奶 DIY 真的好玩嗎？',
+                titleEn: 'Is Boba DIY fun?',
+                text: '非常有成就感！在大理石桌面上學習黃金比例，還能拿到官方結業證書，是很有紀念價值的體驗。',
+                textEn: 'Very satisfying! You learn the golden ratio and receive an official certificate. Great souvenir.'
+            },
+            {
+                title: '太陽餅可以帶回國嗎？',
+                titleEn: 'Bring cakes back?',
+                text: '手作太陽餅不含防腐劑，通常保存期為 7-14 天，建議在行程結束前幾天再帶。',
+                textEn: 'No preservatives; stays fresh for 7-14 days. Buy it towards the end of your trip.'
+            },
+            {
+                title: '審計新村什麼時候去最好？',
+                titleEn: 'Best time for Shenji?',
+                text: '平日下午人潮較少。如果是週末去，人雖然多但會有最熱鬧的暮暮市集可以逛。',
+                textEn: 'Weekday afternoons for less crowd, or weekends for the lively Mumu Market.'
+            },
+            {
+                title: '國家歌劇院需要門票嗎？',
+                titleEn: 'Theater entry fee?',
+                text: '進入歌劇院建築體是免費的！只有要進場觀賞特定的藝術表演才需要購票。',
+                textEn: 'Building entry is free! You only need tickets for specific shows or performances.'
+            }
+        ],
+        dayPreviews: [
+            { day: 1, summary: '珍奶 DIY → 太陽餅 DIY → 第二市場午餐 → 審計新村 → 國家歌劇院深度導覽' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '職人台中：手作與建築的對話',
+                themeEn: ' Artisan Taichung: Crafts & Curves',
+                themeEmoji: '🎨',
+                morning: [
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f5')!, 
+                        instanceId: 'tc-h1', 
+                        startTime: '09:30', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a4')!, 
+                        instanceId: 'tc-h2', 
+                        startTime: '11:30', 
+                        arrivalTransport: 'walk' 
+                    }
+                ],
+                afternoon: [
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f6')!, 
+                        instanceId: 'tc-h3', 
+                        startTime: '13:00', 
+                        timeLabel: '午餐 Lunch',
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a5')!, 
+                        instanceId: 'tc-h4', 
+                        startTime: '14:30', 
+                        arrivalTransport: 'public' 
+                    },
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a6')!, 
+                        instanceId: 'tc-h5', 
+                        startTime: '16:30', 
+                        arrivalTransport: 'public' 
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f7')!, 
+                        instanceId: 'tc-h6', 
+                        startTime: '18:30', 
+                        timeLabel: '晚餐 Dinner',
+                        arrivalTransport: 'walk' 
+                    }
+                ],
+                night: [],
+                accommodation: []
+            }
+        }
     }
 ];

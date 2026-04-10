@@ -1,4 +1,4 @@
-import { TravelItem } from '../../types';
+import { TravelItem } from '../../../types';
 
 export const TAICHUNG_ASSETS: TravelItem[] = [
     // === FOOD (Michelin & Hidden Gems) ===
@@ -290,4 +290,348 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
             }
         }
     },
+    // === NEW SPOTS FOR TEMPLATES ===
+    {
+        id: 'tc-f8',
+        title: '第二市場阿嬤蘿蔔糕',
+        titleEn: "Second Market A-Ma's Radish Cake",
+        type: 'food',
+        duration: '45分',
+        image: '🍳',
+        description: '台中人的靈魂早餐！傳承三代的味道，蘿蔔糕+糯米腸+蛋的「三樣」組合。',
+        descriptionEn: 'The soul of Taichung breakfast! A 3rd-gen classic combo: Radish cake + sticky rice sausage + egg.',
+        price: 65,
+        address: '台中市第二市場',
+        rating: 4.4,
+        lat: 24.1430,
+        lng: 120.6780,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        openingHours: '06:30-18:00',
+        tags: ['早餐', '在地', '銅板美食'],
+        insiderTip: {
+            teaser: '不要只點蘿蔔糕！內行人點「三樣」，配隔壁老賴紅茶',
+            teaserEn: 'Don\'t just get the cake! Order the "Combo 3" with a tea from next door.',
+            full: {
+                story: '這是台中的早晨社交中心。排隊的人潮從沒斷過，但速度很快。看到阿嬤在鐵板上飛快地翻動食材，那是台中的節奏。',
+                storyEn: "This is the social heart of morning Taichung. The line moves fast. Watching A-Ma's rhythmic flipping on the griddle is the heartbeat of this city.",
+                exactLocation: '第二市場內（三民路入口旁）',
+                exactLocationEn: 'Inside Second Market, near Sanmin Rd entrance',
+                mustTry: '蘿蔔糕 + 糯米腸 + 蛋（俗稱三樣）',
+                mustTryEn: 'Radish cake + Sticky rice sausage + Egg (The "Big Three")',
+                avoid: '週末早上 9 點到 11 點人最多，建議更早或下午去',
+                avoidEn: 'Avoid 9AM-11AM weekends. Go early morning or late afternoon.',
+                bestTime: '07:30 (最道地的早餐時段)',
+                bestTimeEn: '07:30 AM (Pure local breakfast vibe)'
+            }
+        }
+    },
+    {
+        id: 'tc-a2',
+        title: '科博館：恐龍紅綠燈',
+        titleEn: 'NMNS: Dinosaur Crossing',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🦖',
+        description: '全台唯一正在奔跑的小恐龍紅綠燈！附近還有亞洲最大的熱帶雨林室。',
+        descriptionEn: 'The only dinosaur traffic light in Taiwan! Next to the largest rainforest dome in Asia.',
+        price: 100,
+        address: '台中市北區館前路',
+        rating: 4.8,
+        lat: 24.1550,
+        lng: 120.6650,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['奇趣', '博物館', '打卡'],
+        insiderTip: {
+            teaser: '紅綠燈不只有小綠人，還有會跑步的小恐龍',
+            teaserEn: 'The green man is a running dinosaur here!',
+            full: {
+                story: '科博館外的交通號誌藏著驚喜。這裡的小恐龍會隨著節奏奔跑。進館後必看生命科學廳的巨型機械恐龍，還會發出吼聲。',
+                storyEn: 'The traffic signal hides a prehistoric surprise. Inside the museum, the animatronic dinosaurs are iconic and roar at visitors.',
+                exactLocation: '館前路口與科博館內',
+                exactLocationEn: 'Guanqian Rd intersection & inside the museum',
+                mustTry: '在門口拍恐龍紅綠燈，進館看暴龍',
+                mustTryEn: 'Photo with the dino light, then visit the T-Rex inside',
+                avoid: '週一休館，別白跑一趟',
+                avoidEn: 'Closed on Mondays.',
+                bestTime: '平日早上，避開戶外教學團',
+                bestTimeEn: 'Weekday mornings to avoid school groups'
+            }
+        }
+    },
+    {
+        id: 'tc-a3',
+        title: '中友百貨主題廁所',
+        titleEn: 'Chungyo Themed Toilets',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🚽',
+        description: '世界十大精彩廁所！每層樓都有不同主題：微醺可卡、海底世界、秘密花園。',
+        descriptionEn: 'World top 10 incredible toilets! Each floor has a unique theme from underwater to coking.',
+        price: 0,
+        address: '台中市三民路',
+        rating: 4.5,
+        lat: 24.1520,
+        lng: 120.6860,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['設計', '逛街', '奇趣'],
+        insiderTip: {
+            teaser: '百貨公司不是來逛街，是來參觀廁所的',
+            teaserEn: 'You don\'t come for shopping; you come for the toilets!',
+            full: {
+                story: '中友百貨的廁所設計曾獲國際大獎。推薦 C 棟 7 樓的「可口可樂」主題與 6 樓的「秘密花園」。甚至還有在廁所裡喝下午茶的感覺。',
+                storyEn: 'International award-winning designs. Floor 7C (Coca-Cola) and 6C (Secret Garden) are the highlights.',
+                exactLocation: '中友百貨 A, B, C 各棟樓層',
+                exactLocationEn: 'Across Buildings A, B, and C',
+                mustTry: '逐層尋找你的最愛，推薦 C 棟',
+                mustTryEn: 'Explore floor by floor, prioritize Building C',
+                avoid: '有些主題是女廁限定，男生請注意標誌',
+                avoidEn: 'Some star themes are ladies-only; watch the signs.',
+                bestTime: '平日下午，逛累了進來吹冷氣',
+                bestTimeEn: 'Weekday afternoons for a cool break'
+            }
+        }
+    },
+    {
+        id: 'tc-f4',
+        title: '一中街商圈',
+        titleEn: 'Yizhong Street',
+        type: 'food',
+        duration: '2小時',
+        image: '🍢',
+        description: '台中學生的美食基地。雞排、滷味、豐仁冰，CP值最高的夜市首選。',
+        descriptionEn: 'The student food base. Fried chicken, luwei, and Fengren ice. Best value night market.',
+        price: 200,
+        address: '台中市北區一中街',
+        rating: 4.6,
+        lat: 24.1490,
+        lng: 120.6850,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['夜市', '美食', '在地'],
+        insiderTip: {
+            teaser: '連鎖店不要吃！必點天使雞排與豐仁冰',
+            teaserEn: 'Skip the chains! Get the Angel Chicken and Fengren Ice.',
+            full: {
+                story: '比起逢甲，一中街更在地。這裡的食物份量大且便宜。如果你看到一長排隊伍，那就是目標。',
+                storyEn: 'More local than Fengjia. Portions are large and cheap. If there\'s a line, it\'s worth it.',
+                exactLocation: '台中科技大學對面整區',
+                exactLocationEn: 'Area opposite Taichung University of Tech',
+                mustTry: '豐仁冰 + 一中大雞排',
+                mustTryEn: 'Fengren Ice + Yizhong Fried Chicken',
+                avoid: '晚餐時段極度擁擠，包包揹前面',
+                avoidEn: 'Extremely crowded at dinner; wear your bag in front.',
+                bestTime: '17:00 (夜市剛開始運作時)',
+                bestTimeEn: '17:00 (Right when it starts up)'
+            }
+        }
+    },
+    {
+        id: 'tc-f5',
+        title: '春水堂 四維創始店',
+        titleEn: 'Chun Shui Tang Original Store',
+        type: 'food',
+        duration: '2小時',
+        image: '🧋',
+        description: '珍珠奶茶的發源地！在這裡親手學習如何調製一杯完美的冷飲茶。',
+        descriptionEn: 'The birthplace of Boba! Learn to craft the perfect pearl milk tea in this historic shop.',
+        price: 550,
+        address: '台中市西區四維街',
+        rating: 4.7,
+        lat: 24.1380,
+        lng: 120.6750,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['體驗', '珍奶', '經典'],
+        insiderTip: {
+            teaser: '不只是喝奶茶，還要拿證書的珍奶手作課',
+            teaserEn: 'Not just drinking; earn a certificate in Boba-making.',
+            full: {
+                story: '走入像古蹟一樣的老店，在大理石桌面上學習茶與奶的黃金比例。搖晃雪克杯的感覺非常治癒。',
+                storyEn: 'Enter the historic shop and learn the golden ratio of tea and milk on marble tables. Shaking the cup is therapeutic.',
+                exactLocation: '中市四維街 30 號',
+                exactLocationEn: 'No. 30, Siwei St',
+                mustTry: '珍奶 DIY 體驗（需預約）',
+                mustTryEn: 'Boba DIY Experience (Reservation req.)',
+                avoid: '一定要提前 5 天線上預訂體驗，不然只能坐著喝',
+                avoidEn: 'Book 5 days ahead, or you can only watch.',
+                bestTime: '平日下午 2 點的體驗場次',
+                bestTimeEn: '2 PM weekday sessions'
+            }
+        }
+    },
+    {
+        id: 'tc-a4',
+        title: '全台太陽餅博物館',
+        titleEn: 'Taiwan Sun Cake Museum',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🥮',
+        description: '日治時期紅磚老建築「全安堂」改造。除了看歷史，還能親手捏出太陽餅。',
+        descriptionEn: 'Housed in a Japanese-era red brick building. Explore history and mold your own sun cakes.',
+        price: 250,
+        address: '台中市中區台灣大道',
+        rating: 4.4,
+        lat: 24.1400,
+        lng: 120.6830,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['老建築', '手作', '伴手禮'],
+        insiderTip: {
+            teaser: '在百年紅磚房裡捏餅，還能看九個太陽的奧秘',
+            teaserEn: 'Bake in a 100-year-old house and learn the sun cake secrets.',
+            full: {
+                story: '全安堂老建築本身就是極美的展品。二樓是藝文空間，一樓則是充滿香氣的手作區。捏出的皮要夠酥，內餡要夠甜。',
+                storyEn: 'The building is an exhibit itself. 1F is for baking, 2F is an art space. The key is the flaky crust.',
+                exactLocation: '台中車站步行 10 分鐘',
+                exactLocationEn: '10-min walk from Taichung Station',
+                mustTry: '手作太陽餅 DIY',
+                mustTryEn: 'Sun Cake DIY',
+                avoid: '手作完需要烘烤時間，建議安排在行程中間',
+                avoidEn: 'Baking takes time; plan to stay for at least an hour.',
+                bestTime: '上午 10:30 (完成後剛好拿著餅去吃午餐)',
+                bestTimeEn: '10:30 AM (Ready just in time for lunch)'
+            }
+        }
+    },
+    {
+        id: 'tc-a5',
+        title: '審計新村',
+        titleEn: 'Shenji New Village',
+        type: 'attraction',
+        duration: '2小時',
+        image: '🏘️',
+        description: '公務員舊宿舍改建的文創聚落。隨處可見的創意小店、市集與特色甜點。',
+        descriptionEn: 'Former govt dorms turned creative hub. Full of indie shops, markets, and unique desserts.',
+        price: 0,
+        address: '台中市西區民生路',
+        rating: 4.6,
+        lat: 24.1450,
+        lng: 120.6620,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['文創', '市集', '文青'],
+        insiderTip: {
+            teaser: '二樓平檯是最佳視角，必買旅禾泡芙',
+            teaserEn: 'The 2F plateau is the best view. Get the L’herbe puffs!',
+            full: {
+                story: '在這些發黃的老牆間穿梭，你會發現驚喜。這裡的小店都是在地職人的心血。週末還會有「暮暮市集」。',
+                storyEn: 'Wander between the vintage walls for surprises. Each shop is a local artisan\'s dream. Mumu Market happens on weekends.',
+                exactLocation: '國美館附近',
+                exactLocationEn: 'Near NTMoFA',
+                mustTry: '旅禾泡芙家門口的戴泡芙帽打卡',
+                mustTryEn: 'Photo with the puff hats at L’herbe',
+                avoid: '週末下午人潮爆滿，拍照要排隊',
+                avoidEn: 'Avoid weekend afternoons if you hate crowds.',
+                bestTime: '平日下午 3 點 (夕陽灑在老房子上的光線最美)',
+                bestTimeEn: '3 PM Weekdays (Perfect golden hour light)'
+            }
+        }
+    },
+    {
+        id: 'tc-a6',
+        title: '台中國際歌劇院',
+        titleEn: 'National Taichung Theater',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🏟️',
+        description: '建築大師伊東豊雄的作品。無樑無柱的「美聲涵洞」，世界建築奇蹟。',
+        descriptionEn: 'Designed by Toyo Ito. A beam-less "Sound Cave" and a world architectural wonder.',
+        price: 0,
+        address: '台中市西屯區',
+        rating: 4.9,
+        lat: 24.1620,
+        lng: 120.6400,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        tags: ['建築', '藝術', '地標'],
+        insiderTip: {
+            teaser: '要去頂樓的空中花園，聽聽「無牆」的迴聲',
+            teaserEn: 'Visit the rooftop garden and listen to the wall-less echoes.',
+            full: {
+                story: '這不是普通的建築，而是一個巨大的呼吸器官。內部的曲牆沒有一處是直角。記得去 5 樓的 VVG 食尚空間坐坐。',
+                storyEn: "It's a giant breathing organ with no straight angles. Visit the VVG space on 5F.",
+                exactLocation: '七期重劃區中心',
+                exactLocationEn: 'Heart of the 7th Redevelopment Zone',
+                mustTry: '頂樓空中花園 + 5 樓 VVG 展覽',
+                mustTryEn: 'Rooftop Garden + 5F VVG exhibits',
+                avoid: '館內冷氣很強，記得帶薄外套',
+                avoidEn: 'Strong AC inside; bring a light jacket.',
+                bestTime: '18:00 (看建築點燈的最佳時刻)',
+                bestTimeEn: '18:00 (When the building glows)'
+            }
+        }
+    },
+    {
+        id: 'tc-f6',
+        title: '老賴茶棧 總店',
+        titleEn: 'Lao Lai Tea Shop',
+        type: 'food',
+        duration: '15分',
+        image: '🥤',
+        description: '第二市場排隊名店，傳統紅茶配豆香十足的豆香紅茶。',
+        descriptionEn: 'The pride of Second Market. Authentic black tea and soy milk tea.',
+        price: 35,
+        address: '台中市第二市場',
+        rating: 4.5,
+        lat: 24.1432,
+        lng: 120.6782,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        openingHours: '07:30-18:00',
+        tags: ['飲品', '在地'],
+        insiderTip: {
+            teaser: '傳說中的豆香紅茶，配阿嬤蘿蔔糕是標配',
+            teaserEn: 'The legendary soy black tea, best with radish cake.',
+            full: {
+                story: '雖然全台都有分店，但唯獨第二市場這間總店的味道最對。大不鏽鋼桶裝著碎冰，用杓子舀進杯裡，那是老派台中的清涼。',
+                storyEn: 'Despite many branches, the original stall in Second Market is unique. Served from large stainless steel drums with crushed ice.',
+                exactLocation: '第二市場內（三民路入口左手邊）',
+                exactLocationEn: 'Second Market, left at Sanmin Rd entrance.',
+                mustTry: '豆香紅茶 (Soy Milk Black Tea)',
+                mustTryEn: 'Soy Milk Black Tea',
+                avoid: '不要微冰去冰，碎冰是老賴的靈魂',
+                avoidEn: 'Don\'t ask for no ice; the crushed ice is the key.',
+                bestTime: '08:00 (配早餐剛剛好)',
+                bestTimeEn: '08:00 AM (Perfect with breakfast)'
+            }
+        }
+    },
+    {
+        id: 'tc-f7',
+        title: 'VVG Food Play',
+        titleEn: 'VVG Food Play',
+        type: 'food',
+        duration: '2小時',
+        image: '🍽️',
+        description: '台中國際歌劇院內的絕美餐廳，將建築藝術融入法式料理與台式美學。',
+        descriptionEn: 'Stunning restaurant inside Taichung Theater, blending architecture with gourmet dining.',
+        price: 1200,
+        address: '台中市西屯區惠來路二段101號5樓',
+        rating: 4.6,
+        lat: 24.1625,
+        lng: 120.6405,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        openingHours: '11:30-21:00',
+        tags: ['正式午餐/晚餐', '景觀', '設計'],
+        insiderTip: {
+            teaser: '在歌劇院呼吸孔洞裡用餐',
+            teaserEn: 'Dine inside the theater\'s breathing caves.',
+            full: {
+                story: '位於伊東豊雄大作的 5 樓。空間充滿了歌劇院著名的圓弧曲面，陽光透過大型落地窗灑入，是台中最浪漫的法式台魂餐廳。',
+                storyEn: 'Located on 5F of Toyo Ito\'s masterpiece. The space features the theater\'s iconic curves and floor-to-ceiling windows.',
+                exactLocation: '歌劇院 5 樓',
+                exactLocationEn: 'Theater Floor 5',
+                mustTry: '窗邊景觀位 + 主廚精選套餐',
+                mustTryEn: 'Window seat + Chef\'s Tasting Menu',
+                avoid: '週末務必預約，窗邊位子極難搶',
+                avoidEn: 'Reserve for weekends; window seats carry high demand.',
+                bestTime: '18:00 (傍晚的光線最優雅)',
+                bestTimeEn: '6 PM (Elegant evening light)'
+            }
+        }
+    }
 ];
