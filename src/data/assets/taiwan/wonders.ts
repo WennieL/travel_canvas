@@ -3,7 +3,7 @@ import { CulturalInsight } from '../../../types';
 export const CULTURAL_WONDERS: CulturalInsight[] = [
     {
         id: 'tw-breakfast-speed',
-        regionId: 'taipei',
+        regionId: 'taiwan',
         regionCode: 'TW',
         regionName: 'Taiwan',
         category: '台灣限定奇景',
@@ -37,7 +37,7 @@ export const CULTURAL_WONDERS: CulturalInsight[] = [
     },
     {
         id: 'tw-garbage-music',
-        regionId: 'taipei',
+        regionId: 'taiwan',
         regionCode: 'TW',
         regionName: 'Taiwan',
         category: '台灣最著名奇景',
@@ -54,7 +54,7 @@ export const CULTURAL_WONDERS: CulturalInsight[] = [
     },
     {
         id: 'tw-convenience-home',
-        regionId: 'taipei',
+        regionId: 'taiwan',
         regionCode: 'TW',
         regionName: 'Taiwan',
         category: '台灣限定奇景',
@@ -105,9 +105,9 @@ export const CULTURAL_WONDERS: CulturalInsight[] = [
     },
     {
         id: 'tw-queue-culture',
-        regionId: 'taipei',
+        regionId: 'taiwan',
         regionCode: 'TW',
-        regionName: 'Taipei',
+        regionName: 'Taiwan',
         category: '台灣限定奇景',
         categoryEn: 'Taiwan Exclusive Wonder',
         title: '排隊文化的神奇秩序',

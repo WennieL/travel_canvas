@@ -6,130 +6,163 @@ import { X, ArrowRight, Info } from 'lucide-react';
 
 interface SurvivalKitProps {
     guide?: SurvivalGuide;       // Legacy single-guide mode
-    guides?: SurvivalGuide[];    // New multi-guide (Compass) mode
+    guides?: SurvivalGuide[];
     lang: LangType;
     title?: string;
     subtitle?: string;
     titleEn?: string;
     subtitleEn?: string;
+    activeRegionFilter?: string; // [NEW] External control
 }
 
 export const SurvivalKit: React.FC<SurvivalKitProps> = ({ 
-    guide, 
-    guides, 
+    guide,
+    guides,
     lang,
     title,
     subtitle,
     titleEn,
-    subtitleEn
+    subtitleEn,
+    activeRegionFilter = 'all'
 }) => {
     const [selectedTopic, setSelectedTopic] = useState<SurvivalTopic | null>(null);
-    const [activeRegionFilter, setActiveRegionFilter] = useState<string>('all');
+    const [activeCategory, setActiveCategory] = useState<string>('all'); // [NEW] Sub-category filter
+    const [showAllTopics, setShowAllTopics] = useState(false); // [NEW] Full screen archive state
 
-    // 1. Determine which topics to show
+    // 1. Determine which topics to show for the region
     const allTopics = guides 
         ? guides.flatMap(g => g.topics) 
         : (guide?.topics || []);
 
-    const filteredTopics = activeRegionFilter === 'all'
+    const regionTopics = activeRegionFilter === 'all' || activeRegionFilter === 'taiwan'
         ? allTopics
         : allTopics.filter(t => {
-            // Find which guide this topic belongs to
             const parentGuide = guides?.find(g => g.topics.some(topic => topic.id === t.id));
-            return parentGuide?.regionId === activeRegionFilter;
+            if (!parentGuide) return false;
+            return parentGuide.regionId === activeRegionFilter || parentGuide.regionId === 'taiwan';
         });
 
-    // 2. Dynamic Filters based on data
-    const filterOptions = guides ? [
-        { id: 'all', label: lang === 'zh' ? '全部' : 'ALL' },
-        ...guides.map(g => ({
-            id: g.regionId,
-            label: g.regionId === 'taiwan' 
-                ? (lang === 'zh' ? '全台通用' : 'ESSENTIALS')
-                : (lang === 'zh' ? g.regionId.toUpperCase() : g.regionId.toUpperCase())
-        }))
-    ] : [];
+    if (regionTopics.length === 0) return null;
+
+    // 2. Extract unique categories dynamically and format them
+    const uniqueCategories = Array.from(new Set(regionTopics.map(t => t.category)));
+    const categoryMapping: Record<string, { zh: string, en: string, icon: string }> = {
+        'transport': { zh: '交通', en: 'Transport', icon: '🚌' },
+        'culture': { zh: '文化', en: 'Culture', icon: '🏮' },
+        'money': { zh: '花費', en: 'Money', icon: '💰' },
+        'food': { zh: '美食', en: 'Food', icon: '🍜' },
+        'safety': { zh: '安全', en: 'Safety', icon: '🛡️' },
+        'tips': { zh: '生活', en: 'Life Tips', icon: '💡' }
+    };
+
+    // 3. Apply final category filter
+    const displayTopics = activeCategory === 'all' 
+        ? regionTopics 
+        : regionTopics.filter(t => t.category === activeCategory);
 
     return (
         <section className="mt-8 mb-12">
-            <div className="flex flex-col gap-6 px-6 mb-8">
+            <div className="flex flex-col gap-6 px-6 mb-4">
                 {/* Header Section */}
                 {(title || subtitle) && (
-                    <div className="flex flex-col gap-1">
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-600">
-                            {lang === 'zh' ? title : titleEn}
-                        </h3>
-                        {subtitle && (
-                            <p className="text-[20px] font-serif font-black text-gray-900 leading-tight">
-                                {lang === 'zh' ? subtitle : subtitleEn}
-                            </p>
-                        )}
-                    </div>
-                )}
-
-                {/* Filter Pills (Only in Multi-guide mode) */}
-                {guides && guides.length > 0 && (
-                    <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-1">
-                        {filterOptions.map(opt => (
-                            <button
-                                key={opt.id}
-                                onClick={() => setActiveRegionFilter(opt.id)}
-                                className={`flex-shrink-0 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                                    activeRegionFilter === opt.id
-                                        ? 'bg-teal-600 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                                }`}
-                            >
-                                {opt.label}
-                            </button>
-                        ))}
+                    <div className="flex items-end justify-between">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-600">
+                                {lang === 'zh' ? title : titleEn}
+                            </h3>
+                            {subtitle && (
+                                <p className="text-[20px] font-serif font-black text-gray-900 leading-tight">
+                                    {lang === 'zh' ? subtitle : subtitleEn}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
 
-            <div className="flex overflow-x-auto scrollbar-hide gap-5 px-6 pb-4">
+            {/* Dynamic Category Tabs */}
+            {uniqueCategories.length > 0 && (
+                <div className="flex gap-2 overflow-x-auto no-scrollbar px-6 pb-6">
+                    <button
+                        onClick={() => setActiveCategory('all')}
+                        className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[11px] font-black tracking-widest transition-all ${
+                            activeCategory === 'all'
+                                ? 'bg-gray-900 text-white shadow-sm'
+                                : 'bg-gray-50 text-tc-text-sec/60 hover:bg-gray-100'
+                        }`}
+                    >
+                        {lang === 'zh' ? '全部' : 'ALL'}
+                    </button>
+                    {uniqueCategories.map(cat => {
+                        const meta = categoryMapping[cat] || { zh: cat, en: cat.toUpperCase(), icon: '📌' };
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveCategory(cat)}
+                                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[11px] font-black tracking-widest transition-all uppercase flex items-center gap-1.5 ${
+                                    activeCategory === cat
+                                        ? 'bg-gray-900 text-white shadow-sm'
+                                        : 'bg-gray-50 text-tc-text-sec/60 hover:bg-gray-100'
+                                }`}
+                            >
+                                <span className="text-[10px]">{meta.icon}</span>
+                                {lang === 'zh' ? meta.zh : meta.en}
+                            </button>
+                        );
+                    })}
+                </div>
+            )}
+
+            <div className="grid grid-rows-2 grid-flow-col auto-cols-[76px] md:auto-cols-[80px] gap-y-6 gap-x-4 overflow-x-auto no-scrollbar px-6 pb-6 snap-x snap-mandatory">
                 <AnimatePresence mode="popLayout">
-                    {filteredTopics.map((topic) => {
+                    {displayTopics.slice(0, 7).map((topic, index) => {
                         const IconComponent = (LucideIcons as any)[topic.icon] || LucideIcons.Info;
                         
                         return (
                             <motion.button
-                                key={topic.id}
+                                key={`${topic.id}-${index}`}
                                 layout
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                whileHover={{ y: -4 }}
-                                whileTap={{ scale: 0.98 }}
+                                whileHover={{ y: -2 }}
+                                whileTap={{ scale: 0.95 }}
                                 onClick={() => setSelectedTopic(topic)}
-                                className="flex-shrink-0 w-72 h-44 relative rounded-[2rem] overflow-hidden group shadow-lg border border-gray-100 bg-gray-50"
+                                className="flex flex-col items-center gap-2 group snap-center w-full"
                             >
-                                <img 
-                                    src={topic.imageUrl || 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800'} 
-                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    alt={topic.title}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                                
-                                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <div className="w-7 h-7 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
-                                            <IconComponent size={14} />
-                                        </div>
-                                        <span className="text-[9px] font-black text-white/70 uppercase tracking-widest leading-none">
-                                            {topic.category.toUpperCase()}
-                                        </span>
-                                    </div>
-                                    <h4 className="text-white font-black text-lg leading-tight mb-1">
+                                <div className="w-[60px] h-[60px] bg-white rounded-full flex shrink-0 items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-gray-100 group-hover:border-tc-primary/30 group-hover:shadow-[0_4px_15px_rgba(0,0,0,0.08)] transition-all overflow-hidden relative">
+                                    <IconComponent size={24} className="text-tc-primary group-hover:scale-110 transition-transform" />
+                                    <div className="absolute inset-0 bg-tc-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </div>
+                                <div className="text-center w-full px-1">
+                                    <h4 className="text-[11px] font-black leading-tight text-tc-text-main group-hover:text-tc-primary transition-colors line-clamp-1">
                                         {lang === 'zh' ? topic.title : topic.titleEn}
                                     </h4>
-                                    <p className="text-white/60 text-[11px] font-bold line-clamp-1">
-                                        {lang === 'zh' ? topic.teaser : topic.teaserEn}
-                                    </p>
                                 </div>
                             </motion.button>
                         );
                     })}
+                    
+                    {displayTopics.length > 7 && (
+                        <motion.button
+                            layout
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            whileHover={{ y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setShowAllTopics(true)}
+                            className="flex flex-col items-center gap-2 group snap-center w-full"
+                        >
+                            <div className="w-[60px] h-[60px] bg-gray-50 rounded-full flex shrink-0 items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-gray-100 group-hover:border-tc-primary/30 group-hover:bg-gray-100 transition-all overflow-hidden relative">
+                                <ArrowRight size={24} className="text-gray-900 group-hover:translate-x-1 transition-transform" />
+                            </div>
+                            <div className="text-center w-full px-1">
+                                <h4 className="text-[11px] font-black leading-tight text-tc-text-sec transition-colors line-clamp-1 uppercase uppercase tracking-wider">
+                                    {lang === 'zh' ? '查看更多' : 'More'}
+                                </h4>
+                            </div>
+                        </motion.button>
+                    )}
                 </AnimatePresence>
             </div>
 
@@ -191,11 +224,67 @@ export const SurvivalKit: React.FC<SurvivalKitProps> = ({
                                 <p className="text-[17px] leading-[2] text-gray-800 font-bold whitespace-pre-wrap">
                                     {lang === 'zh' ? selectedTopic.content : selectedTopic.contentEn}
                                 </p>
-
-
                             </div>
                         </motion.div>
                     </div>
+                )}
+            </AnimatePresence>
+
+            {/* Full Screen Category Archive (Uber Eats Style) */}
+            <AnimatePresence>
+                {showAllTopics && (
+                    <motion.div
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+                        className="fixed inset-0 z-[2000] bg-tc-bg flex flex-col pt-safe overflow-hidden"
+                    >
+                        {/* Sticky Header */}
+                        <div className="flex-shrink-0 h-16 flex items-center justify-between px-4 bg-white/90 backdrop-blur-md border-b border-gray-100 z-10 sticky top-0 shadow-sm">
+                            <button 
+                                onClick={() => setShowAllTopics(false)} 
+                                className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 hover:bg-gray-100 transition-colors"
+                            >
+                                <X size={20} className="text-gray-900" />
+                            </button>
+                            <h2 className="text-[15px] font-black tracking-widest text-tc-text-main absolute left-1/2 -translate-x-1/2 uppercase text-center w-[60%] truncate">
+                                {lang === 'zh' ? title : titleEn}
+                            </h2>
+                            <div className="w-10"></div>
+                        </div>
+
+                        {/* Scrollable Grid */}
+                        <div className="flex-1 overflow-y-auto px-6 py-8 pb-32">
+                            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-8">
+                                {displayTopics.map((topic, index) => {
+                                    const IconComponent = (LucideIcons as any)[topic.icon] || LucideIcons.Info;
+                                    return (
+                                        <motion.button
+                                            key={`${topic.id}-archive-${index}`}
+                                            layout
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            whileHover={{ y: -2 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setSelectedTopic(topic)}
+                                            className="flex flex-col items-center gap-2 group w-full"
+                                        >
+                                            <div className="w-[60px] h-[60px] md:w-[70px] md:h-[70px] bg-white rounded-full flex shrink-0 items-center justify-center shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-gray-100 group-hover:border-tc-primary/30 group-hover:shadow-[0_4px_15px_rgba(0,0,0,0.08)] transition-all overflow-hidden relative">
+                                                <IconComponent size={24} className="text-tc-primary group-hover:scale-110 transition-transform" />
+                                                <div className="absolute inset-0 bg-tc-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            </div>
+                                            <div className="text-center w-full px-1">
+                                                <h4 className="text-[11px] font-black leading-tight text-tc-text-main group-hover:text-tc-primary transition-colors line-clamp-2">
+                                                    {lang === 'zh' ? topic.title : topic.titleEn}
+                                                </h4>
+                                            </div>
+                                        </motion.button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </motion.div>
                 )}
             </AnimatePresence>
         </section>

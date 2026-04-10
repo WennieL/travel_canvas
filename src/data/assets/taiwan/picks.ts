@@ -1,4 +1,3 @@
-import { ALL_REGIONAL_ASSETS } from '../index';
 import { TravelItem } from '../../../types';
 
 export const TAIWAN_TOP_PICKS: Record<string, string[]> = {
@@ -40,9 +39,9 @@ export const TAIWAN_TOP_PICKS: Record<string, string[]> = {
 /**
  * Resolves a list of spot IDs into full TravelItem objects.
  */
-export const resolvePicks = (regionId: string): TravelItem[] => {
+export const resolvePicks = (regionId: string, allAssets: TravelItem[]): TravelItem[] => {
     const ids = TAIWAN_TOP_PICKS[regionId] || TAIWAN_TOP_PICKS['taiwan'];
     return ids
-        .map(id => ALL_REGIONAL_ASSETS.find((asset: any) => asset.id === id))
+        .map(id => allAssets.find((asset: any) => asset.id === id))
         .filter((asset): asset is TravelItem => !!asset);
 };

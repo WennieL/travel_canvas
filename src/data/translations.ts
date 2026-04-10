@@ -574,7 +574,10 @@ export const TRANSLATIONS = {
         category_trap: "踩雷",
         category_hidden: "隱藏版",
         clickToExpandStories: "點擊展開達人故事",
-        noExpertStories: "目前尚無在地達人點評，歡迎預約此行程親自探索這座城市的魅力。"
+        noExpertStories: "目前尚無在地達人點評，歡迎預約此行程親自探索這座城市的魅力。",
+        theGiftAnnex: "品味台灣：旅人伴手禮圖鑑",
+        souvenirStory: "伴手禮的故事",
+        iconicValue: "經典指數",
     },
     en: {
         appTitle: "TravelCanvas",
@@ -1163,7 +1166,10 @@ export const TRANSLATIONS = {
         category_trap: "TRAP",
         category_hidden: "HIDDEN",
         clickToExpandStories: "Tap to expand stories",
-        noExpertStories: "No expert stories yet. Book this spot to discover the city's charm yourself."
+        noExpertStories: "No expert stories yet. Book this spot to discover the city's charm yourself.",
+        theGiftAnnex: "The Gift Annex: Souvenir Guide",
+        souvenirStory: "The Gift Story",
+        iconicValue: "Iconic Value",
     }
 };
 

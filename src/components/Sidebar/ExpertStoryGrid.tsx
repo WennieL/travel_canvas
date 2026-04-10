@@ -45,7 +45,7 @@ export const ExpertStoryGrid: React.FC<ExpertStoryGridProps> = ({ stories, lang,
     return (
         <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-3">
-                {stories.map((story) => {
+                {stories.map((story, index) => {
                     const isExpanded = expandedId === story.id;
                     const IconComponent = (LucideIcons as any)[story.icon || CATEGORY_ICONS[story.id]] || LucideIcons.Info;
                     const accentColor = CATEGORY_COLORS[story.id];
@@ -53,7 +53,7 @@ export const ExpertStoryGrid: React.FC<ExpertStoryGridProps> = ({ stories, lang,
 
                     return (
                         <div
-                            key={story.id}
+                            key={`${story.id}-${index}`}
                             className={clsx(
                                 "flex flex-col rounded-[20px] overflow-hidden cursor-pointer transition-all duration-300 border",
                                 isExpanded ? "col-span-2 shadow-lg scale-[1.02]" : "shadow-sm hover:shadow-md",

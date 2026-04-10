@@ -86,6 +86,7 @@ export interface TravelItem {
     openingHours?: string;
     tags?: string[];
     region?: Region;
+    category?: string; // [NEW] Sub-category for filtering (e.g., 'food', 'lifestyle')
     origin?: string;       // 出發地 (for transport items)
     destination?: string;  // 目的地 (for transport items)
 

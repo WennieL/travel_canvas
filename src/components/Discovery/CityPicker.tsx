@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, MapPin, Star, Heart, Zap, Sparkles, ChevronRight, Leaf } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Template, LangType, Region, TravelItem, CulturalInsight } from '../../types';
-import { REGION_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS, CULTURAL_WONDERS } from '../../data';
+import { REGION_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS, CULTURAL_WONDERS, SAMPLE_ASSETS } from '../../data';
 import { CulturalInsightCard } from './CulturalInsightCard';
 
 interface CityPickerProps {
@@ -18,7 +18,9 @@ interface CityPickerProps {
 
 import { ALL_SURVIVAL_GUIDES } from '../../data/guides/compass';
 import { SurvivalKit } from './SurvivalKit';
+import { CategoryArchiveView } from './CategoryArchiveView';
 import { TAIWAN_TOP_PICKS, resolvePicks } from '../../data/assets/taiwan/picks';
+import { TAIWAN_GIFTS } from '../../data/assets/taiwan/gifts';
 import { getRegionName } from '../../data/regions';
 
 export const CityPicker: React.FC<CityPickerProps> = ({
@@ -33,6 +35,8 @@ export const CityPicker: React.FC<CityPickerProps> = ({
 }) => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [activePicksFilter, setActivePicksFilter] = useState<string>('taiwan');
+    const [activeGiftCategory, setActiveGiftCategory] = useState<string>('all'); // [NEW] Gift Annex category filter
+    const [activeArchive, setActiveArchive] = useState<{title: string, type: 'gifts' | 'wonders' | 'spots' | 'templates', items: any[]} | null>(null);
     const [showAllTopSpots, setShowAllTopSpots] = useState(false);
     const [showAllTemplates, setShowAllTemplates] = useState(false);
     const [likedSpots, setLikedSpots] = useState<Set<string>>(new Set());
@@ -65,13 +69,16 @@ export const CityPicker: React.FC<CityPickerProps> = ({
         { id: 'premium', label: lang === 'zh' ? '奢華' : 'PREMIUM' },
     ];
 
-    // Dynamic Top Picks Resolution
-    const topSpots = resolvePicks(activePicksFilter);
+    // Dynamic Top Picks & Gifts Resolution
+    const topSpots = resolvePicks(activePicksFilter, SAMPLE_ASSETS);
+    const regionGifts = TAIWAN_GIFTS.filter((gift: TravelItem) =>
+        activePicksFilter === 'taiwan' || gift.region === activePicksFilter
+    );
 
     // Dynamic Filter Pills for Top Picks ranking
     const picksRegions = Object.keys(TAIWAN_TOP_PICKS).map(key => ({
         id: key,
-        label: key === 'taiwan' 
+        label: key === 'taiwan'
             ? (lang === 'zh' ? '全台灣' : 'TAIWAN')
             : (lang === 'zh' ? getRegionName(key as Region, lang) : key.toUpperCase())
     }));
@@ -125,15 +132,29 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     </div>
                 </div>
 
-                {/* City Shortcuts (Emerald Canopy Spec: 64px, 10px Bold text) */}
+                {/* City Shortcuts acts as Global Filter */}
                 <div className="flex gap-4 overflow-x-auto no-scrollbar mt-12 pb-4 justify-between md:justify-center md:gap-10">
+                    <button
+                        onClick={() => setActivePicksFilter('taiwan')}
+                        className={`flex-shrink-0 flex flex-col items-center gap-3 group snap-start`}
+                    >
+                        <div className={`w-16 h-16 rounded-full overflow-hidden border-2 transition-all shadow-sm relative bg-gray-50 ${activePicksFilter === 'taiwan' ? 'border-tc-primary shadow-md' : 'border-transparent group-hover:border-tc-primary/40'}`}>
+                            <div className="w-full h-full flex items-center justify-center bg-gray-100/50">
+                                <Sparkles size={24} className={activePicksFilter === 'taiwan' ? 'text-tc-primary' : 'text-tc-text-sec/40 group-hover:text-tc-primary/60 transition-colors'} />
+                            </div>
+                        </div>
+                        <span className={`text-[10px] font-bold uppercase tracking-wider transition-colors ${activePicksFilter === 'taiwan' ? 'text-tc-primary' : 'text-tc-text-sec group-hover:text-tc-primary/80'}`}>
+                            {lang === 'zh' ? '全台探索' : 'ALL TAIWAN'}
+                        </span>
+                    </button>
                     {filteredCities.map((city) => (
                         <button
                             key={city.id}
-                            onClick={() => onSelectCity(city.id)}
+                            onClick={() => setActivePicksFilter(city.id)}
                             className="flex-shrink-0 flex flex-col items-center gap-3 group snap-start"
                         >
-                            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-transparent group-focus-within:border-tc-primary group-active:border-tc-primary transition-all shadow-sm group-hover:shadow-md relative bg-gray-50">
+                            <div className={`w-16 h-16 rounded-full overflow-hidden border-2 transition-all shadow-sm relative bg-gray-50 ${activePicksFilter === city.id ? 'border-tc-primary shadow-md' : 'border-transparent group-hover:border-tc-primary/40'}`}>
+
                                 <img
                                     src={cityImages[city.id] || "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=400"}
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -153,18 +174,125 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                 <>
                     {/* [NEW] Taiwan Compass Dynamic Section */}
                     <div className="mt-8">
-                        <SurvivalKit 
-                            guides={ALL_SURVIVAL_GUIDES} 
-                            lang={lang} 
-                            title="TAIWAN COMPASS"
-                            titleEn="TAIWAN COMPASS"
-                            subtitle="台灣指南針：全台必備生存錦囊"
-                            subtitleEn="The Essential Taiwan Survival Guide"
+                        <SurvivalKit
+                            guides={ALL_SURVIVAL_GUIDES}
+                            lang={lang}
+                            title={activePicksFilter === 'taiwan' ? "TAIWAN COMPASS" : `${getRegionName(activePicksFilter, 'en').toUpperCase()} COMPASS`}
+                            titleEn={activePicksFilter === 'taiwan' ? "TAIWAN COMPASS" : `${getRegionName(activePicksFilter, 'en').toUpperCase()} COMPASS`}
+                            subtitle={lang === 'zh' ? `${activePicksFilter === 'taiwan' ? '台灣' : getRegionName(activePicksFilter, 'zh')}指南針：必備生存錦囊` : `The Essential ${getRegionName(activePicksFilter, 'en')} Survival Guide`}
+                            subtitleEn={`The Essential ${getRegionName(activePicksFilter, 'en')} Survival Guide`}
+                            activeRegionFilter={activePicksFilter}
                         />
                     </div>
 
+                    {/* [NEW] The Gift Annex (Souvenir Guide) */}
+                    <div className="mt-24 px-6 bg-gray-50/50 py-12 border border-gray-100">
+                        <div className="flex items-center justify-between mb-6">
+                            <div className="flex flex-col gap-1">
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-tc-primary">
+                                    The Gift Annex
+                                </h3>
+                                <p className="text-[20px] font-serif font-black text-gray-900 leading-tight">
+                                    {t.theGiftAnnex || "品味台灣：旅人伴手禮圖鑑"}
+                                </p>
+                            </div>
+                            <button 
+                                onClick={() => setActiveArchive({ title: t.theGiftAnnex || "品味台灣：旅人伴手禮圖鑑", type: 'gifts', items: regionGifts })}
+                                className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200/50 hover:bg-gray-200 transition-colors"
+                            >
+                                <ChevronRight size={18} className="text-gray-900" />
+                            </button>
+                        </div>
+
+                        {(() => {
+                            // Unique Categories extraction and mapping
+                            const uniqueGiftCategories = Array.from(new Set(regionGifts.map((g: TravelItem) => g.category).filter(Boolean)));
+                            const giftCategoryMapping: Record<string, { zh: string, en: string, icon: string }> = {
+                                'food': { zh: '食品', en: 'Food', icon: '🍪' },
+                                'drink': { zh: '飲品', en: 'Drink', icon: '🍵' },
+                                'lifestyle': { zh: '生活類', en: 'Lifestyle', icon: '🛍️' }
+                            };
+
+                            const displayGifts = activeGiftCategory === 'all'
+                                ? regionGifts
+                                : regionGifts.filter((g: TravelItem) => g.category === activeGiftCategory);
+
+                            return (
+                                <>
+                                    {/* Gift Category Tabs */}
+                                    {uniqueGiftCategories.length > 0 && (
+                                        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-6">
+                                            <button
+                                                onClick={() => setActiveGiftCategory('all')}
+                                                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[11px] font-black tracking-widest transition-all ${activeGiftCategory === 'all'
+                                                    ? 'bg-gray-900 text-white shadow-sm'
+                                                    : 'bg-white text-tc-text-sec/60 hover:bg-gray-50 border border-gray-100'
+                                                    }`}
+                                            >
+                                                {lang === 'zh' ? '全部' : 'ALL'}
+                                            </button>
+                                            {uniqueGiftCategories.map(cat => {
+                                                const meta = giftCategoryMapping[cat as string] || { zh: cat, en: cat, icon: '📌' };
+                                                return (
+                                                    <button
+                                                        key={cat as string}
+                                                        onClick={() => setActiveGiftCategory(cat as string)}
+                                                        className={`flex-shrink-0 px-4 py-1.5 rounded-full text-[11px] font-black tracking-widest transition-all uppercase flex items-center gap-1.5 ${activeGiftCategory === cat
+                                                            ? 'bg-gray-900 text-white shadow-sm'
+                                                            : 'bg-white text-tc-text-sec/60 hover:bg-gray-50 border border-gray-100'
+                                                            }`}
+                                                    >
+                                                        <span className="text-[10px]">{meta.icon}</span>
+                                                        {lang === 'zh' ? meta.zh : meta.en}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+
+                                    {/* Horizontal Single Row Scroller */}
+                                    <div className="flex gap-4 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory">
+                                        <AnimatePresence mode="popLayout">
+                                            {displayGifts.map((gift: TravelItem) => (
+                                                <motion.button
+                                                    key={gift.id}
+                                                    layout
+                                                    initial={{ opacity: 0, scale: 0.9 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    exit={{ opacity: 0, scale: 0.9 }}
+                                                    onClick={() => onSelectItem(gift, 'discovery')}
+                                                    className="text-left group flex flex-col snap-center w-[140px] md:w-[160px] flex-shrink-0"
+                                                >
+                                                    <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-500 group-hover:-translate-y-1">
+                                                        <img
+                                                            src={gift.coverImage || "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800"}
+                                                            alt={gift.title}
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                        />
+                                                        {/* <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-md px-2 py-1.5 rounded-lg text-[9px] font-black text-tc-primary shadow-sm tracking-widest uppercase flex items-center gap-1">
+                                                            <span>{gift.image}</span>
+                                                            {lang === 'zh' ? '人氣推薦' : 'TOP'}
+                                                        </div> */}
+                                                    </div>
+                                                    <div className="mt-4 px-1">
+                                                        <h4 className="text-[13px] md:text-[14px] font-bold text-tc-text-main line-clamp-1 group-hover:text-tc-primary transition-colors">
+                                                            {lang === 'zh' ? gift.title : gift.titleEn}
+                                                        </h4>
+                                                        <p className="text-[11px] font-medium text-tc-text-sec/60 mt-1 line-clamp-2 leading-relaxed">
+                                                            {lang === 'zh' ? gift.marketingTitle : gift.marketingTitleEn}
+                                                        </p>
+                                                    </div>
+                                                </motion.button>
+                                            ))}
+                                        </AnimatePresence>
+                                    </div>
+                                </>
+                            );
+                        })()}
+                    </div>
+
                     {/* Canvas Top Picks Section */}
-                    <div className="mt-12 px-6">
+                    <div className="mt-24 px-6">
                         <div className="flex flex-col gap-6 mb-8">
                             <div className="flex items-center justify-between">
                                 <div className="flex flex-col gap-1">
@@ -172,40 +300,24 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                         Editor's Choice
                                     </h3>
                                     <p className="text-[20px] font-serif font-black text-gray-900 leading-tight">
-                                        {lang === 'zh' ? '萬中選一的台灣味' : 'Handpicked Taiwan Gems'}
+                                        {lang === 'zh' ? `萬中選一的${activePicksFilter === 'taiwan' ? '台灣' : getRegionName(activePicksFilter, 'zh')}味` : `Handpicked ${getRegionName(activePicksFilter, 'en')} Gems`}
                                     </p>
                                 </div>
-                                <button
-                                    onClick={() => setShowAllTopSpots(!showAllTopSpots)}
-                                    className="flex items-center gap-1 text-[11px] font-black text-tc-text-sec uppercase tracking-widest"
+                                <button 
+                                    onClick={() => setActiveArchive({ 
+                                        title: lang === 'zh' ? `萬中選一的${activePicksFilter === 'taiwan' ? '台灣' : getRegionName(activePicksFilter, 'zh')}味` : `Handpicked ${getRegionName(activePicksFilter, 'en')} Gems`, 
+                                        type: 'spots', 
+                                        items: topSpots 
+                                    })}
+                                    className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200/50 hover:bg-gray-200 transition-colors"
                                 >
-                                    {showAllTopSpots ? 'LESS' : 'MORE'}
+                                    <ChevronRight size={18} className="text-gray-900" />
                                 </button>
-                            </div>
-
-                            {/* Top Picks Region Filter Bar */}
-                            <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-1">
-                                {picksRegions.map(opt => (
-                                    <button
-                                        key={opt.id}
-                                        onClick={() => setActivePicksFilter(opt.id)}
-                                        className={`flex-shrink-0 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                                            activePicksFilter === opt.id
-                                                ? 'bg-gray-900 text-white shadow-md'
-                                                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                                        }`}
-                                    >
-                                        {opt.label}
-                                    </button>
-                                ))}
                             </div>
                         </div>
 
-                        <div className={showAllTopSpots
-                            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 animate-in fade-in duration-300"
-                            : "flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory"
-                        }>
-                            {topSpots.map((spot, idx) => (
+                        <div className="flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory">
+                            {topSpots.map((spot: TravelItem, idx: number) => (
                                 <button
                                     key={`${spot.id}-${idx}`}
                                     onClick={() => onSelectItem(spot, 'discovery')}
@@ -246,21 +358,34 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     </div>
 
                     {/* Curated For You (Templates) */}
-                    <div className="mt-10 px-5 pb-8">
+                    <div className="mt-24 px-5 pb-8">
                         <div className="flex items-center justify-between mb-6 px-1 border-b border-gray-100 pb-4">
                             <div className="flex items-center gap-2">
                                 <div className="w-8 h-8 rounded-full bg-tc-primary/5 flex items-center justify-center">
                                     <Zap className="text-tc-primary w-4 h-4 fill-tc-primary" />
                                 </div>
                                 <h3 className="text-lg font-black tracking-tight text-tc-text-main">
-                                    {lang === 'zh' ? '精選模板' : 'Curated For You'}
+                                    {lang === 'zh' ? `精選${activePicksFilter === 'taiwan' ? '' : getRegionName(activePicksFilter, 'zh')}行程` : `Curated For You in ${getRegionName(activePicksFilter, 'en')}`}
                                 </h3>
                             </div>
                             <button
-                                onClick={() => setShowAllTemplates(!showAllTemplates)}
-                                className="text-[11px] font-black text-tc-primary hover:text-tc-primary/70 transition-colors uppercase tracking-widest"
+                                onClick={() => {
+                                    let filtered = TEMPLATES.filter(tpl => activePicksFilter === 'taiwan' || tpl.region === activePicksFilter);
+                                    if (activeFilter === '1day') filtered = filtered.filter(tpl => tpl.duration === 1);
+                                    else if (activeFilter === 'short') filtered = filtered.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
+                                    else if (activeFilter === 'long') filtered = filtered.filter(tpl => tpl.duration >= 4);
+                                    else if (activeFilter === 'budget') filtered = filtered.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
+                                    else if (activeFilter === 'premium') filtered = filtered.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
+                                    
+                                    setActiveArchive({
+                                        title: lang === 'zh' ? `精選${activePicksFilter === 'taiwan' ? '' : getRegionName(activePicksFilter, 'zh')}行程` : `Curated For You in ${getRegionName(activePicksFilter, 'en')}`,
+                                        type: 'templates',
+                                        items: filtered
+                                    });
+                                }}
+                                className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200/50 hover:bg-gray-200 transition-colors"
                             >
-                                ALL
+                                <ChevronRight size={18} className="text-gray-900" />
                             </button>
                         </div>
 
@@ -281,20 +406,15 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         </div>
 
                         {/* Template Cards Horizontal Walkway */}
-                        <div className={showAllTemplates
-                            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 animate-in fade-in duration-300"
-                            : "flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory"
-                        }>
+                        <div className="flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory">
                             {(() => {
                                 // Apply filter
-                                let filtered = TEMPLATES;
-                                if (activeFilter === '1day') filtered = TEMPLATES.filter(tpl => tpl.duration === 1);
-                                else if (activeFilter === 'short') filtered = TEMPLATES.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
-                                else if (activeFilter === 'long') filtered = TEMPLATES.filter(tpl => tpl.duration >= 4);
-                                else if (activeFilter === 'budget') filtered = TEMPLATES.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
-                                else if (activeFilter === 'premium') filtered = TEMPLATES.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
-
-                                if (showAllTemplates) return filtered;
+                                let filtered = TEMPLATES.filter(tpl => activePicksFilter === 'taiwan' || tpl.region === activePicksFilter);
+                                if (activeFilter === '1day') filtered = filtered.filter(tpl => tpl.duration === 1);
+                                else if (activeFilter === 'short') filtered = filtered.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
+                                else if (activeFilter === 'long') filtered = filtered.filter(tpl => tpl.duration >= 4);
+                                else if (activeFilter === 'budget') filtered = filtered.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
+                                else if (activeFilter === 'premium') filtered = filtered.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
 
                                 // Show diverse for short list
                                 return filtered.filter((tpl, index) => index % 2 === 0).slice(0, 5); // Just some subset
@@ -302,7 +422,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                 <button
                                     key={tpl.id}
                                     onClick={() => onPreviewTemplate(tpl)}
-                                    className={`text-left group snap-center flex flex-col gap-3 ${showAllTemplates ? 'w-full' : 'flex-shrink-0 w-[240px] md:w-[280px]'}`}
+                                    className="text-left group snap-center flex flex-col gap-3 flex-shrink-0 w-[240px] md:w-[280px]"
                                 >
                                     {/* Image Container */}
                                     <div className="relative aspect-[16/10] rounded-[24px] overflow-hidden shadow-sm border border-tc-border/20 group-hover:shadow-[0_10px_30px_rgba(13,99,27,0.08)] transition-all group-hover:-translate-y-1">
@@ -328,19 +448,29 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     </div>
 
                     {/* [NEW] Global Cultural Flashcards (文化閃卡) - Bottom of Page Version */}
-                    <div className="mt-12 px-5 pb-12 overflow-hidden">
+                    <div className="mt-24 px-5 pb-12 overflow-hidden">
                         <div className="flex items-center justify-between mb-8 px-1">
                             <div className="flex items-center gap-2">
                                 <Sparkles className="text-tc-primary w-5 h-5" />
                                 <h2 className="text-xl font-black text-tc-text-main tracking-tight uppercase">
-                                    {lang === 'zh' ? '在地奇景' : 'Local Wonders'}
+                                    {lang === 'zh' ? `${activePicksFilter === 'taiwan' ? '' : getRegionName(activePicksFilter, 'zh')}在地奇景` : `Local Wonders in ${getRegionName(activePicksFilter, 'en')}`}
                                 </h2>
                             </div>
+                            <button 
+                                onClick={() => setActiveArchive({ 
+                                    title: lang === 'zh' ? `${activePicksFilter === 'taiwan' ? '' : getRegionName(activePicksFilter, 'zh')}在地奇景` : `Local Wonders in ${getRegionName(activePicksFilter, 'en')}`, 
+                                    type: 'wonders', 
+                                    items: CULTURAL_WONDERS.filter(w => activePicksFilter === 'taiwan' || w.regionId === activePicksFilter || w.regionId === 'taiwan')
+                                })}
+                                className="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200/50 hover:bg-gray-200 transition-colors"
+                            >
+                                <ChevronRight size={18} className="text-gray-900" />
+                            </button>
                         </div>
 
                         <div className="flex gap-4 overflow-x-auto no-scrollbar px-1 pb-6 snap-x snap-mandatory">
-                            {CULTURAL_WONDERS.map((wonder: CulturalInsight) => (
-                                <div key={wonder.id} className="snap-center">
+                            {CULTURAL_WONDERS.filter(w => activePicksFilter === 'taiwan' || w.regionId === activePicksFilter || w.regionId === 'taiwan').map((wonder: CulturalInsight) => (
+                                <div key={wonder.id} className="snap-center flex-shrink-0">
                                     <CulturalInsightCard
                                         insight={wonder}
                                         lang={lang}
@@ -349,7 +479,6 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                     />
                                 </div>
                             ))}
-                            <div className="min-w-[40px] h-full shrink-0" />
                         </div>
                     </div>
                 </>
@@ -397,6 +526,26 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                             </div>
                         </motion.div>
                     </>
+                )}
+            </AnimatePresence>
+
+            {/* Drill-down Category Archive View */}
+            <AnimatePresence>
+                {activeArchive && (
+                    <CategoryArchiveView
+                        title={activeArchive.title}
+                        type={activeArchive.type}
+                        items={activeArchive.items}
+                        lang={lang}
+                        onClose={() => setActiveArchive(null)}
+                        onSelectItem={(item) => {
+                            if (activeArchive.type === 'wonders') {
+                                setSelectedInsight(item as CulturalInsight);
+                            } else {
+                                onSelectItem(item as TravelItem, 'discovery');
+                            }
+                        }}
+                    />
                 )}
             </AnimatePresence>
         </div>
