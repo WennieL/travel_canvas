@@ -272,7 +272,12 @@ export const useAppActions = (deps: AppActionsDeps) => {
         }
 
         showToastMessage(message);
-    }, [ui, currentDay, activePlan, updateActivePlan, showToastMessage, t]);
+
+        // [Phase UX] Jump to the target day if it's different from the current day
+        if (targetDay !== currentDay) {
+            setCurrentDay(targetDay);
+        }
+    }, [ui, currentDay, activePlan, updateActivePlan, showToastMessage, t, setCurrentDay]);
 
     const handleGateCheck = useCallback((action: () => void, setUnlockTarget: (item: ScheduleItem | null) => void, setBatchUnlockCount: (count: number) => void) => {
         let lockedCount = 0;

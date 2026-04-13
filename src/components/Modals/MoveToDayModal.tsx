@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MoveRight, Sun, Coffee, Moon, Star } from 'lucide-react';
+import { X, MoveRight, Sun, Coffee, Moon, Star, Plus } from 'lucide-react';
 import { TimeSlot } from '../../types';
 
 interface MoveToDayModalProps {
@@ -9,6 +9,7 @@ interface MoveToDayModalProps {
     currentDay: number;
     currentSlot: TimeSlot;
     onExecute: (day: number, slot: TimeSlot) => void;
+    onAddDay?: () => void;
     t: any;
 }
 
@@ -26,6 +27,7 @@ export const MoveToDayModal: React.FC<MoveToDayModalProps> = ({
     currentDay,
     currentSlot,
     onExecute,
+    onAddDay,
     t
 }) => {
     const [selectedDay, setSelectedDay] = useState<number>(currentDay);
@@ -93,6 +95,17 @@ export const MoveToDayModal: React.FC<MoveToDayModalProps> = ({
                                     )}
                                 </button>
                             ))}
+                            {onAddDay && (
+                                <div className="flex items-center justify-center">
+                                    <button
+                                        onClick={onAddDay}
+                                        className="w-9 h-9 rounded-full bg-slate-50 text-slate-400 border border-slate-100 hover:bg-teal-50 hover:text-teal-600 hover:border-teal-100 flex items-center justify-center transition-all shadow-sm"
+                                        title={t.addDay || "Add Day"}
+                                    >
+                                        <Plus size={16} />
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
 

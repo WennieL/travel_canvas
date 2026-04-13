@@ -626,6 +626,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 onExpertMode={enterExpertCreationMode}
                 handleDeletePlan={_handleDeletePlan}
                 setPlans={setPlans}
+                handleAddDay={props.handleAddDay}
                 executeCreateBlankPlan={props.executeCreateBlankPlan}
 
                 // Custom Items

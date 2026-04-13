@@ -44,7 +44,7 @@ import { AppProvider } from './contexts/AppContext';
 import { UIProvider } from './contexts/UIContext';
 
 export function App() {
-    const [lang, setLang] = useState<LangType>('zh');
+    const [lang, setLang] = useState<LangType>('en');
     const [isInitialized, setIsInitialized] = useState(false);
     const [isCreatingNewPlan, setIsCreatingNewPlan] = useState(false);
     const [showOnboarding, setShowOnboarding] = useState(false);

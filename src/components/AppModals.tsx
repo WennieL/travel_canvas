@@ -139,6 +139,7 @@ interface AppModalsProps {
     subscribedCreators: string[];
     onCreatorClick: (id: string) => void;
     onPreviewTemplate: (tpl: Template) => void;
+    handleAddDay?: () => void;
 
     // Tools props for Sidebar/MobileLibrary
     budgetLimit: number;
@@ -199,7 +200,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
         savedSpots, savedTemplates,
         handleToggleFavoriteSpot, handleToggleFavoriteTemplate,
         pendingWizardData, setPendingWizardData,
-        onUpdateScheduleItem
+        onUpdateScheduleItem,
+        handleAddDay
     } = props;
 
     return (
@@ -329,6 +331,7 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 currentDay={currentDay}
                 currentSlot={moveTarget?.slot || 'morning'}
                 onExecute={executeMoveItem}
+                onAddDay={handleAddDay}
                 t={t}
             />
 
