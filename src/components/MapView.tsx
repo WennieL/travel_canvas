@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ScheduleItem, TimeSlot, LangType, TravelItem } from '../types';
-import { List, Map as MapIcon, Navigation, ExternalLink, X, Maximize2, Minimize2, PlusCircle } from 'lucide-react';
+import { List, Map as MapIcon, Navigation, ExternalLink, X, Maximize2, Minimize2, PlusCircle, Star, Filter, ChevronRight, Check, Eye, EyeOff } from 'lucide-react';
 import { SAMPLE_ASSETS, SAMPLE_CREATORS } from '../data';
 import { useMapEvents } from 'react-leaflet';
 
@@ -84,9 +84,24 @@ const MapView: React.FC<MapViewProps> = ({
     const [isMobile, setIsMobile] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [isLandscape, setIsLandscape] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [showScheduled, setShowScheduled] = useState(false); // Default true for Discovery Focus (hide scheduled items)
+    const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
 
     const listRef = useRef<HTMLDivElement>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
     const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+    // Filter Tags Definition
+    const FILTER_TAGS = [
+        { id: 'all', labelKey: 'filter_all', icon: '🌟' },
+        { id: 'food', labelKey: 'filter_food', icon: '🍔' },
+        { id: 'attraction', labelKey: 'filter_attraction', icon: '📸' },
+        { id: 'shopping', labelKey: 'filter_shopping', icon: '🛍️' },
+        { id: 'nature', labelKey: 'nature', icon: '🌲' },
+        { id: 'artisan', labelKey: 'filter_artisan', icon: '🎨' },
+        { id: 'saved', labelKey: 'filter_saved', icon: '❤️' },
+    ];
 
     useEffect(() => {
         const checkDevice = () => {
@@ -133,11 +148,22 @@ const MapView: React.FC<MapViewProps> = ({
         // [PHASE 22.3] Multi-Creator Aggregate Discovery Layer (Region-Aware)
         if (discoveryCreatorId) {
             // Show points from ALL creators in this region (SAMPLE_ASSETS = ALL_REGIONAL_ASSETS)
-            const discoveryAssets = SAMPLE_ASSETS.filter(asset =>
+            let discoveryAssets = SAMPLE_ASSETS.filter(asset =>
                 asset.authorId &&
                 (activeRegion === 'all' || asset.region === activeRegion) &&
                 !list.some(p => p.item.id === asset.id || p.item.title === asset.title)
             );
+
+            // Apply Category Filtering
+            if (selectedCategory !== 'all') {
+                if (selectedCategory === 'saved') {
+                    // TODO: Connect to actual savedSpots state if available
+                    // For now, filter by a mock property or just omit if no saved items
+                    discoveryAssets = discoveryAssets.filter(a => (a as any).isSaved);
+                } else {
+                    discoveryAssets = discoveryAssets.filter(asset => asset.type === selectedCategory);
+                }
+            }
 
             // [NEW] Group by Location (Lat/Lng) to handle multi-author spots
             const groupedNearby: Record<string, TravelItem[]> = {};
@@ -150,8 +176,6 @@ const MapView: React.FC<MapViewProps> = ({
             Object.entries(groupedNearby).forEach(([key, assets]) => {
                 const primary = assets[0];
                 if (primary.lat && primary.lng) {
-                    // [NEW] Use the consolidated recommendations structure
-                    // If multiple assets were found at the same location, merged them
                     const mergedRecommendations = assets.flatMap(a => a.recommendations || []);
                     
                     list.push({
@@ -171,8 +195,13 @@ const MapView: React.FC<MapViewProps> = ({
             });
         }
 
+        // Only show discovery items if "showScheduled" is false
+        if (discoveryCreatorId && !showScheduled) {
+            return list.filter(p => p.isDiscovery);
+        }
+
         return list;
-    }, [schedule, discoveryCreatorId, activeRegion]);
+    }, [schedule, discoveryCreatorId, activeRegion, selectedCategory, showScheduled]);
 
     const getSlotColor = (slot: string, index: number) => {
         if (slot === 'discovery') return 'bg-amber-400 border-amber-500 ring-amber-400/30';
@@ -270,6 +299,24 @@ const MapView: React.FC<MapViewProps> = ({
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        // [NEW] Sync carousel if in discovery mode
+        if (discoveryCreatorId) {
+            const carouselIdx = points.findIndex(p => p.item.instanceId === item.instanceId);
+            if (carouselIdx !== -1) {
+                setActiveCarouselIndex(carouselIdx);
+                const carouselEl = carouselRef.current;
+                if (carouselEl) {
+                    const cardEl = carouselEl.children[carouselIdx] as HTMLElement;
+                    if (cardEl) {
+                        carouselEl.scrollTo({ 
+                            left: cardEl.offsetLeft - 24, 
+                            behavior: 'smooth' 
+                        });
+                    }
+                }
+            }
+        }
+
         if (onItemClick) {
             onItemClick(item);
         }
@@ -278,8 +325,8 @@ const MapView: React.FC<MapViewProps> = ({
     return (
         <div className={`bg-gray-100 rounded-3xl relative overflow-hidden border border-gray-200 shadow-inner flex ${isMobile && !isFullScreen ? (isLandscape ? 'flex-row-reverse h-[85svh]' : 'flex-col-reverse h-[85svh]') : 'flex-row h-full min-h-[500px]'}`}>
 
-            {/* Sidebar List (Desktop or Mobile Split-View) */}
-            {((!isMobile && !isEmbedded && showList) || (isMobile && !isFullScreen && !isEmbedded)) && points.length > 0 && (
+            {/* Sidebar List (Classic Mode Only) */}
+            {!discoveryCreatorId && ((!isMobile && !isEmbedded && showList) || (isMobile && !isFullScreen && !isEmbedded)) && points.length > 0 && (
                 <div className={`${isMobile ? (isLandscape ? 'w-1/2 h-full border-l' : 'w-full flex-1 border-r') : 'w-56 border-r'} bg-white border-gray-200 flex flex-col z-[400] overflow-hidden shrink-0 shadow-lg`}>
                     <div className="p-3 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
                         <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
@@ -350,6 +397,112 @@ const MapView: React.FC<MapViewProps> = ({
                     ))}
                 </MapContainer>
 
+                {/* [NEW] Filter Pills Overlay */}
+                {discoveryCreatorId && (
+                    <div className="absolute top-4 left-4 right-4 z-[600] pointer-events-none">
+                        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 pointer-events-auto">
+                            {FILTER_TAGS.map(tag => (
+                                <button
+                                    key={tag.id}
+                                    onClick={() => setSelectedCategory(tag.id)}
+                                    className={`px-4 py-2 rounded-full text-[10px] font-black whitespace-nowrap transition-all flex items-center gap-1.5 shadow-lg border-2 ${selectedCategory === tag.id
+                                        ? 'bg-gray-900 border-gray-900 text-white scale-105'
+                                        : 'bg-white/90 backdrop-blur-md border-white/50 text-gray-600 hover:bg-white'
+                                        }`}
+                                >
+                                    <span>{tag.icon}</span>
+                                    {t[tag.labelKey] || tag.id}
+                                </button>
+                            ))}
+                            <div className="w-[1px] h-6 bg-gray-300 mx-1 shrink-0" />
+                            <button
+                                onClick={() => setShowScheduled(!showScheduled)}
+                                className={`px-4 py-2 rounded-full text-[10px] font-black whitespace-nowrap transition-all flex items-center gap-1.5 shadow-lg border-2 ${showScheduled
+                                    ? 'bg-teal-500 border-teal-500 text-white'
+                                    : 'bg-white/90 backdrop-blur-md border-white/50 text-gray-600 hover:bg-white'
+                                    }`}
+                            >
+                                {showScheduled ? <Eye size={12} /> : <EyeOff size={12} />}
+                                {lang === 'en' ? 'Scheduled' : '已排程'}
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* [NEW] Horizontal Spot Carousel */}
+                {discoveryCreatorId && points.length > 0 && (
+                    <div className="absolute bottom-6 left-0 right-0 z-[500] flex flex-col items-center gap-4">
+                        <div 
+                            ref={carouselRef}
+                            className="w-full flex gap-4 overflow-x-auto snap-x snap-mandatory px-6 no-scrollbar pb-4"
+                        >
+                            {points.map((p, idx) => (
+                                <div 
+                                    key={idx}
+                                    className={`relative flex-none w-[280px] md:w-[320px] snap-center transition-all duration-300 ${selectedItem?.instanceId === p.item.instanceId ? 'scale-105' : 'scale-100 opacity-90 hover:opacity-100'}`}
+                                    onClick={() => handleItemSelection(p.item, idx)}
+                                >
+                                    <div className={`bg-white rounded-3xl overflow-hidden shadow-2xl border-4 ${selectedItem?.instanceId === p.item.instanceId ? 'border-teal-500' : 'border-white'}`}>
+                                        <div className="aspect-[16/10] relative">
+                                            {p.item.coverImage ? (
+                                                <img src={p.item.coverImage} className="w-full h-full object-cover" alt={p.item.title} />
+                                            ) : (
+                                                <div className="w-full h-full bg-slate-100 flex items-center justify-center text-4xl">{p.item.image || '📍'}</div>
+                                            )}
+                                            <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                                <h4 className="text-white font-black text-lg truncate">
+                                                    {lang === 'zh' ? p.item.title : (p.item.titleEn || p.item.title)}
+                                                </h4>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <div className="flex items-center gap-1 text-amber-400 text-xs font-bold">
+                                                        <Star size={12} fill="currentColor" /> {(p.item as any).rating || '4.8'}
+                                                    </div>
+                                                    <span className="text-white/60 text-[10px]">•</span>
+                                                    <span className="text-white/80 text-[10px] font-bold">{(p.item as any).addressEn || p.item.address || 'Nearby'}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* Creator Badge */}
+                                            <div className="absolute top-4 right-4 w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-lg bg-white">
+                                                <img src={`https://i.pravatar.cc/100?u=${p.item.authorId}`} className="w-full h-full object-cover" />
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="p-4 flex items-center justify-between bg-slate-50/50">
+                                            <div className="flex items-baseline gap-1">
+                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Category</span>
+                                                <span className="text-xs font-black text-slate-600 capitalize">
+                                                    {p.item.type || 'Attraction'}
+                                                </span>
+                                            </div>
+                                            <button 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onAddItem?.(p.item as TravelItem);
+                                                }}
+                                                className="px-5 py-2 bg-teal-500 hover:bg-teal-600 text-white text-xs font-black rounded-xl shadow-lg shadow-teal-500/30 active:scale-95 transition-all flex items-center gap-2"
+                                            >
+                                                <PlusCircle size={14} />
+                                                {t.action_quick_add}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        
+                        {/* Carousel Dots */}
+                        <div className="flex gap-1.5 mb-2">
+                            {points.map((_, i) => (
+                                <div 
+                                    key={i} 
+                                    className={`h-1.5 rounded-full transition-all duration-300 ${activeCarouselIndex === i ? 'w-6 bg-teal-500' : 'w-1.5 bg-gray-300'}`} 
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 {/* Mobile Fullscreen Toggle */}
                 {isMobile && !isEmbedded && (
                     <button
@@ -363,7 +516,15 @@ const MapView: React.FC<MapViewProps> = ({
                 {/* Mobile Close Button (FAB) */}
                 {isMobile && onClose && (
                     <button
-                        onClick={onClose}
+                        onClick={() => {
+                            if (points.length === 0 && discoveryCreatorId) {
+                                // Prevent users from accidentally exiting the map when they just wanted to dismiss the empty state
+                                setSelectedCategory('all');
+                                setShowScheduled(false);
+                            } else {
+                                onClose();
+                            }
+                        }}
                         className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full shadow-lg z-[1100] flex items-center justify-center text-gray-700 active:scale-95 transition-all"
                     >
                         <X size={20} />
@@ -371,12 +532,31 @@ const MapView: React.FC<MapViewProps> = ({
                 )}
 
                 {points.length === 0 && (
-                    <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-[500] flex items-center justify-center">
-                        <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm mx-4">
-                            <MapIcon size={32} className="text-gray-400 mx-auto mb-4" />
-                            <h3 className="font-bold text-gray-800 mb-2">{t.noSpotsOnMap}</h3>
-                            <p className="text-sm text-gray-500">{t.dragFromSidebarToMap}</p>
-                        </div>
+                    <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-[500] flex items-center justify-center pointer-events-auto">
+                        {discoveryCreatorId ? (
+                            <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm mx-4 border border-gray-100 relative">
+                                {/* Only show close button here if requested, but normally mobile X is below */}
+                                <Filter size={32} className="text-gray-400 mx-auto mb-4" />
+                                <h3 className="font-bold text-gray-800 mb-2">{lang === 'en' ? 'No Spots Found' : '沒有符合的景點'}</h3>
+                                <p className="text-sm text-gray-500 mb-5">{lang === 'en' ? 'Try changing the category or showing your scheduled spots.' : '試著切換「全部」或解除隱藏已排程的景點'}</p>
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedCategory('all');
+                                        setShowScheduled(false);
+                                    }}
+                                    className="px-6 py-2.5 bg-gray-900 hover:bg-gray-800 text-white font-bold rounded-xl shadow-md transition-colors w-full"
+                                >
+                                    {lang === 'en' ? 'Clear Filters' : '清除篩選並顯示全部'}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm mx-4">
+                                <MapIcon size={32} className="text-gray-400 mx-auto mb-4" />
+                                <h3 className="font-bold text-gray-800 mb-2">{t.noSpotsOnMap}</h3>
+                                <p className="text-sm text-gray-500">{t.dragFromSidebarToMap}</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
