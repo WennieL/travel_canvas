@@ -130,7 +130,10 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                 {/* City Shortcuts acts as Global Filter */}
                 <div className="flex gap-4 overflow-x-auto no-scrollbar mt-12 pb-4 justify-between md:justify-center md:gap-10">
                     <button
-                        onClick={() => setActivePicksFilter('taiwan')}
+                        onClick={() => {
+                            if (isSelectionOnly) onSelectCity('taiwan' as Region);
+                            else setActivePicksFilter('taiwan');
+                        }}
                         className={`flex-shrink-0 flex flex-col items-center gap-3 group snap-start`}
                     >
                         <div className={`w-16 h-16 rounded-full overflow-hidden border-2 transition-all shadow-sm relative bg-gray-50 ${activePicksFilter === 'taiwan' ? 'border-tc-primary shadow-md' : 'border-transparent group-hover:border-tc-primary/40'}`}>
@@ -145,7 +148,10 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     {filteredCities.map((city) => (
                         <button
                             key={city.id}
-                            onClick={() => setActivePicksFilter(city.id)}
+                            onClick={() => {
+                                if (isSelectionOnly) onSelectCity(city.id as Region);
+                                else setActivePicksFilter(city.id);
+                            }}
                             className="flex-shrink-0 flex flex-col items-center gap-3 group snap-start"
                         >
                             <div className={`w-16 h-16 rounded-full overflow-hidden border-2 transition-all shadow-sm relative bg-gray-50 ${activePicksFilter === city.id ? 'border-tc-primary shadow-md' : 'border-transparent group-hover:border-tc-primary/40'}`}>
@@ -219,7 +225,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         </div>
 
                         {/* Template Cards Horizontal Walkway */}
-                        <div className="flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory">
+                        <div className="flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory min-h-[100px]">
                             {(() => {
                                 let filtered = TEMPLATES.filter(tpl => activePicksFilter === 'taiwan' || tpl.region === activePicksFilter);
                                 if (activeFilter === '1day') filtered = filtered.filter(tpl => tpl.duration === 1);
@@ -228,31 +234,46 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                                 else if (activeFilter === 'budget') filtered = filtered.filter(tpl => !tpl.isLocked || tpl.tier !== 'official');
                                 else if (activeFilter === 'premium') filtered = filtered.filter(tpl => tpl.tier === 'official' || tpl.isLocked);
 
-                                return filtered.slice(0, 8);
-                            })().map(tpl => (
-                                <button
-                                    key={tpl.id}
-                                    onClick={() => onPreviewTemplate(tpl)}
-                                    className="text-left group snap-center flex flex-col gap-3 flex-shrink-0 w-[240px] md:w-[280px]"
-                                >
-                                    <div className="relative aspect-[16/10] rounded-[24px] overflow-hidden shadow-sm border border-tc-border/20 group-hover:shadow-[0_10px_30px_rgba(13,99,27,0.08)] transition-all group-hover:-translate-y-1">
-                                        <img
-                                            src={tpl.coverImage}
-                                            alt={lang === 'zh' ? tpl.name : tpl.nameEn}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                        />
-                                    </div>
-
-                                    <div className="px-1">
-                                        <div className="flex items-center gap-1 text-[10px] text-tc-text/50 font-black mb-1 uppercase tracking-wider leading-none">
-                                            <MapPin size={10} className="text-tc-tertiary" /> {tpl.region}
+                                const results = filtered.slice(0, 8);
+                                
+                                if (results.length === 0) {
+                                    return (
+                                        <div className="w-full py-12 flex flex-col items-center justify-center bg-gray-50/50 rounded-[32px] border-2 border-dashed border-gray-100/80 mx-1">
+                                            <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm mb-4">
+                                                <Sparkles className="text-amber-400 w-6 h-6" />
+                                            </div>
+                                            <p className="text-[13px] font-black text-gray-400 uppercase tracking-[0.2em]">
+                                                {lang === 'zh' ? '敬請期待 靈感正在醞釀中' : 'Coming Soon'}
+                                            </p>
                                         </div>
-                                        <h4 className="text-[15px] font-heading text-tc-text-main leading-[1.1] line-clamp-2 group-hover:text-tc-primary transition-colors tracking-tight">
-                                            {lang === 'zh' ? tpl.name : tpl.nameEn}
-                                        </h4>
-                                    </div>
-                                </button>
-                            ))}
+                                    );
+                                }
+
+                                return results.map(tpl => (
+                                    <button
+                                        key={tpl.id}
+                                        onClick={() => onPreviewTemplate(tpl)}
+                                        className="text-left group snap-center flex flex-col gap-3 flex-shrink-0 w-[240px] md:w-[280px]"
+                                    >
+                                        <div className="relative aspect-[16/10] rounded-[24px] overflow-hidden shadow-sm border border-tc-border/20 group-hover:shadow-[0_10px_30px_rgba(13,99,27,0.08)] transition-all group-hover:-translate-y-1">
+                                            <img
+                                                src={tpl.coverImage}
+                                                alt={lang === 'zh' ? tpl.name : tpl.nameEn}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                            />
+                                        </div>
+
+                                        <div className="px-1">
+                                            <div className="flex items-center gap-1 text-[10px] text-tc-text/50 font-black mb-1 uppercase tracking-wider leading-none">
+                                                <MapPin size={10} className="text-tc-tertiary" /> {tpl.region}
+                                            </div>
+                                            <h4 className="text-[15px] font-heading text-tc-text-main leading-[1.1] line-clamp-2 group-hover:text-tc-primary transition-colors tracking-tight">
+                                                {lang === 'zh' ? tpl.name : tpl.nameEn}
+                                            </h4>
+                                        </div>
+                                    </button>
+                                ));
+                            })()}
                         </div>
                     </div>
 

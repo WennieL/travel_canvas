@@ -776,6 +776,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 onOpenSidebar={() => setIsSidebarOpen(true)}
                 lang={lang}
                 isDiscoveryMode={!!discoveryCreatorId && viewMode === 'map'}
+                showPlanManager={showPlanManager}
+                showFavorites={showFavorites}
             />
 
             {toast.show && <Toast message={toast.message} type={toast.type as any} duration={toast.duration} onClose={() => setToast({ show: false, message: '' })} />}

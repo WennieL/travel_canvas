@@ -26,8 +26,8 @@ const ItineraryHub: React.FC<ItineraryHubProps> = ({
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Normalized for comparison
 
-    const activePlans = plans.filter(p => new Date(p.endDate) >= today).sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-    const pastPlans = plans.filter(p => new Date(p.endDate) < today).sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+    const activePlans = plans.filter(p => new Date(p.endDate) >= today).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    const pastPlans = plans.filter(p => new Date(p.endDate) < today).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
     // Region to Cover Image Map
     const regionCoverMap: Record<string, string> = {

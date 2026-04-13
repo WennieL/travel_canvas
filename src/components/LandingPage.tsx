@@ -7,9 +7,6 @@ import ProductPreview from './ProductPreview';
 import LandingNav from './Landing/LandingNav';
 import LandingHero from './Landing/LandingHero';
 import LandingExplore from './Landing/LandingExplore';
-import LandingFeatures from './Landing/LandingFeatures';
-import LandingCommunity from './Landing/LandingCommunity';
-import LandingPricing from './Landing/LandingPricing';
 import LandingFooter from './Landing/LandingFooter';
 
 interface LandingPageProps {
@@ -44,37 +41,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
 
             {/* Background Decorations */}
             <div className="absolute top-[90vh] right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#FF6B6B]/5 to-[#4ECDC4]/5 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#4ECDC4]/5 to-[#FFE66D]/5 rounded-full blur-3xl"></div>
-
-            <LandingFeatures
-                lang={lang}
-                t={t}
-            />
-
-            <LandingCommunity
-                lang={lang}
-                t={t}
-                onStart={onStart}
-            />
-
-            <ProductPreview
-                lang={lang}
-                t={t}
-                onStart={onStart}
-            />
-
-            <LandingPricing
-                lang={lang}
-                onStart={onStart}
-                t={t}
-            />
-
-            <LandingFooter
-                lang={lang}
-                t={t}
-            />
-
-            {/* Global Animations CSS */}
+        {/* Global Animations CSS */}
             <style>{`
                 @keyframes fadeInUp {
                     from { opacity: 0; transform: translateY(20px); }

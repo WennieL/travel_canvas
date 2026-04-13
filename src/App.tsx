@@ -302,9 +302,9 @@ export function App() {
             // Landing on Discovery instead of showing the wizard/canvas immediately
             setViewMode('discovery');
             
-            // Still show onboarding slides if first-time user for context
+            // Still show onboarding slides if first-time user for context, with a slight delay
             if (!localStorage.getItem('tc_onboarding_done')) {
-                setShowOnboarding(true);
+                setTimeout(() => setShowOnboarding(true), 500);
             }
         }
     }} lang={lang} toggleLang={toggleLang} />;

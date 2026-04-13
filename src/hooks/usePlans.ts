@@ -188,7 +188,7 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
             region: destination,
             createdAt: Date.now()
         };
-        setPlans([...plans, newPlan]);
+        setPlans([newPlan, ...plans]);
         setActivePlanId(newPlan.id);
         setCurrentDay(1);
     };

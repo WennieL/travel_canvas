@@ -13,7 +13,9 @@ interface FloatingActionsProps {
     onOpenMobileLibrary: () => void;
     onOpenSidebar: () => void;
     lang: string;
-    isDiscoveryMode?: boolean; // [NEW] Hide FABs when in map guided discovery mode
+    isDiscoveryMode?: boolean; 
+    showPlanManager?: boolean;
+    showFavorites?: boolean;
 }
 
 /**
@@ -33,9 +35,13 @@ const FloatingActions: React.FC<FloatingActionsProps> = ({
     onOpenSidebar,
     lang,
     isDiscoveryMode = false,
+    showPlanManager = false,
+    showFavorites = false,
 }) => {
     const shouldShow =
-        !isDiscoveryMode && // [NEW] Hide entirely in map guided discovery
+        !isDiscoveryMode && 
+        !showPlanManager &&
+        !showFavorites &&
         (viewMode === 'canvas' || viewMode === 'map') &&
         !showStartPicker &&
         !showCheckIn &&

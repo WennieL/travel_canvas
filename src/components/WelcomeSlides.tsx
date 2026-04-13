@@ -9,7 +9,7 @@ interface WelcomeSlidesProps {
 }
 
 /* ─── Slide 1 Animation: Browse & Apply Template ─── */
-const DiscoverAnimation = ({ t }: { t: any }) => (
+const DiscoverAnimation = ({ t, lang }: { t: any, lang?: 'zh' | 'en' }) => (
     <div className="relative w-64 h-28 mx-auto mb-4">
         <style>{`
             @keyframes card-glow { 0%,60% { box-shadow: 0 0 0 rgba(20,184,166,0); transform: scale(1); } 65% { box-shadow: 0 0 12px rgba(20,184,166,0.4); transform: scale(1.05); } 100% { box-shadow: 0 0 0 rgba(20,184,166,0); transform: scale(1); } }
@@ -46,94 +46,92 @@ const DiscoverAnimation = ({ t }: { t: any }) => (
     </div>
 );
 
-/* ─── Slide 2 Animation: Drag & Drop ─── */
-const DragDropAnimation = ({ t }: { t: any }) => (
-    <div className="relative w-64 h-28 mx-auto mb-4">
+/* ─── Slide 2 Animation: Map Guided Discovery ─── */
+const MapGuideAnimation = ({ t, lang }: { t: any, lang?: 'zh' | 'en' }) => (
+    <div className="relative w-64 h-28 mx-auto mb-4 bg-emerald-50/50 rounded-xl overflow-hidden border border-emerald-100/50">
         <style>{`
-            @keyframes item-fly { 0% { left: 12px; top: 6px; opacity: 1; } 45% { left: 12px; top: 6px; opacity: 1; } 70% { left: 148px; top: 32px; opacity: 1; } 75% { left: 148px; top: 32px; opacity: 0; } 100% { left: 148px; top: 32px; opacity: 0; } }
-            @keyframes slot-fill { 0%,72% { background: rgba(255,255,255,0.5); border-color: #e5e7eb; } 75% { background: rgba(139,92,246,0.1); border-color: #8b5cf6; transform: scale(1.03); } 85% { transform: scale(1); } 100% { background: rgba(139,92,246,0.1); border-color: #8b5cf6; } }
-            @keyframes check-pop { 0%,74% { opacity: 0; transform: scale(0); } 76% { opacity: 1; transform: scale(1.3); } 82%,100% { opacity: 1; transform: scale(1); } }
-            @keyframes dash-move { 0%,45% { width: 0; } 70% { width: 80px; } 100% { width: 0; } }
+            @keyframes pin-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+            @keyframes peak-slide-up { 0%, 40% { opacity: 0; transform: translateY(20px); } 50%, 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(20px); } }
+            @keyframes map-cursor-move { 0% { left: 80%; top: 80%; opacity: 0; } 10%, 30% { opacity: 1; left: 50%; top: 45%; transform: scale(1); } 35% { transform: scale(0.85); } 40%, 100% { opacity: 0; } }
         `}</style>
-        <div className="flex items-start gap-4">
-            {/* Left: Asset Library mini */}
-            <div className="w-20 shrink-0">
-                <div className="text-[8px] text-gray-400 font-bold mb-1.5 text-center">{t.visualsAssets}</div>
-                <div className="space-y-1.5">
-                    <div className="relative">
-                        <div className="w-full h-8 rounded-md bg-white/80 border border-purple-200 flex items-center gap-1 px-1.5 shadow-sm"
-                            style={{ animation: 'item-fly 4.5s ease-in-out infinite', position: 'absolute', zIndex: 5 }}>
-                            <span className="text-xs">🏯</span>
-                            <span className="text-[7px] text-gray-700 font-medium">{t.visualsKinkakuji}</span>
-                        </div>
-                        <div className="w-full h-8 rounded-md bg-white/40 border border-dashed border-gray-200"></div>
-                    </div>
-                    <div className="w-full h-8 rounded-md bg-white/60 border border-gray-200 flex items-center gap-1 px-1.5">
-                        <span className="text-xs">🍜</span>
-                        <span className="text-[7px] text-gray-500 font-medium">{t.ichiran}</span>
-                    </div>
-                </div>
+        {/* Mock Map Background */}
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#14b8a6 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+        
+        {/* Map Pins */}
+        <div className="absolute top-[30%] left-[30%] text-emerald-400 opacity-60 text-xs">📍</div>
+        <div className="absolute top-[60%] left-[70%] text-emerald-400 opacity-60 text-xs">📍</div>
+
+        {/* Active Pin */}
+        <div className="absolute top-[40%] left-[48%] flex flex-col items-center" style={{ animation: 'pin-bounce 2s infinite ease-in-out' }}>
+            <div className="w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center border-2 border-emerald-500 z-10 text-xs">
+                ☕
             </div>
+            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-0.5 opacity-50" />
+        </div>
 
-            {/* Dashed line trail */}
-            <div className="absolute top-8 left-[88px] h-0.5 border-t-2 border-dashed border-purple-300/50"
-                style={{ animation: 'dash-move 4.5s ease-in-out infinite' }}></div>
-
-            {/* Right: Timeline slots */}
+        {/* Peak Card appearing at bottom */}
+        <div className="absolute bottom-2 left-3 right-3 h-10 bg-white rounded-lg shadow-lg border border-gray-100 flex items-center px-2 gap-2"
+            style={{ animation: 'peak-slide-up 5s infinite ease-in-out' }}>
+            <div className="w-6 h-6 bg-slate-100 rounded-md shrink-0 flex items-center justify-center text-[10px]">☕</div>
             <div className="flex-1">
-                <div className="text-[8px] text-gray-400 font-bold mb-1.5 text-center">{t.schedule}</div>
-                <div className="space-y-1.5">
-                    <div className="w-full h-8 rounded-md border border-dashed flex items-center justify-center"
-                        style={{ animation: 'slot-fill 4.5s ease-in-out infinite' }}>
-                        <span className="text-[7px] text-gray-400" style={{ animation: 'check-pop 4.5s ease-in-out infinite' }}>
-                            {t.welcomeApplied}
-                        </span>
-                    </div>
-                    <div className="w-full h-8 rounded-md bg-white/40 border border-dashed border-gray-200 flex items-center justify-center">
-                        <span className="text-[8px] text-gray-300">{t.afternoon}</span>
-                    </div>
-                </div>
+                <div className="h-2 w-16 bg-gray-200 rounded-full mb-1" />
+                <div className="h-1.5 w-10 bg-gray-100 rounded-full" />
             </div>
+        </div>
+
+        {/* Cursor */}
+        <div className="absolute w-5 h-5 z-20" style={{ animation: 'map-cursor-move 5s infinite ease-in-out' }}>
+            <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 drop-shadow-md">
+                <path d="M5 3l14 8-6 2-3 6-5-16z" fill="#1f2937" stroke="white" strokeWidth="1.5" />
+            </svg>
         </div>
     </div>
 );
 
-/* ─── Slide 3 Animation: Quick Fill ─── */
-const QuickFillAnimation = ({ t }: { t: any }) => (
-    <div className="relative w-64 h-28 mx-auto mb-4">
+/* ─── Slide 3 Animation: Add from Peak Card ─── */
+const AddFromPeakCardAnimation = ({ t, lang }: { t: any, lang?: 'zh' | 'en' }) => (
+    <div className="relative w-64 h-28 mx-auto mb-4 bg-slate-50/50 rounded-xl overflow-hidden border border-slate-100">
         <style>{`
-            @keyframes btn-press { 0%,40% { transform: scale(1); box-shadow: 0 2px 8px rgba(245,158,11,0.3); } 45% { transform: scale(0.92); box-shadow: 0 1px 4px rgba(245,158,11,0.2); } 50% { transform: scale(1.05); box-shadow: 0 4px 12px rgba(245,158,11,0.4); } 55%,100% { transform: scale(1); box-shadow: 0 2px 8px rgba(245,158,11,0.3); } }
-            @keyframes slot-pop-1 { 0%,52% { opacity: 0; transform: scale(0) translateY(8px); } 58% { opacity: 1; transform: scale(1.15) translateY(-2px); } 64%,100% { opacity: 1; transform: scale(1) translateY(0); } }
-            @keyframes slot-pop-2 { 0%,58% { opacity: 0; transform: scale(0) translateY(8px); } 64% { opacity: 1; transform: scale(1.15) translateY(-2px); } 70%,100% { opacity: 1; transform: scale(1) translateY(0); } }
-            @keyframes slot-pop-3 { 0%,64% { opacity: 0; transform: scale(0) translateY(8px); } 70% { opacity: 1; transform: scale(1.15) translateY(-2px); } 76%,100% { opacity: 1; transform: scale(1) translateY(0); } }
-            @keyframes slot-pop-4 { 0%,70% { opacity: 0; transform: scale(0) translateY(8px); } 76% { opacity: 1; transform: scale(1.15) translateY(-2px); } 82%,100% { opacity: 1; transform: scale(1) translateY(0); } }
+            @keyframes btn-press-anim { 0%, 50% { transform: scale(1); background-color: #14b8a6; } 55% { transform: scale(0.95); background-color: #0d9488; } 60%, 100% { transform: scale(1); background-color: #14b8a6; } }
+            @keyframes toast-pop { 0%, 60% { opacity: 0; transform: translateY(10px) translateX(-50%); } 65%, 90% { opacity: 1; transform: translateY(0) translateX(-50%); } 100% { opacity: 0; transform: translateY(-10px) translateX(-50%); } }
+            @keyframes add-cursor-move { 0%, 20% { left: 80%; top: 80%; opacity: 0; } 30%, 50% { opacity: 1; left: 75%; top: 58%; transform: scale(1); } 55% { transform: scale(0.85); } 60%, 100% { opacity: 0; } }
         `}</style>
-        {/* Quick Fill button */}
-        <div className="flex justify-center mb-3">
-            <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[9px] font-bold px-4 py-1.5 rounded-full"
-                style={{ animation: 'btn-press 5s ease-in-out infinite' }}>
-                {t.quickFill}
+        
+        {/* Mock Peak Card Centered */}
+        <div className="absolute top-[20%] left-4 right-4 bg-white rounded-xl shadow-md border border-gray-100 p-2">
+            <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-sm">🍜</div>
+                <div>
+                    <div className="h-2.5 w-20 bg-gray-800 rounded-full mb-1" />
+                    <div className="h-1.5 w-12 bg-gray-300 rounded-full" />
+                </div>
+            </div>
+            <div className="flex gap-2">
+                <div className="flex-1 h-6 border border-gray-200 rounded-lg" />
+                {/* The Add Button */}
+                <div className="flex-[1.5] h-6 rounded-lg text-white text-[8px] font-bold flex items-center justify-center"
+                    style={{ animation: 'btn-press-anim 4s infinite ease-in-out' }}>
+                    + {lang === 'zh' ? '加入' : 'Add'}
+                </div>
             </div>
         </div>
-        {/* Slots grid */}
-        <div className="grid grid-cols-4 gap-2 px-2">
-            {[
-                { emoji: '🏯', label: t.visualsKinkakuji, anim: 'slot-pop-1' },
-                { emoji: '🍜', label: t.ichiran, anim: 'slot-pop-2' },
-                { emoji: '🌸', label: t.visualsFushimiInari, anim: 'slot-pop-3' },
-                { emoji: '🏨', label: t.hotel, anim: 'slot-pop-4' },
-            ].map((item, i) => (
-                <div key={i} className="h-14 rounded-lg bg-white/70 border border-orange-200 flex flex-col items-center justify-center shadow-sm"
-                    style={{ animation: `${item.anim} 5s ease-in-out infinite` }}>
-                    <span className="text-lg">{item.emoji}</span>
-                    <span className="text-[7px] text-gray-500 font-medium">{item.label}</span>
-                </div>
-            ))}
+
+        {/* Success Toast */}
+        <div className="absolute top-2 left-1/2 bg-gray-800 text-white text-[9px] px-3 py-1 rounded-full shadow-lg whitespace-nowrap"
+            style={{ animation: 'toast-pop 4s infinite ease-in-out' }}>
+            ✅ {lang === 'zh' ? '已加入行程！' : 'Added to plan!'}
+        </div>
+
+        {/* Cursor */}
+        <div className="absolute w-5 h-5 z-20" style={{ animation: 'add-cursor-move 4s infinite ease-in-out' }}>
+            <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 drop-shadow-md">
+                <path d="M5 3l14 8-6 2-3 6-5-16z" fill="#1f2937" stroke="white" strokeWidth="1.5" />
+            </svg>
         </div>
     </div>
 );
 
-const ANIMATION_COMPONENTS = [DiscoverAnimation, DragDropAnimation, QuickFillAnimation];
+const ANIMATION_COMPONENTS = [DiscoverAnimation, MapGuideAnimation, AddFromPeakCardAnimation];
 
 const SLIDE_CONFIGS = [
     {
@@ -218,7 +216,7 @@ const WelcomeSlides: React.FC<WelcomeSlidesProps> = ({ onComplete, lang = 'zh' }
                 {/* Content */}
                 <div className="px-8 pt-8 pb-4 text-center">
                     {/* Micro Animation */}
-                    <AnimComponent t={t} />
+                    <AnimComponent t={t} lang={lang} />
 
                     {/* Text */}
                     <h2 className="text-2xl font-black text-gray-900 mb-2 tracking-tight">
