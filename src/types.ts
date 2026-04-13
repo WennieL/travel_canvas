@@ -1,4 +1,4 @@
-export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom' | 'vibe';
+export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom' | 'vibe' | 'experiential';
 export type TransportMode = 'car' | 'walk' | 'public';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation' | 'unsorted';
@@ -31,7 +31,7 @@ export interface RegionConfig {
 
 
 // [NEW] Expert Story Structure for the Interactive Grid
-export type ExpertStoryCategory = 'must-do' | 'must-eat' | 'trap' | 'hidden';
+export type ExpertStoryCategory = 'must-do' | 'must-eat' | 'trap' | 'hidden' | 'artisan';
 
 export interface ExpertStory {
     id: ExpertStoryCategory;

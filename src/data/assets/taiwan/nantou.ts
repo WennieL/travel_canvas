@@ -1,4 +1,4 @@
-import { TravelItem } from '../../types';
+import { TravelItem } from '../../../types';
 
 export const NANTOU_ASSETS: TravelItem[] = [
     {
@@ -8,6 +8,7 @@ export const NANTOU_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '2小時',
         image: '🚲',
+        coverImage: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800',
         description: '被CNN評為全球最美十大車道之一，平緩的湖畔路徑，每一轉向都是一幅山水畫。',
         descriptionEn: 'Rated by CNN as one of the world\'s 10 most beautiful cycling paths. Each turn offers a new landscape painting.',
         price: 300,
@@ -82,6 +83,7 @@ export const NANTOU_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '1.5小時',
         image: '⛴️',
+        coverImage: 'https://images.unsplash.com/photo-1719340198760-434a1763b3ac?auto=format&fit=crop&q=80&w=800',
         description: '搭乘遊艇穿梭湖心，近距離觀察邵族心中的神聖象徵「拉魯島」。',
         descriptionEn: 'Cruise the lake heart by yacht to see Lalu Island, a sacred symbol for the Thao people.',
         price: 300,
@@ -156,6 +158,7 @@ export const NANTOU_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '1.5小時',
         image: '🍲',
+        coverImage: 'https://images.unsplash.com/photo-1563245332-69214647efdc?auto=format&fit=crop&q=80&w=800',
         description: '品嚐日月潭在地邵族特色料理，奇力魚、山豬肉、竹筒飯的華麗大賞。',
         descriptionEn: 'Taste local Thao indigenous specialties like Qili fish, wild boar, and bamboo rice.',
         price: 500,
@@ -230,6 +233,7 @@ export const NANTOU_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '1小時',
         image: '🥬',
+        coverImage: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800',
         description: '為素食者準備的靜謐角落，提供新鮮的手工豆製品與當地有機蔬菜料理。',
         descriptionEn: 'A tranquil corner for vegetarians, offering fresh handmade soy products and local organic vegetable dishes.',
         price: 250,
@@ -304,6 +308,7 @@ export const NANTOU_ASSETS: TravelItem[] = [
         type: 'experiential',
         duration: '1.5小時',
         image: '☕',
+        coverImage: 'https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?auto=format&fit=crop&q=80&w=800',
         description: '走入具有歷史感的製茶工廠，學習如何辨識紅玉、紅韻等頂級紅茶的香氣。',
         descriptionEn: 'Enter a historic tea factory and learn to identify the aromas of Ruby and Hong Yun black teas.',
         price: 400,
@@ -378,6 +383,7 @@ export const NANTOU_ASSETS: TravelItem[] = [
         type: 'hotel',
         duration: '0',
         image: '🏨',
+        coverImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800',
         description: '日月潭首家獲得五星認證的飯店，每間房都有專屬溫泉池，望向無敵湖景。',
         descriptionEn: 'The first 5-star certified hotel at Sun Moon Lake. Every room has a private hot spring with lake views.',
         price: 12000,

@@ -38,16 +38,16 @@ export const ProductPreview: React.FC<ProductPreviewProps> = ({ lang = 'zh', t, 
     }, []);
 
     const sidebarItems = [
-        { icon: '⛩️', name: t.previewKiyomizu },
-        { icon: '🦊', name: t.previewFushimiInari },
-        { icon: '🍜', name: t.previewIchiran },
-        { icon: '🏯', name: t.previewKinkakuji },
+        { icon: '🏙️', name: t.previewKiyomizu },
+        { icon: '⛩️', name: t.previewFushimiInari },
+        { icon: '🚠', name: t.previewIchiran },
+        { icon: '🏮', name: t.previewKinkakuji },
     ];
 
     const scheduleItems = [
-        { time: '09:00', icon: '⛩️', name: t.previewKiyomizu, duration: '2h' },
-        { time: '12:00', icon: '🍜', name: t.previewIchiran, duration: '1h' },
-        { time: '14:00', icon: '🦊', name: t.previewFushimiInari, duration: '2h' },
+        { time: '09:00', icon: '🏙️', name: t.previewKiyomizu, duration: '2h' },
+        { time: '12:00', icon: '🥟', name: t.visualsTsujiriMatcha, duration: '1h' },
+        { time: '14:00', icon: '⛩️', name: t.previewFushimiInari, duration: '2h' },
     ];
 
     return (

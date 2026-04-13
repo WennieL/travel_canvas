@@ -1,4 +1,4 @@
-import { TravelItem } from '../../types';
+import { TravelItem } from '../../../types';
 
 export const KAOHSIUNG_ASSETS: TravelItem[] = [
     {
@@ -8,7 +8,7 @@ export const KAOHSIUNG_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '3小時',
         image: '🎨',
-        coverImage: 'https://images.unsplash.com/photo-1571242352227-21397b203c62?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1647685101882-6bd1835e3263?auto=format&fit=crop&q=80&w=800',
         description: '原本是廢棄倉庫，現在是高雄最有活力的文創基地與藝術殿堂。',
         descriptionEn: 'Formerly abandoned warehouses, now Kaohsiung\'s most vibrant creative hub and art center.',
         price: 0,
@@ -158,6 +158,7 @@ export const KAOHSIUNG_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '30分',
         image: '🥛',
+        coverImage: 'https://images.unsplash.com/photo-1544787210-2213d44ad53e?auto=format&fit=crop&q=80&w=800',
         description: '創立於1953年的高雄茶飲傳奇，以獨特的炭燒茶香與現烤火腿蛋吐司聞名。',
         descriptionEn: 'A Kaohsiung legend since 1953, famous for charcoal-smoked tea and toasted ham & egg sandwiches.',
         price: 80,
@@ -232,6 +233,7 @@ export const KAOHSIUNG_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '1小時',
         image: '🥘',
+        coverImage: 'https://images.unsplash.com/photo-1547928576-a4a33237eceb?auto=format&fit=crop&q=80&w=800',
         description: '高雄港都的溫暖補給，傳承三代的現宰溫體羊肉料理。',
         descriptionEn: 'Kaohsiung\'s warm supply. Three generations of fresh local mutton cuisine.',
         price: 450,
@@ -306,6 +308,7 @@ export const KAOHSIUNG_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '1小時',
         image: '🥗',
+        coverImage: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800',
         description: '高雄質感蔬食料理，將在地食材轉化為充滿現代感的蔬食體驗。',
         descriptionEn: 'High-quality vegetarian cuisine in Kaohsiung, transforming local ingredients into modern plant-based experiences.',
         price: 300,
@@ -380,6 +383,7 @@ export const KAOHSIUNG_ASSETS: TravelItem[] = [
         type: 'experiential',
         duration: '2小時',
         image: '🪵',
+        coverImage: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800',
         description: '在鹽埕老港區的鐵道旁，親手打造屬於自己的木藝生活小物。',
         descriptionEn: 'Near the historic port railway, hand-craft your own wooden lifestyle items.',
         price: 800,

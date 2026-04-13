@@ -105,7 +105,7 @@ const LandingCommunity: React.FC<LandingCommunityProps> = ({ lang, t, onStart })
                             <div className="w-16 h-16 bg-gray-200 rounded-lg bg-cover bg-center shrink-0" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=150&q=80)' }}></div>
                             <div>
                                 <div className="text-xs font-bold text-teal-600 mb-1">UP TRENDING 🚀</div>
-                                <div className="text-slate-800 font-bold text-sm">Tokyo Hidden Gems</div>
+                                <div className="text-slate-800 font-bold text-sm">Taipei Top Picks</div>
                                 <div className="text-xs text-gray-400">5 Days • Budget Friendly</div>
                             </div>
                         </div>

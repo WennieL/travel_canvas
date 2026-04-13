@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule, TravelItem } from '../types';
-import { TOKYO_DEMO_PLAN, MELBOURNE_PAST_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
+import { TAIPEI_DEMO_PLAN, MELBOURNE_PAST_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
 import { getRegionCurrency, getRegionExchangeRate } from '../data/regions';
 
 export interface UsePlansReturn {
@@ -35,9 +35,9 @@ export interface UsePlansReturn {
 }
 
 export function usePlans(isInitialized: boolean, t: Record<string, string>, lang: LangType): UsePlansReturn {
-    // Plans State - Default to TOKYO_DEMO_PLAN if empty
-    const [plans, setPlans] = useState<Plan[]>([TOKYO_DEMO_PLAN, MELBOURNE_PAST_PLAN]);
-    const [activePlanId, setActivePlanId] = useState<string>(TOKYO_DEMO_PLAN.id);
+    // Plans State - Default to TAIPEI_DEMO_PLAN if empty
+    const [plans, setPlans] = useState<Plan[]>([TAIPEI_DEMO_PLAN, MELBOURNE_PAST_PLAN]);
+    const [activePlanId, setActivePlanId] = useState<string>(TAIPEI_DEMO_PLAN.id);
     const [currentDay, setCurrentDay] = useState(1);
 
     // Load from localStorage

@@ -122,7 +122,7 @@ export const MobilePreview: React.FC<MobilePreviewProps> = ({ plan, onClose, lan
                                                     {item.price && (
                                                         <span className="flex items-center gap-1">
                                                             <DollarSign size={10} />
-                                                            ¥{item.price.toLocaleString()}
+                                                            NT$ {item.price.toLocaleString()}
                                                         </span>
                                                     )}
                                                 </div>

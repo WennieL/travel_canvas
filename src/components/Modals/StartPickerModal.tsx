@@ -21,7 +21,7 @@ export const StartPickerModal: React.FC<StartPickerModalProps> = ({
 }) => {
     if (!isOpen) return null;
 
-    const regionName = pendingData?.destination?.toUpperCase() || 'TOKYO';
+    const regionName = pendingData?.destination?.toUpperCase() || 'TAIPEI';
     const cityTemplates = TEMPLATES.filter(tpl => tpl.region === pendingData?.destination);
     const hasTemplates = cityTemplates.length > 0;
 

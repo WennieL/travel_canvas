@@ -1,4 +1,4 @@
-import { TravelItem } from '../../types';
+import { TravelItem } from '../../../types';
 
 export const TAINAN_ASSETS: TravelItem[] = [
     {
@@ -8,6 +8,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '1.5小時',
         image: '🏮',
+        coverImage: 'https://images.unsplash.com/photo-1621848296279-7751546e9acc?auto=format&fit=crop&q=80&w=800',
         description: '古色古香的文創老街，每個角落都充滿故事。',
         descriptionEn: 'Vintage creative street with stories in every corner.',
         price: 0,
@@ -82,6 +83,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '30分',
         image: '🍦',
+        coverImage: 'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&q=80&w=800',
         description: '2015世界義式冰淇淋大賽銀牌🥈，首位華人得獎，台南正興街本店。',
         descriptionEn: 'Silver medalist at 2015 Gelato World Tour. First Chinese winner. Flagship on Zhengxing St.',
         price: 90,
@@ -156,6 +158,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '20分',
         image: '🥟',
+        coverImage: 'https://images.unsplash.com/photo-1563245332-69214647efdc?auto=format&fit=crop&q=80&w=800',
         description: '一天只賣5小時的現煎水煎包，在地人真心推薦。',
         descriptionEn: 'Pan-fried buns sold only 5 hours/day. Truly local recommended.',
         price: 35,
@@ -230,6 +233,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '45分',
         image: '🥣',
+        coverImage: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=800',
         description: '台南清晨最迷人的氣味，凌晨三點就有人排隊的傳奇牛肉湯。',
         descriptionEn: 'Tainan\'s most charming morning scent. A legendary beef soup with queues starting at 3 AM.',
         price: 150,
@@ -304,6 +308,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '30分',
         image: '🍙',
+        coverImage: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800',
         description: '台南在地人激推的素食早餐，充滿花生香與Q彈口感。',
         descriptionEn: 'Locally recommended vegetarian breakfast, full of peanut aroma and chewy texture.',
         price: 45,
@@ -378,6 +383,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '2小時',
         image: '🍲',
+        coverImage: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=800',
         description: '台南美食的一級戰區，集結了碗粿、蚵嗲、春捲等經典台南味。',
         descriptionEn: 'The frontline of Tainan cuisine, gathering classic bowls of rice cakes, oyster cakes, and spring rolls.',
         price: 200,
@@ -452,6 +458,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'experiential',
         duration: '1小時',
         image: '🫓',
+        coverImage: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800',
         description: '親手製作台南傳統「香餅」，體驗府城流傳百年的坐月子點心文化。',
         descriptionEn: 'Hand-make traditional Tainan "Fragrant Cakes" and experience the century-old postpartum snack culture.',
         price: 350,
@@ -527,6 +534,7 @@ export const TAINAN_ASSETS: TravelItem[] = [
         type: 'hotel' as const,
         duration: '0',
         image: '🏨',
+        coverImage: 'https://images.unsplash.com/photo-1596402184320-417d7178b2cd?auto=format&fit=crop&q=80&w=800',
         description: '中西區核心地段設計飯店，步行可達國華街與神農街。',
         descriptionEn: 'Design hotel in Tainan core area, walking distance to Guohua St. and Shennong St.',
         price: 2800,

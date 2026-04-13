@@ -6,7 +6,7 @@ import {
     SAMPLE_ASSETS,
     TEMPLATES,
     SAMPLE_CREATORS,
-    TOKYO_DEMO_PLAN
+    TAIPEI_DEMO_PLAN
 } from './data';
 import {
     LangType,
@@ -318,7 +318,7 @@ export function App() {
             onComplete={() => {
                 setShowOnboarding(false);
                 // After onboarding, show wizard if new user
-                if (plans.length === 1 && plans[0].id === 'tokyo-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
+                if (plans.length === 1 && plans[0].id === 'taipei-demo' && plans[0].schedule['Day 1'].morning.length === 0) {
                     ui.setShowCheckIn(true);
                 }
             }}

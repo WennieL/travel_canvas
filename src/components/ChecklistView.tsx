@@ -27,7 +27,7 @@ const ChecklistView: React.FC<ChecklistViewProps> = ({
     // Ensure checklist exists (if empty and newly opened, populate with defaults)
     React.useEffect(() => {
         if (!activePlan.checklist || activePlan.checklist.length === 0) {
-            const region = activePlan.region || 'tokyo';
+            const region = activePlan.region || 'taipei';
             const defaults = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
             onUpdateChecklist(defaults);
         }
@@ -71,7 +71,7 @@ const ChecklistView: React.FC<ChecklistViewProps> = ({
     };
 
     const resetDefaults = () => {
-        const region = activePlan.region || 'tokyo';
+        const region = activePlan.region || 'taipei';
         const defaults = REGION_DEFAULT_CHECKLISTS[region]?.[lang] || REGION_DEFAULT_CHECKLISTS['all']?.[lang] || [];
         onUpdateChecklist(defaults);
         showToastMessage(t.savedSuccess || '已重設為預設清單', 'info');

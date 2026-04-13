@@ -27,28 +27,28 @@ const LandingExplore: React.FC<LandingExploreProps> = ({ lang, onStart, t }) => 
                     </p>
                 </div>
 
-                {/* 🇯🇵 Japan Section */}
+                {/* 🏔️ Northern Taiwan Section */}
                 <div className="mb-16">
                     <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-100 pb-2">
-                        <span className="text-2xl">🇯🇵</span>
-                        {t.exploreJapan}
+                        <span className="text-2xl">🏔️</span>
+                        {t.exploreNorthernTaiwan}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Tokyo Classic */}
+                        {/* Taipei Classic */}
                         <div
-                            onClick={() => onStart('t1')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-rose-200 transition-all duration-300 cursor-pointer"
+                            onClick={() => onStart('tpl-t-classic')}
+                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer"
                         >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/tokyo.png)' }}>
+                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1552233312-70b09419914b?auto=format&fit=crop&q=80&w=600)' }}>
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.tokyoLabel}</span>
-                                    <span className="text-xs text-white font-medium">4 {t.daysUnit}</span>
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.northernLabel}</span>
+                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
                                 </div>
                             </div>
                             <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-rose-600 transition-colors mb-2">
-                                    {t.tokyoClassic}
+                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-emerald-600 transition-colors mb-2">
+                                    {t.taipeiClassicTitle}
                                 </h4>
                                 <div className="flex items-center gap-2">
                                     <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-[10px]">🏢</div>
@@ -57,110 +57,110 @@ const LandingExplore: React.FC<LandingExploreProps> = ({ lang, onStart, t }) => 
                             </div>
                         </div>
 
-                        {/* Tokyo Foodie */}
+                        {/* Taipei Old Street */}
                         <div
-                            onClick={() => onStart('t2')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-rose-200 transition-all duration-300 cursor-pointer"
+                            onClick={() => onStart('tw-taipei-oldstreet-day')}
+                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer"
                         >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/tokyo.png)' }}>
+                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1560613041-3897b69324cc?auto=format&fit=crop&q=80&w=600)' }}>
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.tokyoLabel}</span>
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.northernLabel}</span>
                                     <span className="text-xs text-white font-medium">1 {t.day}</span>
                                 </div>
                             </div>
                             <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-rose-600 transition-colors mb-2">
-                                    {t.tokyoFoodie}
+                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-emerald-600 transition-colors mb-2">
+                                    {t.taipeiOldStreetTitle}
                                 </h4>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-orange-100/50 flex items-center justify-center text-[10px]">🍜</div>
-                                    <p className="text-sm text-slate-500">{t.foodieAnan}</p>
+                                    <div className="w-5 h-5 rounded-full bg-orange-100/50 flex items-center justify-center text-[10px]">🏮</div>
+                                    <p className="text-sm text-slate-500">{t.templateAuthorPro}</p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Kyoto */}
+                        {/* Taipei Mountain */}
                         <div
-                            onClick={() => onStart('t5')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-rose-200 transition-all duration-300 cursor-pointer"
+                            onClick={() => onStart('tw-taipei-mountain-city-day')}
+                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer"
                         >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/kyoto.png)' }}>
+                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=600)' }}>
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.kyotoLabel}</span>
-                                    <span className="text-xs text-white font-medium">3 {t.daysUnit}</span>
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.northernLabel}</span>
+                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
                                 </div>
                             </div>
                             <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-rose-600 transition-colors mb-2">
-                                    {t.kyotoAncient}
+                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-emerald-600 transition-colors mb-2">
+                                    {t.taipeiMountainTitle}
                                 </h4>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-green-100/50 flex items-center justify-center text-[10px]">⛩️</div>
-                                    <p className="text-sm text-slate-500">{t.kyotoSlowLife}</p>
+                                    <div className="w-5 h-5 rounded-full bg-green-100/50 flex items-center justify-center text-[10px]">⛰️</div>
+                                    <p className="text-sm text-slate-500">{t.templateAuthorPro}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* 🇦🇺 Australia Section */}
+                {/* 🌆 Central & Southern Taiwan Section */}
                 <div>
                     <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-100 pb-2">
-                        <span className="text-2xl">🇦🇺</span>
-                        {t.exploreAustralia}
+                        <span className="text-2xl">🌆</span>
+                        {t.exploreSouthernTaiwan}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Melbourne Coffee */}
+                        {/* Tainan Ancient */}
                         <div
-                            onClick={() => onStart('mel-coffee')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-teal-200 transition-all duration-300 cursor-pointer"
+                            onClick={() => onStart('tn-curated-1')}
+                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-amber-200 transition-all duration-300 cursor-pointer"
                         >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/melbourne.png)' }}>
+                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1621848296279-7751546e9acc?auto=format&fit=crop&q=80&w=600)' }}>
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.melbourneLabel}</span>
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.southernLabel}</span>
                                     <span className="text-xs text-white font-medium">1 {t.day}</span>
                                 </div>
                             </div>
                             <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-teal-600 transition-colors mb-2">
-                                    {t.melbourneCoffee}
+                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-amber-600 transition-colors mb-2">
+                                    {t.tainanAncientTitle}
                                 </h4>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-amber-100/50 flex items-center justify-center text-[10px]">☕</div>
-                                    <p className="text-sm text-slate-500">{t.melbourneLocal}</p>
+                                    <div className="w-5 h-5 rounded-full bg-amber-100/50 flex items-center justify-center text-[10px]">🥘</div>
+                                    <p className="text-sm text-slate-500">{t.templateAuthorAnan}</p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Melbourne Bars */}
+                        {/* Taichung Quirky */}
                         <div
-                            onClick={() => onStart('mel-bars')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-teal-200 transition-all duration-300 cursor-pointer"
+                            onClick={() => onStart('tc-quirky-1d')}
+                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-blue-200 transition-all duration-300 cursor-pointer"
                         >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/melbourne.png)' }}>
+                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1510333300264-b17ad3023315?auto=format&fit=crop&q=80&w=600)' }}>
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
                                 <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.melbourneLabel}</span>
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.centralLabel}</span>
                                     <span className="text-xs text-white font-medium">1 {t.day}</span>
                                 </div>
                             </div>
                             <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-teal-600 transition-colors mb-2">
-                                    {t.melbourneBars}
+                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors mb-2">
+                                    {t.taichungQuirkyTitle}
                                 </h4>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-purple-100/50 flex items-center justify-center text-[10px]">🍸</div>
-                                    <p className="text-sm text-slate-500">{t.melbourneLocal}</p>
+                                    <div className="w-5 h-5 rounded-full bg-purple-100/50 flex items-center justify-center text-[10px]">🦖</div>
+                                    <p className="text-sm text-slate-500">{t.templateAuthorMing}</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Coming Soon */}
                         <div className="bg-slate-50 rounded-2xl overflow-hidden border border-dashed border-slate-300 flex flex-col items-center justify-center h-[264px] hover:bg-slate-100 transition-colors">
-                            <span className="text-4xl mb-3 opacity-50">🌏</span>
+                            <span className="text-4xl mb-3 opacity-50">🌊</span>
                             <p className="text-slate-400 font-medium">{t.moreCitiesComing}</p>
                         </div>
                     </div>

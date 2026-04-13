@@ -23,7 +23,7 @@ export const CheckInWizardModal: React.FC<CheckInWizardModalProps> = ({
     isOpen, onClose, onComplete, lang, t
 }) => {
     const [step, setStep] = useState(1);
-    const [destination, setDestination] = useState<Region>('tokyo');
+    const [destination, setDestination] = useState<Region>('taipei');
     const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
     const [totalDays, setTotalDays] = useState(4);
 

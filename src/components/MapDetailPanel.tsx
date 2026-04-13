@@ -125,7 +125,7 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
                         <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
                             <div className="text-xs text-gray-400 mb-1">{t.price || "Price"}</div>
                             <div className="font-semibold text-gray-800">
-                                {price === 0 ? (t.freeLabel || 'Free') : `¥${price.toLocaleString()}`}
+                                {price === 0 ? (t.freeLabel || 'Free') : `NT$ ${price.toLocaleString()}`}
                             </div>
                         </div>
                     )}

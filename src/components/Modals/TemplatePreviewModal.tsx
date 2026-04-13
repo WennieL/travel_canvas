@@ -76,21 +76,6 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
     // Per-region FAQ content
     type FaqContent = { zh: string; en: string };
     const regionFaqMap: Record<string, { time: FaqContent; transport: FaqContent; advice: FaqContent }> = {
-        tokyo: {
-            time: { zh: '3月下旬賞櫻、11月賞楓最熱鬧，建議清晨 8 點前抵達熱門景點。', en: 'Late March for cherry blossoms, November for fall foliage. Arrive at popular spots before 8am.' },
-            transport: { zh: 'JR Pass 或 IC 卡（Suica/Pasmo）搭地鐵最方便，避開早 8-9 點通勤高峰。', en: 'JR Pass or IC card (Suica/Pasmo) for easy subway access. Avoid rush hour 8-9am.' },
-            advice: { zh: '便利商店早餐物美價廉，建議攜帶現金，許多傳統店家不收卡。', en: 'Convenience store breakfasts are great value. Carry cash — many traditional shops are cash only.' },
-        },
-        kyoto: {
-            time: { zh: '4月初人潮最多，建議開門前（9點前）抵達，或選擇工作日前往嵐山竹林。', en: 'April is busiest. Arrive before 9am or visit on weekdays to beat crowds at Arashiyama.' },
-            transport: { zh: '市區以公車和地鐵為主，嵐山建議租借腳踏車探索，多日可購買巴士一日券。', en: 'Bus and subway cover most areas. Rent a bike in Arashiyama. A 1-day bus pass is great for multi-stop days.' },
-            advice: { zh: '和服租借建議提前預訂，清水寺日落前 1 小時光線最美，拍照最佳。', en: 'Book kimono rentals in advance. Kiyomizudera is most photogenic 1 hour before sunset.' },
-        },
-        osaka: {
-            time: { zh: '道頓堀夜晚最熱鬧，下午 3 點後才逛可避開午間人潮；黑門市場建議週間上午前往。', en: 'Dotonbori is best at night. Visit Kuromon Market on weekday mornings for freshest seafood.' },
-            transport: { zh: 'Osaka Amazing Pass 可無限搭乘地鐵並免費進入多項景點，CP 值極高。', en: 'Osaka Amazing Pass offers unlimited subway rides + free entry to many attractions — great value.' },
-            advice: { zh: '串炸和燒肉人均約 800-1500 yen，建議避開假日晚餐高峰，排隊時間較長。', en: 'Kushikatsu and yakiniku average ¥800-1500/person. Expect waits on weekend evenings.' },
-        },
         taipei: {
             time: { zh: '春秋兩季最宜，象山日落後 30 分鐘是拍 101 夜景的黃金時刻。', en: 'Oct-Nov is ideal. Head to Elephant Mountain 30 min after sunset for the best 101 night views.' },
             transport: { zh: '悠遊卡搭捷運最方便，桃園機場捷運到台北市區約 35 分鐘。', en: 'EasyCard for MRT is best. Airport to city is ~35 min via Taoyuan Airport MRT.' },
@@ -110,11 +95,6 @@ export const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
             time: { zh: '彩虹眷村早上 9 點開門，建議平日上午前往；逢甲夜市下午 4 點後逐漸熱鬧。', en: 'Rainbow Village opens at 9am — weekday mornings are crowd-free. Fengjia Night Market picks up after 4pm.' },
             transport: { zh: '市區以公車和 BRT 為主，景點距離較遠，建議租車或共乘。', en: 'City bus and BRT cover major sites. Attractions are spread out — renting a car or ride-sharing is helpful.' },
             advice: { zh: '台中是甜點之都！審計新村和一中街都值得半天探索，預留下午茶時間。', en: 'Taichung is a dessert paradise! Budget half a day for Shen Ji New Village or Yizhong Street.' },
-        },
-        melbourne: {
-            time: { zh: '墨爾本天氣多變「一天四季」，洋蔥式穿法是不二法門，隨身帶薄外套。', en: "Melbourne's weather is famously unpredictable — layer up and always carry a light jacket." },
-            transport: { zh: 'Myki 卡搭大眾交通，CBD 免費電車圈範圍廣，機場建議搭 SkyBus 較划算。', en: 'Myki card covers all public transport. Free tram zone covers the CBD. SkyBus is the best-value airport transfer.' },
-            advice: { zh: '別點美式咖啡，試試 Flat White！Queen Victoria Market 週一/三公休，出發前確認。', en: 'Order a Flat White like a local! Queen Victoria Market is closed Mon/Wed — check before visiting.' },
         },
     };
     const regionFaq = regionFaqMap[template.region] || {

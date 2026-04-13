@@ -5,44 +5,6 @@ import { RegionConfig } from '../types';
  * Adding a new city = adding ONE entry here. No switch/case anywhere.
  */
 export const REGIONS: RegionConfig[] = [
-    // ── Asia › Japan ──────────────────────────────────────
-    {
-        id: 'tokyo',
-        name: '東京',
-        nameEn: 'Tokyo',
-        emoji: '🗼',
-        continent: 'asia',
-        country: 'japan',
-        gradient: 'from-indigo-500 via-purple-500 to-pink-500',
-        heroEmoji: '🗼',
-        currency: 'JPY',
-        exchangeRate: 0.21, // 1 JPY ≈ 0.21 TWD
-    },
-    {
-        id: 'osaka',
-        name: '大阪',
-        nameEn: 'Osaka',
-        emoji: '🏯',
-        continent: 'asia',
-        country: 'japan',
-        gradient: 'from-orange-500 via-red-500 to-pink-500',
-        heroEmoji: '🏯',
-        currency: 'JPY',
-        exchangeRate: 0.21,
-    },
-    {
-        id: 'kyoto',
-        name: '京都',
-        nameEn: 'Kyoto',
-        emoji: '⛩️',
-        continent: 'asia',
-        country: 'japan',
-        gradient: 'from-emerald-600 via-teal-500 to-cyan-500',
-        heroEmoji: '⛩️',
-        currency: 'JPY',
-        exchangeRate: 0.21,
-    },
-
     // ── Asia › Taiwan ─────────────────────────────────────
     {
         id: 'taipei',
@@ -127,20 +89,6 @@ export const REGIONS: RegionConfig[] = [
         heroEmoji: '🏞️',
         currency: 'TWD',
         exchangeRate: 1,
-    },
-
-    // ── Oceania › Australia ────────────────────────────────
-    {
-        id: 'melbourne',
-        name: '墨爾本',
-        nameEn: 'Melbourne',
-        emoji: '☕',
-        continent: 'oceania',
-        country: 'australia',
-        gradient: 'from-amber-500 via-orange-500 to-red-500',
-        heroEmoji: '☕',
-        currency: 'AUD',
-        exchangeRate: 20.5, // 1 AUD ≈ 20.5 TWD
     },
 ];
 

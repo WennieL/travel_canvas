@@ -21,12 +21,12 @@ export const DragDropVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
         <div className="relative w-full h-48 bg-slate-50 rounded-xl border border-gray-200 overflow-hidden flex shadow-inner">
             <div className="w-1/4 bg-white border-r border-gray-100 flex flex-col items-center py-4 gap-2 z-10">
                 <div className="w-8 h-2 bg-gray-100 rounded-full mb-2"></div>
-                <div className="w-12 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-xl">🍜</div>
+                <div className="w-12 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-xl">🥟</div>
                 <div className="relative w-12 h-12">
-                    <div className="absolute inset-0 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-xl animate-sidebar-item-vanish z-20">⛩️</div>
+                    <div className="absolute inset-0 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-xl animate-sidebar-item-vanish z-20">🏙️</div>
                     <div className="absolute inset-0 bg-gray-50 border border-dashed border-gray-200 rounded-lg"></div>
                 </div>
-                <div className="w-12 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-xl">🍵</div>
+                <div className="w-12 h-12 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-center text-xl">🍜</div>
             </div>
             <div className="flex-1 flex flex-col p-4 relative">
                 <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200 z-0"></div>
@@ -36,7 +36,7 @@ export const DragDropVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.morning}</span>
                     </div>
                     <div className="bg-white p-2 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2 w-full max-w-[220px]">
-                        <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">🦊</div>
+                        <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">🏯</div>
                         <div className="flex-1 space-y-1">
                             <div className="h-1.5 w-16 bg-gray-300 rounded"></div>
                             <div className="h-1 w-8 bg-gray-100 rounded"></div>
@@ -51,7 +51,7 @@ export const DragDropVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
                     <div className="h-14 w-full max-w-[220px] rounded-xl relative">
                         <div className="absolute inset-0 border-2 border-dashed border-teal-200 bg-teal-50/20 rounded-xl animate-placeholder-fade"></div>
                         <div className="absolute inset-0 bg-white p-2 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2 animate-item-drop-move">
-                            <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">⛩️</div>
+                            <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">🏙️</div>
                             <div className="flex-1 space-y-1">
                                 <div className="h-1.5 w-20 bg-gray-300 rounded"></div>
                                 <div className="h-1 w-12 bg-gray-100 rounded"></div>
@@ -67,7 +67,7 @@ export const DragDropVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
                     <div className="h-14 w-full max-w-[220px] rounded-xl relative">
                         <div className="absolute inset-0 border-2 border-dashed border-gray-200 rounded-xl"></div>
                         <div className="absolute inset-0 bg-white p-2 rounded-xl border border-gray-100 shadow-sm flex items-center gap-2 animate-item-reorder-appear opacity-0">
-                            <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">⛩️</div>
+                            <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">🏙️</div>
                             <div className="flex-1 space-y-1">
                                 <div className="h-1.5 w-20 bg-gray-300 rounded"></div>
                                 <div className="h-1 w-12 bg-gray-100 rounded"></div>
@@ -78,7 +78,7 @@ export const DragDropVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
             </div>
             <div className="absolute z-50 animate-drag-1 pointer-events-none" style={{ top: '65px', left: '28px', opacity: 0 }}>
                 <div className="bg-white p-2 rounded-xl border border-teal-500 shadow-xl flex items-center gap-2 w-[180px] transform rotate-3">
-                    <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">⛩️</div>
+                    <div className="w-8 h-8 bg-gray-50 rounded-md flex items-center justify-center text-lg">🏙️</div>
                     <div className="flex-1 space-y-1">
                         <div className="h-1.5 w-20 bg-gray-300 rounded"></div>
                         <div className="h-1 w-12 bg-gray-100 rounded"></div>
@@ -111,7 +111,7 @@ export const MapVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
             </div>
             <div className="w-1/2 h-full relative flex flex-col items-center justify-center p-3 bg-white">
                 <div className="flex items-center gap-2 w-full bg-white border border-gray-100 p-1.5 rounded-lg shadow-sm">
-                    <div className="w-6 h-6 rounded-md bg-gray-50 border border-gray-200 flex items-center justify-center text-xs">⛩️</div>
+                    <div className="w-6 h-6 rounded-md bg-gray-50 border border-gray-200 flex items-center justify-center text-xs">🏙️</div>
                     <span className="text-[10px] font-bold text-gray-700 truncate">{t.visualsKinkakuji}</span>
                 </div>
                 <div className="h-8 w-0.5 bg-gray-200 my-1 relative flex items-center justify-center">
@@ -129,7 +129,7 @@ export const MapVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
                     </div>
                 </div>
                 <div className="flex items-center gap-2 w-full bg-white border border-gray-100 p-1.5 rounded-lg shadow-sm">
-                    <div className="w-6 h-6 rounded-md bg-gray-50 border border-gray-200 flex items-center justify-center text-xs">🦊</div>
+                    <div className="w-6 h-6 rounded-md bg-gray-50 border border-gray-200 flex items-center justify-center text-xs">🏯</div>
                     <span className="text-[10px] font-bold text-gray-700 truncate">{t.visualsFushimiInari}</span>
                 </div>
             </div>
@@ -141,8 +141,8 @@ export const MapVisual = ({ lang = 'zh' }: { lang?: LangType }) => {
 export const ChecklistVisual = ({ lang }: { lang: LangType }) => {
     const t = TRANSLATIONS[lang];
     const items = [
-        { text: t.checklistItem1, price: "¥2,800" },
-        { text: t.checklistItem2, price: "¥8,400" },
+        { text: t.checklistItem1, price: "NT$ 400" },
+        { text: t.checklistItem2, price: "NT$ 1,200" },
         { text: t.checklistItem3, price: null }
     ];
 
@@ -153,7 +153,7 @@ export const ChecklistVisual = ({ lang }: { lang: LangType }) => {
             </div>
             <div className="flex justify-between items-center mb-3 mt-1">
                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.checklistTitle}</span>
-                <span className="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full">¥ 11,200</span>
+                <span className="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full">NT$ 1,600</span>
             </div>
             <div className="flex flex-col gap-2.5">
                 {items.map((item, i) => (
@@ -234,9 +234,9 @@ export const AssetsVisual: React.FC<AssetsVisualProps> = ({ lang }) => {
     }, []);
 
     const assets = [
-        { icon: '⛩️', name: t.visualsKinkakuji, duration: '2hr', price: '¥400' },
-        { icon: '🦊', name: t.visualsFushimiInari, duration: '1.5hr', price: 'Free' },
-        { icon: '🍵', name: t.visualsTsujiriMatcha, duration: '30m', price: '¥600' },
+        { icon: '🏙️', name: t.visualsKinkakuji, duration: '2hr', price: 'NT$ 100' },
+        { icon: '🏯', name: t.visualsFushimiInari, duration: '1.5hr', price: 'Free' },
+        { icon: '🥟', name: t.visualsTsujiriMatcha, duration: '30m', price: 'NT$ 150' },
     ];
 
     const templates = [
@@ -364,7 +364,7 @@ export const AssetsVisual: React.FC<AssetsVisualProps> = ({ lang }) => {
                     }`}>
                     <div className="text-[8px] font-bold text-gray-400 uppercase tracking-wider mb-1 text-center">{t.visualsDragHint}</div>
                     <div className="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 shadow-sm">
-                        <div className="w-6 h-6 bg-orange-50 rounded flex items-center justify-center text-xs">⛩️</div>
+                        <div className="w-6 h-6 bg-orange-50 rounded flex items-center justify-center text-xs">🏙️</div>
                         <div className="flex-1">
                             <div className="h-1.5 w-16 bg-gray-600 rounded mb-1"></div>
                             <div className="h-1 w-8 bg-gray-300 rounded"></div>
@@ -379,7 +379,7 @@ export const AssetsVisual: React.FC<AssetsVisualProps> = ({ lang }) => {
                         </div>
                     </div>
                     <div className="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200 shadow-sm">
-                        <div className="w-6 h-6 bg-blue-50 rounded flex items-center justify-center text-xs">🍵</div>
+                        <div className="w-6 h-6 bg-blue-50 rounded flex items-center justify-center text-xs">🥟</div>
                         <div className="flex-1">
                             <div className="h-1.5 w-12 bg-gray-600 rounded mb-1"></div>
                             <div className="h-1 w-10 bg-gray-300 rounded"></div>

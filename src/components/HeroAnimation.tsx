@@ -183,7 +183,7 @@ const TabsToApp: React.FC<TabsToAppProps> = ({ lang }) => {
                                             animate={{ opacity: 1, y: 0 }}
                                             className="w-full max-w-[220px] mt-4 space-y-2"
                                         >
-                                            {['東京5日遊攻略 - Maps', '東京住宿推薦 - Booking', '必去景點TOP10'].map((result, i) => (
+                                            {['台北5日遊攻略 - Maps', '台北住宿推薦 - Booking', '必去景點TOP10'].map((result, i) => (
                                                 <motion.div
                                                     key={i}
                                                     initial={{ opacity: 0, x: -10 }}
@@ -342,16 +342,16 @@ const TabsToApp: React.FC<TabsToAppProps> = ({ lang }) => {
                                     <div className="text-[10px] font-bold text-gray-700">📅 {t.heroAnimationDay}</div>
                                     <div className="flex items-center gap-1 text-[8px] text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full">
                                         <Wallet size={8} />
-                                        <span>¥ 3,200</span>
+                                        <span>NT$ 1,200</span>
                                     </div>
                                 </motion.div>
 
                                 {/* Timeline */}
                                 <div className="flex-1 space-y-1.5 overflow-hidden">
                                     {[
-                                        { icon: '⛩️', name: t.asakusa, time: '09:00', bg: 'bg-orange-50' },
-                                        { icon: '🍜', name: t.ichiran, time: '12:00', bg: 'bg-red-50' },
-                                        { icon: '🗼', name: t.tokyoTower, time: '14:00', bg: 'bg-pink-50' },
+                                        { icon: '🏙️', name: t.asakusa, time: '09:00', bg: 'bg-orange-50' },
+                                        { icon: '🥟', name: t.ichiran, time: '12:00', bg: 'bg-red-50' },
+                                        { icon: '🎡', name: t.tokyoTower, time: '14:00', bg: 'bg-pink-50' },
                                         { icon: '🛍️', name: t.shibuya, time: '16:00', bg: 'bg-purple-50' },
                                     ].map((item, i) => (
                                         <motion.div

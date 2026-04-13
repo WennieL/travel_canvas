@@ -222,7 +222,7 @@ export const useAppHandlers = (deps: AppHandlersDeps) => {
 
     const generateExportText = useCallback(() => {
         let text = `✈️ ${activePlan.name}\n`;
-        text += `💰 Budget: JP¥${calculateTotalBudget().toLocaleString()}\n\n`;
+        text += `💰 Budget: NT$ ${calculateTotalBudget().toLocaleString()}\n\n`;
         return text;
     }, [activePlan.name, calculateTotalBudget]);
 

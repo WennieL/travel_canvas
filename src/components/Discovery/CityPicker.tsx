@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, MapPin, Star, Heart, Zap, Sparkles, ChevronRight, Leaf } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Template, LangType, Region, TravelItem, CulturalInsight } from '../../types';
-import { REGION_FILTERS, COUNTRY_FILTERS, TEMPLATES, MELBOURNE_ASSETS, SAMPLE_CREATORS, CULTURAL_WONDERS, SAMPLE_ASSETS } from '../../data';
+import { REGION_FILTERS, TEMPLATES, SAMPLE_CREATORS, CULTURAL_WONDERS, SAMPLE_ASSETS } from '../../data';
 import { CulturalInsightCard } from './CulturalInsightCard';
 
 interface CityPickerProps {
@@ -56,10 +56,6 @@ export const CityPicker: React.FC<CityPickerProps> = ({
         city.id !== 'all' && (lang === 'zh' ? city.label : city.labelEn).toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const filteredCountries = COUNTRY_FILTERS.filter(country =>
-        (lang === 'zh' ? country.label : country.labelEn).toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
     const filters = [
         { id: 'all', label: lang === 'zh' ? '所有行程' : 'ALL PLANS' },
         { id: '1day', label: lang === 'zh' ? '一日遊' : '1 DAY' },
@@ -86,15 +82,12 @@ export const CityPicker: React.FC<CityPickerProps> = ({
     // City Avatar Fallbacks
     const cityImages: Record<string, string> = {
         taipei: 'https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&q=80&w=400',
-        tainan: 'https://images.unsplash.com/photo-1596402184320-417d7178b2cd?auto=format&fit=crop&q=80&w=400',
-        taichung: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=80&w=400',
-        hualien: 'https://images.unsplash.com/photo-1517400508447-f8dd518b86db?auto=format&fit=crop&q=80&w=400',
-        tokyo: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?auto=format&fit=crop&q=80&w=400',
-        osaka: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=80&w=400',
-        kyoto: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400',
-        kaohsiung: 'https://images.unsplash.com/photo-1571242352227-21397b203c62?auto=format&fit=crop&q=80&w=400',
-        chiayi: 'https://images.unsplash.com/photo-1542662565-7e4b66bae529?auto=format&fit=crop&q=80&w=400',
-        nantou: 'https://images.unsplash.com/photo-1528148332152-6a68364b66df?auto=format&fit=crop&q=80&w=400',
+        tainan: 'https://images.unsplash.com/photo-1621848296279-7751546e9acc?auto=format&fit=crop&q=80&w=400',
+        taichung: 'https://images.unsplash.com/photo-1705312222607-3891bce8923a?auto=format&fit=crop&q=80&w=400',
+        hualien: 'https://images.unsplash.com/photo-1656746792552-c1eda28136d3?auto=format&fit=crop&q=80&w=400',
+        kaohsiung: 'https://images.unsplash.com/photo-1647685101882-6bd1835e3263?auto=format&fit=crop&q=80&w=400',
+        chiayi: 'https://images.unsplash.com/photo-1675990275056-8012982fb446?auto=format&fit=crop&q=80&w=400',
+        nantou: 'https://images.unsplash.com/photo-1719340198760-434a1763b3ac?auto=format&fit=crop&q=80&w=400',
     };
 
     return (

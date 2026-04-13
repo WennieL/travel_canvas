@@ -1,4 +1,4 @@
-import { TravelItem } from '../../types';
+import { TravelItem } from '../../../types';
 
 export const CHIAYI_ASSETS: TravelItem[] = [
     {
@@ -8,6 +8,7 @@ export const CHIAYI_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '4小時',
         image: '🌅',
+        coverImage: 'https://images.unsplash.com/photo-1675990275056-8012982fb446?auto=format&fit=crop&q=80&w=800',
         description: '台灣最富盛名的五大奇景之一，清晨旭日從玉山山脈後升起的瞬間，照亮整片翻騰雲海。',
         descriptionEn: 'One of Taiwan\'s most famous sights. Watch the morning sun rise behind the Yushan Range, illuminating the churning sea of clouds.',
         price: 200,
@@ -82,6 +83,7 @@ export const CHIAYI_ASSETS: TravelItem[] = [
         type: 'attraction',
         duration: '3小時',
         image: '🚂',
+        coverImage: 'https://images.unsplash.com/photo-1675990275056-8012982fb446?auto=format&fit=crop&q=80&w=800',
         description: '世界僅存的三個登山鐵道之一，沿線跨越熱帶、暖帶、溫帶三種林相變化。',
         descriptionEn: 'One of the world\'s three remaining mountain railways, traversing tropical, temperate, and alpine forests.',
         price: 450,
@@ -156,6 +158,7 @@ export const CHIAYI_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '45分',
         image: '🍚',
+        coverImage: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&q=80&w=800',
         description: '嘉義人心中的靈魂，肉質鮮嫩、雞油香氣濃郁的經典代表。',
         descriptionEn: 'The soul of Chiayi. A classic representative with tender meat and aromatic chicken oil.',
         price: 60,
@@ -230,6 +233,7 @@ export const CHIAYI_ASSETS: TravelItem[] = [
         type: 'food',
         duration: '1.5小時',
         image: '🍰',
+        coverImage: 'https://images.unsplash.com/photo-1550928431-fe14582f3484?auto=format&fit=crop&q=80&w=800',
         description: '隱身嘉義巷弄的日式復古空間，提供精緻的甜點與舒適的蔬食輕食選擇。',
         descriptionEn: 'Japanese-style retro space hidden in Chiayi alleys, offering refined desserts and comfortable vegetarian light meals.',
         price: 300,
@@ -304,6 +308,7 @@ export const CHIAYI_ASSETS: TravelItem[] = [
         type: 'experiential',
         duration: '2小時',
         image: '🍵',
+        coverImage: 'https://images.unsplash.com/photo-1582733315330-2495837ee440?auto=format&fit=crop&q=80&w=800',
         description: '在海拔1300公尺的茶園中，親手體驗揉捻茶青，感受高山茶的生命力。',
         descriptionEn: 'At 1300m elevation, experience hand-kneading tea leaves and feel the vitality of high-mountain tea.',
         price: 600,
@@ -378,6 +383,7 @@ export const CHIAYI_ASSETS: TravelItem[] = [
         type: 'hotel',
         duration: '0',
         image: '🏨',
+        coverImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800',
         description: '全台海拔最高的五星級飯店，百年歷史底蘊，在房內就能看日落。',
         descriptionEn: 'The highest 5-star hotel in Taiwan with 100 years of history. Watch sunset from your room.',
         price: 7000,

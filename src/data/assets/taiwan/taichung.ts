@@ -445,6 +445,44 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         region: 'taichung',
         authorId: 'c-tw3',
         tags: ['體驗', '珍奶', '經典'],
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '必點推薦',
+                labelEn: 'Must Eat',
+                summary: '珍珠奶茶 & 功夫麵',
+                summaryEn: 'Pearl Milk Tea & Gongfu Noodles',
+                story: '來創始店一定要點大杯珍奶！珍珠軟 Q 有勁，配上一碗古早味的功夫麵，是台中人記憶中最經典的午茶組合。',
+                storyEn: 'A large Boba is a must at the original store! The pearls are perfectly chewy, and paired with classic Gongfu noodles, it\'s the most iconic Taichung tea time combo.'
+            },
+            {
+                id: 'must-do',
+                label: '核心體驗',
+                labelEn: 'Must Do',
+                summary: '參與珍奶手作課程',
+                summaryEn: 'Boba Making Class',
+                story: '親手搖出屬於自己的珍奶非常療癒，還能獲得一張「珍奶認證證書」，非常有成就感。',
+                storyEn: 'Shaking your own pearl milk tea is therapeutic, and you even get a certificate—extremely rewarding.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '避免週末無預約前往',
+                summaryEn: 'Avoid Weekend Walk-ins',
+                story: '四維創始店名氣極大，週末現場排隊至少一小時起跳。體驗課程務必在 5 天前先在網路上預約。',
+                storyEn: 'The Siwei original store is legendary; weekend lines take at least an hour. Book the DIY class online at least 5 days ahead.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '古色古香的大理石桌',
+                summaryEn: 'Vintage Marble Tables',
+                story: '這家店保留了早年的大理石圓桌與中式窗櫺，下午時分陽光灑進來的自然光下拍照最有復古氛圍。',
+                storyEn: 'The shop retains its early marble tables and Chinese-style windows. The natural light in the afternoon creates a perfect retro vibe for photos.'
+            }
+        ],
         insiderTip: {
             teaser: '不只是喝奶茶，還要拿證書的珍奶手作課',
             teaserEn: 'Not just drinking; earn a certificate in Boba-making.',
@@ -479,6 +517,44 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         region: 'taichung',
         authorId: 'c-tw3',
         tags: ['老建築', '手作', '伴手禮'],
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '必玩推薦',
+                labelEn: 'Must Do',
+                summary: '親手捏製太陽餅',
+                summaryEn: 'Hand-make Sun Cakes',
+                story: '在這裡可以從揉麵团開始體驗製作太陽餅。現烤出來的餅皮最酥，麥芽糖內餡還會微微牽絲。',
+                storyEn: 'Experience making sun cakes from scratch. The freshly baked crust is flaky, and the maltose filling is delightfully warm and gooey.'
+            },
+            {
+                id: 'must-eat',
+                label: '必吃經典',
+                labelEn: 'Must Eat',
+                summary: '現烤出爐的太陽餅',
+                summaryEn: 'Fresh Baked Sun Cake',
+                story: '別只買包裝好的，一定要當場試吃剛出爐、還帶著溫度的太陽餅，那種療癒感完全不一樣。',
+                storyEn: 'Don\'t just buy the boxes; you must try the warm ones fresh from the oven. The comfort level is on another floor.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '手作力道要輕',
+                summaryEn: 'Gentle on the Dough',
+                story: '捏餅皮時力道不可太大，否則烘烤後餅皮會裂開。聽從現場師傅的建議，慢慢捲出層次感。',
+                storyEn: 'Don\'t press too hard when molding the dough, or it will crack when baking. Follow the master\'s advice and roll thin layers gently.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '二樓紅磚古蹟空間',
+                summaryEn: '2F Red Brick Heritage',
+                story: '全安堂老建築本身就是歷史。二樓的木造結構與紅磚牆保存非常完整，在這裡喝茶看歷史展覽非常愜意。',
+                storyEn: 'The Chuan-An Hall building is history itself. The 2F wooden structure and red brick walls are perfectly preserved; it\'s very cozy for tea and history.'
+            }
+        ],
         insiderTip: {
             teaser: '在百年紅磚房裡捏餅，還能看九個太陽的奧秘',
             teaserEn: 'Bake in a 100-year-old house and learn the sun cake secrets.',
@@ -513,6 +589,44 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         region: 'taichung',
         authorId: 'c-tw3',
         tags: ['文創', '市集', '文青'],
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '必逛推薦',
+                labelEn: 'Must Do',
+                summary: '暮暮市集尋寶',
+                summaryEn: 'Mumu Market Treasure Hunt',
+                story: '週末才有的大規模市集，聚集了台中的首飾、皮件、插畫工作者。每攤都是對生活的精緻想像。',
+                storyEn: 'A weekend market featuring jewelry, leather goods, and illustrations from local creators. Each stall reflects a unique lifestyle vision.'
+            },
+            {
+                id: 'must-eat',
+                label: '必吃點心',
+                labelEn: 'Must Eat',
+                summary: '旅禾泡芙',
+                summaryEn: 'L’herbe Puffs',
+                story: '門口那頂巨大的泡芙帽是地標。一定要買現灌奶油的泡芙，外皮酥脆、內餡冰涼香甜。',
+                storyEn: 'The giant puff hat outside is a landmark. You must get the fresh-filled puffs with crispy shells and icy sweet cream.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '週末人湖爆滿',
+                summaryEn: 'Weekend Crowds',
+                story: '週末下午 2 點到 5 點是巔峰時段，想要好好拍照幾乎不可能。建議平日 11 點剛開門時來。',
+                storyEn: '2-5 PM on weekends is peak time; photography is impossible. Visit at 11 AM on weekdays when it just opens.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '二樓木造廊道',
+                summaryEn: '2F Wooden Corridor',
+                story: '走上老宅二樓的小樓梯，從高處俯看整片村落的屋頂與市集人潮，是這裡最美的拍照視角。',
+                storyEn: 'Climb the tiny wooden stairs to the 2F. Looking down at the rooftops and the market crowds is the best photography perspective here.'
+            }
+        ],
         insiderTip: {
             teaser: '二樓平檯是最佳視角，必買旅禾泡芙',
             teaserEn: 'The 2F plateau is the best view. Get the L’herbe puffs!',
@@ -547,6 +661,44 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         region: 'taichung',
         authorId: 'c-tw3',
         tags: ['建築', '藝術', '地標'],
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '必探體驗',
+                labelEn: 'Must Do',
+                summary: '空中花園迷宮',
+                summaryEn: 'Rooftop Sky Garden',
+                story: '搭電梯直達頂樓，在雪白的「火山口」造型植栽間散步，感受建築大師伊東豊雄的弧形美學。',
+                storyEn: 'Take the elevator to the roof and wander among the white "volcano" planters. Feel Toyo Ito\'s signature curved aesthetics.'
+            },
+            {
+                id: 'must-eat',
+                label: '必訪空間',
+                labelEn: 'Must Visit',
+                summary: 'VVG 食尚空間',
+                summaryEn: 'VVG Lifestyle Space',
+                story: '五樓的選物與餐飲空間同樣維持了曲牆設計，坐在洞穴般的空間裡喝咖啡是極致奢華的享受。',
+                storyEn: 'The 5F lifestyle and café areas share the same curved walls. Sipping coffee in this cave-like space is ultimate luxury.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '室內冷氣強勁',
+                summaryEn: 'Strong Indoor AC',
+                story: '為了維持昂貴音響器材與樂器的恆溫，館內冷氣非常強。即便外面 35 度，進來一定要備薄外套。',
+                storyEn: 'To protect expensive equipment, it\'s very cold inside. Even if it\'s 35°C outside, bring a light jacket.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '曲牆間的小耳朵',
+                summaryEn: 'Ears in the Walls',
+                story: '尋找牆上的圓形通風孔，那被稱為「美聲涵洞」的小耳朵。在特定角落，你可以聽到不可思議的聲音反射。',
+                storyEn: 'Find the round vents in the walls—the "Sound Caves." In specific corners, you can hear incredible acoustic reflections.'
+            }
+        ],
         insiderTip: {
             teaser: '要去頂樓的空中花園，聽聽「無牆」的迴聲',
             teaserEn: 'Visit the rooftop garden and listen to the wall-less echoes.',
@@ -582,6 +734,44 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '07:30-18:00',
         tags: ['飲品', '在地'],
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '必喝推薦',
+                labelEn: 'Must Drink',
+                summary: '豆香紅茶 (大杯)',
+                summaryEn: 'Soy Milk Black Tea (Large)',
+                story: '招牌紅茶加入研磨豆漿，喝得到濃郁豆香。一定要加碎冰，那種喝一口透心涼的感覺，才是老賴的味道。',
+                storyEn: 'Signature black tea mixed with ground soy milk. You must have the crushed ice—that brain-freeze coldness is the essence of Lao Lai.'
+            },
+            {
+                id: 'must-do',
+                label: '核心觀察',
+                labelEn: 'Must Do',
+                summary: '看大不鏽鋼桶舀茶',
+                summaryEn: 'Watch the Ladle Craft',
+                story: '看店員從不鏽鋼桶中快速舀茶、加入碎冰，節奏感十足。這是在第二市場生活超過四十年的老派日常。',
+                storyEn: 'Watch staff scoop tea from stainless steel drums with crushed ice. It\'s a decades-old rhythmic routine in the Second Market.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '不要去冰微冰',
+                summaryEn: 'Don\'t Skip the Ice',
+                story: '老賴紅茶最重要的霛魂就是那層細碎的碎冰，去冰會讓甜度顯得太高，口感也會大打折扣。',
+                storyEn: 'The soul of this drink is the layer of fine crushed ice. Going "no ice" makes it too sweet and less refreshing.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '配阿嬤蘿蔔糕是標配',
+                summaryEn: 'Pair with Radish Cake',
+                story: '內行人的台中早餐吃法：先到隔壁王記點盤蘿蔔糕，再來老賴買杯紅茶。一鹹一甜、一熱一涼是最高境界。',
+                storyEn: 'The pro Taichung breakfast move: get a plate of radish cakes next door, then grab this tea. Salty and sweet, hot and cold—perfection.'
+            }
+        ],
         insiderTip: {
             teaser: '傳說中的豆香紅茶，配阿嬤蘿蔔糕是標配',
             teaserEn: 'The legendary soy black tea, best with radish cake.',
@@ -617,6 +807,44 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
         authorId: 'c-tw3',
         openingHours: '11:30-21:00',
         tags: ['正式午餐/晚餐', '景觀', '設計'],
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '必吃推薦',
+                labelEn: 'Must Eat',
+                summary: '法式台魂晚宴',
+                summaryEn: 'French-Taiwanese Dinner',
+                story: '主廚用精緻的法式手法重新詮釋台中在地食材。每一道菜上桌都像是一件與建築呼應的藝術品。',
+                storyEn: 'The chef reimagines local Taichung ingredients with refined French techniques. Each dish looks like a piece of architecture on a plate.'
+            },
+            {
+                id: 'must-do',
+                label: '核心體驗',
+                labelEn: 'Must Do',
+                summary: '窗邊景觀位賞七期',
+                summaryEn: 'Window View of 7th Dist',
+                story: '夕陽西下時分，落地窗外是台中最精華的七期豪宅區夜景。配上館內的流動曲牆，是全台中最浪漫的位子。',
+                storyEn: 'At sunset, the view of the elite 7th District mansions is stunning. It\'s the most romantic spot in Taichung.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '晚餐務必預約',
+                summaryEn: 'Dinner Booking Reqd',
+                story: '因為在歌劇院內，散場觀眾會瞬間湧入。晚餐時段座位極難搶，建議至少提前二週在網路上訂位。',
+                storyEn: 'Post-performance crowds flood in. Dinner seats are extremely hard to get; book online at least 2 weeks ahead.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '圓弧孔洞空間攝影',
+                summaryEn: 'Curved Space Photography',
+                story: '餐廳最內側的孔洞設計最為壯觀。趁剛開門人少時請求服務生協助，可以拍到與大廳截然不同的光影。',
+                storyEn: 'The innermost arch design is spectacular. Ask the staff for a quick photo right at opening for unique shadow play.'
+            }
+        ],
         insiderTip: {
             teaser: '在歌劇院呼吸孔洞裡用餐',
             teaserEn: 'Dine inside the theater\'s breathing caves.',
@@ -631,6 +859,152 @@ export const TAICHUNG_ASSETS: TravelItem[] = [
                 avoidEn: 'Reserve for weekends; window seats carry high demand.',
                 bestTime: '18:00 (傍晚的光線最優雅)',
                 bestTimeEn: '6 PM (Elegant evening light)'
+            }
+        }
+    },
+    {
+        id: 'tc-f10',
+        title: '天津苟不理湯包',
+        titleEn: 'Gou-Bu-Li Juicy Buns',
+        type: 'food',
+        duration: '1小時',
+        image: '🥟',
+        description: '台中後站傳奇早餐！如饅頭般碩大的噴汁湯包，內餡紮實，咬下務必小心燙口。',
+        descriptionEn: 'Legendary breakfast near Taichung Station! Massive, juicy dumplings as big as buns. Watch out for the hot broth!',
+        price: 150,
+        address: '台中市東區信義街63號',
+        rating: 4.6,
+        lat: 24.1362,
+        lng: 120.6895,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        openingHours: '05:30-11:30',
+        tags: ['早餐', '在地', '銅板美食'],
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '必點推薦',
+                labelEn: 'Must Eat',
+                summary: '鮮肉湯包 & 蔥花蛋',
+                summaryEn: 'Juicy Meat Bun & Scallion Egg',
+                story: '這裡的湯包皮厚實 Q 彈，內餡是滿滿的豬肉溫體鮮甜味。配上一份現煎的蔥花蛋，是在地人最飽足的組合。',
+                storyEn: 'The bun is thick and chewy with fresh pork filling. Paired with a scallion egg, it\'s the most satisfying local breakfast combo.'
+            },
+            {
+                id: 'must-do',
+                label: '在地體驗',
+                labelEn: 'Must Do',
+                summary: '享受飲料無限續杯',
+                summaryEn: 'Unlimited Soft Drinks',
+                story: '店內提供超霸氣的飲料自助吧，豆漿、紅茶、混漿隨你喝。這種台中式的海派與豪爽，只有在這裡才看得到。',
+                storyEn: 'The shop offers a generous self-serve drink bar with soy milk and black tea. This hospitality is uniquely Taichung style.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '噴汁警告：小心衣服',
+                summaryEn: 'Sploosh Juice Warning',
+                story: '這款湯包的湯汁量極大，咬下第一口時絕對不要太用力。如果沒掌握好角度，湯汁會直接噴到對面或衣服上！',
+                storyEn: 'The broth volume is massive; don\'t bite too hard on the first go! If misangled, the juice will spray onto you or your friends.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '混漿 (豆漿加紅茶)',
+                summaryEn: 'The Soy-Tea Mix',
+                story: '不知道喝什麼？熟客都會自己調配 1:1 的「混漿」（豆漿加紅茶），口感柔順又有茶香，是解膩聖品。',
+                storyEn: 'Undecided? Locals mix soy milk and black tea 1:1 for a smooth, fragrant drink that perfectly cuts through the oiliness.'
+            }
+        ],
+        insiderTip: {
+            teaser: '咬下第一口請保持距離，那是噴汁級的震撼',
+            teaserEn: 'Maintain distance for the first bite—it\'s a juice sploosh!',
+            full: {
+                story: '雖然名為湯包，但在這裡更像是一種會噴汁的巨大肉饅頭。別看它皮厚，那種吸飽肉汁的嚼勁才是精華。',
+                storyEn: 'Though called a soup dumpling, it\'s more like a giant juicy bun. The dough soaked in meat broth is the real highlight.',
+                exactLocation: '台中火車站後站信義街',
+                exactLocationEn: 'Xinyi St, behind Taichung Station',
+                mustTry: '噴汁大湯包 + 蔥花蛋',
+                mustTryEn: 'Juicy Meat Bun + Scallion Omelet',
+                avoid: '早上 9 點到 10 點人潮最擁擠，建議清晨 7 點去',
+                avoidEn: 'Avoid peak 9-10 AM; visit around 7 AM for a better experience.',
+                bestTime: '07:30',
+                bestTimeEn: '07:30 AM'
+            }
+        }
+    },
+    {
+        id: 'tc-a7',
+        title: '台中刑務所演武場',
+        titleEn: 'Natural Way Six Arts Center',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '⚔️',
+        description: '台中唯一存留的日治時期武德殿建築。提供劍道、茶道、弓道等六藝體驗。',
+        descriptionEn: 'The only surviving Japanese-era martial arts dojo in Taichung. Offers kendo, tea ceremony, and archery.',
+        price: 0,
+        address: '台中市西區林森路33號',
+        rating: 4.7,
+        lat: 24.1332,
+        lng: 120.6725,
+        region: 'taichung',
+        authorId: 'c-tw3',
+        openingHours: '09:00-22:00',
+        tags: ['歷史建築', '文化', '手作體驗'],
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '核心體驗',
+                labelEn: 'Must Do',
+                summary: '感受惟和館劍道正氣',
+                summaryEn: 'Feel the Kendo Spirit',
+                story: '主要建築「惟和館」目前仍提供劍道修練。看著穿著傳統服飾的職人在道場切磋，能強烈感受到那種肅穆的傳承感。',
+                storyEn: 'The main hall "Weihe" still hosts kendo training. Watching practitioners in traditional gear is a powerful cultural experience.'
+            },
+            {
+                id: 'must-eat',
+                label: '必訪空間',
+                labelEn: 'Must Visit',
+                summary: '心行館日式茶點',
+                summaryEn: 'Tea Ceremony at Xinxing',
+                story: '在純日式的木造建築「心行館」中坐下來。換上茶人腳尖，在榻榻米上享用一份日式茶具與精緻點心。',
+                storyEn: 'Sit in the traditional wooden "Xinxing" hall. Wear traditional socks and enjoy Japanese tea and snacks on the tatami.'
+            },
+            {
+                id: 'trap',
+                label: '避坑指南',
+                labelEn: 'Avoid Trap',
+                summary: '小心隱藏版小黑蚊',
+                summaryEn: 'Beware of Midges',
+                story: '演武場周邊老樹環繞，生態極佳，但也意味著「小黑蚊」非常兇猛。夏天前往務必穿著長袖或噴好強效防蚊液。',
+                storyEn: 'The lush greenery means vicious midges! Wear long sleeves or apply strong repellent before exploring the grounds.'
+            },
+            {
+                id: 'hidden',
+                label: '在地私藏',
+                labelEn: 'Hidden Gem',
+                summary: '百年大榕樹下的市集',
+                summaryEn: 'Market under Banyan Tree',
+                story: '後方的百年大榕樹是生命力象徵。週末常有小型的文創市集或工作坊在此舉行，非常適合在樹蔭下乘涼漫步。',
+                storyEn: 'The 100-year-old banyan tree is iconic. Weekends often feature small indie markets or workshops in its generous shade.'
+            }
+        ],
+        insiderTip: {
+            teaser: '不只是古蹟，更是能親身體驗武士精神的文化場域',
+            teaserEn: 'Not just a relic, but a field to experience the samurai spirit.',
+            full: {
+                story: '身為台中最完整的日治時期道場建築，走在木地板上都能感受到歷史的厚度。一旁的「心行館」是絕佳的歇腳處，茶香四溢。',
+                storyEn: 'As Taichung\'s most complete colonial-era dojo, every step on the wood floors drips with history. The nearby tea house is perfect for a break.',
+                exactLocation: '台中市林森路與府後街口',
+                exactLocationEn: 'Corner of Linsen Rd & Fuhou St',
+                mustTry: '心行館日式下午茶體驗',
+                mustTryEn: 'Japanese Afternoon Tea at Xinxing Hall',
+                avoid: '週末下午會有大量人潮，建議 10 點前或 5 點後造訪',
+                avoidEn: 'Avoid weekend afternoons; early morning or late evening is best.',
+                bestTime: '15:30 (斜光下日式建築的光影最動人)',
+                bestTimeEn: '15:30 PM (Shadow play on Japanese architecture is best)'
             }
         }
     }
