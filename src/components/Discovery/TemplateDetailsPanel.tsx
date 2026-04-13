@@ -143,6 +143,10 @@ interface TemplateDetailsPanelProps {
     onSpotClick?: (spot: any) => void;
     savedTemplates?: Template[];
     handleToggleFavoriteTemplate?: (tpl: Template) => void;
+    // [Phase UX] Sync with header action
+    isExternalPurchaseModalOpen?: boolean;
+    onOpenPurchaseModal?: () => void;
+    onClosePurchaseModal?: () => void;
 }
 
 // Helper to render icon by name
@@ -165,11 +169,23 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     onCreatorClick,
     onSpotClick,
     savedTemplates = [],
-    handleToggleFavoriteTemplate
+    handleToggleFavoriteTemplate,
+    onOpenPurchaseModal,
+    onClosePurchaseModal,
+    isExternalPurchaseModalOpen = false
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
-    const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+    // [Phase UX] Use external state if available, otherwise fallback
+    const [internalShowPurchaseModal, setInternalShowPurchaseModal] = useState(false);
+    const showPurchaseModal = onOpenPurchaseModal ? isExternalPurchaseModalOpen : internalShowPurchaseModal;
+    const setShowPurchaseModal = (val: boolean) => {
+        if (onOpenPurchaseModal) {
+            val ? onOpenPurchaseModal() : onClosePurchaseModal?.();
+        } else {
+            setInternalShowPurchaseModal(val);
+        }
+    };
     const { purchasedTemplateIds, unlockTemplate } = useUI();
     const { showToastMessage } = useApp();
     
@@ -733,19 +749,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                 </motion.div>
             </div>
         )}
-            {/* Premium Unlock Modal */}
-            <TemplateUnlockModal 
-                isOpen={showPurchaseModal}
-                onClose={() => setShowPurchaseModal(false)}
-                template={template}
-                lang={lang}
-                onConfirm={() => {
-                    unlockTemplate(template.id);
-                    setShowPurchaseModal(false);
-                    showToastMessage(lang === 'zh' ? '🔓 成功購買！感謝您的支持' : '🔓 Purchased! Thank you for your support', 'success');
-                }}
-                creator={creator}
-            />
+        {/* Purchase modal now handled by parent App.tsx for header/content sync */}
         </>
     );
 };

@@ -27,6 +27,7 @@ import {
     getSlotLabel,
     getFallbackImage
 } from './utils';
+import { Plus } from 'lucide-react';
 
 import LandingPage from './components/LandingPage';
 import WelcomeSlides from './components/WelcomeSlides';
@@ -35,6 +36,7 @@ import { ImmersivePage } from './components/Common/ImmersivePage';
 import { TemplateDetailsPanel } from './components/Discovery/TemplateDetailsPanel';
 import { CreatorProfilePanel } from './components/Discovery/CreatorProfilePanel';
 import { Toast } from './components/Toast';
+import { TemplateUnlockModal } from './components/Modals';
 import { usePlans, useBudget, useUIState, useConfirm, useItinerary, useAppActions, useAppHandlers } from './hooks';
 import { useIsMobile } from './hooks/useIsMobile';
 
@@ -48,6 +50,8 @@ export function App() {
     const [isInitialized, setIsInitialized] = useState(false);
     const [isCreatingNewPlan, setIsCreatingNewPlan] = useState(false);
     const [showOnboarding, setShowOnboarding] = useState(false);
+    const [showTemplatePurchaseModal, setShowTemplatePurchaseModal] = useState(false);
+    const [isTemplateScrolled, setIsTemplateScrolled] = useState(false);
 
     // UI State Management Hook
     const ui = useUIState();
@@ -410,34 +414,53 @@ export function App() {
         
         {/* Immersive Detail Pages (Phase C: Unified) */}
         {ui.activeTemplateId && (
-            <ImmersivePage
-                isOpen={!!ui.activeTemplateId}
-                onClose={() => {
-                    ui.setActiveTemplateId(null);
-                    // If we were in the middle of creating a trip, reopen the settings modal
-                    if (pendingWizardData) {
-                        ui.setShowCheckIn(true);
+            (() => {
+                const tpl = TEMPLATES.find(t => t.id === ui.activeTemplateId);
+                if (!tpl) return null;
+                const creator = SAMPLE_CREATORS.find(c => c.id === tpl.authorId);
+                const isPurchased = tpl.isLocked ? ui.purchasedTemplateIds.includes(tpl.id) : true;
+                
+                const handleHeaderApply = () => {
+                    if (!isPurchased) {
+                        setShowTemplatePurchaseModal(true);
+                    } else {
+                        applyTemplate(tpl);
+                        ui.setActiveTemplateId(null);
                     }
-                }}
-                title={lang === 'zh' ? '行程預覽' : 'Template Preview'}
-                historyId={`tpl-${ui.activeTemplateId}`}
-                transparentHeader
-                hideTitle
-                {...(() => {
-                    const tpl = TEMPLATES.find(t => t.id === ui.activeTemplateId);
-                    const creator = SAMPLE_CREATORS.find(c => c.id === tpl?.authorId);
-                    return {
-                        creator,
-                        onFollow: handleToggleSubscribe,
-                        isFollowed: creator ? subscribedCreators.includes(creator.id) : false,
-                        lang
-                    };
-                })()}
-            >
-                {(() => {
-                    const tpl = TEMPLATES.find(t => t.id === ui.activeTemplateId);
-                    if (!tpl) return null;
-                    return (
+                };
+
+                return (
+                    <ImmersivePage
+                        isOpen={!!ui.activeTemplateId}
+                        onClose={() => {
+                            ui.setActiveTemplateId(null);
+                            if (pendingWizardData) {
+                                ui.setShowCheckIn(true);
+                            }
+                        }}
+                        title={lang === 'zh' ? '行程預覽' : 'Template Preview'}
+                        historyId={`tpl-${ui.activeTemplateId}`}
+                        transparentHeader
+                        hideTitle
+                        creator={creator}
+                        onFollow={handleToggleSubscribe}
+                        isFollowed={creator ? subscribedCreators.includes(creator.id) : false}
+                        showTitleOnScroll={true}
+                        isScrolled={isTemplateScrolled}
+                        onScroll={(scrollTop) => setIsTemplateScrolled(scrollTop > 100)}
+                        rightAction={
+                            <button 
+                                onClick={handleHeaderApply}
+                                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                                    (!isTemplateScrolled) 
+                                        ? 'bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-black/50 shadow-lg' 
+                                        : 'text-[#181D17] hover:bg-[#F1F3EE]'
+                                }`}
+                            >
+                                <Plus size={24} />
+                            </button>
+                        }
+                    >
                         <TemplateDetailsPanel
                             template={tpl}
                             lang={lang}
@@ -452,10 +475,33 @@ export function App() {
                             }}
                             savedTemplates={savedTemplates}
                             handleToggleFavoriteTemplate={handleToggleFavoriteTemplate}
+                            // [Phase UX] Sync with header purchase modal
+                            isExternalPurchaseModalOpen={showTemplatePurchaseModal}
+                            onOpenPurchaseModal={() => setShowTemplatePurchaseModal(true)}
+                            onClosePurchaseModal={() => setShowTemplatePurchaseModal(false)}
                         />
-                    );
-                })()}
-            </ImmersivePage>
+
+                        {/* Standardized Header Purchase Modal (Shared logic) */}
+                        <TemplateUnlockModal 
+                            isOpen={showTemplatePurchaseModal}
+                            onClose={() => setShowTemplatePurchaseModal(false)}
+                            template={tpl}
+                            lang={lang}
+                            onConfirm={() => {
+                                ui.unlockTemplate(tpl.id);
+                                setShowTemplatePurchaseModal(false);
+                                showToastMessage(lang === 'zh' ? '🔓 成功購買！感謝您的支持' : '🔓 Purchased! Thank you for your support', 'success');
+                            }}
+                            creator={creator || {
+                                id: tpl.authorId,
+                                name: tpl.author,
+                                nameEn: tpl.authorEn || tpl.author,
+                                avatar: `https://i.pravatar.cc/100?u=${tpl.authorId}`
+                            } as any}
+                        />
+                    </ImmersivePage>
+                );
+            })()
         )}
 
         {/* SpotDetailPage renders AFTER template panel to ensure z-order stacking */}

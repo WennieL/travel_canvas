@@ -79,7 +79,11 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
             rightAction={
                 <button 
                     onClick={handleAddAction}
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-tc-primary hover:bg-tc-primary/5 transition-colors"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                        (!isScrolled) 
+                            ? 'bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-black/50 shadow-lg' 
+                            : 'text-[#181D17] hover:bg-[#F1F3EE]'
+                    }`}
                 >
                     <Plus size={24} />
                 </button>
