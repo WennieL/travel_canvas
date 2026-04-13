@@ -16,21 +16,24 @@ const CATEGORY_ICONS: Record<ExpertStoryCategory, string> = {
     'must-do': 'CheckCircle2',
     'must-eat': 'UtensilsCrossed',
     'trap': 'AlertTriangle',
-    'hidden': 'Lightbulb'
+    'hidden': 'Lightbulb',
+    'artisan': 'Zap'
 };
 
 const CATEGORY_COLORS: Record<ExpertStoryCategory, string> = {
     'must-do': '#527d22',
     'must-eat': '#b86818',
     'trap': '#b83838',
-    'hidden': '#354e96'
+    'hidden': '#354e96',
+    'artisan': '#7c3aed'
 };
 
 const CATEGORY_BG_COLORS: Record<ExpertStoryCategory, string> = {
     'must-do': '#eef5e3',
     'must-eat': '#fff3e8',
     'trap': '#fdf0ef',
-    'hidden': '#edf0f9'
+    'hidden': '#edf0f9',
+    'artisan': '#f5f3ff'
 };
 
 export const ExpertStoryGrid: React.FC<ExpertStoryGridProps> = ({ stories, lang, themeColor }) => {
@@ -79,7 +82,8 @@ export const ExpertStoryGrid: React.FC<ExpertStoryGridProps> = ({ stories, lang,
                                                 const t = TRANSLATIONS[lang];
                                                 const categoryKey = story.id === 'must-do' ? 'category_mustDo' : 
                                                                     story.id === 'must-eat' ? 'category_mustEat' : 
-                                                                    story.id === 'trap' ? 'category_trap' : 'category_hidden';
+                                                                    story.id === 'trap' ? 'category_trap' : 
+                                                                    story.id === 'artisan' ? 'category_artisan' : 'category_hidden';
                                                 return lang === 'zh' ? (story.label || t[categoryKey]) : (story.labelEn || t[categoryKey]);
                                             })()}
                                         </span>

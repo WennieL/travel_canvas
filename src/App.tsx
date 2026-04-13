@@ -473,6 +473,7 @@ export function App() {
                 onCreatorClick={ui.setActiveCreatorId}
                 fallbackItem={ui.selectedItem as TravelItem}
                 plans={plans}
+                activePlanId={activePlanId}
                 onAddItemToPlan={handleAddItemToPlan}
                 onCreateNewPlan={() => {
                     ui.setShowCheckIn(true);

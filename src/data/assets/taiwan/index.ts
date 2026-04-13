@@ -7,7 +7,7 @@ import { CHIAYI_ASSETS } from './chiayi';
 import { NANTOU_ASSETS } from './nantou';
 import { TAIWAN_GIFTS } from './gifts';
 import { TAIWAN_TOP_PICKS, resolvePicks } from './picks';
-import { TravelItem } from '../../types';
+import { TravelItem } from '../../../types';
 
 export const TAIWAN_ASSETS: TravelItem[] = [
     ...TAIPEI_ASSETS,

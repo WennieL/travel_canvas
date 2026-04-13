@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExpertStory, LangType, ExpertStoryCategory } from '../../types';
-import { CheckCircle2, UtensilsCrossed, AlertTriangle, Lightbulb, ChevronDown, Zap } from 'lucide-react';
+import { CheckCircle2, UtensilsCrossed, AlertTriangle, Lightbulb, ChevronDown, Zap, Hammer } from 'lucide-react';
 import { clsx } from 'clsx';
 
 interface ExpertStoryTabsProps {
@@ -13,14 +13,16 @@ const CATEGORY_ICONS: Record<ExpertStoryCategory, React.ReactNode> = {
     'must-do': <CheckCircle2 size={18} />,
     'must-eat': <UtensilsCrossed size={18} />,
     'trap': <AlertTriangle size={18} />,
-    'hidden': <Lightbulb size={18} />
+    'hidden': <Lightbulb size={18} />,
+    'artisan': <Hammer size={18} />
 };
 
 const CATEGORY_COLORS: Record<ExpertStoryCategory, string> = {
     'must-do': 'text-green-600 bg-green-50 border-green-100',
     'must-eat': 'text-orange-600 bg-orange-50 border-orange-100',
     'trap': 'text-amber-600 bg-amber-50 border-amber-100',
-    'hidden': 'text-indigo-600 bg-indigo-50 border-indigo-100'
+    'hidden': 'text-indigo-600 bg-indigo-50 border-indigo-100',
+    'artisan': 'text-purple-600 bg-purple-50 border-purple-100',
 };
 
 export const ExpertStoryTabs: React.FC<ExpertStoryTabsProps> = ({ stories, lang }) => {

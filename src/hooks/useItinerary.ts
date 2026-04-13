@@ -179,6 +179,7 @@ export function useItinerary(
         newSchedule[currentDayKey][targetSlot].sort((a, b) => (a.startTime || 'ZZZZ').localeCompare(b.startTime || 'ZZZZ'));
 
         updateActivePlan({ schedule: newSchedule });
+        ui.setViewMode?.('canvas');
         ui.setShowMobileLibrary(false);
         if (ui.setSidebarMode) {
             ui.setSidebarMode('list');

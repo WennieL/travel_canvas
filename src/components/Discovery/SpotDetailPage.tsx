@@ -16,6 +16,7 @@ interface SpotDetailPageProps {
     onCreatorClick?: (creatorId: string) => void;
     fallbackItem?: TravelItem | null;
     plans?: any[];
+    activePlanId?: string | null;
     onAddItemToPlan?: (item: TravelItem, planId: string) => void;
     onCreateNewPlan?: () => void;
     savedSpots?: TravelItem[];
@@ -32,6 +33,7 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
     onCreatorClick,
     fallbackItem,
     plans = [],
+    activePlanId,
     onAddItemToPlan,
     onCreateNewPlan,
     savedSpots = [],
@@ -51,6 +53,17 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
     if (!item) return null;
 
     const title = lang === 'zh' ? item.title : ((item as any).titleEn || item.title);
+    
+    // [NEW] Intelligent Add Action: Direct add if in active trip context
+    const handleAddAction = () => {
+        if (activePlanId) {
+            onAddItemToPlan?.(item as TravelItem, activePlanId);
+            setIsAddedToPlan(true);
+            setTimeout(() => onClose(), 600); 
+        } else {
+            setIsPlanSelectorOpen(true);
+        }
+    };
 
     return (
         <ImmersivePage
@@ -65,7 +78,7 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
             onScroll={(scrollTop) => setIsScrolled(scrollTop > 100)}
             rightAction={
                 <button 
-                    onClick={() => setIsPlanSelectorOpen(true)}
+                    onClick={handleAddAction}
                     className="w-10 h-10 rounded-full flex items-center justify-center text-tc-primary hover:bg-tc-primary/5 transition-colors"
                 >
                     <Plus size={24} />
@@ -85,12 +98,12 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
                 onAddItemToPlan={(item, planId) => {
                     onAddItemToPlan?.(item, planId);
                     setIsAddedToPlan(true);
-                    setTimeout(() => setIsAddedToPlan(false), 3000);
+                    setTimeout(() => onClose(), 600);
                 }}
                 onCreateNewPlan={onCreateNewPlan}
                 // These are for the EngagementSocialBlock inside
                 isExternalPlanSelectorOpen={isPlanSelectorOpen}
-                onOpenPlanSelector={() => setIsPlanSelectorOpen(true)}
+                onOpenPlanSelector={handleAddAction}
                 disableInternalScroll={true}
                 isScrolled={isScrolled}
                 savedSpots={savedSpots}
@@ -105,7 +118,7 @@ export const SpotDetailPage: React.FC<SpotDetailPageProps> = ({
                     onAddItemToPlan?.(item as TravelItem, planId);
                     setIsPlanSelectorOpen(false);
                     setIsAddedToPlan(true);
-                    setTimeout(() => setIsAddedToPlan(false), 3000);
+                    setTimeout(() => onClose(), 600);
                 }}
                 onCreatePlan={() => {
                     setIsPlanSelectorOpen(false);
