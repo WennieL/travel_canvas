@@ -293,28 +293,16 @@ const MapView: React.FC<MapViewProps> = ({
         setSelectedItem(item);
         if (idx !== undefined) setHoveredIndex(idx);
 
-        // Sync scroll to list
+        // Sync scroll to list (classic mode only)
         const element = itemRefs.current[item.instanceId || ''];
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        // [NEW] Sync carousel if in discovery mode
+        // [DISCOVERY MODE] Pin tap only shows the Peak Card — do NOT open SpotDetailPage.
+        // SpotDetailPage is triggered only when user explicitly taps the Peak Card body.
         if (discoveryCreatorId) {
-            const carouselIdx = points.findIndex(p => p.item.instanceId === item.instanceId);
-            if (carouselIdx !== -1) {
-                setActiveCarouselIndex(carouselIdx);
-                const carouselEl = carouselRef.current;
-                if (carouselEl) {
-                    const cardEl = carouselEl.children[carouselIdx] as HTMLElement;
-                    if (cardEl) {
-                        carouselEl.scrollTo({ 
-                            left: cardEl.offsetLeft - 24, 
-                            behavior: 'smooth' 
-                        });
-                    }
-                }
-            }
+            return;
         }
 
         if (onItemClick) {
@@ -429,79 +417,108 @@ const MapView: React.FC<MapViewProps> = ({
                     </div>
                 )}
 
-                {/* [NEW] Horizontal Spot Carousel */}
-                {discoveryCreatorId && points.length > 0 && (
-                    <div className="absolute bottom-6 left-0 right-0 z-[500] flex flex-col items-center gap-4">
-                        <div 
-                            ref={carouselRef}
-                            className="w-full flex gap-4 overflow-x-auto snap-x snap-mandatory px-6 no-scrollbar pb-4"
-                        >
-                            {points.map((p, idx) => (
-                                <div 
-                                    key={idx}
-                                    className={`relative flex-none w-[280px] md:w-[320px] snap-center transition-all duration-300 ${selectedItem?.instanceId === p.item.instanceId ? 'scale-105' : 'scale-100 opacity-90 hover:opacity-100'}`}
-                                    onClick={() => handleItemSelection(p.item, idx)}
+                {/* [PEAK CARD] Compact Google Maps-style Bottom Sheet */}
+                {discoveryCreatorId && selectedItem && (() => {
+                    const spot = selectedItem as any;
+                    const title = lang === 'zh' ? selectedItem.title : (spot.titleEn || selectedItem.title);
+                    const address = spot.addressEn || selectedItem.address || (lang === 'zh' ? '附近景點' : 'Nearby');
+                    const rating = spot.rating || '4.8';
+                    const type = selectedItem.type || 'attraction';
+                    const typeLabel: Record<string, string> = {
+                        food: lang === 'zh' ? '🍜 美食' : '🍜 Food',
+                        attraction: lang === 'zh' ? '📸 景點' : '📸 Attraction',
+                        shopping: lang === 'zh' ? '🛍️ 購物' : '🛍️ Shopping',
+                        nature: lang === 'zh' ? '🌲 自然' : '🌲 Nature',
+                        artisan: lang === 'zh' ? '🎨 職人' : '🎨 Artisan',
+                        hotel: lang === 'zh' ? '🏨 住宿' : '🏨 Hotel',
+                    };
+                    const typePill = typeLabel[type] || (lang === 'zh' ? '📍 景點' : '📍 Spot');
+
+                    return (
+                        <div className="absolute bottom-24 left-3 right-3 z-[500]"
+                            style={{ animation: 'peakCardIn 0.28s cubic-bezier(0.34,1.56,0.64,1) both' }}>
+                            <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+
+                                {/* ── Main Row: Thumbnail + Info + Close ── */}
+                                <div
+                                    className="flex items-center gap-3 px-3 pt-3 pb-2.5 cursor-pointer"
+                                    onClick={() => onItemClick?.(selectedItem)}
                                 >
-                                    <div className={`bg-white rounded-3xl overflow-hidden shadow-2xl border-4 ${selectedItem?.instanceId === p.item.instanceId ? 'border-teal-500' : 'border-white'}`}>
-                                        <div className="aspect-[16/10] relative">
-                                            {p.item.coverImage ? (
-                                                <img src={p.item.coverImage} className="w-full h-full object-cover" alt={p.item.title} />
-                                            ) : (
-                                                <div className="w-full h-full bg-slate-100 flex items-center justify-center text-4xl">{p.item.image || '📍'}</div>
-                                            )}
-                                            <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                                                <h4 className="text-white font-black text-lg truncate">
-                                                    {lang === 'zh' ? p.item.title : (p.item.titleEn || p.item.title)}
-                                                </h4>
-                                                <div className="flex items-center gap-2 mt-1">
-                                                    <div className="flex items-center gap-1 text-amber-400 text-xs font-bold">
-                                                        <Star size={12} fill="currentColor" /> {(p.item as any).rating || '4.8'}
-                                                    </div>
-                                                    <span className="text-white/60 text-[10px]">•</span>
-                                                    <span className="text-white/80 text-[10px] font-bold">{(p.item as any).addressEn || p.item.address || 'Nearby'}</span>
-                                                </div>
+                                    {/* Small square thumbnail */}
+                                    <div className="shrink-0 w-14 h-14 rounded-xl overflow-hidden bg-slate-100 relative">
+                                        {spot.coverImage ? (
+                                            <img src={spot.coverImage} className="w-full h-full object-cover" alt={title} />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center text-2xl bg-gradient-to-br from-teal-50 to-slate-100">
+                                                {selectedItem.image || '📍'}
                                             </div>
-                                            
-                                            {/* Creator Badge */}
-                                            <div className="absolute top-4 right-4 w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-lg bg-white">
-                                                <img src={`https://i.pravatar.cc/100?u=${p.item.authorId}`} className="w-full h-full object-cover" />
+                                        )}
+                                        {/* Creator avatar badge */}
+                                        {spot.authorId && (
+                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white overflow-hidden shadow-sm bg-white">
+                                                <img src={`https://i.pravatar.cc/100?u=${spot.authorId}`} className="w-full h-full object-cover" />
                                             </div>
-                                        </div>
-                                        
-                                        <div className="p-4 flex items-center justify-between bg-slate-50/50">
-                                            <div className="flex items-baseline gap-1">
-                                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Category</span>
-                                                <span className="text-xs font-black text-slate-600 capitalize">
-                                                    {p.item.type || 'Attraction'}
-                                                </span>
-                                            </div>
-                                            <button 
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    onAddItem?.(p.item as TravelItem);
-                                                }}
-                                                className="px-5 py-2 bg-teal-500 hover:bg-teal-600 text-white text-xs font-black rounded-xl shadow-lg shadow-teal-500/30 active:scale-95 transition-all flex items-center gap-2"
-                                            >
-                                                <PlusCircle size={14} />
-                                                {t.action_quick_add}
-                                            </button>
+                                        )}
+                                    </div>
+
+                                    {/* Text info */}
+                                    <div className="flex-1 min-w-0">
+                                        <h3 className="font-black text-gray-900 text-[15px] leading-tight truncate">{title}</h3>
+                                        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                                            <span className="px-1.5 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[10px] font-bold border border-teal-100 leading-none">
+                                                {typePill}
+                                            </span>
+                                            <span className="flex items-center gap-0.5 text-amber-500 text-[11px] font-bold">
+                                                <Star size={9} fill="currentColor" /> {rating}
+                                            </span>
+                                            <span className="text-gray-300 text-[10px]">·</span>
+                                            <span className="text-gray-400 text-[11px] truncate flex-1">{address}</span>
                                         </div>
                                     </div>
+
+                                    {/* Close (X) button */}
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setSelectedItem(null); }}
+                                        className="shrink-0 w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition-colors ml-1"
+                                    >
+                                        <X size={13} />
+                                    </button>
                                 </div>
-                            ))}
+
+                                {/* ── Action Bar ── */}
+                                <div className="flex items-center gap-2 px-3 pb-3">
+                                    <button
+                                        onClick={() => onItemClick?.(selectedItem)}
+                                        className="flex-1 h-8 rounded-xl border border-gray-200 bg-white text-gray-600 text-[11px] font-bold flex items-center justify-center gap-1.5 hover:border-teal-300 hover:text-teal-700 transition-colors"
+                                    >
+                                        <ExternalLink size={12} />
+                                        {lang === 'zh' ? '查看詳情' : 'Details'}
+                                    </button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onAddItem?.(selectedItem as TravelItem);
+                                            setSelectedItem(null);
+                                        }}
+                                        className="flex-[1.6] h-8 rounded-xl bg-teal-500 hover:bg-teal-600 text-white text-[11px] font-black flex items-center justify-center gap-1.5 shadow-md shadow-teal-500/20 active:scale-95 transition-all"
+                                    >
+                                        <PlusCircle size={13} />
+                                        {lang === 'zh' ? '加入行程' : 'Add to Plan'}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <style>{`
+                                @keyframes peakCardIn {
+                                    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+                                    to   { opacity: 1; transform: translateY(0) scale(1); }
+                                }
+                            `}</style>
                         </div>
-                        
-                        {/* Carousel Dots */}
-                        <div className="flex gap-1.5 mb-2">
-                            {points.map((_, i) => (
-                                <div 
-                                    key={i} 
-                                    className={`h-1.5 rounded-full transition-all duration-300 ${activeCarouselIndex === i ? 'w-6 bg-teal-500' : 'w-1.5 bg-gray-300'}`} 
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                    );
+                })()}
+
+
 
                 {/* Mobile Fullscreen Toggle */}
                 {isMobile && !isEmbedded && (
