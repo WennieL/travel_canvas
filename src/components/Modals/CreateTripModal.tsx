@@ -123,7 +123,7 @@ export const CreateTripModal: React.FC<CreateTripModalProps> = ({
     const regionalTemplates = TEMPLATES.filter(t => t.region === selectedRegion);
 
     return (
-        <div className="fixed inset-0 z-[1500] bg-white flex flex-col animate-in slide-in-from-bottom duration-500 overflow-hidden">
+        <div className="fixed inset-0 z-[4000] bg-white flex flex-col animate-in slide-in-from-bottom duration-500 overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 shrink-0">
                 <button onClick={onClose} className="p-2 -ml-2 text-gray-400 hover:text-gray-600">

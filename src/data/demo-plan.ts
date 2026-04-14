@@ -155,6 +155,8 @@ export const MELBOURNE_PAST_PLAN = {
     ...TAIPEI_DEMO_PLAN,
     id: 'tainan-past',
     name: '台南美食地圖 (Past)',
+    startDate: '2023-05-10',
+    endDate: '2023-05-12',
     region: 'tainan'
 };
 

@@ -38,7 +38,7 @@ export const PlanSelectorDrawer: React.FC<PlanSelectorDrawerProps> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[1000]"
+                        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[5000]"
                     />
 
                     {/* Drawer */}
@@ -47,7 +47,7 @@ export const PlanSelectorDrawer: React.FC<PlanSelectorDrawerProps> = ({
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed bottom-0 inset-x-0 bg-white rounded-t-[32px] z-[1001] shadow-2xl max-h-[80vh] flex flex-col overflow-hidden"
+                        className="fixed bottom-0 inset-x-0 bg-white rounded-t-[32px] z-[5001] shadow-2xl max-h-[80vh] flex flex-col overflow-hidden"
                     >
                         {/* Header */}
                         <div className="px-6 py-5 border-b border-[#E8EDE4] flex items-center justify-between shrink-0">
@@ -117,8 +117,8 @@ export const PlanSelectorDrawer: React.FC<PlanSelectorDrawerProps> = ({
                             )}
                         </div>
 
-                        {/* Safe Area Spacer for iOS/Mobile */}
-                        <div className="h-8 bg-white shrink-0" />
+                        {/* Safe Area Spacer for iOS/Mobile - Increased to clear MobileNav */}
+                        <div className="h-32 bg-white shrink-0" />
                     </motion.div>
                 </>
             )}

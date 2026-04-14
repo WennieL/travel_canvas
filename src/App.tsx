@@ -27,13 +27,14 @@ import {
     getSlotLabel,
     getFallbackImage
 } from './utils';
-import { Plus } from 'lucide-react';
+import { Plus, Search, Heart, MoreHorizontal, Share2 } from 'lucide-react';
 
 import LandingPage from './components/LandingPage';
 import WelcomeSlides from './components/WelcomeSlides';
 import { SpotDetailPage } from './components/Discovery/SpotDetailPage';
 import { ImmersivePage } from './components/Common/ImmersivePage';
 import { TemplateDetailsPanel } from './components/Discovery/TemplateDetailsPanel';
+import { TemplateActionDrawer } from './components/Discovery/TemplateActionDrawer';
 import { CreatorProfilePanel } from './components/Discovery/CreatorProfilePanel';
 import { Toast } from './components/Toast';
 import { TemplateUnlockModal } from './components/Modals';
@@ -51,6 +52,7 @@ export function App() {
     const [isCreatingNewPlan, setIsCreatingNewPlan] = useState(false);
     const [showOnboarding, setShowOnboarding] = useState(false);
     const [showTemplatePurchaseModal, setShowTemplatePurchaseModal] = useState(false);
+    const [showTemplateActionDrawer, setShowTemplateActionDrawer] = useState(false);
     const [isTemplateScrolled, setIsTemplateScrolled] = useState(false);
 
     // UI State Management Hook
@@ -449,16 +451,30 @@ export function App() {
                         isScrolled={isTemplateScrolled}
                         onScroll={(scrollTop) => setIsTemplateScrolled(scrollTop > 100)}
                         rightAction={
-                            <button 
-                                onClick={handleHeaderApply}
-                                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                                    (!isTemplateScrolled) 
-                                        ? 'bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-black/50 shadow-lg' 
-                                        : 'text-[#181D17] hover:bg-[#F1F3EE]'
-                                }`}
-                            >
-                                <Plus size={24} />
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <button 
+                                    onClick={() => {
+                                        if (tpl) handleToggleFavoriteTemplate(tpl);
+                                    }}
+                                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                                        (!isTemplateScrolled) 
+                                            ? 'bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-black/50 shadow-lg' 
+                                            : 'text-[#181D17] hover:bg-[#F1F3EE]'
+                                    }`}
+                                >
+                                    <Heart size={20} className={savedTemplates.some(t => t.id === tpl?.id) ? "fill-red-500 text-red-500" : ""} />
+                                </button>
+                                <button 
+                                    onClick={() => setShowTemplateActionDrawer(true)}
+                                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                                        (!isTemplateScrolled) 
+                                            ? 'bg-black/40 backdrop-blur-xl border border-white/20 text-white hover:bg-black/50 shadow-lg' 
+                                            : 'text-[#181D17] hover:bg-[#F1F3EE]'
+                                    }`}
+                                >
+                                    <MoreHorizontal size={22} />
+                                </button>
+                            </div>
                         }
                     >
                         <TemplateDetailsPanel
@@ -499,6 +515,26 @@ export function App() {
                                 avatar: `https://i.pravatar.cc/100?u=${tpl.authorId}`
                             } as any}
                         />
+
+                        {/* More Action Drawer */}
+                        <TemplateActionDrawer 
+                            isOpen={showTemplateActionDrawer}
+                            onClose={() => setShowTemplateActionDrawer(false)}
+                            template={tpl}
+                            lang={lang}
+                            isFavorited={savedTemplates.some(t => t.id === tpl.id)}
+                            onToggleFavorite={() => handleToggleFavoriteTemplate(tpl)}
+                            onApply={handleHeaderApply}
+                            onShare={() => {
+                                // For now, just show a message or trigger existing share logic if available
+                                showToastMessage(lang === 'zh' ? '正在開啟分享功能...' : 'Opening share...', 'info');
+                                setShowShareModal(true);
+                            }}
+                            onCreatorClick={() => {
+                                ui.setActiveCreatorId(tpl.authorId);
+                                setShowTemplateActionDrawer(false);
+                            }}
+                        />
                     </ImmersivePage>
                 );
             })()
@@ -527,6 +563,8 @@ export function App() {
                 }}
                 savedSpots={savedSpots}
                 handleToggleFavoriteSpot={handleToggleFavoriteSpot}
+                showToastMessage={showToastMessage}
+                viewMode={ui.viewMode}
             />
         )}
 

@@ -79,13 +79,13 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                     <div className="flex -space-x-1.5 overflow-hidden">
                         {item.recommendations ? (
                             item.recommendations.map((rec, idx) => (
-                                <div 
-                                    key={rec.id} 
+                                <div
+                                    key={rec.id}
                                     className="w-4 h-4 rounded-full border border-white bg-slate-100 overflow-hidden shrink-0"
                                     title={lang === 'zh' ? `${rec.author} 的建議` : `${rec.author}'s tip`}
                                 >
-                                    <img 
-                                        src={rec.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(rec.author)}&background=random`} 
+                                    <img
+                                        src={rec.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(rec.author)}&background=random`}
                                         className="w-full h-full object-cover"
                                         alt={rec.author}
                                     />
@@ -103,7 +103,7 @@ export const AssetItemCard: React.FC<AssetItemCardProps> = ({
                         </span>
                     ) : (
                         <span className="text-[10px] font-bold text-teal-600">
-                            {item.recommendations && item.recommendations.length > 0 
+                            {item.recommendations && item.recommendations.length > 0
                                 ? `${getCurrencySymbol(item.region)}${item.recommendations[0].pricing?.toLocaleString()}`
                                 : `${getCurrencySymbol(item.region)}${item.price?.toLocaleString() || 0}`
                             }

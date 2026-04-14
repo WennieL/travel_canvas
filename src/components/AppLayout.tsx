@@ -723,6 +723,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                     ui.setSelectedItem(null);
                     ui.setSelectionSource(null);
                     ui.setSearchQuery('');
+                    ui.setShowCheckIn(false); // [FIX] Close plan creation modal on nav
+                    ui.setShowStartPicker(false); // [FIX] Close start picker on nav
 
                     // Reset DiscoveryView state every time user taps the Discover tab
                     if (mode === 'discovery') {
@@ -742,6 +744,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         ui.setActiveCreatorId(null);
                         ui.setSelectedItem(null);
                         ui.setSelectionSource(null);
+                        ui.setShowCheckIn(false); // [FIX] Close plan creation modal
+                        ui.setShowStartPicker(false); // [FIX] Close start picker
                     }
                     setShowPlanManager(show);
                 }}
@@ -754,6 +758,8 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                         ui.setActiveCreatorId(null);
                         ui.setSelectedItem(null);
                         ui.setSelectionSource(null);
+                        ui.setShowCheckIn(false); // [FIX] Close plan creation modal
+                        ui.setShowStartPicker(false); // [FIX] Close start picker
                     }
                     setShowFavorites(show);
                 }}

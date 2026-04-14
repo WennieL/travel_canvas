@@ -465,7 +465,7 @@ export const TRANSLATIONS = {
         halfDay: "半天",
         viewExpertPicks: "看其他推薦",
         becomeExpert: "我也要成為達人",
-        
+
         // Welcome Slides & Visuals
         welcomeStep1Title: "探索在地達人行程",
         welcomeStep1Subtitle: "讓當地人帶路",
@@ -489,11 +489,15 @@ export const TRANSLATIONS = {
         visualsKinkakuji: "台北 101",
         visualsFushimiInari: "故宮博物院",
         visualsTsujiriMatcha: "鼎泰豐小籠包",
-        
+
         // Sidebar & Discovery
         findSpots: "找景點",
         expertMap: "地圖引導",
         mapGuidedMode: "地圖引導模式",
+        addCustomLink: "找不到理想景點？自訂一個 +",
+        recommendationsLabel: "✨ 靈感推薦",
+        vibeLabel: "🌈 氛圍",
+        discoveryModeLabel: "探索模式",
         globalPicks: "全區熱門",
         readyToExplore: "準備開始探索",
         discoveryGuideDesc: "請從右側地圖點選感興趣的標記，查看達人私房推薦...",
@@ -1103,6 +1107,10 @@ export const TRANSLATIONS = {
         expertsRecommended: "Experts Recommended",
         noResults: "No results found",
         createCustomSpot: "Create Custom Spot",
+        addCustomLink: "Still can't find what you need? Add a custom spot +",
+        recommendationsLabel: "✨ Recommendations",
+        vibeLabel: "🌈 Vibes",
+        discoveryModeLabel: "Discovery Mode",
         creatorDefaultDesc: "These are my personal hidden gems. Hope you love them!",
         featuredPlans: "Featured Plans",
         exploreDestinations: "Explore Popular Destinations",

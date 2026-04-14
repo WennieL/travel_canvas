@@ -272,7 +272,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 : (primaryCreator?.descriptionEn || primaryCreator?.description || t.creatorDefaultDesc)}"
                         </p>
                     </>
-                 ) : (
+                ) : (
                     // EMPTY STATE: BE THE FIRST
                     <div className="animate-in fade-in zoom-in-95 duration-500">
                         <div className="flex items-center gap-4 mb-4">
@@ -305,103 +305,103 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
             {/* [PHASE 24] Curated List - Suppressed in Map mode to focus on Hero Spot / Map interactions */}
             <div className="p-4">
                 <div className="flex items-center justify-between mb-4 px-1">
-                        <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">
-                            {selectedItem ? t.viewDetailsLabel : t.expertTemplates}
-                        </h4>
-                        <div className="px-2 py-0.5 bg-teal-100 text-teal-700 text-[10px] font-bold rounded-lg capitalize">
-                            {activeRegion !== 'all' ? activeRegion : t.allRegion}
-                        </div>
+                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                        {selectedItem ? t.viewDetailsLabel : t.expertTemplates}
+                    </h4>
+                    <div className="px-2 py-0.5 bg-teal-100 text-teal-700 text-[10px] font-bold rounded-lg capitalize">
+                        {activeRegion !== 'all' ? activeRegion : t.allRegion}
                     </div>
+                </div>
 
-                    <div className={`${isSpotGroup ? 'flex flex-col gap-4' : 'grid grid-cols-2 gap-2'}`}>
-                        {/* Show aggregated tips if it's a spot group, otherwise show creator's list */}
-                        {isSpotGroup ? (
-                            // [NEW] AGGREGATED TIPS VIEW
-                            authors.map((authId: string) => {
-                                const author = SAMPLE_CREATORS.find(c => c.id === authId);
-                                // Find the specific asset for this author at this spot
-                                const asset = (SAMPLE_ASSETS as TravelItem[]).find(a =>
-                                    a.authorId === authId &&
-                                    (((a as any).title === (selectedItem as any).title) || ((a as any).titleEn === (selectedItem as any).titleEn))
-                                );
+                <div className={`${isSpotGroup ? 'flex flex-col gap-4' : 'grid grid-cols-2 gap-2'}`}>
+                    {/* Show aggregated tips if it's a spot group, otherwise show creator's list */}
+                    {isSpotGroup ? (
+                        // [NEW] AGGREGATED TIPS VIEW
+                        authors.map((authId: string) => {
+                            const author = SAMPLE_CREATORS.find(c => c.id === authId);
+                            // Find the specific asset for this author at this spot
+                            const asset = (SAMPLE_ASSETS as TravelItem[]).find(a =>
+                                a.authorId === authId &&
+                                (((a as any).title === (selectedItem as any).title) || ((a as any).titleEn === (selectedItem as any).titleEn))
+                            );
 
-                                if (!asset) return null;
+                            if (!asset) return null;
 
-                                return (
-                                    <div key={authId} className="bg-white rounded-2xl p-4 border border-amber-100 shadow-sm hover:shadow-md transition-all">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-amber-200">
-                                                <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-xs font-black text-gray-800 lowercase tracking-tighter">
-                                                    @{((lang === 'en' && author?.nameEn ? author.nameEn : (author?.name || 'Expert'))).replace(/\s/g, '').toLowerCase()}
-                                                </span>
-                                                <span className="text-[10px] text-amber-600 font-bold uppercase tracking-widest">{t.insiderTipLabel}</span>
-                                            </div>
+                            return (
+                                <div key={authId} className="bg-white rounded-2xl p-4 border border-amber-100 shadow-sm hover:shadow-md transition-all">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-amber-200">
+                                            <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
                                         </div>
-
-                                        <div className="bg-amber-50/50 rounded-xl p-3 mb-3 border border-amber-50">
-                                            <p className="text-sm font-bold text-gray-800 mb-1">
-                                                {lang === 'zh' ? (asset as any).insiderTip?.teaser : ((asset as any).insiderTip?.teaserEn || (asset as any).insiderTip?.teaser)}
-                                            </p>
-                                            <p className="text-xs text-gray-600 leading-relaxed line-clamp-2 italic">
-                                                {lang === 'zh' ? (asset as any).insiderTip?.full?.story : ((asset as any).insiderTip?.full?.storyEn || (asset as any).insiderTip?.full?.story)}
-                                            </p>
-                                        </div>
-
-                                        <div className="flex items-center justify-between gap-3 mt-4 pt-4 border-t border-amber-50">
-                                            <button
-                                                onClick={() => onSelectItem?.(asset)}
-                                                className="text-[11px] font-black text-amber-600 uppercase hover:text-amber-700 underline underline-offset-4"
-                                            >
-                                                {t.viewDetailsLabel}
-                                            </button>
-                                            <button
-                                                onClick={() => onExploreCreatorMap?.(authId, author?.name || 'Expert')}
-                                                className="px-3 py-1.5 bg-gray-900 text-white text-[10px] font-black rounded-lg uppercase hover:bg-black transition-all"
-                                            >
-                                                {t.viewExpertPicks}
-                                            </button>
+                                        <div className="flex flex-col">
+                                            <span className="text-xs font-black text-gray-800 lowercase tracking-tighter">
+                                                @{((lang === 'en' && author?.nameEn ? author.nameEn : (author?.name || 'Expert'))).replace(/\s/g, '').toLowerCase()}
+                                            </span>
+                                            <span className="text-[10px] text-amber-600 font-bold uppercase tracking-widest">{t.insiderTipLabel}</span>
                                         </div>
                                     </div>
-                                );
-                            })
-                        ) : (
-                            // STANDARD CREATOR ASSETS VIEW
-                            (discoveryCreatorId === 'all'
-                                ? (SAMPLE_ASSETS
-                                    .filter(item => item.authorId && (activeRegion === 'all' || item.region === activeRegion))
-                                    .slice(0, 8))
-                                : filteredAssets.slice(0, 6)).map((item) => (
-                                    <AssetItemCard
-                                        key={`discover-${item.id}`}
-                                        item={item}
-                                        lang={lang}
-                                        t={t}
-                                        isMobile={isMobile}
-                                        onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
-                                        onClick={() => {
-                                            if (isMobile) setMobilePreviewItem(item);
-                                            onSelectItem?.(item);
-                                        }}
-                                        onMouseEnter={() => { }}
-                                        onMouseLeave={() => { }}
-                                    />
-                                ))
-                        )}
-                    </div>
 
-                    <button
-                        onClick={() => {
-                            if (onExitDiscovery) onExitDiscovery();
-                            handleModeChange('list');
-                        }}
-                        className="w-full mt-6 py-3 border border-gray-100 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-teal-600 hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
-                    >
-                        {t.exitDiscoveryMode}
-                    </button>
+                                    <div className="bg-amber-50/50 rounded-xl p-3 mb-3 border border-amber-50">
+                                        <p className="text-sm font-bold text-gray-800 mb-1">
+                                            {lang === 'zh' ? (asset as any).insiderTip?.teaser : ((asset as any).insiderTip?.teaserEn || (asset as any).insiderTip?.teaser)}
+                                        </p>
+                                        <p className="text-xs text-gray-600 leading-relaxed line-clamp-2 italic">
+                                            {lang === 'zh' ? (asset as any).insiderTip?.full?.story : ((asset as any).insiderTip?.full?.storyEn || (asset as any).insiderTip?.full?.story)}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex items-center justify-between gap-3 mt-4 pt-4 border-t border-amber-50">
+                                        <button
+                                            onClick={() => onSelectItem?.(asset)}
+                                            className="text-[11px] font-black text-amber-600 uppercase hover:text-amber-700 underline underline-offset-4"
+                                        >
+                                            {t.viewDetailsLabel}
+                                        </button>
+                                        <button
+                                            onClick={() => onExploreCreatorMap?.(authId, author?.name || 'Expert')}
+                                            className="px-3 py-1.5 bg-gray-900 text-white text-[10px] font-black rounded-lg uppercase hover:bg-black transition-all"
+                                        >
+                                            {t.viewExpertPicks}
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        // STANDARD CREATOR ASSETS VIEW
+                        (discoveryCreatorId === 'all'
+                            ? (SAMPLE_ASSETS
+                                .filter(item => item.authorId && (activeRegion === 'all' || item.region === activeRegion))
+                                .slice(0, 8))
+                            : filteredAssets.slice(0, 6)).map((item) => (
+                                <AssetItemCard
+                                    key={`discover-${item.id}`}
+                                    item={item}
+                                    lang={lang}
+                                    t={t}
+                                    isMobile={isMobile}
+                                    onDragStart={(e) => handleDragStart(e, item, 'sidebar')}
+                                    onClick={() => {
+                                        if (isMobile) setMobilePreviewItem(item);
+                                        onSelectItem?.(item);
+                                    }}
+                                    onMouseEnter={() => { }}
+                                    onMouseLeave={() => { }}
+                                />
+                            ))
+                    )}
                 </div>
+
+                <button
+                    onClick={() => {
+                        if (onExitDiscovery) onExitDiscovery();
+                        handleModeChange('list');
+                    }}
+                    className="w-full mt-6 py-3 border border-gray-100 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-teal-600 hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                >
+                    {t.exitDiscoveryMode}
+                </button>
+            </div>
         </div>
     );
 };
