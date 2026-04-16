@@ -54,7 +54,8 @@ const LandingHero: React.FC<LandingHeroProps> = ({ lang, t, onStart }) => {
                             title: t.comingSoon,
                             message: t.earlyAccessMsg,
                             type: 'info',
-                            confirmText: t.gotIt
+                            confirmText: t.gotIt,
+                            cancelText: t.cancel
                         })}
                     >
                         {t.joinEarlyAccess}

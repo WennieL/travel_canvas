@@ -6,7 +6,10 @@ import ProductPreview from './ProductPreview';
 // Modularized Components
 import LandingNav from './Landing/LandingNav';
 import LandingHero from './Landing/LandingHero';
+import LandingFeatures from './Landing/LandingFeatures';
 import LandingExplore from './Landing/LandingExplore';
+import LandingCommunity from './Landing/LandingCommunity';
+import LandingPricing from './Landing/LandingPricing';
 import LandingFooter from './Landing/LandingFooter';
 
 interface LandingPageProps {
@@ -33,9 +36,31 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, lang, toggleLang }) 
                 onStart={onStart}
             />
 
+            <LandingFeatures
+                lang={lang}
+                t={t}
+            />
+
             <LandingExplore
                 lang={lang}
                 onStart={onStart}
+                t={t}
+            />
+
+            <LandingCommunity
+                lang={lang}
+                t={t}
+                onStart={onStart}
+            />
+
+            <LandingPricing
+                lang={lang}
+                onStart={onStart}
+                t={t}
+            />
+
+            <LandingFooter
+                lang={lang}
                 t={t}
             />
 
