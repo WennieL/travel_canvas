@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Plan, DaySchedule, ChecklistItem, TimeSlot, ScheduleItem, TransportMode, LangType, Region, FullSchedule, TravelItem } from '../types';
-import { TAIPEI_DEMO_PLAN, MELBOURNE_PAST_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
+import { TAIPEI_DEMO_PLAN, REGION_DEFAULT_CHECKLISTS, SAMPLE_ASSETS, ALL_SUGGESTIONS } from '../data';
 import { getRegionCurrency, getRegionExchangeRate } from '../data/regions';
 
 export interface UsePlansReturn {
@@ -36,7 +36,7 @@ export interface UsePlansReturn {
 
 export function usePlans(isInitialized: boolean, t: Record<string, string>, lang: LangType): UsePlansReturn {
     // Plans State - Default to TAIPEI_DEMO_PLAN if empty
-    const [plans, setPlans] = useState<Plan[]>([TAIPEI_DEMO_PLAN, MELBOURNE_PAST_PLAN]);
+    const [plans, setPlans] = useState<Plan[]>([TAIPEI_DEMO_PLAN]);
     const [activePlanId, setActivePlanId] = useState<string>(TAIPEI_DEMO_PLAN.id);
     const [currentDay, setCurrentDay] = useState(1);
 
@@ -52,12 +52,11 @@ export function usePlans(isInitialized: boolean, t: Record<string, string>, lang
                     // Hydrate plans with latest asset data if missing
                     let hydratedPlans = hydratePlans(parsedPlans);
                     
-                    // [NEW] Ensure Melbourne Past Plan exists for demo purposes
-                    if (!hydratedPlans.some(p => p.id === 'melbourne-past')) {
-                        hydratedPlans.push(MELBOURNE_PAST_PLAN);
-                    }
+                    // [CLEANUP] Filter out any plans from regions no longer supported (non-Taiwan)
+                    const supportedRegions = new Set(['taipei', 'tainan', 'taichung', 'hualien', 'kaohsiung', 'chiayi', 'nantou']);
+                    hydratedPlans = hydratedPlans.filter(p => p.region && supportedRegions.has(p.region));
                     
-                    setPlans(hydratedPlans);
+                    setPlans(hydratedPlans.length > 0 ? hydratedPlans : [TAIPEI_DEMO_PLAN]);
                 }
             }
             if (savedActiveId) {

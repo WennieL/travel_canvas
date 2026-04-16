@@ -1,7 +1,7 @@
 import React from 'react';
 import { Plus, Trash2, MapPin, Calendar, Clock, ChevronRight } from 'lucide-react';
 import { Plan, LangType } from '../types';
-import { getRegionName } from '../data/regions';
+import { getRegionName, getCountryName } from '../data/regions';
 
 interface ItineraryHubProps {
     plans: Plan[];
@@ -102,7 +102,7 @@ const ItineraryHub: React.FC<ItineraryHubProps> = ({
                                             <div className="text-[16px] font-heading font-bold text-tc-primary mb-3 flex items-center gap-1.5">
                                                 {getRegionName(plan.region || '', lang)}
                                                 <span className="text-[#8E9285]/40 font-black text-[12px]">•</span>
-                                                {lang === 'zh' ? '台灣' : 'Taiwan'}
+                                                {getCountryName(plan.region || '', t)}
                                             </div>
 
                                             <div className="flex items-center gap-1.5 text-[12px] font-medium text-[#8E9285]">
@@ -148,7 +148,7 @@ const ItineraryHub: React.FC<ItineraryHubProps> = ({
                                         {plan.name}
                                     </div>
                                     <h4 className="text-[14px] font-medium text-tc-primary truncate mb-1 mt-0.5">
-                                        {getRegionName(plan.region || '', lang)} • {lang === 'zh' ? '澳洲' : 'Australia'}
+                                        {getRegionName(plan.region || '', lang)} • {getCountryName(plan.region || '', t)}
                                     </h4>
                                     <div className="text-[12px] font-medium text-[#8E9285] flex items-center gap-3">
                                         <span>{plan.startDate.split('-')[1]} {plan.startDate.split('-')[2]} - {plan.endDate.split('-')[2]}</span>

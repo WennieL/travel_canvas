@@ -145,3 +145,15 @@ export const getRegionsByContinent = (continent: string): RegionConfig[] =>
 /** Get all unique countries */
 export const getCountries = (): string[] =>
     [...new Set(REGIONS.map(r => r.country))];
+
+/**
+ * Get the translated country name for a given region ID.
+ * @param regionId The ID of the region (e.g., 'taipei')
+ * @param t The translations object containing country names (e.g., 'taiwan')
+ */
+export const getCountryName = (regionId: string, t: any): string => {
+    const region = getRegion(regionId);
+    if (!region) return '';
+    // Look up the country key from the region config in the translation object
+    return t[region.country] || region.country;
+};
