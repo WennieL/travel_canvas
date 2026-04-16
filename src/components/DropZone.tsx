@@ -157,7 +157,7 @@ const DropZone: React.FC<DropZoneProps> = ({
 
                 {slot === 'unsorted' ? (
                     <div
-                        className="grid grid-flow-col grid-rows-2 auto-cols-[minmax(160px,1fr)] gap-3 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:grid-flow-row md:grid-rows-none md:grid-cols-2 md:auto-cols-auto md:overflow-x-visible md:snap-none md:pb-0"
+                        className="grid grid-cols-2 gap-3 pb-4 md:grid-cols-2"
                         onDragOver={onDragOver}
                         onDrop={(e) => onDrop(e)}
                     >
