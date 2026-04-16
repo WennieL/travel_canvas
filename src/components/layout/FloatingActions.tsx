@@ -16,6 +16,7 @@ interface FloatingActionsProps {
     isDiscoveryMode?: boolean; 
     showPlanManager?: boolean;
     showFavorites?: boolean;
+    showMobileLibrary?: boolean;
 }
 
 /**
@@ -37,11 +38,13 @@ const FloatingActions: React.FC<FloatingActionsProps> = ({
     isDiscoveryMode = false,
     showPlanManager = false,
     showFavorites = false,
+    showMobileLibrary = false,
 }) => {
     const shouldShow =
         !isDiscoveryMode && 
         !showPlanManager &&
         !showFavorites &&
+        !showMobileLibrary &&
         (viewMode === 'canvas' || viewMode === 'map') &&
         !showStartPicker &&
         !showCheckIn &&

@@ -20,6 +20,7 @@ import { DesktopTooltip } from './Sidebar/DesktopTooltip';
 import { MobilePreviewPane } from './Sidebar/MobilePreviewPane';
 import { AssetLibrary } from './Sidebar/AssetLibrary';
 import { DiscoverySidekick } from './Sidebar/DiscoverySidekick';
+import MapView from './MapView';
 
 interface SidebarContentProps {
     searchQuery: string;
@@ -171,8 +172,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
             />
 
 
-            {/* [NEW] Phase 21: Segmented Control (Find vs Explore) */}
-            {activeTab === 'assets' && (
+            {/* [NEW] Phase 21: Segmented Control (Find vs Explore) - Hidden on Mobile */}
+            {activeTab === 'assets' && !isMobile && (
                 <div className="px-5 pt-2 pb-0 flex gap-1">
                     <button
                         onClick={() => handleModeChange('list')}
@@ -201,27 +202,25 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
             <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain no-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
                 {activeTab === 'assets' && (
                     <>
-                        {/* Layer 3: Main Content Area (Hidden if in Map mode) */}
-                        {sidebarMode === 'list' ? (
-                            <AssetLibrary
-                                searchQuery={searchQuery}
-                                setSearchQuery={setSearchQuery}
-                                activeCategory={activeCategory}
-                                setActiveCategory={setActiveCategory}
-                                activeTag={activeTag}
-                                setActiveTag={setActiveTag}
-                                filteredAssets={filteredAssets}
-                                t={t}
-                                lang={lang}
-                                isSlim={isSlim}
-                                setShowCustomItemModal={setShowCustomItemModal}
-                                isMobile={isMobile}
-                                setMobilePreviewItem={setMobilePreviewItem}
-                                handleDragStart={handleDragStart}
-                                setTooltipPos={setTooltipPos}
-                                setHoveredItem={setHoveredItem}
-                            />
-                        ) : (
+                        {/* Layer 3: Main Content Area (Hidden if in Map mode, Force Map on Mobile) */}
+                        {isMobile ? (
+                            <div className="flex-1 h-full -mt-2">
+                                <MapView
+                                    schedule={activePlan.schedule}
+                                    lang={lang}
+                                    t={t}
+                                    onItemClick={(item) => onSelectItem?.(item as any)}
+                                    onAddItem={handleTapToAdd}
+                                    isEmbedded={true}
+                                    onClose={() => setShowMobileLibrary?.(false)}
+                                    discoveryCreatorId={discoveryCreatorId || 'all'}
+                                    currentDay={currentDay}
+                                    addToSlotTarget={addToSlotTarget}
+                                    activeRegion={activeRegion}
+                                    subscribedCreators={subscribedCreators}
+                                />
+                            </div>
+                        ) : sidebarMode === 'map' ? (
                             <DiscoverySidekick
                                 selectedItem={selectedItem || null}
                                 selectionSource={selectionSource}
@@ -246,6 +245,25 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
                                 sidebarMode={sidebarMode}
                                 savedSpots={savedSpots}
                                 handleToggleFavoriteSpot={handleToggleFavoriteSpot}
+                            />
+                        ) : (
+                            <AssetLibrary
+                                searchQuery={searchQuery}
+                                setSearchQuery={setSearchQuery}
+                                activeCategory={activeCategory}
+                                setActiveCategory={setActiveCategory}
+                                activeTag={activeTag}
+                                setActiveTag={setActiveTag}
+                                filteredAssets={filteredAssets}
+                                t={t}
+                                lang={lang}
+                                isSlim={isSlim}
+                                setShowCustomItemModal={setShowCustomItemModal}
+                                isMobile={isMobile}
+                                setMobilePreviewItem={setMobilePreviewItem}
+                                handleDragStart={handleDragStart}
+                                setTooltipPos={setTooltipPos}
+                                setHoveredItem={setHoveredItem}
                             />
                         )}
                     </>

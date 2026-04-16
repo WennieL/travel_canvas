@@ -357,7 +357,8 @@ const AppModals: React.FC<AppModalsProps> = (props) => {
                 />
             )}
 
-            {showMobileLibrary && (
+            {/* Integrated Map in CanvasView replaces MobileLibrary for Assets on mobile (Figure 1 Design) */}
+            {showMobileLibrary && props.activeTab !== 'assets' && (
                 <MobileLibrary
                     onClose={() => setShowMobileLibrary(false)}
                     activeTab={props.activeTab}

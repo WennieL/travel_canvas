@@ -41,6 +41,7 @@ interface CanvasViewProps {
     setSidebarMode?: (mode: 'list' | 'map') => void;
     onSelectItem?: (item: TravelItem | ScheduleItem | null, source: 'map' | 'sidebar' | 'canvas' | null) => void;
     setActiveCategory?: (category: 'all' | ItemType) => void;
+    showMobileLibrary?: boolean;
 }
 
 const CanvasView: React.FC<CanvasViewProps> = ({
@@ -71,6 +72,7 @@ const CanvasView: React.FC<CanvasViewProps> = ({
     setSidebarMode,
     onSelectItem,
     setActiveCategory,
+    showMobileLibrary,
 }) => {
     const { lang, t } = useApp();
     const isTimeline = !showContextMap;
@@ -88,8 +90,29 @@ const CanvasView: React.FC<CanvasViewProps> = ({
 
     return (
         <div className={`flex h-full ${showContextMap ? 'gap-4 overflow-hidden' : ''}`}>
-            {/* Schedule List Area */}
-            <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''}`}>
+            {/* [PHASE FINAL]: Integrated Mobile Map Discovery (Figure 1 Style) */}
+            {isMobile && showMobileLibrary && (
+                <div className="flex-1 h-full bg-white relative z-10 animate-in fade-in duration-300">
+                    <MapView
+                        schedule={currentDaySchedule}
+                        lang={lang}
+                        t={t}
+                        onItemClick={(item) => onSelectItem ? onSelectItem(item, 'map') : handleMapItemClick(item)}
+                        isEmbedded={true}
+                        discoveryCreatorId={discoveryCreatorId || 'all'}
+                        currentDay={currentDay}
+                        addToSlotTarget={addToSlotTarget}
+                        onExitDiscovery={() => setShowMobileLibrary(false)}
+                        onClose={() => setShowMobileLibrary(false)}
+                        activeRegion={activePlan.region}
+                        onAddItem={onAddItem}
+                        subscribedCreators={[]} // Pass empty or actual if available
+                    />
+                </div>
+            )}
+
+            {/* Schedule List Area - Hidden when mobile map is active */}
+            <div className={`flex-1 transition-all duration-300 w-full max-w-full mx-auto ${showContextMap ? 'overflow-y-auto pr-2' : ''} ${isMobile && showMobileLibrary ? 'hidden' : ''}`}>
                 <div className={`schedule-content relative pb-16 lg:pb-12 lg:max-w-4xl mx-auto w-full overflow-x-hidden ${isTimeline ? 'pr-2' : 'px-4 md:px-6 lg:px-0'}`}>
 
                     {/* Day Anchor: Accommodation (Top-Level Sticky Feel) */}

@@ -584,6 +584,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                         setSidebarMode={ui.setSidebarMode}
                                         onSelectItem={handleSelectItem}
                                         setActiveCategory={ui.setActiveCategory}
+                                        showMobileLibrary={showMobileLibrary}
                                     />
                                 )}
                             </motion.div>
@@ -779,6 +780,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                 isDayEmpty={isDayEmpty}
                 showStartPicker={ui.showStartPicker}
                 showCheckIn={ui.showCheckIn}
+                showMobileLibrary={ui.showMobileLibrary}
                 onOpenMobileLibrary={() => ui.setShowMobileLibrary(true)}
                 onOpenSidebar={() => setIsSidebarOpen(true)}
                 lang={lang}
