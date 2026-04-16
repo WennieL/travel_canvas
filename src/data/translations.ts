@@ -1143,6 +1143,7 @@ export const TRANSLATIONS = {
         // Sidebar & Discovery  
         findSpots: "Find Spots",
         expertMap: "Expert Map",
+        mapGuidedMode: "Map Guided Mode",
         dragMode: "Visual Guided Mode",
         globalPicks: "Global Picks",
         readyToExplore: "Ready to Explore",

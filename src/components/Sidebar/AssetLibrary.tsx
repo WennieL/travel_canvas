@@ -41,27 +41,29 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
         <>
             {/* Layer 2: Sticky Toolbar (Search + Categories + Tags) */}
             <div className={`sticky top-0 z-[50] bg-white px-4 space-y-4 shadow-sm border-b border-gray-100 ${isSlim ? 'py-2' : 'py-4'}`}>
-                <div className="flex items-center gap-2">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
-                        <input
-                            type="text"
-                            placeholder={t.searchPlaceholder}
-                            className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all h-9"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
+                {!isMobile && (
+                    <div className="flex items-center gap-2">
+                        <div className="relative flex-1">
+                            <Search className="absolute left-3 top-2.5 text-gray-400 w-4 h-4" />
+                            <input
+                                type="text"
+                                placeholder={t.searchPlaceholder}
+                                className="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-lg text-sm focus:ring-1 focus:ring-teal-500 transition-all h-9"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                        {isSlim && (
+                            <button
+                                onClick={() => setShowCustomItemModal(true)}
+                                className="h-9 px-3 bg-white border border-dashed border-teal-200 text-teal-600 rounded-lg flex items-center justify-center hover:bg-teal-50"
+                                title={t.createCustom}
+                            >
+                                <Plus size={16} />
+                            </button>
+                        )}
                     </div>
-                    {isSlim && (
-                        <button
-                            onClick={() => setShowCustomItemModal(true)}
-                            className="h-9 px-3 bg-white border border-dashed border-teal-200 text-teal-600 rounded-lg flex items-center justify-center hover:bg-teal-50"
-                            title={t.createCustom}
-                        >
-                            <Plus size={16} />
-                        </button>
-                    )}
-                </div>
+                )}
                 {!isSlim && (
                     <button
                         onClick={() => setShowCustomItemModal(true)}
@@ -71,24 +73,28 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
                     </button>
                 )}
 
-                <CategoryCarousel
-                    activeCategory={activeCategory}
-                    setActiveCategory={setActiveCategory}
-                    lang={lang}
-                    t={t}
-                />
+                {!isMobile && (
+                    <>
+                        <CategoryCarousel
+                            activeCategory={activeCategory}
+                            setActiveCategory={setActiveCategory}
+                            lang={lang}
+                            t={t}
+                        />
 
-                <TagCarousel
-                    activeTag={activeTag}
-                    setActiveTag={setActiveTag}
-                    lang={lang}
-                />
+                        <TagCarousel
+                            activeTag={activeTag}
+                            setActiveTag={setActiveTag}
+                            lang={lang}
+                        />
+                    </>
+                )}
             </div>
 
             {/* Layer 3: Main Grid Area */}
             <div className="p-4 pt-2 pb-12">
                 <div className="grid grid-cols-2 gap-2">
-                    {filteredAssets.map((item) => (
+                    {!isMobile && filteredAssets.map((item) => (
                         <AssetItemCard
                             key={item.id}
                             item={item}
@@ -110,7 +116,7 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({
                             onMouseLeave={() => setHoveredItem(null)}
                         />
                     ))}
-                    {filteredAssets.length === 0 && (
+                    {!isMobile && filteredAssets.length === 0 && (
                         <div className="col-span-2 text-center text-gray-400 text-sm py-8">
                             {t.noResults}
                         </div>
