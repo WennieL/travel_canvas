@@ -50,6 +50,18 @@ export const TAIWAN_SURVIVAL: SurvivalGuide = {
             content: '雖然大城市的大型商場支援各種電子支付，但台灣靈魂所在的「夜市」與「巷弄小店」幾乎只收現金（部分接受悠遊卡）。建議隨身準備 1000-3000 TWD，並多保留一些 100 元紙鈔，它是小額消費的王道。',
             contentEn: 'While big malls take cards/mobile pay, Taiwan\'s best "alley gems" and night market stalls are cash-only. Keep 1,000-3,000 TWD on hand, mostly in 100 TWD bills for easy payment at smaller vendors.',
             imageUrl: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&q=80&w=800'
+        },
+        {
+            id: 'culture-etiquette',
+            icon: 'Users',
+            category: 'culture',
+            title: '在地禮儀：手扶梯與垃圾',
+            titleEn: 'Local Etiquette: Escalators & Trash',
+            teaser: '讓您像個在地人的小細節',
+            teaserEn: 'Small details to blend in like a local',
+            content: '在台北搭乘手扶梯時，請習慣「靠右站立」，左側則讓給趕時間的人。此外，台灣沒有小費文化，餐廳帳單通常已含 10% 服務費。街頭垃圾桶較少，建議隨身攜帶小袋子，或利用便利商店的垃圾桶。',
+            contentEn: 'When on escalators in Taipei, always "stay to the right" and leave the left side for those in a hurry. Tipping is not required in Taiwan as a 10% service charge is usually included. Public trash cans are rare; keep a small bag or use bins at convenience stores.',
+            imageUrl: 'https://images.unsplash.com/photo-1470252649358-96f3c802bca8?auto=format&fit=crop&q=80&w=800'
         }
     ]
 };

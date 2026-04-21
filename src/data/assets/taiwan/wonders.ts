@@ -12,10 +12,10 @@ export const CULTURAL_WONDERS: CulturalInsight[] = [
         titleEn: "Breakfast Auntie's God-like Speed",
         emoji: '🍳',
         backgroundColor: '#FFF2E0', // Soft Orange
-        content: '台灣早餐店是平行宇宙。同時有 10 個人點不同東西，阿姨不用記、不用寫，30 秒出餐，從不出錯。蛋餅、三明治、飯糰、奶茶同時進行，像在看雜技。',
-        contentEn: "The breakfast shops are a parallel universe. 10 people order different items simultaneously, and the 'Auntie' remembers them all without writing a single note. Within 30 seconds, she serves everything perfectly. It's like watching a high-stakes circus act.",
-        foreignerReaction: '「她怎麼可能記得住？我懷疑她有超能力。」',
-        foreignerReactionEn: '"How does she remember it all? I suspect she has superpowers."',
+        content: '台灣早餐店是平行宇宙。同時有 10 個人點不同東西，阿姨不用記、不用寫，30 秒出餐。達人推薦組合：大冰奶 + 火腿蛋/蛋餅。這不是米其林，但這是台北人醒來的唯一方式。',
+        contentEn: "The breakfast shops are a parallel universe. 10 people order different items simultaneously, and the 'Auntie' remembers them all. Expert Combo: Large Ice Milk Tea + Ham Egg Toast. Not Michelin, but the only way Taipei wakes up.",
+        foreignerReaction: '「大冰奶真的是地表最強通腸劑，但配蛋餅真的絕配。」',
+        foreignerReactionEn: '"The milk tea is the world\'s strongest laxative, but it pairs perfectly with the egg crepe."',
         coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800'
     },
     {
@@ -63,10 +63,10 @@ export const CULTURAL_WONDERS: CulturalInsight[] = [
         titleEn: 'Convenience Store: A Second Home',
         emoji: '🏪',
         backgroundColor: '#E0F2F1', // Soft Teal
-        content: '走累了，進任何一家 7-11 或全家。台灣超商可以繳罰單、印文件、買演唱會票、寄包裹、吃熱食、充電、上廁所。這是 24 小時對所有人開放的客廳。',
-        contentEn: "Step into any 7-11 or FamilyMart. You can pay bills, print documents, buy concert tickets, send parcels, eat hot meals, charge your phone, and use the restroom. It's a 24/7 living room open to everyone.",
-        foreignerReaction: '「我在台灣超商繳了電費、印了護照影本、又買了熱湯。這間店什麼都能做，我的國家的超商只賣糖和汽油。」',
-        foreignerReactionEn: '"I paid my electricity bill, printed my passport, and bought soup. This store can do everything. My country\'s 7-11 only sells candy and gas."',
+        content: '走累了，進任何一家 7-11 或全家。達人必吃：茶葉蛋、木瓜牛乳、或是與名店聯名的微波食品。這是 24 小時對所有人開放的客廳，甚至能野餐。',
+        contentEn: "Step into any 7-11. Expert Picks: Tea Egg, Papaya Milk, or co-branded microwave meals. It's a 24/7 living room open to everyone, even for a quick indoor picnic.",
+        foreignerReaction: '「我在 7-11 買了茶葉蛋跟木瓜牛奶。這間店什麼都能做，我的國家的超商只賣糖和汽油。」',
+        foreignerReactionEn: '"I bought tea eggs and papaya milk. This store can do everything. My country\'s 7-11 only sells candy and gas."',
         coverImage: 'https://images.unsplash.com/photo-1511317551221-f19af9288e6c?auto=format&fit=crop&q=80&w=800'
     },
     {

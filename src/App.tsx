@@ -186,7 +186,14 @@ export function App() {
     // Initialization & Persistence
     useEffect(() => {
         const savedLang = localStorage.getItem('app_lang');
-        if (savedLang) setLang(savedLang as LangType);
+        if (savedLang) {
+            setLang(savedLang as LangType);
+        } else {
+            // [NEW] First-time visit: auto-detect from browser language
+            const browserLang = navigator.language || (navigator as any).userLanguage || 'en';
+            const isChineseBrowser = browserLang.startsWith('zh');
+            setLang(isChineseBrowser ? 'zh' : 'en');
+        }
         setIsInitialized(true);
     }, []);
 
@@ -480,6 +487,7 @@ export function App() {
                         <TemplateDetailsPanel
                             template={tpl}
                             lang={lang}
+                            isPurchased={isPurchased}
                             onApply={(selectedTpl) => {
                                 applyTemplate(selectedTpl);
                                 ui.setActiveTemplateId(null);

@@ -12,7 +12,7 @@ interface MobileDiscoveryDrawerProps {
     onToggleSubscribe: (creatorId: string) => void;
     onAddItem: (item: TravelItem) => void;
     onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
-    showToastMessage?: (msg: string, type: 'success' | 'error') => void;
+    showToastMessage?: (msg: string, type: 'success' | 'error' | 'info' | 'warning') => void;
     lang: LangType;
     preferredAuthorId?: string | null;
     onCreatorClick?: (creatorId: string) => void;

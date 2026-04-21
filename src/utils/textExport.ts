@@ -25,7 +25,9 @@ function getTransportLabel(transport: TransportMode, lang: LangType): string {
     const keyMap: Record<TransportMode, keyof Translation> = {
         walk: 'transportWalk',
         public: 'transportPublic',
-        car: 'transportCar'
+        car: 'transportCar',
+        taxi: 'transportPublic', // Use public as fallback or transportCar
+        bike: 'transportWalk'
     };
     return (t[keyMap[transport]] as string) || transport;
 }

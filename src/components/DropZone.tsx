@@ -56,7 +56,7 @@ const DropZone: React.FC<DropZoneProps> = ({
     // Passed from parent
     const onDelete = (i: number) => onRemoveItem(i);
     const onTransportChange = (i: number, m: TransportMode) => onUpdateItem(i, { arrivalTransport: m });
-    const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'car' };
+    const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'taxi', 'taxi': 'bike', 'bike': 'car' };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(index, nextMode); };
     const handleCrossSlotTransportClick = (e: React.MouseEvent, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(0, nextMode); };
 
@@ -151,7 +151,7 @@ const DropZone: React.FC<DropZoneProps> = ({
             <div onDragOver={onDragOver} onDrop={(e) => onDrop(e)} className={`transition-all duration-300 rounded-xl ${isCompact ? 'min-h-[40px] border-2 border-dashed p-3 flex flex-col space-y-2' : showTimeline ? 'min-h-[12px] flex flex-col space-y-2' : slot === 'unsorted' ? '' : 'min-h-[12px] px-0 md:p-3 flex flex-col space-y-2'} ${isDraggingGlobal && items.length === 0 ? 'border-2 border-teal-400 bg-teal-50 scale-[1.02] shadow-sm' : ''}`}>
                 {items.length === 0 && (
                     <div className={`w-full h-full flex flex-col items-center justify-center text-sm transition-colors transition-all py-1 px-2 gap-2 opacity-0 ${isDraggingGlobal ? 'text-teal-600 font-bold opacity-100 min-h-[40px] border-2 border-dashed border-teal-200' : 'text-gray-300'}`}>
-                        {isDraggingGlobal ? t.dropToAdd : null}
+                        {isDraggingGlobal ? (t as any).dropToAdd : null}
                     </div>
                 )}
 

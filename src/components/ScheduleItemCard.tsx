@@ -9,6 +9,7 @@ import { ScheduleItemCardHeader } from './Schedule/ScheduleItemCardHeader';
 import { EditableMetadataBadges } from './Schedule/EditableMetadataBadges';
 import { EditableNoteSection } from './Schedule/EditableNoteSection';
 import { ScheduleActionMenu } from './Schedule/ScheduleActionMenu';
+import { ExpertInsightsSection } from './Schedule/ExpertInsightsSection';
 
 interface ScheduleItemCardProps {
     item: ScheduleItem;
@@ -130,6 +131,11 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                     <EditableNoteSection
                         item={item} t={t} editingNoteId={editingNoteId}
                         setEditingNoteId={setEditingNoteId} onNoteChange={onNoteChange}
+                    />
+
+                    {/* [NEW] Expert Insights & Pro Tips */}
+                    <ExpertInsightsSection
+                        item={item} lang={lang}
                     />
 
                     {/* Cross-Region Warning Inline */}

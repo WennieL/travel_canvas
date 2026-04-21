@@ -56,6 +56,10 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
     const avoid = getExtraField('avoid', 'avoidEn');
     const exactLocation = getExtraField('exactLocation', 'exactLocationEn');
 
+    // [NEW] Expert Insights
+    const expertNote = getLocal((item as any).expertNoteEn, (item as any).expertNote);
+    const proTip = getLocal((item as any).proTipEn, (item as any).proTip);
+
     // Image fallback
     const imageSrc = item.image; // Assuming item.image is a valid URL or emoji. If emoji, we might need a fallback cover.
     const isEmoji = imageSrc && (imageSrc.startsWith('http') === false && imageSrc.length < 5); // Rough check
@@ -117,6 +121,41 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
                     <p className="text-gray-600 text-sm leading-relaxed">
                         {description}
                     </p>
+                )}
+
+                {/* [NEW] Expert Insights & Human Navigation */}
+                {(expertNote || proTip) && (
+                    <div className="space-y-3">
+                        {expertNote && (
+                            <div className="bg-indigo-50/80 border border-indigo-100 rounded-2xl p-4 relative overflow-hidden">
+                                <div className="flex gap-3 text-indigo-900 z-10 relative">
+                                    <span className="text-2xl shrink-0">🎙️</span>
+                                    <div>
+                                        <h4 className="text-[10px] font-bold uppercase tracking-wider text-indigo-400 mb-1">
+                                            {lang === 'en' ? "Why Jett & Sakura Love This" : "選擇為什麼"}
+                                        </h4>
+                                        <p className="text-[13px] italic font-medium leading-relaxed">「{expertNote}」</p>
+                                    </div>
+                                </div>
+                                <div className="absolute -right-2 -bottom-2 opacity-5 pointer-events-none">
+                                    <span className="text-6xl text-indigo-900">"</span>
+                                </div>
+                            </div>
+                        )}
+                        {proTip && (
+                            <div className="bg-amber-50 border-l-4 border-amber-300 rounded-xl p-4 shadow-sm">
+                                <div className="flex gap-3">
+                                    <span className="text-2xl shrink-0">💡</span>
+                                    <div>
+                                        <h4 className="text-[10px] font-bold uppercase tracking-wider text-amber-600 mb-1">
+                                            {lang === 'en' ? "Pro Tips & Human Nav" : "達人交通祕技"}
+                                        </h4>
+                                        <p className="text-[13px] text-amber-900 font-bold leading-relaxed">{proTip}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 )}
 
                 {/* Metadata Grid */}

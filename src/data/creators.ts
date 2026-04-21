@@ -16,6 +16,20 @@ export const SAMPLE_CREATORS: Creator[] = [
     },
     // ── Taiwan Creators ──
     {
+        id: 'c-tw-family',
+        name: '全家出走研究所',
+        nameEn: 'Family Escape Lab',
+        avatar: 'https://images.unsplash.com/photo-1559070169-a3077159ee16?auto=format&fit=crop&w=100&q=80',
+        description: '兩個孩子的爸，研究如何帶著5-16歲的小孩，在不崩潰的情況下玩遍台灣。',
+        descriptionEn: 'A dad of two, researching how to explore Taiwan with kids aged 5–16 without anyone having a meltdown.',
+        followers: 14200,
+        tags: ['親子', '台北', '零決策'],
+        tagsEn: ['Family', 'Taipei', 'Zero-Decision'],
+        blogUrl: 'https://family-escape-lab.tw',
+        role: '親子旅遊研究員',
+        roleEn: 'FAMILY TRAVEL EXPERT'
+    },
+    {
         id: 'c-tw1',
         name: '台北文青散步',
         nameEn: 'Taipei Culture Walk',

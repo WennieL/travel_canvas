@@ -998,86 +998,273 @@ export const TEMPLATES: Template[] = [
         }
     },
     {
-        id: 'hl-curated-1',
-        name: '大地的力量：太魯閣與原民織紋',
-        nameEn: 'Hualien: Canyon & Indigenous Heritage',
-        title: '花蓮：在太平洋與大理石岩壁間的深度共鳴',
-        titleEn: 'Hualien: Deep Resonance Between Pacific & Marble Cliffs',
-        author: '子瑄',
-        authorEn: 'Zi Xuan',
-        authorId: 'c-tw4',
-        region: 'hualien',
-        tags: ['自然', '震撼', '文化'],
-        tagsEn: ['Nature', 'Stunning', 'Culture'],
-        duration: 2,
-        rating: 4.9,
+        id: 'circuit-tp-family',
+        name: '台北親子旗艦 96 小時',
+        nameEn: 'Taipei Family Flagship 96hr',
+        title: '台北親子旗艦：96 小時無痛育兒與都會探索',
+        titleEn: 'Taipei Family Flagship: 96hr Stress-Free City Exploration',
+        author: 'Family Escape Lab',
+        authorEn: 'Family Escape Lab',
+        authorId: 'c-tw-family',
+        region: 'taipei',
+        tags: ['親子旗艦', '零決策', '教育與科技'],
+        tagsEn: ['Family Flagship', 'Zero-Decision', 'Edu-Tech'],
+        duration: 4,
+        rating: 5.0,
         price: 0,
-        tier: 'creator',
-        coverImage: 'https://images.unsplash.com/photo-1656746792552-c1eda28136d3?auto=format&fit=crop&q=80&w=800',
-        authorStory: {
-            zh: '花蓮的美是狂野且溫柔的。我們深入太魯閣的裂縫，聽溪水切開巨石的聲音；我們走進部落，在長輩的帶領下感受織紋背後的土地記憶。',
-            en: 'Hualien is wild yet gentle. We deep-dive into Taroko canyons and visit indigenous tribes to learn history through weaving patterns.'
+        tier: 'official',
+        lastUpdated: '2026/04/20',
+        coverImage: '/images/covers/taipei.png',
+        highlights: { days: 4, spots: 15, tips: 12, rating: 5.0, usageCount: 4200 },
+        vibes: [
+            { tag: '#親子奇蹟', color: 'bg-pink-100 text-pink-800' },
+            { tag: '#零決策攻略', color: 'bg-amber-100 text-amber-800' },
+            { tag: '#黑科技體驗', color: 'bg-blue-100 text-blue-800' }
+        ],
+        coverStory: {
+            quote: '「帶小孩出國不是挑戰，而是與他們一起重新看世界的機會。」',
+            quoteEn: '"Traveling with kids isn\'t a challenge, but a chance to see the world again through their eyes."',
+            description: '【2026/04/20 更新 | 2024/05/10 發佈】這是為 5-16 歲孩子量身打造的台北終極劇本。從清晨的恐龍探險到深夜的潮流西門町，我們精確計算了體力、交通與「小睡窗口」，讓父母能在享受旅行的同時，看著孩子在科技與自然中發光。',
+            descriptionEn: '[Updated 2026/04/20 | Published 2024/05/10] The ultimate Taipei script for kids aged 5-16. From dinosaur adventures to Ximending, we\'ve precisely calculated energy levels and "nap windows." Enjoy Taipei while watching your kids shine through tech and nature.',
+            authorLabel: 'TravelCanvas 官方旗艦推薦',
+            authorLabelEn: 'TravelCanvas Official Flagship Recommendation'
         },
+        authorStory: {
+            zh: '身為兩位孩子的父親，我深知帶娃旅行的痛點。這份 96 小時的旗艦行程，是我在台北實測無數次後的黃金動線。我們為您精選了最適合家庭的景點與動線。',
+            en: 'As a father of two, I know the pain points of family travel. This 96-hour itinerary is the gold standard after countless tests, curated to ensure the best family experience.'
+        },
+        preparationGuide: [
+            {
+                title: '現金依然是關鍵',
+                titleEn: 'Cash is Queen',
+                text: '雖然百貨公司可刷卡，但行程中的「夜市」與「在地老店」幾乎只收現金。建議隨身準備 NT$2000-3000 現金。',
+                textEn: 'While malls take cards, "night markets" and "local gems" in this script are cash-only. Keep NT$2000-3000 on hand.',
+                icon: 'Banknote'
+            },
+            {
+                title: '悠遊卡：您的交通金鑰',
+                titleEn: 'EasyCard: Your Transit Key',
+                text: '捷運、公車甚至部分景點門票都能感應付費。省去排隊買票的時間，對帶著小孩的家庭至關重要。',
+                textEn: 'Use it for MRT, buses, and even some attraction entries. Skipping the ticket lines is a lifesaver for families.',
+                icon: 'CreditCard'
+            }
+        ],
         faq: [
-            { title: '太魯閣燕子口需要帶安全帽嗎？', text: '需要。現場有免費借用站，入內參觀請務必配戴，以防落石風險。' },
-            { title: '部落廚房可以當天直接去嗎？', text: '不行。部落私房菜通常需要提前 3-7 天預約備料。' }
+            { title: '捷運還是計程車？', titleEn: 'MRT or Taxi?', text: '台北捷運推車友善度極高，但我建議早晚尖峰時段（08:00 / 18:00）果斷換成計程車/Uber，這對維持小孩情緒至關重要。', textEn: 'Taipei MRT is very stroller-friendly, but I recommend taking a taxi/Uber during peak hours (08:00 / 18:00) to keep the kids comfortable.' },
+            { title: '需要買聯票嗎？', titleEn: 'Need Combo Tickets?', text: '直接刷悠遊卡進場最快。動物園、貓纜、土銀展示館都能感應進場，免去排隊領票的崩潰感。', textEn: 'Just use EasyCard/TPASS for entry. Zoo, Gondola, and museums all support it—skip the ticket lines and avoid meltdowns.' },
+            { title: '行李寄放建議', titleEn: 'Luggage Storage', text: '若住宿地點還無法 check in，建議將行李寄放在北車置物櫃（機捷 A1 站或北車地下街出口都有大型櫃位），這對開啟輕鬆的第一天至關重要。', textEn: 'If you can\'t check in yet, luggage lockers at Taipei Station or Airport MRT A1 terminal are highly recommended for a stress-free start.' },
+            { title: '數位工具建議', titleEn: 'Digital Survival Kit', text: '建議下載 Uber、Grab 或 55688 App 進行叫車。地圖建議使用 Google Maps，並下載台北離線地圖。捷運與交通動態可使用 Bus+。', textEn: 'Download Uber or 55688 for taxis. Use Google Maps with offline maps downloaded. For real-time transit, Bus+ is the local favorite.' }
         ],
         dayPreviews: [
-            { day: 1, summary: '太魯閣燕子口 → 部落風味餐 → 織紋體驗 → 七星潭' },
-            { day: 2, summary: '松園別館 → 四八高地 → 炸彈蔥油餅' }
+            { 
+                day: 1, 
+                summary: '台北站前恐龍探險 → 鼎泰豐午餐 → 101 高空視野 → 信義區潮流',
+                summaryEn: 'Dinosaur discovery at Taipei Station → Din Tai Fung → Taipei 101 Heights → Xinyi Trends'
+            },
+            { 
+                day: 2, 
+                summary: '紅樹林生態教室 → 淡水老街阿給 → 八里渡輪單車 → 漁人碼頭日落 → 士林夜市',
+                summaryEn: 'Mangrove Eco-Class → Tamsui Agei → Bali Ferry & Cycling → Fisherman\'s Wharf Sunset → Shilin Night Market'
+            },
+            { 
+                day: 3, 
+                summary: '動物園全下坡體力不支攻略 → 貓空水晶車廂日落 → 彩虹橋 → 饒河夜市',
+                summaryEn: 'Zoo Downhill Hack → Maokong Crystal Cabin Sunset → Rainbow Bridge → Raohe Night Market'
+            },
+            { 
+                day: 4, 
+                summary: '北門名店早午餐 → 鐵道博物館 → 復古食堂午餐 → 三創生活園區 → 西門町潮流散步',
+                summaryEn: 'Beimen Brunch → Railway Museum → Vintage Canteen Lunch → Syntrend Tech → Ximending Walk'
+            }
         ],
         schedule: {
             'Day 1': {
+                theme: '【啟航】歷史巨獸與城市高度',
+                themeEn: '【Launch】Historic Giants & Urban Heights',
                 morning: [
                     { 
-                        ...HUALIEN_ASSETS.find((a: any) => a.id === 'hl-a4')!,
-                        instanceId: 'hl-c1-h1',
-                        startTime: '09:00',
-                        timeLabel: '上午 Morning', 
-                        arrivalTransport: 'car' 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-dino')!, 
+                        instanceId: 'f1-1', 
+                        startTime: '10:00', 
+                        arrivalTransport: 'public', 
+                        expertNote: '💳 零決策提示：捷運台大醫院站 4 號出口。直接刷悠遊卡進場。🚕 [Show to Driver: 100台北市中正區襄陽路25號]',
+                        expertNoteEn: '💳 Zero-Decision: MRT NTU Hospital Exit 4. Use EasyCard. 🚕 [Show to Driver: No. 25, Xiangyang Rd, Zhongzheng District]'
                     }
                 ],
                 afternoon: [
                     { 
-                        ...HUALIEN_ASSETS.find((a: any) => a.id === 'hl-f3')!,
-                        instanceId: 'hl-c1-h2',
-                        startTime: '12:00',
-                        timeLabel: '午餐 Lunch', 
-                        arrivalTransport: 'car' 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-f5')!, 
+                        instanceId: 'f1-2', 
+                        startTime: '12:30', 
+                        timeLabel: '名店午餐 Lunch', 
+                        arrivalTransport: 'public', 
+                        expertNote: '即便在 101 也要早點取號！店員對小孩極其友善。💡 達人提示：點擊景點卡片查看「即時排隊進度」。',
+                        expertNoteEn: 'Grab a number early! The staff is kid-friendly. 💡 Expert Tip: Click the card to check "Real-time Queue Status".'
                     },
                     { 
-                        ...HUALIEN_ASSETS.find((a: any) => a.id === 'hl-exp1')!,
-                        instanceId: 'hl-c1-h3',
-                        startTime: '14:30',
-                        timeLabel: '下午 Afternoon', 
-                        arrivalTransport: 'walk' 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a8')!, 
+                        instanceId: 'f1-3', 
+                        startTime: '15:00', 
+                        arrivalTransport: 'walk', 
+                        expertNote: '89 樓有雲朵拍照點。🚕 [Show to Driver: 110台北市信義區信義路五段7號]。☕ 家長充電：這層的 %Arabica 咖啡。💡 達人提示：點擊景點卡片查看「官方門票預約」。',
+                        expertNoteEn: 'Cloud photo spots on 89F. 🚕 [Show to Driver: No. 7, Sec 5, Xinyi Rd]. ☕ Parent Recharge: %Arabica on this floor. 💡 Expert Tip: Click the card for "Official Ticket Booking".',
                     }
                 ],
                 evening: [
                     { 
-                        ...HUALIEN_ASSETS.find((a: any) => a.id === 'hl-f2')!,
-                        instanceId: 'hl-c1-h4',
-                        startTime: '18:00',
-                        timeLabel: '晚餐 Dinner', 
-                        arrivalTransport: 'walk' 
+                        id: 'custom-ximy-walk', 
+                        title: '信義香堤大道散步', 
+                        titleEn: 'Xinyi Xiangti Avenue Walk',
+                        itemType: 'spot', 
+                        startTime: '18:30', 
+                        arrivalTransport: 'walk', 
+                        expertNote: '信義區晚上充滿了水準極高的街頭藝人。找張長椅坐下看表演，這是台北最現代、最 chill 的親子時光。',
+                        expertNoteEn: 'Xinyi at night is full of top-tier street performers. Find a bench and enjoy the show; it\'s Taipei\'s most modern and chill family time.'
                     }
                 ],
-                night: [],
-                accommodation: [
-                    { ...HUALIEN_ASSETS.find((a: any) => a.id === 'hl-h1')!, instanceId: 'hl-c1-acc' }
-                ]
+                night: [], accommodation: []
             },
             'Day 2': {
+                theme: '【生態】淡水河畔的河岸日記',
+                themeEn: '【Ecology】Riverside Journal of Tamsui',
                 morning: [
                     { 
-                         ...HUALIEN_ASSETS.find((a: any) => a.id === 'hl-a2')!,
-                         instanceId: 'hl-c1-h5',
-                         startTime: '10:00',
-                         timeLabel: '上午 Morning', 
-                         arrivalTransport: 'public' 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-mangrove')!, 
+                        instanceId: 'f2-1', 
+                        startTime: '10:00', 
+                        arrivalTransport: 'public', 
+                        expertNote: '捷運紅樹林站 2 號出口出站即達。這裡是全台唯一能近距離看水筆仔的地方，記得找螃蟹！',
+                        expertNoteEn: 'MRT Mangrove Station Exit 2. The only place in Taiwan to see mangroves up close. Remember to look for crabs!'
                     }
                 ],
-                afternoon: [], evening: [], night: [], accommodation: []
+                afternoon: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-f-agei')!, 
+                        instanceId: 'f2-2', 
+                        startTime: '12:30', 
+                        timeLabel: '在地食育 Food', 
+                        arrivalTransport: 'public', 
+                        expertNote: '真理街的三間阿給都不錯。教孩子如何切開豆腐讓冬粉吸湯，這是一場餐桌上的動手實驗。',
+                        expertNoteEn: 'The three Agei shops on Zhenli Street are all good. Teach kids to cut open the tofu to soak the soup—it\'s a table-top experiment.'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-bali')!, 
+                        instanceId: 'f2-3', 
+                        startTime: '14:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '渡輪上可以吹海風。八里租車請選「電動親子車」。🌧️ 雨天備案：若雨勢過大，可改往信義區室內百貨或三創園區。',
+                        expertNoteEn: 'Ferry breeze is magical. Choose electric bikes. 🌧️ Rain Pivot: If pouring, head back to Xinyi malls or Syntrend indoor fun.'
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a13')!, 
+                        instanceId: 'f2-4', 
+                        startTime: '18:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '士林夜市規模巨大，建議鎖定「陽明戲院」周邊的小吃，避免漫無目的亂逛導致小孩疲累。',
+                        expertNoteEn: 'Shilin is huge. Target the snacks around Yangming Cinema to avoid aimless wandering and exhausted kids.'
+                    }
+                ],
+                night: [], accommodation: []
+            },
+            'Day 3': {
+                theme: '【野性】森林呼吸與山影星辰',
+                themeEn: '【Wild】Forest Breaths & Mountain Shadows',
+                morning: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-zoo')!, 
+                        instanceId: 'f3-1', 
+                        startTime: '09:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '🚸 生存密技：搭接駁車上山！🚕 [Show to Driver: 116台北市文山區新光路二段30號] 🌧️ 雨天備案：可改往士林科教館 (NTSEC)。',
+                        expertNoteEn: '🚸 Hack: Take the shuttle up! 🚕 [Show to Driver: No. 30, Sec 2, Xinguang Rd] 🌧️ Rain Pivot: Switch Zoo to NTSEC Science Museum.'
+                    }
+                ],
+                afternoon: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-mao')!, 
+                        instanceId: 'f3-2', 
+                        startTime: '14:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '一定要試試鐵觀音霜淇淋。🍵 家長回血：貓空茶屋是絕佳的小睡窗口。',
+                        expertNoteEn: 'Try the Tieguanyin soft serve. 🍵 Parent Recharge: Maokong tea houses are the perfect nap-window spots.'
+                    },
+                    { 
+                        id: 'nap-window-3', 
+                        title: '小睡續命窗口', 
+                        titleEn: 'Nap Window',
+                        itemType: 'spot', 
+                        startTime: '16:30', 
+                        arrivalTransport: 'taxi', 
+                        expertNote: '🚕 計程車約 25 分鐘前往饒河。這是小孩補充體力的黃金關鍵，家長也能在安靜的車內歇口氣。',
+                        expertNoteEn: '🚕 Taxi takes ~25 mins to Raohe. This is critical for kids to recharge; parents can rest in the quiet car too.'
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a9')!, 
+                        instanceId: 'f3-3', 
+                        startTime: '18:30', 
+                        arrivalTransport: 'walk', 
+                        expertNote: '饒河夜市胡椒餅排隊很長，買完後帶孩子去旁邊的「彩虹橋」河濱坐著吃，涼爽又安靜。',
+                        expertNoteEn: 'After buying pepper buns, take the kids to the nearby Rainbow Bridge riverside to eat peacefully in the breeze.'
+                    }
+                ],
+                night: [], accommodation: []
+            },
+            'Day 4': {
+                theme: '【未來】黑科技與潮流夜臺北',
+                themeEn: '【Future】High-Tech & Night Taipei Trends',
+                morning: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-brunch-beimen')!, 
+                        instanceId: 'f4-1', 
+                        startTime: '09:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '北門旁的人氣名店。大份量拼盤非常適合全家分食，在開啟博物館行程前先把能量補滿。',
+                        expertNoteEn: 'Popular spot near Beimen. The large platters are great for family sharing; recharge fully before the museum tour.'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-ntrm')!, 
+                        instanceId: 'f4-2', 
+                        startTime: '11:00', 
+                        arrivalTransport: 'walk', 
+                        expertNote: '週一休館！園區內的「蒸汽夢工廠」互動區是小孩最愛。🚕 [Show to Driver: 100台北市中正區延平南路2號]',
+                        expertNoteEn: 'Closed Mondays! The Steam Dream Factory is a kid favorite. 🚕 [Show to Driver: No. 2, Yanping S Rd, Zhongzheng District]'
+                    }
+                ],
+                afternoon: [
+                    { 
+                        id: 'museum-lunch', 
+                        title: '博物館復古食堂午餐', 
+                        titleEn: 'Museum Vintage Canteen Lunch',
+                        itemType: 'spot', 
+                        startTime: '13:00', 
+                        arrivalTransport: 'walk', 
+                        expertNote: '園區內設有復古風格的食堂，提供簡單定食。在古蹟中用餐氛圍極佳，或是步行至三創 B2 的美食街也有極多選擇。',
+                        expertNoteEn: 'The vintage canteen inside provides set meals with great vibes. Or walk to Syntrend B2 food court for more choices.'
+                    },
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-syntrend')!, 
+                        instanceId: 'f4-3', 
+                        startTime: '14:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '達人攻略：大門 Wiwi 公仔旁有直達 B2 捷徑。☕ 家長回血：11F 咖啡空間是整棟最靜謐的休息區。',
+                        expertNoteEn: 'Expert Hack: Shortcut to B2 near the Wiwi statue. ☕ Parent Recharge: 11F Coffee space is the quietest spot in the building.'
+                    }
+                ],
+                evening: [
+                    { 
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-ximending')!, 
+                        instanceId: 'f4-4', 
+                        startTime: '17:30', 
+                        arrivalTransport: 'public', 
+                        expertNote: '完美句點。🚕 [Show to Driver: 108台北市萬華區漢中街與成都路口 (西門彩虹地標)]',
+                        expertNoteEn: 'The perfect finale. 🚕 [Show to Driver: Intersection of Hanzhong St & Chengdu Rd (Rainbow Landmark)]'
+                    }
+                ],
+                night: [], accommodation: []
             }
         }
     }

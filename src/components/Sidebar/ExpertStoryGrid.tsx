@@ -116,6 +116,21 @@ export const ExpertStoryGrid: React.FC<ExpertStoryGridProps> = ({ stories, lang,
                                                 <p className="text-[14px] leading-[1.7] text-[#181D17]/80 font-bold">
                                                     {lang === 'zh' ? story.story : (story.storyEn || story.story)}
                                                 </p>
+                                                {story.url && (
+                                                    <div className="mt-5">
+                                                        <a 
+                                                            href={story.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                            className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white text-[12px] font-black uppercase tracking-widest shadow-md hover:scale-105 active:scale-95 transition-all"
+                                                            style={{ backgroundColor: accentColor }}
+                                                        >
+                                                            {story.urlLabel || (lang === 'zh' ? '開啟官方連結' : 'Official Link')}
+                                                            <LucideIcons.ArrowUpRight size={14} />
+                                                        </a>
+                                                    </div>
+                                                )}
                                             </div>
                                         </motion.div>
                                     )}

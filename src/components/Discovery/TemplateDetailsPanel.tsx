@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Lightbulb, Sun, Navigation, User, DollarSign, Bed, Moon, Home, Lock } from 'lucide-react';
+import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Quote, Lightbulb, Sun, Navigation, User, DollarSign, Bed, Moon, Home, Lock, Ticket, Briefcase, ArrowRight } from 'lucide-react';
 import { Template, LangType, TemplateStat, CulturalInsight, TemplateItem } from '../../types';
 import { SAMPLE_CREATORS, SAMPLE_ASSETS, CULTURAL_WONDERS } from '../../data';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
@@ -7,6 +7,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TemplateUnlockModal } from '../Modals';
 import { useUI } from '../../contexts/UIContext';
 import { useApp } from '../../contexts/AppContext';
+
+// --- NEW COMPONENT: Auto-Linkify text ---
+const LinkifyText: React.FC<{ text: string }> = ({ text }) => {
+    if (!text) return null;
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return (
+        <>
+            {parts.map((part, i) => 
+                urlRegex.test(part) ? (
+                    <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-bg-primary underline break-all hover:opacity-80" onClick={(e) => e.stopPropagation()}>
+                        {part}
+                    </a>
+                ) : part
+            )}
+        </>
+    );
+};
 
 // --- NEW COMPONENT: Timeline Insight Whisper ---
 const TimelineInsightWhisper: React.FC<{ insight: CulturalInsight, lang: LangType, onClick: () => void }> = ({ insight, lang, onClick }) => {
@@ -37,6 +55,111 @@ const TimelineInsightWhisper: React.FC<{ insight: CulturalInsight, lang: LangTyp
                 <ChevronRight size={14} className="text-[#5B4D7D]" />
             </div>
         </motion.div>
+    );
+};
+
+
+// --- NEW COMPONENT: Timeline Item Card (Standard Item Card) ---
+const TimelineItemCard: React.FC<{ 
+    item: any, 
+    idx: number, 
+    lang: LangType, 
+    isPurchased: boolean, 
+    onSpotClick?: (spot: any) => void 
+}> = ({ item, idx, lang, isPurchased, onSpotClick }) => {
+    return (
+        <div
+            onClick={(e) => {
+                e.stopPropagation();
+                // We allow clicking into locked items now to show the monetization hook in SpotDetailsPanel
+                onSpotClick?.({ ...item, id: item.id || `spot-${idx}`, _unlocked: isPurchased, images: item.images || [`https://images.unsplash.com/photo-${1500000000000 + (item.title?.length || 0) * 1234567}?auto=format&fit=crop&w=800&q=80`] });
+            }}
+            className={`flex-1 flex items-center gap-3 bg-white border border-[#E8EDE4] rounded-2xl p-3 shadow-[0_1px_6px_rgba(0,0,0,0.05)] transition-all duration-200 ${
+                item.isLocked && !isPurchased 
+                    ? 'cursor-default opacity-80' 
+                    : 'hover:shadow-[0_4px_14px_rgba(0,0,0,0.08)] hover:border-[#C8D5C0] active:border-[#4A7C59] active:shadow-[0_2px_8px_rgba(0,0,0,0.12)] active:scale-[0.99] cursor-pointer'
+            }`}
+        >
+            {/* Visual Thumbnail */}
+            <div className="w-[68px] h-[68px] rounded-xl bg-[#F7FBF0] overflow-hidden shrink-0">
+                <img
+                    src={item.coverImage || (item.image?.startsWith('http') ? item.image : `https://images.unsplash.com/photo-${[
+                        '1527633051730-adb4729c1b85',
+                        '1470252649358-96f3c802bca8',
+                        '1467269204594-9661b134dd2b',
+                        '1514362545857-3bc16c4c7d1b',
+                        '1533107862482-0e6974b068c7'
+                    ][idx % 5]}?auto=format&fit=crop&w=300&q=80`)}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    alt={item.title}
+                    onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=300&q=80';
+                    }}
+                />
+            </div>
+
+            {/* Text Content */}
+            <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
+                    <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest shrink-0">{item.type || 'SPOT'}</span>
+                    {item.timeLabel && (
+                        <span className="text-[9px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md uppercase tracking-tight shrink-0">
+                            {item.timeLabel}
+                        </span>
+                    )}
+                    {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500 shrink-0"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
+                </div>
+                <h5 className="text-[15px] font-black text-[#181D17] leading-tight flex items-center gap-1">
+                    <span className={`line-clamp-1 transition-all ${item.isLocked && !isPurchased ? 'blur-[3px] opacity-70 select-none' : ''}`}>
+                        {item.isLocked && !isPurchased 
+                            ? (lang === 'zh' ? (item.marketingTitle || '🔒 神祕地點') : (item.marketingTitleEn || '🔒 Secret Location'))
+                            : (lang === 'zh' ? item.title : (item.titleEn || item.title))}
+                    </span>
+                    {!isPurchased && item.isLocked && (
+                        <Lock size={12} className="text-amber-500 shrink-0" />
+                    )}
+                    <ChevronRight size={14} className="shrink-0 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-bg-primary ml-auto" />
+                </h5>
+                {(!item.expertNote && !item.expertNoteEn && (item.description || item.descriptionEn)) && (
+                    <p className={`text-[11.5px] text-[#4A5548] mt-2 line-clamp-2 leading-[1.6] opacity-60 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-30 select-none' : ''}`}>
+                        {item.isLocked && !isPurchased
+                            ? (lang === 'zh' ? '這是一個付費解鎖後才能查看的獨家在地推薦。' : 'This is an exclusive local recommendation available after unlocking.')
+                            : (lang === 'zh' ? item.description : (item.descriptionEn || item.description))}
+                    </p>
+                )}
+                {(item.expertNote || item.expertNoteEn) && (
+                    <div className={`mt-3 flex items-start gap-2.5 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
+                        <div className="mt-0.5 shrink-0">
+                            <div className="w-[22px] h-[22px] rounded-full bg-[#FFF8EE] flex items-center justify-center">
+                                <Quote size={10} className="text-[#F19B38] fill-current" />
+                            </div>
+                        </div>
+                        <div className="flex-1 pt-0.5">
+                            <p className="text-[12px] font-medium text-[#4A5548] leading-[1.6]">
+                                <span className="font-black text-[#F19B38] mr-1.5 align-baseline">
+                                    {lang === 'zh' ? '達人說' : 'Pro Tip'}
+                                </span>
+                                {item.isLocked && !isPurchased
+                                    ? (lang === 'zh' ? '解鎖以查看達人點評...' : 'Unlock to view expert insight...')
+                                    : <LinkifyText text={lang === 'zh' ? item.expertNote : (item.expertNoteEn || item.expertNote)} />}
+                            </p>
+                        </div>
+                    </div>
+                )}
+                {(item.transitNote || item.transitNoteEn) && (
+                    <div className={`mt-2 flex items-center justify-start transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
+                        <div className="inline-flex items-start gap-1.5 px-2.5 py-1.5 bg-[#EEF4ED] rounded-lg border border-[#D5E3D0] text-[11.5px] font-bold text-[#3B6649]">
+                            <svg className="w-3.5 h-3.5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                            </svg>
+                            <span className="leading-snug">
+                            {lang === 'zh' ? item.transitNote : (item.transitNoteEn || item.transitNote)}
+                            </span>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 };
 
@@ -147,6 +270,7 @@ interface TemplateDetailsPanelProps {
     isExternalPurchaseModalOpen?: boolean;
     onOpenPurchaseModal?: () => void;
     onClosePurchaseModal?: () => void;
+    isPurchased?: boolean;
 }
 
 // Helper to render icon by name
@@ -158,6 +282,9 @@ const IconComponent = ({ name, size = 18 }: { name?: string, size?: number }) =>
         case 'Calendar': return <Calendar size={size} />;
         case 'Sparkles': return <Sparkles size={size} />;
         case 'DollarSign': return <DollarSign size={size} />;
+        case 'Ticket': return <Ticket size={size} />;
+        case 'Briefcase': return <Briefcase size={size} />;
+        case 'Sun': return <Sun size={size} />;
         default: return <MapPin size={size} />;
     }
 };
@@ -172,10 +299,12 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
     handleToggleFavoriteTemplate,
     onOpenPurchaseModal,
     onClosePurchaseModal,
-    isExternalPurchaseModalOpen = false
+    isExternalPurchaseModalOpen = false,
+    isPurchased = true
 }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
+    
     // [Phase UX] Use external state if available, otherwise fallback
     const [internalShowPurchaseModal, setInternalShowPurchaseModal] = useState(false);
     const showPurchaseModal = onOpenPurchaseModal ? isExternalPurchaseModalOpen : internalShowPurchaseModal;
@@ -186,10 +315,9 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
             setInternalShowPurchaseModal(val);
         }
     };
-    const { purchasedTemplateIds, unlockTemplate } = useUI();
-    const { showToastMessage } = useApp();
     
-    const isPurchased = template.isLocked ? purchasedTemplateIds.includes(template.id) : true;
+    const { lang: appLang, showToastMessage } = useApp();
+    
     const resolvedCreator = SAMPLE_CREATORS.find(c => c.id === template.authorId);
     
     // Virtual Creator Fallback (No Hardcode!)
@@ -262,7 +390,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                     {/* Badges Overlay */}
                     {displayBadges && displayBadges.length > 0 && (
                         <div className="flex gap-2 mb-4">
-                            {displayBadges.map((badge, idx) => (
+                            {displayBadges.map((badge: string, idx: number) => (
                                 <span key={idx} className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-[9px] font-black text-white uppercase tracking-widest whitespace-nowrap">
                                     {badge}
                                 </span>
@@ -286,7 +414,18 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                 : (template.region || 'Taipei').toUpperCase()}
                         </span>
                         <span className="w-1 h-1 rounded-full bg-white/20" />
-                        <span>2024/05/10 {lang === 'zh' ? '發佈' : 'Published'}</span>
+                        
+                        {/* Dynamic Version & Last Updated Badge */}
+                        {template.lastUpdated ? (
+                            <span className="flex items-center gap-1.5 bg-[#4A7C59] text-white px-2 py-0.5 rounded-[4px] font-bold tracking-[0.1em] drop-shadow-sm">
+                                {template.lastUpdated} {lang === 'zh' ? '更新' : 'Updated'} 
+                                <span className="font-medium opacity-80 border-l border-white/30 pl-1.5 ml-0.5 text-[10px]">
+                                    2024/05/10 {lang === 'zh' ? '發佈' : 'Published'}
+                                </span>
+                            </span>
+                        ) : (
+                            <span>2024/05/10 {lang === 'zh' ? '發佈' : 'Published'}</span>
+                        )}
                     </div>
                 </div>
             </div>
@@ -312,8 +451,39 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
             {/* 3. Dynamic Content Area */}
             <div className="px-6 py-10 relative z-20">
                 {activeTab === 'overview' ? (
-                    <div className="space-y-14">
-                        {/* 3a. Smart Stats Strip (Horizontal Editorial Style) */}
+                    <div className="space-y-12">
+                        {/* 3a. [NEW] Value Anchor - The Trust Switch */}
+                        {template.valueAnchor && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-[#1A2D1F] p-8 rounded-[38px] shadow-[0_20px_50px_rgba(26,45,31,0.15)] relative overflow-hidden"
+                            >
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#4A7C59]/20 to-transparent rounded-full -mr-16 -mt-16 blur-2xl" />
+                                
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-2 h-2 rounded-full bg-amber-400" />
+                                        <span className="text-[10px] font-black text-white/50 uppercase tracking-[0.25em]">
+                                            {lang === 'zh' ? '零決策行程體驗' : 'DECISION-FREE EXPERIENCE'}
+                                        </span>
+                                    </div>
+                                    
+                                    <h3 className="text-[20px] md:text-[24px] font-heading font-black text-white leading-tight mb-4">
+                                        {lang === 'zh' ? '你不需要計畫，' : "You don't plan the trip."}
+                                        <span className="block text-white/60">
+                                            {lang === 'zh' ? '只需跟隨。' : 'You just follow it.'}
+                                        </span>
+                                    </h3>
+                                    
+                                    <p className="text-[15px] leading-[1.7] text-white/80 font-medium bg-white/5 p-4 rounded-2xl border border-white/10">
+                                        {lang === 'zh' ? template.valueAnchor : (template.valueAnchorEn || template.valueAnchor)}
+                                    </p>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* 3b. Smart Stats Strip (Horizontal Editorial Style) */}
                         <div className="bg-white/40 backdrop-blur-sm rounded-[32px] p-1 border border-white/60 shadow-sm overflow-hidden">
                             <div className="grid grid-cols-4 divide-x divide-tc-primary/5">
                                 {(template.customStats || [
@@ -337,7 +507,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                     },
                                     { 
                                         label: lang === 'zh' ? '熱度' : 'COPIED', 
-                                        value: String(template.copiedCount || 100), 
+                                        value: String(template.copiedCount || template.highlights?.usageCount || 100), 
                                         icon: 'Sparkles',
                                         color: '#f3e8ff'
                                     },
@@ -365,6 +535,23 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                             </div>
                         </div>
 
+                        {/* 3a. Value Proposition Strip (PREMIUM) */}
+                        <div className="flex justify-between gap-3 mb-10">
+                            {[
+                                { zh: '零決策排程', en: '⚡ ZERO DECISION', desc: 'zh: 全程手動排雷 / en: Fully optimized' },
+                                { zh: '親子認證', en: '🛡️ KIDS VERIFIED', desc: 'zh: 孩子笑容保證 / en: Family-approved' },
+                                { zh: '物流配套', en: '📦 LOGISTICS PRO', desc: 'zh: 含寄存與預約 / en: Booking & pickup' }
+                            ].map((val, idx) => (
+                                <div key={idx} className="flex-1 bg-[#F1F3EE]/50 border border-bg-primary/5 rounded-2xl p-3 text-center">
+                                    <div className="text-[10px] font-black text-bg-primary tracking-widest mb-1">
+                                        {lang === 'zh' ? val.zh : val.en}
+                                    </div>
+                                    <div className="text-[8px] font-bold text-[#8E9285] uppercase opacity-70">
+                                        {lang === 'zh' ? val.desc.split(' / ')[0].replace('zh: ', '') : val.desc.split(' / ')[1].replace('en: ', '')}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
 
                         {/* 3b. Creator & Fluid Narrative Block */}
                         <div className="space-y-8">
@@ -402,7 +589,43 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                             </div>
                         </div>
 
-                        {/* 3c. Know Before You Go (DYNAMIC EDITORIAL SECTION) */}
+                        {/* 3c. [NEW] EXPERT PREPARATION GUIDE (TEASER) */}
+                        {template.preparationGuide && template.preparationGuide.length > 0 && (
+                            <div className="bg-[#E9F3E4] rounded-[32px] p-8 border border-[#B5C9A4]/30 shadow-sm relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+                                    <Sparkles size={80} className="text-[#4A7C59]" />
+                                </div>
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-8 h-8 rounded-full bg-[#4A7C59] flex items-center justify-center text-white">
+                                            <Sparkles size={16} />
+                                        </div>
+                                        <h4 className="text-[20px] font-heading font-black text-[#1A2D1F]">
+                                            {lang === 'zh' ? '達人行前預習' : "Expert's Prep Guide"}
+                                        </h4>
+                                    </div>
+                                    <div className="space-y-6">
+                                        {template.preparationGuide.map((guide, idx) => (
+                                            <div key={idx} className="flex gap-5">
+                                                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#4A7C59] shrink-0 shadow-sm">
+                                                    <IconComponent name={guide.icon} size={20} />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <div className="text-[11px] font-black text-[#6B7C6E] uppercase tracking-widest mb-1.5">
+                                                        {lang === 'zh' ? guide.title : (guide.titleEn || guide.title)}
+                                                    </div>
+                                                    <p className="text-[15px] font-semibold text-[#1A2D1F] leading-relaxed">
+                                                        {lang === 'zh' ? guide.text : (guide.textEn || guide.text)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 3d. Know Before You Go (DYNAMIC EDITORIAL SECTION) */}
                         {template.faq && template.faq.length > 0 && (
                             <div>
                                 <h4 className="text-[20px] font-heading font-black text-[#181D17] mb-6">{t.knowBeforeYouGo}</h4>
@@ -432,6 +655,16 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                 </div>
                             </div>
                         )}
+
+                        {/* [INFO] Survival Guide tip — static, no click required */}
+                        <div className="flex items-start gap-3 px-2 py-1">
+                            <span className="text-[14px] mt-0.5">💡</span>
+                            <p className="text-[12px] font-semibold text-[#8E9285] leading-relaxed">
+                                {lang === 'zh'
+                                    ? '更多在地生存法則（交通、禮儀、網路）可在首頁 Discover 的「台灣生存指南」中找到。'
+                                    : 'More local survival tips (transport, etiquette, connectivity) are in the "Taiwan Survival Guide" on the Discover tab.'}
+                            </p>
+                        </div>
 
                         {/* 3d. Author's Note */}
                         {template.authorStory && (
@@ -488,9 +721,18 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                 </div>
                                             </div>
 
-                                            {/* Info Below Image */}
-                                            <div className="px-1">
-                                                <h5 className="text-[16px] font-black text-[#181D17] leading-tight line-clamp-1 mb-1.5">
+                                            {/* Info Below Image - width constrained to match image */}
+                                            <div className="px-1 w-[40vw] md:w-48 overflow-hidden">
+                                                <h5 
+                                                    className="text-[16px] font-black text-[#181D17] leading-tight mb-1.5 whitespace-normal break-words"
+                                                    style={{ 
+                                                        display: '-webkit-box',
+                                                        WebkitLineClamp: 2,
+                                                        WebkitBoxOrient: 'vertical',
+                                                        overflow: 'hidden',
+                                                        minHeight: '2.5em'
+                                                    }}
+                                                >
                                                     {lang === 'zh' ? spot.title : (spot.titleEn || spot.title)}
                                                 </h5>
                                                 <div className="flex items-center gap-1.5 opacity-70">
@@ -536,12 +778,50 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                             return (
                                 <div className="relative">
                                     {/* Centered Day Title */}
-                                    <div className="mb-8 text-center">
+                                    <div className="mb-4 text-center">
                                         <h2 className="text-[22px] font-black text-[#181D17] leading-snug">{lang === 'zh' ? dayData.theme : (dayData.themeEn || dayData.theme)} {dayData.themeEmoji}</h2>
                                     </div>
 
+                                    {/* [NEW] Zero-Decision Context Bar - Humanized */}
+                                    {dayData.contextBar && (
+                                        <div className="flex items-center justify-center gap-3 mb-6">
+                                            <div className="px-2.5 py-1 bg-[#F5F8F5] border border-[#E0E9DE] rounded-full flex items-center shadow-sm">
+                                                <span className="text-[10px] font-black text-[#5B7C64] tracking-tight">
+                                                    {lang === 'zh' ? dayData.contextBar.weather : (dayData.contextBar.weatherEn || dayData.contextBar.weather)}
+                                                </span>
+                                            </div>
+                                            <div className="px-2.5 py-1 bg-[#F5F8F5] border border-[#E0E9DE] rounded-full flex items-center shadow-sm">
+                                                <span className="text-[10px] font-black text-[#5B7C64] tracking-tight">
+                                                    {lang === 'zh' ? dayData.contextBar.optimization : (dayData.contextBar.optimizationEn || dayData.contextBar.optimization)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Deprecated: Daily Tips moving to Trust Card or Expert Notes */}
+                                    {/* dayData.dailyTips && dayData.dailyTips.length > 0 && ... */}
+
                                     {/* Timeline + Items */}
                                     <div className="space-y-0">
+                                        {/* [NEW] Expert Mind / Warm Note */}
+                                        {dayData.trustCard && (
+                                            <div className="relative mb-8 mt-2 mx-4">
+                                                <div className="bg-[#FFFAF2] rounded-2xl p-4 shadow-sm border border-[#F2E8D5] flex gap-4 ring-4 ring-[#FFFDF9]/80">
+                                                    <div className="w-10 h-10 rounded-full bg-[#F2EDE4] flex items-center justify-center text-xl shrink-0 shadow-inner">
+                                                        {dayData.trustCard.icon}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <h4 className="text-[13px] font-black text-[#6B5A40] mb-0.5 flex items-center gap-2">
+                                                            {lang === 'zh' ? dayData.trustCard.title : (dayData.trustCard.titleEn || dayData.trustCard.title)}
+                                                        </h4>
+                                                        <p className="text-[12.5px] font-medium text-[#7D6B50] leading-relaxed italic opacity-90">
+                                                            「{lang === 'zh' ? dayData.trustCard.text : (dayData.trustCard.textEn || dayData.trustCard.text)}」
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
                                         {[...(dayData.morning || []), ...(dayData.afternoon || []), ...(dayData.evening || []), ...(dayData.night || [])].map((rawItem, idx, arr) => {
                                             // 1. Detection of Insight vs Spot
                                             if (rawItem.itemType === 'insight') {
@@ -551,7 +831,9 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                             }
 
                                             const asset = SAMPLE_ASSETS.find(a => a.id === rawItem.id);
-                                            const item = asset ? { ...asset, ...rawItem } : rawItem;
+                                            let item = asset ? { ...asset, ...rawItem } : rawItem;
+
+
                                             
                                             return (
                                                 <div key={idx} className="relative group flex items-start gap-3 pb-8">
@@ -574,70 +856,14 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                     )}
                                                 </div>
 
-                                                {/* RIGHT COLUMN: Clickable Card */}
-                                                <div
-                                                    onClick={() => {
-                                                        if (item.isLocked && !isPurchased) {
-                                                            showToastMessage(lang === 'zh' ? '🔒 此為神祕地點，請先解鎖完整行程以查看詳情。' : '🔒 This is a Secret Location. Please unlock the full itinerary to view details.', 'info');
-                                                            return;
-                                                        }
-                                                        onSpotClick?.({ ...item, id: item.id || `spot-${idx}`, images: item.images || [`https://images.unsplash.com/photo-${1500000000000 + (item.title?.length || 0) * 1234567}?auto=format&fit=crop&w=800&q=80`] });
-                                                    }}
-                                                    className={`flex-1 flex items-center gap-3 bg-white border border-[#E8EDE4] rounded-2xl p-3 shadow-[0_1px_6px_rgba(0,0,0,0.05)] transition-all duration-200 ${
-                                                        item.isLocked && !isPurchased 
-                                                            ? 'cursor-default opacity-80' 
-                                                            : 'hover:shadow-[0_4px_14px_rgba(0,0,0,0.08)] hover:border-[#C8D5C0] active:border-[#4A7C59] active:shadow-[0_2px_8px_rgba(0,0,0,0.12)] active:scale-[0.99] cursor-pointer'
-                                                    }`}
-                                                >
-                                                    {/* Visual Thumbnail */}
-                                                    <div className="w-[68px] h-[68px] rounded-xl bg-[#F7FBF0] overflow-hidden shrink-0">
-                                                        <img
-                                                            src={item.coverImage || (item.image?.startsWith('http') ? item.image : `https://images.unsplash.com/photo-${[
-                                                                '1527633051730-adb4729c1b85',
-                                                                '1470252649358-96f3c802bca8',
-                                                                '1467269204594-9661b134dd2b',
-                                                                '1514362545857-3bc16c4c7d1b',
-                                                                '1533107862482-0e6974b068c7'
-                                                            ][idx % 5]}?auto=format&fit=crop&w=300&q=80`)}
-                                                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                                                            alt={item.title}
-                                                            onError={(e) => {
-                                                                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=300&q=80';
-                                                            }}
-                                                        />
-                                                    </div>
-
-                                                    {/* Text Content */}
-                                                    <div className="flex-1 min-w-0">
-                                                        <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
-                                                            <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest shrink-0">{item.type || 'SPOT'}</span>
-                                                            {item.timeLabel && (
-                                                                <span className="text-[9px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md uppercase tracking-tight shrink-0">
-                                                                    {item.timeLabel}
-                                                                </span>
-                                                            )}
-                                                            {item.rating && <div className="flex items-center gap-0.5 text-[10px] font-bold text-amber-500 shrink-0"><Star size={9} fill="currentColor" /><span>{item.rating}</span></div>}
-                                                        </div>
-                                                        <h5 className="text-[15px] font-black text-[#181D17] leading-snug flex items-center gap-1">
-                                                            <span className={`line-clamp-1 transition-all ${item.isLocked && !isPurchased ? 'blur-[3px] opacity-70 select-none' : ''}`}>
-                                                                {item.isLocked && !isPurchased 
-                                                                    ? (lang === 'zh' ? (item.marketingTitle || '🔒 神祕地點') : (item.marketingTitleEn || '🔒 Secret Location'))
-                                                                    : (lang === 'zh' ? item.title : (item.titleEn || item.title))}
-                                                            </span>
-                                                            {!isPurchased && item.isLocked && (
-                                                                <Lock size={12} className="text-amber-500 shrink-0" />
-                                                            )}
-                                                            <ChevronRight size={12} className="shrink-0 opacity-30 group-hover:opacity-70 group-hover:translate-x-0.5 transition-all text-[#8E9285]" />
-                                                        </h5>
-                                                        {(item.description || item.descriptionEn) && (
-                                                            <p className={`text-[11.5px] text-[#4A5548] mt-2 line-clamp-2 leading-[1.6] opacity-60 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-30 select-none' : ''}`}>
-                                                                {item.isLocked && !isPurchased
-                                                                    ? (lang === 'zh' ? '這是一個付費解鎖後才能查看的獨家在地推薦。' : 'This is an exclusive local recommendation available after unlocking.')
-                                                                    : (lang === 'zh' ? item.description : (item.descriptionEn || item.description))}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
+                                                {/* RIGHT COLUMN: Standard Item */}
+                                                <TimelineItemCard 
+                                                    item={item} 
+                                                    idx={idx} 
+                                                    lang={lang} 
+                                                    isPurchased={isPurchased} 
+                                                    onSpotClick={onSpotClick} 
+                                                />
                                             </div>
                                         );
                                     })}

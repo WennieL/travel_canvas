@@ -1,5 +1,5 @@
 export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom' | 'vibe' | 'experiential';
-export type TransportMode = 'car' | 'walk' | 'public';
+export type TransportMode = 'car' | 'walk' | 'public' | 'taxi' | 'bike';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation' | 'unsorted';
 export type ViewMode = 'overview' | 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery' | 'favorites' | 'projects' | 'flights' | 'hotels' | 'files'; // Supports split view and mobile map
@@ -42,6 +42,8 @@ export interface ExpertStory {
     summaryEn?: string;
     story: string;      // 3-5 sentence full narrative
     storyEn?: string;
+    url?: string;        // [NEW] Clickable action URL
+    urlLabel?: string;   // [NEW] Clickable action Label (e.g. "Book Tickets")
     color?: string;     // custom accent color
 }
 
@@ -98,6 +100,10 @@ export interface TravelItem {
     marketingImage?: string; // Vibe photo (Shown when locked)
     isLocked?: boolean;     // If true, hide address/real title
     isCustom?: boolean;     // [NEW] Flag to identify user-created items
+    expertNote?: string;
+    expertNoteEn?: string;
+    proTip?: string;
+    proTipEn?: string;
     
     // [PHASE 36] Consolidated Recommendation Architecture
     recommendations?: Recommendation[];
@@ -163,8 +169,10 @@ export interface InsiderTip {
         avoidEn?: string;
         bestTime?: string;       // Best time to visit
         bestTimeEn?: string;
-        reservation?: string;    // Booking link
-        reservationEn?: string;
+        externalLinks?: {
+            official?: string;
+            booking?: string;
+        };
     };
 
     // Legacy fields for compatibility
@@ -185,6 +193,16 @@ export interface ScheduleItem extends TravelItem {
     selectedRecommendationId?: string;
     activeRecommendation?: Recommendation;
 
+    // [NEW] Expert specific insights and human navigation
+    expertNote?: string;
+    expertNoteEn?: string;
+    proTip?: string;
+    proTipEn?: string;
+    
+    // [NEW] Transit specific instructions
+    transitNote?: string;
+    transitNoteEn?: string;
+
     // Legacy fields for compatibility
     insiderTip?: InsiderTip;
     lockedTeaser?: {
@@ -192,6 +210,10 @@ export interface ScheduleItem extends TravelItem {
         description: string;
     };
     day?: number; // [NEW] Optional day context for move operations
+    
+    // Deprecated in favor of Single-Path Output:
+    // options?: ScheduleItem[];
+    // isAlternative?: boolean;
 }
 
 export interface Review {
@@ -213,8 +235,12 @@ export interface ChecklistItem {
 }
 
 export interface TemplateItem {
-    id: string; // References TravelItem.id for type 'spot'
+    id?: string; // References TravelItem.id for type 'spot'
     itemType?: 'spot' | 'insight';
+    type?: string; 
+    category?: string;
+    description?: string;
+    descriptionEn?: string;
     insightId?: string; // References CulturalInsight.id for type 'insight'
     instanceId?: string; // Support for legacy/existing templates that define it
     timeLabel?: string;
@@ -223,6 +249,25 @@ export interface TemplateItem {
     arrivalTransport?: TransportMode;
     insiderTip?: InsiderTip; // Added for legacy templates
     isLocked?: boolean;     // Added for legacy templates
+
+    // [NEW] Expert specific insights and human navigation
+    expertNote?: string;
+    expertNoteEn?: string;
+    proTip?: string;
+    proTipEn?: string;
+    
+    // [NEW] Transit specific instructions
+    transitNote?: string;
+    transitNoteEn?: string;
+
+    // Support for custom items in templates
+    title?: string;
+    titleEn?: string;
+    duration?: string;
+
+    // Deprecated in favor of Single-Path Output:
+    // options?: TemplateItem[];
+    // isAlternative?: boolean;
 }
 
 export interface TemplateDaySchedule {
@@ -236,6 +281,26 @@ export interface TemplateDaySchedule {
     themeEmoji?: string;
     swapSuggestion?: string;
     swapSuggestionEn?: string;
+    dailyTips?: Array<{
+        icon: string;
+        title: string;
+        titleEn?: string;
+        text: string;
+        textEn?: string;
+    }>;
+    contextBar?: {
+        weather?: string;
+        weatherEn?: string;
+        optimization?: string;
+        optimizationEn?: string;
+    };
+    trustCard?: {
+        icon: string;
+        title: string;
+        titleEn?: string;
+        text: string;
+        textEn?: string;
+    };
 }
 
 export interface TemplateFullSchedule {
@@ -249,12 +314,18 @@ export interface DaySchedule {
     night: ScheduleItem[];
     accommodation: ScheduleItem[];
     unsorted?: ScheduleItem[];
-    // [NEW] Themed day enhancements
     theme?: string;               // "咖啡廳 & 文青小店"
     themeEn?: string;             // "Cafés & Indie Shops"
     themeEmoji?: string;          // "☕"
     swapSuggestion?: string;      // "咖啡廳可替換為獨立書店"
     swapSuggestionEn?: string;
+    dailyTips?: Array<{
+        icon: string;
+        title: string;
+        titleEn?: string;
+        text: string;
+        textEn?: string;
+    }>;
 }
 
 export interface FullSchedule {
@@ -346,8 +417,14 @@ export interface Template {
     dayPreviews?: Array<{  // Condensed day preview
         day: number;
         summary: string;   // "淺草寺 → 晴空塔 → 隅田川夜景"
+        summaryEn?: string;
     }>;
     hiddenCount?: number;  // Number of hidden/locked items
+    
+    // [NEW] Versioning & Maintenance
+    version?: string;       // e.g. "2026.1 春季限定版"
+    versionEn?: string;     // e.g. "2026.1 Spring Ed."
+    lastUpdated?: string;   // e.g. "2026-04-18"
 
     // [NEW] Location × Style architecture fields
     travelStyle?: string[];  // e.g. ['慢活', '文青', 'michelin']
@@ -367,6 +444,14 @@ export interface Template {
         zh: string;
         en: string;
     };
+    // [NEW] Expert-led Pre-trip Guidance (Magazine-style Teasers)
+    preparationGuide?: Array<{
+        title: string;
+        titleEn?: string;
+        text: string;
+        textEn?: string;
+        icon?: string; // Lucide icon name or emoji
+    }>;
     // [PHASE 1] FAQ — "Know Before You Go" critical info
     faq?: Array<{
         title: string;
@@ -380,6 +465,8 @@ export interface Template {
     badgesEn?: string[];
     subLocations?: string[];  // e.g. ['迪化街', '大稻埕']
     subLocationsEn?: string[];
+    valueAnchor?: string;     // [NEW] High-conversion value proposition
+    valueAnchorEn?: string;
     customStats?: TemplateStat[]; // 4 items for the premium horizontal bar (Fig. 7)
 }
 

@@ -42,13 +42,38 @@ export const useAppActions = (deps: AppActionsDeps) => {
     const applyTemplate = useCallback(async (template: Template) => {
         const templateName = (lang === 'en' && template.nameEn) ? template.nameEn : template.name;
 
-        const copy = (items: ScheduleItem[]) => (items || [])
-            .filter((i: any) => i.itemType !== 'insight')
-            .map(i => ({
-                ...i,
-                instanceId: Math.random().toString(36).substr(2, 9),
-                arrivalTransport: (i.arrivalTransport || 'car') as TransportMode
-            }));
+        const copy = (items: any[]) => {
+            const flat: any[] = [];
+            (items || []).forEach(i => {
+                if (i.itemType === 'insight') return;
+                
+                // Original item
+                const instanceId = Math.random().toString(36).substr(2, 9);
+                flat.push({
+                    ...i,
+                    instanceId,
+                    arrivalTransport: (i.arrivalTransport || 'car') as TransportMode,
+                    options: undefined // Clean up for editor
+                });
+
+                // Flatten options (if any)
+                if (i.options && i.options.length > 0) {
+                    i.options.forEach((opt: any) => {
+                        // Avoid duplicates if the main item is also in options
+                        if (opt.id !== i.id) {
+                            flat.push({
+                                ...opt,
+                                instanceId: Math.random().toString(36).substr(2, 9),
+                                arrivalTransport: (opt.arrivalTransport || i.arrivalTransport || 'car') as TransportMode,
+                                isAlternative: true,
+                                startTime: i.startTime || opt.startTime
+                            });
+                        }
+                    });
+                }
+            });
+            return flat;
+        };
 
         const newSchedule: Record<string, DaySchedule> = {};
         const isMultiDay = !('morning' in template.schedule);

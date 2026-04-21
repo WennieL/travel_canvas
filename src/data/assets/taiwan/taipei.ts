@@ -730,7 +730,9 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summary: '10 點整是唯一解',
                 summaryEn: '10 AM sharp',
                 story: '信義店（或本店）最好在早上 10 點開門前就抵達。這時第一批入座的機率最高。只要晚 20 分鐘，你可能就要等 90 分鐘起跳。',
-                storyEn: 'Arrive before 10 AM opening at the Xinyi original store. Being in the first batch keeps you from 90-minute waits later.'
+                storyEn: 'Arrive before 10 AM opening at the Xinyi original store. Being in the first batch keeps you from 90-minute waits later.',
+                url: 'https://www.dintaifung.com.tw/branch_wait_time.php',
+                urlLabel: '查詢即時候位進度'
             },
             {
                 id: 'must-eat',
@@ -992,7 +994,9 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summary: '秒速 1014 公尺的脈動',
                 summaryEn: '1,014m per minute',
                 story: '這是全球最快的電梯之一。我的建議：進入電梯後別只顧著錄影，閉上眼感受那輕微的耳鳴與壓力的變化。當門打開，那一瞬間的台北全景會因為你的「盲測」而變得更加震撼。',
-                storyEn: 'One of the world\'s fastest elevators. My advice: Close your eyes and feel the G-force and ear pressure change. When the doors open, the Taipei panorama will hit you much harder after the sensory deprivation.'
+                storyEn: 'One of the world\'s fastest elevators. My advice: Close your eyes and feel the G-force and ear pressure change. When the doors open, the Taipei panorama will hit you much harder after the sensory deprivation.',
+                url: 'https://stage.taipei-101.com.tw/ticket',
+                urlLabel: '立即預約官方門票'
             },
             {
                 id: 'must-eat',
@@ -1947,5 +1951,477 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 bestTime: '17:30'
             }
         }
+    },
+    // --- FLAGSHIP: TAIPEI FAMILY & TECH FAVORITES ---
+    {
+        id: 'tw-t-fam-dino',
+        title: '台博館土銀展示館 (恐龍博物館)',
+        titleEn: 'National Taiwan Museum (Land Bank / Dinosaur Hall)',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🦖',
+        description: '位於台北車站對面，這座古老的銀行建築內隱藏著巨大的恐龍化師。走在巨大的樑柱下，孩子能近距離觀察雷龍與暴龍，還能進入神祕的老金庫探險。',
+        descriptionEn: 'Magnificent dinosaurs inside a historic bank building. Explore the heavy vaults and walk under massive dinosaur skeletons—a perfect, affordable start near Taipei Main Station.',
+        price: 30,
+        address: '台北市中正區襄陽路25號',
+        rating: 4.8,
+        lat: 25.0428,
+        lng: 121.5145,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '09:30 - 17:00 (週一休館)',
+        tags: ['親子', '歷史', '恐龍'],
+        themeColor: '#D2B48C',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '在老銀行裡與恐龍共舞，這是台北送給孩子的第一份奇蹟。',
+        teaserEn: 'Dance with dinosaurs in an old bank—Taipei\'s first gift of wonder for kids.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '金庫探險',
+                labelEn: 'Vault Tour',
+                summary: '帶著存摺（導覽手冊）走進金庫',
+                summaryEn: 'Enter the vault with your "passbook"',
+                story: '在這裡，孩子不只是看恐龍，還能進入古老的土銀金庫。記得領取入館存摺，在原本存放金條的地方蓋章印字，對大孩子來說是一場有趣的金融歷史探險。',
+                storyEn: 'Kids can enter the old Land Bank vaults. Grab an entry "passbook" and stamp it where gold bars used to be kept—a fun historical dive for older kids.'
+            },
+            {
+                id: 'must-do',
+                label: '與巨獸平視',
+                labelEn: 'Eye-to-Eye',
+                summary: '走上二樓走廊看雷龍脊椎',
+                summaryEn: 'Upper gallery for the Brontosaurus',
+                story: '不要只停留在恐龍腳下。走上二樓的環型迴廊，這能讓你與數層樓高的恐龍骨骼「平視」，那種視覺衝擊力是地面上感受不到的。',
+                storyEn: 'Don\'t just stay on the floor. Head to the 2F gallery to stand eye-to-eye with the massive skeletons for the best perspective.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-mangrove',
+        title: '紅樹林生態步道',
+        titleEn: 'Mangrove Ecology Trail',
+        type: 'nature',
+        duration: '1小時',
+        image: '🦀',
+        description: '淡水河口最珍貴的生態教室。木棧道平坦友善，適合推車，能近距離觀察水筆仔、招潮蟹與彈塗魚，是帶孩子體驗潮間帶的最佳起點。',
+        descriptionEn: 'The most precious ecology classroom at the Tamsui River mouth. Flat, stroller-friendly boardwalks to see crabs and mudskippers up close.',
+        price: 0,
+        address: '新北市淡水區中正東路二段68號',
+        rating: 4.6,
+        lat: 25.1558,
+        lng: 121.4608,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '24H (建議日間前往)',
+        tags: ['生態', '戶外', '親子'],
+        themeColor: '#2F4F4F',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '捷運站出來就是森林，帶孩子尋找泥土裡的招潮蟹魔法。',
+        teaserEn: 'A forest right outside the MRT, where kids can find the magic of fiddler crabs.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '生物偵探',
+                labelEn: 'Bio-Detective',
+                summary: '低頭尋找招潮蟹與彈塗魚',
+                summaryEn: 'Look for crabs and mudskippers',
+                story: '木棧道兩側的泥灘就是最精彩的舞台。教孩子觀察招潮蟹的大螯，或是尋找正在泥地跳躍的彈塗魚，這比課本上的生物課有趣一百倍。',
+                storyEn: 'The mudflats along the boardwalk are a stage. Show kids the massive claws of the fiddler crabs or spot the jumping mudskippers.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-bali',
+        title: '八里左岸單車與渡輪',
+        titleEn: 'Bali Left Bank Cycling & Ferry',
+        type: 'experiential',
+        duration: '2-3小時',
+        image: '🚲',
+        description: '從淡水搭乘渡輪橫跨河口，抵達八里後租輛親子單車。沿著河岸平緩前行，吹著海風，享受台北最悠閒的午後時光。',
+        descriptionEn: 'Cross the river by ferry and rent a family bike. A breezy, flat ride along the Bali waterfront, perfect for a relaxing Taipei afternoon.',
+        price: 200,
+        address: '新北市八里區觀海大道',
+        rating: 4.7,
+        lat: 25.1633,
+        lng: 121.4425,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '10:00 - 18:00',
+        tags: ['單車', '風景', '體能'],
+        themeColor: '#00BFFF',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '搭小船、踩踏板，把台北的夕陽裝進孩子的口袋。',
+        teaserEn: 'Hop on a boat, pedal away, and capture Taipei\'s sunset for your kids.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '海上儀式',
+                labelEn: 'Sea Ritual',
+                summary: '站在渡輪甲板吹海風',
+                summaryEn: 'Feel the breeze on the ferry deck',
+                story: '從淡水到八里的 10 分鐘渡輪對小孩來說是極大的冒險。讓他們站在甲板上觀察波浪，這種短暂的海上航行是行程中最好的轉場。',
+                storyEn: 'The 10-minute ferry from Tamsui is a huge adventure for kids. Let them stand on the deck and watch the waves—it\'s the best transition.'
+            },
+            {
+                id: 'must-do',
+                label: '動力懶人包',
+                labelEn: 'E-Bike Hack',
+                summary: '必租電動親子協力車',
+                summaryEn: 'Rent an electric family bike',
+                story: '這是不崩潰的秘密：八里河岸雖然平坦，但體力留給小孩尖叫比較划算。果斷租用「四輪電動車」，家長輕鬆導航，小孩坐後座大喊歡呼。',
+                storyEn: 'Insider secret: Rent a 4-wheel electric bike. Save your energy while the kids enjoy the "joyride" from the back seat.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-syntrend',
+        title: '三創生活園區 (Syntrend)',
+        titleEn: 'Syntrend Creative Park',
+        type: 'experiential',
+        duration: '2小時',
+        image: '🤖',
+        description: '台北科技與動漫的殿堂。從最新空拍機到鋼彈模型，以及專屬的親子科技玩樂層，這裡是讓大孩子與家長共同入迷的未來空間。',
+        descriptionEn: 'The hub of tech and anime. From drones to Gundam models and dedicated kid-tech zones, it\'s a futuristic space that fascinates all ages.',
+        price: 0,
+        address: '台北市中正區市民大道三段2號',
+        rating: 4.5,
+        lat: 25.0452,
+        lng: 121.5303,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '11:00 - 21:30',
+        tags: ['科技', '動漫', '室內'],
+        themeColor: '#708090',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '台北黑科技總部，這裡是逃離雨天與烈日的終極武庫。',
+        teaserEn: 'Taipei\'s tech HQ—the ultimate indoor armor against rain and sun.',
+        expertStories: [
+            {
+                id: 'hidden',
+                label: '【動線攻略】',
+                labelEn: 'Logistics Hack',
+                summary: 'B2 捷徑與隱藏 D 電梯',
+                summaryEn: 'B2 Shortcut & D-Elevator',
+                story: '八德路大門 Wiwi 公仔旁有直達 B2 美食街的捷徑，不用在館內擠電梯；若要上樓，市民大道入口旁的 D 電梯通常更人少快速。',
+                storyEn: 'Next to the Wiwi statue at the Bade Rd entrance is a direct shortcut to the B2 food court. For upper floors, the "D Elevator" near the Civil Blvd entrance is usually faster and less crowded.'
+            },
+            {
+                id: 'must-do',
+                label: '【親子手作】',
+                labelEn: 'Kids Activity',
+                summary: '7F 寶可夢卡牌教學與多美小汽車',
+                summaryEn: 'Pokemon Card Tutorials & Tomica',
+                story: '7F 創 Q Space 定期舉辦官方寶可夢卡牌教學，參加還有機會拿限量禮。旁邊的多美小汽車專區則是 10 歲以下小孩的終極樂園。',
+                storyEn: '7F Chuang Q Space holds official Pokemon TCG tutorials (check FB for times). The Tomica area next door is a paradise for kids under 10.'
+            },
+            {
+                id: 'hidden',
+                label: '【隱藏休息】',
+                labelEn: 'Hidden Rest',
+                summary: '11F 共享咖啡與 4F 安靜角落',
+                summaryEn: '11F Shared Coffee & 4F Quiet Spot',
+                story: '逛累了？11F 共享咖啡吧與 4F 哈亞極品咖啡是全館最安靜的地方，適合家長充電。',
+                storyEn: 'Exhausted? 11F Shared Coffee Bar and 4F Kaya Coffee are the quietest spots in the building, perfect for parents to recharge.'
+            },
+            {
+                id: 'hidden',
+                label: '【貼心設施】',
+                labelEn: 'Facility Tip',
+                summary: '2F-9F 飲水機與 ChargeSPOT',
+                summaryEn: 'Water Dispensers & Power Rental',
+                story: '2F 洗手間外飲水機有供應冷水。全館多處（1F/3F/5F/6F）皆有 ChargeSPOT 租借行動電源，不用擔心手機沒電。',
+                storyEn: 'Water dispensers are near restrooms from 2F-9F (2F offers cold water). ChargeSPOT rentals are available on 1F, 3F, 5F, and 6F.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-ntrm',
+        title: '國家鐵道博物館籌備處',
+        titleEn: 'National Taiwan Railway Museum',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🚂',
+        description: '這座擁有百年歷史的台北機廠，記錄了台灣鐵道的輝煌歲月。孩子能在古老的維修廠房中看到復古火車頭，甚至在特定的公共展覽中體驗鐵道文化。',
+        descriptionEn: 'The historic Taipei Railway Workshop. A place where kids can see vintage locomotives in century-old industrial workshops—pure magic for train enthusiasts.',
+        price: 0,
+        address: '台北市信義區市民大道五段50號',
+        rating: 4.6,
+        lat: 25.0478,
+        lng: 121.5628,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '09:30 - 17:00 (16:30 停止售票，周一休館)',
+        tags: ['鐵道', '親子', '歷史'],
+        themeColor: '#8B4513',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '走進火車的醫院，見證台灣鋼鐵與鐵道的百年記憶。',
+        teaserEn: 'Enter the "hospital for trains" and witness a century of Taiwan\'s iron and steel history.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【官網攻略】',
+                labelEn: 'Official Hack',
+                summary: '捷運北門站 2 號出口直達',
+                summaryEn: 'MRT Beimen Exit 2 Direct',
+                story: '這裡是國立臺灣博物館鐵道部園區。每週一、除夕、初一休館。除了火車，園區內的「蒸汽夢工廠」互動設施是小孩體感遊戲的首選。',
+                storyEn: 'Part of the National Taiwan Museum. Closed on Mondays. Beyond trains, the "Steam Factory" interactive zone is a must for physical play.'
+            },
+            {
+                id: 'must-eat',
+                label: '【博物館餐】',
+                labelEn: 'Museum Lunch',
+                summary: '園區內的復古食堂',
+                summaryEn: 'On-site Vintage Canteen',
+                story: '園區內設有復古風格的食堂，提供簡單的定食與飲品。在百年古蹟中用餐，對鐵道迷來說是極致的浪漫。',
+                storyEn: 'The on-site canteen offers vintage-style sets and drinks. Dining within a century-old historical site is pure magic for rail fans.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-ximending',
+        title: '西門町潮流商圈',
+        titleEn: 'Ximending Youth District',
+        type: 'shopping',
+        duration: '2小時',
+        image: '🌈',
+        description: '台北潮流文化的發源地。五彩斑斕的招牌、街頭藝人表演，以及各式各樣充滿創意的小店，這裡是感受台北「酷靈魂」的最佳場合。',
+        descriptionEn: 'The birthplace of Taipei youth culture. Colorful signs, street performers, and creative boutiques—this is where you find the city\'s "cool soul."',
+        price: 0,
+        address: '台北市萬華區成都路',
+        rating: 4.3,
+        lat: 25.0422,
+        lng: 121.5085,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '24H (熱鬧時段 16:00-22:00)',
+        tags: ['潮流', '美食', '夜生活'],
+        themeColor: '#FF69B4',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '台北的秋葉原與東宿，這裡有最熱鬧的街頭與最好拍的彩虹標誌。',
+        teaserEn: 'The Akihabara of Taipei, featuring vibrant streets and the iconic rainbow landmark.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '彩虹地標',
+                labelEn: 'Rainbow Spot',
+                summary: '西門站 6 號出口彩虹步道',
+                summaryEn: 'Rainbow crossing at Exit 6',
+                story: '位於 6 號出口前的彩虹地景是必須打卡的標誌。帶孩子在這裡留下合影，這代表你們已經真正「解鎖」了台北的都會活力。',
+                storyEn: 'The massive rainbow crossing at Exit 6 is an essential photo op—the perfect symbolic "unlock" of Taipei\'s urban energy.'
+            },
+            {
+                id: 'must-do',
+                label: '萬年商業大樓',
+                labelEn: 'Vintage Hub',
+                summary: '4 樓隱藏的模型模型基地',
+                summaryEn: 'Hidden model shops on 4F',
+                story: '如果孩子是模型迷，一定要去「萬年大樓」4 樓。那裡充滿了幾十年歷史的模型老店，跟三創的現代感不同，這裡有一種老台北的浪漫。',
+                storyEn: 'For serious collectors, the 4th floor of Wannien Building offers historic model shops with a romantic, vintage Taipei vibe.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-f-mala-pot',
+        title: '馬辣頂級麻辣鴛鴦火鍋',
+        titleEn: 'Mala Hot Pot (Top Tier)',
+        type: 'food',
+        duration: '2小時',
+        image: '🥘',
+        description: '台北最受歡迎的吃到飽火鍋。除了豐富的頂級肉品，最吸引孩子的是無限量供應的哈根達斯冰淇淋與新鮮水果牆。',
+        descriptionEn: 'Taipei\'s favorite all-you-can-eat hot pot. Beyond premium meats, the endless Häagen-Dazs and wall of fresh fruit are major kid-pleasers.',
+        price: 800,
+        address: '台北市萬華區漢口街二段30號',
+        rating: 4.6,
+        lat: 25.0445,
+        lng: 121.5065,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '11:30 - 02:00',
+        tags: ['吃到飽', '麻辣鍋', '慶祝'],
+        themeColor: '#800000',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '台北旗艦行程的慶祝晚宴，用和牛與冰淇淋填滿全家人的胃。',
+        teaserEn: 'The celebratory gala dinner of the flagship tour—fill up on Wagyu and endless ice cream.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '冰淇淋挑戰',
+                labelEn: 'Ice Cream Quest',
+                summary: '16 種口味哈根達斯',
+                summaryEn: '16 flavors of Häagen-Dazs',
+                story: '這不僅是火車。這裡是孩子們的甜點天堂。教他們如何在火鍋結束後，精確挑選自己最愛的口味，這就是旅行中最幸福的時刻。',
+                storyEn: 'It\'s a dessert paradise. Watching kids pick their favorite flavors after a hot pot meal is the definition of travel joy.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-f-agei',
+        title: '淡水正宗阿給',
+        titleEn: 'Authentic Tamsui Agei',
+        type: 'food',
+        duration: '45分鐘',
+        image: '🥙',
+        description: '淡水最具代表性的傳統小吃。油豆腐塞入冬粉後以魚漿封口，淋上特製甜辣醬，這是一口就能體驗到的淡水百年風味。',
+        descriptionEn: 'The iconic Tamsui snack: tofu pockets stuffed with glass noodles, sealed with fish paste, and drizzled in sweet-spicy sauce.',
+        price: 50,
+        address: '新北市淡水區真理街6-1號',
+        rating: 4.5,
+        lat: 25.1748,
+        lng: 121.4385,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '05:00 - 14:00 (售完為止)',
+        tags: ['老字號', '必吃', '平價'],
+        themeColor: '#FF7F50',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '淡水人的私藏早餐，每一口都是飽滿的冬粉與魚漿香氣。',
+        teaserEn: 'The locals\' secret breakfast—each bite is packed with glass noodles and savory fish paste.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '解剖學吃法',
+                labelEn: 'Anatomy Eat',
+                summary: '教孩子如何切開豆腐',
+                summaryEn: 'Show kids how to cut the tofu',
+                story: '這對孩子來說非常有參與感：先用筷子輕輕劃開油豆腐，讓飽吸湯汁的冬粉滑出來。這不是在吃飯，這是在進行一場美味的探索。',
+                storyEn: 'It\'s an interactive meal: show kids how to slice the tofu so the juice-soaked noodles slide out—a tasty exploration.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-f-railway-bento',
+        title: '台鐵排骨便當',
+        titleEn: 'TR Classic Railway Bento',
+        type: 'food',
+        duration: '30分鐘',
+        image: '🍱',
+        description: '台灣鐵道的文化縮影。一塊厚實的滷排骨、一顆滷蛋與酸菜，這份在火車上流傳數十年的美味，是無數台灣人的共同記憶。',
+        descriptionEn: 'The cultural icon of Taiwan railways. A thick braised pork chop, braised egg, and pickles—the flavor that defined decades of train travel.',
+        price: 80,
+        address: '台北市中正區北平西路3號 (台北車站)',
+        rating: 4.7,
+        lat: 25.0478,
+        lng: 121.5170,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '08:00 - 20:00',
+        tags: ['經典', '台味', '必吃'],
+        themeColor: '#000080',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '這不只是一份便當，這是台灣一整個世代的鄉愁與移動記憶。',
+        teaserEn: 'More than a bento—this is a generation\'s nostalgia and collective travel memory.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '儀式感',
+                labelEn: 'The Ritual',
+                summary: '在台北車站大廳席地而坐',
+                summaryEn: 'Sitting on the Main Station floor',
+                story: '如果不急著走，買完便當後跟著當地人在台北車站黑白格大廳坐下吃。這種席地而坐的豪邁感，對小孩來說是非常獨特的城市體驗。',
+                storyEn: 'Join the locals in the massive black-and-white hall of Taipei Main Station. Sitting on the floor for a meal is a unique, relaxed urban experience for kids.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-brunch-beimen',
+        title: 'Coppii Lumii living coffee 冉苒生活 (北門店)',
+        titleEn: 'Coppii Lumii Living Coffee (Beimen)',
+        type: 'food',
+        duration: '1.5小時',
+        image: '🥗',
+        description: '北門周邊評分最高的早午餐。環境寬敞明亮，極具北歐風格。不僅咖啡專業，豐富的早午餐大拼盤更是網友熱推，是前往鐵道部參觀前的最佳能量補給站。',
+        descriptionEn: 'Top-rated brunch near Beimen. A spacious, Nordic-style cafe with professional coffee and legendary breakfast platters. The perfect pre-museum fuel.',
+        price: 400,
+        address: '台北市中正區延平北路一段72號',
+        rating: 4.7,
+        lat: 25.0492,
+        lng: 121.5122,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '09:00 - 17:00',
+        tags: ['早午餐', '名店', '親子'],
+        themeColor: '#DEB887',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '台北北門旁的陽光早午餐，大拼盤是不變的經典。',
+        teaserEn: 'Sun-drenched brunch near Beimen—legendary platters are always a win.',
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '【必點拼盤】',
+                labelEn: 'Must Eat',
+                summary: '冉苒大太陽大拼盤',
+                summaryEn: 'Signature Platter',
+                story: '拼盤內含豐富的時蔬、法式吐司與德式香腸。份量很大，建議親子可以共食一份再加點飲品，性價比極高。',
+                storyEn: 'The signature platter features fresh veggies, French toast, and sausages. It\'s huge—perfect for sharing with your kids.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-zoo',
+        title: '台北市立動物園',
+        titleEn: 'Taipei Zoo',
+        type: 'attraction',
+        duration: '4-5小時',
+        image: '🐼',
+        description: '亞洲最大的動物園之一。除了超高人氣的大熊貓、國王企鵝，最吸引人的還有廣大的熱帶雨林區與非洲動物區。結合教育與休閒，是親子旅遊的必訪之地。',
+        descriptionEn: 'One of Asia\'s largest zoos. Meet giant pandas, king penguins, and explore the massive African and Tropical zones—an essential stop for families.',
+        price: 60,
+        address: '台北市文山區新光路二段30號',
+        rating: 4.8,
+        lat: 24.9983,
+        lng: 121.5811,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '09:00 - 17:00 (農曆除夕休館)',
+        tags: ['動物園', '教育', '旗艦'],
+        themeColor: '#228B22',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '在森林與草地間尋找野生奇蹟，這是台北最經典的親子記憶。',
+        teaserEn: 'Discover wild wonders between the forests and slopes—Taipei\'s most classic family memory.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【生存密技】',
+                labelEn: 'Pro Tip',
+                summary: '上山搭車，下山走路',
+                summaryEn: 'Bus up, Walk down',
+                story: '絕對不要傻傻地從門口往上走！先搭接駁車（5 元）到最上面的企鵝館，然後一路往下坡逛回來，這能省下小孩 1 小時的體力。',
+                storyEn: 'Never walk uphill from the entrance! Take the shuttle bus ($5) to the top (Penguins) and walk down—save your kids\' energy for more fun.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-fam-mao',
+        title: '貓空纜車',
+        titleEn: 'Maokong Gondola',
+        type: 'attraction',
+        duration: '1.5小時',
+        image: '🚠',
+        description: '跨越台北盆地的雲端旅程。搭乘全透明的「之眼」水晶車廂，俯瞰茶園山景與台北 101，感受山谷間的微風與靜謐。',
+        descriptionEn: 'A high-flying journey over Taipei. Ride the crystal cabins for a 360-degree view of tea plantations and Taipei 101—a serene escape above the city.',
+        price: 120,
+        address: '台北市文山區萬芳路',
+        rating: 4.7,
+        lat: 24.9681,
+        lng: 121.5884,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        openingHours: '09:00 - 21:00 (每月第一個週一營運)',
+        tags: ['纜車', '夜景', '風景'],
+        themeColor: '#556B2F',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        teaser: '搭乘水晶車廂穿梭雲端，讓台北 101 當你的背景。',
+        teaserEn: 'Soar through the clouds in a crystal cabin with Taipei 101 as your backdrop.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【水晶挑戰】',
+                labelEn: 'Crystal Ride',
+                summary: '必排「貓纜之眼」',
+                summaryEn: 'Queue for "Eyes of Maokong"',
+                story: '水晶車廂地板是全透明的！雖然排隊時間稍長，但懸浮在茶園上空的視覺體驗絕對讓孩子大聲尖叫與瘋迷。',
+                storyEn: 'The floor is completely transparent! The wait is a bit longer, but floating over the tea gardens is a visual thrill kids love.'
+            }
+        ]
     }
 ];

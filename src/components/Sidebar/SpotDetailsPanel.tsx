@@ -17,7 +17,9 @@ import {
     ChevronLeft,
     Lightbulb,
     Sparkles,
-    Zap
+    Zap,
+    User,
+    Lock
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
@@ -43,7 +45,7 @@ interface SpotDetailsPanelProps {
     onToggleSubscribe: (creatorId: string) => void;
     onAddItem: (item: TravelItem) => void;
     onUpdateItem?: (slot: string, index: number, updates: Partial<ScheduleItem>) => void;
-    showToastMessage?: (msg: string, type: 'success' | 'error') => void;
+    showToastMessage?: (msg: string, type: 'success' | 'error' | 'info' | 'warning') => void;
     onClose: () => void;
     lang: LangType;
     preferredAuthorId?: string | null;
@@ -259,53 +261,90 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
 
                             {/* Layer 1: Narrative Header (達人語錄) */}
                             <div
-                                className="relative py-2 px-1 flex flex-col gap-8"
+                                className="relative py-2 px-1 flex flex-col gap-6"
                                 style={{ borderLeft: `6px solid ${(item as any).themeColor || '#8E9E82'}`, paddingLeft: '32px' }}
                             >
                                 <h3 className="text-[28px] md:text-[32px] leading-[1.3] font-serif font-black text-[#181D17] tracking-tight">
                                     {lang === 'zh' ? (item as any).teaser || item.title : (item as any).teaserEn || item.titleEn || item.title}
                                 </h3>
 
+                                {/* [NEW] insiderTip.teaser — 承諾句，直接告訴使用者「這個時間來對了」 */}
+                                {(item as any).insiderTip?.teaser && (
+                                    <div className="flex items-center gap-2.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                                        <p className="text-[14px] font-bold text-[#181D17]/60 leading-snug italic">
+                                            {lang === 'zh'
+                                                ? (item as any).insiderTip.teaser
+                                                : ((item as any).insiderTip.teaserEn || (item as any).insiderTip.teaser)}
+                                        </p>
+                                    </div>
+                                )}
+
                                 <div className="w-16 h-[1px] bg-black/10" />
 
-                                <p className="text-[16px] leading-[1.9] text-[#181D17] font-bold opacity-90 whitespace-pre-wrap">
+                                {/* description — 降權為輔助資訊 */}
+                                <p className="text-[13px] leading-[1.8] text-[#181D17]/50 font-medium whitespace-pre-wrap">
                                     {lang === 'zh' ? item.description : (item.descriptionEn || item.description)}
                                 </p>
-                            </div>
 
-                            {/* Layer 2: Interactive Grid (Expert Stories - 4 Accordions) */}
-                            <div className="flex flex-col gap-6">
-                                <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-tc-primary/40 flex items-center gap-3">
-                                    <span className="w-8 h-[1px] bg-tc-primary/20"></span>
-                                    {TRANSLATIONS[lang].expertStoriesTitle || (lang === 'zh' ? '在地達人撇步' : 'Expert Stories')}
-                                </h4>
-
-                                {(item as any).expertStories && (item as any).expertStories.length > 0 ? (
-                                    <ExpertStoryGrid 
-                                        stories={(item as any).expertStories} 
-                                        lang={lang} 
-                                        themeColor={themeColor}
-                                    />
-                                ) : (
-                                    <div
-                                        className="p-6 rounded-[24px] border border-tc-primary/5 shadow-sm relative overflow-hidden"
-                                        style={{ backgroundColor: `${themeColor}05` }}
-                                    >
-                                        <div className="absolute top-0 left-0 w-1 h-full" style={{ backgroundColor: themeColor }}></div>
-                                        <p className="text-[14px] leading-[1.8] text-[#181D17]/70 font-medium italic">
-                                            {TRANSLATIONS[lang].noExpertStories || 'No expert stories available yet.'}
+                                {(item.expertNote || item.expertNoteEn) && (
+                                    <div className="mt-2 p-6 rounded-[24px] border relative overflow-hidden"
+                                        style={{ backgroundColor: `${themeColor}08`, borderColor: `${themeColor}30` }}>
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm" style={{ backgroundColor: themeColor }}>
+                                                <User size={14} />
+                                            </div>
+                                            <h4 className="text-[12px] font-black tracking-widest uppercase" style={{ color: themeColor }}>
+                                                {lang === 'zh' ? '達人評鑑' : 'EXPERT VIEW'}
+                                            </h4>
+                                        </div>
+                                        <p className="text-[16px] md:text-[17px] font-bold text-[#181D17] leading-[1.8] opacity-90">
+                                            {lang === 'zh' ? item.expertNote : (item.expertNoteEn || item.expertNote)}
                                         </p>
+                                    </div>
+                                )}
+
+                                {(item.proTip || item.proTipEn) && (
+                                    <div className="mt-2 p-6 rounded-[24px] relative overflow-hidden shadow-sm border border-[#FDE68A]" style={{ backgroundColor: '#FFFBEB' }}>
+                                        <div className="flex items-center gap-3 mb-4 relative z-10">
+                                            <div className="w-8 h-8 rounded-full flex items-center justify-center bg-amber-500 text-white shadow-sm">
+                                                <Lightbulb size={14} />
+                                            </div>
+                                            <h4 className="text-[12px] font-black tracking-[0.15em] uppercase text-amber-600">
+                                                {lang === 'zh' ? '實戰密技' : 'PRO TIP'}
+                                            </h4>
+                                        </div>
+                                        
+                                        {item.isLocked && !(item as any)._unlocked ? (
+                                            <div className="flex flex-col items-start gap-4">
+                                                <p className="text-[15px] md:text-[16px] font-bold text-amber-800/60 leading-[1.8] blur-[4px] select-none px-1">
+                                                    {lang === 'zh' ? '這是一段高度機密的生存法則，包含了最佳抵達時間、點餐秘密與避坑指南。唯有解鎖完整劇本才能一窺究竟...' : 'This is a highly classified survival guide, including the best time to arrive, ordering secrets, and how to avoid tourist traps. Unlock the full script to find out...'}
+                                                </p>
+                                                <div className="absolute inset-0 bg-white/20 backdrop-blur-[3px] flex mt-10 items-center justify-center z-20">
+                                                    <div className="bg-white px-7 py-3.5 rounded-full border border-amber-200 shadow-[0_8px_20px_rgba(245,158,11,0.15)] flex items-center gap-3 relative cursor-pointer hover:scale-105 active:scale-95 transition-all" onClick={(e) => { e.stopPropagation(); showToastMessage?.(lang === 'zh' ? '👉 請在上方點擊「套用此行程」以解鎖所有隱藏密技！' : 'Apply template to unlock all secrets!', 'info'); }}>
+                                                        <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center">
+                                                            <Lock size={12} className="text-amber-600" />
+                                                        </div>
+                                                        <span className="text-[14px] font-black text-amber-700 tracking-wide">{lang === 'zh' ? '解鎖完整劇本以查看' : 'Unlock Script to View'}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <p className="text-[15px] md:text-[16px] font-bold text-amber-800 leading-[1.8] pl-1">
+                                                {lang === 'zh' ? (item as any).proTip : ((item as any).proTipEn || (item as any).proTip)}
+                                            </p>
+                                        )}
                                     </div>
                                 )}
                             </div>
 
-                            {/* Layer 3: Expert Tip / Action Box (達人撇步 - Orange Box from Fig 1) */}
+                            {/* [MOVED UP] Expert Tip / insiderTip.full — 核心安心保證，放在 Stories 之前 */}
                             {(item as any).insiderTip?.full?.story && (
                                 <div
                                     className="rounded-[32px] p-8 relative overflow-hidden border-2 shadow-sm"
                                     style={{ 
-                                        backgroundColor: '#FFF3EB', // Matching the pale peach/orange in Fig 1
-                                        borderColor: '#F5D3BB' // Subtle accent border
+                                        backgroundColor: '#FFF3EB',
+                                        borderColor: '#F5D3BB'
                                     }}
                                 >
                                     <div className="relative z-10">
@@ -331,6 +370,32 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                     </div>
                                 </div>
                             )}
+
+                            {/* Layer 2: Interactive Grid (Expert Stories - Accordions) */}
+                            <div className="flex flex-col gap-6">
+                                <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-tc-primary/40 flex items-center gap-3">
+                                    <span className="w-8 h-[1px] bg-tc-primary/20"></span>
+                                    {TRANSLATIONS[lang].expertStoriesTitle || (lang === 'zh' ? '在地達人撇步' : 'Expert Stories')}
+                                </h4>
+
+                                {(item as any).expertStories && (item as any).expertStories.length > 0 ? (
+                                    <ExpertStoryGrid 
+                                        stories={(item as any).expertStories} 
+                                        lang={lang} 
+                                        themeColor={themeColor}
+                                    />
+                                ) : (
+                                    <div
+                                        className="p-6 rounded-[24px] border border-tc-primary/5 shadow-sm relative overflow-hidden"
+                                        style={{ backgroundColor: `${themeColor}05` }}
+                                    >
+                                        <div className="absolute top-0 left-0 w-1 h-full" style={{ backgroundColor: themeColor }}></div>
+                                        <p className="text-[14px] leading-[1.8] text-[#181D17]/70 font-medium italic">
+                                            {TRANSLATIONS[lang].noExpertStories || 'No expert stories available yet.'}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
                             <div className="mt-6">
                                 <h4
                                     className="text-[20px] font-heading font-black text-[#181D17] mb-6 px-1 flex items-center gap-3"
@@ -354,7 +419,7 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                                 {lang === 'zh' ? '詳細地址' : 'ADDRESS'}
                                             </p>
                                             <p className="text-[13px] font-bold text-[#181D17] truncate">
-                                                {item.address}
+                                                {lang === 'zh' ? item.address : ((item as any).addressEn || item.address)}
                                             </p>
                                         </div>
                                         <button
