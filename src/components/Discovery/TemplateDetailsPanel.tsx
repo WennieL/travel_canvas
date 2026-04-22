@@ -325,7 +325,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
         id: template.authorId,
         name: template.author,
         nameEn: template.authorEn || template.author,
-        avatar: `https://i.pravatar.cc/100?u=${template.authorId}`,
+        avatar: SAMPLE_CREATORS.find(c => c.id === template.authorId)?.avatar || `https://i.pravatar.cc/100?u=${template.authorId}`,
         description: template.targetAudience?.description || 'Recommend the most authentic experiences.',
         descriptionEn: template.targetAudience?.descriptionEn || template.targetAudience?.description || 'Recommend the most authentic experiences.'
     };
@@ -432,7 +432,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
             {/* 2. Sticky Tab Bar */}
             <div className="sticky top-0 z-[100] bg-white border-b border-[#E8EDE4] shadow-sm">
-                <div className="flex overflow-x-auto no-scrollbar px-6 gap-10 py-5">
+                <div className="flex overflow-x-auto no-scrollbar px-6 gap-10 py-5 touch-pan-y">
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
@@ -685,7 +685,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                 <Sparkles size={22} className="text-amber-500 fill-amber-500/20" />
                                 <h4 className="text-[20px] font-heading font-black text-[#181D17]">{t.tripHighlights}</h4>
                             </div>
-                            <div className="flex overflow-x-auto no-scrollbar gap-5 -mx-6 px-6 pb-4">
+                            <div className="flex overflow-x-auto no-scrollbar gap-5 -mx-6 px-6 pb-4 touch-pan-y">
                                 {(() => {
                                     const allSpots: any[] = [];
                                     const schedule = template.schedule as any;

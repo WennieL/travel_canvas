@@ -34,71 +34,34 @@ const LandingExplore: React.FC<LandingExploreProps> = ({ lang, onStart, t }) => 
                         {t.exploreNorthernTaiwan}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Taipei Classic */}
+                        {/* Taipei Family Flagship */}
                         <div
-                            onClick={() => onStart('tpl-t-classic')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer"
+                            onClick={() => onStart('circuit-tp-family')}
+                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer lg:col-span-3"
                         >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1552233312-70b09419914b?auto=format&fit=crop&q=80&w=600)' }}>
+                            <div className="h-64 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/taipei.png)' }}>
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.northernLabel}</span>
-                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
+                                <div className="absolute top-4 right-4 bg-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
+                                    FLAGSHIP
+                                </div>
+                                <div className="absolute bottom-4 left-4 flex items-center gap-3">
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-3 py-1 rounded-full shadow-sm">{t.northernLabel}</span>
+                                    <span className="text-xs text-white font-bold bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">4 {t.daysUnit}</span>
                                 </div>
                             </div>
-                            <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-emerald-600 transition-colors mb-2">
-                                    {t.taipeiClassicTitle}
-                                </h4>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center text-[10px]">🏢</div>
-                                    <p className="text-sm text-slate-500">TravelCanvas {t.editors}</p>
+                            <div className="p-8 flex items-center justify-between">
+                                <div>
+                                    <h4 className="font-black text-slate-800 text-2xl group-hover:text-emerald-600 transition-colors mb-2">
+                                        {t.taipeiFamilyFlagshipTitle}
+                                    </h4>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✨</div>
+                                        <p className="text-sm font-medium text-slate-500">TravelCanvas {t.officialPick}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        {/* Taipei Old Street */}
-                        <div
-                            onClick={() => onStart('tw-taipei-oldstreet-day')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer"
-                        >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1560613041-3897b69324cc?auto=format&fit=crop&q=80&w=600)' }}>
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.northernLabel}</span>
-                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-emerald-600 transition-colors mb-2">
-                                    {t.taipeiOldStreetTitle}
-                                </h4>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-orange-100/50 flex items-center justify-center text-[10px]">🏮</div>
-                                    <p className="text-sm text-slate-500">{t.templateAuthorPro}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Taipei Mountain */}
-                        <div
-                            onClick={() => onStart('tw-taipei-mountain-city-day')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer"
-                        >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=600)' }}>
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.northernLabel}</span>
-                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-emerald-600 transition-colors mb-2">
-                                    {t.taipeiMountainTitle}
-                                </h4>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-green-100/50 flex items-center justify-center text-[10px]">⛰️</div>
-                                    <p className="text-sm text-slate-500">{t.templateAuthorPro}</p>
+                                <div className="hidden md:flex flex-col items-end">
+                                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Pace</span>
+                                    <span className="text-emerald-600 font-bold">Family Friendly</span>
                                 </div>
                             </div>
                         </div>

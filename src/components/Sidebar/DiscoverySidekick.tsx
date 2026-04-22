@@ -207,7 +207,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 <div className="w-full h-full flex flex-wrap">
                                     {authors.slice(0, 4).map((authId: string, idx: number) => (
                                         <div key={authId} className="w-1/2 h-1/2 border-[0.5px] border-amber-50 overflow-hidden">
-                                            <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
+                                            <img src={SAMPLE_CREATORS.find(c => c.id === authId)?.avatar || `https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
                                         </div>
                                     ))}
                                 </div>
@@ -234,7 +234,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                         className="flex-shrink-0 flex items-center gap-2 bg-white/60 hover:bg-white p-1.5 pr-3 rounded-full border border-amber-100 shadow-sm transition-all hover:scale-105 group"
                                     >
                                         <div className="w-6 h-6 rounded-full overflow-hidden ring-2 ring-amber-200">
-                                            <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
+                                            <img src={SAMPLE_CREATORS.find(c => c.id === authId)?.avatar || `https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
                                         </div>
                                         <span className="text-[10px] font-bold text-gray-700 group-hover:text-amber-600 transition-colors uppercase">
                                             {(lang === 'en' && auth?.nameEn ? auth.nameEn : (auth?.name || 'Expert')).split(' ')[0]}
@@ -331,7 +331,7 @@ export const DiscoverySidekick: React.FC<DiscoverySidekickProps> = ({
                                 <div key={authId} className="bg-white rounded-2xl p-4 border border-amber-100 shadow-sm hover:shadow-md transition-all">
                                     <div className="flex items-center gap-2 mb-3">
                                         <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-amber-200">
-                                            <img src={`https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
+                                            <img src={SAMPLE_CREATORS.find(c => c.id === authId)?.avatar || `https://i.pravatar.cc/100?u=${authId}`} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex flex-col">
                                             <span className="text-xs font-black text-gray-800 lowercase tracking-tighter">

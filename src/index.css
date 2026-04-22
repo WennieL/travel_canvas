@@ -14,7 +14,7 @@
 /* Typography */
 [draggable],
 [draggable="true"] {
-  touch-action: none !important;
+  touch-action: pan-y;
   -webkit-touch-callout: none !important;
   -webkit-user-select: none !important;
   user-select: none !important;

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ChevronLeft, Sparkles, Compass, Star, Users } from 'lucide-react';
 import { Template, LangType, Region } from '../../types';
-import { TEMPLATES, CITY_FILTERS } from '../../data';
+import { TEMPLATES, CITY_FILTERS, SAMPLE_CREATORS } from '../../data';
 import { TAIPEI_SURVIVAL } from '../../data/guides';
 import { SurvivalKit } from './SurvivalKit';
 
@@ -45,7 +45,7 @@ const CityHub: React.FC<CityHubProps> = ({
     if (!city) return null;
 
     const filteredTemplates = useMemo(() => {
-        let templates = TEMPLATES.filter(tpl => tpl.region === regionId);
+        let templates = TEMPLATES.filter(tpl => tpl.region === regionId && !tpl.isHidden);
         if (selectedStyle !== 'all') {
             templates = templates.filter(tpl =>
                 tpl.travelStyle?.includes(selectedStyle) ||
@@ -219,7 +219,11 @@ const CityHub: React.FC<CityHubProps> = ({
                                         className="flex items-center gap-2.5 hover:opacity-70 transition-opacity focus:outline-none"
                                     >
                                         <div className="w-5 h-5 rounded-full border border-gray-100 overflow-hidden shadow-sm">
-                                            <img src={`https://i.pravatar.cc/100?img=${tpl.id.length % 70}`} alt="author" className="w-full h-full object-cover" />
+                                            <img 
+                                                src={SAMPLE_CREATORS.find(c => c.id === tpl.authorId)?.avatar || `https://i.pravatar.cc/100?u=${tpl.authorId}`} 
+                                                alt="author" 
+                                                className="w-full h-full object-cover" 
+                                            />
                                         </div>
                                         <span className="text-[10px] md:text-[11px] font-black text-gray-400 uppercase tracking-widest hover:text-teal-600 transition-colors">
                                             {lang === 'zh' ? (tpl.author || '查看達人') : (tpl.authorEn || tpl.author || 'View Creator')}

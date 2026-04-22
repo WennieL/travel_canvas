@@ -188,7 +188,7 @@ export const ImmersivePage: React.FC<ImmersivePageProps> = ({
                     <div 
                         ref={scrollContainerRef}
                         onScroll={handleScroll}
-                        className="flex-1 overflow-y-auto no-scrollbar scroll-smooth"
+                        className="flex-1 overflow-y-auto no-scrollbar scroll-smooth touch-pan-y min-h-0"
                     >
                         {children}
                     </div>

@@ -520,7 +520,7 @@ export function App() {
                                 id: tpl.authorId,
                                 name: tpl.author,
                                 nameEn: tpl.authorEn || tpl.author,
-                                avatar: `https://i.pravatar.cc/100?u=${tpl.authorId}`
+                                avatar: SAMPLE_CREATORS.find(c => c.id === tpl.authorId)?.avatar || `https://i.pravatar.cc/100?u=${tpl.authorId}`
                             } as any}
                         />
 

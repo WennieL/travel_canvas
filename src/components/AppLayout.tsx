@@ -490,7 +490,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                                drag="x"
+                                drag={viewMode === 'overview' || viewMode === 'canvas' ? "x" : false}
                                 dragConstraints={{ left: 0, right: 0 }}
                                 dragElastic={0.15}
                                 onDragEnd={(_, info) => {
@@ -502,7 +502,7 @@ const AppLayout: React.FC<AppLayoutProps> = (props) => {
                                     }
                                 }}
                                 onScroll={handleScroll}
-                                className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : (viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files' ? 'p-0' : (isDayEmpty && viewMode === 'canvas' ? 'p-0 h-full overflow-hidden' : 'p-4 pb-20 lg:px-8 lg:pb-8 lg:pt-4'))} no-scrollbar h-full`}
+                                className={`flex-1 overflow-y-auto overflow-x-hidden bg-transparent ${viewMode === 'discovery' ? 'p-0 pb-0' : (viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files' ? 'p-0' : (isDayEmpty && viewMode === 'canvas' ? 'p-0 h-full overflow-hidden' : 'p-4 pb-20 lg:px-8 lg:pb-8 lg:pt-4'))} no-scrollbar touch-pan-y min-h-0 h-full`}
                             >
                                 {(viewMode === 'overview' || viewMode === 'budget' || viewMode === 'checklist' || viewMode === 'flights' || viewMode === 'hotels' || viewMode === 'files') ? (
                                     <OverviewView 

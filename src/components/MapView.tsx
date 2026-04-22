@@ -236,7 +236,7 @@ const MapView: React.FC<MapViewProps> = ({
                         <!-- Mini Creator Avatar Overlay -->
                         <div class="absolute -bottom-1 -right-1 flex">
                             <div class="w-5 h-5 rounded-full border-2 border-white shadow-md overflow-hidden bg-white">
-                                <img src="https://i.pravatar.cc/100?u=${authors[0]}" class="w-full h-full object-cover" />
+                                <img src="${SAMPLE_CREATORS.find(c => c.id === authors[0])?.avatar || `https://i.pravatar.cc/100?u=${authors[0]}`}" class="w-full h-full object-cover" />
                             </div>
                         </div>
                     </div>
@@ -456,7 +456,7 @@ const MapView: React.FC<MapViewProps> = ({
                                         {/* Creator avatar badge */}
                                         {spot.authorId && (
                                             <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white overflow-hidden shadow-sm bg-white">
-                                                <img src={`https://i.pravatar.cc/100?u=${spot.authorId}`} className="w-full h-full object-cover" />
+                                                <img src={SAMPLE_CREATORS.find(c => c.id === spot.authorId)?.avatar || `https://i.pravatar.cc/100?u=${spot.authorId}`} className="w-full h-full object-cover" />
                                             </div>
                                         )}
                                     </div>

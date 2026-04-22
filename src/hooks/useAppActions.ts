@@ -4,7 +4,7 @@ import {
     FullSchedule, TransportMode, Region,
     TimeSlot, TravelItem
 } from '../types';
-import { REGION_DEFAULT_CHECKLISTS } from '../data/index';
+import { REGION_DEFAULT_CHECKLISTS, SAMPLE_CREATORS } from '../data/index';
 import { getRegionCurrency, getRegionExchangeRate } from '../data/regions';
 
 interface AppActionsDeps {
@@ -143,7 +143,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
             valueAnchor: template.valueAnchor,
             valueAnchorEn: template.valueAnchorEn,
             authorName: template.author,
-            authorAvatar: `https://i.pravatar.cc/100?u=${template.authorId}`
+            authorAvatar: SAMPLE_CREATORS.find(c => c.id === template.authorId)?.avatar || `https://i.pravatar.cc/100?u=${template.authorId}`
         };
         setPlans([...plans, newPlan]);
         setActivePlanId(id);
