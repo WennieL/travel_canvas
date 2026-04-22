@@ -2801,7 +2801,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         descriptionEn: 'Centered around Dianji Temple, famously called Taiwan\'s most delicious night market. Iconic sea-port flavors like Nutritious Sandwiches and Bubble Ice have decades of history.',
         price: 0,
         address: '基隆市仁愛區仁三路',
-        rating: 4.6,
+        rating: 4.8,
         lat: 25.1283,
         lng: 121.7442,
         region: 'taipei',
@@ -2813,47 +2813,473 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         teaserEn: 'Under the glowing triple rows of lanterns lie the culinary dreams of every gourmet.',
         expertStories: [
             {
-                id: 'must-do',
-                label: '【老饕必吃】',
-                labelEn: 'Gourmet Must',
+                id: 'must-eat',
+                label: '【招牌必吃】',
+                labelEn: 'Must Eat',
                 summary: '58號攤位的營養三明治',
-                summaryEn: 'Stall 58 Nutritious Sandwich',
-                story: '這裡的強項是「炸三明治」。外皮金黃酥脆，裡面的火腿與美乃滋達到完美平衡。專業建議：先去拿號碼牌，接著去旁邊買一杯泡泡冰，邊等邊吃才是正宗基隆吃法。',
-                storyEn: 'The star is the fried sandwich—golden crust with a perfect mayo-ham balance. Pro tip: Grab your queue ticket first, then go get a Bubble Ice next door to enjoy while you wait.'
+                summaryEn: 'Stall 58 Sandwich',
+                story: '這裡的強項是「炸三明治」。外皮金黃酥脆，裡面的火腿與美乃滋達到完美平衡。這是在地人即便排隊一小時也要買到的傳奇。',
+                storyEn: 'The legendary fried sandwich. Crispy golden crust with a perfect balance of mayo and ham. Locals wait an hour for this.'
+            },
+            {
+                id: 'must-do',
+                label: '【老饕流程】',
+                labelEn: 'Expert Flow',
+                summary: '先領號碼牌，再買泡泡冰',
+                summaryEn: 'Ticket first, Ice second',
+                story: '先去營養三明治領號碼牌（一定要先領！），接著去旁邊買一杯「沈記泡泡冰」，邊吃冰邊等號碼，這是最正宗的基隆吃法。',
+                storyEn: 'Grab your sandwich queue ticket FIRST, then get a "Shen\'s Bubble Ice" nearby. Eating ice while waiting is the local ritual.'
+            },
+            {
+                id: 'trap',
+                label: '【人潮避開】',
+                labelEn: 'Crowd Trap',
+                summary: '週末晚上八點是巔峰',
+                summaryEn: 'Peak at 8 PM Weekends',
+                story: '如果你不想在窄巷中體驗「人肉罐頭」，請在下午 17:00 前抵達，這時大部分攤位剛開，不用排隊。',
+                storyEn: 'To avoid the crush, arrive before 5 PM. Most stalls are fresh and the lines haven\'t started yet.'
+            },
+            {
+                id: 'hidden',
+                label: '【在地隱藏】',
+                labelEn: 'Hidden Gem',
+                summary: '奠濟宮門口的鐤邊趖',
+                summaryEn: 'Dianji Temple Ding Bian Cuo',
+                story: '這道菜結合了麵疙瘩與河粉的口感，清甜的湯頭帶著蝦米的香氣，是基隆海港文化的縮影。',
+                storyEn: 'A unique mix of noodle and dumpling textures in a sweet shrimp-scented broth. The essence of Keelung port culture.'
             }
-        ]
+        ],
+        insiderTip: {
+            teaser: '先去三明治領號碼牌是關鍵。',
+            teaserEn: 'Grabbing the sandwich ticket first is the golden rule.',
+            full: {
+                story: '這裡的強項是「炸三明治」。外皮金黃酥脆，裡面的火腿與美乃滋達到完美平衡。專業建議：先去拿號碼牌，接著去旁邊買一杯泡泡冰，邊等邊吃才是正宗基隆吃法。',
+                storyEn: 'Fried sandwich is the star. Get your ticket first, then bubble ice. This is the way.',
+                exactLocation: '仁三路廟口區',
+                mustTry: '58號營養三明治 + 沈記泡泡冰',
+                bestTime: '17:00'
+            }
+        }
     },
     {
-        id: 'tw-t-f11',
-        title: '饒河街觀光夜市',
-        titleEn: 'Raohe St. Night Market',
-        type: 'food',
-        duration: '1.5小時',
-        image: '🚇',
-        description: '台北歷史最悠久的夜市之一，巨大的牌樓與緊鄰的彩虹橋構成了迷人的夜景。這裡的福州世祖胡椒餅是連年米其林必比登推薦的排隊名物。',
-        descriptionEn: 'One of the oldest night markets in Taipei, with a grand archway and the adjacent Rainbow Bridge. Famous for its Michelin Bib Gourmand-recommended Pepper Buns.',
-        price: 0,
-        address: '台北市松山區饒河街',
-        rating: 4.5,
-        lat: 25.0501,
-        lng: 121.5772,
+        id: 'tw-t-a14',
+        title: '野柳地質公園',
+        titleEn: 'Yehliu Geopark',
+        type: 'nature',
+        duration: '2小時',
+        image: '🗿',
+        description: '大自然在北海岸雕刻出的奇蹟。這裡的蕈狀岩、薑石與舉世聞名的「女王頭」，見證了數萬年的地質變遷。走在海岸邊，你彷彿漫步在異世界。',
+        descriptionEn: 'Nature\'s sculpture gallery on the North Coast. From mushroom rocks to the world-famous "Queen\'s Head," it feels like another planet.',
+        price: 120,
+        address: '新北市萬里區港東路167-1號',
+        rating: 4.7,
+        lat: 25.2064,
+        lng: 121.6953,
         region: 'taipei',
         authorId: 'c-tw1',
-        tags: ['美食', '夜市', '攝影'],
-        themeColor: '#ef4444',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
-        teaser: '在牌樓下感受台北夜晚的喧囂，體現最純粹的萬家燈火氛圍。',
-        teaserEn: 'Feel the vibrant bustle of Taipei\'s night under the grand archway; the purest atmosphere of lights and flavors.',
+        tags: ['地質奇觀', '自然', '攝影'],
+        themeColor: '#d69e2e',
+        isPhotographySpot: true,
+        photographyTips: {
+            zh: '想拍出女王頭的優雅感？請站在木棧道的右側 45 度角，利用廣角鏡頭能同時拍到後方的海面。',
+            en: 'For the Queen\'s Head, stand at a 45-degree angle on the right side of the boardwalk to catch the ocean background.'
+        },
+        teaser: '穿越數萬年的風與浪，親眼見證女王的優雅。',
+        teaserEn: 'Wind and waves of millennia; witness the Queen\'s elegance in person.',
         expertStories: [
             {
                 id: 'must-do',
-                label: '【絕美夜視】',
-                labelEn: 'Night View',
-                summary: '彩虹橋的燈光秀',
-                summaryEn: 'Rainbow Bridge Lights',
-                story: '吃飽後，從夜市中段的巷子穿出去就是「松河街」與彩虹橋。這裡非常適合拍攝燈光橋樑與河面倒影。找個長椅坐下來吹吹風，這是台北最悠閒的夜市結尾。',
-                storyEn: 'After eating, cut through an alley to Songhe St and Rainbow Bridge. Perfect for long-exposure shots of the lights reflecting on the river. Best way to end the night.'
+                label: '【女王視角】',
+                labelEn: 'Queen\'s View',
+                summary: '必排的女王頭合照',
+                summaryEn: 'The Queen\'s Head Shot',
+                story: '雖然要排隊，但這絕對是北台灣最經典的打卡點。建議選擇清晨入園，那時的光線柔和，岩石的層次感更豐富。',
+                storyEn: 'The most iconic shot in Northern Taiwan. Arrive early for soft light and rich rock textures.'
+            },
+            {
+                id: 'trap',
+                label: '【氣候警告】',
+                labelEn: 'Weather Alert',
+                summary: '遮蔽物極少，注意防曬',
+                summaryEn: 'Zero shade, wear sunblock',
+                story: '園區完全暴露在海風與陽光下。夏天一定要帶傘與防曬，否則兩小時的漫步會變成一場體力考驗。',
+                storyEn: 'The park is totally exposed. Bring an umbrella and sunblock, or your walk will become a survival test.'
             }
-        ]
+        ],
+        insiderTip: {
+            teaser: '清晨九點前入園，避開大量團客。',
+            teaserEn: 'Arrive before 9 AM to beat the tour buses.',
+            full: {
+                story: '除了女王頭，一定要去看「俏皮公主」，她被認為是女王的接班人。後方的第三區步道人煙稀少，是欣賞開闊海景的私藏地。',
+                storyEn: 'See the "Cute Princess" too! Also, Trail 3 in the back is a quiet spot for wide ocean views.',
+                mustTry: '跟女王頭借位合照',
+                bestTime: '08:30'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a15',
+        title: '十分瀑布 & 十分老街',
+        titleEn: 'Shifen Waterfall & Old St.',
+        type: 'attraction',
+        duration: '2.5小時',
+        image: '🏮',
+        description: '台灣版的「尼加拉瀑布」，水勢磅礴且空氣清新。接著搭火車到老街，體驗「火車門前過」的奇景，並在鐵軌上放天燈祈福，是充滿台式浪漫的體驗。',
+        descriptionEn: 'Taiwan\'s "Niagara Falls" and the home of sky lanterns. Experience the unique sight of trains passing right through the street.',
+        price: 0,
+        address: '新北市平溪區十分街',
+        rating: 4.8,
+        lat: 25.0428,
+        lng: 121.7766,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['天燈', '瀑布', '鐵道'],
+        themeColor: '#e53e3e',
+        isPhotographySpot: true,
+        photographyTips: {
+            zh: '拍攝火車進站老街時，建議在鐵軌兩側尋找高處平台，能拍到天燈與火車交織的經典畫面。',
+            en: 'Find a high spot near the tracks to capture both the passing train and floating lanterns.'
+        },
+        teaser: '在鐵軌上許下心願，看著天燈載著夢想飛向天空。',
+        teaserEn: 'Write your wishes on a lantern and watch dreams fly into the sky.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【祈福儀式】',
+                labelEn: 'Ritual',
+                summary: '在鐵軌上親手寫天燈',
+                summaryEn: 'Writing Sky Lanterns',
+                story: '四面顏色的天燈各有代表（紅求財、粉求愛等）。在店家指導下寫下心願，他們還會專業地幫你拍照錄影，那是很溫暖的回憶。',
+                storyEn: 'Each color represents a wish. Shops will guide you and take professional photos of your lantern launch.'
+            },
+            {
+                id: 'hidden',
+                label: '【瀑布秘境】',
+                labelEn: 'Hidden Falls',
+                summary: '觀瀑平台的彩虹時刻',
+                summaryEn: 'Rainbow Hour at the Falls',
+                story: '如果天氣晴朗，下午兩點到三點之間，十分瀑布的龍潭上方常會出現彩虹，這也是它被稱為「彩虹淵」的原因。',
+                storyEn: 'On sunny days between 2-3 PM, a rainbow often appears over the falls. A truly magical moment.'
+            }
+        ],
+        insiderTip: {
+            teaser: '瀑布離老街有段距離，建議搭 Uber 或接駁車。',
+            teaserEn: 'The falls are a bit far from the station; take an Uber or shuttle.',
+            full: {
+                story: '瀑布園區步道規劃很好，但需要走一段路。老街上有許多美味的雞翅包飯。記得查好火車時刻表，拍下火車經過老街的一瞬間。',
+                storyEn: 'Trails are well-marked but require walking. Try the stuffed chicken wings! Check train times for the perfect shot.',
+                mustTry: '雞翅包飯 + 十分瀑布彩虹',
+                bestTime: '14:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a16',
+        title: '九份老街',
+        titleEn: 'Jiufen Old Street',
+        type: 'attraction',
+        duration: '3小時',
+        image: '🏮',
+        description: '依山而建的神祕山城，曾因金礦而繁華。狹窄的階梯、紅色的燈籠，以及像極了《神隱少女》場景的阿妹茶樓，讓這裡成為全台灣最神祕也最迷人的角落。',
+        descriptionEn: 'A mysterious mountain town once booming with gold. Red lanterns, narrow stairs, and the "Spirited Away" vibe of A-Mei Tea House.',
+        price: 0,
+        address: '新北市瑞芳區基山街',
+        rating: 4.9,
+        lat: 25.1099,
+        lng: 121.8452,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['山城', '茶文化', '神隱少女'],
+        themeColor: '#b83280',
+        isPhotographySpot: true,
+        photographyTips: {
+            zh: '拍攝阿妹茶樓的最佳位置是在對面的「海悅樓」平台。晚上六點燈光亮起時，畫面最有魔幻感。',
+            en: 'Best shot of A-Mei Tea House is from the balcony of Haiyue Restaurant across the stairs at 6 PM.'
+        },
+        teaser: '當燈籠在山城迷霧中亮起，你會忘記自己身在哪個時空。',
+        teaserEn: 'When lanterns glow in the mountain mist, you\'ll lose track of time and space.',
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '【在地甜點】',
+                labelEn: 'Local Sweet',
+                summary: '阿柑姨芋圓看海景',
+                summaryEn: 'Taro Balls with Sea View',
+                story: '雖然要爬很高，但坐在阿柑姨最深處的窗邊，一邊吃著Ｑ彈芋圓一邊看著深澳港的海景，是九份最頂級的享受。',
+                storyEn: 'Climb high to Grandma Lai\'s or A-Gan-Yi. Sitting by the window with chewy taro balls and a harbor view is bliss.'
+            },
+            {
+                id: 'trap',
+                label: '【避雷指南】',
+                labelEn: 'Avoid the Trap',
+                summary: '下午五點後主街會塞人',
+                summaryEn: 'Avoid the 5 PM Main St Rush',
+                story: '九份的主街「基山街」非常狹窄。週末下午會動彈不得。建議早點來，或是在傍晚後直接躲進茶樓等天黑。',
+                storyEn: 'Jishan St gets extremely crowded. Arrive early or hide in a tea house until the day-trippers leave.'
+            }
+        ],
+        insiderTip: {
+            teaser: '留在九份看夜景，你會發現完全不同的山城。',
+            teaserEn: 'Stay for the night view to see a completely different town.',
+            full: {
+                story: '九份的靈魂在天黑之後。大多數團客在 17:00 前就會離開，那時的九份才真正安靜下來。穿上外套，走在微涼的階梯上，那才是真正的山城時光。',
+                storyEn: 'Jiufen\'s soul awakens after dark. Most tours leave by 5 PM. The cool breeze on the stairs after dark is the real experience.',
+                mustTry: '阿妹茶樓喝茶 + 草仔粿',
+                bestTime: '18:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a17',
+        title: '北投溫泉 & 溫泉博物館',
+        titleEn: 'Beitou Hot Spring area',
+        type: 'attraction',
+        duration: '2.5小時',
+        image: '♨️',
+        description: '台北市區內的療癒天堂。這裡有充滿日式風情的溫泉博物館、宛如仙境的地熱谷，以及可以享受大眾池或私人湯屋的各種選擇。濃濃的硫磺香是這裡的標記。',
+        descriptionEn: 'A healing paradise in the city. Features Japanese-style bathhouses, the misty Thermal Valley, and various hot spring resorts.',
+        price: 0,
+        address: '台北市北投區中山路2號',
+        rating: 4.8,
+        lat: 25.1365,
+        lng: 121.5065,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['溫泉', '歷史', '療癒'],
+        themeColor: '#4c51bf',
+        teaser: '在蒸汽瀰漫的巷弄間，找回生活的溫度。',
+        teaserEn: 'Find the warmth of life amidst the steamy alleys.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【仙境漫步】',
+                labelEn: 'Misty Walk',
+                summary: '地熱谷的蒸汽煙霧',
+                summaryEn: 'Thermal Valley Mist',
+                story: '地熱谷的水溫極高，終年煙霧繚繞。特別是冬天，那種置身於仙境的視覺衝擊，配上特殊的綠礬泉香氣，非常特別。',
+                storyEn: 'Thermal Valley is misty year-round. In winter, the visual impact of the steam is like stepping into a dream.'
+            },
+            {
+                id: 'artisan',
+                label: '【建築美學】',
+                labelEn: 'Architecture',
+                summary: '北投圖書館與博物館',
+                summaryEn: 'Beitou Library & Museum',
+                story: '北投圖書館是全台最美綠建築，全木構造與公園融為一體。旁邊的溫泉博物館則是日治時期的豪華浴場，彩繪玻璃非常動人。',
+                storyEn: 'Beitou Library is Taiwan\'s most beautiful green building. The nearby museum is a stunning Japanese-era bathhouse.'
+            }
+        ],
+        insiderTip: {
+            teaser: '捷運新北投站出站即達，這裡非常適合慢步。',
+            teaserEn: 'Right outside Xinbeitou MRT; perfect for a slow stroll.',
+            full: {
+                story: '如果想泡湯又不想花大錢，可以試試「露天溫泉」。只要幾十元銅板價就能體驗在地老北投的泡湯氛圍。記得自備泳衣。',
+                storyEn: 'Try the Public Open-Air Bath for a few dollars to experience local culture. Remember your swimsuit!',
+                mustTry: '地熱谷 + 溫泉拉麵',
+                bestTime: '10:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a18',
+        title: '基隆和平島公園',
+        titleEn: 'Heping Island Park (Keelung)',
+        type: 'nature',
+        duration: '2小時',
+        image: '🏊',
+        description: '這不是一般的公園，這是與大海共生的奇觀。這裡有天然的海水泳池，你可以與魚共游。海蝕平台上的岩石被風化成各種奇異形狀，是台灣離海最近的設計傑作。',
+        descriptionEn: 'A natural seaside wonder. Features natural salt-water pools where you can swim with fish and unique rock formations.',
+        price: 120,
+        address: '基隆市中正區平一路360號',
+        rating: 4.7,
+        lat: 25.1614,
+        lng: 121.7645,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['海景', '天然泳池', '地質'],
+        themeColor: '#3182ce',
+        isPhotographySpot: true,
+        photographyTips: {
+            zh: '在「等嶼亭」上可以拍到天然海水泳池與後方基隆嶼的絕美合照，下午三點後光線最佳。',
+            en: 'From the "Island Waiting Pavilion," capture the salt-water pools with Keelung Islet in the back. Best light after 3 PM.'
+        },
+        teaser: '跳進大海的天然浴缸，感受太平洋的律動。',
+        teaserEn: 'Jump into nature\'s ocean bathtub and feel the Pacific rhythm.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【天然暢泳】',
+                labelEn: 'Ocean Swim',
+                summary: '與熱帶魚共游的泳池',
+                summaryEn: 'Swim with the Fish',
+                story: '這裡的泳池是直接引入海水，甚至能看見彩色的小魚在你腳邊游動。在安全的前提下，這是台北周邊最接近大自然的玩水地點。',
+                storyEn: 'The pools are natural seawater. You can see tropical fish swimming at your feet—safely and beautifully.'
+            }
+        ],
+        insiderTip: {
+            teaser: '園區內的「等嶼亭」是看海景的最高點。',
+            teaserEn: 'The "Island Waiting Pavilion" is the highest viewpoint.',
+            full: {
+                story: '和平島經過重新設計，現在非常有質感。夏天建議一定要帶泳具，冬天則推薦走步道欣賞奇岩異石。',
+                storyEn: 'Recently redesigned with great aesthetics. Bring swimwear in summer; in winter, walk the rock trails.',
+                mustTry: '海水泳池 + 海藻冰淇淋',
+                bestTime: '15:30'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a19',
+        title: '正濱漁港彩色屋',
+        titleEn: 'Zhengbin Port Color Houses',
+        type: 'attraction',
+        duration: '1小時',
+        image: '🏘️',
+        description: '基隆的「威尼斯」。一整排色彩繽紛的房屋倒映在平靜的港灣中，這原本是平凡的漁港，經過色彩計畫後，變成了北台灣最受歡迎的網美與攝影聖地。',
+        descriptionEn: 'The "Venice of Keelung." A row of vibrantly colored houses reflecting in the calm harbor waters—a true photography paradise.',
+        price: 0,
+        address: '基隆市中正區正濱路',
+        rating: 4.6,
+        lat: 25.1534,
+        lng: 121.7695,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['彩色建築', '攝影', '海港'],
+        themeColor: '#dd6b20',
+        isPhotographySpot: true,
+        photographyTips: {
+            zh: '站在正濱路上的木棧道平台，能平視整排彩色屋。若能等微風靜止，港面的倒影會像鏡子一樣完美。',
+            en: 'Stand on the wooden platform on Zhengbin Rd for a level view. Wait for zero wind for a mirror-like reflection.'
+        },
+        teaser: '用色彩點亮憂鬱的港灣，遇見北台灣最繽紛的驚喜。',
+        teaserEn: 'Brighten the harbor with colors; meet Northern Taiwan\'s most vibrant surprise.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【港邊慢活】',
+                labelEn: 'Harbor Life',
+                summary: '坐在岸邊喝杯咖啡',
+                summaryEn: 'Coffee by the Harbor',
+                story: '不要只是拍完照就走。彩色屋中有幾間非常具備個性的咖啡廳（如：圖們咖啡），坐在二樓窗邊看著小船進出，是基隆特有的浪漫。',
+                storyEn: 'Don\'t just snap and leave. Sit in a harbor-side cafe like Tumen Coffee and watch the boats go by.'
+            }
+        ],
+        insiderTip: {
+            teaser: '就在和平島公園附近，可以安排在同一個下午。',
+            teaserEn: 'Near Heping Island; perfect for a combined afternoon trip.',
+            full: {
+                story: '這是一個非常純粹的拍照點。建議銜接後方的阿根納造船廠遺址，那種廢墟感與彩色屋的視覺對比非常強烈。',
+                storyEn: 'Purely for photos. Pair it with the nearby Agenna Shipyard Ruins for a contrast between color and decay.',
+                mustTry: '港邊咖啡 + 阿根納造船廠遺址',
+                bestTime: '16:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a20',
+        title: '陽明山二子坪步道',
+        titleEn: 'Erziping Trail (Yangmingshan)',
+        type: 'nature',
+        duration: '2小時',
+        image: '🌳',
+        description: '全台灣最溫柔的無障礙步道。這裡海拔約 800 公尺，氣候涼爽，步道全程平坦無階梯。終點是一個宛如世外桃源的生態池，是陽明山最平易近人的秘境。',
+        descriptionEn: 'The gentlest accessible trail in Taiwan. Flat, cool, and leading to a hidden eco-pond paradise at 800m elevation.',
+        price: 0,
+        address: '新北市三芝區 (陽明山國家公園)',
+        rating: 4.8,
+        lat: 25.1834,
+        lng: 121.5245,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['無障礙', '避暑', '森林'],
+        themeColor: '#38a169',
+        teaser: '在最溫柔的步道上，聽見森林的心跳。',
+        teaserEn: 'On the gentlest trail, hear the heartbeat of the forest.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【森呼吸】',
+                labelEn: 'Forest Breath',
+                summary: '無障礙的林間漫步',
+                summaryEn: 'Accessible Forest Walk',
+                story: '這是陽明山少數完全沒有樓梯的步道，推車或輪椅都能輕鬆通過。兩旁是茂密的闊葉林，即便夏天也非常涼爽。',
+                storyEn: 'One of the few step-free trails in the park. Cool and shady even in the height of summer.'
+            },
+            {
+                id: 'hidden',
+                label: '【霧中仙境】',
+                labelEn: 'Misty Pond',
+                summary: '二子坪生態池',
+                summaryEn: 'Erziping Eco-Pond',
+                story: '步道終點是三座小池塘。午後山區常起霧，雲霧繚繞中的生態池非常有靈氣，是攝影師最愛的自然場景。',
+                storyEn: 'The trail ends at three ponds. Afternoon mist often turns this area into a spiritual, ethereal landscape.'
+            }
+        ],
+        insiderTip: {
+            teaser: '這裡是陽明山躲避酷暑的最佳去處。',
+            teaserEn: 'The best escape from Taipei\'s summer heat.',
+            full: {
+                story: '假日停車位極難求。強烈建議從捷運劍潭站搭乘「108 遊園公車」上山。在二子坪站下車，就是這趟森林之旅的起點。',
+                storyEn: 'Weekend parking is impossible. Take the 108 Shuttle Bus from MRT Jiantan Station instead.',
+                mustTry: '在生態池邊野餐 (記得帶走垃圾)',
+                bestTime: '10:00'
+            }
+        }
+    },
+    {
+        id: 'tw-t-a21',
+        title: '松仁路 253 巷 (達人機位)',
+        titleEn: 'Songren Rd Lane 253 (Photo Spot)',
+        type: 'attraction',
+        duration: '30分',
+        image: '📸',
+        description: '這不是一個景點，這是一個被攝影師視為「黃金機位」的普通巷弄。在這裡，你可以拍到台北 101 被兩旁老舊公寓框住的獨特視覺，體現台北新舊交織的震撼感。',
+        descriptionEn: 'A normal alley hailed as a "Golden Spot" by photographers. Capture Taipei 101 framed by old apartments for a striking contrast.',
+        price: 0,
+        address: '台北市信義區松仁路253巷',
+        rating: 4.7,
+        lat: 25.0294,
+        lng: 121.5685,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['攝影', '101視角', '新舊交織'],
+        themeColor: '#718096',
+        isPhotographySpot: true,
+        photographyTips: {
+            zh: '使用手機的 2x 或 3x 長焦鏡頭，站在巷口往 101 方向拍。長焦能產生「空間壓縮感」，讓 101 看起來就像緊貼在老房子後方一樣巨大。',
+            en: 'Use 2x or 3x zoom from the alley entrance. The zoom compresses space, making 101 look massive right behind the old houses.'
+        },
+        teaser: '在老巷弄的盡頭，遇見直破天際的摩天奇蹟。',
+        teaserEn: 'At the end of an old alley, meet the sky-piercing miracle.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【黃金機位】',
+                labelEn: 'Golden Shot',
+                summary: '台北最經典的城市構圖',
+                summaryEn: 'Taipei\'s Iconic Composition',
+                story: '這裡在 Instagram 上極度出名。建議傍晚來，當老房子的窗戶點亮，101 的藍調燈光亮起，那種視覺對比是台北最美的縮影。',
+                storyEn: 'Extremely famous on IG. Visit at dusk when apartment lights match the 101\'s blue hour glow.'
+            },
+            {
+                id: 'trap',
+                label: '【禮儀提醒】',
+                labelEn: 'Etiquette',
+                summary: '保持安靜，不要阻礙交通',
+                summaryEn: 'Be quiet, don\'t block traffic',
+                story: '這是一個真實居住的社區。請在拍攝時保持安靜，且注意往來車輛，千萬不要為了拍照擋住巷道。',
+                storyEn: 'This is a real residential neighborhood. Be quiet and mindful of cars; never block the road for a photo.'
+            }
+        ],
+        insiderTip: {
+            teaser: '這是台北最具「賽博龐克」感的角落。',
+            teaserEn: 'Taipei\'s most "Cyberpunk" feeling corner.',
+            full: {
+                story: '推薦在「象山」行程前後順道造訪，步行約 10 分鐘即可到達。這是一個不用流汗就能拍出大片的神祕地點。',
+                storyEn: 'Visit before or after your Elephant Mountain hike; it\'s just a 10-minute walk away.',
+                mustTry: '利用手機的人像模式拍攝',
+                bestTime: '17:30'
+            }
+        }
     }
 ];
+

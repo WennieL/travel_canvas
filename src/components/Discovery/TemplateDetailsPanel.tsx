@@ -96,12 +96,22 @@ const TimelineItemCard: React.FC<{
                         (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=300&q=80';
                     }}
                 />
+                {item.isPhotographySpot && (
+                    <div className="absolute top-1.5 left-1.5 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg z-10 animate-bounce duration-[2500ms]">
+                        <span className="text-[10px]">📸</span>
+                    </div>
+                )}
             </div>
 
             {/* Text Content */}
             <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
                     <span className="text-[10px] font-black text-bg-primary uppercase tracking-widest shrink-0">{item.type || 'SPOT'}</span>
+                    {item.isPhotographySpot && (
+                        <span className="text-[9px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md uppercase tracking-tight shrink-0 flex items-center gap-1">
+                            📸 {lang === 'zh' ? '達人機位' : 'EXPERT SPOT'}
+                        </span>
+                    )}
                     {item.timeLabel && (
                         <span className="text-[9px] font-black bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md uppercase tracking-tight shrink-0">
                             {item.timeLabel}
@@ -155,6 +165,25 @@ const TimelineItemCard: React.FC<{
                             <span className="leading-snug">
                             {lang === 'zh' ? item.transitNote : (item.transitNoteEn || item.transitNote)}
                             </span>
+                        </div>
+                    </div>
+                )}
+                {(item.photographyTips || item.photographyTipsEn) && (
+                    <div className={`mt-3 flex items-start gap-2.5 p-2.5 bg-amber-50/50 rounded-xl border border-amber-200/30 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
+                        <div className="mt-0.5 shrink-0">
+                            <div className="w-[22px] h-[22px] rounded-full bg-white flex items-center justify-center shadow-sm">
+                                <Star size={10} className="text-amber-500 fill-current" />
+                            </div>
+                        </div>
+                        <div className="flex-1 pt-0.5">
+                            <p className="text-[12px] font-bold text-amber-900 leading-[1.6]">
+                                <span className="font-black text-amber-600 mr-1.5 uppercase tracking-tighter">
+                                    {lang === 'zh' ? '構圖建議' : 'PHOTO TIPS'}
+                                </span>
+                                {item.isLocked && !isPurchased
+                                    ? (lang === 'zh' ? '解鎖以查看攝影祕訣...' : 'Unlock for photography tips...')
+                                    : (lang === 'zh' ? item.photographyTips?.zh : (item.photographyTips?.en || item.photographyTips?.zh))}
+                            </p>
                         </div>
                     </div>
                 )}

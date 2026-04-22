@@ -239,6 +239,13 @@ const MapView: React.FC<MapViewProps> = ({
                                 <img src="${SAMPLE_CREATORS.find(c => c.id === authors[0])?.avatar || `https://i.pravatar.cc/100?u=${authors[0]}`}" class="w-full h-full object-cover" />
                             </div>
                         </div>
+
+                        <!-- [NEW] Camera Icon Badge -->
+                        ${item.isPhotographySpot ? `
+                            <div class="absolute -top-1 -left-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg animate-bounce duration-[2000ms]">
+                                <span class="text-[10px]">📸</span>
+                            </div>
+                        ` : ''}
                     </div>
 
                     <!-- IG-Style Label -->
@@ -276,6 +283,13 @@ const MapView: React.FC<MapViewProps> = ({
                 ${isScheduled ? `
                     <div class="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center text-[10px] font-black border-2 border-teal-500 shadow-sm text-teal-600">
                         ${index + 1}
+                    </div>
+                ` : ''}
+
+                <!-- [NEW] Camera Icon Badge for Scheduled Items -->
+                ${item.isPhotographySpot ? `
+                    <div class="absolute -top-1.5 -left-1.5 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg z-[1001] animate-bounce duration-[3000ms]">
+                        <span class="text-[10px]">📸</span>
                     </div>
                 ` : ''}
             </div>
@@ -468,6 +482,11 @@ const MapView: React.FC<MapViewProps> = ({
                                             <span className="px-1.5 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[10px] font-bold border border-teal-100 leading-none">
                                                 {typePill}
                                             </span>
+                                            {spot.isPhotographySpot && (
+                                                <span className="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-black border border-amber-200 leading-none flex items-center gap-1 animate-pulse">
+                                                    📸 {lang === 'zh' ? '達人機位' : 'Expert Spot'}
+                                                </span>
+                                            )}
                                             <span className="flex items-center gap-0.5 text-amber-500 text-[11px] font-bold">
                                                 <Star size={9} fill="currentColor" /> {rating}
                                             </span>

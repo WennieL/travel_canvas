@@ -126,6 +126,10 @@ export interface TravelItem {
     insiderTip?: InsiderTip;
     coverImage?: string;
     reviews?: Review[];
+
+    // [NEW] Expert Photography Insights
+    isPhotographySpot?: boolean;
+    photographyTips?: { zh: string; en: string };
 }
 
 // [NEW] Recommendation entity - represents a creator's perspective on a landmark
@@ -211,6 +215,10 @@ export interface ScheduleItem extends TravelItem {
     };
     day?: number; // [NEW] Optional day context for move operations
     
+    // [NEW] Expert Photography Insights
+    isPhotographySpot?: boolean;
+    photographyTips?: { zh: string; en: string };
+
     // Deprecated in favor of Single-Path Output:
     // options?: ScheduleItem[];
     // isAlternative?: boolean;
@@ -264,6 +272,10 @@ export interface TemplateItem {
     title?: string;
     titleEn?: string;
     duration?: string;
+
+    // [NEW] Expert Photography Insights
+    isPhotographySpot?: boolean;
+    photographyTips?: { zh: string; en: string };
 
     // Deprecated in favor of Single-Path Output:
     // options?: TemplateItem[];
