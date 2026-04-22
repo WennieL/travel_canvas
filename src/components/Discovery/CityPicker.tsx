@@ -189,7 +189,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                             </div>
                             <button
                                 onClick={() => {
-                                    let filtered = TEMPLATES.filter(tpl => activePicksFilter === 'taiwan' || tpl.region === activePicksFilter);
+                                    let filtered = TEMPLATES.filter(tpl => (activePicksFilter === 'taiwan' || tpl.region === activePicksFilter) && !tpl.isHidden);
                                     if (activeFilter === '1day') filtered = filtered.filter(tpl => tpl.duration === 1);
                                     else if (activeFilter === 'short') filtered = filtered.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
                                     else if (activeFilter === 'long') filtered = filtered.filter(tpl => tpl.duration >= 4);
@@ -227,7 +227,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         {/* Template Cards Horizontal Walkway */}
                         <div className="flex gap-5 overflow-x-auto no-scrollbar pb-6 snap-x snap-mandatory min-h-[100px]">
                             {(() => {
-                                let filtered = TEMPLATES.filter(tpl => activePicksFilter === 'taiwan' || tpl.region === activePicksFilter);
+                                let filtered = TEMPLATES.filter(tpl => (activePicksFilter === 'taiwan' || tpl.region === activePicksFilter) && !tpl.isHidden);
                                 if (activeFilter === '1day') filtered = filtered.filter(tpl => tpl.duration === 1);
                                 else if (activeFilter === 'short') filtered = filtered.filter(tpl => tpl.duration >= 2 && tpl.duration <= 3);
                                 else if (activeFilter === 'long') filtered = filtered.filter(tpl => tpl.duration >= 4);
