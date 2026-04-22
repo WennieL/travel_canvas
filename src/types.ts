@@ -349,6 +349,15 @@ export interface Plan {
     // [NEW] Template metadata — preserved when applying a template
     templateId?: string;
     travelStyle?: string[];  // e.g. ['慢活', '文青'] or ['michelin']
+    
+    // [NEW] Expert editorial content snapshot
+    authorNote?: { zh: string; en: string; };
+    preparationGuide?: Array<{ title: string; titleEn?: string; text: string; textEn?: string; icon?: string; }>;
+    faq?: Array<{ title: string; titleEn?: string; text: string; textEn?: string; }>;
+    valueAnchor?: string;
+    valueAnchorEn?: string;
+    authorName?: string;
+    authorAvatar?: string;
 }
 
 export interface Creator {

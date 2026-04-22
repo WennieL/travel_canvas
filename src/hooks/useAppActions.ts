@@ -135,6 +135,15 @@ export const useAppActions = (deps: AppActionsDeps) => {
             exchangeRate: getRegionExchangeRate(region),
             templateId: template.id,
             travelStyle: template.travelStyle || template.targetAudience?.personas || [],
+
+            // [NEW] Expert editorial content snapshot
+            authorNote: template.authorStory,
+            preparationGuide: template.preparationGuide,
+            faq: template.faq,
+            valueAnchor: template.valueAnchor,
+            valueAnchorEn: template.valueAnchorEn,
+            authorName: template.author,
+            authorAvatar: `https://i.pravatar.cc/100?u=${template.authorId}`
         };
         setPlans([...plans, newPlan]);
         setActivePlanId(id);
@@ -152,8 +161,7 @@ export const useAppActions = (deps: AppActionsDeps) => {
         ui.setActiveTab('assets');
         ui.setIsSidebarOpen(true);
         ui.setIsSidebarPinned(true);
-
-        ui.setViewMode('canvas');
+        ui.setViewMode('overview');
         showToastMessage((t.appliedTemplate || '✅ "{name}" applied!').replace('{name}', templateName));
     }, [lang, isCreatingNewPlan, plans, setPlans, setActivePlanId, setIsCreatingNewPlan, updateActivePlan, setCurrentDay, ui, showToastMessage, pendingWizardData, setPendingWizardData, t]);
 

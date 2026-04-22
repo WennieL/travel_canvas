@@ -16,6 +16,7 @@ import {
 import { Plan, LangType, ViewMode } from '../types';
 import { TEMPLATES } from '../data/templates';
 import { motion } from 'framer-motion';
+import ExpertBriefing from './Schedule/ExpertBriefing';
 
 interface OverviewViewProps {
   activePlan: Plan;
@@ -84,6 +85,9 @@ const OverviewView: React.FC<OverviewViewProps> = ({
 
   return (
     <div className="max-w-xl mx-auto px-6 py-8 space-y-8 pb-32">
+      {/* 0. Expert Briefing Header (Collapsible Tips/FAQ) */}
+      <ExpertBriefing plan={activePlan} lang={lang} type="header" />
+
       {/* Grid: Checklist & Spending Stats */}
       <div className="grid grid-cols-2 gap-4">
         {/* Packing List Widget */}
@@ -238,6 +242,9 @@ const OverviewView: React.FC<OverviewViewProps> = ({
           </button>
         </div>
       </motion.div>
+
+      {/* 4. Expert Briefing Footer (Creator Signature) */}
+      <ExpertBriefing plan={activePlan} lang={lang} type="footer" />
     </div>
   );
 };
