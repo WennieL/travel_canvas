@@ -2392,198 +2392,6 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         ]
     },
     {
-        id: 'tw-t-a14',
-        title: '野柳地質公園',
-        titleEn: 'Yehliu Geopark',
-        type: 'nature',
-        duration: '1.5小時',
-        image: '🗿',
-        description: '世界級的地質奇觀。由於地殼運動與海蝕作用，形成了女王頭、仙女鞋、蕈狀岩等奇異形狀。走在海岸邊，彷彿置身於異星世界。',
-        descriptionEn: 'World-class geological wonders. Unique rock formations like the "Queen\'s Head" sculpted by sea erosion and tectonic shifts. An alien-like coastal landscape.',
-        price: 120,
-        address: '新北市萬里區港東路167-1號',
-        rating: 4.6,
-        lat: 25.2062,
-        lng: 121.6917,
-        region: 'taipei',
-        authorId: 'c-tw1',
-        tags: ['地質', '自然', '攝影'],
-        themeColor: '#D2B48C',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
-        teaser: '穿越時空的海蝕迷宮，親眼見證「女王頭」的優雅風采。',
-        teaserEn: 'A sea-eroded labyrinth where you witness the elegance of the "Queen\'s Head."',
-        expertStories: [
-            {
-                id: 'must-do',
-                label: '【最佳機位】',
-                labelEn: 'Photo Spot',
-                summary: '女王頭官方拍攝角度',
-                summaryEn: 'Official Queen\'s Head Angle',
-                story: '為了保護女王頭，現在有規劃排隊拍攝區。如果不想排隊，其實從側後方的木棧道高處可以拍到更具孤獨感的全景，那種海天一色的背景更有質感。',
-                storyEn: 'Skip the main queue. Head to the higher boardwalk for a panoramic shot that captures the Queen against the vast sea backdrop—much more atmospheric.'
-            },
-            {
-                id: 'hidden',
-                label: '【避雷指南】',
-                labelEn: 'Trap Avoidance',
-                summary: '紅色警戒線',
-                summaryEn: 'The Red Line Rule',
-                story: '千萬不要跨越地上的紅色界線，甚至不要用手觸碰岩石。管理人員巡視非常嚴，這不僅是為了保護景觀，也是為了你的安全，外海瘋狗浪不可小覷。',
-                storyEn: 'NEVER cross the red lines or touch the rocks. Guards are strict for protection and your safety; rogue waves on this coast are a real threat.'
-            }
-        ]
-    },
-    {
-        id: 'tw-t-a15',
-        title: '十分瀑布 & 十分老街',
-        titleEn: 'Shifen Waterfall & Old Street',
-        type: 'attraction',
-        duration: '2.5小時',
-        image: '🏮',
-        description: '「台灣版尼加拉瀑布」壯闊迷人。緊鄰的十分老街更有獨特的「火車門前過」奇景，在鐵道上親手寫下心願並施放天燈，是台北最具儀式感的體驗。',
-        descriptionEn: 'The "Niagara of Taiwan" and the iconic Shifen Old Street. Release a sky lantern on the railway tracks where trains pass right by the storefronts.',
-        price: 150,
-        address: '新北市平溪區十分街',
-        rating: 4.7,
-        lat: 25.0428,
-        lng: 121.7765,
-        region: 'taipei',
-        authorId: 'c-tw1',
-        tags: ['天燈', '瀑布', '鐵道'],
-        themeColor: '#FF4500',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
-        teaser: '在鐵道上寫下心願，讓繽紛的天燈帶著夢想飛向遙遠的天際。',
-        teaserEn: 'Write your wishes on the tracks and let colorful lanterns carry your dreams into the sky.',
-        expertStories: [
-            {
-                id: 'must-do',
-                label: '【攝影機位】',
-                labelEn: 'Photo Spot',
-                summary: '瀑布迴廊的鏡面反射',
-                summaryEn: 'Waterfall Mirror View',
-                story: '觀賞十分瀑布時，不要只拍瀑布正面。走到後方的觀景迴廊，利用玻璃或地面水漬拍出倒影，能讓瀑布看起來更有層次。',
-                storyEn: 'Don\'t just shoot the waterfall head-on. Use the glass panels or water patches on the boardwalk for mirror reflections that add depth.'
-            },
-            {
-                id: 'must-do',
-                label: '【天燈儀式】',
-                labelEn: 'Lantern Ritual',
-                summary: '四色天燈的寓意',
-                summaryEn: 'Four-Color Meaning',
-                story: '選擇四色天燈，每一面代表不同的祈求（健康、財運、事業、愛情）。在鐵道上施放前，店員會熟練地幫你拍照，雖然很商業化，但那種火花升空的瞬間依然令人感動。',
-                storyEn: 'Opt for the 4-color lantern; each side represents a goal (Health, Wealth, etc.). The vendors are pros at taking photos for you—it\'s a tourist ritual worth the hype.'
-            }
-        ]
-    },
-    {
-        id: 'tw-t-a17',
-        title: '北投溫泉 & 溫泉博物館',
-        titleEn: 'Beitou Hot Springs & Museum',
-        type: 'attraction',
-        duration: '2小時',
-        image: '♨️',
-        description: '台北最受歡迎的療癒聖地。從日治時期留下的公共浴場（現為博物館）到地熱谷煙霧繚繞的小徑，這裡完美融合了溫泉文化與昭和建築美學。',
-        descriptionEn: 'The therapeutic heart of Taipei. From the historic bathhouse museum to the steamy Hell Valley, it\'s a blend of hot spring culture and Showa-era aesthetics.',
-        price: 0,
-        address: '台北市北投區中山路2號',
-        rating: 4.7,
-        lat: 25.1367,
-        lng: 121.5065,
-        region: 'taipei',
-        authorId: 'c-tw1',
-        tags: ['溫泉', '歷史', '舒壓'],
-        themeColor: '#5b21b6',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
-        teaser: '漫步在裊裊白煙中，體驗百年不變的清幽與舒心度。',
-        teaserEn: 'Wander through the gentle steam and experience a century of tranquility.',
-        expertStories: [
-            {
-                id: 'must-do',
-                label: '【地熱谷攝影】',
-                labelEn: 'Steam Photos',
-                summary: '抓住那抹藍綠色的煙霧',
-                summaryEn: 'Capture the teal steam',
-                story: '地熱谷的水色會隨陽光變成夢幻的藍綠色。專業建議：站在步道盡頭的木橋上，等一陣風吹過讓煙霧稍微散開時按下快門，那種若隱若現的感覺最有仙氣。',
-                storyEn: 'Hell Valley\'s water turns teal under the sun. Pro tip: Stand on the wooden bridge at the end of the trail; wait for a breeze to clear the steam slightly for that mystical, ethereal shot.'
-            },
-            {
-                id: 'hidden',
-                label: '【博物館細節】',
-                labelEn: 'Museum Detail',
-                summary: '羅馬大浴場的陽光',
-                summaryEn: 'Sunlight in Roman Bath',
-                story: '溫泉博物館內的二樓塌塌米區是必拍點，但更內行的是一樓的羅馬式大浴場。午後三點左右，陽光會從花窗灑進來，那是復刻昭和時代奢華感的最佳時刻。',
-                storyEn: 'The 2F Tatami area is a must. But the true gem is the 1F Roman-style bath. Around 3 PM, sunlight hits the stained glass, perfectly recreating Showa-era luxury.'
-            }
-        ]
-    },
-    {
-        id: 'tw-t-a19',
-        title: '正濱漁港彩色屋',
-        titleEn: 'Zhengbin Port Color Houses',
-        type: 'attraction',
-        duration: '1小時',
-        image: '🎨',
-        description: '曾是繁榮的漁港，如今以充滿異國情調的「彩色屋」重生。倒映在平靜海面上的繽紛建築，讓這裡被封為「台灣威尼斯」，是專業攝影師不願透露的取景地。',
-        descriptionEn: 'Once a bustling port, now reborn as the "Venice of Taiwan" with its exotic colored houses. The vibrant reflections on the water are a dream for photographers.',
-        price: 0,
-        address: '基隆市中正區正濱路',
-        rating: 4.4,
-        lat: 25.1528,
-        lng: 121.7685,
-        region: 'taipei',
-        authorId: 'c-tw1',
-        tags: ['攝影', '港口', '打卡'],
-        themeColor: '#be123c',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
-        teaser: '像走進了色彩斑斕的歐洲小鎮，按下快門，留住那抹海上彩虹。',
-        teaserEn: 'Step into a vibrant European-style harbor town; snap a photo of the rainbow on the waves.',
-        expertStories: [
-            {
-                id: 'must-do',
-                label: '【絕妙視角】',
-                labelEn: 'Best Angle',
-                summary: '對岸景觀平台的廣角',
-                summaryEn: 'Across-the-Harbor Wide',
-                story: '如果要拍到最完整的彩色屋與倒影，請到「對岸」的景觀平台。下午兩點到四點間的陽光最合適，這時色彩飽和度最高，不用濾鏡也能拍出大片。',
-                storyEn: 'For the full reflection and houses, go to the platform on the OPPOSITE side. The sun from 2 PM to 4 PM provides the best color saturation—no filters needed.'
-            }
-        ]
-    },
-    {
-        id: 'tw-t-a20',
-        title: '陽明山二子坪步道',
-        titleEn: 'Yangmingshan Erziping Trail',
-        type: 'nature',
-        duration: '1.5小時',
-        image: '🦋',
-        description: '陽明山最優雅的「蝴蝶步道」。全台首創的無障礙步道，全程平坦寬敞，兩側樹蔭蓊鬱，即便是推著嬰兒車或帶著長輩也能輕鬆享受森林浴。',
-        descriptionEn: 'The most elegant "Butterfly Path" in Yangmingshan. Taiwan\'s first barrier-free nature trail—flat, shaded, and perfect for families or seniors to enjoy a forest bath.',
-        price: 0,
-        address: '台北市北投區二子坪步道',
-        rating: 4.8,
-        lat: 25.1825,
-        lng: 121.5235,
-        region: 'taipei',
-        authorId: 'c-tw1',
-        tags: ['自然', '散步', '親子'],
-        themeColor: '#15803d',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
-        teaser: '在森林與草地間尋找飛舞的奇蹟，這是台北最溫柔的自然懷抱。',
-        teaserEn: 'Search for fluttering wonders among the trees—Taipei\'s gentlest natural embrace.',
-        expertStories: [
-            {
-                id: 'must-do',
-                label: '【輕鬆漫步】',
-                labelEn: 'Easy Stroll',
-                summary: '不流汗的登頂感',
-                summaryEn: 'No-sweat Summiting',
-                story: '雖然是在山上，但這條路平緩到不可思議。走到步道盡頭的二子坪遊憩區，大片的草地與水池，非常適合野餐或是看著山頭發呆，這是上機前放鬆心情的首選。',
-                storyEn: 'Despite being on a mountain, it\'s incredibly flat. The end of the trail opens up to vast lawns and ponds—perfect for a pre-flight picnic or just staring at the peaks.'
-            }
-        ]
-    },
-    {
         id: 'tw-t-a-milkfall',
         title: '小隱潭瀑布 (牛奶瀑布)',
         titleEn: 'Xiaoyintan Waterfall (Milk Fall)',
@@ -2757,12 +2565,30 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         expertStories: [
             {
                 id: 'must-eat',
-                label: '【招牌必吃】',
-                labelEn: 'Must Eat',
-                summary: '58號攤位的營養三明治',
+                label: '【招牌首選】',
+                labelEn: 'The Legend',
+                summary: '58 號攤位的營養三明治',
                 summaryEn: 'Stall 58 Sandwich',
                 story: '這裡的強項是「炸三明治」。外皮金黃酥脆，裡面的火腿與美乃滋達到完美平衡。這是在地人即便排隊一小時也要買到的傳奇。',
                 storyEn: 'The legendary fried sandwich. Crispy golden crust with a perfect balance of mayo and ham. Locals wait an hour for this.'
+            },
+            {
+                id: 'must-eat',
+                label: '【一口滿足】',
+                labelEn: 'Bite-Sized',
+                summary: '43-1 號一口吃香腸',
+                summaryEn: 'Stall 43-1 Mini Sausages',
+                story: '這家攤位永遠排滿人。炭火現烤的小香腸，配上生大蒜，是基隆最經典的街頭小吃。一粒只要 7 元，建議一次買 10 粒才過癮。',
+                storyEn: 'Always a line. Charcoal-grilled mini sausages with raw garlic—a classic Keelung street snack. Only $7 each; get 10 to satisfy your soul.'
+            },
+            {
+                id: 'hidden',
+                label: '【米食天花板】',
+                labelEn: 'Rice King',
+                summary: '21 號攤位魯肉飯',
+                summaryEn: 'Stall 21 Braised Pork Rice',
+                story: '如果您不想吃炸物，這家的魯肉飯切工細膩，肥而不膩，入口即化。搭配一碗肉羹湯，是當地老饕的標準配備。',
+                storyEn: 'For rice lovers, this stall serves delicate braised pork that melts in your mouth. Pair it with meat thick soup for the authentic local experience.'
             },
             {
                 id: 'must-do',
@@ -2770,26 +2596,8 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 labelEn: 'Expert Flow',
                 summary: '先領號碼牌，再買泡泡冰',
                 summaryEn: 'Ticket first, Ice second',
-                story: '先去營養三明治領號碼牌（一定要先領！），接著去旁邊買一杯「沈記泡泡冰」，邊吃冰邊等號碼，這是最正宗的基隆吃法。',
-                storyEn: 'Grab your sandwich queue ticket FIRST, then get a "Shen\'s Bubble Ice" nearby. Eating ice while waiting is the local ritual.'
-            },
-            {
-                id: 'trap',
-                label: '【人潮避開】',
-                labelEn: 'Crowd Trap',
-                summary: '週末晚上八點是巔峰',
-                summaryEn: 'Peak at 8 PM Weekends',
-                story: '如果你不想在窄巷中體驗「人肉罐頭」，請在下午 17:00 前抵達，這時大部分攤位剛開，不用排隊。',
-                storyEn: 'To avoid the crush, arrive before 5 PM. Most stalls are fresh and the lines haven\'t started yet.'
-            },
-            {
-                id: 'hidden',
-                label: '【在地隱藏】',
-                labelEn: 'Hidden Gem',
-                summary: '奠濟宮門口的鐤邊趖',
-                summaryEn: 'Dianji Temple Ding Bian Cuo',
-                story: '這道菜結合了麵疙瘩與河粉的口感，清甜的湯頭帶著蝦米的香氣，是基隆海港文化的縮影。',
-                storyEn: 'A unique mix of noodle and dumpling textures in a sweet shrimp-scented broth. The essence of Keelung port culture.'
+                story: '先去 58 號領號碼牌（一定要先領！），接著去旁邊買一杯「沈記泡泡冰」，邊吃冰邊等號碼，這是最正宗的基隆吃法。',
+                storyEn: 'Grab your sandwich queue ticket at Stall 58 FIRST, then get a "Shen\'s Bubble Ice" nearby. Eating ice while waiting is the local ritual.'
             }
         ],
         insiderTip: {
@@ -3108,6 +2916,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Coffee by the Harbor',
                 story: '不要只是拍完照就走。彩色屋中有幾間非常具備個性的咖啡廳（如：圖們咖啡），坐在二樓窗邊看著小船進出，是基隆特有的浪漫。',
                 storyEn: 'Don\'t just snap and leave. Sit in a harbor-side cafe like Tumen Coffee and watch the boats go by.'
+            },
+            {
+                id: 'hidden',
+                label: '【廢墟美學】',
+                labelEn: 'Ruin Aesthetic',
+                summary: '阿根納造船廠遺構',
+                summaryEn: 'Agenna Shipyard Ruins',
+                story: '就在彩色屋步行 3 分鐘處。巨大的鋼筋水泥支架與外露的結構，展現出強烈的工業廢墟感。這裡曾是《美國隊長》克里斯伊凡拍攝廣告的取景地。💡 達人提示：從彩色屋望向造船廠，能拍出「過去與現在」的對比感。',
+                storyEn: 'Just a 3-min walk from the colored houses. The massive skeletal remains of the shipyard offer a stark industrial contrast. It was even a filming location for a Chris Evans commercial. 💡 Pro Tip: Capture the contrast between the decay of the shipyard and the vibrancy of the harbor.'
             }
         ],
         insiderTip: {

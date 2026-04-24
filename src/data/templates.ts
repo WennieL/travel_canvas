@@ -1316,8 +1316,8 @@ export const TEMPLATES: Template[] = [
         coverStory: {
             quote: '「台北的美不在於單一的地標，而在於山、海與城市僅在咫尺之間。」',
             quoteEn: '"Taipei\'s beauty isn\'t in a single landmark, but in how mountains, ocean, and city are all within reach."',
-            description: '【2026/04/22 更新 | 官方旗艦版】這是為第一次造訪台北的旅人設計的終極劇本。我們剔除了所有重複與低質量的景點，保留了最經典的城市高度、歷史靈魂、與震撼的北海岸自然奇觀。並針對自助旅行者優化了「捷運+關鍵Uber」的交通動線，讓您用最聰明的方式玩轉台北。',
-            descriptionEn: '[Updated 2026/04/22 | Official Flagship] The ultimate script for first-time Taipei visitors. We\'ve removed redundant spots to focus on iconic heights, historical souls, and North Coast wonders. Optimized with "MRT + Uber" routes for smart, effortless exploration.',
+            description: '【2026/04/22 更新 | 官方旗艦版】這是為第一次造訪台北的旅人設計的終極劇本。我們保留了經典地標、歷史靈魂與北海岸奇觀，並優化了交通動線。💡 達人雨天提示：台北與山區氣候多變，包包內請隨身攜帶雨傘。若遇小雨，九份與陽明山的朦朧霧氣反而能拍出更有質感的「山城仙境」大片，是另一種極致的美。',
+            descriptionEn: '[Updated 2026/04/22 | Official Flagship] The ultimate script for first-time Taipei visitors. Optimized with "MRT + Uber" routes. 💡 Pro Tip: Taipei weather is unpredictable; always keep an umbrella handy. In light rain, Jiufen and Yangmingshan transform into a stunning "misty wonderland," offering a uniquely beautiful, moody photography experience.',
             authorLabel: 'TravelCanvas 官方旗艦推薦',
             authorLabelEn: 'TravelCanvas Official Flagship Recommendation'
         },
@@ -1339,6 +1339,34 @@ export const TEMPLATES: Template[] = [
                 text: '本行程部分路段建議搭乘 Uber 以節省體力，Bus+ 則能精準預測客運抵達時間，對去九份、野柳非常重要。',
                 textEn: 'We recommend Uber for certain legs to save energy. Bus+ is essential for real-time bus tracking to Jiufen and Yehliu.',
                 icon: 'Smartphone'
+            },
+            {
+                title: '雨具是必備的優雅',
+                titleEn: 'Umbrella is Essential',
+                text: '台北北海岸（九份、野柳）氣候多變，請隨身攜帶堅固摺疊傘。若遇雨，二子坪或九份茶館的「朦朧霧氣」也是極美的備案。',
+                textEn: 'Weather in Jiufen and Yehliu is unpredictable. Keep a sturdy umbrella handy. In rain, the "misty vibes" of Teahouses or Erziping offer a unique charm.',
+                icon: 'CloudRain'
+            },
+            {
+                title: '現金仍是夜市之王',
+                titleEn: 'Cash for Markets',
+                text: '雖然悠遊卡發達，但九份老街、基隆廟口與多數小吃攤「僅收現金」。建議隨身準備 NT$2,000-3,000 零錢。',
+                textEn: 'EasyCard is common, but most stalls in Jiufen and Keelung are "Cash Only." Keep NT$2,000-3,000 in cash for street food.',
+                icon: 'Banknote'
+            },
+            {
+                title: '這是一場雙腳的旅行',
+                titleEn: 'Comfortable Shoes',
+                text: '即便我們優化了 Uber 動線，九份階梯與地質公園仍需大量步行。請穿上最舒適的運動鞋，不要穿新鞋。',
+                textEn: 'Even with Uber, Jiufen and Yehliu require walking. Wear your most comfortable sneakers—avoid brand new shoes.',
+                icon: 'Footprints'
+            },
+            {
+                title: '行李解放計畫',
+                titleEn: 'Luggage Liberation',
+                text: 'Day 1 抵達可先存飯店或北車置物櫃。Day 6 強烈推薦在「機捷 A1 站」預辦登機或寄放，實現空手逛街。',
+                textEn: 'Day 1: Drop at hotel or use station lockers. Day 6: Highly recommend In-town Check-in at Airport MRT (A1) to shop hands-free.',
+                icon: 'Briefcase'
             }
         ],
         faq: [
@@ -1441,32 +1469,37 @@ export const TEMPLATES: Template[] = [
                 themeEn: '【Seaside】Geo-Wonders & Colorful Harbor',
                 themeEmoji: '🌊',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a14')!, instanceId: 'c6-5-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通攻略：國光客運 1815 直達。💡 達人指令：務必 09:00 開門進場以避開熱浪與大團客。', expertNoteEn: '🚍 Transit: Bus 1815. 💡 Expert Command: Enter at 09:00 sharp to avoid the heat and tour groups.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a14')!, instanceId: 'c6-5-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通攻略：在「市府轉運站」搭乘國光客運 1815 直達。💡 達人指令：務必 09:30 前抵達野柳，避開正午酷暑與觀光大團。', expertNoteEn: '🚍 Transit: Take Bus 1815 from Taipei City Hall Bus Station. 💡 Pro Tip: Arrive by 09:30 AM to beat the mid-day heat and large tour groups.' }
                 ],
                 afternoon: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a18')!, instanceId: 'c6-5-2', startTime: '13:00', arrivalTransport: 'taxi', expertNote: '🚕 關鍵段落：建議從野柳搭 Uber 直達和平島（約 25 分鐘），這是海線最舒適的接駁方式。', expertNoteEn: '🚕 Critical Leg: Uber from Yehliu to Heping Island (~25m). The most comfortable coastal link.' },
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a19')!, instanceId: 'c6-5-3', startTime: '15:30', arrivalTransport: 'public', expertNote: '就在和平島出口旁。📸 達人機位：木棧道平台捕捉漁港倒影。', expertNoteEn: 'Right near the island exit. 📸 Expert Spot: Wooden platform for harbor reflections.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a18')!, instanceId: 'c6-5-2', startTime: '12:30', arrivalTransport: 'taxi', expertNote: '🚕 關鍵段落：建議從野柳搭 Uber 直達和平島（約 25 分鐘，約 $350-$450）。這段路若搭公車需轉乘且耗時 1.5 小時，這筆投資絕對值得。', expertNoteEn: '🚕 Critical Link: Take an Uber from Yehliu to Heping Island (~25 mins, $350-$450 TWD). Saves 1 hour of transit time compared to buses.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a19')!, instanceId: 'c6-5-3', startTime: '15:30', arrivalTransport: 'public', expertNote: '🎨 視覺饗宴：除了彩色屋，旁邊步行 3 分鐘的「阿根納造船廠遺構」是廢墟攝影聖地。💡 建議：坐在港邊咖啡廳二樓，享受基隆港的寧靜。', expertNoteEn: '🎨 Visual Feast: Don\'t miss the Agenna Shipyard Ruins (3-min walk) next to the colored houses for epic photos. 💡 Enjoy a coffee by the harbor.' }
                 ],
                 evening: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f10')!, instanceId: 'c6-5-4', startTime: '18:30', arrivalTransport: 'public', expertNote: '基隆廟口是全台最有秩序、最好吃的夜市之一。💡 必吃：營養三明治、泡泡冰。', expertNoteEn: 'Keelung Miaokou is a top-tier organized market. 💡 Must-eats: Nutritious Sandwich, Bubble Ice.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f10')!, instanceId: 'c6-5-4', startTime: '17:30', arrivalTransport: 'public', expertNote: '🍜 廟口攻略：直衝 58 號營養三明治（先領號碼牌）與 43-1 號一口吃香腸。💡 達人指引：這裡的 21 號魯肉飯也是在地老饕的最愛。', expertNoteEn: '🍜 Market Strategy: Head straight to Stall 58 (get a ticket first) and Stall 43-1 for sausages. 💡 Local Tip: Stall 21 for the best braised pork rice.' },
+                    { id: 'keelung-return', title: '基隆歸途：快速公車', titleEn: 'Keelung Return Logistics', itemType: 'spot', startTime: '19:30', arrivalTransport: 'public', expertNote: '🚌 歸途建議：搭乘 2088 公車直達「市府轉運站」。下車後可近距離拍 101 夜景。💡 達人提示：今天海風吹久了較疲累，強烈推薦到附近的「指舞春秋 (Dancing Fingers)」按個腳底，這間性價比極高且環境舒適，是緩解五天疲勞的良藥。', expertNoteEn: '🚌 Return: Bus 2088 back to City Hall. Snap a quick photo of Taipei 101. 💡 Pro Tip: Today was windy; a session at "Dancing Fingers" (high value & comfy) nearby will work wonders for your tired feet.' }
                 ],
                 night: [], accommodation: []
             },
             'Day 6': {
-                theme: '【寧靜】森林吐納與最終採買',
-                themeEn: '【Quiet】Forest Breath & Last Shopping',
+                theme: '【舒心】森林收心與最終採買',
+                themeEn: '【Relax】Forest Retreat & Final Shopping',
                 themeEmoji: '🌲',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a20')!, instanceId: 'c6-6-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通攻略：捷運劍潭站搭乘 108 遊園公車。💡 體力提示：全程無階梯。', expertNoteEn: '🚍 Transit: Bus 108 from MRT Jiantan. 💡 Stamina: Step-free trail.' },
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-milkfall')!, instanceId: 'c6-6-milk', startTime: '11:00', arrivalTransport: 'public', expertNote: '🥛 陽明山隱藏版：水質富含硫磺而呈乳白色。📸 攝影提示：就在路邊石牆後，2 分鐘即可拍到美照。', expertNoteEn: '🥛 Hidden Gem: Milky white water due to sulfur. 📸 Photo Tip: Right behind the roadside wall, 2m walk for a great shot.' }
+                    { id: 'luggage-drop', title: '雙手解放：北車預辦登機', titleEn: 'Luggage-Free Morning', itemType: 'spot', startTime: '08:30', arrivalTransport: 'public', expertNote: '🧳 零決策指令：辦理退房後直奔「機捷台北車站 (A1)」。華航/長榮旅客可辦理預辦登機託運行李，其餘旅客可使用 A1 站置物櫃。💡 早餐建議：在飯店門口買個蛋餅或 7-11 飯糰在車上吃，節省時間。', expertNoteEn: '🧳 Zero-Decision: Check out and head to Airport MRT (A1). Use In-town Check-in or lockers to free your hands. 💡 Breakfast: Grab a local egg crepe or 7-11 onigiri to eat on the way.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a20')!, instanceId: 'c6-6-1', startTime: '09:30', arrivalTransport: 'taxi', expertNote: '🚕 交通攻略：從台北車站直接搭 Uber 上山（約 50 分鐘）。💡 達人提示：最後一天的體力非常珍貴，二子坪是全台最平緩的步道，即便推著行李箱也能走，但我們已經空手了，這將是一場完美的森林浴。', expertNoteEn: '🚕 Transit: Uber from Taipei Station (~50m). 💡 Pro Tip: Erziping is a barrier-free trail—pure relaxation. Since your hands are free, just enjoy the mountain breeze.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-milkfall')!, instanceId: 'c6-6-milk', startTime: '11:30', arrivalTransport: 'walk', expertNote: '🥛 陽明山隱藏版：水質富含硫磺而呈乳白色。📸 攝影提示：就在路邊石牆後，2 分鐘即可拍到美照。', expertNoteEn: '🥛 Hidden Gem: Milky white water due to sulfur. 📸 Photo Tip: Right behind the roadside wall, 2m walk for a great shot.' }
                 ],
                 afternoon: [
-                    { id: 'tw-t-gifts', title: '台北車站伴手禮採買', titleEn: 'Taipei Station Souvenirs', itemType: 'spot', startTime: '14:00', arrivalTransport: 'public', expertNote: '北車微風與地下街有最齊全的伴手禮。💡 推薦：佳德鳳梨酥、快車肉乾。', expertNoteEn: 'Taipei Station Breeze & Underground malls have it all. 💡 Recs: Chia Te Pineapple Cakes, Kuai Che Jerky.' }
+                    { id: 'breeze-lunch', title: '微風北車：最後的美食祭', titleEn: 'Breeze Taipei Station Lunch', itemType: 'spot', startTime: '13:30', arrivalTransport: 'taxi', expertNote: '🍲 午餐攻略：搭 Uber 下山直達「微風台北車站 2F」。推薦試試「牛肉麵街」或是「排骨便當」。💡 採買清單：樓下就是伴手禮區，佳德鳳梨酥、快車肉乾等經典品牌一應俱全。', expertNoteEn: '🍲 Lunch: Uber down to Breeze Taipei Station 2F. Try the award-winning Beef Noodles or a classic Railway Bento. 💡 Shopping: Souvenirs like Chia Te and Kuai Che are all right here downstairs.' }
                 ],
                 evening: [
-                    { id: 'airport-transfer', title: '機場接駁 / 出發', titleEn: 'Airport Transfer / Departure', itemType: 'spot', startTime: '17:00', arrivalTransport: 'public', expertNote: '搭乘機場捷運直達機場。💡 零決策提示：記得檢查航廈，並預留 3 小時抵達機場。', expertNoteEn: 'Airport MRT straight to terminals. 💡 Zero-Decision: Check your terminal and allow 3h for airport arrival.' }
+                    { id: 'ningxia-last', title: '最後一搏：寧夏夜市', titleEn: 'Last Call: Ningxia Night Market', itemType: 'spot', startTime: '17:30', arrivalTransport: 'walk', expertNote: '🏮 彈性方案：如果您的航班在 22:00 之後，強烈建議去北車附近的「寧夏夜市」吃最後一餐。💡 必吃：圓環邊蚵仔煎、劉芋仔蛋黃芋餅。這裡是台北公認美食密度最高、最道地的夜市。', expertNoteEn: '🏮 Late Flight Option: If your flight is after 22:00, hit Ningxia Night Market (near Taipei Station) for your final Taiwanese feast. 💡 Must-eats: Oyster Omelet, Taro Balls. The local favorite.' }
                 ],
-                night: [], accommodation: []
+                night: [
+                    { id: 'airport-transfer', title: '機場銜接：機捷直達', titleEn: 'Airport Transfer', itemType: 'spot', startTime: '19:30', arrivalTransport: 'public', expertNote: '🚄 最後段：搭乘「機場捷運直達車」前往機場。💡 溫馨提醒：機捷末班車約 23:00。請根據您的登機時間往前推 3.5 小時離開市區。祝您帶著滿滿的回憶平安歸國！', expertNoteEn: '🚄 Final Leg: Airport MRT Express to terminals. 💡 Reminder: Last train is around 23:00. Depart 3.5h before your flight. Have a safe and wonderful flight back home!' }
+                ],
+                accommodation: []
             }
         }
     }
