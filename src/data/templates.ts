@@ -1316,8 +1316,8 @@ export const TEMPLATES: Template[] = [
         coverStory: {
             quote: '「台北的美不在於單一的地標，而在於山、海與城市僅在咫尺之間。」',
             quoteEn: '"Taipei\'s beauty isn\'t in a single landmark, but in how mountains, ocean, and city are all within reach."',
-            description: '【2026/04/22 更新 | 官方旗艦版】這是為第一次造訪台北的旅人設計的終極劇本。我們保留了經典地標、歷史靈魂與北海岸奇觀，並優化了交通動線。💡 達人雨天提示：台北與山區氣候多變，包包內請隨身攜帶雨傘。若遇小雨，九份與陽明山的朦朧霧氣反而能拍出更有質感的「山城仙境」大片，是另一種極致的美。',
-            descriptionEn: '[Updated 2026/04/22 | Official Flagship] The ultimate script for first-time Taipei visitors. Optimized with "MRT + Uber" routes. 💡 Pro Tip: Taipei weather is unpredictable; always keep an umbrella handy. In light rain, Jiufen and Yangmingshan transform into a stunning "misty wonderland," offering a uniquely beautiful, moody photography experience.',
+            description: '【2026/04/22 更新 | 官方旗艦版】這是為第一次造訪台北的旅人設計的終極劇本。💡 達人雨天提示：隨身帶傘，小雨中的九份與陽明山更有仙境感。🍜 靈魂美食攻略：直衝 50 嵐點「1 號（微糖微冰）」體驗極致珍奶；宵夜必點「鹽酥雞+炸甜不辣+九層塔」。這份行程不僅管你的交通，更要教你像台北人一樣生活。',
+            descriptionEn: '[Updated 2026/04/22 | Official Flagship] The ultimate script for first-time visitors. 💡 Pro Tip: Keep an umbrella; rainy Jiufen is a misty wonderland. 🍜 Soul Food Bible: Order 50 Lan "Number 1" (30% Sugar) for the best boba; midnight snacks must include "Fried Chicken + Tempura + Basil." We don\'t just plan your route—we teach you how to live like a local.',
             authorLabel: 'TravelCanvas 官方旗艦推薦',
             authorLabelEn: 'TravelCanvas Official Flagship Recommendation'
         },
@@ -1367,11 +1367,68 @@ export const TEMPLATES: Template[] = [
                 text: 'Day 1 抵達可先存飯店或北車置物櫃。Day 6 強烈推薦在「機捷 A1 站」預辦登機或寄放，實現空手逛街。',
                 textEn: 'Day 1: Drop at hotel or use station lockers. Day 6: Highly recommend In-town Check-in at Airport MRT (A1) to shop hands-free.',
                 icon: 'Briefcase'
+            },
+            {
+                title: '珍奶與宵夜攻略',
+                titleEn: 'Boba & Midnight Snacks',
+                text: '直衝 50 嵐點「1 號（微糖微冰）」；宵夜必點「鹽酥雞+炸甜不辣+九層塔」。這是在地人的靈魂標配。',
+                textEn: 'Order 50 Lan "Number 1" (30% sugar); for supper, "Fried Chicken + Tempura + Basil" is the local soul combo.',
+                icon: 'Utensils'
             }
         ],
         faq: [
             { title: '九份、野柳一定要包車嗎？', titleEn: 'Need a car for Jiufen?', text: '不需要！本行程特別優化了「客運 + 關鍵段 Uber」方案，讓您省下高額包車費，同時享受點對點的便利。', textEn: 'No! This script optimizes "Bus + Critical Uber legs," saving you high charter fees while maintaining point-to-point convenience.' },
             { title: '攝影點好找嗎？', titleEn: 'Finding photo spots?', text: '行程中標註了「相機圖示」的景點都有達人攝影建議。點擊卡片，我們會告訴您具體的巷弄機位與推薦拍攝時間。', textEn: 'Spots with a "Camera" icon include expert photography tips. Click the card for exact alley locations and best shooting times.' }
+        ],
+        culturalInsights: [
+            {
+                id: 'boba-bible',
+                regionId: 'taipei',
+                regionCode: 'TW',
+                regionName: 'Taipei',
+                category: '手搖飲點餐聖經',
+                categoryEn: 'Boba Tea Bible',
+                title: '50 嵐的黃金密碼',
+                titleEn: 'The 50 Lan Code',
+                emoji: '🧋',
+                content: '直衝 50 嵐必點「1 號」（四季春+珍波椰）。這是珍珠、波霸、椰果的終極三重奏。黃金比例是「微糖微冰」。',
+                contentEn: 'Order "Number 1" at 50 Lan (Four Seasons Tea with boba, pearls, and coconut jelly). The golden ratio is "Light Sugar, Light Ice."',
+                foreignerReaction: '「咬到嘴痠但停不下來的快樂，這就是台灣的魔力。」',
+                foreignerReactionEn: '"My jaw is tired but I can\'t stop. This is pure Taiwanese magic."',
+                backgroundColor: 'bg-yellow-50'
+            },
+            {
+                id: 'chicken-guide',
+                regionId: 'taipei',
+                regionCode: 'TW',
+                regionName: 'Taipei',
+                category: '深夜靈魂攻略',
+                categoryEn: 'Midnight Soul Guide',
+                title: '鹽酥雞必點圖鑑',
+                titleEn: 'Fried Chicken Checklist',
+                emoji: '🍗',
+                content: '除了雞肉，必點「炸甜不辣」（像餅乾般脆）、「豬血糕」與「雞皮」。靈魂配料是蒜片與九層塔。',
+                contentEn: 'Beyond chicken, order "Fried Tempura" (crispy like chips), "Pig Blood Cake," and "Chicken Skin." Garlic and Basil are non-negotiable.',
+                foreignerReaction: '「這是我這輩子吃過最好吃的炸雞，為什麼還有九層塔！」',
+                foreignerReactionEn: '"Best fried chicken ever. The fried basil is a total game changer!"',
+                backgroundColor: 'bg-orange-50'
+            },
+            {
+                id: 'cvs-gems',
+                regionId: 'taipei',
+                regionCode: 'TW',
+                regionName: 'Taipei',
+                category: '全天候補給站',
+                categoryEn: '24/7 Supply Hub',
+                title: '超商不只是商店',
+                titleEn: 'Convenience Store Gems',
+                emoji: '🏪',
+                content: '試試「茶葉蛋」與「冰地瓜」。這是台灣人補充蛋白質的最強方案，也是隨時都能找到的溫暖。',
+                contentEn: 'Try "Tea Eggs" and "Chilled Sweet Potatoes." It\'s the local secret for high-protein, healthy snacks anytime.',
+                foreignerReaction: '「原來便利商店可以這麼有生命力，隨時都能吃到熱騰騰的健康食物。」',
+                foreignerReactionEn: '"The fact that I can get hot, healthy food at 3 AM is incredible."',
+                backgroundColor: 'bg-green-50'
+            }
         ],
         dayPreviews: [
             { day: 1, summary: '大稻埕老時光 → 永樂市場午餐 → 101 攝影機位 → 象山夕陽與夜景', summaryEn: 'Dadaocheng Soul → Yongle Noodle → 101 Photo Spot → Elephant Mt. Sunset' },

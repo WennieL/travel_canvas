@@ -500,6 +500,7 @@ export interface Template {
         descZh: string;
         descEn: string;
     }>;
+    culturalInsights?: CulturalInsight[]; // [PHASE 2] Cultural Flashcards for food/etiquette guides
 }
 
 // [NEW] Interface for custom template statistics (Fig. 7)
