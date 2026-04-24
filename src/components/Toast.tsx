@@ -35,7 +35,7 @@ export const Toast: React.FC<ToastProps> = ({ message, onClose, duration = 3000,
     };
 
     return (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-6">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
             {/* Background Blur Overlay */}
             <div 
                 className="absolute inset-0 bg-black/20 backdrop-blur-[2px] animate-fade-in cursor-pointer" 

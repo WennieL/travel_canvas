@@ -157,6 +157,24 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                     />
 
                     <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-8 pb-7">
+                        {/* [NEW] Michelin Badge */}
+                        {item.michelinRating && (
+                            <div className="flex items-center gap-2 mb-3">
+                                <div className="px-3 py-1.5 bg-[#E60012] text-white text-[10px] font-black tracking-[0.1em] uppercase rounded flex items-center gap-1.5 shadow-lg">
+                                    <span className="text-[14px]">
+                                        {item.michelinRating === 'bib-gourmand' ? '😋' : '⭐'}
+                                    </span>
+                                    {lang === 'zh' ? '米其林指南' : 'MICHELIN GUIDE'}
+                                    {item.michelinRating.includes('star') && ` ${item.michelinRating.split('-')[0].toUpperCase()}`}
+                                </div>
+                                {item.michelinYears && item.michelinYears.length > 0 && (
+                                    <div className="px-3 py-1.5 bg-white/20 backdrop-blur-md text-white text-[10px] font-black tracking-[0.1em] uppercase rounded border border-white/20">
+                                        {Math.max(...item.michelinYears)}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
                         <h1 className="text-[30px] md:text-[36px] font-serif font-bold text-white leading-tight tracking-[0.02em] max-w-[95%] mb-2 drop-shadow-md">
                             {title}
                         </h1>

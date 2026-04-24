@@ -325,7 +325,7 @@ export const TEMPLATES: Template[] = [
                         arrivalTransport: 'public' 
                     },
                     { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a12')!, 
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-grandhotel')!, 
                         instanceId: 'cl-4', 
                         itemType: 'spot',
                         startTime: '14:30', 
@@ -1031,6 +1031,11 @@ export const TEMPLATES: Template[] = [
             { tag: '#零決策攻略', color: 'bg-amber-100 text-amber-800' },
             { tag: '#黑科技體驗', color: 'bg-blue-100 text-blue-800' }
         ],
+        valueProps: [
+            { zh: '零決策排程', en: '⚡ ZERO DECISION', descZh: '全程手動排雷', descEn: 'Fully optimized' },
+            { zh: '親子認證', en: '🛡️ KIDS VERIFIED', descZh: '孩子笑容保證', descEn: 'Family-approved' },
+            { zh: '物流配套', en: '📦 LOGISTICS PRO', descZh: '含寄存與預約', descEn: 'Booking & pickup' }
+        ],
         coverStory: {
             quote: '「帶小孩出國不是挑戰，而是與他們一起重新看世界的機會。」',
             quoteEn: '"Traveling with kids isn\'t a challenge, but a chance to see the world again through their eyes."',
@@ -1303,6 +1308,11 @@ export const TEMPLATES: Template[] = [
             { tag: '#攝影大片', color: 'bg-purple-100 text-purple-800' },
             { tag: '#海港氛圍', color: 'bg-blue-100 text-blue-800' }
         ],
+        valueProps: [
+            { zh: '第一次就不踩雷', en: '🏆 NO-TRAP FIRST TRIP', descZh: '全程精選不走冤枉路', descEn: 'Zero wasted steps guaranteed' },
+            { zh: '第一次就玩透台北', en: '🚇 MASTER TAIPEI', descZh: '捷運與關鍵 Uber 動線', descEn: 'Optimized MRT + Uber route' },
+            { zh: '第一次就拍出大片', en: '📸 PRO PHOTO GUIDE', descZh: '解鎖攝影師私藏機位', descEn: 'Unlock hidden master spots' }
+        ],
         coverStory: {
             quote: '「台北的美不在於單一的地標，而在於山、海與城市僅在咫尺之間。」',
             quoteEn: '"Taipei\'s beauty isn\'t in a single landmark, but in how mountains, ocean, and city are all within reach."',
@@ -1326,7 +1336,7 @@ export const TEMPLATES: Template[] = [
             {
                 title: '下載 Uber 與 Bus+ App',
                 titleEn: 'Uber & Bus+ Apps',
-                text: '本行程部分段建議搭乘 Uber 以節省體力，Bus+ 則能精準預測客運抵達時間，對去九份、野柳非常重要。',
+                text: '本行程部分路段建議搭乘 Uber 以節省體力，Bus+ 則能精準預測客運抵達時間，對去九份、野柳非常重要。',
                 textEn: 'We recommend Uber for certain legs to save energy. Bus+ is essential for real-time bus tracking to Jiufen and Yehliu.',
                 icon: 'Smartphone'
             }
@@ -1339,8 +1349,8 @@ export const TEMPLATES: Template[] = [
             { day: 1, summary: '大稻埕老時光 → 永樂市場午餐 → 101 攝影機位 → 象山夕陽與夜景', summaryEn: 'Dadaocheng Soul → Yongle Noodle → 101 Photo Spot → Elephant Mt. Sunset' },
             { day: 2, summary: '故宮瑰寶 → 圓山大飯店 → 中正紀念堂 → 士林夜市美食', summaryEn: 'Palace Museum → Grand Hotel → Memorial Hall → Shilin Night Market' },
             { day: 3, summary: '北投溫泉博物館 → 地熱谷仙境漫步 → 漁人碼頭夕陽 → 饒河夜市', summaryEn: 'Beitou Hot Spring → Thermal Valley → Tamsui Sunset → Raohe Night Market' },
-            { day: 4, summary: '野柳女王頭 → 十分瀑布彩虹 → 九份山城夜色 (關鍵 Uber 動線)', summaryEn: 'Yehliu Queen\'s Head → Shifen Falls → Jiufen Night (Uber Optimized)' },
-            { day: 5, summary: '基隆和平島天然泳池 → 正濱漁港彩色屋 → 基隆廟口夜市', summaryEn: 'Heping Island Pool → Zhengbin Color Houses → Keelung Miaokou Market' },
+            { day: 4, summary: '悠閒慢活 → 九份老街 → 金瓜石黃金博物館 → 報時山夕陽', summaryEn: 'Slow Morning → Jiufen Old Street → Gold Museum → Baoshi Mt. Sunset' },
+            { day: 5, summary: '野柳女王頭 → 基隆和平島 (天然泳池) → 正濱漁港彩色屋 → 基隆廟口夜市', summaryEn: 'Yehliu Queen\'s Head → Heping Island Pool → Zhengbin Color Houses → Keelung Market' },
             { day: 6, summary: '陽明山二子坪最美步道 → 台北車站伴手禮清單 → 機場接駁', summaryEn: 'Erziping Forest Trail → Taipei Station Gifts → Departure' }
         ],
         schedule: {
@@ -1349,15 +1359,18 @@ export const TEMPLATES: Template[] = [
                 themeEn: '【First Glimpse】Old Souls & City Skylines',
                 themeEmoji: '🌇',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f1')!, instanceId: 'c6-1-1', startTime: '08:30', arrivalTransport: 'public', expertNote: '💳 零決策提示：捷運善導寺站 5 號出口。只收現金，建議點厚燒餅夾蛋加鹹豆漿。', expertNoteEn: '💳 Zero-Decision: MRT Shandao Temple Exit 5. Cash only. Order thick biscuit w/ egg & savory soy milk.' },
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a1')!, instanceId: 'c6-1-2', startTime: '10:30', arrivalTransport: 'public', expertNote: '從善導寺搭捷運至大橋頭站。💡 攝影提示：迪化街的紅磚立面在早上 11 點的光線最立體。', expertNoteEn: 'MRT to Daqiaotou. 💡 Photo Tip: Dihua St\'s brick facades look best in 11 AM lighting.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-zhenfang')!, instanceId: 'c6-1-1', startTime: '08:30', arrivalTransport: 'public', expertNote: '💳 零決策：捷運大橋頭站。🧳 貼心提醒：若剛下飛機，請先將行李放至飯店或台北車站，大稻埕老店多不便拖行。', expertNoteEn: '💳 Zero-Decision: MRT Daqiaotou. 🧳 Luggage: Drop bags at hotel/station first; Dadaocheng shops are not luggage-friendly.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a1')!, instanceId: 'c6-1-2', startTime: '10:00', arrivalTransport: 'walk', expertNote: '💡 攝影提示：迪化街紅磚立面在 11 點光線最立體。順道拜訪霞海城隍廟，體驗最道地的月老文化。', expertNoteEn: '💡 Photo Tip: Dihua St facades look best in 11 AM light. Visit Xiahai Temple for local matchmaking culture.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-kuobook')!, instanceId: 'c6-1-kuo', startTime: '11:30', arrivalTransport: 'walk', expertNote: '📸 達人機位：二樓天井俯拍角度。這棟老宅是迪化街保存最完整的商業遺產。', expertNoteEn: '📸 Expert Spot: 2F courtyard overlook. This historic house is a well-preserved piece of Taipei history.' }
                 ],
                 afternoon: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f2')!, instanceId: 'c6-1-3', startTime: '12:30', arrivalTransport: 'walk', expertNote: '永樂市場 2 樓。找人最多的那一攤。💡 達人提示：點完麵記得加一小勺桌上的靈魂辣油。', expertNoteEn: 'Yongle Market 2F. Find the busiest stall. 💡 Expert Tip: Add a small spoon of the house chili oil.' },
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a21')!, instanceId: 'c6-1-4', startTime: '15:30', arrivalTransport: 'public', expertNote: '📸 達人機位：站在巷口使用 3x 焦段，能拍到 101 壓在老房子上方的震撼感。', expertNoteEn: '📸 Expert Spot: Use 3x zoom at the alley entrance to frame 101 over old houses.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f2')!, instanceId: 'c6-1-3', startTime: '12:30', arrivalTransport: 'walk', expertNote: '🍜 永樂市場 2 樓。💡 腳力保存：剛逛完老街，請在此處坐下休息至少 15 分鐘，喝杯青草茶再出發。', expertNoteEn: '🍜 Yongle Market 2F. 💡 Stamina: Take at least a 15-minute rest here; grab a herbal tea to recharge.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-yongkang')!, instanceId: 'c6-1-yk', startTime: '14:30', arrivalTransport: 'taxi', expertNote: '🚕 關鍵段落：建議從大稻埕直接搭 Uber 前往永康街（約 15 分鐘），避開捷運轉乘耗損體力。', expertNoteEn: '🚕 Critical Leg: Take an Uber from Dadaocheng to Yongkang St (~15m) to avoid tiring MRT transfers.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-101-alley')!, instanceId: 'c6-1-4', startTime: '16:30', arrivalTransport: 'public', expertNote: '📸 達人機位：站在巷口使用 3x 焦段，能拍到 101 壓在老房子上方的震撼感。', expertNoteEn: '📸 Expert Spot: Use 3x zoom at the alley entrance to frame 101 over old houses.' }
                 ],
                 evening: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a5')!, instanceId: 'c6-1-5', startTime: '17:30', arrivalTransport: 'walk', expertNote: '從松仁路步行約 10 分鐘即達登山口。💡 體力攻略：六巨石後再往上走 10 分鐘，視野更好且人更少。', expertNoteEn: '10m walk from Songren Rd. 💡 Stamina Hack: Climb 10m past Six Rocks for better views with fewer people.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a7')!, instanceId: 'c6-1-5', startTime: '17:30', arrivalTransport: 'walk', expertNote: '📸 攝影機位：眷村斜坡。💡 達人提示：這裡不用爬坡就能拍到 101 與老眷村的對比，是首訪台北最省力的「大片產地」。', expertNoteEn: '📸 Photo Spot: Village slopes. 💡 Expert Tip: No climbing needed for the iconic 101 vs. historic cabin shot—the easiest high-value photo op.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-fengsheng')!, instanceId: 'c6-1-din', startTime: '19:30', arrivalTransport: 'public', expertNote: '從「台北 101/世貿站」搭捷運紅線直達「東門站」。🍴 必吃：白斬雞。慶祝第一晚的豐盛台菜。', expertNoteEn: 'Red Line MRT from Taipei 101 to Dongmen. 🍴 Must-eat: Poached chicken. A warm Taiwanese celebratory dinner.' }
                 ],
                 night: [], accommodation: []
             },
@@ -1366,13 +1379,15 @@ export const TEMPLATES: Template[] = [
                 themeEn: '【Treasure】Imperial Aesthetics & Night Markets',
                 themeEmoji: '🏯',
                 morning: [
-                    { id: 'tw-t-a6', title: '國立故宮博物院', titleEn: 'National Palace Museum', itemType: 'spot', startTime: '09:00', arrivalTransport: 'public', expertNote: '搭捷運至士林站轉紅 30 公車。💡 零決策提示：建議提早線上預約門票，避開團客隊伍。', expertNoteEn: 'MRT Shilin + Red 30 bus. 💡 Zero-Decision: Book tickets online to skip the tour groups.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-npm')!, instanceId: 'c6-2-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通建議：搭乘捷運紅線至「士林站」，從 1 號出口轉乘「紅 30 號公車」。💡 零決策提示：建議提早線上預約門票，避開團客隊伍。', expertNoteEn: '🚍 Transit: MRT Red Line to Shilin Station, Exit 1, then transfer to "Red 30 Bus". 💡 Zero-Decision: Book tickets online to skip the tour groups.' }
                 ],
                 afternoon: [
-                    { id: 'tw-t-a7', title: '中正紀念堂', titleEn: 'Chiang Kai-shek Memorial', itemType: 'spot', startTime: '14:00', arrivalTransport: 'public', expertNote: '💡 必看亮點：整點的儀隊交接儀式。📸 攝影提示：在自由廣場牌樓下利用地面積水拍倒影。', expertNoteEn: '💡 Must-see: Hourly guard change. 📸 Photo Tip: Use ground puddles under the archway for reflections.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-silks')!, instanceId: 'c6-2-lunch', startTime: '12:00', arrivalTransport: 'walk', expertNote: '🍴 必吃：翠玉白菜港點。就在故宮建築群內，省去跨區覓食的煩惱。', expertNoteEn: '🍴 Must-eat: Jadeite Cabbage dim sum. Located right within the museum complex—no need to travel for lunch.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-grandhotel')!, instanceId: 'c6-2-grand', startTime: '14:30', arrivalTransport: 'taxi', expertNote: '🚕 建議叫 Uber。💡 零決策提示：密道導覽需提前 14 天網上預約，建議選 14:30 場次。', expertNoteEn: '🚕 Uber suggested. 💡 Zero-Decision: Book tunnel tour 14 days ahead; 14:30 slot recommended.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-cks')!, instanceId: 'c6-2-2', startTime: '16:30', arrivalTransport: 'public', expertNote: '搭捷運紅線直達。💡 必看亮點：整點的儀隊交接儀式。', expertNoteEn: 'Direct via MRT Red Line. 💡 Must-see: Hourly guard change ceremony.' }
                 ],
                 evening: [
-                    { id: 'tw-t-f7', title: '士林夜市', titleEn: 'Shilin Night Market', itemType: 'food', startTime: '18:30', arrivalTransport: 'public', expertNote: '捷運劍潭站 1 號出口。💡 避雷提示：不要在水果攤買切好的水果。推薦地下街的生炒花枝。', expertNoteEn: 'MRT Jiantan Exit 1. 💡 Avoid the pre-cut fruit stalls. Try the stir-fried squid in the basement food court.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-shilin')!, instanceId: 'c6-2-night', startTime: '18:30', arrivalTransport: 'public', expertNote: '搭捷運紅線回「劍潭站」。💡 避雷提示：不要在水果攤買切好的水果。', expertNoteEn: 'Back to MRT Jiantan (Red Line). 💡 Pro Tip: Avoid pre-cut fruit stalls.' }
                 ],
                 night: [], accommodation: []
             },
@@ -1381,44 +1396,59 @@ export const TEMPLATES: Template[] = [
                 themeEn: '【Healing】Hot Springs & Riverside Sunset',
                 themeEmoji: '♨️',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a17')!, instanceId: 'c6-3-1', startTime: '10:00', arrivalTransport: 'public', expertNote: '捷運新北投站。博物館週一公休，請注意。💡 達人提示：帶條小毛巾，可以去復興公園泡腳池免費泡腳。', expertNoteEn: 'MRT Xinbeitou. Museum closed Mondays. 💡 Expert Tip: Bring a towel for the free foot soak at Fuxing Park.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f1')!, instanceId: 'c6-3-b', startTime: '07:30', arrivalTransport: 'public', expertNote: '💳 零決策提示：捷運善導寺站 5 號出口。💡 達人指令：請在 06:30 ~ 07:00 之間抵達以避開兩小時的人潮。記得準備「現金」，這裡不收悠遊卡。', expertNoteEn: '💳 Zero-Decision: MRT Shandao Temple Exit 5. 💡 Expert Command: Arrive between 06:30-07:00 to avoid the 2hr queue. Cash only.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-beitou')!, instanceId: 'c6-3-1', startTime: '10:30', arrivalTransport: 'public', expertNote: '搭捷運至新北投站。💡 零決策路線：從圖書館走到地熱谷，感受百年和洋建築的靜謐。這段路微上坡，請慢行。', expertNoteEn: 'MRT to Xinbeitou. 💡 Zero-Decision: Walk from Library to Thermal Valley. Uphill slope, walk slowly.' }
                 ],
                 afternoon: [
-                    { id: 'tw-t-a11', title: '淡水老街與夕陽', titleEn: 'Tamsui Old St & Sunset', itemType: 'spot', startTime: '14:30', arrivalTransport: 'public', expertNote: '💡 達人路線：搭船前往漁人碼頭，回程搭輕軌看城市風景。', expertNoteEn: '💡 Expert Route: Ferry to Fisherman\'s Wharf, then return via Light Rail for city views.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-beitou-mkt')!, instanceId: 'c6-3-lunch', startTime: '12:30', arrivalTransport: 'walk', expertNote: '🍴 達人推薦：矮仔財滷肉飯。💡 避坑提示：避開 12 點高峰，下午兩點前會收攤。', expertNoteEn: '🍴 Rec: A-Zai-Cai Pork Rice. 💡 Pro Tip: Avoid the 12 PM peak; closes by 2 PM.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-tamsui')!, instanceId: 'c6-3-2', startTime: '15:00', arrivalTransport: 'public', expertNote: '捷運紅線直達淡水。💡 達人路線：先逛重建街（戀愛巷），然後前往渡船頭。', expertNoteEn: 'MRT Red Line to Tamsui. 💡 Expert Route: Explore Reconstruction St first, then head to Ferry Pier.' },
+                    {
+                        id: 'tamsui-ferry',
+                        title: '淡水河藍色公路渡輪',
+                        titleEn: 'Tamsui Blue Highway Ferry',
+                        itemType: 'spot',
+                        startTime: '17:00',
+                        arrivalTransport: 'ship',
+                        expertNote: '🛳️ 達人指令：從渡船頭搭船前往漁人碼頭。這能節省 15 分鐘公車顛簸，並在船上捕捉最美的淡水夕陽倒影。',
+                        expertNoteEn: '🛳️ Expert Command: Take the ferry to Fisherman\'s Wharf. Saves 15m of bus ride and offers the best sunset views from the water.'
+                    }
                 ],
                 evening: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f11')!, instanceId: 'c6-3-2', startTime: '19:00', arrivalTransport: 'public', expertNote: '松山捷運站出口即達。💡 必吃推薦：門口的胡椒餅一定要排。吃完去後方彩虹橋吹風。', expertNoteEn: 'Exit MRT Songshan. 💡 Must-eat: Pepper Buns at the entrance. Relax at Rainbow Bridge after.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-raohe')!, instanceId: 'c6-3-3', startTime: '19:00', arrivalTransport: 'public', expertNote: '🚍 交通決策：搭捷運至「中山站」轉綠線直達「松山站」。🍴 必吃米其林：福州世祖胡椒餅、陳董藥燉排骨。買完後去旁邊「彩虹橋」坐著吃。', expertNoteEn: '🚍 Transit Decision: MRT to Zhongshan then Green Line to Songshan. 🍴 Michelin Must-eats: Fuzhou Pepper Bun, Chen Dong Herbal Ribs. Eat at Rainbow Bridge nearby.' }
                 ],
                 night: [], accommodation: []
             },
             'Day 4': {
-                theme: '【奇觀】北海岸女王與山城夜色',
-                themeEn: '【Wonders】North Coast Queen & Mountain Night',
-                themeEmoji: '👑',
+                theme: '【金脈】深度的山城與海景',
+                themeEn: '【Golden】Deep Mountain & Coastal Views',
+                themeEmoji: '⛰️',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a14')!, instanceId: 'c6-4-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通攻略：台北車站搭乘 1815 客運直達野柳。💡 零決策：下車後步行 10 分鐘即達公園入口。', expertNoteEn: '🚍 Transit: Bus 1815 from Taipei Station. 💡 Zero-Decision: 10m walk to park entry after drop-off.' }
+                    { id: 'taipei-rest', title: '台北早晨：準備出發', titleEn: 'Taipei Morning: Getting Ready', itemType: 'spot', startTime: '09:30', arrivalTransport: 'walk', expertNote: '🚌 交通指南：今天我們搭乘 965 快速公車。不論您住哪，建議前往「捷運西門站」或「捷運北門站」搭乘最為方便。💡 班次頻繁，約 15-30 分鐘一班，建議 10:00 前上車。', expertNoteEn: '🚌 Transit Guide: We\'re taking Bus 965 today. Head to "MRT Ximen" or "MRT Beimen" station—these are the best hubs regardless of where you stay. 💡 Buses run every 15-30 mins; aim to board by 10 AM.' }
                 ],
                 afternoon: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a15')!, instanceId: 'c6-4-2', startTime: '13:00', arrivalTransport: 'taxi', expertNote: '🚕 關鍵 Uber 段：野柳至十分建議直接叫 Uber (約 40 分鐘)，省去轉乘 2 小時的痛苦。', expertNoteEn: '🚕 Critical Uber Leg: Yehliu to Shifen via Uber (~40m). Saves 2h of painful transfers.' },
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a16')!, instanceId: 'c6-4-3', startTime: '16:30', arrivalTransport: 'public', expertNote: '從十分搭平溪線火車至瑞芳，再搭 Uber 或公車上山。💡 攝影機位：18:00 前抵達阿妹茶樓對面。', expertNoteEn: 'Train to Ruifang, then Uber/Bus uphill. 💡 Photo Spot: Arrive across A-Mei Tea House by 6 PM.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a16')!, instanceId: 'c6-4-1', startTime: '11:30', arrivalTransport: 'public', expertNote: '🚌 交通建議：從西門或捷運北門站搭乘 965 快速公車直達九份老街 (車程約 70-90 分)。💡 避人潮攻略：中午抵達能避開傍晚的極致人潮。', expertNoteEn: '🚌 Transit: Take Bus 965 from Ximen or Beimen MRT directly to Jiufen (approx. 70-90 mins). 💡 Strategy: Arriving by noon beats the massive evening crowds.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a23')!, instanceId: 'c6-4-2', startTime: '14:00', arrivalTransport: 'public', expertNote: '💰 礦徑時光：從九份老街站牌 (7-11 旁) 搭乘往金瓜石方向公車 (788, 825, 856, 965 均可)，僅需 5-10 分鐘。觸摸 220 公斤純金磚是必做儀式。', expertNoteEn: '💰 Mining History: Take any bus toward Jinguashi (788, 825, 856, 965) from the Jiufen Old St stop (next to 7-11); it\'s only 5-10 mins. Touching the 220kg gold bar is a must.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a42')!, instanceId: 'c6-4-3', startTime: '15:30', arrivalTransport: 'walk', expertNote: '🏞️ 絕美攝影：步行 10 分鐘即可抵達報時山。這裡能拍到陰陽海與「六坑斜坡索道」紅磚廢墟的末日美感，視角極其開闊。', expertNoteEn: '🏞️ Panoramic Views: A 10-min walk to Baoshi Mountain for the Yinyang Sea and the "Six-Pit Railway" ruins for that iconic doomsday aesthetic.' }
                 ],
                 evening: [
-                    { id: 'custom-jiufen-tea', title: '九份山城夜遊', titleEn: 'Jiufen Night Wander', itemType: 'spot', startTime: '19:00', arrivalTransport: 'walk', expertNote: '九份的靈魂在天黑之後。找間茶樓坐下，看著海港燈火亮起，這是此行最浪漫的瞬間。', expertNoteEn: 'Jiufen\'s soul is after dark. Find a tea house and watch the harbor lights; the most romantic moment.' }
+                    { id: 'jiufen-return', title: '山城歸途：快速直達', titleEn: 'Jiufen Return Logistics', itemType: 'spot', startTime: '17:30', arrivalTransport: 'public', expertNote: '🚌 歸途指引：推薦搭乘 965 公車直達「捷運西門站」。💡 班次指引：若想在車上補眠，這是最佳時機，預計 19:00 抵達台北。', expertNoteEn: '🚌 Return: Take Bus 965 directly to "MRT Ximen Station." 💡 Pro Tip: This 90-min ride is the perfect time for a nap before dinner.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-fam-ximending')!, instanceId: 'c6-4-4', startTime: '19:30', arrivalTransport: 'walk', expertNote: '🍲 暖心晚餐：推薦前往「萬年大樓」B1 尋找老字號牛肉麵與排骨飯，或到峨眉街品嚐「阿宗麵線」（站著吃也是一種在地體驗）。💡 達人提示：回飯店前可以順便去「老天祿」買點滷味當宵夜。西門町的夜晚越晚越熱鬧，即便只是散步感受都會活力也很棒。', expertNoteEn: '🍲 Hearty Dinner: Head to Wannien Building B1 for classic beef noodles and pork chop rice, or grab Ah-Zhong Flour Rice Noodles on Emey St. 💡 Pro Tip: Stop by Lao Tian Lu for their famous braised snacks to enjoy back at the hotel. Ximending at night is vibrant and perfect for a slow post-dinner stroll.' }
                 ],
                 night: [], accommodation: []
             },
             'Day 5': {
-                theme: '【色彩】海港浴缸與威尼斯影像',
-                themeEn: '【Colors】Ocean Bath & Venice Visuals',
-                themeEmoji: '🏊',
+                theme: '【海味】地質奇觀與彩色威尼斯',
+                themeEn: '【Seaside】Geo-Wonders & Colorful Harbor',
+                themeEmoji: '🌊',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a18')!, instanceId: 'c6-5-1', startTime: '10:00', arrivalTransport: 'public', expertNote: '搭台鐵至基隆站，轉公車或 Uber。💡 零決策：夏天請自備泳衣，體驗天然海水泳池。', expertNoteEn: 'Train to Keelung + Bus/Uber. 💡 Zero-Decision: Bring swimwear in summer for the natural pools.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a14')!, instanceId: 'c6-5-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通攻略：國光客運 1815 直達。💡 達人指令：務必 09:00 開門進場以避開熱浪與大團客。', expertNoteEn: '🚍 Transit: Bus 1815. 💡 Expert Command: Enter at 09:00 sharp to avoid the heat and tour groups.' }
                 ],
                 afternoon: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a19')!, instanceId: 'c6-5-2', startTime: '14:30', arrivalTransport: 'public', expertNote: '和平島步行約 15 分鐘可達。📸 達人機位：木棧道平台能拍到完美的港面彩色倒影。', expertNoteEn: '15m walk from Heping Island. 📸 Expert Spot: Wooden platform for perfect mirror reflections.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a18')!, instanceId: 'c6-5-2', startTime: '13:00', arrivalTransport: 'taxi', expertNote: '🚕 關鍵段落：建議從野柳搭 Uber 直達和平島（約 25 分鐘），這是海線最舒適的接駁方式。', expertNoteEn: '🚕 Critical Leg: Uber from Yehliu to Heping Island (~25m). The most comfortable coastal link.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a19')!, instanceId: 'c6-5-3', startTime: '15:30', arrivalTransport: 'public', expertNote: '就在和平島出口旁。📸 達人機位：木棧道平台捕捉漁港倒影。', expertNoteEn: 'Right near the island exit. 📸 Expert Spot: Wooden platform for harbor reflections.' }
                 ],
                 evening: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f10')!, instanceId: 'c6-5-3', startTime: '18:30', arrivalTransport: 'public', expertNote: '🍴 必吃清單：營養三明治(先領號碼牌！)、泡泡冰、鐤邊趖。💡 達人提示：買完可以去旁邊奠濟宮門口坐著吃。', expertNoteEn: '🍴 Must-eats: Sandwich (get ticket first!), Bubble Ice. 💡 Expert Tip: Eat at the temple entrance nearby.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f10')!, instanceId: 'c6-5-4', startTime: '18:30', arrivalTransport: 'public', expertNote: '基隆廟口是全台最有秩序、最好吃的夜市之一。💡 必吃：營養三明治、泡泡冰。', expertNoteEn: 'Keelung Miaokou is a top-tier organized market. 💡 Must-eats: Nutritious Sandwich, Bubble Ice.' }
                 ],
                 night: [], accommodation: []
             },
@@ -1427,13 +1457,14 @@ export const TEMPLATES: Template[] = [
                 themeEn: '【Quiet】Forest Breath & Last Shopping',
                 themeEmoji: '🌲',
                 morning: [
-                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a20')!, instanceId: 'c6-6-1', startTime: '09:30', arrivalTransport: 'public', expertNote: '🚍 交通攻略：捷運劍潭站搭乘 108 遊園公車。💡 體力提示：全程無階梯，非常適合當作行程最後一天的緩衝。', expertNoteEn: '🚍 Transit: Bus 108 from MRT Jiantan. 💡 Stamina: Step-free trail, perfect for the last day.' }
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a20')!, instanceId: 'c6-6-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '🚍 交通攻略：捷運劍潭站搭乘 108 遊園公車。💡 體力提示：全程無階梯。', expertNoteEn: '🚍 Transit: Bus 108 from MRT Jiantan. 💡 Stamina: Step-free trail.' },
+                    { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-milkfall')!, instanceId: 'c6-6-milk', startTime: '11:00', arrivalTransport: 'public', expertNote: '🥛 陽明山隱藏版：水質富含硫磺而呈乳白色。📸 攝影提示：就在路邊石牆後，2 分鐘即可拍到美照。', expertNoteEn: '🥛 Hidden Gem: Milky white water due to sulfur. 📸 Photo Tip: Right behind the roadside wall, 2m walk for a great shot.' }
                 ],
                 afternoon: [
-                    { id: 'tw-t-gifts', title: '台北車站伴手禮採買', titleEn: 'Taipei Station Souvenirs', itemType: 'shopping', startTime: '14:00', arrivalTransport: 'public', expertNote: '北車微風與地下街有最齊全的伴手禮。💡 推薦：佳德鳳梨酥、快車肉乾。', expertNoteEn: 'Taipei Station Breeze & Underground malls have it all. 💡 Recs: Chia Te Pineapple Cakes, Kuai Che Jerky.' }
+                    { id: 'tw-t-gifts', title: '台北車站伴手禮採買', titleEn: 'Taipei Station Souvenirs', itemType: 'spot', startTime: '14:00', arrivalTransport: 'public', expertNote: '北車微風與地下街有最齊全的伴手禮。💡 推薦：佳德鳳梨酥、快車肉乾。', expertNoteEn: 'Taipei Station Breeze & Underground malls have it all. 💡 Recs: Chia Te Pineapple Cakes, Kuai Che Jerky.' }
                 ],
                 evening: [
-                    { id: 'airport-transfer', title: '機場接駁 / 出發', titleEn: 'Airport Transfer / Departure', itemType: 'transport', startTime: '17:00', arrivalTransport: 'public', expertNote: '搭乘機場捷運直達機場。💡 零決策提示：記得檢查航廈，並預留 3 小時抵達機場。', expertNoteEn: 'Airport MRT straight to terminals. 💡 Zero-Decision: Check your terminal and allow 3h for airport arrival.' }
+                    { id: 'airport-transfer', title: '機場接駁 / 出發', titleEn: 'Airport Transfer / Departure', itemType: 'spot', startTime: '17:00', arrivalTransport: 'public', expertNote: '搭乘機場捷運直達機場。💡 零決策提示：記得檢查航廈，並預留 3 小時抵達機場。', expertNoteEn: 'Airport MRT straight to terminals. 💡 Zero-Decision: Check your terminal and allow 3h for airport arrival.' }
                 ],
                 night: [], accommodation: []
             }

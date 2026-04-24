@@ -1,5 +1,5 @@
 export type ItemType = 'attraction' | 'food' | 'hotel' | 'transport' | 'shopping' | 'nature' | 'custom' | 'vibe' | 'experiential';
-export type TransportMode = 'car' | 'walk' | 'public' | 'taxi' | 'bike';
+export type TransportMode = 'car' | 'walk' | 'public' | 'taxi' | 'bike' | 'ship' | 'ferry';
 export type LangType = 'zh' | 'en';
 export type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night' | 'accommodation' | 'unsorted';
 export type ViewMode = 'overview' | 'canvas' | 'map' | 'checklist' | 'budget' | 'discovery' | 'favorites' | 'projects' | 'flights' | 'hotels' | 'files'; // Supports split view and mobile map
@@ -66,6 +66,8 @@ export interface SurvivalGuide {
     topics: SurvivalTopic[];
 }
 
+export type MichelinRating = '3-star' | '2-star' | '1-star' | 'bib-gourmand' | 'selected';
+
 export interface TravelItem {
     id: string;
     title: string;
@@ -79,7 +81,10 @@ export interface TravelItem {
     address?: string;
     addressEn?: string; // English Address
     rating?: number;
-    tips?: string;
+    michelinRating?: MichelinRating; // [NEW] Michelin Guide rating
+    michelinYears?: number[];        // [NEW] Years of recommendation (e.g. [2022, 2023, 2024, 2025])
+    isVegetarianFriendly?: boolean;
+    dietaryOptions?: ('vegetarian' | 'vegan' | 'gluten-free' | 'halal')[];
     x?: number; // relative x (0-100) for demo map
     y?: number; // relative y (0-100) for demo map
     lat?: number; // Real latitude
@@ -489,6 +494,12 @@ export interface Template {
     valueAnchor?: string;     // [NEW] High-conversion value proposition
     valueAnchorEn?: string;
     customStats?: TemplateStat[]; // 4 items for the premium horizontal bar (Fig. 7)
+    valueProps?: Array<{
+        zh: string;
+        en: string;
+        descZh: string;
+        descEn: string;
+    }>;
 }
 
 // [NEW] Interface for custom template statistics (Fig. 7)

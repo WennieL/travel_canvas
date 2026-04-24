@@ -95,7 +95,9 @@ const MapView: React.FC<MapViewProps> = ({
     // Filter Tags Definition
     const FILTER_TAGS = [
         { id: 'all', labelKey: 'filter_all', icon: '🌟' },
-        { id: 'food', labelKey: 'filter_food', icon: '🍔' },
+        { id: 'michelin', labelKey: 'michelin_guide', icon: '😋' },
+        { id: 'vegetarian', labelKey: 'filter_vegetarian', icon: '🌱' },
+        { id: 'food', labelKey: 'filter_food', icon: '🍜' },
         { id: 'attraction', labelKey: 'filter_attraction', icon: '📸' },
         { id: 'shopping', labelKey: 'filter_shopping', icon: '🛍️' },
         { id: 'nature', labelKey: 'nature', icon: '🌲' },
@@ -158,8 +160,11 @@ const MapView: React.FC<MapViewProps> = ({
             if (selectedCategory !== 'all') {
                 if (selectedCategory === 'saved') {
                     // TODO: Connect to actual savedSpots state if available
-                    // For now, filter by a mock property or just omit if no saved items
                     discoveryAssets = discoveryAssets.filter(a => (a as any).isSaved);
+                } else if (selectedCategory === 'michelin') {
+                    discoveryAssets = discoveryAssets.filter(a => !!a.michelinRating);
+                } else if (selectedCategory === 'vegetarian') {
+                    discoveryAssets = discoveryAssets.filter(a => a.isVegetarianFriendly);
                 } else {
                     discoveryAssets = discoveryAssets.filter(asset => asset.type === selectedCategory);
                 }
@@ -240,9 +245,23 @@ const MapView: React.FC<MapViewProps> = ({
                             </div>
                         </div>
 
+                        <!-- [NEW] Michelin Icon Badge -->
+                        ${item.michelinRating ? `
+                            <div class="absolute -top-1.5 -right-1.5 w-6 h-6 bg-[#E60012] rounded-full border-2 border-white flex items-center justify-center shadow-lg z-20">
+                                <span class="text-[10px]">${item.michelinRating === 'bib-gourmand' ? '😋' : '⭐'}</span>
+                            </div>
+                        ` : ''}
+
+                        <!-- [NEW] Vegetarian Badge -->
+                        ${item.isVegetarianFriendly ? `
+                            <div class="absolute -bottom-1.5 -left-1.5 w-5 h-5 bg-[#22C55E] rounded-full border-2 border-white flex items-center justify-center shadow-lg z-20">
+                                <span class="text-[10px]">🌱</span>
+                            </div>
+                        ` : ''}
+
                         <!-- [NEW] Camera Icon Badge -->
                         ${item.isPhotographySpot ? `
-                            <div class="absolute -top-1 -left-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg animate-bounce duration-[2000ms]">
+                            <div class="absolute -top-1 -left-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg animate-bounce duration-[2000ms] z-10">
                                 <span class="text-[10px]">📸</span>
                             </div>
                         ` : ''}
@@ -286,6 +305,13 @@ const MapView: React.FC<MapViewProps> = ({
                     </div>
                 ` : ''}
 
+                <!-- [NEW] Michelin Icon Badge for Scheduled Items -->
+                ${item.michelinRating ? `
+                    <div class="absolute -top-1.5 -right-1.5 w-6 h-6 bg-[#E60012] rounded-full border-2 border-white flex items-center justify-center shadow-lg z-[1002]">
+                        <span class="text-[10px]">${item.michelinRating === 'bib-gourmand' ? '😋' : '⭐'}</span>
+                    </div>
+                ` : ''}
+
                 <!-- [NEW] Camera Icon Badge for Scheduled Items -->
                 ${item.isPhotographySpot ? `
                     <div class="absolute -top-1.5 -left-1.5 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg z-[1001] animate-bounce duration-[3000ms]">
@@ -325,7 +351,10 @@ const MapView: React.FC<MapViewProps> = ({
     };
 
     return (
-        <div className={`bg-gray-100 rounded-3xl relative overflow-hidden border border-gray-200 shadow-inner flex ${isMobile && !isFullScreen ? (isLandscape ? 'flex-row-reverse h-[85svh]' : 'flex-col-reverse h-[85svh]') : 'flex-row h-full min-h-[500px]'}`}>
+        <div 
+            className={`bg-gray-100 rounded-3xl relative overflow-hidden border border-gray-200 shadow-inner flex ${isMobile && !isFullScreen ? (isLandscape ? 'flex-row-reverse h-[85svh]' : 'flex-col-reverse h-[85svh]') : 'flex-row h-full min-h-[500px]'}`}
+            style={{ touchAction: 'pan-y' }}
+        >
 
             {/* Sidebar List (Classic Mode Only) */}
             {!discoveryCreatorId && ((!isMobile && !isEmbedded && showList) || (isMobile && !isFullScreen && !isEmbedded)) && points.length > 0 && (
@@ -463,7 +492,12 @@ const MapView: React.FC<MapViewProps> = ({
                                         {spot.coverImage ? (
                                             <img src={spot.coverImage} className="w-full h-full object-cover" alt={title} />
                                         ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-2xl bg-gradient-to-br from-teal-50 to-slate-100">
+                                            <div 
+                                                className="w-full h-full flex items-center justify-center text-2xl bg-gradient-to-br from-teal-50 to-slate-100"
+                                                onTouchStart={(e) => e.stopPropagation()}
+                                                onTouchMove={(e) => e.stopPropagation()}
+                                                onPointerDown={(e) => e.stopPropagation()}
+                                            >
                                                 {selectedItem.image || '📍'}
                                             </div>
                                         )}
@@ -483,8 +517,18 @@ const MapView: React.FC<MapViewProps> = ({
                                                 {typePill}
                                             </span>
                                             {spot.isPhotographySpot && (
-                                                <span className="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-black border border-amber-200 leading-none flex items-center gap-1 animate-pulse">
+                                                <span className="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700 text-[10px] font-black border border-amber-200 leading-none flex items-center gap-1">
                                                     📸 {lang === 'zh' ? '達人機位' : 'Expert Spot'}
+                                                </span>
+                                            )}
+                                            {spot.michelinRating && (
+                                                <span className="px-1.5 py-0.5 rounded-full bg-[#E60012] text-white text-[10px] font-black border border-[#E60012] leading-none flex items-center gap-1 shadow-sm">
+                                                    {spot.michelinRating === 'bib-gourmand' ? '😋' : '⭐'} {lang === 'zh' ? '米其林' : 'Michelin'}
+                                                </span>
+                                            )}
+                                            {spot.isVegetarianFriendly && (
+                                                <span className="px-1.5 py-0.5 rounded-full bg-[#22C55E] text-white text-[10px] font-black border border-[#22C55E] leading-none flex items-center gap-1 shadow-sm">
+                                                    🌱 {lang === 'zh' ? '素食友善' : 'Veggie'}
                                                 </span>
                                             )}
                                             <span className="flex items-center gap-0.5 text-amber-500 text-[11px] font-bold">

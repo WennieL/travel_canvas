@@ -461,7 +461,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
             {/* 2. Sticky Tab Bar */}
             <div className="sticky top-0 z-[100] bg-white border-b border-[#E8EDE4] shadow-sm">
-                <div className="flex overflow-x-auto no-scrollbar px-6 gap-10 py-5 touch-pan-y">
+                <div className="flex overflow-x-auto no-scrollbar px-6 gap-10 py-5 touch-pan-x">
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
@@ -566,17 +566,17 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
 
                         {/* 3a. Value Proposition Strip (PREMIUM) */}
                         <div className="flex justify-between gap-3 mb-10">
-                            {[
-                                { zh: '零決策排程', en: '⚡ ZERO DECISION', desc: 'zh: 全程手動排雷 / en: Fully optimized' },
-                                { zh: '親子認證', en: '🛡️ KIDS VERIFIED', desc: 'zh: 孩子笑容保證 / en: Family-approved' },
-                                { zh: '物流配套', en: '📦 LOGISTICS PRO', desc: 'zh: 含寄存與預約 / en: Booking & pickup' }
-                            ].map((val, idx) => (
+                            {(template.valueProps || [
+                                { zh: '零決策排程', en: '⚡ ZERO DECISION', descZh: '全程手動排雷', descEn: 'Fully optimized' },
+                                { zh: '親子認證', en: '🛡️ KIDS VERIFIED', descZh: '孩子笑容保證', descEn: 'Family-approved' },
+                                { zh: '物流配套', en: '📦 LOGISTICS PRO', descZh: '含寄存與預約', descEn: 'Booking & pickup' }
+                            ]).map((val, idx) => (
                                 <div key={idx} className="flex-1 bg-[#F1F3EE]/50 border border-bg-primary/5 rounded-2xl p-3 text-center">
                                     <div className="text-[10px] font-black text-bg-primary tracking-widest mb-1">
                                         {lang === 'zh' ? val.zh : val.en}
                                     </div>
                                     <div className="text-[8px] font-bold text-[#8E9285] uppercase opacity-70">
-                                        {lang === 'zh' ? val.desc.split(' / ')[0].replace('zh: ', '') : val.desc.split(' / ')[1].replace('en: ', '')}
+                                        {lang === 'zh' ? val.descZh : val.descEn}
                                     </div>
                                 </div>
                             ))}
@@ -714,7 +714,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                 <Sparkles size={22} className="text-amber-500 fill-amber-500/20" />
                                 <h4 className="text-[20px] font-heading font-black text-[#181D17]">{t.tripHighlights}</h4>
                             </div>
-                            <div className="flex overflow-x-auto no-scrollbar gap-5 -mx-6 px-6 pb-4 touch-pan-y">
+                            <div className="flex overflow-x-auto no-scrollbar gap-5 -mx-6 px-6 pb-4 touch-pan-x">
                                 {(() => {
                                     const allSpots: any[] = [];
                                     const schedule = template.schedule as any;

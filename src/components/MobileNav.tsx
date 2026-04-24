@@ -124,14 +124,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             {/* More Menu Overlay */}
             {showMoreMenu && (
                 <div
-                    className="lg:hidden fixed inset-0 bg-black/20 z-[2040]"
+                    className="lg:hidden fixed inset-0 bg-black/20 z-[5040]"
                     onClick={() => setShowMoreMenu(false)}
                 />
             )}
 
             {/* More Menu Bottom Sheet */}
             {showMoreMenu && (
-                <div className="lg:hidden fixed bottom-16 left-0 right-0 bg-white rounded-t-[32px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.08)] z-[2050] border-t border-gray-100 overflow-hidden animate-in slide-in-from-bottom duration-300">
+                <div className="lg:hidden fixed bottom-16 left-0 right-0 bg-white rounded-t-[32px] rounded-b-none shadow-[0_-10px_40px_rgba(0,0,0,0.08)] z-[5050] border-t border-gray-100 overflow-hidden animate-in slide-in-from-bottom duration-300">
                     {/* Grabber */}
                     <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mt-4 mb-2" />
 
@@ -208,7 +208,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             )}
 
             {/* Bottom Tab Bar (Emerald Canopy Spec: handle safe area, absolute bottom fix) */}
-            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[4000] bg-white">
+            <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[5000] bg-white">
                 {/* Main Content Bar */}
                 <div className="relative bg-white border-t border-[#E8EDE4] grid grid-cols-4 items-center pt-3 pb-[calc(12px+env(safe-area-inset-bottom))] shadow-[0_-1px_10px_rgba(0,0,0,0.02)] translate-y-[0.5px]">
                     {mobilePrimary.map((tab: NavItem) => {
