@@ -56,7 +56,15 @@ const DropZone: React.FC<DropZoneProps> = ({
     // Passed from parent
     const onDelete = (i: number) => onRemoveItem(i);
     const onTransportChange = (i: number, m: TransportMode) => onUpdateItem(i, { arrivalTransport: m });
-    const nextModeMap: Record<TransportMode, TransportMode> = { 'car': 'public', 'public': 'walk', 'walk': 'taxi', 'taxi': 'bike', 'bike': 'car' };
+    const nextModeMap: Record<TransportMode, TransportMode> = { 
+        'car': 'public', 
+        'public': 'walk', 
+        'walk': 'taxi', 
+        'taxi': 'bike', 
+        'bike': 'ship',
+        'ship': 'ferry',
+        'ferry': 'car'
+    };
     const handleTransportClick = (e: React.MouseEvent, index: number, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(index, nextMode); };
     const handleCrossSlotTransportClick = (e: React.MouseEvent, currentMode: TransportMode = 'car') => { e.stopPropagation(); const nextMode = nextModeMap[currentMode]; onTransportChange(0, nextMode); };
 

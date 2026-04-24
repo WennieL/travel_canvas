@@ -3801,5 +3801,225 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         expertNote: '一定要趁熱吃湯圓！吃完剩下的冰可以到櫃檯「免費續加」桂花蜜和檸檬汁，變成清爽的飲品。',
         expertNoteEn: 'Eat the dumplings while they\'re hot! You can get free refills of honey and lemon juice for the leftover ice.'
     },
+    {
+        id: 'tw-t-a-jjy',
+        title: '軍艦岩 (Jun-Jian-Yan)',
+        titleEn: 'Battleship Rock',
+        type: 'nature',
+        duration: '1.5小時',
+        image: '🧗',
+        description: '這是一塊巨大的白色石英砂岩，外型酷似一艘破浪而出的軍艦。它是台北北投最受歡迎的親山步道，只需 15-20 分鐘即可攻頂。山頂視野極其遼闊，可以俯瞰整個台北盆地與威嚴的關渡平原。',
+        descriptionEn: 'A massive white sandstone rock formation resembling a battleship. It\'s a popular 20-minute hike in Beitou, offering 360-degree views of the Taipei Basin and Guandu Plain.',
+        price: 0,
+        address: '台北市北投區立農街二段155號 (陽明交通大學內)',
+        rating: 4.8,
+        lat: 25.1205,
+        lng: 121.5175,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['攝影', '步道', '奇岩'],
+        themeColor: '#cbd5e1',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【攻頂儀式】',
+                labelEn: 'Summit Ritual',
+                summary: '站在「艦頭」拍大片',
+                summaryEn: 'Stand at the Prow',
+                story: '站在最高處的白色岩層上，能拍出宛如置身荒野的感覺。💡 攝影提示：利用廣角鏡頭，由下往上拍，可以拍出軍艦岩與後方台北 101 同框的視覺壓縮感。',
+                storyEn: 'Stand on the white rock summit for a "wilderness" vibe. 💡 Photo Tip: Use a wide-angle lens from a low angle to frame the rock with Taipei 101 in the background.'
+            },
+            {
+                id: 'trap',
+                label: '【防滑提醒】',
+                labelEn: 'Slip Warning',
+                summary: '砂岩易滑，穿防滑鞋',
+                summaryEn: 'Slippery Sandstone',
+                story: '山頂的石英砂岩非常平滑且帶有細砂。即便天氣晴朗也容易打滑，強烈建議穿著抓地力強的運動鞋，避免在岩層邊緣奔跑。',
+                storyEn: 'The sandstone is smooth and covered in fine sand. Even on sunny days, it can be slippery. Wear shoes with good grip and stay away from the edges.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a-yhd',
+        title: '銀河洞越嶺步道 (Yin-He-Dong)',
+        titleEn: 'Silver Stream Cave',
+        type: 'nature',
+        duration: '2小時',
+        image: '🏞️',
+        description: '一個嵌入在峭壁中的百年古廟，瀑布從窗櫺前輕灑落下，宛如武俠小說中的仙境。這裡是新店最神祕的戶外景點，結合了自然之美與濃厚的宗教神祕感。',
+        descriptionEn: 'A historic cliffside temple with a waterfall cascading past its windows. A mystical oasis in Xindian that feels like a scene from a martial arts epic.',
+        price: 0,
+        address: '新北市新店區銀河路',
+        rating: 4.7,
+        lat: 24.9583,
+        lng: 121.5833,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['攝影', '廟宇', '瀑布'],
+        themeColor: '#34d399',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【經典機位】',
+                labelEn: 'Iconic Shot',
+                summary: '從窗櫺外拍向呂洞賓廟',
+                summaryEn: 'Through the Windows',
+                story: '這是最出名的打卡角度。站在廟宇突出的平台上，瀑布就在你身後飛濺。💡 攝影提示：下午的光線最柔和，能拍出瀑布水霧瀰漫的仙氣。',
+                storyEn: 'The most famous shot. Stand on the protruding platform with the waterfall splashing behind you. 💡 Afternoon light is best for capturing the "ethereal" mist.'
+            },
+            {
+                id: 'trap',
+                label: '【體力評估】',
+                labelEn: 'Stamina Check',
+                summary: '一段不長但陡的樓梯',
+                summaryEn: 'Short but Steep Stairs',
+                story: '雖然步道全程只要 15-20 分鐘，但幾乎全是不斷上升的石階。夏天爬會非常悶熱，建議攜帶足夠的水並預備一件擦汗的毛巾。',
+                storyEn: 'It\'s only a 15-20 min walk, but it\'s all steep stone steps. It can get very humid in summer; bring plenty of water and a towel.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a-teapot',
+        title: '無耳茶壺山 (Teapot Mt.)',
+        titleEn: 'Teapot Mountain',
+        type: 'nature',
+        duration: '3小時',
+        image: '⛰️',
+        description: '因山頂形狀酷似沒有把手的茶壺而得名。這裡是瑞芳最具挑戰性的景觀步道之一，山頂擁有 360 度的山海全景，能將金瓜石、九份與陰陽海一次收進眼底。',
+        descriptionEn: 'Named for its unique teapot shape. One of Ruifang\'s most challenging scenic trails, offering a 360-degree panorama of Jiufen, Jinguashi, and the Yinyang Sea.',
+        price: 0,
+        address: '新北市瑞芳區金瓜石',
+        rating: 4.9,
+        lat: 25.1114,
+        lng: 121.8655,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['冒險', '登山', '全景'],
+        themeColor: '#a855f7',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【終極巔峰】',
+                labelEn: 'Summit Peak',
+                summary: '攀爬進入「茶壺」內部',
+                summaryEn: 'Into the Teapot',
+                story: '步道的終點是一堆巨石。體力好的人可以透過繩索攀爬進入洞內。💡 達人提示：洞內空間狹小且岩石粗糙，請務必戴上手套，並在有同伴陪同的情況下進行。',
+                storyEn: 'The trail ends at a cluster of giant boulders. You can use ropes to climb into the "teapot." 💡 Wear gloves and never climb alone; the space is tight and rocky.'
+            },
+            {
+                id: 'trap',
+                label: '【氣候守則】',
+                labelEn: 'Weather Rule',
+                summary: '強風與午後雷雨',
+                summaryEn: 'High Winds & Storms',
+                story: '山頂完全沒有遮蔽物。如果風勢太大或看到遠方有烏雲，請立刻撤離，不要勉強登頂，因為稜線上的雷擊風險極高。',
+                storyEn: 'The summit is totally exposed. If winds are strong or dark clouds appear, descend immediately. Lightning risks on the ridge are high.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a-bitou',
+        title: '鼻頭角步道 (Bitoujiao)',
+        titleEn: 'Bitoujiao Trail',
+        type: 'nature',
+        duration: '2小時',
+        image: '🐉',
+        description: '被譽為「台版萬里長城」。這條步道沿著鼻頭角的山脊蜿蜒而上，左手邊是翠綠的山巒，右手邊是深邃的太平洋。步道的終點能拍到層層疊疊的山脊線與大海交織出的視覺奇蹟。',
+        descriptionEn: 'The "Great Wall of Taiwan." This ridge-line trail offers emerald mountains on one side and the deep Pacific on the other. An architectural and natural masterpiece.',
+        price: 0,
+        address: '新北市瑞芳區鼻頭路',
+        rating: 4.8,
+        lat: 25.1278,
+        lng: 121.9166,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['攝影', '海岸', '經典'],
+        themeColor: '#3b82f6',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【龍脈攝影】',
+                labelEn: 'Dragon Photo',
+                summary: '拍攝蜿蜒的山脊步道',
+                summaryEn: 'The Winding Ridge',
+                story: '站在步道的高點回頭望去，步道就像一條巨龍盤踞在山脊上。💡 攝影提示：使用手機的「全景模式」或「廣角」，能捕捉到步道、山海與燈塔共存的震撼畫面。',
+                storyEn: 'From the high point, the trail looks like a dragon on the ridge. 💡 Use Panorama or Wide-angle to capture the trail, sea, and lighthouse in one shot.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a-houtong',
+        title: '猴硐貓村',
+        titleEn: 'Houtong Cat Village',
+        type: 'attraction',
+        address: '新北市瑞芳區',
+        addressEn: 'Ruifang, New Taipei',
+        category: '文化體驗',
+        tags: ['貓奴必去', '礦業遺產', '療癒'],
+        themeColor: '#fbbf24',
+        coverImage: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【尋貓大作戰】',
+                labelEn: 'Cat Hunt',
+                summary: '與可愛貓咪的午後邂逅',
+                summaryEn: 'Lazy Afternoon with Cats',
+                story: '這裡曾是重要的採礦據點，現在則是貓咪的天堂。💡 達人提示：請不要隨意餵食人類食物。建議與孩子一起挑戰「尋貓大作戰」，看看誰能拍到最慵懶的貓咪！',
+                storyEn: 'A former mining hub turned cat sanctuary. 💡 Please do not feed them human food. Great for a "Cat Search" challenge with kids!'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a-sjl',
+        title: '三貂嶺生態步道',
+        titleEn: 'Sanjiaoling Waterfall Trail',
+        type: 'attraction',
+        address: '新北市瑞芳區',
+        addressEn: 'Ruifang, New Taipei',
+        category: '戶外冒險',
+        tags: ['瀑布群', '彩繪村', '秘境'],
+        themeColor: '#10b981',
+        coverImage: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【瀑布洗禮】',
+                labelEn: 'Waterfall Baptism',
+                summary: '一次收集三座壯麗瀑布',
+                summaryEn: 'Triple Waterfall Trek',
+                story: '這是全台唯一沒有公路可抵達的車站。步道沿線包含合谷、摩天、枇杷洞三座瀑布。💡 提醒：部分路段較為原始，雨天後路面濕滑，請務必穿著防滑登山鞋。',
+                storyEn: 'The only station in Taiwan with no road access. Collect three stunning waterfalls. 💡 Wear high-grip shoes as the trail can be very slippery after rain.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-a-wyv',
+        title: '忘憂谷步道',
+        titleEn: 'Wangyougu Trail',
+        type: 'attraction',
+        address: '基隆市中正區',
+        addressEn: 'Keelung',
+        category: '戶外冒險',
+        tags: ['海景', 'V型谷', '夕陽'],
+        themeColor: '#0ea5e9',
+        coverImage: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'hidden',
+                label: '【山海波浪】',
+                labelEn: 'Ocean Waves',
+                summary: '步入藍色與綠色的交界',
+                summaryEn: 'Blue Meets Green',
+                story: '名字由來是因為這裡的美景能讓人忘記憂慮。翠綠的V型山谷直通蔚藍大海。💡 攝影提示：站在白色階梯處向下拍，可以捕捉到步道向海洋無限延伸的絕佳視角。',
+                storyEn: 'Name means "Forget Worries Valley." Green V-shaped valley meets the deep blue sea. 💡 Shoot from the white stairs looking down for an infinite trail-to-sea perspective.'
+            }
+        ]
+    }
 ];
 

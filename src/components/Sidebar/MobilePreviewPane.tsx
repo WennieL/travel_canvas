@@ -78,10 +78,10 @@ export const MobilePreviewPane: React.FC<MobilePreviewPaneProps> = ({
                     )}
 
                     {/* Tips */}
-                    {item.tips && (
+                    {item.insiderTip?.teaser && (
                         <div className="bg-purple-50 border-l-3 border-purple-400 p-3 rounded-r-lg mb-3">
                             <div className="text-purple-600 text-xs font-bold mb-1">{t.insiderTips || '💡 小撇步'}</div>
-                            <div className="text-purple-700 text-sm">{item.tips}</div>
+                            <div className="text-purple-700 text-sm">{item.insiderTip.teaser}</div>
                         </div>
                     )}
 

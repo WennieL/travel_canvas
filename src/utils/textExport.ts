@@ -27,7 +27,9 @@ function getTransportLabel(transport: TransportMode, lang: LangType): string {
         public: 'transportPublic',
         car: 'transportCar',
         taxi: 'transportPublic', // Use public as fallback or transportCar
-        bike: 'transportWalk'
+        bike: 'transportWalk',
+        ship: 'transportPublic',
+        ferry: 'transportPublic'
     };
     return (t[keyMap[transport]] as string) || transport;
 }

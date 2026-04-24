@@ -1559,5 +1559,122 @@ export const TEMPLATES: Template[] = [
                 accommodation: []
             }
         }
+    },
+    {
+        id: 'tw-t-outdoor-flagship',
+        name: '台北山海極限：戶外愛好者專屬 6D/5N',
+        nameEn: 'Taipei Outdoor Adventure: 6D/5N Flagship',
+        title: '用腳步閱讀雙北：山海、單車與秘境攝影',
+        titleEn: 'Mountain, Sea & Pedal: The Ultimate Outdoor Script',
+        author: 'TravelCanvas 官方戶外團隊',
+        authorEn: 'TravelCanvas Outdoor Team',
+        authorId: 'c-tw1',
+        region: 'taipei',
+        tags: ['戶外冒險', '攝影', '體力週期管理'],
+        tagsEn: ['Outdoor', 'Photography', 'Energy Managed'],
+        duration: 6,
+        rating: 5.0,
+        price: 0,
+        tier: 'official',
+        lastUpdated: '2026/04/24',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=1200',
+        highlights: { days: 6, spots: 18, tips: 12, rating: 5.0, usageCount: 420 },
+        vibes: [
+            { tag: '#汗水美學', color: 'bg-green-100 text-green-800' },
+            { tag: '#巔峰大片', color: 'bg-blue-100 text-blue-800' },
+            { tag: '#運動恢復', color: 'bg-indigo-100 text-indigo-800' }
+        ],
+        coverStory: {
+            quote: '「真正的台北，藏在捷運到不了的山脊與浪花中。」',
+            quoteEn: '"The real Taipei hides in the ridges and waves where the MRT can\'t reach."',
+            description: '【2026/04/24 全新推出】這是一份為「不爬山不舒服」的旅人設計的深度腳本。我們打破了走馬看花的節奏，導入專業運動訓練的「體力週期管理」。從長距離單車破風，到瑞芳黃金稜線攀爬，再到銀河洞的仙境攝影，最後輔以北投溫泉的肌肉恢復。這不只是一場旅行，這是一場與雙北自然母體的深度對話。',
+            descriptionEn: '[New Launch 2026/04/24] Designed for outdoor lovers who crave more than just landmarks. We\'ve integrated "Energy Periodization"—balancing high-intensity days like the 20km Riverside Cycle and Teapot Mt. hike with recovery sessions like the Beitou Hot Springs. This is a deep dialogue with Taipei\'s mountains and sea.'
+        },
+        preparationGuide: [
+            { title: '專業戶外裝備', titleEn: 'Outdoor Gear', text: '請準備抓地力強的登山鞋或運動鞋。本行程包含岩層攀爬與濕滑步道。', textEn: 'Bring high-grip hiking shoes. Includes rock scrambling and slippery trails.', icon: 'Footprints' },
+            { title: '體力預算分配', titleEn: 'Energy Budget', text: 'Day 2, Day 4 與 Day 5 (若選越嶺) 是體力高峰，前一晚請務必充足睡眠。', textEn: 'Day 2, 4 & 5 (if hiking ridge) are high intensity. Ensure good sleep.', icon: 'Battery' },
+            { title: '防曬與水分', titleEn: 'Sun & Hydration', text: '瑞芳稜線與單車道遮蔽物少，建議攜帶 1.5L 水壺與防曬衣物。', textEn: 'Ridge lines and cycle paths are exposed. Carry 1.5L water & sun protection.', icon: 'Droplets' }
+        ],
+        culturalInsights: [
+            {
+                id: 'hiking-etiquette',
+                regionId: 'taipei',
+                regionCode: 'TW',
+                regionName: 'Taipei',
+                category: '山系生活指南',
+                categoryEn: 'Mountain Etiquette',
+                title: '「山友」的親切密語',
+                titleEn: 'The Hiker\'s Code',
+                emoji: '👋',
+                content: '在台北步道遇到人，一聲「你好」或「加油」是標準問候。下山者通常會讓上山者先行，展現山上的禮儀。',
+                contentEn: 'A simple "Hello" (Nee-How) is the norm on Taipei trails. Descending hikers usually yield to those climbing up.',
+                foreignerReaction: '「台灣的山友是我見過最熱情的人，總是在我快不行時說加油。」',
+                foreignerReactionEn: '"Taiwanese hikers are so friendly—they always cheer me on when I look exhausted."',
+                backgroundColor: 'bg-green-50'
+            }
+        ],
+        dayPreviews: [
+            { day: 1, summary: '抵達台北 → 象山夕陽暖身 → 慶祝晚餐', summaryEn: 'Arrival → Elephant Mt Sunset → Celebration' },
+            { day: 2, summary: '全天河濱單車挑戰：大稻埕 ➔ 淡水 (20km)', summaryEn: 'Full Day Cycle: Dadaocheng to Tamsui' },
+            { day: 3, summary: '軍艦岩奇岩攻頂 → 北投溫泉恢復浴', summaryEn: 'Jun-Jian-Yan Hike → Beitou Hot Spring Recovery' },
+            { day: 4, summary: '瑞芳巔峰冒險：茶壺山 ➔ 猴硐貓村 ➔ 九份', summaryEn: 'Ruifang Peak: Teapot Mt → Houtong → Jiufen' },
+            { day: 5, summary: '銀河洞仙境攝影 → 貓空品茶看風景', summaryEn: 'Yin-He-Dong Waterfall → Maokong Tea Time' },
+            { day: 6, summary: '市區最終採買 → 帶著肌肉回憶歸國', summaryEn: 'Final Shopping → Departure' }
+        ],
+        schedule: {
+            'Day 1': {
+                theme: '【啟動】城市天際線的熱身',
+                themeEn: '【Ignition】Skyline Warm-up',
+                themeEmoji: '🌇',
+                morning: [{ id: 'hotel-checkin', title: '飯店進駐', titleEn: 'Hotel Check-in', itemType: 'spot', startTime: '14:00', arrivalTransport: 'taxi', expertNote: '💡 建議選擇捷運紅線沿線飯店，方便後續幾天的戶外移動。', expertNoteEn: 'Stay along the Red Line for easy outdoor access.' }],
+                afternoon: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a5')!, instanceId: 'od-1-1', startTime: '16:00', arrivalTransport: 'public', expertNote: '攀爬難度：(Medium 🟡) 第一天的熱身：象山。雖然只是爬階梯，但能讓您對台北的盆地地形有初步認識。', expertNoteEn: 'Difficulty: (Medium 🟡) Warm-up hike. Get your first look at the Taipei Basin.' }],
+                evening: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-raohe')!, instanceId: 'od-1-2', startTime: '18:30', arrivalTransport: 'public', expertNote: '🍲 慶祝第一晚。建議吃個藥燉排骨補一下。', expertNoteEn: 'Celebration dinner. Try herbal ribs for a boost.' }],
+                night: [], accommodation: []
+            },
+            'Day 2': {
+                theme: '【破風】淡水河濱 20 公里大遠征',
+                themeEn: '【Drafting】20km Riverside Epic',
+                themeEmoji: '🚲',
+                morning: [{ id: 'cycling-start', title: '大稻埕單車租借 (High 🔴 - 體力挑戰)', titleEn: 'Cycling Start (High 🔴 - Energy Challenge)', itemType: 'spot', startTime: '09:00', arrivalTransport: 'walk', expertNote: '🚲 達人建議：租借 Ubike 2.0。檢查胎壓與煞車，開啟 Bus+ App 確認淡水方向。', expertNoteEn: 'Rent Ubike 2.0. Check tires/brakes. Head North toward Tamsui.' }],
+                afternoon: [{ id: 'cycling-tamsui', title: '關渡➔淡水➔八里', titleEn: 'Guandu to Tamsui', itemType: 'spot', startTime: '13:00', arrivalTransport: 'bike', expertNote: '🚴 20km 挑戰：沿著金色水岸，感受海風。下午可以在八里左岸租借專業單車再騎一段。', expertNoteEn: '20km challenge along the Golden Waterfront. Feel the sea breeze.' }],
+                evening: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-tamsui')!, instanceId: 'od-2-1', startTime: '17:30', arrivalTransport: 'bike', expertNote: '🌅 獎勵：淡水夕陽。騎了一整天，這是最好的慰勞。', expertNoteEn: 'Reward: Tamsui sunset. The best way to end a day on wheels.' }],
+                night: [], accommodation: []
+            },
+            'Day 3': {
+                theme: '【恢復】白色岩脈與溫泉洗禮',
+                themeEn: '【Restoration】White Rocks & Springs',
+                themeEmoji: '🛁',
+                morning: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-jjy')!, instanceId: 'od-3-1', startTime: '10:00', arrivalTransport: 'public', expertNote: '攀爬難度：(Low 🟢) 恢復日步道：軍艦岩。距離短、風景好。這是為了讓昨天的單車腿稍微休息。', expertNoteEn: 'Difficulty: (Low 🟢) Jun-Jian-Yan: Short hike, high value. Let the cycling legs rest a bit.' }],
+                afternoon: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a17')!, instanceId: 'od-3-2', startTime: '14:00', arrivalTransport: 'walk', expertNote: '♨️ 核心環節：北投溫泉。這是明天攻克茶壺山的關鍵「肌肉修復」。', expertNoteEn: 'Core Step: Beitou Hot Spring. Essential muscle recovery for tomorrow.' }],
+                evening: [{ id: 'beitou-food', title: '北投市場美食', titleEn: 'Beitou Market Food', itemType: 'spot', startTime: '18:00', arrivalTransport: 'walk', expertNote: '🍲 推薦：矮仔財滷肉飯（下午會收，請注意時間）或市場周邊排骨酥。', expertNoteEn: 'Local comfort food in the market area.' }],
+                night: [], accommodation: []
+            },
+            'Day 4': {
+                theme: '【山城】從稜線巔峰到貓村療癒',
+                themeEn: '【Mountain City】From Ridge to Cat Haven',
+                themeEmoji: '🏔️',
+                morning: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-teapot')!, instanceId: 'od-4-1', startTime: '09:00', arrivalTransport: 'public', expertNote: '攀爬難度：(High 🔴 - 終極挑戰) 茶壺山。需手腳並用，體力消耗大。💡 若想挑戰更原始路線，可參考支線：三貂嶺瀑布群。', expertNoteEn: 'Difficulty: (High 🔴 - Ultimate Challenge) Teapot Mt. Scrambling required. 💡 Side Quest: Sanjiaoling Waterfall Trail.' }],
+                afternoon: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-houtong')!, instanceId: 'od-4-2', startTime: '13:30', arrivalTransport: 'public', expertNote: '🐈 (Low 🟢) 運動後恢復：猴硐貓村。💡 達人提示：瑞芳山區點位銜接（如茶壺山往猴硐）建議預約 Uber，省下的等待時間能多拍 20 張貓咪大片。', expertNoteEn: '🐈 (Low 🟢) Recovery: Houtong Cat Village. 💡 Expert Tip: Book an Uber for transitions in Ruifang (e.g., Teapot Mt to Houtong) to save time for more cat photos!' }, { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a16')!, instanceId: 'od-4-3', startTime: '16:00', arrivalTransport: 'walk', expertNote: '🏮 九份夕陽。找間茶館，從高處俯瞰剛才征服的山頭。', expertNoteEn: 'Jiufen sunset. Overlook the peaks you conquered earlier.' }],
+                evening: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f10')!, instanceId: 'od-4-4', startTime: '19:00', arrivalTransport: 'public', expertNote: '🍜 基隆廟口。運動了一天，值得大吃一頓。💡 攝影控推薦：基隆忘憂谷夕陽。', expertNoteEn: 'Keelung Market. You earned a feast! 💡 Photo Spot: Wangyougu Sunset.' }],
+                night: [], accommodation: []
+            },
+            'Day 5': {
+                theme: '【幻境】銀河瀑布與貓空茶語',
+                themeEn: '【Fantasy】Silver Waterfall & Tea',
+                themeEmoji: '🍵',
+                morning: [{ ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-yhd')!, instanceId: 'od-5-1', startTime: '10:00', arrivalTransport: 'public', expertNote: '攀爬難度：(Medium 🟡) 攝影控必去：銀河洞。💡【硬核支線】：體力充沛者可沿步道繼續向上，挑戰「銀河洞越嶺步道」直接步行至貓空（約 2 小時），這是一段極美的森林洗禮。', expertNoteEn: 'Difficulty: (Medium 🟡) Photographer\'s Dream: Yin-He-Dong. 💡【Hardcore Side Quest】: Hike the ridge trail directly to Maokong (approx 2 hrs) for a deep forest immersion.' }],
+                afternoon: [{ id: 'maokong-gondola', title: '貓空纜車與品茶', titleEn: 'Maokong Gondola & Tea', itemType: 'spot', startTime: '14:00', arrivalTransport: 'public', expertNote: '🍵 慢活戶外：若早上選擇越嶺，下午就在茶園靜坐。若早上搭車，下午可搭纜車享受高空美景。', expertNoteEn: 'Take the Gondola if you skipped the hike, or just relax at a teahouse if you conquered the ridge.' }],
+                evening: [{ id: 'gongguan-dinner', title: '公館商圈美食', titleEn: 'Gongguan Dinner', itemType: 'spot', startTime: '18:30', arrivalTransport: 'public', expertNote: '🍲 推薦：陳三鼎（或類似青蛙撞奶）與各種巷弄美食。', expertNoteEn: 'Vibrant student district with amazing street food.' }],
+                night: [], accommodation: []
+            },
+            'Day 6': {
+                theme: '【收心】帶著肌肉記憶平安歸家',
+                themeEn: '【Conclusion】Muscle Memories',
+                themeEmoji: '✈️',
+                morning: [{ id: 'final-shopping', title: '台北車站最終採買', titleEn: 'Final Shopping', itemType: 'spot', startTime: '10:00', arrivalTransport: 'public', expertNote: '🎁 伴手禮：微熱山丘或鳳梨酥。💡 提醒：檢查行李是否有遺漏。', expertNoteEn: 'Last gifts. Check bags. Safe flight!' }],
+                afternoon: [{ id: 'departure', title: '前往機場', titleEn: 'To Airport', itemType: 'spot', startTime: '14:00', arrivalTransport: 'public', expertNote: '🚄 搭乘機捷，帶著這六天的山海回憶平安歸國。', expertNoteEn: 'Head to the airport. Memories of mountains and sea preserved!' }],
+                evening: [], night: [], accommodation: []
+            }
+        }
     }
 ];
