@@ -35,7 +35,7 @@ export const EditableMetadataBadges: React.FC<EditableMetadataBadgesProps> = ({
     const isLocked = item.isLocked;
 
     return (
-        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+        <div className="flex items-center gap-2 mt-2 mb-1.5 flex-wrap">
             {/* --- Duration Badge --- */}
             {editingDurationId === item.instanceId ? (
                 <div

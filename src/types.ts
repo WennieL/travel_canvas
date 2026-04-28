@@ -33,6 +33,27 @@ export interface RegionConfig {
 // [NEW] Expert Story Structure for the Interactive Grid
 export type ExpertStoryCategory = 'must-do' | 'must-eat' | 'trap' | 'hidden' | 'artisan';
 
+// [NEW] Structured facility tags — render as Pill Badges in ScheduleItemCard
+export type FacilityTag =
+    | 'stroller'        // 🚼 推車友善
+    | 'restroom'        // 🚽 廁所
+    | 'restroom-1f'     // 🚽 廁所 1F
+    | 'elevator'        // 🛗 電梯
+    | 'easycard'        // 💳 悠遊卡
+    | 'cash-only'       // 💵 現金
+    | 'booking'         // 📅 需預約
+    | 'closed-mon'      // ⛔ 週一休館
+    | 'crowd-warning'   // ⏰ 18:30 前入場
+    | 'rain-ok'         // 🌧️ 雨天可去
+    | 'kid-friendly'    // 👶 親子友善
+    | 'hiking-boots'    // 🥾 登山鞋
+    | 'weather-check'   // 🌡️ 注意天氣
+    | 'free-entry'      // 🆓 免費
+    | 'cobblestone'     // ⚠️ 石板路，推車不便
+    | 'high-energy'     // ⚡️ 耗費體力
+    | 'nap-friendly'    // 💤 適合午休
+    | 'kid-menu';       // 🍽️ 兒童菜單
+
 export interface ExpertStory {
     id: ExpertStoryCategory;
     icon?: string;       // Lucide icon name or Emoji
@@ -109,6 +130,10 @@ export interface TravelItem {
     expertNoteEn?: string;
     proTip?: string;
     proTipEn?: string;
+    
+    // [NEW] 兒童點餐與生存指南
+    kidFriendlyTip?: string;
+    kidFriendlyTipEn?: string;
     
     // [PHASE 36] Consolidated Recommendation Architecture
     recommendations?: Recommendation[];
@@ -207,6 +232,8 @@ export interface ScheduleItem extends TravelItem {
     expertNoteEn?: string;
     proTip?: string;
     proTipEn?: string;
+    kidFriendlyTip?: string;
+    kidFriendlyTipEn?: string;
     
     // [NEW] Transit specific instructions
     transitNote?: string;
@@ -223,6 +250,12 @@ export interface ScheduleItem extends TravelItem {
     // [NEW] Expert Photography Insights
     isPhotographySpot?: boolean;
     photographyTips?: { zh: string; en: string };
+
+    // [NEW] Structured Facility Tags — renders as Pill Badges above expertNote
+    facilityTags?: FacilityTag[];
+
+    // [NEW] Driver Card — always Chinese; shown in detail page near the map
+    driverNote?: string;
 
     // Deprecated in favor of Single-Path Output:
     // options?: ScheduleItem[];
@@ -268,6 +301,8 @@ export interface TemplateItem {
     expertNoteEn?: string;
     proTip?: string;
     proTipEn?: string;
+    kidFriendlyTip?: string;
+    kidFriendlyTipEn?: string;
     
     // [NEW] Transit specific instructions
     transitNote?: string;
@@ -281,6 +316,12 @@ export interface TemplateItem {
     // [NEW] Expert Photography Insights
     isPhotographySpot?: boolean;
     photographyTips?: { zh: string; en: string };
+
+    // [NEW] Structured Facility Tags — renders as Pill Badges above expertNote
+    facilityTags?: FacilityTag[];
+
+    // [NEW] Driver Card
+    driverNote?: string;
 
     // Deprecated in favor of Single-Path Output:
     // options?: TemplateItem[];
@@ -296,6 +337,9 @@ export interface TemplateDaySchedule {
     theme?: string;
     themeEn?: string;
     themeEmoji?: string;
+    energyLevel?: 'low' | 'moderate' | 'high' | 'intense';
+    restReminder?: string;
+    restReminderEn?: string;
     swapSuggestion?: string;
     swapSuggestionEn?: string;
     dailyTips?: Array<{

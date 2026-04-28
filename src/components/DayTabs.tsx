@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, X, ChevronLeft, ChevronRight, Check, Map as MapIcon, Calendar, Minus, Trash2 } from 'lucide-react';
+import { Plus, X, ChevronLeft, ChevronRight, Check, Map as MapIcon, Calendar, Minus, Trash2, List as ListIcon } from 'lucide-react';
 import { Plan, ViewMode, LangType } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 

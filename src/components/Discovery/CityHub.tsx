@@ -74,37 +74,52 @@ const CityHub: React.FC<CityHubProps> = ({
 
             {/* Hero / Banner - Editor's Choice Magazine Style */}
             <div className="px-5 mt-6 mb-8">
-                <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-[2.5rem] overflow-hidden bg-gray-900 shadow-2xl group border-4 border-white">
+                <button
+                    onClick={() => {
+                        if (regionId === 'taipei') {
+                            const flagship = TEMPLATES.find(t => t.id === 'circuit-tp-classic-6d');
+                            if (flagship) onPreviewTemplate(flagship);
+                        }
+                    }}
+                    className="w-full relative aspect-[16/9] md:aspect-[21/9] rounded-[2.5rem] overflow-hidden bg-gray-900 shadow-2xl group border-4 border-white text-left focus:outline-none transition-transform hover:scale-[1.02] duration-300"
+                >
                     <img
                         src={{
                             tokyo: 'https://images.unsplash.com/photo-1540959733332-e9ab42be6125?q=80&w=2094&auto=format&fit=crop',
                             melbourne: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?q=80&w=2071&auto=format&fit=crop',
                             osaka: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?q=80&w=2000&auto=format&fit=crop',
                             kyoto: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2000&auto=format&fit=crop',
-                            taipei: 'https://images.unsplash.com/photo-1598935898639-81586f7d2129?auto=format&fit=crop&q=80&w=2000',
+                            taipei: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=2000',
                         }[regionId as string] || 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=1974&auto=format&fit=crop'}
                         className="w-full h-full object-cover opacity-70 transition-transform duration-[12s] group-hover:scale-110 ease-out"
                         alt={city?.label || 'City'}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
                     {/* Editor's Choice Overlay */}
-                    <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                        <div className="mb-4 flex items-center gap-2">
+                    <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+                        <div className="mb-4 flex flex-wrap items-center gap-2">
                             <span className="px-3 py-1 bg-amber-400 text-black rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">
-                                {lang === 'zh' ? '達人首選' : "Editor's Choice"}
+                                {lang === 'zh' ? '官方旗艦版' : "Official Flagship"}
                             </span>
                             <span className="px-3 py-1 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-[10px] font-black text-white uppercase tracking-widest">
-                                {regionId === 'melbourne' ? (lang === 'zh' ? '巷弄咖啡專題' : 'Laneway Coffee Special') : (lang === 'zh' ? '新潮之旅' : 'Modern Vibe')}
+                                {regionId === 'taipei' ? (lang === 'zh' ? '零決策套裝' : 'Zero-Decision Guide') : (lang === 'zh' ? '新潮之旅' : 'Modern Vibe')}
                             </span>
                         </div>
-                        <h3 className="text-4xl md:text-6xl font-black text-white mb-4 drop-shadow-2xl leading-none">
-                            {regionId === 'melbourne'
-                                ? (lang === 'zh' ? '隱藏在巷弄中的\n墨爾本靈魂' : 'Hidden Souls of\nMelbourne Laneways')
-                                : (lang === 'zh' ? `${city.label} 深度探索` : `${city.labelEn} Deep Dive`)}
+                        <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-2 drop-shadow-2xl leading-tight md:leading-none">
+                            {regionId === 'taipei'
+                                ? (lang === 'zh' ? '台北全攻略\n首訪旗艦版 6D/5N' : 'Classic Essential Taipei\nFlagship Guide')
+                                : (regionId === 'melbourne'
+                                    ? (lang === 'zh' ? '隱藏在巷弄中的\n墨爾本靈魂' : 'Hidden Souls of\nMelbourne Laneways')
+                                    : (lang === 'zh' ? `${city.label} 深度探索` : `${city.labelEn} Deep Dive`))}
                         </h3>
+                        {regionId === 'taipei' && (
+                            <p className="text-white/90 text-xs md:text-sm font-bold tracking-wide mt-2 line-clamp-1">
+                                {lang === 'zh' ? '點擊預覽：專為第一次來台北的你設計的最強路線' : 'Click to preview: The ultimate guide for first-timers.'}
+                            </p>
+                        )}
                     </div>
-                </div>
+                </button>
             </div>
 
             {/* Survival Guide - For Taipei only for now */}

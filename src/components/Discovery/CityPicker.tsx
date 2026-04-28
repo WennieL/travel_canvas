@@ -110,6 +110,25 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                     {lang === 'zh' ? '下一站，你想去哪？' : 'Where will you travel next?'}
                 </h1>
 
+                {/* MVP Validation Notice Banner */}
+                <div className="mt-8 max-w-md mx-auto px-1">
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/60 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
+                        <div className="bg-amber-400 p-1.5 rounded-full mt-0.5 shadow-sm">
+                            <Sparkles size={14} className="text-white" />
+                        </div>
+                        <div>
+                            <h4 className="text-[13px] font-black text-amber-900 mb-1 tracking-tight">
+                                {lang === 'zh' ? '🚀 MVP 概念驗證測試中' : '🚀 MVP Validation Phase'}
+                            </h4>
+                            <p className="text-[11px] text-amber-800/80 leading-relaxed font-bold">
+                                {lang === 'zh' 
+                                    ? '我們正在驗證「零決策行程」的設計！目前團隊全心專注於打造完美的「台北」體驗。點擊下方「Taipei」，體驗為你準備的 3 套旗艦版攻略。'
+                                    : 'We are validating the "Zero-Decision" experience! Currently focusing exclusively on Taipei. Click "Taipei" below to explore our 3 flagship guides.'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Sticky Search Bar (White Canopy Refined: bg-gray-50 base) */}
                 <div className="mt-10 max-w-[400px] mx-auto relative px-1">
                     <div className="h-[56px] flex items-center bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/5 focus-within:bg-white">

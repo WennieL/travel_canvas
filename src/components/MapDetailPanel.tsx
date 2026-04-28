@@ -59,6 +59,7 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
     // [NEW] Expert Insights
     const expertNote = getLocal((item as any).expertNoteEn, (item as any).expertNote);
     const proTip = getLocal((item as any).proTipEn, (item as any).proTip);
+    const kidFriendlyTip = getLocal((item as any).kidFriendlyTipEn, (item as any).kidFriendlyTip);
 
     // Image fallback
     const imageSrc = item.image; // Assuming item.image is a valid URL or emoji. If emoji, we might need a fallback cover.
@@ -124,7 +125,7 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
                 )}
 
                 {/* [NEW] Expert Insights & Human Navigation */}
-                {(expertNote || proTip) && (
+                {(expertNote || proTip || kidFriendlyTip) && (
                     <div className="space-y-3">
                         {expertNote && (
                             <div className="bg-indigo-50/80 border border-indigo-100 rounded-2xl p-4 relative overflow-hidden">
@@ -151,6 +152,19 @@ const MapDetailPanel: React.FC<MapDetailPanelProps> = ({ item, onClose, t, lang 
                                             {lang === 'en' ? "Pro Tips & Human Nav" : "達人交通祕技"}
                                         </h4>
                                         <p className="text-[13px] text-amber-900 font-bold leading-relaxed">{proTip}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {kidFriendlyTip && (
+                            <div className="bg-orange-50 border-l-4 border-orange-300 rounded-xl p-4 shadow-sm">
+                                <div className="flex gap-3">
+                                    <span className="text-2xl shrink-0">👶</span>
+                                    <div>
+                                        <h4 className="text-[10px] font-bold uppercase tracking-wider text-orange-600 mb-1">
+                                            {lang === 'en' ? "Kids Safe Food Guide" : "兒童點餐指南"}
+                                        </h4>
+                                        <p className="text-[13px] text-orange-900 font-bold leading-relaxed">{kidFriendlyTip}</p>
                                     </div>
                                 </div>
                             </div>

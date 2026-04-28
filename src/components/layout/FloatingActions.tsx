@@ -55,42 +55,35 @@ const FloatingActions: React.FC<FloatingActionsProps> = ({
             {shouldShow && (
                 <>
                     {isMobile ? (
-                        <div className="fixed bottom-28 left-0 right-0 z-[120] px-6 pointer-events-none">
-                            <div className="relative w-full h-full flex items-center justify-center">
-                                {/* Map/List toggle pill — centered */}
-                                <motion.button
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 20 }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
-                                        setViewMode(targetMode);
-                                    }}
-                                    className="h-11 px-6 rounded-full bg-white text-teal-800 shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 flex items-center justify-center gap-2.5 pointer-events-auto active:bg-gray-50 transition-all font-bold text-[13px] tracking-wide"
-                                >
-                                    {viewMode === 'map' ? <ListIcon size={18} /> : <MapIcon size={18} />}
-                                    <span>
-                                        {viewMode === 'map'
-                                            ? (lang === 'zh' ? '清單' : 'List')
-                                            : (lang === 'zh' ? '地圖' : 'Map')}
-                                    </span>
-                                </motion.button>
+                        <div className="fixed bottom-28 right-6 z-[120] flex flex-col items-center gap-3 pointer-events-none">
+                            {/* Map/List toggle — Stacked Circular FAB */}
+                            <motion.button
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => {
+                                    const targetMode: ViewMode = viewMode === 'map' ? 'canvas' : 'map';
+                                    setViewMode(targetMode);
+                                }}
+                                className="w-11 h-11 rounded-full bg-white text-teal-700 shadow-lg border border-gray-100 flex items-center justify-center pointer-events-auto active:bg-gray-50 transition-all"
+                            >
+                                {viewMode === 'map' ? <ListIcon size={20} /> : <MapIcon size={20} />}
+                            </motion.button>
 
-                                {/* Primary Add — bottom-right corner */}
-                                <motion.button
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={onOpenMobileLibrary}
-                                    className="absolute right-0 w-13 h-13 rounded-full bg-teal-600 text-white shadow-[0_10px_30px_rgba(13,148,136,0.4)] flex items-center justify-center pointer-events-auto active:bg-teal-700 transition-all border-2 border-white/20"
-                                >
-                                    <Plus size={26} strokeWidth={3} />
-                                </motion.button>
-                            </div>
+                            {/* Primary Add — bottom-right corner */}
+                            <motion.button
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={onOpenMobileLibrary}
+                                className="w-13 h-13 rounded-full bg-teal-600 text-white shadow-[0_10px_30px_rgba(13,148,136,0.4)] flex items-center justify-center pointer-events-auto active:bg-teal-700 transition-all border-2 border-white/20"
+                            >
+                                <Plus size={26} strokeWidth={3} />
+                            </motion.button>
                         </div>
                     ) : (
                         /* Desktop — right-side vertical stack */

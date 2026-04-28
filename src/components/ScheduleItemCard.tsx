@@ -117,7 +117,12 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                         item={item} lang={lang} t={t} planRegion={planRegion}
                     />
 
-                    {/* Metadata Badges (Duration, Price) */}
+                    {/* [NEW] Expert Insights & Pro Tips */}
+                    <ExpertInsightsSection
+                        item={item} lang={lang}
+                    />
+
+                    {/* Metadata Badges (Duration, Price) - Moved below Expert Insights per user request */}
                     <EditableMetadataBadges
                         item={item} index={index} lang={lang} t={t} planRegion={planRegion}
                         onUpdateItem={onUpdateItem} onUnlockItem={onUnlockItem}
@@ -131,11 +136,6 @@ const ScheduleItemCard: React.FC<ScheduleItemCardProps> = ({
                     <EditableNoteSection
                         item={item} t={t} editingNoteId={editingNoteId}
                         setEditingNoteId={setEditingNoteId} onNoteChange={onNoteChange}
-                    />
-
-                    {/* [NEW] Expert Insights & Pro Tips */}
-                    <ExpertInsightsSection
-                        item={item} lang={lang}
                     />
 
                     {/* Cross-Region Warning Inline */}

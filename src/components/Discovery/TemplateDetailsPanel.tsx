@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Star, Clock, MapPin, Calendar, Sparkles, Check, ChevronRight, Info, Quote, Lightbulb, Sun, Navigation, User, DollarSign, Bed, Moon, Home, Lock, Ticket, Briefcase, ArrowRight } from 'lucide-react';
-import { Template, LangType, TemplateStat, CulturalInsight, TemplateItem } from '../../types';
+import { Template, LangType, TemplateStat, CulturalInsight, TemplateItem, FacilityTag } from '../../types';
 import { SAMPLE_CREATORS, SAMPLE_ASSETS, CULTURAL_WONDERS } from '../../data';
 import { EngagementSocialBlock } from '../Common/EngagementSocialBlock';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,6 +9,29 @@ import { useUI } from '../../contexts/UIContext';
 import { useApp } from '../../contexts/AppContext';
 
 // --- NEW COMPONENT: Auto-Linkify text ---
+
+// ── Facility Badge Config (mirrors ExpertInsightsSection) ────────────────────
+const FACILITY_CONFIG: Record<FacilityTag, { emoji: string; zh: string; en: string; color: string }> = {
+    'stroller':       { emoji: '🚼', zh: '推車友善',    en: 'Stroller OK',     color: 'bg-blue-50 text-blue-700 border-blue-200' },
+    'restroom':       { emoji: '🚽', zh: '廁所',        en: 'Restroom',        color: 'bg-teal-50 text-teal-700 border-teal-200' },
+    'restroom-1f':    { emoji: '🚽', zh: '廁所 1F',     en: 'Restroom @ 1F',   color: 'bg-teal-50 text-teal-700 border-teal-200' },
+    'elevator':       { emoji: '🛗', zh: '有電梯',      en: 'Elevator',        color: 'bg-slate-50 text-slate-700 border-slate-200' },
+    'easycard':       { emoji: '💳', zh: '悠遊卡',      en: 'EasyCard OK',     color: 'bg-green-50 text-green-700 border-green-200' },
+    'cash-only':      { emoji: '💵', zh: '現金',        en: 'Cash Only',       color: 'bg-orange-50 text-orange-700 border-orange-200' },
+    'booking':        { emoji: '📅', zh: '建議預約',    en: 'Book Ahead',      color: 'bg-purple-50 text-purple-700 border-purple-200' },
+    'closed-mon':     { emoji: '⛔', zh: '週一休館',    en: 'Closed Mon',      color: 'bg-red-50 text-red-700 border-red-200' },
+    'crowd-warning':  { emoji: '⏰', zh: '18:30前入場', en: 'Arrive by 18:30', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+    'rain-ok':        { emoji: '🌧️', zh: '雨天可去',   en: 'Rain Friendly',   color: 'bg-sky-50 text-sky-700 border-sky-200' },
+    'kid-friendly':   { emoji: '👶', zh: '親子友善',    en: 'Kid Friendly',    color: 'bg-pink-50 text-pink-700 border-pink-200' },
+    'hiking-boots':   { emoji: '🥾', zh: '需登山鞋',   en: 'Hiking Boots',    color: 'bg-stone-50 text-stone-700 border-stone-200' },
+    'weather-check':  { emoji: '🌡️', zh: '注意天氣',  en: 'Check Weather',   color: 'bg-cyan-50 text-cyan-700 border-cyan-200' },
+    'free-entry':     { emoji: '🆓', zh: '免費入場',   en: 'Free Entry',      color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+    'cobblestone':    { emoji: '⚠️', zh: '石板路',     en: 'Cobblestones',    color: 'bg-yellow-50 text-yellow-700 border-yellow-200' },
+    'high-energy':    { emoji: '⚡', zh: '高體力值',    en: 'High Energy',     color: 'bg-orange-50 text-orange-700 border-orange-200' },
+    'nap-friendly':   { emoji: '💤', zh: '適合午休',    en: 'Nap Friendly',    color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+    'kid-menu':       { emoji: '🍱', zh: '兒童餐指南', en: "Kid's Menu",       color: 'bg-amber-50 text-amber-700 border-amber-200' },
+};
+
 const LinkifyText: React.FC<{ text: string }> = ({ text }) => {
     if (!text) return null;
     const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -96,11 +119,7 @@ const TimelineItemCard: React.FC<{
                         (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=300&q=80';
                     }}
                 />
-                {item.isPhotographySpot && (
-                    <div className="absolute top-1.5 left-1.5 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center shadow-lg z-10 animate-bounce duration-[2500ms]">
-                        <span className="text-[10px]">📸</span>
-                    </div>
-                )}
+
             </div>
 
             {/* Text Content */}
@@ -137,22 +156,45 @@ const TimelineItemCard: React.FC<{
                             : (lang === 'zh' ? item.description : (item.descriptionEn || item.description))}
                     </p>
                 )}
-                {(item.expertNote || item.expertNoteEn) && (
-                    <div className={`mt-3 flex items-start gap-2.5 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
-                        <div className="mt-0.5 shrink-0">
-                            <div className="w-[22px] h-[22px] rounded-full bg-[#FFF8EE] flex items-center justify-center">
-                                <Quote size={10} className="text-[#F19B38] fill-current" />
-                            </div>
-                        </div>
-                        <div className="flex-1 pt-0.5">
-                            <p className="text-[12px] font-medium text-[#4A5548] leading-[1.6]">
-                                <span className="font-black text-[#F19B38] mr-1.5 align-baseline">
-                                    {lang === 'zh' ? '達人說' : 'Pro Tip'}
+                {/* Facility Pill Badges */}
+                {item.facilityTags && item.facilityTags.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                        {(item.facilityTags as FacilityTag[]).map((tag: FacilityTag) => {
+                            const cfg = FACILITY_CONFIG[tag];
+                            if (!cfg) return null;
+                            return (
+                                <span
+                                    key={tag}
+                                    className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-semibold border ${cfg.color}`}
+                                >
+                                    <span>{cfg.emoji}</span>
+                                    <span>{lang === 'zh' ? cfg.zh : cfg.en}</span>
                                 </span>
-                                {item.isLocked && !isPurchased
-                                    ? (lang === 'zh' ? '解鎖以查看達人點評...' : 'Unlock to view expert insight...')
-                                    : <LinkifyText text={lang === 'zh' ? item.expertNote : (item.expertNoteEn || item.expertNote)} />}
-                            </p>
+                            );
+                        })}
+                    </div>
+                )}
+                {(item.expertNote || item.expertNoteEn) && (
+                    <p className={`mt-2 pt-2 border-t border-[#E8EDE4] text-[10.5px] text-[#8E9E8A] leading-[1.65] transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
+                        {item.isLocked && !isPurchased
+                            ? (lang === 'zh' ? '解鎖以查看達人點評...' : 'Unlock to view expert insight...')
+                            : <LinkifyText text={lang === 'zh' ? item.expertNote : (item.expertNoteEn || item.expertNote)} />}
+                    </p>
+                )}
+                {(item.kidFriendlyTip || item.kidFriendlyTipEn) && (
+                    <div className={`mt-2 p-2 bg-orange-50/50 rounded-lg border-l-2 border-orange-300 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
+                        <div className="flex gap-2">
+                            <span className="text-sm shrink-0">👶</span>
+                            <div>
+                                <h6 className="text-[9px] font-bold uppercase tracking-wider text-orange-600 mb-0.5">
+                                    {lang === 'zh' ? '兒童點餐指南' : 'KIDS SAFE FOOD GUIDE'}
+                                </h6>
+                                <p className="text-[10.5px] font-bold text-orange-900/80 leading-[1.6]">
+                                    {item.isLocked && !isPurchased
+                                        ? (lang === 'zh' ? '解鎖以查看點餐指南...' : 'Unlock to view food guide...')
+                                        : (lang === 'zh' ? item.kidFriendlyTip : (item.kidFriendlyTipEn || item.kidFriendlyTip))}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -168,25 +210,7 @@ const TimelineItemCard: React.FC<{
                         </div>
                     </div>
                 )}
-                {(item.photographyTips || item.photographyTipsEn) && (
-                    <div className={`mt-3 flex items-start gap-2.5 p-2.5 bg-amber-50/50 rounded-xl border border-amber-200/30 transition-all ${item.isLocked && !isPurchased ? 'blur-[2px] opacity-50 select-none' : ''}`}>
-                        <div className="mt-0.5 shrink-0">
-                            <div className="w-[22px] h-[22px] rounded-full bg-white flex items-center justify-center shadow-sm">
-                                <Star size={10} className="text-amber-500 fill-current" />
-                            </div>
-                        </div>
-                        <div className="flex-1 pt-0.5">
-                            <p className="text-[12px] font-bold text-amber-900 leading-[1.6]">
-                                <span className="font-black text-amber-600 mr-1.5 uppercase tracking-tighter">
-                                    {lang === 'zh' ? '構圖建議' : 'PHOTO TIPS'}
-                                </span>
-                                {item.isLocked && !isPurchased
-                                    ? (lang === 'zh' ? '解鎖以查看攝影祕訣...' : 'Unlock for photography tips...')
-                                    : (lang === 'zh' ? item.photographyTips?.zh : (item.photographyTips?.en || item.photographyTips?.zh))}
-                            </p>
-                        </div>
-                    </div>
-                )}
+
             </div>
         </div>
     );
@@ -481,36 +505,7 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
             <div className="px-6 py-10 relative z-20">
                 {activeTab === 'overview' ? (
                     <div className="space-y-12">
-                        {/* 3a. [NEW] Value Anchor - The Trust Switch */}
-                        {template.valueAnchor && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-[#1A2D1F] p-8 rounded-[38px] shadow-[0_20px_50px_rgba(26,45,31,0.15)] relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#4A7C59]/20 to-transparent rounded-full -mr-16 -mt-16 blur-2xl" />
-                                
-                                <div className="relative z-10">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-2 h-2 rounded-full bg-amber-400" />
-                                        <span className="text-[10px] font-black text-white/50 uppercase tracking-[0.25em]">
-                                            {lang === 'zh' ? '零決策行程體驗' : 'DECISION-FREE EXPERIENCE'}
-                                        </span>
-                                    </div>
-                                    
-                                    <h3 className="text-[20px] md:text-[24px] font-heading font-black text-white leading-tight mb-4">
-                                        {lang === 'zh' ? '你不需要計畫，' : "You don't plan the trip."}
-                                        <span className="block text-white/60">
-                                            {lang === 'zh' ? '只需跟隨。' : 'You just follow it.'}
-                                        </span>
-                                    </h3>
-                                    
-                                    <p className="text-[15px] leading-[1.7] text-white/80 font-medium bg-white/5 p-4 rounded-2xl border border-white/10">
-                                        {lang === 'zh' ? template.valueAnchor : (template.valueAnchorEn || template.valueAnchor)}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        )}
+
 
                         {/* 3b. Smart Stats Strip (Horizontal Editorial Style) */}
                         <div className="bg-white/40 backdrop-blur-sm rounded-[32px] p-1 border border-white/60 shadow-sm overflow-hidden">
@@ -809,6 +804,23 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                     {/* Centered Day Title */}
                                     <div className="mb-4 text-center">
                                         <h2 className="text-[22px] font-black text-[#181D17] leading-snug">{lang === 'zh' ? dayData.theme : (dayData.themeEn || dayData.theme)} {dayData.themeEmoji}</h2>
+                                        {dayData.energyLevel && (
+                                            <div className="mt-2 flex justify-center items-center gap-1.5">
+                                                <span className="text-[11px] font-bold text-[#8E9285] uppercase tracking-widest">
+                                                    {lang === 'zh' ? '體力消耗' : 'ENERGY LEVEL'}
+                                                </span>
+                                                <div className="flex gap-0.5">
+                                                    {Array.from({ length: 4 }).map((_, i) => {
+                                                        const levels = ['low', 'moderate', 'high', 'intense'];
+                                                        const idx = levels.indexOf(dayData.energyLevel);
+                                                        const isActive = i <= idx;
+                                                        return (
+                                                            <div key={i} className={`w-3 h-3 rounded-full ${isActive ? 'bg-orange-500' : 'bg-[#E8EDE4]'}`} />
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* [NEW] Zero-Decision Context Bar - Humanized */}
@@ -845,6 +857,18 @@ export const TemplateDetailsPanel: React.FC<TemplateDetailsPanelProps> = ({
                                                         </h4>
                                                         <p className="text-[12.5px] font-medium text-[#7D6B50] leading-relaxed italic opacity-90">
                                                             「{lang === 'zh' ? dayData.trustCard.text : (dayData.trustCard.textEn || dayData.trustCard.text)}」
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {dayData.restReminder && (
+                                            <div className="relative mb-6 mt-2 mx-4">
+                                                <div className="bg-[#FFF8E6] rounded-xl p-3 shadow-sm border border-[#FFEBB3] flex gap-3 ring-2 ring-[#FFFAF2]">
+                                                    <div className="flex-1">
+                                                        <p className="text-[12px] font-bold text-[#8A6A23] leading-relaxed">
+                                                            {((lang === 'zh' ? dayData.restReminder : (dayData.restReminderEn || dayData.restReminder)) || '').replace(/☕️\s*/g, '')}
                                                         </p>
                                                     </div>
                                                 </div>

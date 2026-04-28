@@ -19,7 +19,8 @@ import {
     Sparkles,
     Zap,
     User,
-    Lock
+    Lock,
+    Camera
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
@@ -389,6 +390,8 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                 </div>
                             )}
 
+
+
                             {/* Layer 2: Interactive Grid (Expert Stories - Accordions) */}
                             <div className="flex flex-col gap-6">
                                 <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-tc-primary/40 flex items-center gap-3">
@@ -396,23 +399,48 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                     {TRANSLATIONS[lang].expertStoriesTitle || (lang === 'zh' ? '在地達人撇步' : 'Expert Stories')}
                                 </h4>
 
-                                {(item as any).expertStories && (item as any).expertStories.length > 0 ? (
-                                    <ExpertStoryGrid 
-                                        stories={(item as any).expertStories} 
-                                        lang={lang} 
-                                        themeColor={themeColor}
-                                    />
-                                ) : (
-                                    <div
-                                        className="p-6 rounded-[24px] border border-tc-primary/5 shadow-sm relative overflow-hidden"
-                                        style={{ backgroundColor: `${themeColor}05` }}
-                                    >
-                                        <div className="absolute top-0 left-0 w-1 h-full" style={{ backgroundColor: themeColor }}></div>
-                                        <p className="text-[14px] leading-[1.8] text-[#181D17]/70 font-medium italic">
-                                            {TRANSLATIONS[lang].noExpertStories || 'No expert stories available yet.'}
-                                        </p>
-                                    </div>
-                                )}
+                                {(() => {
+                                    const stories = [...((item as any).expertStories || [])];
+                                    if ((item as any).photographyTips) {
+                                        stories.push({
+                                            id: 'photography-tip',
+                                            label: lang === 'zh' ? '構圖建議' : 'Photo Guide',
+                                            labelEn: 'Photo Guide',
+                                            summary: lang === 'zh' ? '達人攝影取景攻略' : 'Expert Photography Hack',
+                                            summaryEn: 'Expert Photography Hack',
+                                            story: (item as any).photographyTips.zh,
+                                            storyEn: (item as any).photographyTips.en
+                                        });
+                                    }
+                                    if ((item as any).kidFriendlyTip) {
+                                        stories.push({
+                                            id: 'kid-friendly',
+                                            label: lang === 'zh' ? '兒童點餐指南' : 'Kid\'s Food Guide',
+                                            labelEn: 'Kid\'s Food Guide',
+                                            summary: lang === 'zh' ? '親子友善用餐攻略' : 'Family-Friendly Dining',
+                                            summaryEn: 'Family-Friendly Dining',
+                                            story: (item as any).kidFriendlyTip,
+                                            storyEn: (item as any).kidFriendlyTipEn || (item as any).kidFriendlyTip
+                                        });
+                                    }
+                                    return stories.length > 0 ? (
+                                        <ExpertStoryGrid 
+                                            stories={stories} 
+                                            lang={lang} 
+                                            themeColor={themeColor}
+                                        />
+                                    ) : (
+                                        <div
+                                            className="p-6 rounded-[24px] border border-tc-primary/5 shadow-sm relative overflow-hidden"
+                                            style={{ backgroundColor: `${themeColor}05` }}
+                                        >
+                                            <div className="absolute top-0 left-0 w-1 h-full" style={{ backgroundColor: themeColor }}></div>
+                                            <p className="text-[14px] leading-[1.8] text-[#181D17]/70 font-medium italic">
+                                                {TRANSLATIONS[lang].noExpertStories || 'No expert stories available yet.'}
+                                            </p>
+                                        </div>
+                                    );
+                                })()}
                             </div>
                             <div className="mt-6">
                                 <h4
@@ -449,6 +477,29 @@ export const SpotDetailsPanel: React.FC<SpotDetailsPanelProps> = ({
                                             {lang === 'zh' ? '導航' : 'NAV'}
                                         </button>
                                     </div>
+
+                                    {/* 🚕 Driver Card — always Chinese, bilingual label */}
+                                    {(item as any).driverNote && (
+                                        <div className="mx-2 mb-2 rounded-[22px] bg-[#1A1A1A] p-4 flex flex-col gap-2">
+                                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40">
+                                                {lang === 'zh'
+                                                    ? '🚕 請將此畫面出示給司機'
+                                                    : '🚕 Show this screen to your taxi driver'}
+                                            </p>
+                                            <p className="text-[18px] font-black text-white leading-snug tracking-wide">
+                                                {(item as any).driverNote}
+                                            </p>
+                                            <button
+                                                onClick={() => {
+                                                    navigator.clipboard.writeText((item as any).driverNote || '');
+                                                    showToastMessage?.(lang === 'zh' ? '地址已複製！' : 'Address copied!', 'success');
+                                                }}
+                                                className="self-start mt-1 px-3 py-1 rounded-full bg-white/10 text-white/60 text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition-colors"
+                                            >
+                                                {lang === 'zh' ? '複製地址' : 'Copy'}
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

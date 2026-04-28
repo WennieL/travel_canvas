@@ -27,7 +27,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b86818',
         teaser: '台北早晨的靈魂，米其林級的厚燒餅。',
         teaserEn: 'Soul of Taipei mornings, Michelin-grade thick biscuits.',
-        coverImage: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1555465083-a845797ef750?q=80&w=928&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -104,7 +104,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#d64d4d',
         teaser: '百年老街與月老聖地，全台北最有層次的巷弄。',
         teaserEn: 'Old street & Cupid shrine, the most layered alley in Taipei.',
-        coverImage: 'https://images.unsplash.com/photo-1620311210080-87425883a48e?auto=format&fit=crop&q=80&w=800',
+        coverImage: '        https://images.unsplash.com/photo-1728183261493-3c3a11f8403e?q=80&w=774&auto=format&fit=croq=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -180,7 +180,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#3a7aaa',
         teaser: '台北最美河岸夕陽，吹著海風迎接夜晚。',
         teaserEn: 'Taipei\'s most beautiful river sunset, ocean breeze included.',
-        coverImage: 'https://images.unsplash.com/photo-1644722849845-66858e384898?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1683842178259-61789b7e0e56?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -256,7 +256,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#8a5a3a',
         teaser: '市場裡的隱藏美味，在地人吃了三十年的乾麵。',
         teaserEn: 'Hidden market gem, dry noodles locals have loved for 30 years.',
-        coverImage: 'https://images.unsplash.com/photo-1563245372-f21724e3a404?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1600490036275-35f5f1656861?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -332,7 +332,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c24a2d',
         teaser: '萬華的靈魂所在，全台最精緻的寺廟建築。',
         teaserEn: 'The soul of Wanhua, the most intricate temple architecture in Taiwan.',
-        coverImage: 'https://images.unsplash.com/photo-1582266255745-9e509426a5a3?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1693238111767-c6b47ba92f40?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -408,7 +408,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '萬華最美的紅磚牆，每一扇窗都是歷史。',
         teaserEn: 'Wanhua\'s most beautiful brick walls; every window has a story.',
-        coverImage: 'https://images.unsplash.com/photo-1584285437876-068340d867c2?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1744871981045-948eb6604759?q=80&w=870&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -484,7 +484,8 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c28a2d',
         teaser: '慈聖宮廟前大樹下的熱炒，台北最道地的吃法。',
         teaserEn: 'Dining under a temple tree: Taipei\'s most authentic experience.',
-        coverImage: 'https://images.unsplash.com/photo-1562601579-599dec564e06?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1693239306186-20f9703f2e09?q=80&w=870&auto=format&fit=crop&q=80&w=800',
+
         expertStories: [
             {
                 id: 'must-eat',
@@ -560,7 +561,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d2222',
         teaser: '米其林光環下的江湖夜市，必嚐傳說級魯肉飯。',
         teaserEn: 'Michelin-starred street food in a gritty, historic market.',
-        coverImage: 'https://images.unsplash.com/photo-1570535316410-b9bbd6642d93?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1625628796472-99e9d285e00e?q=80&w=870&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -636,7 +637,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#4a7c59',
         teaser: '台北 101 的最佳伸展台，流汗後的日出獎勵。',
         teaserEn: 'The best stage for Taipei 101, a sunrise reward for your sweat.',
-        coverImage: 'https://images.unsplash.com/photo-1528669830501-44754e9bc3cc?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1583938484095-270e82655645?q=80&w=1335&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -707,7 +708,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#d64d4d',
         teaser: '米其林級的工藝，全世界最好的小籠包。',
         teaserEn: 'Michelin-grade craft, the best soup dumplings in the world.',
-        coverImage: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1678026582164-24a5460c447a?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -779,7 +780,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#8a5a3a',
         teaser: '不是景點，是台灣真實的日常切面。',
         teaserEn: 'Not a tourist spot, but a real slice of Taiwan life.',
-        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1709111642708-8c1893dd2c66?q=80&w=1170&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -849,7 +850,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#4a7c59',
         teaser: '城市的綠洲，觀察台北日常的最佳座位。',
         teaserEn: 'A city oasis, the best seat to watch daily life flow.',
-        coverImage: 'https://images.unsplash.com/photo-1590424600650-6ed6679b3cb0?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1585938389612-a552a28d6914?q=80&w=1160&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -919,7 +920,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '眷村轉角遇見 101，感受歷史與現代的對話。',
         teaserEn: '101 meets historical cabins; a dialogue across time.',
-        coverImage: 'https://images.unsplash.com/photo-1470252649358-96f3c802bca8?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1531934985319-1fc5317d8ce1?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -989,7 +990,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#3a7aaa',
         teaser: '登上雲端俯瞰台北，見證工程奇蹟。',
         teaserEn: 'Climb above the clouds and witness an engineering marvel.',
-        coverImage: 'https://images.unsplash.com/photo-1538356111083-74819827bb68?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1661964181196-0fa3fac9647a?q=80&w=1332&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1061,7 +1062,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d2222',
         teaser: '燈火通明的台北深夜，米其林級的在地美味。',
         teaserEn: 'A lit Taipei night with Michelin-level local flavors.',
-        coverImage: 'https://images.unsplash.com/photo-1570535316410-b9bbd6642d93?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1593359946320-bb3b05e13259?q=80&w=1170&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1235,7 +1236,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d5a2d',
         teaser: '台北深夜最溫塊的救贖，別忘了那瓢靈魂辣牛油。',
         teaserEn: 'Midnight healing in a bowl. Don\'t forget the soul-stirring spicy beef butter.',
-        coverImage: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1657457320630-3f3e25814b06?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -1305,7 +1306,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#1a1a1a',
         teaser: '推開西裝店的神祕大門，進入大亨小傳的深夜聚會。',
         teaserEn: 'Step behind the tailor shop into a Great Gatsby-esque midnight gathering.',
-        coverImage: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1542666910-07c167428567?q=80&w=1714&auto=format&fit=crop&q=80&w=800',
         marketingTitle: '西裝店後的祕密解憂爵士酒吧',
         marketingTitleEn: 'The Secret Jazz Speakeasy behind a Tailor Shop',
         expertStories: [
@@ -1377,7 +1378,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#3a5a40',
         teaser: '城市不睡，我們在字裡行間與靈魂對視。',
         teaserEn: 'The city sleeps not; we meet our souls between the lines.',
-        coverImage: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1589200348508-adf9bb6e0828?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1447,7 +1448,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b45309',
         teaser: '清晨四點的豆漿，是瘋狂夜晚與正常世界的緩衝區。',
         teaserEn: '4 AM soy milk: your buffer between a wild night and the normal world.',
-        coverImage: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1555465083-a845797ef750?q=80&w=928&auto=format&fit=crop&q=80&w=800',
         marketingTitle: '台北計程車司機的深夜救贖聖地',
         marketingTitleEn: 'Morning Sanctuary for Midnight Cabbies',
         expertStories: [
@@ -1521,7 +1522,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#dc2626',
         teaser: '台北夜市的米其林殿堂，老饕不說的口袋名單。',
         teaserEn: 'The Michelin hall of night markets; a foodie\'s best-kept secret.',
-        coverImage: 'https://images.unsplash.com/photo-1570535316410-b9bbd6642d93?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1698563874316-c53d7493c04c?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -1591,7 +1592,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#eab308',
         teaser: '台北早晨的香氣，從炭火吐司開始。',
         teaserEn: 'The aroma of Taipei morning begins with charcoal toast.',
-        coverImage: 'https://images.unsplash.com/photo-1550507992-eb63ffee0847?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1740247383851-8380f7d385de?q=80&w=1742&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -1653,7 +1654,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#92400e',
         teaser: '台北靈魂的滋味，一碗濃縮半世紀的精華。',
         teaserEn: 'The taste of Taipei\'s soul, concentrated in a half-century-old recipe.',
-        coverImage: 'https://images.unsplash.com/photo-1624300629298-e9de39c13be5?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1651330395670-1680a92028bc?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -1713,7 +1714,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7c2d12',
         teaser: '跨越千年的文化巡禮，近距離觀察歷史的重量。',
         teaserEn: 'A millennial cultural journey, witnessing the weight of history up close.',
-        coverImage: 'https://images.unsplash.com/photo-1596434406196-857c0c6e0892?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1661962818476-adac14ed5d46?q=80&w=1632&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1782,7 +1783,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#1e40af',
         teaser: '正午時分的儀隊交接，感受莊嚴肅穆的守護儀式。',
         teaserEn: 'The midday guard changing ceremony—a display of solemnity and precision.',
-        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1693236731045-5148457c0491?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -1843,7 +1844,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c2410c',
         teaser: '燈火輝煌的美食迷宮，挑戰味蕾的極限。',
         teaserEn: 'A neon-lit food labyrinth challenging your taste buds.',
-        coverImage: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1513599974100-e724eabafef5?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -1912,7 +1913,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '09:30 - 17:00 (週一休館)',
         tags: ['親子', '歷史', '恐龍'],
         themeColor: '#D2B48C',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1560148271-00b5e5850812?q=80&w=1752&auto=format&fit=crop&q=80&w=800',
         teaser: '在老銀行裡與恐龍共舞，這是台北送給孩子的第一份奇蹟。',
         teaserEn: 'Dance with dinosaurs in an old bank—Taipei\'s first gift of wonder for kids.',
         expertStories: [
@@ -1955,7 +1956,8 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '24H (建議日間前往)',
         tags: ['生態', '戶外', '親子'],
         themeColor: '#2F4F4F',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1614116824474-4fcf1b87321f?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
+
         teaser: '捷運站出來就是森林，帶孩子尋找泥土裡的招潮蟹魔法。',
         teaserEn: 'A forest right outside the MRT, where kids can find the magic of fiddler crabs.',
         expertStories: [
@@ -1989,7 +1991,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '10:00 - 18:00',
         tags: ['單車', '風景', '體能'],
         themeColor: '#00BFFF',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1532000322649-66258c184310?q=80&w=1742&auto=format&fit=crop&q=80&w=800',
         teaser: '搭小船、踩踏板，把台北的夕陽裝進孩子的口袋。',
         teaserEn: 'Hop on a boat, pedal away, and capture Taipei\'s sunset for your kids.',
         expertStories: [
@@ -2032,7 +2034,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '11:00 - 21:30',
         tags: ['科技', '動漫', '室內'],
         themeColor: '#708090',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/p/AF1QipPbzzSHtMT9tqg2n__mCu565Dvht4FErCNTsmUo?auto=format&fit=crop&q=80&w=800',
         teaser: '台北黑科技總部，這裡是逃離雨天與烈日的終極武庫。',
         teaserEn: 'Taipei\'s tech HQ—the ultimate indoor armor against rain and sun.',
         expertStories: [
@@ -2093,7 +2095,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '09:30 - 17:00 (16:30 停止售票，周一休館)',
         tags: ['鐵道', '親子', '歷史'],
         themeColor: '#8B4513',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/p/AF1QipNragxK2porpxm1SK2YUYzbvDImGuiz2VvbT0Sh?auto=format&fit=crop&q=80&w=800',
         teaser: '走進火車的醫院，見證台灣鋼鐵與鐵道的百年記憶。',
         teaserEn: 'Enter the "hospital for trains" and witness a century of Taiwan\'s iron and steel history.',
         expertStories: [
@@ -2136,7 +2138,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '24H (熱鬧時段 16:00-22:00)',
         tags: ['潮流', '美食', '夜生活'],
         themeColor: '#FF69B4',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://www.travel.taipei/image/490753/?r=1728873877663?auto=format&fit=crop&q=80&w=800',
         teaser: '台北的秋葉原與東宿，這裡有最熱鬧的街頭與最好拍的彩虹標誌。',
         teaserEn: 'The Akihabara of Taipei, featuring vibrant streets and the iconic rainbow landmark.',
         expertStories: [
@@ -2206,7 +2208,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '11:30 - 02:00',
         tags: ['吃到飽', '麻辣鍋', '慶祝'],
         themeColor: '#800000',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1661410881226-c42c7f6c6690?q=80&w=1632&auto=format&fit=crop&q=80&w=800',
         teaser: '台北旗艦行程的慶祝晚宴，用和牛與冰淇淋填滿全家人的胃。',
         teaserEn: 'The celebratory gala dinner of the flagship tour—fill up on Wagyu and endless ice cream.',
         expertStories: [
@@ -2240,7 +2242,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '05:00 - 14:00 (售完為止)',
         tags: ['老字號', '必吃', '平價'],
         themeColor: '#FF7F50',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAEMf75y8vqo7FGgVlKfgsvWgN2TCtY-pDH-Ec_yAjJdY1JdLcnWFXLWn_s1I4TDegs9jSKI0x0y2zA_7WpkjryUknrjt3592KCVaim8cJdSxR6USYOeH7ynTL7Z317f0dyABctenlRd0-Jb?auto=format&fit=crop&q=80&w=800',
         teaser: '淡水人的私藏早餐，每一口都是飽滿的冬粉與魚漿香氣。',
         teaserEn: 'The locals\' secret breakfast—each bite is packed with glass noodles and savory fish paste.',
         expertStories: [
@@ -2274,7 +2276,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '08:00 - 20:00',
         tags: ['經典', '台味', '必吃'],
         themeColor: '#000080',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1709111642691-ebc144470744?q=80&w=1740&?auto=format&fit=crop&q=80&w=800',
         teaser: '這不只是一份便當，這是台灣一整個世代的鄉愁與移動記憶。',
         teaserEn: 'More than a bento—this is a generation\'s nostalgia and collective travel memory.',
         expertStories: [
@@ -2308,7 +2310,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '09:00 - 17:00',
         tags: ['早午餐', '名店', '親子'],
         themeColor: '#DEB887',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1733317254623-94ea60b1eb3b?q=80&w=1160&?auto=format&fit=crop&q=80&w=800',
         teaser: '台北北門旁的陽光早午餐，大拼盤是不變的經典。',
         teaserEn: 'Sun-drenched brunch near Beimen—legendary platters are always a win.',
         expertStories: [
@@ -2342,7 +2344,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '09:00 - 17:00 (農曆除夕休館)',
         tags: ['動物園', '教育', '旗艦'],
         themeColor: '#228B22',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAGGZLspPlrOp_tB1XdOEg74pNsU1Scsw547K4vCV47pPJwrcQUyRePyvl4GR-nN07elqQfETt7aka33GZU49NRtZNYJQa4Y8p77ZWTTB5P855pxCHC0Ng-1U9obpJPahUpMqBrPpw?auto=format&fit=crop&q=80&w=800',
         teaser: '在森林與草地間尋找野生奇蹟，這是台北最經典的親子記憶。',
         teaserEn: 'Discover wild wonders between the forests and slopes—Taipei\'s most classic family memory.',
         expertStories: [
@@ -2376,7 +2378,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '09:00 - 21:00 (每月第一個週一營運)',
         tags: ['纜車', '夜景', '風景'],
         themeColor: '#556B2F',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1635328380844-adb3f8e12309?q=80&w=774&?auto=format&fit=crop&q=80&w=800',
         teaser: '搭乘水晶車廂穿梭雲端，讓台北 101 當你的背景。',
         teaserEn: 'Soar through the clouds in a crystal cabin with Taipei 101 as your backdrop.',
         expertStories: [
@@ -2409,7 +2411,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '自然', '秘境'],
         themeColor: '#cbd5e1',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAEQPe8qy3X3v_fl4psIyVwqbTRQCZ2MnJ9NGdy-hE8c1zF9L8L-YO248dNLgeoVZWAmto35AoFmb6HABfpE7bh6-7V4sxU_JmBvGdQncLrIvdg5gmeLMlUF8rB96fhqU6lU_rdy?auto=format&fit=crop&q=80&w=800',
         teaser: '馬路旁的森林奇蹟，遇見那一池溫柔的乳白翠綠。',
         teaserEn: 'A forest miracle right by the road; witness the pool of gentle milk-white and emerald green.',
         expertStories: [
@@ -2442,7 +2444,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '歷史', '浪漫'],
         themeColor: '#f43f5e',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAH868D-ujhfvCvouSWquOn9vL2RFLs4jgInvPtffGzIrJDsdqHPYfz8MpGrvcynPgapwahbFjWUGiN2eC8rZIZuk9rVYvQTcbxavufA_AcH6NiNG5HqeUZcui1J0lwihD4Zukj4pw?auto=format&fit=crop&q=80&w=800',
         teaser: '走進淡水時光的縫隙，在戀愛巷的階梯上與歷史對望。',
         teaserEn: 'Step into the cracks of Tamsui\'s history; meet the past on the steps of Love Lane.',
         expertStories: [
@@ -3859,7 +3861,8 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '廟宇', '瀑布'],
         themeColor: '#34d399',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1669516255001-39f49df961ff?q=80&w=928&auto=format&fit=crop&q=80&w=800',
+
         expertStories: [
             {
                 id: 'must-do',
@@ -3899,7 +3902,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['冒險', '登山', '全景'],
         themeColor: '#a855f7',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1659232394721-3a51c050b08b?q=80&w=870&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3939,7 +3942,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '海岸', '經典'],
         themeColor: '#3b82f6',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1668570835670-9e5e627c526c?q=80&w=1074&auto=format&fit=crop&q=80 & w=800',
         expertStories: [
             {
                 id: 'must-do',
