@@ -159,75 +159,75 @@ export const TEMPLATES: Template[] = [
                 themeEn: 'Mountain & City Altitudes',
                 themeEmoji: '🌇',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a5')!, 
-                        instanceId: 'tm-1', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a5')!,
+                        instanceId: 'tm-1',
                         itemType: 'spot',
-                        startTime: '05:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '05:30',
+                        arrivalTransport: 'public'
                     },
-                    { 
+                    {
                         id: 'insight-1',
                         itemType: 'insight',
                         insightId: 'tw-morning-exercise',
                         startTime: '06:30'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f5')!, 
-                        instanceId: 'tm-2', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f5')!,
+                        instanceId: 'tm-2',
                         itemType: 'spot',
-                        startTime: '10:00', 
-                        arrivalTransport: 'public' 
+                        startTime: '10:00',
+                        arrivalTransport: 'public'
                     }
                 ],
                 afternoon: [
-                    { 
+                    {
                         id: 'insight-2',
                         itemType: 'insight',
                         insightId: 'tw-queue-culture',
                         startTime: '11:00'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a6')!, 
-                        instanceId: 'tm-3', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a6')!,
+                        instanceId: 'tm-3',
                         itemType: 'spot',
-                        startTime: '12:00', 
-                        arrivalTransport: 'public' 
+                        startTime: '12:00',
+                        arrivalTransport: 'public'
                     },
-                    { 
+                    {
                         id: 'insight-3',
                         itemType: 'insight',
                         insightId: 'tw-park-karaoke',
                         startTime: '13:00'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a7')!, 
-                        instanceId: 'tm-4', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a7')!,
+                        instanceId: 'tm-4',
                         itemType: 'spot',
-                        startTime: '14:30', 
-                        arrivalTransport: 'walk' 
+                        startTime: '14:30',
+                        arrivalTransport: 'walk'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a8')!, 
-                        instanceId: 'tm-5', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a8')!,
+                        instanceId: 'tm-5',
                         itemType: 'spot',
-                        startTime: '16:30', 
-                        arrivalTransport: 'walk' 
+                        startTime: '16:30',
+                        arrivalTransport: 'walk'
                     },
-                    { 
+                    {
                         id: 'insight-4',
                         itemType: 'insight',
                         insightId: 'tw-dept-anniversary',
                         startTime: '18:00'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a9')!, 
-                        instanceId: 'tm-6', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a9')!,
+                        instanceId: 'tm-6',
                         itemType: 'spot',
-                        startTime: '21:00', 
-                        arrivalTransport: 'public' 
+                        startTime: '21:00',
+                        arrivalTransport: 'public'
                     }
                 ],
                 night: [],
@@ -301,58 +301,58 @@ export const TEMPLATES: Template[] = [
                 themeEn: 'Taipei in Mini: Heritage to Modernity',
                 themeEmoji: '🌇',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f7')!, 
-                        instanceId: 'cl-1', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f7')!,
+                        instanceId: 'cl-1',
                         itemType: 'spot',
-                        startTime: '08:00', 
-                        arrivalTransport: 'public' 
+                        startTime: '08:00',
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a10')!, 
-                        instanceId: 'cl-2', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a10')!,
+                        instanceId: 'cl-2',
                         itemType: 'spot',
-                        startTime: '09:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '09:30',
+                        arrivalTransport: 'public'
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f8')!, 
-                        instanceId: 'cl-3', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f8')!,
+                        instanceId: 'cl-3',
                         itemType: 'spot',
-                        startTime: '12:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '12:30',
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-grandhotel')!, 
-                        instanceId: 'cl-4', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a-grandhotel')!,
+                        instanceId: 'cl-4',
                         itemType: 'spot',
-                        startTime: '14:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '14:30',
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a11')!, 
-                        instanceId: 'cl-5', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a11')!,
+                        instanceId: 'cl-5',
                         itemType: 'spot',
-                        startTime: '16:00', 
-                        arrivalTransport: 'public' 
+                        startTime: '16:00',
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a8')!, 
-                        instanceId: 'cl-6', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a8')!,
+                        instanceId: 'cl-6',
                         itemType: 'spot',
-                        startTime: '17:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '17:30',
+                        arrivalTransport: 'public'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a13')!, 
-                        instanceId: 'cl-7', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a13')!,
+                        instanceId: 'cl-7',
                         itemType: 'spot',
-                        startTime: '19:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '19:30',
+                        arrivalTransport: 'public'
                     }
                 ],
                 night: [],
@@ -419,52 +419,52 @@ export const TEMPLATES: Template[] = [
                 morning: [],
                 afternoon: [],
                 evening: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n6')!, 
-                        instanceId: 'ns-1', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n6')!,
+                        instanceId: 'ns-1',
                         itemType: 'spot',
-                        startTime: '20:30', 
-                        arrivalTransport: 'public' 
+                        startTime: '20:30',
+                        arrivalTransport: 'public'
                     }
                 ],
                 night: [
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n1')!, 
-                        instanceId: 'ns-2', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n1')!,
+                        instanceId: 'ns-2',
                         itemType: 'spot',
-                        startTime: '22:30', 
+                        startTime: '22:30',
                         arrivalTransport: 'public',
-                        isLocked: true 
+                        isLocked: true
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n4')!, 
-                        instanceId: 'ns-3', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n4')!,
+                        instanceId: 'ns-3',
                         itemType: 'spot',
-                        startTime: '23:30', 
-                        arrivalTransport: 'walk' 
+                        startTime: '23:30',
+                        arrivalTransport: 'walk'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n3')!, 
-                        instanceId: 'ns-4', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n3')!,
+                        instanceId: 'ns-4',
                         itemType: 'spot',
-                        startTime: '01:00', 
+                        startTime: '01:00',
                         arrivalTransport: 'public',
-                        isLocked: true 
+                        isLocked: true
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n2')!, 
-                        instanceId: 'ns-5', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n2')!,
+                        instanceId: 'ns-5',
                         itemType: 'spot',
-                        startTime: '03:00', 
-                        arrivalTransport: 'public' 
+                        startTime: '03:00',
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n5')!, 
-                        instanceId: 'ns-6', 
+                    {
+                        ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-n5')!,
+                        instanceId: 'ns-6',
                         itemType: 'spot',
-                        startTime: '05:00', 
+                        startTime: '05:00',
                         arrivalTransport: 'public',
-                        isLocked: true 
+                        isLocked: true
                     }
                 ],
                 accommodation: []
@@ -532,48 +532,48 @@ export const TEMPLATES: Template[] = [
         schedule: {
             'Day 1': {
                 morning: [
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f8')!, 
-                        instanceId: 'tc-q1', 
-                        startTime: '08:30', 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f8')!,
+                        instanceId: 'tc-q1',
+                        startTime: '08:30',
                         timeLabel: '早餐 Breakfast',
-                        arrivalTransport: 'public' 
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a2')!, 
-                        instanceId: 'tc-q2', 
-                        startTime: '10:00', 
-                        arrivalTransport: 'walk' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a2')!,
+                        instanceId: 'tc-q2',
+                        startTime: '10:00',
+                        arrivalTransport: 'walk'
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f3')!, 
-                        instanceId: 'tc-q3', 
-                        startTime: '12:30', 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f3')!,
+                        instanceId: 'tc-q3',
+                        startTime: '12:30',
                         timeLabel: '午餐 Lunch',
-                        arrivalTransport: 'public' 
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a3')!, 
-                        instanceId: 'tc-q4', 
-                        startTime: '14:30', 
-                        arrivalTransport: 'walk' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a3')!,
+                        instanceId: 'tc-q4',
+                        startTime: '14:30',
+                        arrivalTransport: 'walk'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f1')!, 
-                        instanceId: 'tc-q5', 
-                        startTime: '16:00', 
-                        arrivalTransport: 'public' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f1')!,
+                        instanceId: 'tc-q5',
+                        startTime: '16:00',
+                        arrivalTransport: 'public'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f4')!, 
-                        instanceId: 'tc-q6', 
-                        startTime: '18:30', 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f4')!,
+                        instanceId: 'tc-q6',
+                        startTime: '18:30',
                         timeLabel: '晚餐 Dinner',
-                        arrivalTransport: 'public' 
+                        arrivalTransport: 'public'
                     }
                 ],
                 night: [],
@@ -619,54 +619,54 @@ export const TEMPLATES: Template[] = [
         schedule: {
             'Day 1': {
                 morning: [
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f10')!, 
-                        instanceId: 'tc-h-b1', 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f10')!,
+                        instanceId: 'tc-h-b1',
                         startTime: '08:30',
                         timeLabel: '早餐 Breakfast',
-                        arrivalTransport: 'public' 
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a4')!, 
-                        instanceId: 'tc-h-m1', 
-                        startTime: '10:00', 
-                        arrivalTransport: 'public' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a4')!,
+                        instanceId: 'tc-h-m1',
+                        startTime: '10:00',
+                        arrivalTransport: 'public'
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f5')!, 
-                        instanceId: 'tc-h-l1', 
-                        startTime: '12:30', 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f5')!,
+                        instanceId: 'tc-h-l1',
+                        startTime: '12:30',
                         timeLabel: '午餐 Lunch',
-                        arrivalTransport: 'public' 
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a7')!, 
-                        instanceId: 'tc-h-a1', 
-                        startTime: '14:30', 
-                        arrivalTransport: 'walk' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a7')!,
+                        instanceId: 'tc-h-a1',
+                        startTime: '14:30',
+                        arrivalTransport: 'walk'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a5')!, 
-                        instanceId: 'tc-h-a2', 
-                        startTime: '16:30', 
-                        arrivalTransport: 'public' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a5')!,
+                        instanceId: 'tc-h-a2',
+                        startTime: '16:30',
+                        arrivalTransport: 'public'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a6')!, 
-                        instanceId: 'tc-h-e1', 
-                        startTime: '18:00', 
-                        arrivalTransport: 'public' 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-a6')!,
+                        instanceId: 'tc-h-e1',
+                        startTime: '18:00',
+                        arrivalTransport: 'public'
                     },
-                    { 
-                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f7')!, 
-                        instanceId: 'tc-h-e2', 
-                        startTime: '19:30', 
+                    {
+                        ...TAICHUNG_ASSETS.find(a => a.id === 'tc-f7')!,
+                        instanceId: 'tc-h-e2',
+                        startTime: '19:30',
                         timeLabel: '晚餐 Dinner',
-                        arrivalTransport: 'walk' 
+                        arrivalTransport: 'walk'
                     }
                 ],
                 night: [],
@@ -707,50 +707,50 @@ export const TEMPLATES: Template[] = [
         schedule: {
             'Day 1': {
                 morning: [
-                    { 
+                    {
                         ...TAINAN_ASSETS.find((a: any) => a.id === 'tn-f3')!,
                         instanceId: 'tn-c1-h1',
                         startTime: '05:00',
-                        timeLabel: '清晨 Dawn', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '清晨 Dawn',
+                        arrivalTransport: 'public'
                     },
-                    { 
+                    {
                         ...TAINAN_ASSETS.find((a: any) => a.id === 'tn-f4')!,
                         instanceId: 'tn-c1-h2',
                         startTime: '08:30',
-                        timeLabel: '早餐 Breakfast', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '早餐 Breakfast',
+                        arrivalTransport: 'walk'
                     }
                 ],
                 afternoon: [
-                    { 
+                    {
                         ...TAINAN_ASSETS.find((a: any) => a.id === 'tn-f5')!,
                         instanceId: 'tn-c1-h3',
                         startTime: '11:30',
-                        timeLabel: '午餐 Lunch', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '午餐 Lunch',
+                        arrivalTransport: 'walk'
                     },
-                    { 
+                    {
                         ...TAINAN_ASSETS.find((a: any) => a.id === 'tn-exp1')!,
                         instanceId: 'tn-c1-h4',
                         startTime: '14:00',
-                        timeLabel: '下午 Afternoon', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '下午 Afternoon',
+                        arrivalTransport: 'walk'
                     },
-                    { 
+                    {
                         ...TAINAN_ASSETS.find((a: any) => a.id === 'tn-f1')!,
                         instanceId: 'tn-c1-h5',
                         startTime: '16:00',
-                        arrivalTransport: 'walk' 
+                        arrivalTransport: 'walk'
                     }
                 ],
                 evening: [
-                    { 
+                    {
                         ...TAINAN_ASSETS.find((a: any) => a.id === 'tn-a1')!,
                         instanceId: 'tn-c1-h6',
                         startTime: '19:00',
-                        timeLabel: '夜間 Night', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '夜間 Night',
+                        arrivalTransport: 'walk'
                     }
                 ],
                 night: [],
@@ -792,50 +792,50 @@ export const TEMPLATES: Template[] = [
         schedule: {
             'Day 1': {
                 morning: [
-                    { 
+                    {
                         ...KAOHSIUNG_ASSETS.find((a: any) => a.id === 'kh-f1')!,
                         instanceId: 'kh-c1-h1',
                         startTime: '09:00',
-                        timeLabel: '早餐 Breakfast', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '早餐 Breakfast',
+                        arrivalTransport: 'public'
                     }
                 ],
                 afternoon: [
-                    { 
+                    {
                         ...KAOHSIUNG_ASSETS.find((a: any) => a.id === 'kh-a1')!,
                         instanceId: 'kh-c1-h2',
                         startTime: '11:00',
-                        timeLabel: '上午 Morning', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '上午 Morning',
+                        arrivalTransport: 'public'
                     },
-                    { 
+                    {
                         ...KAOHSIUNG_ASSETS.find((a: any) => a.id === 'kh-exp1')!,
                         instanceId: 'kh-c1-h3',
                         startTime: '14:00',
-                        timeLabel: '下午 Afternoon', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '下午 Afternoon',
+                        arrivalTransport: 'walk'
                     },
-                    { 
+                    {
                         ...KAOHSIUNG_ASSETS.find((a: any) => a.id === 'kh-a2')!,
                         instanceId: 'kh-c1-h4',
                         startTime: '16:30',
-                        timeLabel: '傍晚 Evening', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '傍晚 Evening',
+                        arrivalTransport: 'public'
                     }
                 ],
                 evening: [
-                    { 
+                    {
                         ...KAOHSIUNG_ASSETS.find((a: any) => a.id === 'kh-f2')!,
                         instanceId: 'kh-c1-h5',
                         startTime: '19:00',
-                        timeLabel: '晚餐 Dinner', 
-                        arrivalTransport: 'car' 
+                        timeLabel: '晚餐 Dinner',
+                        arrivalTransport: 'car'
                     },
-                    { 
+                    {
                         ...KAOHSIUNG_ASSETS.find((a: any) => a.id === 'kh-f3')!,
                         instanceId: 'kh-c1-h6',
                         startTime: '19:00',
-                        arrivalTransport: 'public' 
+                        arrivalTransport: 'public'
                     }
                 ],
                 night: [],
@@ -878,37 +878,37 @@ export const TEMPLATES: Template[] = [
         schedule: {
             'Day 1': {
                 morning: [
-                    { 
+                    {
                         ...CHIAYI_ASSETS.find((a: any) => a.id === 'cy-f1')!,
                         instanceId: 'cy-c1-h1',
                         startTime: '10:00',
-                        timeLabel: '上午 Morning', 
-                        arrivalTransport: 'car' 
+                        timeLabel: '上午 Morning',
+                        arrivalTransport: 'car'
                     }
                 ],
                 afternoon: [
-                    { 
+                    {
                         ...CHIAYI_ASSETS.find((a: any) => a.id === 'cy-a2')!,
                         instanceId: 'cy-c1-h2',
                         startTime: '13:00',
-                        timeLabel: '午餐 Lunch', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '午餐 Lunch',
+                        arrivalTransport: 'public'
                     },
-                    { 
+                    {
                         ...CHIAYI_ASSETS.find((a: any) => a.id === 'cy-exp1')!,
                         instanceId: 'cy-c1-h3',
                         startTime: '15:30',
-                        timeLabel: '下午 Afternoon', 
-                        arrivalTransport: 'car' 
+                        timeLabel: '下午 Afternoon',
+                        arrivalTransport: 'car'
                     }
                 ],
                 evening: [
-                    { 
+                    {
                         ...CHIAYI_ASSETS.find((a: any) => a.id === 'cy-f2')!,
                         instanceId: 'cy-c1-h4',
                         startTime: '18:00',
-                        timeLabel: '晚餐 Dinner', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '晚餐 Dinner',
+                        arrivalTransport: 'walk'
                     }
                 ],
                 night: [],
@@ -918,12 +918,12 @@ export const TEMPLATES: Template[] = [
             },
             'Day 2': {
                 morning: [
-                    { 
+                    {
                         ...CHIAYI_ASSETS.find((a: any) => a.id === 'cy-a1')!,
                         instanceId: 'cy-c1-h5',
                         startTime: '05:00',
-                        timeLabel: '日出 Sunrise', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '日出 Sunrise',
+                        arrivalTransport: 'public'
                     }
                 ],
                 afternoon: [], evening: [], night: [], accommodation: []
@@ -962,42 +962,42 @@ export const TEMPLATES: Template[] = [
         schedule: {
             'Day 1': {
                 morning: [
-                    { 
+                    {
                         ...NANTOU_ASSETS.find((a: any) => a.id === 'nt-a1')!,
                         instanceId: 'nt-c1-h1',
                         startTime: '09:00',
-                        timeLabel: '上午 Morning', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '上午 Morning',
+                        arrivalTransport: 'public'
                     }
                 ],
                 afternoon: [
-                    { 
+                    {
                         ...NANTOU_ASSETS.find((a: any) => a.id === 'nt-f1')!,
                         instanceId: 'nt-c1-h2',
                         startTime: '11:30',
-                        timeLabel: '午餐 Lunch', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '午餐 Lunch',
+                        arrivalTransport: 'walk'
                     },
-                    { 
+                    {
                         ...NANTOU_ASSETS.find((a: any) => a.id === 'nt-f2')!,
                         instanceId: 'nt-c1-h3',
                         startTime: '11:45',
-                        timeLabel: '午間輕食 Light Lunch', 
-                        arrivalTransport: 'walk' 
+                        timeLabel: '午間輕食 Light Lunch',
+                        arrivalTransport: 'walk'
                     },
-                    { 
-                         ...NANTOU_ASSETS.find((a: any) => a.id === 'nt-exp1')!,
+                    {
+                        ...NANTOU_ASSETS.find((a: any) => a.id === 'nt-exp1')!,
                         instanceId: 'nt-c1-h4',
                         startTime: '14:00',
-                        timeLabel: '下午 Afternoon', 
-                        arrivalTransport: 'public' 
+                        timeLabel: '下午 Afternoon',
+                        arrivalTransport: 'public'
                     },
-                    { 
+                    {
                         ...NANTOU_ASSETS.find((a: any) => a.id === 'nt-a2')!,
                         instanceId: 'nt-c1-h5',
                         startTime: '16:00',
-                        timeLabel: '傍晚 Evening', 
-                        arrivalTransport: 'car' 
+                        timeLabel: '傍晚 Evening',
+                        arrivalTransport: 'car'
                     }
                 ],
                 evening: [], night: [],
@@ -1009,7 +1009,7 @@ export const TEMPLATES: Template[] = [
     },
     {
         id: 'circuit-tp-family',
-        name: '台北親子旗艦 6D5N',
+        name: '台北親子旗艦 6D/5N',
         nameEn: 'Taipei Family Flagship 6D5N',
         title: '台北親子旗艦：6D5N 無痛育兒與都會探索',
         titleEn: 'Taipei Family Flagship: 6D5N Stress-Free City Exploration',
@@ -1024,7 +1024,7 @@ export const TEMPLATES: Template[] = [
         price: 0,
         tier: 'official',
         lastUpdated: '2026/04/20',
-        coverImage: '/images/covers/taipei.png',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1682094139633-b06316cee50f?q=80&w=1740&?auto=format&fit=crop&q=80&w=1200',
         highlights: { days: 6, spots: 20, tips: 16, rating: 5.0, usageCount: 4200 },
         vibes: [
             { tag: '#親子奇蹟', color: 'bg-pink-100 text-pink-800' },
@@ -1071,23 +1071,23 @@ export const TEMPLATES: Template[] = [
             { title: '數位工具建議', titleEn: 'Digital Survival Kit', text: '建議下載 Uber、Grab 或 55688 App 進行叫車。地圖建議使用 Google Maps，並下載台北離線地圖。捷運與交通動態可使用 Bus+。', textEn: 'Download Uber or 55688 for taxis. Use Google Maps with offline maps downloaded. For real-time transit, Bus+ is the local favorite.' }
         ],
         dayPreviews: [
-            { 
-                day: 1, 
+            {
+                day: 1,
                 summary: '台北站前恐龍探險 → 鼎泰豐午餐 → 101 高空視野 → 信義區潮流',
                 summaryEn: 'Dinosaur discovery at Taipei Station → Din Tai Fung → Taipei 101 Heights → Xinyi Trends'
             },
-            { 
-                day: 2, 
+            {
+                day: 2,
                 summary: '紅樹林生態教室 → 淡水老街阿給 → 八里渡輪單車 → 漁人碼頭日落 → 士林夜市',
                 summaryEn: 'Mangrove Eco-Class → Tamsui Agei → Bali Ferry & Cycling → Fisherman\'s Wharf Sunset → Shilin Night Market'
             },
-            { 
-                day: 3, 
+            {
+                day: 3,
                 summary: '動物園全下坡體力不支攻略 → 貓空水晶車廂日落 → 彩虹橋 → 饒河夜市',
                 summaryEn: 'Zoo Downhill Hack → Maokong Crystal Cabin Sunset → Rainbow Bridge → Raohe Night Market'
             },
-            { 
-                day: 4, 
+            {
+                day: 4,
                 summary: '北門名店早午餐 → 鐵道博物館 → 復古食堂午餐 → 三創生活園區 → 西門町潮流散步',
                 summaryEn: 'Beimen Brunch → Railway Museum → Vintage Canteen Lunch → Syntrend Tech → Ximending Walk'
             },
@@ -1120,11 +1120,11 @@ export const TEMPLATES: Template[] = [
                         expertNote: '🧳 行李提示：若飯店尚未開放 Check-in，請先至台北車站地下街 Z4 出口的置物櫃寄放行李。帶著大包小包去恐龍博物館是一場噩夢。',
                         expertNoteEn: '🧳 Do this FIRST: If your hotel is not ready, store bags at Taipei Main Station lockers (Underground Mall, Exit Z4). Dragging suitcases to a dinosaur museum with kids = disaster.'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-dino')!, 
-                        instanceId: 'f1-1', 
-                        startTime: '10:00', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-dino')!,
+                        instanceId: 'f1-1',
+                        startTime: '10:00',
+                        arrivalTransport: 'public',
                         facilityTags: ['easycard', 'stroller', 'restroom-1f'],
                         expertNote: '🚇 交通：搭乘「捷運藍線」或「紅線」至台北車站，步行 5 分鐘。建議直接刷悠遊卡進場。',
                         expertNoteEn: '🚇 Transit: Take BLUE or RED line to Taipei Main Station, 5-min walk. Use EasyCard for entry.',
@@ -1132,23 +1132,23 @@ export const TEMPLATES: Template[] = [
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-f5')!, 
-                        instanceId: 'f1-2', 
-                        startTime: '12:30', 
-                        timeLabel: '名店午餐 Lunch', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-f5')!,
+                        instanceId: 'f1-2',
+                        startTime: '12:30',
+                        timeLabel: '名店午餐 Lunch',
+                        arrivalTransport: 'public',
                         facilityTags: ['kid-menu'],
                         expertNote: '即便在 101 也要早點取號！店員對小孩極其友善。💡 達人提示：點擊景點卡片查看「即時排隊進度」。',
                         expertNoteEn: 'Grab a number early! The staff is kid-friendly. 💡 Expert Tip: Click the card to check "Real-time Queue Status".',
                         kidFriendlyTip: '推薦點「清燉牛肉麵（不辣）」與「原味小籠包」，店內備有兒童餐具及安全剪刀。',
                         kidFriendlyTipEn: 'We recommend "Clear Broth Beef Noodle (Non-spicy)" and "Classic Soup Dumplings". Child utensils/scissors available.'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a8')!, 
-                        instanceId: 'f1-3', 
-                        startTime: '15:00', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a8')!,
+                        instanceId: 'f1-3',
+                        startTime: '15:00',
+                        arrivalTransport: 'public',
                         facilityTags: ['stroller', 'elevator', 'restroom', 'booking'],
                         expertNote: '🚇 交通：從台北車站搭乘「捷運紅線」直達【台北 101/世貿站】。89 樓有雲朵拍照點。☕ 家長充電：這層的 %Arabica 咖啡。',
                         expertNoteEn: '🚇 Transit: Take RED line directly to [Taipei 101 Station]. Cloud photo spots on 89F. ☕ Parent Recharge: %Arabica on this floor.',
@@ -1156,13 +1156,13 @@ export const TEMPLATES: Template[] = [
                     }
                 ],
                 evening: [
-                    { 
-                        id: 'custom-ximy-walk', 
-                        title: '信義香堤大道散步', 
+                    {
+                        id: 'custom-ximy-walk',
+                        title: '信義香堤大道散步',
                         titleEn: 'Xinyi Xiangti Avenue Walk',
-                        itemType: 'spot', 
-                        startTime: '18:30', 
-                        arrivalTransport: 'walk', 
+                        itemType: 'spot',
+                        startTime: '18:30',
+                        arrivalTransport: 'walk',
                         expertNote: '信義區晚上充滿了水準極高的街頭藝人。找張長椅坐下看表演，這是台北最現代、最 chill 的親子時光。',
                         expertNoteEn: 'Xinyi at night is full of top-tier street performers. Find a bench and enjoy the show; it\'s Taipei\'s most modern and chill family time.'
                     }
@@ -1176,45 +1176,45 @@ export const TEMPLATES: Template[] = [
                 restReminder: '達人溫馨提醒：八里騎車較耗體力且容易曬傷，建議下午三點左右到附近特色咖啡廳躲太陽兼補充水分。',
                 restReminderEn: '☕️ Expert tip: Bali cycling can be draining under the sun. Grab a cafe break around 3 PM to rehydrate.',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-mangrove')!, 
-                        instanceId: 'f2-1', 
-                        startTime: '10:00', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-mangrove')!,
+                        instanceId: 'f2-1',
+                        startTime: '10:00',
+                        arrivalTransport: 'public',
                         facilityTags: ['stroller', 'restroom', 'free-entry'],
                         expertNote: '🚇 交通：搭乘「捷運紅線」一路向北直達【紅樹林站】。2 號出口出站即達。這裡是全台唯一能近距離看水筆仔的地方，記得找螃蟹！',
                         expertNoteEn: '🚇 Transit: Take RED line all the way north to [Mangrove Station]. Exit 2 is right there. Look for crabs!'
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-f-agei')!, 
-                        instanceId: 'f2-2', 
-                        startTime: '12:30', 
-                        timeLabel: '在地食育 Food', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-f-agei')!,
+                        instanceId: 'f2-2',
+                        startTime: '12:30',
+                        timeLabel: '在地食育 Food',
+                        arrivalTransport: 'public',
                         facilityTags: ['kid-menu'],
                         expertNote: '真理街的三間阿給都不錯。教孩子如何切開豆腐讓冬粉吸湯，這是一場餐桌上的動手實驗。',
                         expertNoteEn: 'The three Agei shops on Zhenli Street are all good. Teach kids to cut open the tofu to soak the soup—it\'s a table-top experiment.',
                         kidFriendlyTip: '阿給的醬汁通常帶微辣，記得點餐時請老闆「醬汁分開裝」，並多點一碗清淡的魚丸湯給小孩。',
                         kidFriendlyTipEn: 'Agei sauce can be spicy. Ask to put the sauce on the side, and order a mild fishball soup for the kids.'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-bali')!, 
-                        instanceId: 'f2-3', 
-                        startTime: '14:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-bali')!,
+                        instanceId: 'f2-3',
+                        startTime: '14:30',
+                        arrivalTransport: 'public',
                         facilityTags: ['cobblestone', 'restroom', 'rain-ok'],
                         expertNote: '渡輪上可以吹海風。八里租車請選「電動親子車」。🌧️ 雨天備案：若雨勢過大，可改往信義區室內百貨或三創園區。',
                         expertNoteEn: 'Ferry breeze is magical. Choose electric bikes. 🌧️ Rain Pivot: If pouring, head to Xinyi malls or Syntrend.'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a13')!, 
-                        instanceId: 'f2-4', 
-                        startTime: '18:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a13')!,
+                        instanceId: 'f2-4',
+                        startTime: '18:30',
+                        arrivalTransport: 'public',
                         facilityTags: ['crowd-warning'],
                         expertNote: '建議鎖定「陽明戲院」周邊的小吃，避免漫無目的亂逛。',
                         expertNoteEn: 'Target snacks around Yangming Cinema — do NOT wander aimlessly.'
@@ -1229,11 +1229,11 @@ export const TEMPLATES: Template[] = [
                 restReminder: '達人溫馨提醒：動物園佔地廣，逛完後務必在搭乘貓纜前，讓孩子吃點點心，避免低血糖引發情緒失控。',
                 restReminderEn: '☕️ Expert tip: The Zoo is massive. Have some snacks before taking the Gondola to avoid low-blood-sugar meltdowns.',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-zoo')!, 
-                        instanceId: 'f3-1', 
-                        startTime: '09:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-zoo')!,
+                        instanceId: 'f3-1',
+                        startTime: '09:30',
+                        arrivalTransport: 'public',
                         facilityTags: ['stroller', 'restroom', 'kid-friendly'],
                         expertNote: '🚇 交通：搭乘「捷運棕線（文湖線）」終點站【動物園站】。🚸 生存密技：搭接駁車上山！🌧️ 雨天備案：可改往士林科教館 (NTSEC)。',
                         expertNoteEn: '🚇 Transit: Take BROWN line to the terminal [Taipei Zoo Station]. 🚸 Hack: Take the shuttle up! 🌧️ Rain Pivot: Switch Zoo to NTSEC Science Museum.',
@@ -1241,31 +1241,31 @@ export const TEMPLATES: Template[] = [
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-mao')!, 
-                        instanceId: 'f3-2', 
-                        startTime: '14:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-mao')!,
+                        instanceId: 'f3-2',
+                        startTime: '14:30',
+                        arrivalTransport: 'public',
                         expertNote: '一定要試試鐵觀音霜淇淋。🍵 家長回血：貓空茶屋是絕佳的小睡窗口。',
                         expertNoteEn: 'Try the Tieguanyin soft serve. 🍵 Parent Recharge: Maokong tea houses are the perfect nap-window spots.'
                     },
-                    { 
-                        id: 'nap-window-3', 
-                        title: '小睡續命窗口', 
+                    {
+                        id: 'nap-window-3',
+                        title: '小睡續命窗口',
                         titleEn: 'Nap Window',
-                        itemType: 'spot', 
-                        startTime: '16:30', 
-                        arrivalTransport: 'taxi', 
+                        itemType: 'spot',
+                        startTime: '16:30',
+                        arrivalTransport: 'taxi',
                         expertNote: '🚕 計程車約 25 分鐘前往饒河。這是小孩補充體力的黃金關鍵，家長也能在安靜的車內歇口氣。',
                         expertNoteEn: '🚕 Taxi takes ~25 mins to Raohe. This is critical for kids to recharge; parents can rest in the quiet car too.'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a9')!, 
-                        instanceId: 'f3-3', 
-                        startTime: '18:30', 
-                        arrivalTransport: 'walk', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a9')!,
+                        instanceId: 'f3-3',
+                        startTime: '18:30',
+                        arrivalTransport: 'walk',
                         facilityTags: ['crowd-warning', 'kid-menu'],
                         expertNote: '饒河夜市胡椒餅排隊很長，先買好再帶孩子去旁邊的「彩虹橋」河濱坐著吃，涼爽又安靜。',
                         expertNoteEn: 'Pepper bun lines get very long. Buy first, then take the kids to Rainbow Bridge riverside to eat in the breeze — cool, quiet, perfect.',
@@ -1282,19 +1282,19 @@ export const TEMPLATES: Template[] = [
                 restReminder: '達人溫馨提醒：三創園區樓層多，建議中間安排 30 分鐘讓小孩在 11 樓咖啡廳安靜休息。',
                 restReminderEn: '☕️ Expert tip: Syntrend has many floors. Take a 30-min break at the 11F cafe so kids don\'t burn out.',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-brunch-beimen')!, 
-                        instanceId: 'f4-1', 
-                        startTime: '09:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-brunch-beimen')!,
+                        instanceId: 'f4-1',
+                        startTime: '09:30',
+                        arrivalTransport: 'public',
                         expertNote: '北門旁的人氣名店。大份量拼盤非常適合全家分食，在開啟博物館行程前先把能量補滿。',
                         expertNoteEn: 'Popular spot near Beimen. The large platters are great for family sharing; recharge fully before the museum tour.'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-ntrm')!, 
-                        instanceId: 'f4-2', 
-                        startTime: '11:00', 
-                        arrivalTransport: 'walk', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-ntrm')!,
+                        instanceId: 'f4-2',
+                        startTime: '11:00',
+                        arrivalTransport: 'walk',
                         facilityTags: ['closed-mon', 'kid-friendly'],
                         expertNote: '🚇 交通：從台北車站北門出口步行 5 分鐘。園區內的「蒸汽夢工廠」互動區是小孩最愛。',
                         expertNoteEn: '🚇 Transit: 5-min walk from Taipei Main Station Beimen exit. The Steam Dream Factory inside is a kid favorite.',
@@ -1302,35 +1302,35 @@ export const TEMPLATES: Template[] = [
                     }
                 ],
                 afternoon: [
-                    { 
-                        id: 'museum-lunch', 
-                        title: '博物館復古食堂午餐', 
+                    {
+                        id: 'museum-lunch',
+                        title: '博物館復古食堂午餐',
                         titleEn: 'Museum Vintage Canteen Lunch',
-                        itemType: 'spot', 
-                        startTime: '13:00', 
-                        arrivalTransport: 'walk', 
+                        itemType: 'spot',
+                        startTime: '13:00',
+                        arrivalTransport: 'walk',
                         facilityTags: ['kid-menu'],
                         expertNote: '園區內設有復古風格的食堂，提供簡單定食。在古蹟中用餐氛圍極佳，或是步行至三創 B2 的美食街也有極多選擇。',
                         expertNoteEn: 'The vintage canteen inside provides set meals with great vibes. Or walk to Syntrend B2 food court for more choices.',
                         kidFriendlyTip: '食堂有提供不辣的「鐵路排骨便當」，適合學齡孩童。',
                         kidFriendlyTipEn: 'The canteen offers a non-spicy "Railway Pork Chop Bento" perfect for kids.'
                     },
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-syntrend')!, 
-                        instanceId: 'f4-3', 
-                        startTime: '14:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-syntrend')!,
+                        instanceId: 'f4-3',
+                        startTime: '14:30',
+                        arrivalTransport: 'public',
                         facilityTags: ['stroller', 'elevator', 'restroom', 'kid-friendly'],
                         expertNote: '達人攻略：大門 Wiwi 公仔旁有直達 B2 捷徑。☕ 家長回血：11F 咖啡空間是整棟最靜謐的休息區。',
                         expertNoteEn: 'Expert Hack: Shortcut to B2 near the Wiwi statue. ☕ Parent Recharge: 11F Coffee space is the quietest spot in the building.'
                     }
                 ],
                 evening: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-ximending')!, 
-                        instanceId: 'f4-4', 
-                        startTime: '17:30', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-fam-ximending')!,
+                        instanceId: 'f4-4',
+                        startTime: '17:30',
+                        arrivalTransport: 'public',
                         expertNote: '完美句點。',
                         expertNoteEn: 'The perfect finale.',
                         driverNote: '108台北市萬華區漢中街與成都路口 (西門彩虹地標)',
@@ -1345,11 +1345,11 @@ export const TEMPLATES: Template[] = [
                 restReminder: '達人溫馨提醒：這天地形起伏大，若孩子需要午睡，建議直接包車，讓孩子在車上補眠。',
                 restReminderEn: '☕️ Expert tip: High physical demand today. A chartered car is highly recommended for kids to nap.',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a14')!, 
-                        instanceId: 'f5-1', 
-                        startTime: '09:00', 
-                        arrivalTransport: 'taxi', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a14')!,
+                        instanceId: 'f5-1',
+                        startTime: '09:00',
+                        arrivalTransport: 'taxi',
                         facilityTags: ['cobblestone', 'weather-check'],
                         expertNote: '推車只能走在主步道，若要近距離觀察奇岩，強烈建議家長準備『嬰兒揹巾』，或把推車暫時寄放在入口遊客中心。',
                         expertNoteEn: 'Strollers only work on the main path. Use a baby carrier to get close to the rocks, and leave the stroller at the visitor center.',
@@ -1358,11 +1358,11 @@ export const TEMPLATES: Template[] = [
                     }
                 ],
                 afternoon: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a15')!, 
-                        instanceId: 'f5-2', 
-                        startTime: '14:00', 
-                        arrivalTransport: 'taxi', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a15')!,
+                        instanceId: 'f5-2',
+                        startTime: '14:00',
+                        arrivalTransport: 'taxi',
                         facilityTags: ['restroom', 'kid-friendly', 'kid-menu'],
                         expertNote: '帶小孩前往野柳與十分，強烈建議直接使用 Uber 或包車，能為父母省下 60% 的精力。',
                         expertNoteEn: 'Taking an Uber or chartered car between Yehliu and Shifen will save parents 60% of their energy.',
@@ -1379,11 +1379,11 @@ export const TEMPLATES: Template[] = [
                 restReminder: '達人溫馨提醒：班機起飛前一天的行程應以步行極少、隨時可撤退的溫泉小鎮為主。',
                 restReminderEn: '☕️ Expert tip: The day before departure should feature minimal walking. Beitou is perfect for this.',
                 morning: [
-                    { 
-                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a17')!, 
-                        instanceId: 'f6-1', 
-                        startTime: '10:00', 
-                        arrivalTransport: 'public', 
+                    {
+                        ...TAIPEI_ASSETS.find((a: any) => a.id === 'tw-t-a17')!,
+                        instanceId: 'f6-1',
+                        startTime: '10:00',
+                        arrivalTransport: 'public',
                         facilityTags: ['nap-friendly', 'stroller', 'kid-friendly', 'kid-menu'],
                         expertNote: '🚇 交通：搭乘「捷運紅線」往北至【新北投站】。地熱谷的魔法煙霧對小孩來說非常迷人。圖書館前的草皮非常適合跑跳。',
                         expertNoteEn: '🚇 Transit: Take RED line north to [Xinbeitou Station]. Thermal Valley\'s magical mist is fascinating for kids. The grass area by the library is great for running.',
@@ -1415,7 +1415,7 @@ export const TEMPLATES: Template[] = [
         price: 0,
         tier: 'official',
         lastUpdated: '2026/04/22',
-        coverImage: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=1200',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1740&?auto=format&fit=crop&q=80&w=1200',
         highlights: { days: 6, spots: 22, tips: 15, rating: 5.0, usageCount: 1580 },
         vibes: [
             { tag: '#經典必訪', color: 'bg-amber-100 text-amber-800' },
@@ -1571,7 +1571,7 @@ export const TEMPLATES: Template[] = [
                     { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-a7')!, instanceId: 'c6-1-5', startTime: '17:30', arrivalTransport: 'walk', expertNote: '📸 攝影機位：眷村斜坡。💡 達人提示：這裡不用爬坡就能拍到 101 與老眷村的對比，是首訪台北最省力的「大片產地」。', expertNoteEn: '📸 Photo Spot: Village slopes. 💡 Expert Tip: No climbing needed for the iconic 101 vs. historic cabin shot—the easiest high-value photo op.' },
                     { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-fengsheng')!, instanceId: 'c6-1-din', startTime: '19:30', arrivalTransport: 'public', expertNote: '從「台北 101/世貿站」搭捷運紅線直達「東門站」。🍴 必吃：白斬雞。慶祝第一晚的豐盛台菜。', expertNoteEn: 'Red Line MRT from Taipei 101 to Dongmen. 🍴 Must-eat: Poached chicken. A warm Taiwanese celebratory dinner.' }
                 ],
-                night: [], 
+                night: [],
                 accommodation: [
                     {
                         id: 'rec-hotel-taipei',
@@ -1600,7 +1600,7 @@ export const TEMPLATES: Template[] = [
                 evening: [
                     { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-shilin')!, instanceId: 'c6-2-night', startTime: '18:30', arrivalTransport: 'public', expertNote: '搭捷運紅線回「劍潭站」。💡 避雷提示：不要在水果攤買切好的水果。', expertNoteEn: 'Back to MRT Jiantan (Red Line). 💡 Pro Tip: Avoid pre-cut fruit stalls.' }
                 ],
-                night: [], 
+                night: [],
                 accommodation: [
                     {
                         id: 'rec-hotel-taipei-cont',
@@ -1639,7 +1639,7 @@ export const TEMPLATES: Template[] = [
                 evening: [
                     { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f-raohe')!, instanceId: 'c6-3-3', startTime: '19:00', arrivalTransport: 'public', expertNote: '🚍 交通決策：搭捷運至「中山站」轉綠線直達「松山站」。🍴 必吃米其林：福州世祖胡椒餅、陳董藥燉排骨。買完後去旁邊「彩虹橋」坐著吃。', expertNoteEn: '🚍 Transit Decision: MRT to Zhongshan then Green Line to Songshan. 🍴 Michelin Must-eats: Fuzhou Pepper Bun, Chen Dong Herbal Ribs. Eat at Rainbow Bridge nearby.' }
                 ],
-                night: [], 
+                night: [],
                 accommodation: [
                     {
                         id: 'rec-hotel-taipei-cont',
@@ -1669,7 +1669,7 @@ export const TEMPLATES: Template[] = [
                     { id: 'jiufen-return', title: '山城歸途：快速直達', titleEn: 'Jiufen Return Logistics', itemType: 'spot', startTime: '17:30', arrivalTransport: 'public', expertNote: '🚌 歸途指引：推薦搭乘 965 公車直達「捷運西門站」。💡 班次指引：若想在車上補眠，這是最佳時機，預計 19:00 抵達台北。', expertNoteEn: '🚌 Return: Take Bus 965 directly to "MRT Ximen Station." 💡 Pro Tip: This 90-min ride is the perfect time for a nap before dinner.' },
                     { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-fam-ximending')!, instanceId: 'c6-4-4', startTime: '19:30', arrivalTransport: 'walk', expertNote: '🍲 暖心晚餐：推薦前往「萬年大樓」B1 尋找老字號牛肉麵與排骨飯，或到峨眉街品嚐「阿宗麵線」（站著吃也是一種在地體驗）。💡 達人提示：回飯店前可以順便去「老天祿」買點滷味當宵夜。西門町的夜晚越晚越熱鬧，即便只是散步感受都會活力也很棒。', expertNoteEn: '🍲 Hearty Dinner: Head to Wannien Building B1 for classic beef noodles and pork chop rice, or grab Ah-Zhong Flour Rice Noodles on Emey St. 💡 Pro Tip: Stop by Lao Tian Lu for their famous braised snacks to enjoy back at the hotel. Ximending at night is vibrant and perfect for a slow post-dinner stroll.' }
                 ],
-                night: [], 
+                night: [],
                 accommodation: [
                     {
                         id: 'rec-hotel-taipei-cont',
@@ -1698,7 +1698,7 @@ export const TEMPLATES: Template[] = [
                     { ...TAIPEI_ASSETS.find(a => a.id === 'tw-t-f10')!, instanceId: 'c6-5-4', startTime: '17:30', arrivalTransport: 'public', expertNote: '🍜 廟口攻略：直衝 58 號營養三明治（先領號碼牌）與 43-1 號一口吃香腸。💡 達人指引：這裡的 21 號魯肉飯也是在地老饕的最愛。', expertNoteEn: '🍜 Market Strategy: Head straight to Stall 58 (get a ticket first) and Stall 43-1 for sausages. 💡 Local Tip: Stall 21 for the best braised pork rice.' },
                     { id: 'keelung-return', title: '基隆歸途：快速公車', titleEn: 'Keelung Return Logistics', itemType: 'spot', startTime: '19:30', arrivalTransport: 'public', expertNote: '🚌 歸途建議：搭乘 2088 公車直達「市府轉運站」。下車後可近距離拍 101 夜景。💡 達人提示：今天海風吹久了較疲累，強烈推薦到附近的「指舞春秋 (Dancing Fingers)」按個腳底，這間性價比極高且環境舒適，是緩解五天疲勞的良藥。', expertNoteEn: '🚌 Return: Bus 2088 back to City Hall. Snap a quick photo of Taipei 101. 💡 Pro Tip: Today was windy; a session at "Dancing Fingers" (high value & comfy) nearby will work wonders for your tired feet.' }
                 ],
-                night: [], 
+                night: [],
                 accommodation: [
                     {
                         id: 'rec-hotel-taipei-cont',
@@ -1762,7 +1762,7 @@ export const TEMPLATES: Template[] = [
         price: 0,
         tier: 'official',
         lastUpdated: '2026/04/24',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=1200',
+        coverImage: 'https://images.unsplash.com/photo-1663475424372-4abf28c404a1?q=80&w=774&?auto=format&fit=crop&q=80&w=1200',
         highlights: { days: 6, spots: 18, tips: 12, rating: 5.0, usageCount: 420 },
         vibes: [
             { tag: '#汗水美學', color: 'bg-green-100 text-green-800' },

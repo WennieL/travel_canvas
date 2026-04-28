@@ -1844,7 +1844,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c2410c',
         teaser: '燈火輝煌的美食迷宮，挑戰味蕾的極限。',
         teaserEn: 'A neon-lit food labyrinth challenging your taste buds.',
-        coverImage: 'https://images.unsplash.com/photo-1513599974100-e724eabafef5?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -2477,7 +2477,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['歷史', '體驗', '建築'],
         themeColor: '#ca8a04',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://thumbs.dreamstime.com/b/new-taipei-city-taiwan-mar-gold-museum-government-jinguashi-ruifang-189639750.jpg??auto=format&fit=crop&q=80&w=800',
         teaser: '親手淘出屬於你的那抹金色，在山城中追尋採礦人的夢想。',
         teaserEn: 'Pan for your own fleck of gold; follow the dreams of the miners in the mountain town.',
         expertStories: [
@@ -2510,7 +2510,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['步道', '海景', '攝影', '廢墟'],
         themeColor: '#0ea5e9',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.newtalk.tw/resize_action2/1200/album/news/178/5c0b52c5b6cdd.jpg?auto=format&fit=crop&q=80&w=800',
         teaser: '站在世界的邊緣，俯視大自然最神奇的藍黃調色盤與礦業遺跡。',
         teaserEn: 'Stand at the edge of the world and witness nature\'s magical palette and mining relics.',
         expertStories: [
@@ -2561,7 +2561,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['美食', '夜市', '海港'],
         themeColor: '#ea580c',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAGITuYFjE7-1eGPn114q3AjF9zT7wdP-1IDPSkCR2x0XoIkd-AeSyfHnVfCUqu0PFWyvTK9b8A2z6Uq9Awe1GjFqITp4EmpG62oLD-lZlRPirHwoSeo5Elh0quboGzIY10j9yQ1YW-vF8yF?auto=format&fit=crop&q=80&w=800',
         teaser: '燈火輝煌的三排路燈下，藏著每一位老饕心中的台北美食清單。',
         teaserEn: 'Under the glowing triple rows of lanterns lie the culinary dreams of every gourmet.',
         expertStories: [
@@ -2632,6 +2632,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['地質奇觀', '自然', '攝影'],
         themeColor: '#d69e2e',
+        coverImage: 'https://images.unsplash.com/photo-1751016306794-bcbf43f7abee?q=80&w=1740&?auto=format&fit=crop&q=80&w=800',
         isPhotographySpot: true,
         photographyTips: {
             zh: '想拍出女王頭的優雅感？請站在木棧道的右側 45 度角，利用廣角鏡頭能同時拍到後方的海面。',
@@ -2688,6 +2689,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['天燈', '瀑布', '鐵道'],
         themeColor: '#e53e3e',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAEL2rVDyX_83DIWubS1csiPO-NayIXn-6vVSb_0fZR-tEodEgi1i7ViyH4GQ9V6ioWED2TIRhKgwN5w3GAEBuuYnYn3SHEc8EFlf5R9PAagf6GXR58CjXQiBKT72vEG7XF5NkjwNd6SiOuq?auto=format&fit=crop&q=80&w=800',
         isPhotographySpot: true,
         photographyTips: {
             zh: '拍攝火車進站老街時，建議在鐵軌兩側尋找高處平台，能拍到天燈與火車交織的經典畫面。',
@@ -2746,7 +2748,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b83280',
         teaser: '從黃昏攝影到深夜品茶，捕捉九份最靈魂的四個小時。',
         teaserEn: 'From sunset photos to late-night tea; capture the soul of Jiufen in 4 hours.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1593759057907-b3fd6244741b?q=80&w=1548&?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -2804,6 +2806,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['溫泉', '歷史', '療癒'],
         themeColor: '#4c51bf',
+        coverImage: 'https://taiwanngo.tw/Upload/FileManager/3880f1ca-a455-4b36-bb3b-49ca718c6de2.jpg?auto=format&fit=crop&q=80&w=800',
         teaser: '在蒸汽瀰漫的巷弄間，找回生活的溫度。',
         teaserEn: 'Find the warmth of life amidst the steamy alleys.',
         expertStories: [
@@ -2855,6 +2858,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['海景', '天然泳池', '地質'],
         themeColor: '#3182ce',
+        coverImage: 'https://images.unsplash.com/photo-1717468582133-5b5d39d7cfd9?q=80&w=1632&?auto=format&fit=crop&q=80&w=800',
         isPhotographySpot: true,
         photographyTips: {
             zh: '在「等嶼亭」上可以拍到天然海水泳池與後方基隆嶼的絕美合照，下午三點後光線最佳。',
@@ -2902,6 +2906,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['彩色建築', '攝影', '海港'],
         themeColor: '#dd6b20',
+        coverImage: 'https://images.unsplash.com/photo-1651027965259-c7565ab91003?q=80&w=1548&?auto=format&fit=crop&q=80&w=800',
         isPhotographySpot: true,
         photographyTips: {
             zh: '站在正濱路上的木棧道平台，能平視整排彩色屋。若能等微風靜止，港面的倒影會像鏡子一樣完美。',
@@ -2958,6 +2963,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['無障礙', '避暑', '森林'],
         themeColor: '#38a169',
+        coverImage: 'https://images.unsplash.com/photo-1571071665841-42614273ae6b?q=80&w=1632&?auto=format&fit=crop&q=80&w=800',
         teaser: '在最溫柔的步道上，聽見森林的心跳。',
         teaserEn: 'On the gentlest trail, hear the heartbeat of the forest.',
         expertStories: [
@@ -3010,6 +3016,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         tags: ['攝影', '101視角', '新舊交織'],
         themeColor: '#718096',
         isPhotographySpot: true,
+        coverImage: 'http://images.unsplash.com/photo-1714093698979-c3b371859795?q=80&w=774&?auto=format&fit=crop&q=80&w=800',
         photographyTips: {
             zh: '使用手機的 2x 或 3x 長焦鏡頭，站在巷口往 101 方向拍。長焦能產生「空間壓縮感」，讓 101 看起來就像緊貼在老房子後方一樣巨大。',
             en: 'Use 2x or 3x zoom from the alley entrance. The zoom compresses space, making 101 look massive right behind the old houses.'
@@ -3068,7 +3075,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b86818',
         teaser: '台北早餐傳說，那一抹炭香是早晨最美的溫柔。',
         teaserEn: 'A Taipei breakfast legend; that touch of charcoal is morning\'s finest grace.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1740247383851-8380f7d385de?q=80&w=1742&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -3102,7 +3109,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '迪化街最美的天井書店，走進書香與歷史的深處。',
         teaserEn: 'The most beautiful courtyard bookstore on Dihua Street.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAEgBoQPa2H95Rzy1hmnsj0tXHb6LBZMrOwgPwTXdXD34wnX9LRxlc87NKVSuMdvvbfdhy4SYs4d3iQJFJqUh95v3E1AEzezPiJi3LPnHM-BojcYFBkloAmnIT6fg21z0q81YpejmQ=s680-w680-h510-rw?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3135,7 +3142,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#4a7c59',
         teaser: '巷弄裡的慢活台北，遇見最溫潤的城市光影。',
         teaserEn: 'Slow-living Taipei in the alleys; meet the city\'s gentlest light.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://taiwan-shugakuryoko.jp/wp/wp-content/uploads/2023/12/940c8e6145e42e32a399fe6b4f296a04.jpg?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3169,7 +3176,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d2222',
         teaser: '東門巷弄裡的台味傳奇，品味最有溫度的家常。',
         teaserEn: 'A Taiwanese culinary legend in the Dongmen alleys.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1755742319537-449f661a3190?q=80&w=1740&?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -3203,7 +3210,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7d3a22',
         teaser: '故宮旁的國寶級饗宴，品味文物的美味靈魂。',
         teaserEn: 'A national treasure feast; taste the edible soul of historic artifacts.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAESYhEJ8r8fA7KMg_bPKuMx5F729C9XNzOPe3NqXHVxez6S0Zeec_uESAaUxRn4gYcXu2tMQrB2qdUYGWs1W488IPQ1XGl6LhDA690TdTQYx5qPSGR-noExWHRgETDTc3ESIeSjhZIdBFe4?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -3254,7 +3261,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b91c1c',
         teaser: '紅柱金瓦的皇宮傳奇，探索隱藏的時光密道。',
         teaserEn: 'A palace legend of red columns and golden tiles; explore hidden history.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1615225851513-dca31d9d6a57?q=80&w=928&?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3342,7 +3349,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#1e40af',
         teaser: '白牆藍瓦的莊嚴美學，見證台北的歷史轉角。',
         teaserEn: 'The majestic blue and white aesthetics of Taipei\'s history.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1693236731045-5148457c0491?q=80&w=774&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3412,7 +3419,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#4c3a2b',
         teaser: '五千年中華文明縮影，親眼見證國寶奇蹟。',
         teaserEn: '5,000 years of civilization; witness the miracles of national treasures.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://plus.unsplash.com/premium_photo-1661962818476-adac14ed5d46?q=80&w=1632&auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3580,7 +3587,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7c2d12',
         teaser: '米其林必比登連年推薦，暖到心底的藥燉湯頭。',
         teaserEn: 'Consecutive Michelin Bib Gourmand winner; a heart-warming herbal classic.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1737549573890-38569f6a14c8?q=80&w=774&?auto=format&fit=crop&q=80&w=800',
         expertNote: '一定要蘸他們家特製的豆瓣醬，排骨的味道會提升到另一個層次！',
         expertNoteEn: 'You must dip the ribs in their special spicy bean sauce; it elevates the flavor to another level!',
         proTip: '如果是冬天晚上來，建議外帶到旁邊的彩虹橋坐著吃，避開排隊人潮且風景更佳。',
@@ -3609,32 +3616,32 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b45309',
         teaser: '入口即見的炭火香氣，台北胡椒餅的黃金標準。',
         teaserEn: 'The gold standard of Taipei pepper buns; follow the charcoal aroma at the entrance.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800'
+        coverImage: 'https://cdn-ak.f.st-hatena.com/images/fotolife/m/molitw/20231124/20231124160331.jpg?auto=format&fit=crop&q=80&w=800'
     },
     {
-        id: 'tw-t-f-aguo-lamb',
-        title: '阿國羊肉',
-        titleEn: 'A-Guo Lamb Soup',
+        id: 'tw-t-f-dongfa',
+        title: '東發號 蚵仔麵線',
+        titleEn: 'Dong Fa Hao Vermicelli',
         type: 'food',
-        duration: '40分鐘',
+        duration: '30分鐘',
         image: '🍜',
-        description: '以清燉羊肉湯聞名，沒有羊羶味，只有羊肉的鮮甜。米其林必比登推薦，湯頭透徹、肉質細嫩，是老饕的隱藏清單。',
-        descriptionEn: 'Famous for clear lamb soup with no gaminess. Michelin Bib Gourmand choice; clean broth and tender meat for true foodies.',
-        price: 200,
-        address: '台北市松山區饒河街',
-        rating: 4.4,
+        description: '饒河夜市裡的百年老店，隱藏在土地公廟旁。招牌是清湯底的蚵仔麵線與肉羹，吃起來清爽無負擔，與市面上勾芡濃重的麵線截然不同。',
+        descriptionEn: 'A century-old stall hidden next to the Earth God Temple. Famous for its light, non-thickened oyster vermicelli and pork soup. A refreshing departure from typical heavy street food.',
+        price: 80,
+        address: '台北市松山區饒河街94號',
+        rating: 4.6,
         michelinRating: 'bib-gourmand',
-        michelinYears: [2020, 2021, 2022, 2023, 2024],
+        michelinYears: [2018, 2019, 2020, 2021],
         lat: 25.0506,
         lng: 121.5760,
         region: 'taipei',
         authorId: 'c-tw1',
-        openingHours: '17:00-00:00',
-        tags: ['必比登', '清燉', '老饕推薦'],
-        themeColor: '#4d7c0f',
-        teaser: '一碗清甜羊肉湯，台北夜市裡的純粹鮮美。',
-        teaserEn: 'A bowl of pure, sweet lamb soup in the heart of the night market.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800'
+        openingHours: '08:30-00:00',
+        tags: ['百年老店', '隱藏版', '小吃'],
+        themeColor: '#ca8a04',
+        teaser: '隱身廟宇旁的百年清湯麵線，饒河夜市的靈魂小吃。',
+        teaserEn: 'A century-old clear vermicelli soup hidden beside a temple.',
+        coverImage: 'https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=1664&auto=format&fit=crop&q=80&w=800'
     },
     {
         id: 'tw-t-a-beitou',
@@ -3657,7 +3664,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#b91c1c',
         teaser: '走進紅磚大浴場，回望北投溫泉的百年時光。',
         teaserEn: 'Enter the grand red-brick bathhouse; witness a century of Beitou history.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=80https://lh3.googleusercontent.com/gps-cs-s/APNQkAFPXhx5F7wQjqfpu_mWhkvSWC1Ip17wvLbk21msUKlbut67m9GjfYh3t_pSiHpGgMzVr4V_9W2vP4Ta4y_xoWnEft0CxyzO4qcX-yoeblJ74yQH-2OE1XQcg6ZdGZW6s4YYdDOS?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3689,6 +3696,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         openingHours: '06:00-14:00 (週一休)',
         tags: ['在地人推薦', '平民美食', '老字號'],
         themeColor: '#92400e',
+        coverImage: 'https://static.wixstatic.com/media/15887e_0fecfe4375224327aba21503b3b631b2.jpg/v1/fill/w_350,h_233,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/15887e_0fecfe4375224327aba21503b3b631b2.jpg?auto=format&fit=crop&q=80&w=800',
         teaser: '走進北投人的廚房，品嚐 CNN 推薦的靈魂滷肉飯。',
         teaserEn: 'Enter Beitou\'s kitchen; taste the soulful braised pork rice.',
         expertStories: [
@@ -3723,7 +3731,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#0369a1',
         teaser: '漫步重建街戀愛巷，捕捉淡水最溫柔的日落光影。',
         teaserEn: 'Walk through Love Alley; capture Tamsui\'s gentlest sunset.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://static.wixstatic.com/media/425620_11b0b3119bc14c5caf685ed5f924e8cb~mv2.jpg/v1/fill/w_538,h_359,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/425620_11b0b3119bc14c5caf685ed5f924e8cb~mv2.jpg?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3770,7 +3778,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#16a34a',
         teaser: '顛覆想像的川式蔬食，米其林必比登連續八年推薦。',
         teaserEn: 'Revolutionary Szechuan vegetarian food; 8-year Michelin Bib Gourmand winner.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1771762210605-36baa5beea73?q=80&w=687&?auto=format&fit=crop&q=80&w=800',
         expertNote: '他們的「松露炒飯」與「塔香脆腸」是每桌必點的夢幻逸品，建議提前兩週預訂。',
         expertNoteEn: 'The "Truffle Fried Rice" and "Basil Crispy Intestine" (vegan) are legendary. Book at least 2 weeks in advance.'
     },
@@ -3799,7 +3807,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#fef3c7',
         teaser: '冰與火的極致交融，淋上桂花蜜的優雅甜點。',
         teaserEn: 'The ultimate fusion of hot and cold; elegant osmanthus honey dessert.',
-        coverImage: 'https://images.unsplash.com/photo-1563245372-f21724e3a404?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://images.unsplash.com/photo-1614235183711-7a4f4f339265?q=80&w=1548&?auto=format&fit=crop&q=80&w=800',
         expertNote: '一定要趁熱吃湯圓！吃完剩下的冰可以到櫃檯「免費續加」桂花蜜和檸檬汁，變成清爽的飲品。',
         expertNoteEn: 'Eat the dumplings while they\'re hot! You can get free refills of honey and lemon juice for the leftover ice.'
     },
@@ -3821,7 +3829,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '步道', '奇岩'],
         themeColor: '#cbd5e1',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://www.travel.taipei/image/222664/?r=1637907861411?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3861,8 +3869,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '廟宇', '瀑布'],
         themeColor: '#34d399',
-        coverImage: 'https://images.unsplash.com/photo-1669516255001-39f49df961ff?q=80&w=928&auto=format&fit=crop&q=80&w=800',
-
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAHEVX3olRNzOoEkgc5X9c5r0NNJhx9XugSE2PUqlxgGuMkBfhzjvRugEQUSX9m0_btaBER5MPNsB2NERoI8bj_vUg3KpqoNMhOa30ZGrHtYMmVBqu17VtsvfcaViA0s3yU5PZdR?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3902,7 +3909,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['冒險', '登山', '全景'],
         themeColor: '#a855f7',
-        coverImage: 'https://images.unsplash.com/photo-1659232394721-3a51c050b08b?q=80&w=870&auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://shoplineimg.com/5c6cbb526b52b40001feba05/6066d9de900c9351febd5237/540x.webp?source_format=JPG?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3942,7 +3949,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         authorId: 'c-tw1',
         tags: ['攝影', '海岸', '經典'],
         themeColor: '#3b82f6',
-        coverImage: 'https://images.unsplash.com/photo-1668570835670-9e5e627c526c?q=80&w=1074&auto=format&fit=crop&q=80 & w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAH5srLp4oEA9tN6FHjkhA29xF7ywH3jUPPJevoIupMwelYYTKmQdxbpryq-lE9iS0vo-lsXmg-tRdqZGVtPwIMFFv3a_4GMBhTWcglhljKGsF-ZNLc4eCMSqT6C0shNhfvZ76XzCw?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3952,6 +3959,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'The Winding Ridge',
                 story: '站在步道的高點回頭望去，步道就像一條巨龍盤踞在山脊上。💡 攝影提示：使用手機的「全景模式」或「廣角」，能捕捉到步道、山海與燈塔共存的震撼畫面。',
                 storyEn: 'From the high point, the trail looks like a dragon on the ridge. 💡 Use Panorama or Wide-angle to capture the trail, sea, and lighthouse in one shot.'
+            },
+            {
+                id: 'hidden',
+                label: '【聽濤營區】',
+                labelEn: 'Rainbow Camp',
+                summary: '山谷中的彩虹階梯',
+                summaryEn: 'Valley of Rainbows',
+                story: '步道中段隱藏著一個廢棄軍營改建的「聽濤營區」。走下浪漫的彩虹階梯，可以在迷彩建築的咖啡廳裡點杯飲料，聽著太平洋的濤聲，是這條步道最驚喜的休息站。',
+                storyEn: 'Hidden in the valley is a former military camp turned cafe. Walk down the romantic rainbow stairs, grab a drink in the camouflage building, and listen to the Pacific waves.'
+            },
+            {
+                id: 'trap',
+                label: '【防曬警報】',
+                labelEn: 'Sun Trap',
+                summary: '全程無遮蔽的 3.5 公里',
+                summaryEn: 'Zero shade for 3.5km',
+                story: '這條「台版萬里長城」最致命的缺點就是「全程幾乎沒有樹蔭遮蔽」。如果是夏天前往，強烈建議在下午 3 點過後再開始走，並帶足至少 1000cc 的水分與物理防曬。',
+                storyEn: 'The biggest trap of the "Great Wall of Taiwan" is zero shade. In summer, do not start before 3 PM. Bring at least 1L of water and a UV umbrella.'
             }
         ]
     },
@@ -3960,12 +3985,24 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         title: '猴硐貓村',
         titleEn: 'Houtong Cat Village',
         type: 'attraction',
-        address: '新北市瑞芳區',
+        duration: '1.5小時',
+        image: '🐈',
+        description: '曾獲 CNN 推薦為全球六大賞貓景點。這裡的貓咪在居民照顧下乾淨又不怕人，是最佳的攝影模特兒。除了賞貓，還可以參觀「貓公所籌備處」了解正確的餵養與保育觀念，是個結合礦業遺跡與療癒氛圍的小鎮。',
+        descriptionEn: 'Recommended by CNN as one of the top 6 cat-watching spots globally. The well-cared-for cats roam freely among the old mining village ruins, serving as perfect photography models.',
+        price: 0,
+        address: '新北市瑞芳區柴寮路',
         addressEn: 'Ruifang, New Taipei',
+        rating: 4.6,
+        lat: 25.0872,
+        lng: 121.8268,
+        region: 'taipei',
+        authorId: 'c-tw1',
         category: '文化體驗',
         tags: ['貓奴必去', '礦業遺產', '療癒'],
         themeColor: '#fbbf24',
-        coverImage: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800',
+        teaser: 'CNN 評選全球六大賞貓勝地，來一場被貓咪包圍的療癒午後。',
+        teaserEn: 'Voted one of CNN\'s top 6 cat-watching spots globally; enjoy a healing afternoon surrounded by cats.',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAFfNSwVs2-LCnGboxylKNxPEMCQZlKsiQmsgLIgEKSBvFqP676S4EZca_smgm3v3FD8sd663apc25PIX5EM95Dnze3c_GYXtnacPNWr-JwQjZ5B-U0W7TFrXpYC9qMEsBbfijM?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
@@ -3973,32 +4010,71 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 labelEn: 'Cat Hunt',
                 summary: '與可愛貓咪的午後邂逅',
                 summaryEn: 'Lazy Afternoon with Cats',
-                story: '這裡曾是重要的採礦據點，現在則是貓咪的天堂。💡 達人提示：請不要隨意餵食人類食物。建議與孩子一起挑戰「尋貓大作戰」，看看誰能拍到最慵懶的貓咪！',
-                storyEn: 'A former mining hub turned cat sanctuary. 💡 Please do not feed them human food. Great for a "Cat Search" challenge with kids!'
+                story: '這裡曾是重要的採礦據點，現在則是貓咪的天堂。💡 達人提示：建議與孩子一起挑戰「尋貓大作戰」，看看誰能拍到最慵懶的貓咪！',
+                storyEn: 'A former mining hub turned cat sanctuary. Great for a "Cat Search" challenge with kids to find the laziest cat!'
+            },
+            {
+                id: 'trap',
+                label: '【保育禮儀】',
+                labelEn: 'Cat Etiquette',
+                summary: '不要隨意餵食人類食物',
+                summaryEn: 'Do Not Feed Human Food',
+                story: '請務必遵守村內的「愛貓守則」。不要餵食人類食物，也請勿打擾正在休息的貓咪。建議可以先去參觀村內的「貓公所籌備處」，了解正確的貓咪餵養與互動觀念。',
+                storyEn: 'Please follow the village rules. Do not feed them human food or disturb sleeping cats. Visit the "Cat Info Center" first to learn proper interaction guidelines.'
             }
         ]
     },
     {
         id: 'tw-t-a-sjl',
-        title: '三貂嶺生態步道',
-        titleEn: 'Sanjiaoling Waterfall Trail',
+        title: '三貂嶺生態友善隧道',
+        titleEn: 'Sanjiaoling Eco-Friendly Tunnel',
         type: 'attraction',
+        duration: '2小時',
+        image: '🚇',
+        description: '荒廢30年的舊鐵路隧道，如今重生成為全台第一條「鋼筋自行車道」。隧道全長 3.19 公里，盡頭處利用水池設計，打造出令人驚豔的「鏡面反射倒影」，將翠綠山色與天光完美融合。',
+        descriptionEn: 'An abandoned railway tunnel transformed into Taiwan\'s first rebar bikeway. The 3.19km tunnel features a stunning water reflection pool at the exit, perfectly mirroring the lush mountains and sky.',
+        price: 0,
         address: '新北市瑞芳區',
         addressEn: 'Ruifang, New Taipei',
+        rating: 4.7,
+        lat: 25.0568,
+        lng: 121.8430,
+        region: 'taipei',
+        authorId: 'c-tw1',
         category: '戶外冒險',
-        tags: ['瀑布群', '彩繪村', '秘境'],
+        tags: ['攝影', '舊隧道', '自行車'],
         themeColor: '#10b981',
-        coverImage: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800',
+        teaser: '走進荒廢 30 年的百年隧道，拍下無邊際的鏡面水池倒影。',
+        teaserEn: 'Walk into an abandoned centennial tunnel and capture the stunning mirror reflection pool.',
+        coverImage: 'https://newtaipei.travel/content/images/attractions/44962/1024x768_attractions-image-ucqzjz2eyeobrkhbtbsgpa.jpg?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-do',
-                label: '【瀑布洗禮】',
-                labelEn: 'Waterfall Baptism',
-                summary: '一次收集三座壯麗瀑布',
-                summaryEn: 'Triple Waterfall Trek',
-                story: '這是全台唯一沒有公路可抵達的車站。步道沿線包含合谷、摩天、枇杷洞三座瀑布。💡 提醒：部分路段較為原始，雨天後路面濕滑，請務必穿著防滑登山鞋。',
-                storyEn: 'The only station in Taiwan with no road access. Collect three stunning waterfalls. 💡 Wear high-grip shoes as the trail can be very slippery after rain.'
-            }
+                label: '【鏡面倒影攝影】',
+                labelEn: 'Mirror Reflection',
+                summary: '隧道盡頭的絕美天空之鏡',
+                summaryEn: 'Sky Mirror at the Exit',
+                story: '隧道出口處的淺水池是設計師的巧思。💡 達人提示：拍攝時請將手機貼近水面，就能拍出從漆黑洞口過渡到翠綠山色，宛如「天空之鏡」般的絕美倒影。如果有火車剛好經過，更是可遇不可求的神級畫面！',
+                storyEn: 'The shallow pool at the exit is an architectural masterpiece. 💡 Put your phone close to the water surface to capture the stunning "Sky Mirror" transition from darkness to lush green mountains.'
+            },
+            {
+                id: 'trap',
+                label: '【牽行規定】',
+                labelEn: 'Walk Your Bike',
+                summary: '隧道內必須下車牽行',
+                summaryEn: 'Dismount and Walk',
+                story: '雖然這裡是自行車道，但考量隧道內的光線與雙向通行安全，官方規定在「三瓜子隧道至壁掛棧橋」路段，自行車「必須」採步行牽引方式通過。千萬別為了貪快而在隧道內騎乘喔！',
+                storyEn: 'Despite being a bikeway, for safety reasons due to lighting and two-way traffic, you MUST dismount and walk your bike inside the tunnel. Do not ride inside!'
+            },
+            {
+                id: 'trap',
+                label: '【入園必讀】',
+                labelEn: 'Entry Rules',
+                summary: '全預約制與營運時間',
+                summaryEn: 'Reservation & Hours',
+                story: '注意！串聯牡丹與三貂嶺的「三貂嶺及三瓜子隧道自行車道」採【全預約制】，必須先上網申請才能入場。營運時間：08:30~16:30 (最後入園16:00)，每週二固定公休 (遇假日不休)。沒預約或休園日前往會被擋在門外喔！',
+                storyEn: 'Advance online reservation is REQUIRED to enter the bikeway connecting Mudan and Sandiao Ling! Open 08:30-16:30 (Last entry 16:00). Closed on Tuesdays (except holidays).'
+            },
         ]
     },
     {
@@ -4011,7 +4087,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         category: '戶外冒險',
         tags: ['海景', 'V型谷', '夕陽'],
         themeColor: '#0ea5e9',
-        coverImage: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://lh3.googleusercontent.com/gps-cs-s/APNQkAE6vuaEweDFZH7egBq4QsKbI891QFOk9auDOACIHkJ5kmdgdXZPptNOZjYdxqEk-kcFo67mjtdP5gJrjEJmmohgGva5vLrLa2Nkk4XhsmiIVfLNZIzbyym7eaWR8NrqNgD9SEPxEg?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'hidden',
