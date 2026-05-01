@@ -8,125 +8,98 @@ interface LandingExploreProps {
 }
 
 const LandingExplore: React.FC<LandingExploreProps> = ({ lang, onStart, t }) => {
+    const isZh = lang === 'zh';
+
+    const templates = [
+        {
+            id: 'circuit-tp-classic-6d',
+            title: isZh ? '台北全攻略：首訪旗艦版' : 'Classic Essential Taipei',
+            tag: 'Classic',
+            author: 'TravelCanvas Official',
+            days: 6,
+            image: 'https://plus.unsplash.com/premium_photo-1661951189203-12decb9d7f8e?q=80&w=1740&?auto=format&fit=crop',
+            themeColor: 'emerald',
+            emoji: '🏙️'
+        },
+        {
+            id: 'circuit-tp-family',
+            title: isZh ? '台北親子旗艦：無痛育兒與都會探索' : 'Taipei Family Flagship',
+            tag: 'Family',
+            author: 'TravelCanvas Official',
+            days: 6,
+            image: 'https://plus.unsplash.com/premium_photo-1682094139633-b06316cee50f?q=80&w=1740&?auto=format&fit=crop',
+            themeColor: 'rose',
+            emoji: '👨‍👩‍👧‍👦'
+        },
+        {
+            id: 'tw-t-outdoor-flagship',
+            title: isZh ? '台北山海極限：戶外專屬版' : 'Taipei Outdoor Adventure',
+            tag: 'Outdoor',
+            author: 'TravelCanvas Outdoor',
+            days: 6,
+            image: 'https://images.unsplash.com/photo-1663475424372-4abf28c404a1?q=80&w=1740&auto=format&fit=crop',
+            themeColor: 'blue',
+            emoji: '🏔️'
+        }
+    ];
+
     return (
-        <section className="w-full bg-white py-24 px-6 z-10 relative">
-            {/* Decorative background element for separation */}
+        <section className="w-full bg-slate-50 py-24 px-6 z-10 relative">
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
 
             <div className="max-w-6xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-16">
-                    <span className="inline-block px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-bold uppercase tracking-wider mb-4">
-                        {t.featuredPlans}
+                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider mb-4">
+                        {isZh ? '編輯精選' : 'Featured Editor\'s Picks'}
                     </span>
                     <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">
-                        {t.exploreDestinations}
+                        {isZh ? '探索頂級台北體驗' : 'Explore Premium Taipei Experiences'}
                     </h2>
                     <p className="text-slate-500 text-lg max-w-xl mx-auto">
-                        {t.curatedByExperts}
+                        {isZh ? '由在地專家精心設計的「零決策」旗艦行程，只需一鍵即可套用。' : 'Zero-Decision flagship itineraries curated by local experts. Apply with one click.'}
                     </p>
                 </div>
 
-                {/* 🏔️ Northern Taiwan Section */}
-                <div className="mb-16">
-                    <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-100 pb-2">
-                        <span className="text-2xl">🏔️</span>
-                        {t.exploreNorthernTaiwan}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Taipei Family Flagship */}
+                {/* Templates Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {templates.map((tpl) => (
                         <div
-                            onClick={() => onStart('circuit-tp-family')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-emerald-200 transition-all duration-300 cursor-pointer lg:col-span-3"
+                            key={tpl.id}
+                            onClick={() => onStart(tpl.id)}
+                            className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer flex flex-col"
                         >
-                            <div className="h-64 bg-cover bg-center relative" style={{ backgroundImage: 'url(/images/covers/taipei.png)' }}>
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute top-4 right-4 bg-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
+                            <div className="h-56 bg-cover bg-center relative" style={{ backgroundImage: `url(${tpl.image})` }}>
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity"></div>
+
+                                <div className={`absolute top-4 right-4 bg-${tpl.themeColor}-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase`}>
                                     FLAGSHIP
                                 </div>
+
                                 <div className="absolute bottom-4 left-4 flex items-center gap-3">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-3 py-1 rounded-full shadow-sm">{t.northernLabel}</span>
-                                    <span className="text-xs text-white font-bold bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">4 {t.daysUnit}</span>
+                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-3 py-1 rounded-full shadow-sm">
+                                        {tpl.tag}
+                                    </span>
+                                    <span className="text-xs text-white font-bold bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
+                                        {tpl.days} {isZh ? '天' : 'Days'}
+                                    </span>
                                 </div>
                             </div>
-                            <div className="p-8 flex items-center justify-between">
+
+                            <div className="p-6 flex-1 flex flex-col justify-between">
                                 <div>
-                                    <h4 className="font-black text-slate-800 text-2xl group-hover:text-emerald-600 transition-colors mb-2">
-                                        {t.taipeiFamilyFlagshipTitle}
+                                    <div className="text-3xl mb-3">{tpl.emoji}</div>
+                                    <h4 className={`font-black text-slate-800 text-xl group-hover:text-${tpl.themeColor}-600 transition-colors mb-3 leading-snug`}>
+                                        {tpl.title}
                                     </h4>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✨</div>
-                                        <p className="text-sm font-medium text-slate-500">TravelCanvas {t.officialPick}</p>
-                                    </div>
                                 </div>
-                                <div className="hidden md:flex flex-col items-end">
-                                    <span className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Pace</span>
-                                    <span className="text-emerald-600 font-bold">Family Friendly</span>
+                                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+                                    <div className={`w-6 h-6 rounded-full bg-${tpl.themeColor}-100 flex items-center justify-center text-[10px]`}>✨</div>
+                                    <p className="text-xs font-medium text-slate-500">{tpl.author}</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                {/* 🌆 Central & Southern Taiwan Section */}
-                <div>
-                    <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-100 pb-2">
-                        <span className="text-2xl">🌆</span>
-                        {t.exploreSouthernTaiwan}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Tainan Ancient */}
-                        <div
-                            onClick={() => onStart('tn-curated-1')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-amber-200 transition-all duration-300 cursor-pointer"
-                        >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1621848296279-7751546e9acc?auto=format&fit=crop&q=80&w=600)' }}>
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.southernLabel}</span>
-                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-amber-600 transition-colors mb-2">
-                                    {t.tainanAncientTitle}
-                                </h4>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-amber-100/50 flex items-center justify-center text-[10px]">🥘</div>
-                                    <p className="text-sm text-slate-500">{t.templateAuthorAnan}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Taichung Quirky */}
-                        <div
-                            onClick={() => onStart('tc-quirky-1d')}
-                            className="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-blue-200 transition-all duration-300 cursor-pointer"
-                        >
-                            <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1510333300264-b17ad3023315?auto=format&fit=crop&q=80&w=600)' }}>
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
-                                <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                    <span className="text-xs bg-white/90 backdrop-blur-sm text-slate-800 font-bold px-2 py-0.5 rounded-full shadow-sm">{t.centralLabel}</span>
-                                    <span className="text-xs text-white font-medium">1 {t.day}</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <h4 className="font-bold text-slate-800 text-lg group-hover:text-blue-600 transition-colors mb-2">
-                                    {t.taichungQuirkyTitle}
-                                </h4>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-purple-100/50 flex items-center justify-center text-[10px]">🦖</div>
-                                    <p className="text-sm text-slate-500">{t.templateAuthorMing}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Coming Soon */}
-                        <div className="bg-slate-50 rounded-2xl overflow-hidden border border-dashed border-slate-300 flex flex-col items-center justify-center h-[264px] hover:bg-slate-100 transition-colors">
-                            <span className="text-4xl mb-3 opacity-50">🌊</span>
-                            <p className="text-slate-400 font-medium">{t.moreCitiesComing}</p>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>

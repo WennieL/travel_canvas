@@ -68,7 +68,8 @@ export type FacilityTag =
     | 'food'            // 🍜 美食
     | 'bus-schedule'    // 🚌 注意班次
     | 'massage'         // 💆 按摩
-    | 'mrt';            // 🚇 捷運
+    | 'mrt'             // 🚇 捷運
+    | 'air-conditioned'; // ❄️ 冷氣開放
 
 export interface ExpertStory {
     id: ExpertStoryCategory;

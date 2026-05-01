@@ -1844,7 +1844,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#c2410c',
         teaser: '燈火輝煌的美食迷宮，挑戰味蕾的極限。',
         teaserEn: 'A neon-lit food labyrinth challenging your taste buds.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://cdn-ak.f.st-hatena.com/images/fotolife/m/molitw/20231124/20231124160331.jpg?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -4106,6 +4106,48 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Blue Meets Green',
                 story: '名字由來是因為這裡的美景能讓人忘記憂慮。翠綠的V型山谷直通蔚藍大海。💡 攝影提示：站在白色階梯處向下拍，可以捕捉到步道向海洋無限延伸的絕佳視角。',
                 storyEn: 'Name means "Forget Worries Valley." Green V-shaped valley meets the deep blue sea. 💡 Shoot from the white stairs looking down for an infinite trail-to-sea perspective.'
+            }
+        ]
+    },
+    {
+        id: 'tw-h-garden-hotel',
+        title: '台北花園大酒店',
+        titleEn: 'Taipei Garden Hotel',
+        type: 'hotel',
+        duration: 'Overnight',
+        image: '🏨',
+        description: '鄰近西門町的頂級親子飯店，以「柑仔店零食推車」與舒適的親子主題房聞名。不僅提供 50 幾種古早味零食供小孩挑選，更具備極佳的電梯友善動線與家庭房型。',
+        descriptionEn: 'A premium family hotel near Ximending, famous for its "Retro Snack Cart" with 50+ types of treats and spacious family rooms.',
+        price: 4500,
+        address: '100台北市中正區中華路二段1號',
+        rating: 4.8,
+        lat: 25.0352,
+        lng: 121.5074,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['親子飯店', '西門町', '零食推車', '電梯友善'],
+        themeColor: '#7c2d12',
+        coverImage: 'https://images.unsplash.com/photo-1542314831-c6a4d14293e5?q=80&w=1200&auto=format&fit=crop',
+        teaser: '西門町旁的親子祕境，用 50 種零食開啟孩子的台北童年。',
+        teaserEn: 'A family sanctuary by Ximending, creating childhood memories with 50+ local treats.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【柑仔店寶箱】',
+                labelEn: 'Snack Cart',
+                summary: '50 幾種古早味零食隨你拿',
+                summaryEn: '50+ Types of Retro Treats',
+                story: '飯店大廳設有「花園點心坊」，小孩進門即可領取專屬袋子，免費挑選數十種台灣古早味零食。這是讓孩子瞬間愛上這趟旅行的最佳「收買」儀式。',
+                storyEn: 'The lobby features a retro snack bar where kids get a bag to fill with 50+ types of local treats for free. The ultimate ritual to make kids fall in love with the trip.'
+            },
+            {
+                id: 'hidden',
+                label: '【西門散步】',
+                labelEn: 'Ximen Walk',
+                summary: '10 分鐘進駐西門町中心',
+                summaryEn: '10-min Walk to Ximen',
+                story: '從飯店出發步行不到 10 分鐘就是西門町。晚上 9 點後人潮稍減，帶小孩去逛逛「唐吉訶德」或吃碗阿宗麵線，回程路上還能看到點亮的北門古蹟。',
+                storyEn: 'A short walk leads straight to Ximending. Visit Don Don Donki after 9 PM to avoid crowds, and enjoy the night view of North Gate on your way back.'
             }
         ]
     }
