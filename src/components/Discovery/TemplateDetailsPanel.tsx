@@ -43,6 +43,7 @@ const FACILITY_CONFIG: Record<FacilityTag, { emoji: string; zh: string; en: stri
     'no-restroom':    { emoji: '🚫', zh: '無廁所',      en: 'No Restroom',     color: 'bg-red-50 text-red-700 border-red-200' },
     'cafe':           { emoji: '☕', zh: '咖啡館',      en: 'Cafe',            color: 'bg-stone-50 text-stone-700 border-stone-200' },
     'food':           { emoji: '🍜', zh: '美食',        en: 'Food',            color: 'bg-orange-50 text-orange-700 border-orange-200' },
+    'michelin':       { emoji: '🌟', zh: '米其林推薦',   en: 'Michelin',        color: 'bg-amber-50 text-amber-700 border-amber-200' },
     'bus-schedule':   { emoji: '🚌', zh: '注意班次',    en: 'Bus Schedule',    color: 'bg-blue-50 text-blue-700 border-blue-200' },
     'massage':        { emoji: '💆', zh: '按摩',        en: 'Massage',         color: 'bg-purple-50 text-purple-700 border-purple-200' },
     'mrt':            { emoji: '🚇', zh: '捷運',        en: 'MRT',             color: 'bg-sky-50 text-sky-700 border-sky-200' },

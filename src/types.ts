@@ -66,9 +66,12 @@ export type FacilityTag =
     | 'no-restroom'     // 🚫 無廁所
     | 'cafe'            // ☕ 咖啡館
     | 'food'            // 🍜 美食
+    | 'michelin'        // 🌟 米其林推薦
     | 'bus-schedule'    // 🚌 注意班次
     | 'massage'         // 💆 按摩
     | 'mrt'             // 🚇 捷運
+    | 'local-food'       // 🍜 在地美食
+    | 'fast-return'      // 🚄 快速回程
     | 'air-conditioned'; // ❄️ 冷氣開放
 
 export interface ExpertStory {

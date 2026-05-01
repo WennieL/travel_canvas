@@ -3523,7 +3523,7 @@ export const TAIPEI_ASSETS: TravelItem[] = [
         themeColor: '#7c2d12',
         teaser: '穿越紅磚牌樓，品味那一顆爆汁的胡椒餅。',
         teaserEn: 'Enter the grand archway for the city\'s best juicy pepper buns.',
-        coverImage: 'https://images.unsplash.com/photo-1541414779316-956a5084c0d4?auto=format&fit=crop&q=80&w=800',
+        coverImage: 'https://cdn-ak.f.st-hatena.com/images/fotolife/m/molitw/20231124/20231124160331.jpg?auto=format&fit=crop&q=80&w=800',
         expertStories: [
             {
                 id: 'must-eat',
@@ -4148,6 +4148,81 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: '10-min Walk to Ximen',
                 story: '從飯店出發步行不到 10 分鐘就是西門町。晚上 9 點後人潮稍減，帶小孩去逛逛「唐吉訶德」或吃碗阿宗麵線，回程路上還能看到點亮的北門古蹟。',
                 storyEn: 'A short walk leads straight to Ximending. Visit Don Don Donki after 9 PM to avoid crowds, and enjoy the night view of North Gate on your way back.'
+            }
+        ]
+    },
+    {
+        id: 'tw-h-citizenm-beimen',
+        title: '台北北門世民酒店',
+        titleEn: 'CitizenM Taipei North Gate',
+        type: 'hotel',
+        duration: 'Overnight',
+        image: '🏨',
+        description: '位於機捷 A1 與北門站旁的現代化科技飯店。以絕佳的落地窗景觀與智能操控系統著稱，是戶外冒險者探索台北山海的最佳轉乘大本營。',
+        descriptionEn: 'A high-tech hotel next to Airport MRT and Beimen Station. Featuring panoramic floor-to-ceiling windows, it\'s the perfect basecamp for outdoor explorers.',
+        price: 3800,
+        address: '100台北市中正區中華路一段3號',
+        rating: 4.6,
+        lat: 25.0487,
+        lng: 121.5115,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['冒險哨站', '機捷旁', '落地窗景', '智能飯店'],
+        themeColor: '#e11d48',
+        coverImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+        teaser: '坐擁北門與河景的現代哨站，用落地窗偵查明天的攻頂天氣。',
+        teaserEn: 'A modern outpost with North Gate views. Use your window to scout the weather before summiting.',
+        expertStories: [
+            {
+                id: 'must-do',
+                label: '【攻頂天氣窗】',
+                labelEn: 'Weather Scout',
+                summary: '全落地窗偵查遠方山頭氣候',
+                summaryEn: 'Scout the mountains from your bed',
+                story: '每個房間都有巨大的落地窗，早晨起床第一件事不是滑手機，而是直接檢查遠方山頭的雲霧狀況。這對於決定今天是否要去陽明山或是東北角，是最直覺的決策指標。',
+                storyEn: 'Every room features a massive window. The first thing you do in the morning is check the cloud coverage over the distant mountains to decide your adventure for the day.'
+            },
+            {
+                id: 'artisan',
+                label: '【機捷閃擊戰】',
+                labelEn: 'Transit Blitz',
+                summary: '下飛機 5 分鐘即可入房休憩',
+                summaryEn: 'From plane to room in record time',
+                story: '對於追求「體力最大化」的冒險者，這裡的地理位置無可取代。走出機捷出口 5 分鐘內就能入房，這省下的每分每秒，都是明天登山步道上的能量儲備。',
+                storyEn: 'For explorers who value stamina, this location is unmatched. Being within 5 minutes of the Airport MRT means saving every bit of energy for tomorrow\'s trails.'
+            }
+        ]
+    },
+    {
+        id: 'tw-t-f-ruifang',
+        title: '瑞芳美食廣場 (在地老饕首選)',
+        titleEn: 'Ruifang Food Court (Local\'s Choice)',
+        type: 'food',
+        duration: '1.5小時',
+        image: '🍜',
+        description: '位於瑞芳火車站對面，這裡不是觀光客的熱門景點，卻是在地人吃了數十年的廚房。從胡椒餅、龍鳳腿到熱騰騰的牛肉麵，這裡提供的美味與九份老街截然不同，是爬完山後補充能量的最強基石。',
+        descriptionEn: 'Located right across from Ruifang Station. This is the "local\'s kitchen". From pepper buns to beef noodles, it\'s the perfect place to refuel after a long hike without the tourist markup.',
+        price: 200,
+        address: '新北市瑞芳區民生街35巷2號',
+        rating: 4.6,
+        lat: 25.1085,
+        lng: 121.8055,
+        region: 'taipei',
+        authorId: 'c-tw1',
+        tags: ['在地美食', '平價', '小吃'],
+        themeColor: '#b45309',
+        teaser: '九份山腳下的最強美食集散地，在地人的靈魂廚房。',
+        teaserEn: 'The best local food hub at the base of Jiufen.',
+        coverImage: 'https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=1740&auto=format&fit=crop&q=80&w=800',
+        expertStories: [
+            {
+                id: 'must-eat',
+                label: '【老饕點法】',
+                labelEn: 'Local Picks',
+                summary: '龍鳳腿與豐味肉羹',
+                summaryEn: 'Dragon-Phoenix Roll & Meat Soup',
+                story: '廣場入口處的龍鳳腿是瑞芳的標誌性小吃。而內部的豐味肉羹湯頭鮮甜，肉羹扎實，是登山後恢復體力的首選。',
+                storyEn: 'The Dragon-Phoenix rolls at the entrance are iconic. Inside, "Fengwei Meat Soup" offers a savory recovery meal for tired hikers.'
             }
         ]
     }
