@@ -2390,6 +2390,15 @@ export const TAIPEI_ASSETS: TravelItem[] = [
                 summaryEn: 'Queue for "Eyes of Maokong"',
                 story: '水晶車廂地板是全透明的！雖然排隊時間稍長，但懸浮在茶園上空的視覺體驗絕對讓孩子大聲尖叫與瘋迷。',
                 storyEn: 'The floor is completely transparent! The wait is a bit longer, but floating over the tea gardens is a visual thrill kids love.'
+            },
+            {
+                id: 'must-eat',
+                label: '【山林茶香】',
+                labelEn: 'Tea Tasting',
+                summary: '鐵觀音與茶香小點',
+                summaryEn: 'Tieguanyin & Snacks',
+                story: '貓空以鐵觀音聞名。越嶺之後，隨意找間能眺望市區的茶坊，點一壺熱茶配上茶香霜淇淋，是恢復體力的最佳方式。',
+                storyEn: 'Famous for Tieguanyin tea. Find a teahouse with a city view, order a pot of hot tea and tea-flavored soft serve to recover your energy.'
             }
         ]
     },

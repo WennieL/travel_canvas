@@ -52,7 +52,23 @@ export type FacilityTag =
     | 'cobblestone'     // ⚠️ 石板路，推車不便
     | 'high-energy'     // ⚡️ 耗費體力
     | 'nap-friendly'    // 💤 適合午休
-    | 'kid-menu';       // 🍽️ 兒童菜單
+    | 'kid-menu'        // 🍽️ 兒童菜單
+    | 'luggage-storage' // 🧳 行李寄放
+    | 'stairs'          // 🧗 階梯多
+    | 'water-fountain'  // 💧 飲水機
+    | 'youbike'         // 🚲 YouBike
+    | 'sun-exposure'    // ☀️ 注意防曬
+    | 'windy'           // 💨 注意強風
+    | 'slippery'        // ⚠️ 步道濕滑
+    | 'hot-spring'      // ♨️ 溫泉
+    | 'early-start'     // 🌅 需早起
+    | 'gloves-needed'   // 🧤 需手套
+    | 'no-restroom'     // 🚫 無廁所
+    | 'cafe'            // ☕ 咖啡館
+    | 'food'            // 🍜 美食
+    | 'bus-schedule'    // 🚌 注意班次
+    | 'massage'         // 💆 按摩
+    | 'mrt';            // 🚇 捷運
 
 export interface ExpertStory {
     id: ExpertStoryCategory;
@@ -319,6 +335,11 @@ export interface TemplateItem {
 
     // [NEW] Structured Facility Tags — renders as Pill Badges above expertNote
     facilityTags?: FacilityTag[];
+
+    // [NEW] Added for rich custom items
+    expertStories?: ExpertStory[];
+    coverImage?: string;
+    image?: string;
 
     // [NEW] Driver Card
     driverNote?: string;
