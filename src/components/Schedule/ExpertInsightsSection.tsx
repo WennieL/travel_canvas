@@ -43,6 +43,8 @@ const FACILITY_CONFIG: Record<FacilityTag, { emoji: string; zh: string; en: stri
     'bus-schedule':   { emoji: '🚌', zh: '注意班次',    en: 'Bus Schedule',    color: 'bg-blue-50 text-blue-700 border-blue-200' },
     'massage':        { emoji: '💆', zh: '按摩',        en: 'Massage',         color: 'bg-purple-50 text-purple-700 border-purple-200' },
     'mrt':            { emoji: '🚇', zh: '捷運',        en: 'MRT',             color: 'bg-sky-50 text-sky-700 border-sky-200' },
+    'local-food':     { emoji: '🍜', zh: '在地美食',    en: 'Local Food',      color: 'bg-orange-50 text-orange-700 border-orange-200' },
+    'fast-return':    { emoji: '🚄', zh: '快速回程',    en: 'Fast Return',     color: 'bg-blue-50 text-blue-700 border-blue-200' },
     'air-conditioned':{ emoji: '❄️', zh: '冷氣開放',    en: 'Air Conditioned', color: 'bg-blue-50 text-blue-700 border-blue-200' },
 };
 
