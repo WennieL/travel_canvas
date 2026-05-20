@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Search, MapPin, Star, Heart, Zap, Sparkles, ChevronRight, Leaf } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Search, MapPin, Star, Heart, Zap, Sparkles, ChevronRight, Leaf, Loader2, Compass, ArrowRight, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Template, LangType, Region, TravelItem, CulturalInsight } from '../../types';
 import { REGION_FILTERS, TEMPLATES, SAMPLE_CREATORS, CULTURAL_WONDERS, SAMPLE_ASSETS } from '../../data';
 import { CulturalInsightCard } from './CulturalInsightCard';
+import { GlobeLoader } from './GlobeLoader';
 
 interface CityPickerProps {
     searchQuery: string;
@@ -41,6 +42,136 @@ export const CityPicker: React.FC<CityPickerProps> = ({
     const [showAllTemplates, setShowAllTemplates] = useState(false);
     const [likedSpots, setLikedSpots] = useState<Set<string>>(new Set());
     const [selectedInsight, setSelectedInsight] = useState<CulturalInsight | null>(null);
+
+    const [isSearching, setIsSearching] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showOnboardingTip, setShowOnboardingTip] = useState(false);
+    const templatesSectionRef = useRef<HTMLDivElement>(null);
+
+    const [transitionLoading, setTransitionLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState('');
+
+    const triggerTransition = (text: string, callback: () => void) => {
+        setLoadingText(text);
+        setTransitionLoading(true);
+        setTimeout(() => {
+            setTransitionLoading(false);
+            callback();
+        }, 1500);
+    };
+
+    // Onboarding tip visibility check
+    useEffect(() => {
+        const guideDone = localStorage.getItem('tc_interactive_guide_done');
+        if (!guideDone) {
+            setShowOnboardingTip(true);
+        }
+    }, []);
+
+    // Search simulation loader
+    useEffect(() => {
+        if (searchQuery.trim() === '') {
+            setIsSearching(false);
+            setShowDropdown(false);
+            return;
+        }
+        setIsSearching(true);
+        setShowDropdown(true);
+        const timer = setTimeout(() => {
+            setIsSearching(false);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
+    const lowercaseQuery = searchQuery.toLowerCase().trim();
+    
+    const matchedCities = REGION_FILTERS.filter(city =>
+        city.id !== 'all' && (
+            (lang === 'zh' ? city.label : city.labelEn).toLowerCase().includes(lowercaseQuery) ||
+            city.id.toLowerCase().includes(lowercaseQuery)
+        )
+    );
+
+    const matchedTemplates = TEMPLATES.filter(tpl =>
+        !tpl.isHidden && (
+            (lang === 'zh' ? tpl.name : tpl.nameEn || tpl.name).toLowerCase().includes(lowercaseQuery) ||
+            tpl.region.toLowerCase().includes(lowercaseQuery)
+        )
+    ).slice(0, 5);
+
+    const matchedSpots = SAMPLE_ASSETS.filter(spot =>
+        (
+            (lang === 'zh' ? spot.title : spot.titleEn || spot.title).toLowerCase().includes(lowercaseQuery) ||
+            (spot.description && spot.description.toLowerCase().includes(lowercaseQuery)) ||
+            (spot.descriptionEn && spot.descriptionEn.toLowerCase().includes(lowercaseQuery)) ||
+            (spot.region && spot.region.toLowerCase().includes(lowercaseQuery))
+        )
+    ).slice(0, 5);
+
+    const hasResults = matchedCities.length > 0 || matchedTemplates.length > 0 || matchedSpots.length > 0;
+
+    const handleSelectCityFromSearch = (cityId: string) => {
+        const cityLabel = REGION_FILTERS.find(c => c.id === cityId)?.label || cityId;
+        triggerTransition(
+            lang === 'zh' ? `正在規劃前往 ${cityLabel} 的精彩旅程...` : `Preparing your journey to ${cityId}...`,
+            () => {
+                if (isSelectionOnly) {
+                    onSelectCity(cityId as Region);
+                } else {
+                    setActivePicksFilter(cityId);
+                    setTimeout(() => {
+                        templatesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+        );
+        setSearchQuery('');
+        setShowDropdown(false);
+    };
+
+    const handleSelectTemplateFromSearch = (tpl: Template) => {
+        const tplName = lang === 'zh' ? tpl.name : tpl.nameEn || tpl.name;
+        triggerTransition(
+            lang === 'zh' ? `正在加載行程「${tplName}」...` : `Opening plan "${tplName}"...`,
+            () => {
+                onPreviewTemplate(tpl);
+            }
+        );
+        setSearchQuery('');
+        setShowDropdown(false);
+    };
+
+    const handleSelectSpotFromSearch = (spot: TravelItem) => {
+        const spotTitle = lang === 'zh' ? spot.title : spot.titleEn || spot.title;
+        triggerTransition(
+            lang === 'zh' ? `正在定位景點「${spotTitle}」...` : `Locating spot "${spotTitle}"...`,
+            () => {
+                onSelectItem(spot, 'discovery');
+            }
+        );
+        setSearchQuery('');
+        setShowDropdown(false);
+    };
+
+    const handleSearchSubmit = (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+        
+        const firstCity = matchedCities[0];
+        if (firstCity) {
+            triggerTransition(
+                lang === 'zh' ? `正在探索 ${firstCity.label} 精選行程...` : `Exploring plans in ${firstCity.labelEn}...`,
+                () => {
+                    setActivePicksFilter(firstCity.id);
+                    setTimeout(() => {
+                        templatesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            );
+        } else {
+            templatesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setShowDropdown(false);
+    };
 
     const toggleLike = (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
@@ -131,27 +262,220 @@ export const CityPicker: React.FC<CityPickerProps> = ({
 
                 {/* Sticky Search Bar (White Canopy Refined: bg-gray-50 base) */}
                 <div className="mt-10 max-w-[400px] mx-auto relative px-1">
-                    <div className="h-[56px] flex items-center bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/5 focus-within:bg-white">
-                        <Search className="text-tc-text-sec/60 w-5 h-5 flex-shrink-0" />
+                    {/* Onboarding Tooltip */}
+                    <AnimatePresence>
+                        {showOnboardingTip && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 15 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 15 }}
+                                className="absolute bottom-[70px] left-1/2 transform -translate-x-1/2 w-[320px] bg-white border border-tc-primary/20 rounded-2xl p-4 shadow-xl z-[60] flex flex-col gap-3"
+                            >
+                                {/* Speech Bubble Arrow */}
+                                <div className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-r border-b border-tc-primary/10 rotate-45" />
+                                
+                                <div className="flex gap-2.5 items-start">
+                                    <div className="bg-tc-primary/10 p-2 rounded-xl text-tc-primary flex-shrink-0">
+                                        <Sparkles size={16} />
+                                    </div>
+                                    <div className="flex-1 text-left">
+                                        <h4 className="text-[13px] font-bold text-tc-text-main mb-1">
+                                            {lang === 'zh' ? '💡 新手探索指引' : '💡 Onboarding Guide'}
+                                        </h4>
+                                        <p className="text-[11px] text-tc-text-sec leading-relaxed font-medium">
+                                            {lang === 'zh'
+                                                ? '直接輸入目的地（例如：台北）進行搜尋，或點選下方的「Taipei」直接瀏覽專家推薦的一系列旗艦行程！'
+                                                : 'Enter a destination (e.g. Taipei) to search, or click "Taipei" below to explore our expert-led flagship itineraries!'}
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex justify-end border-t border-gray-100 pt-2.5">
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowOnboardingTip(false);
+                                            localStorage.setItem('tc_interactive_guide_done', 'true');
+                                        }}
+                                        className="px-4 py-1.5 bg-tc-primary hover:bg-tc-primary/95 text-white text-[10px] font-bold rounded-lg transition-all shadow-sm"
+                                    >
+                                        {lang === 'zh' ? '我知道了' : 'Got it'}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    <form onSubmit={handleSearchSubmit} className="h-[56px] flex items-center bg-gray-50 rounded-2xl shadow-sm border border-gray-100 p-1.5 pl-5 transition-all focus-within:ring-2 ring-tc-primary/5 focus-within:bg-white relative z-50">
+                        {isSearching ? (
+                            <Loader2 className="text-tc-primary w-5 h-5 animate-spin flex-shrink-0" />
+                        ) : (
+                            <Search className="text-tc-text-sec/60 w-5 h-5 flex-shrink-0" />
+                        )}
                         <input
                             type="text"
                             placeholder={t.searchDiscoveryPlaceholder || "Search spots, cities..."}
                             className="flex-1 bg-transparent border-none focus:ring-0 text-[15px] py-1.5 px-3 text-tc-text-main placeholder:text-tc-text-sec/40 font-medium outline-none min-w-0"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
+                            onFocus={() => {
+                                if (searchQuery.trim() !== '') {
+                                    setShowDropdown(true);
+                                }
+                            }}
                         />
-                        <button className="bg-tc-primary text-white h-full px-8 rounded-xl text-sm font-bold shadow-sm hover:opacity-90 transition-all flex-shrink-0">
+                        <button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowOnboardingTip(prev => !prev);
+                            }}
+                            className="p-2 text-tc-text-sec/40 hover:text-tc-primary transition-colors flex-shrink-0 mr-1.5"
+                            title={lang === 'zh' ? '顯示探索指引' : 'Show onboarding guide'}
+                        >
+                            <HelpCircle size={18} />
+                        </button>
+                        <button type="submit" className="bg-tc-primary text-white h-full px-8 rounded-xl text-sm font-bold shadow-sm hover:opacity-90 transition-all flex-shrink-0">
                             {t.searchGo || "Go"}
                         </button>
-                    </div>
+                    </form>
+
+                    {/* Search Results Dropdown */}
+                    <AnimatePresence>
+                        {showDropdown && searchQuery.trim() !== '' && (
+                            <>
+                                {/* Click outside handler */}
+                                <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)} />
+                                
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-2xl shadow-2xl z-50 p-4 max-h-[350px] overflow-y-auto flex flex-col gap-4 scrollbar-hide"
+                                >
+                                    {isSearching ? (
+                                        <div className="py-8 flex flex-col items-center justify-center gap-2 text-tc-text-sec/60 text-xs font-semibold">
+                                            <Loader2 size={24} className="text-tc-primary animate-spin" />
+                                            <span>{lang === 'zh' ? '正在搜尋中...' : 'Searching...'}</span>
+                                        </div>
+                                    ) : !hasResults ? (
+                                        <div className="py-8 text-center text-tc-text-sec/60 text-xs font-medium">
+                                            {lang === 'zh' ? `🔍 找不到與「${searchQuery}」相關的結果` : `🔍 No results found for "${searchQuery}"`}
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {/* Matching Cities */}
+                                            {matchedCities.length > 0 && (
+                                                <div className="flex flex-col gap-1.5">
+                                                    <span className="text-[10px] font-bold text-tc-text-sec/50 tracking-wider uppercase pl-1">
+                                                        {lang === 'zh' ? '城市/地區' : 'CITIES'}
+                                                    </span>
+                                                    <div className="flex flex-col gap-1 text-left">
+                                                        {matchedCities.map(city => (
+                                                            <button
+                                                                key={city.id}
+                                                                type="button"
+                                                                onClick={() => handleSelectCityFromSearch(city.id)}
+                                                                className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-tc-primary/5 transition-all text-left text-xs font-bold text-tc-text-main group"
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <div className="w-7 h-7 rounded-full bg-tc-primary/10 flex items-center justify-center text-tc-primary">
+                                                                        <MapPin size={14} />
+                                                                    </div>
+                                                                    <span>{lang === 'zh' ? city.label : city.labelEn}</span>
+                                                                </div>
+                                                                <ArrowRight size={14} className="text-tc-text-sec/20 group-hover:text-tc-primary transition-colors opacity-0 group-hover:opacity-100" />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Matching Templates */}
+                                            {matchedTemplates.length > 0 && (
+                                                <div className="flex flex-col gap-1.5">
+                                                    <span className="text-[10px] font-bold text-tc-text-sec/50 tracking-wider uppercase pl-1">
+                                                        {lang === 'zh' ? '精選行程' : 'ITINERARIES'}
+                                                    </span>
+                                                    <div className="flex flex-col gap-1 text-left">
+                                                        {matchedTemplates.map(tpl => (
+                                                            <button
+                                                                key={tpl.id}
+                                                                type="button"
+                                                                onClick={() => handleSelectTemplateFromSearch(tpl)}
+                                                                className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-tc-primary/5 transition-all text-left text-xs font-bold text-tc-text-main group"
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <div className="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                                                                        <Compass size={14} />
+                                                                    </div>
+                                                                    <div className="flex flex-col">
+                                                                        <span className="line-clamp-1">{lang === 'zh' ? tpl.name : tpl.nameEn || tpl.name}</span>
+                                                                        <span className="text-[9px] text-tc-text-sec/60 font-medium">{tpl.duration} {lang === 'zh' ? '天' : 'Days'} • {tpl.region}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <ArrowRight size={14} className="text-tc-text-sec/20 group-hover:text-tc-primary transition-colors opacity-0 group-hover:opacity-100" />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Matching Spots */}
+                                            {matchedSpots.length > 0 && (
+                                                <div className="flex flex-col gap-1.5">
+                                                    <span className="text-[10px] font-bold text-tc-text-sec/50 tracking-wider uppercase pl-1">
+                                                        {lang === 'zh' ? '精選景點' : 'SPOTS'}
+                                                    </span>
+                                                    <div className="flex flex-col gap-1 text-left">
+                                                        {matchedSpots.map(spot => (
+                                                            <button
+                                                                key={spot.id}
+                                                                type="button"
+                                                                onClick={() => handleSelectSpotFromSearch(spot)}
+                                                                className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-tc-primary/5 transition-all text-left text-xs font-bold text-tc-text-main group"
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <div className="w-7 h-7 rounded-full bg-teal-100 flex items-center justify-center text-teal-600">
+                                                                        <MapPin size={14} />
+                                                                    </div>
+                                                                    <div className="flex flex-col text-left">
+                                                                        <span className="line-clamp-1">{lang === 'zh' ? spot.title : spot.titleEn || spot.title}</span>
+                                                                        <span className="text-[9px] text-tc-text-sec/60 font-medium">{lang === 'zh' ? spot.address : spot.addressEn || spot.address}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <ArrowRight size={14} className="text-tc-text-sec/20 group-hover:text-tc-primary transition-colors opacity-0 group-hover:opacity-100" />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
+                                </motion.div>
+                            </>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* City Shortcuts acts as Global Filter */}
                 <div className="flex gap-4 overflow-x-auto no-scrollbar mt-12 pb-4 justify-between md:justify-center md:gap-10">
                     <button
                         onClick={() => {
-                            if (isSelectionOnly) onSelectCity('taiwan' as Region);
-                            else setActivePicksFilter('taiwan');
+                            triggerTransition(
+                                lang === 'zh' ? '正在為您拼貼全台灣精彩行程...' : 'Assembling flagship itineraries for Taiwan...',
+                                () => {
+                                    if (isSelectionOnly) {
+                                        onSelectCity('taiwan' as Region);
+                                    } else {
+                                        setActivePicksFilter('taiwan');
+                                        setTimeout(() => {
+                                            templatesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }, 100);
+                                    }
+                                }
+                            );
                         }}
                         className={`flex-shrink-0 flex flex-col items-center gap-3 group snap-start`}
                     >
@@ -168,8 +492,19 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                         <button
                             key={city.id}
                             onClick={() => {
-                                if (isSelectionOnly) onSelectCity(city.id as Region);
-                                else setActivePicksFilter(city.id);
+                                triggerTransition(
+                                    lang === 'zh' ? `正在拼貼 ${city.label} 行程圖景...` : `Assembling ${city.labelEn} itineraries...`,
+                                    () => {
+                                        if (isSelectionOnly) {
+                                            onSelectCity(city.id as Region);
+                                        } else {
+                                            setActivePicksFilter(city.id);
+                                            setTimeout(() => {
+                                                templatesSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            }, 100);
+                                        }
+                                    }
+                                );
                             }}
                             className="flex-shrink-0 flex flex-col items-center gap-3 group snap-start"
                         >
@@ -191,7 +526,7 @@ export const CityPicker: React.FC<CityPickerProps> = ({
             </div>
 
             {/* Main Content Separator (demarcates navigation from content) */}
-            <div className="h-px bg-gray-100 mx-10 mt-16 opacity-60" />
+            <div ref={templatesSectionRef} className="h-px bg-gray-100 mx-10 mt-16 opacity-60" />
 
             {!isSelectionOnly && (
                 <>
@@ -575,6 +910,20 @@ export const CityPicker: React.FC<CityPickerProps> = ({
                             }
                         }}
                     />
+                )}
+            </AnimatePresence>
+
+            {/* Globe Loading Overlay */}
+            <AnimatePresence>
+                {transitionLoading && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[9999] pointer-events-auto"
+                    >
+                        <GlobeLoader text={loadingText} />
+                    </motion.div>
                 )}
             </AnimatePresence>
         </div>
